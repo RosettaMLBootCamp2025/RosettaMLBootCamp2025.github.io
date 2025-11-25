@@ -1,0 +1,7 @@
+---
+title: "About"
+---
+
+This bootcamp covers machine learning tools for protein structure prediction and design.
+
+*More information coming soon.*
