@@ -12,8 +12,32 @@ website:
         menu:
           - href: monday/index.qmd
             text: "Monday Overview"
-          - href: monday/1.1-placeholder.qmd
-            text: "1.1 Module Placeholder"
+          - text: "---"
+          - href: monday/1-localcolabfold.qmd
+            text: "1. LocalColabFold"
+          - href: monday/2-ligandmpnn.qmd
+            text: "2. LigandMPNN"
+          - href: monday/3-rfdiffusion2.qmd
+            text: "3. RFdiffusion2"
+          - href: monday/4-esmfold.qmd
+            text: "4. ESMFold"
+          - href: monday/5-openfold.qmd
+            text: "5. OpenFold"
+          - href: monday/6-chai1.qmd
+            text: "6. Chai-1"
+          - href: monday/7-boltz2.qmd
+            text: "7. Boltz-2"
+          - href: monday/8-diffdock-pp.qmd
+            text: "8. DiffDock-PP"
+          - href: monday/9-placer.qmd
+            text: "9. PLACER"
+          - href: monday/10-bindcraft.qmd
+            text: "10. BindCraft"
+          - text: "---"
+          - href: monday/11-esm3.qmd
+            text: "11. ESM3 (Optional)"
+          - href: monday/12-rfdiffusion-aa.qmd
+            text: "12. RFdiffusion AA (Optional)"
       - text: "Tuesday"
         menu:
           - href: tuesday/index.qmd

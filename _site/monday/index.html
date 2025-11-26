@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Monday – ML Protein Design Bootcamp 2025</title>
+<title>Monday: Tool Installation – ML Protein Design Bootcamp 2025</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -103,9 +103,55 @@ ul.task-list li input[type="checkbox"] {
     <a class="dropdown-item" href="../monday/index.html">
  <span class="dropdown-text">Monday Overview</span></a>
   </li>  
+        <li><hr class="dropdown-divider"></li>
         <li>
-    <a class="dropdown-item" href="../monday/1.1-placeholder.html">
- <span class="dropdown-text">1.1 Module Placeholder</span></a>
+    <a class="dropdown-item" href="../monday/1-localcolabfold.html">
+ <span class="dropdown-text">1. LocalColabFold</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../monday/2-ligandmpnn.html">
+ <span class="dropdown-text">2. LigandMPNN</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../monday/3-rfdiffusion2.html">
+ <span class="dropdown-text">3. RFdiffusion2</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../monday/4-esmfold.html">
+ <span class="dropdown-text">4. ESMFold</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../monday/5-openfold.html">
+ <span class="dropdown-text">5. OpenFold</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../monday/6-chai1.html">
+ <span class="dropdown-text">6. Chai-1</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../monday/7-boltz2.html">
+ <span class="dropdown-text">7. Boltz-2</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../monday/8-diffdock-pp.html">
+ <span class="dropdown-text">8. DiffDock-PP</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../monday/9-placer.html">
+ <span class="dropdown-text">9. PLACER</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../monday/10-bindcraft.html">
+ <span class="dropdown-text">10. BindCraft</span></a>
+  </li>  
+        <li><hr class="dropdown-divider"></li>
+        <li>
+    <a class="dropdown-item" href="../monday/11-esm3.html">
+ <span class="dropdown-text">11. ESM3 (Optional)</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../monday/12-rfdiffusion-aa.html">
+ <span class="dropdown-text">12. RFdiffusion AA (Optional)</span></a>
   </li>  
     </ul>
   </li>
@@ -194,6 +240,8 @@ ul.task-list li input[type="checkbox"] {
   <ul>
   <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">Overview</a></li>
   <li><a href="#modules" id="toc-modules" class="nav-link" data-scroll-target="#modules">Modules</a></li>
+  <li><a href="#tips-for-success" id="toc-tips-for-success" class="nav-link" data-scroll-target="#tips-for-success">Tips for Success</a></li>
+  <li><a href="#getting-help" id="toc-getting-help" class="nav-link" data-scroll-target="#getting-help">Getting Help</a></li>
   </ul>
 </nav>
     </div>
@@ -202,7 +250,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Monday</h1>
+<h1 class="title">Monday: Tool Installation</h1>
 </div>
 
 
@@ -221,27 +269,114 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="overview" class="level2">
 <h2 class="anchored" data-anchor-id="overview">Overview</h2>
-<p><em>Monday content coming soon.</em></p>
+<p>Monday is dedicated to installing the essential ML-based protein design and structure prediction tools on your HPC cluster. Each module guides you through installing a specific tool, from structure predictors like LocalColabFold and ESMFold to design tools like LigandMPNN and BindCraft.</p>
+<p><strong>Goal</strong>: By the end of Monday, you should have all major tools installed and tested on your HPC cluster.</p>
 </section>
 <section id="modules" class="level2">
 <h2 class="anchored" data-anchor-id="modules">Modules</h2>
 <table class="caption-top table">
 <thead>
 <tr class="header">
-<th>Module</th>
-<th>Topic</th>
+<th>#</th>
+<th>Tool</th>
+<th>Description</th>
 <th>Status</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td><a href="../monday/1.1-placeholder.html">1.1</a></td>
-<td>Placeholder Module</td>
-<td>Coming soon</td>
+<td>1</td>
+<td><a href="../monday/1-localcolabfold.html">LocalColabFold</a></td>
+<td>Fast AlphaFold2 structure prediction</td>
+<td>Required</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td><a href="../monday/2-ligandmpnn.html">LigandMPNN</a></td>
+<td>Context-aware protein sequence design</td>
+<td>Required</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td><a href="../monday/3-rfdiffusion2.html">RFdiffusion2</a></td>
+<td>Atom-level active site scaffolding</td>
+<td>Required</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td><a href="../monday/4-esmfold.html">ESMFold</a></td>
+<td>Single-sequence structure prediction</td>
+<td>Required</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td><a href="../monday/5-openfold.html">OpenFold</a></td>
+<td>Open-source AlphaFold2 reproduction</td>
+<td>Required</td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td><a href="../monday/6-chai1.html">Chai-1</a></td>
+<td>Multi-modal biomolecular structure prediction</td>
+<td>Required</td>
+</tr>
+<tr class="odd">
+<td>7</td>
+<td><a href="../monday/7-boltz2.html">Boltz-2</a></td>
+<td>Structure + binding affinity prediction</td>
+<td>Required</td>
+</tr>
+<tr class="even">
+<td>8</td>
+<td><a href="../monday/8-diffdock-pp.html">DiffDock-PP</a></td>
+<td>Protein-protein docking</td>
+<td>Required</td>
+</tr>
+<tr class="odd">
+<td>9</td>
+<td><a href="../monday/9-placer.html">PLACER</a></td>
+<td>Protein-ligand conformational ensemble prediction</td>
+<td>Required</td>
+</tr>
+<tr class="even">
+<td>10</td>
+<td><a href="../monday/10-bindcraft.html">BindCraft</a></td>
+<td>End-to-end binder design pipeline</td>
+<td>Required</td>
+</tr>
+<tr class="odd">
+<td>11</td>
+<td><a href="../monday/11-esm3.html">ESM3</a></td>
+<td>Multimodal protein generation</td>
+<td>Optional</td>
+</tr>
+<tr class="even">
+<td>12</td>
+<td><a href="../monday/12-rfdiffusion-aa.html">RFdiffusion All Atom</a></td>
+<td>All-atom protein design (predecessor to RFd2)</td>
+<td>Optional</td>
 </tr>
 </tbody>
 </table>
-<p><em>More modules will be added here.</em></p>
+</section>
+<section id="tips-for-success" class="level2">
+<h2 class="anchored" data-anchor-id="tips-for-success">Tips for Success</h2>
+<ol type="1">
+<li><p><strong>Work sequentially</strong> - Some tools share dependencies, so installing in order may help avoid conflicts</p></li>
+<li><p><strong>Use separate conda environments</strong> - Each tool should have its own environment to avoid dependency conflicts</p></li>
+<li><p><strong>Check GPU availability</strong> - Most tools require GPU access; make sure you can request GPU nodes on your cluster</p></li>
+<li><p><strong>Note your paths</strong> - Keep track of where you install each tool; you’ll need these paths later</p></li>
+<li><p><strong>Test each installation</strong> - Don’t move on until you’ve verified each tool works</p></li>
+</ol>
+</section>
+<section id="getting-help" class="level2">
+<h2 class="anchored" data-anchor-id="getting-help">Getting Help</h2>
+<p>If you encounter issues:</p>
+<ol type="1">
+<li>Check the tool’s official documentation (linked in each module)</li>
+<li>Search for existing GitHub issues on the tool’s repository</li>
+<li><a href="https://github.com/RosettaMLBootCamp2025/RosettaMLBootCamp2025.github.io/issues/new">Report an issue</a> on the bootcamp site</li>
+</ol>
 <hr>
 <div style="display: flex; justify-content: space-between; align-items: center;">
 <div>

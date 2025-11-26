@@ -1,18 +1,49 @@
 ---
-title: "Monday"
+title: "Monday: Tool Installation"
 ---
 
 ## Overview
 
-*Monday content coming soon.*
+Monday is dedicated to installing the essential ML-based protein design and structure prediction tools on your HPC cluster. Each module guides you through installing a specific tool, from structure predictors like LocalColabFold and ESMFold to design tools like LigandMPNN and BindCraft.
+
+**Goal**: By the end of Monday, you should have all major tools installed and tested on your HPC cluster.
 
 ## Modules
 
-| Module | Topic | Status |
-|--------|-------|--------|
-| [1.1](1.1-placeholder.qmd) | Placeholder Module | Coming soon |
+| # | Tool | Description | Status |
+|---|------|-------------|--------|
+| 1 | [LocalColabFold](1-localcolabfold.qmd) | Fast AlphaFold2 structure prediction | Required |
+| 2 | [LigandMPNN](2-ligandmpnn.qmd) | Context-aware protein sequence design | Required |
+| 3 | [RFdiffusion2](3-rfdiffusion2.qmd) | Atom-level active site scaffolding | Required |
+| 4 | [ESMFold](4-esmfold.qmd) | Single-sequence structure prediction | Required |
+| 5 | [OpenFold](5-openfold.qmd) | Open-source AlphaFold2 reproduction | Required |
+| 6 | [Chai-1](6-chai1.qmd) | Multi-modal biomolecular structure prediction | Required |
+| 7 | [Boltz-2](7-boltz2.qmd) | Structure + binding affinity prediction | Required |
+| 8 | [DiffDock-PP](8-diffdock-pp.qmd) | Protein-protein docking | Required |
+| 9 | [PLACER](9-placer.qmd) | Protein-ligand conformational ensemble prediction | Required |
+| 10 | [BindCraft](10-bindcraft.qmd) | End-to-end binder design pipeline | Required |
+| 11 | [ESM3](11-esm3.qmd) | Multimodal protein generation | Optional |
+| 12 | [RFdiffusion All Atom](12-rfdiffusion-aa.qmd) | All-atom protein design (predecessor to RFd2) | Optional |
 
-*More modules will be added here.*
+## Tips for Success
+
+1. **Work sequentially** - Some tools share dependencies, so installing in order may help avoid conflicts
+
+2. **Use separate conda environments** - Each tool should have its own environment to avoid dependency conflicts
+
+3. **Check GPU availability** - Most tools require GPU access; make sure you can request GPU nodes on your cluster
+
+4. **Note your paths** - Keep track of where you install each tool; you'll need these paths later
+
+5. **Test each installation** - Don't move on until you've verified each tool works
+
+## Getting Help
+
+If you encounter issues:
+
+1. Check the tool's official documentation (linked in each module)
+2. Search for existing GitHub issues on the tool's repository
+3. [Report an issue](https://github.com/RosettaMLBootCamp2025/RosettaMLBootCamp2025.github.io/issues/new) on the bootcamp site
 
 ---
 
