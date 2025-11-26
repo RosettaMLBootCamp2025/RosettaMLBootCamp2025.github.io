@@ -3,12 +3,6 @@ title: "ML Protein Design Bootcamp 2025"
 toc: false
 ---
 
-<div id="resume-banner" style="display: none; background: #e7f3ff; border: 1px solid #0066cc; border-radius: 8px; padding: 15px; margin-bottom: 20px;">
-  <strong>Welcome back!</strong> You were last on: <span id="last-page-title"></span>
-  <br><a id="resume-link" href="#" class="btn btn-primary btn-sm" style="margin-top: 10px;">Resume where you left off</a>
-  <button onclick="clearProgress()" class="btn btn-outline-secondary btn-sm" style="margin-top: 10px; margin-left: 10px;">Start Fresh</button>
-</div>
-
 Welcome to the ML Protein Design Bootcamp 2025! This self-paced course covers machine learning tools for protein structure prediction and design.
 
 ## Course Overview
@@ -54,6 +48,7 @@ Modules for Day 4.
   <div class="progress" style="height: 25px;">
     <div id="progress-bar" class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>
   </div>
+  <p style="margin-top: 10px;"><button onclick="clearProgress()" class="btn btn-outline-secondary btn-sm">Reset Progress</button></p>
 </div>
 
 ## Getting Started
@@ -61,8 +56,8 @@ Modules for Day 4.
 1. **Choose a day** from the navigation above or the cards below
 2. **Work through modules** in order - each builds on the previous
 3. **Check off sections** as you complete them - your progress is saved automatically
-4. **Return anytime** - the site remembers where you left off
+4. **Return anytime** - the site automatically resumes where you left off
 
 ---
 
-*Questions? Contact: icanderson@ucdavis.edu*
+<a href="https://github.com/RosettaMLBootCamp2025/RosettaMLBootCamp2025.github.io/issues/new" class="btn btn-primary">Report an Issue / Ask a Question</a>

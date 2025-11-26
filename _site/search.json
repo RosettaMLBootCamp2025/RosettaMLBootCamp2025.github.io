@@ -179,7 +179,7 @@
     "href": "index.html",
     "title": "ML Protein Design Bootcamp 2025",
     "section": "",
-    "text": "Welcome back! You were last on:  Resume where you left off Start Fresh\nWelcome to the ML Protein Design Bootcamp 2025! This self-paced course covers machine learning tools for protein structure prediction and design."
+    "text": "Welcome to the ML Protein Design Bootcamp 2025! This self-paced course covers machine learning tools for protein structure prediction and design."
   },
   {
     "objectID": "index.html#course-overview",
@@ -193,14 +193,14 @@
     "href": "index.html#your-progress",
     "title": "ML Protein Design Bootcamp 2025",
     "section": "Your Progress",
-    "text": "Your Progress\n\n\nCompleted modules: 0\n\n\n&lt;div id=\"progress-bar\" class=\"progress-bar\" role=\"progressbar\" style=\"width: 0%;\" aria-valuenow=\"0\" aria-valuemin=\"0\" aria-valuemax=\"100\"&gt;0%&lt;/div&gt;"
+    "text": "Your Progress\n\n\nCompleted modules: 0\n\n\n&lt;div id=\"progress-bar\" class=\"progress-bar\" role=\"progressbar\" style=\"width: 0%;\" aria-valuenow=\"0\" aria-valuemin=\"0\" aria-valuemax=\"100\"&gt;0%&lt;/div&gt;\n\n\n\nReset Progress"
   },
   {
     "objectID": "index.html#getting-started",
     "href": "index.html#getting-started",
     "title": "ML Protein Design Bootcamp 2025",
     "section": "Getting Started",
-    "text": "Getting Started\n\nChoose a day from the navigation above or the cards below\nWork through modules in order - each builds on the previous\nCheck off sections as you complete them - your progress is saved automatically\nReturn anytime - the site remembers where you left off\n\n\nQuestions? Contact: icanderson@ucdavis.edu"
+    "text": "Getting Started\n\nChoose a day from the navigation above or the cards below\nWork through modules in order - each builds on the previous\nCheck off sections as you complete them - your progress is saved automatically\nReturn anytime - the site automatically resumes where you left off\n\n\nReport an Issue / Ask a Question"
   },
   {
     "objectID": "day1/1.1-placeholder.html",

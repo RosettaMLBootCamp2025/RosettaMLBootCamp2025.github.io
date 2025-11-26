@@ -6,8 +6,9 @@ website:
   title: "ML Protein Design Bootcamp 2025"
   navbar:
     left:
-      - href: index.qmd
-        text: Home
+      - text: "Home"
+        href: index.qmd
+        id: home-link
       - text: "Day 1"
         menu:
           - href: day1/index.qmd
@@ -35,6 +36,9 @@ website:
     right:
       - href: about.qmd
         text: About
+      - icon: github
+        href: https://github.com/RosettaMLBootCamp2025/RosettaMLBootCamp2025.github.io/issues/new
+        text: Report Issue
 
 format:
   html:
