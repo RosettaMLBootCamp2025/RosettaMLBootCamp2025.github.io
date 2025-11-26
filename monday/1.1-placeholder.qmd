@@ -20,4 +20,4 @@ title: "1.1 Placeholder Module"
 
 ---
 
-**Navigation:** [← Day 1 Overview](index.qmd) | [Next Module →](1.1-placeholder.qmd)
+**Navigation:** [← Monday Overview](index.qmd) | [Next Module →](1.1-placeholder.qmd)

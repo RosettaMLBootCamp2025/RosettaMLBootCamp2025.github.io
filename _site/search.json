@@ -1,178 +1,87 @@
 [
   {
-    "objectID": "day1/index.html",
-    "href": "day1/index.html",
-    "title": "Day 1",
+    "objectID": "wednesday/index.html",
+    "href": "wednesday/index.html",
+    "title": "Wednesday",
     "section": "",
-    "text": "Day 1 content coming soon."
+    "text": "Wednesday content coming soon."
   },
   {
-    "objectID": "day1/index.html#overview",
-    "href": "day1/index.html#overview",
-    "title": "Day 1",
+    "objectID": "wednesday/index.html#overview",
+    "href": "wednesday/index.html#overview",
+    "title": "Wednesday",
     "section": "",
-    "text": "Day 1 content coming soon."
+    "text": "Wednesday content coming soon."
   },
   {
-    "objectID": "day1/index.html#modules",
-    "href": "day1/index.html#modules",
-    "title": "Day 1",
+    "objectID": "wednesday/index.html#modules",
+    "href": "wednesday/index.html#modules",
+    "title": "Wednesday",
     "section": "Modules",
-    "text": "Modules\n\n\n\nModule\nTopic\nStatus\n\n\n\n\n1.1\nPlaceholder Module\nComing soon\n\n\n\nMore modules will be added here.\n\n\n\n← Back to Home\n\n\nDay 2 →"
+    "text": "Modules\n\n\n\nModule\nTopic\nStatus\n\n\n\n\n3.1\nPlaceholder Module\nComing soon\n\n\n\nMore modules will be added here.\n\n\n\n← Tuesday\n\n\nBack to Home\n\n\nThursday →"
   },
   {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "About",
+    "objectID": "thursday/index.html",
+    "href": "thursday/index.html",
+    "title": "Thursday",
     "section": "",
-    "text": "This bootcamp covers machine learning tools for protein structure prediction and design.\nMore information coming soon."
+    "text": "Thursday content coming soon."
   },
   {
-    "objectID": "day2/index.html",
-    "href": "day2/index.html",
-    "title": "Day 2",
+    "objectID": "thursday/index.html#overview",
+    "href": "thursday/index.html#overview",
+    "title": "Thursday",
     "section": "",
-    "text": "Day 2 content coming soon."
+    "text": "Thursday content coming soon."
   },
   {
-    "objectID": "day2/index.html#overview",
-    "href": "day2/index.html#overview",
-    "title": "Day 2",
-    "section": "",
-    "text": "Day 2 content coming soon."
-  },
-  {
-    "objectID": "day2/index.html#modules",
-    "href": "day2/index.html#modules",
-    "title": "Day 2",
+    "objectID": "thursday/index.html#modules",
+    "href": "thursday/index.html#modules",
+    "title": "Thursday",
     "section": "Modules",
-    "text": "Modules\n\n\n\nModule\nTopic\nStatus\n\n\n\n\n2.1\nPlaceholder Module\nComing soon\n\n\n\nMore modules will be added here.\n\n\n\n← Day 1\n\n\nBack to Home\n\n\nDay 3 →"
+    "text": "Modules\n\n\n\nModule\nTopic\nStatus\n\n\n\n\n4.1\nPlaceholder Module\nComing soon\n\n\n\nMore modules will be added here.\n\n\n\n← Wednesday\n\n\nBack to Home\n\n\nCapstone →"
   },
   {
-    "objectID": "day3/index.html",
-    "href": "day3/index.html",
-    "title": "Day 3",
+    "objectID": "tuesday/index.html",
+    "href": "tuesday/index.html",
+    "title": "Tuesday",
     "section": "",
-    "text": "Day 3 content coming soon."
+    "text": "Tuesday content coming soon."
   },
   {
-    "objectID": "day3/index.html#overview",
-    "href": "day3/index.html#overview",
-    "title": "Day 3",
+    "objectID": "tuesday/index.html#overview",
+    "href": "tuesday/index.html#overview",
+    "title": "Tuesday",
     "section": "",
-    "text": "Day 3 content coming soon."
+    "text": "Tuesday content coming soon."
   },
   {
-    "objectID": "day3/index.html#modules",
-    "href": "day3/index.html#modules",
-    "title": "Day 3",
+    "objectID": "tuesday/index.html#modules",
+    "href": "tuesday/index.html#modules",
+    "title": "Tuesday",
     "section": "Modules",
-    "text": "Modules\n\n\n\nModule\nTopic\nStatus\n\n\n\n\n3.1\nPlaceholder Module\nComing soon\n\n\n\nMore modules will be added here.\n\n\n\n← Day 2\n\n\nBack to Home\n\n\nDay 4 →"
+    "text": "Modules\n\n\n\nModule\nTopic\nStatus\n\n\n\n\n2.1\nPlaceholder Module\nComing soon\n\n\n\nMore modules will be added here.\n\n\n\n← Monday\n\n\nBack to Home\n\n\nWednesday →"
   },
   {
-    "objectID": "day4/index.html",
-    "href": "day4/index.html",
-    "title": "Day 4",
+    "objectID": "capstone/index.html",
+    "href": "capstone/index.html",
+    "title": "Capstone",
     "section": "",
-    "text": "Day 4 content coming soon."
+    "text": "Capstone project details coming soon.\nThe capstone project brings together everything you’ve learned throughout the bootcamp."
   },
   {
-    "objectID": "day4/index.html#overview",
-    "href": "day4/index.html#overview",
-    "title": "Day 4",
+    "objectID": "capstone/index.html#overview",
+    "href": "capstone/index.html#overview",
+    "title": "Capstone",
     "section": "",
-    "text": "Day 4 content coming soon."
+    "text": "Capstone project details coming soon.\nThe capstone project brings together everything you’ve learned throughout the bootcamp."
   },
   {
-    "objectID": "day4/index.html#modules",
-    "href": "day4/index.html#modules",
-    "title": "Day 4",
-    "section": "Modules",
-    "text": "Modules\n\n\n\nModule\nTopic\nStatus\n\n\n\n\n4.1\nPlaceholder Module\nComing soon\n\n\n\nMore modules will be added here.\n\n\n\n← Day 3\n\n\nBack to Home"
-  },
-  {
-    "objectID": "day4/4.1-placeholder.html",
-    "href": "day4/4.1-placeholder.html",
-    "title": "4.1 Placeholder Module",
-    "section": "",
-    "text": "Content coming soon."
-  },
-  {
-    "objectID": "day4/4.1-placeholder.html#learning-objectives",
-    "href": "day4/4.1-placeholder.html#learning-objectives",
-    "title": "4.1 Placeholder Module",
-    "section": "",
-    "text": "Content coming soon."
-  },
-  {
-    "objectID": "day4/4.1-placeholder.html#section-1",
-    "href": "day4/4.1-placeholder.html#section-1",
-    "title": "4.1 Placeholder Module",
-    "section": "Section 1",
-    "text": "Section 1\n Mark Section 1 as complete\nPlaceholder content for Section 1."
-  },
-  {
-    "objectID": "day4/4.1-placeholder.html#section-2",
-    "href": "day4/4.1-placeholder.html#section-2",
-    "title": "4.1 Placeholder Module",
-    "section": "Section 2",
-    "text": "Section 2\n Mark Section 2 as complete\nPlaceholder content for Section 2.\n\nNavigation: ← Day 4 Overview | Next Module →"
-  },
-  {
-    "objectID": "day3/3.1-placeholder.html",
-    "href": "day3/3.1-placeholder.html",
-    "title": "3.1 Placeholder Module",
-    "section": "",
-    "text": "Content coming soon."
-  },
-  {
-    "objectID": "day3/3.1-placeholder.html#learning-objectives",
-    "href": "day3/3.1-placeholder.html#learning-objectives",
-    "title": "3.1 Placeholder Module",
-    "section": "",
-    "text": "Content coming soon."
-  },
-  {
-    "objectID": "day3/3.1-placeholder.html#section-1",
-    "href": "day3/3.1-placeholder.html#section-1",
-    "title": "3.1 Placeholder Module",
-    "section": "Section 1",
-    "text": "Section 1\n Mark Section 1 as complete\nPlaceholder content for Section 1."
-  },
-  {
-    "objectID": "day3/3.1-placeholder.html#section-2",
-    "href": "day3/3.1-placeholder.html#section-2",
-    "title": "3.1 Placeholder Module",
-    "section": "Section 2",
-    "text": "Section 2\n Mark Section 2 as complete\nPlaceholder content for Section 2.\n\nNavigation: ← Day 3 Overview | Next Module →"
-  },
-  {
-    "objectID": "day2/2.1-placeholder.html",
-    "href": "day2/2.1-placeholder.html",
-    "title": "2.1 Placeholder Module",
-    "section": "",
-    "text": "Content coming soon."
-  },
-  {
-    "objectID": "day2/2.1-placeholder.html#learning-objectives",
-    "href": "day2/2.1-placeholder.html#learning-objectives",
-    "title": "2.1 Placeholder Module",
-    "section": "",
-    "text": "Content coming soon."
-  },
-  {
-    "objectID": "day2/2.1-placeholder.html#section-1",
-    "href": "day2/2.1-placeholder.html#section-1",
-    "title": "2.1 Placeholder Module",
-    "section": "Section 1",
-    "text": "Section 1\n Mark Section 1 as complete\nPlaceholder content for Section 1."
-  },
-  {
-    "objectID": "day2/2.1-placeholder.html#section-2",
-    "href": "day2/2.1-placeholder.html#section-2",
-    "title": "2.1 Placeholder Module",
-    "section": "Section 2",
-    "text": "Section 2\n Mark Section 2 as complete\nPlaceholder content for Section 2.\n\nNavigation: ← Day 2 Overview | Next Module →"
+    "objectID": "capstone/index.html#project-description",
+    "href": "capstone/index.html#project-description",
+    "title": "Capstone",
+    "section": "Project Description",
+    "text": "Project Description\nComing soon.\n\n\n\n← Thursday\n\n\nBack to Home"
   },
   {
     "objectID": "index.html",
@@ -186,7 +95,7 @@
     "href": "index.html#course-overview",
     "title": "ML Protein Design Bootcamp 2025",
     "section": "Course Overview",
-    "text": "Course Overview\nThis bootcamp is organized into 4 days of content. Each day contains sequential modules that build on each other.\n\n\nDay 1\nComing soon\nIntroduction and setup modules.\n\n\nDay 2\nComing soon\nModules for Day 2.\n\n\nDay 3\nComing soon\nModules for Day 3.\n\n\nDay 4\nComing soon\nModules for Day 4."
+    "text": "Course Overview\nThis bootcamp is organized into 4 days of content plus a capstone project. Each day contains sequential modules that build on each other.\n\n\nMonday\nComing soon\nIntroduction and setup modules.\n\n\nTuesday\nComing soon\nModules for Tuesday.\n\n\nWednesday\nComing soon\nModules for Wednesday.\n\n\nThursday\nComing soon\nModules for Thursday.\n\n\nCapstone\nComing soon\nCapstone project bringing together everything you’ve learned."
   },
   {
     "objectID": "index.html#your-progress",
@@ -203,31 +112,143 @@
     "text": "Getting Started\n\nChoose a day from the navigation above or the cards below\nWork through modules in order - each builds on the previous\nCheck off sections as you complete them - your progress is saved automatically\nReturn anytime - use the “Resume” button to pick up where you left off\n\n\nReport an Issue / Ask a Question"
   },
   {
-    "objectID": "day1/1.1-placeholder.html",
-    "href": "day1/1.1-placeholder.html",
+    "objectID": "monday/1.1-placeholder.html",
+    "href": "monday/1.1-placeholder.html",
     "title": "1.1 Placeholder Module",
     "section": "",
     "text": "Content coming soon."
   },
   {
-    "objectID": "day1/1.1-placeholder.html#learning-objectives",
-    "href": "day1/1.1-placeholder.html#learning-objectives",
+    "objectID": "monday/1.1-placeholder.html#learning-objectives",
+    "href": "monday/1.1-placeholder.html#learning-objectives",
     "title": "1.1 Placeholder Module",
     "section": "",
     "text": "Content coming soon."
   },
   {
-    "objectID": "day1/1.1-placeholder.html#section-1",
-    "href": "day1/1.1-placeholder.html#section-1",
+    "objectID": "monday/1.1-placeholder.html#section-1",
+    "href": "monday/1.1-placeholder.html#section-1",
     "title": "1.1 Placeholder Module",
     "section": "Section 1",
     "text": "Section 1\n Mark Section 1 as complete\nPlaceholder content for Section 1."
   },
   {
-    "objectID": "day1/1.1-placeholder.html#section-2",
-    "href": "day1/1.1-placeholder.html#section-2",
+    "objectID": "monday/1.1-placeholder.html#section-2",
+    "href": "monday/1.1-placeholder.html#section-2",
     "title": "1.1 Placeholder Module",
     "section": "Section 2",
-    "text": "Section 2\n Mark Section 2 as complete\nPlaceholder content for Section 2.\n\nNavigation: ← Day 1 Overview | Next Module →"
+    "text": "Section 2\n Mark Section 2 as complete\nPlaceholder content for Section 2.\n\nNavigation: ← Monday Overview | Next Module →"
+  },
+  {
+    "objectID": "monday/index.html",
+    "href": "monday/index.html",
+    "title": "Monday",
+    "section": "",
+    "text": "Monday content coming soon."
+  },
+  {
+    "objectID": "monday/index.html#overview",
+    "href": "monday/index.html#overview",
+    "title": "Monday",
+    "section": "",
+    "text": "Monday content coming soon."
+  },
+  {
+    "objectID": "monday/index.html#modules",
+    "href": "monday/index.html#modules",
+    "title": "Monday",
+    "section": "Modules",
+    "text": "Modules\n\n\n\nModule\nTopic\nStatus\n\n\n\n\n1.1\nPlaceholder Module\nComing soon\n\n\n\nMore modules will be added here.\n\n\n\n← Back to Home\n\n\nTuesday →"
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "This bootcamp covers machine learning tools for protein structure prediction and design.\nMore information coming soon."
+  },
+  {
+    "objectID": "tuesday/2.1-placeholder.html",
+    "href": "tuesday/2.1-placeholder.html",
+    "title": "2.1 Placeholder Module",
+    "section": "",
+    "text": "Content coming soon."
+  },
+  {
+    "objectID": "tuesday/2.1-placeholder.html#learning-objectives",
+    "href": "tuesday/2.1-placeholder.html#learning-objectives",
+    "title": "2.1 Placeholder Module",
+    "section": "",
+    "text": "Content coming soon."
+  },
+  {
+    "objectID": "tuesday/2.1-placeholder.html#section-1",
+    "href": "tuesday/2.1-placeholder.html#section-1",
+    "title": "2.1 Placeholder Module",
+    "section": "Section 1",
+    "text": "Section 1\n Mark Section 1 as complete\nPlaceholder content for Section 1."
+  },
+  {
+    "objectID": "tuesday/2.1-placeholder.html#section-2",
+    "href": "tuesday/2.1-placeholder.html#section-2",
+    "title": "2.1 Placeholder Module",
+    "section": "Section 2",
+    "text": "Section 2\n Mark Section 2 as complete\nPlaceholder content for Section 2.\n\nNavigation: ← Tuesday Overview | Next Module →"
+  },
+  {
+    "objectID": "thursday/4.1-placeholder.html",
+    "href": "thursday/4.1-placeholder.html",
+    "title": "4.1 Placeholder Module",
+    "section": "",
+    "text": "Content coming soon."
+  },
+  {
+    "objectID": "thursday/4.1-placeholder.html#learning-objectives",
+    "href": "thursday/4.1-placeholder.html#learning-objectives",
+    "title": "4.1 Placeholder Module",
+    "section": "",
+    "text": "Content coming soon."
+  },
+  {
+    "objectID": "thursday/4.1-placeholder.html#section-1",
+    "href": "thursday/4.1-placeholder.html#section-1",
+    "title": "4.1 Placeholder Module",
+    "section": "Section 1",
+    "text": "Section 1\n Mark Section 1 as complete\nPlaceholder content for Section 1."
+  },
+  {
+    "objectID": "thursday/4.1-placeholder.html#section-2",
+    "href": "thursday/4.1-placeholder.html#section-2",
+    "title": "4.1 Placeholder Module",
+    "section": "Section 2",
+    "text": "Section 2\n Mark Section 2 as complete\nPlaceholder content for Section 2.\n\nNavigation: ← Thursday Overview | Next Module →"
+  },
+  {
+    "objectID": "wednesday/3.1-placeholder.html",
+    "href": "wednesday/3.1-placeholder.html",
+    "title": "3.1 Placeholder Module",
+    "section": "",
+    "text": "Content coming soon."
+  },
+  {
+    "objectID": "wednesday/3.1-placeholder.html#learning-objectives",
+    "href": "wednesday/3.1-placeholder.html#learning-objectives",
+    "title": "3.1 Placeholder Module",
+    "section": "",
+    "text": "Content coming soon."
+  },
+  {
+    "objectID": "wednesday/3.1-placeholder.html#section-1",
+    "href": "wednesday/3.1-placeholder.html#section-1",
+    "title": "3.1 Placeholder Module",
+    "section": "Section 1",
+    "text": "Section 1\n Mark Section 1 as complete\nPlaceholder content for Section 1."
+  },
+  {
+    "objectID": "wednesday/3.1-placeholder.html#section-2",
+    "href": "wednesday/3.1-placeholder.html#section-2",
+    "title": "3.1 Placeholder Module",
+    "section": "Section 2",
+    "text": "Section 2\n Mark Section 2 as complete\nPlaceholder content for Section 2.\n\nNavigation: ← Wednesday Overview | Next Module →"
   }
 ]

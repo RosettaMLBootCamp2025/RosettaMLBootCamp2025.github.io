@@ -1,0 +1,23 @@
+---
+title: "Tuesday"
+---
+
+## Overview
+
+*Tuesday content coming soon.*
+
+## Modules
+
+| Module | Topic | Status |
+|--------|-------|--------|
+| [2.1](2.1-placeholder.qmd) | Placeholder Module | Coming soon |
+
+*More modules will be added here.*
+
+---
+
+<div style="display: flex; justify-content: space-between; align-items: center;">
+<div>[← Monday](../monday/index.qmd)</div>
+<div>[Back to Home](../index.qmd)</div>
+<div>[Wednesday →](../wednesday/index.qmd)</div>
+</div>

@@ -1,0 +1,20 @@
+---
+title: "Capstone"
+---
+
+## Overview
+
+*Capstone project details coming soon.*
+
+The capstone project brings together everything you've learned throughout the bootcamp.
+
+## Project Description
+
+*Coming soon.*
+
+---
+
+<div style="display: flex; justify-content: space-between; align-items: center;">
+<div>[← Thursday](../thursday/index.qmd)</div>
+<div>[Back to Home](../index.qmd)</div>
+</div>

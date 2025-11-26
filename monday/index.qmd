@@ -1,22 +1,22 @@
 ---
-title: "Day 4"
+title: "Monday"
 ---
 
 ## Overview
 
-*Day 4 content coming soon.*
+*Monday content coming soon.*
 
 ## Modules
 
 | Module | Topic | Status |
 |--------|-------|--------|
-| [4.1](4.1-placeholder.qmd) | Placeholder Module | Coming soon |
+| [1.1](1.1-placeholder.qmd) | Placeholder Module | Coming soon |
 
 *More modules will be added here.*
 
 ---
 
 <div style="display: flex; justify-content: space-between; align-items: center;">
-<div>[← Day 3](../day3/index.qmd)</div>
-<div>[Back to Home](../index.qmd)</div>
+<div>[← Back to Home](../index.qmd)</div>
+<div>[Tuesday →](../tuesday/index.qmd)</div>
 </div>

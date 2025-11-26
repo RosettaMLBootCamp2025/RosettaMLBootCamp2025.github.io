@@ -8,31 +8,34 @@ website:
     left:
       - text: "Home"
         href: index.qmd
-        id: home-link
-      - text: "Day 1"
+      - text: "Monday"
         menu:
-          - href: day1/index.qmd
-            text: "Day 1 Overview"
-          - href: day1/1.1-placeholder.qmd
+          - href: monday/index.qmd
+            text: "Monday Overview"
+          - href: monday/1.1-placeholder.qmd
             text: "1.1 Module Placeholder"
-      - text: "Day 2"
+      - text: "Tuesday"
         menu:
-          - href: day2/index.qmd
-            text: "Day 2 Overview"
-          - href: day2/2.1-placeholder.qmd
+          - href: tuesday/index.qmd
+            text: "Tuesday Overview"
+          - href: tuesday/2.1-placeholder.qmd
             text: "2.1 Module Placeholder"
-      - text: "Day 3"
+      - text: "Wednesday"
         menu:
-          - href: day3/index.qmd
-            text: "Day 3 Overview"
-          - href: day3/3.1-placeholder.qmd
+          - href: wednesday/index.qmd
+            text: "Wednesday Overview"
+          - href: wednesday/3.1-placeholder.qmd
             text: "3.1 Module Placeholder"
-      - text: "Day 4"
+      - text: "Thursday"
         menu:
-          - href: day4/index.qmd
-            text: "Day 4 Overview"
-          - href: day4/4.1-placeholder.qmd
+          - href: thursday/index.qmd
+            text: "Thursday Overview"
+          - href: thursday/4.1-placeholder.qmd
             text: "4.1 Module Placeholder"
+      - text: "Capstone"
+        menu:
+          - href: capstone/index.qmd
+            text: "Capstone Overview"
     right:
       - href: about.qmd
         text: About

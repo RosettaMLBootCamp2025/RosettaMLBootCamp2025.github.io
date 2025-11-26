@@ -13,36 +13,43 @@ Welcome to the ML Protein Design Bootcamp 2025! This self-paced course covers ma
 
 ## Course Overview
 
-This bootcamp is organized into 4 days of content. Each day contains sequential modules that build on each other.
+This bootcamp is organized into 4 days of content plus a capstone project. Each day contains sequential modules that build on each other.
 
 ::: {.grid}
 
 ::: {.g-col-6}
-### [Day 1](day1/index.qmd) {.day-card}
+### [Monday](monday/index.qmd) {.day-card}
 *Coming soon*
 
 Introduction and setup modules.
 :::
 
 ::: {.g-col-6}
-### [Day 2](day2/index.qmd) {.day-card}
+### [Tuesday](tuesday/index.qmd) {.day-card}
 *Coming soon*
 
-Modules for Day 2.
+Modules for Tuesday.
 :::
 
 ::: {.g-col-6}
-### [Day 3](day3/index.qmd) {.day-card}
+### [Wednesday](wednesday/index.qmd) {.day-card}
 *Coming soon*
 
-Modules for Day 3.
+Modules for Wednesday.
 :::
 
 ::: {.g-col-6}
-### [Day 4](day4/index.qmd) {.day-card}
+### [Thursday](thursday/index.qmd) {.day-card}
 *Coming soon*
 
-Modules for Day 4.
+Modules for Thursday.
+:::
+
+::: {.g-col-12}
+### [Capstone](capstone/index.qmd) {.day-card}
+*Coming soon*
+
+Capstone project bringing together everything you've learned.
 :::
 
 :::

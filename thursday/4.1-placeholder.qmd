@@ -20,4 +20,4 @@ title: "4.1 Placeholder Module"
 
 ---
 
-**Navigation:** [← Day 4 Overview](index.qmd) | [Next Module →](4.1-placeholder.qmd)
+**Navigation:** [← Thursday Overview](index.qmd) | [Next Module →](4.1-placeholder.qmd)
