@@ -94,6 +94,68 @@ ul.task-list li input[type="checkbox"] {
     <a class="nav-link" href="./index.html"> 
 <span class="menu-text">Home</span></a>
   </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-day-1" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Day 1</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-day-1">    
+        <li>
+    <a class="dropdown-item" href="./day1/index.html">
+ <span class="dropdown-text">Day 1 Overview</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./day1/1.1-placeholder.html">
+ <span class="dropdown-text">1.1 Module Placeholder</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-day-2" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Day 2</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-day-2">    
+        <li>
+    <a class="dropdown-item" href="./day2/index.html">
+ <span class="dropdown-text">Day 2 Overview</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./day2/2.1-placeholder.html">
+ <span class="dropdown-text">2.1 Module Placeholder</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-day-3" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Day 3</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-day-3">    
+        <li>
+    <a class="dropdown-item" href="./day3/index.html">
+ <span class="dropdown-text">Day 3 Overview</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./day3/3.1-placeholder.html">
+ <span class="dropdown-text">3.1 Module Placeholder</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-day-4" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Day 4</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-day-4">    
+        <li>
+    <a class="dropdown-item" href="./day4/index.html">
+ <span class="dropdown-text">Day 4 Overview</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./day4/4.1-placeholder.html">
+ <span class="dropdown-text">4.1 Module Placeholder</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
     <a class="nav-link active" href="./about.html" aria-current="page"> 
 <span class="menu-text">About</span></a>
@@ -140,6 +202,118 @@ ul.task-list li input[type="checkbox"] {
 
 
 </main> <!-- /main -->
+<script>
+(function() {
+  const STORAGE_KEY = 'bootcamp2025_progress';
+  const LAST_PAGE_KEY = 'bootcamp2025_lastpage';
+
+  // Get current page path
+  const currentPath = window.location.pathname;
+  const isHomePage = currentPath === '/' || currentPath.endsWith('index.html') || currentPath === '/index.html';
+
+  // Save current page as last visited (except homepage)
+  if (!isHomePage) {
+    const pageTitle = document.title.replace(' - ML Protein Design Bootcamp 2025', '');
+    localStorage.setItem(LAST_PAGE_KEY, JSON.stringify({
+      path: currentPath,
+      title: pageTitle,
+      timestamp: Date.now()
+    }));
+  }
+
+  // Load progress data
+  function getProgress() {
+    const data = localStorage.getItem(STORAGE_KEY);
+    return data ? JSON.parse(data) : { completed: [] };
+  }
+
+  // Save progress data
+  function saveProgress(progress) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
+  }
+
+  // Update progress bar on homepage
+  function updateProgressBar() {
+    const progress = getProgress();
+    const totalModules = document.querySelectorAll('.module-checkbox').length ||
+                         parseInt(document.body.dataset.totalModules) || 8; // fallback
+    const completed = progress.completed.length;
+    const percent = Math.round((completed / totalModules) * 100);
+
+    const bar = document.getElementById('progress-bar');
+    const count = document.getElementById('completed-count');
+
+    if (bar) {
+      bar.style.width = percent + '%';
+      bar.textContent = percent + '%';
+      bar.setAttribute('aria-valuenow', percent);
+    }
+    if (count) {
+      count.textContent = completed;
+    }
+  }
+
+  // Show resume banner on homepage
+  function showResumeBanner() {
+    const lastPage = localStorage.getItem(LAST_PAGE_KEY);
+    if (lastPage && isHomePage) {
+      const data = JSON.parse(lastPage);
+      const banner = document.getElementById('resume-banner');
+      const link = document.getElementById('resume-link');
+      const title = document.getElementById('last-page-title');
+
+      if (banner && link && title) {
+        title.textContent = data.title;
+        link.href = data.path;
+        banner.style.display = 'block';
+      }
+    }
+  }
+
+  // Initialize checkboxes on module pages
+  function initCheckboxes() {
+    const checkboxes = document.querySelectorAll('.module-checkbox');
+    const progress = getProgress();
+
+    checkboxes.forEach(cb => {
+      const id = cb.dataset.moduleId;
+
+      // Restore state
+      if (progress.completed.includes(id)) {
+        cb.checked = true;
+      }
+
+      // Save on change
+      cb.addEventListener('change', function() {
+        const progress = getProgress();
+        if (this.checked) {
+          if (!progress.completed.includes(id)) {
+            progress.completed.push(id);
+          }
+        } else {
+          progress.completed = progress.completed.filter(x => x !== id);
+        }
+        saveProgress(progress);
+        updateProgressBar();
+      });
+    });
+  }
+
+  // Clear all progress
+  window.clearProgress = function() {
+    localStorage.removeItem(STORAGE_KEY);
+    localStorage.removeItem(LAST_PAGE_KEY);
+    location.reload();
+  };
+
+  // Run on page load
+  document.addEventListener('DOMContentLoaded', function() {
+    showResumeBanner();
+    initCheckboxes();
+    updateProgressBar();
+  });
+})();
+</script>
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
