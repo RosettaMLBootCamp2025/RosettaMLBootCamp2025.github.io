@@ -160,6 +160,11 @@ ul.task-list li input[type="checkbox"] {
     <a class="nav-link active" href="./about.html" aria-current="page"> 
 <span class="menu-text">About</span></a>
   </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://github.com/RosettaMLBootCamp2025/RosettaMLBootCamp2025.github.io/issues/new"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text">Report Issue</span></a>
+  </li>  
 </ul>
           </div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
@@ -209,7 +214,19 @@ ul.task-list li input[type="checkbox"] {
 
   // Get current page path
   const currentPath = window.location.pathname;
-  const isHomePage = currentPath === '/' || currentPath.endsWith('index.html') || currentPath === '/index.html';
+  const isHomePage = currentPath === '/' || currentPath.endsWith('/index.html') || currentPath === '/index.html' || currentPath.match(/^\/[^\/]*\/?$/);
+
+  // Auto-redirect to last page if on homepage
+  function autoResume() {
+    const lastPage = localStorage.getItem(LAST_PAGE_KEY);
+    if (lastPage && isHomePage) {
+      const data = JSON.parse(lastPage);
+      // Only redirect if the last page wasn't the homepage
+      if (data.path && !data.path.endsWith('/index.html') && data.path !== '/' && data.path !== '/index.html') {
+        window.location.href = data.path;
+      }
+    }
+  }
 
   // Save current page as last visited (except homepage)
   if (!isHomePage) {
@@ -253,23 +270,6 @@ ul.task-list li input[type="checkbox"] {
     }
   }
 
-  // Show resume banner on homepage
-  function showResumeBanner() {
-    const lastPage = localStorage.getItem(LAST_PAGE_KEY);
-    if (lastPage && isHomePage) {
-      const data = JSON.parse(lastPage);
-      const banner = document.getElementById('resume-banner');
-      const link = document.getElementById('resume-link');
-      const title = document.getElementById('last-page-title');
-
-      if (banner && link && title) {
-        title.textContent = data.title;
-        link.href = data.path;
-        banner.style.display = 'block';
-      }
-    }
-  }
-
   // Initialize checkboxes on module pages
   function initCheckboxes() {
     const checkboxes = document.querySelectorAll('.module-checkbox');
@@ -299,18 +299,44 @@ ul.task-list li input[type="checkbox"] {
     });
   }
 
-  // Clear all progress
+  // Clear all progress and go home
   window.clearProgress = function() {
     localStorage.removeItem(STORAGE_KEY);
     localStorage.removeItem(LAST_PAGE_KEY);
-    location.reload();
+    window.location.href = '/';
   };
+
+  // Go to homepage (clears last page so you stay there)
+  window.goHome = function(e) {
+    if (e) e.preventDefault();
+    localStorage.removeItem(LAST_PAGE_KEY);
+    window.location.href = '/';
+  };
+
+  // Intercept Home link clicks in navbar
+  function interceptHomeLink() {
+    // Find navbar Home links (links to / or index.html with "Home" text)
+    const navLinks = document.querySelectorAll('.navbar-nav a.nav-link, .navbar a');
+    navLinks.forEach(link => {
+      const href = link.getAttribute('href');
+      const text = link.textContent.trim();
+      if (text === 'Home' || href === '/' || href === '/index.html' || href === 'index.html') {
+        link.addEventListener('click', function(e) {
+          e.preventDefault();
+          goHome();
+        });
+      }
+    });
+  }
+
+  // Run auto-resume immediately (before DOM loads for faster redirect)
+  autoResume();
 
   // Run on page load
   document.addEventListener('DOMContentLoaded', function() {
-    showResumeBanner();
     initCheckboxes();
     updateProgressBar();
+    interceptHomeLink();
   });
 })();
 </script>
