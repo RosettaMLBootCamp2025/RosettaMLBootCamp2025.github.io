@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>1.1 Placeholder Module – ML Protein Design Bootcamp 2025</title>
+<title>1. LocalColabFold – ML Protein Design Bootcamp 2025</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -19,6 +19,41 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -103,9 +138,55 @@ ul.task-list li input[type="checkbox"] {
     <a class="dropdown-item" href="../monday/index.html">
  <span class="dropdown-text">Monday Overview</span></a>
   </li>  
+        <li><hr class="dropdown-divider"></li>
         <li>
-    <a class="dropdown-item" href="../monday/1.1-placeholder.html">
- <span class="dropdown-text">1.1 Module Placeholder</span></a>
+    <a class="dropdown-item" href="../monday/1-localcolabfold.html">
+ <span class="dropdown-text">1. LocalColabFold</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../monday/2-ligandmpnn.html">
+ <span class="dropdown-text">2. LigandMPNN</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../monday/3-rfdiffusion2.html">
+ <span class="dropdown-text">3. RFdiffusion2</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../monday/4-esmfold.html">
+ <span class="dropdown-text">4. ESMFold</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../monday/5-openfold.html">
+ <span class="dropdown-text">5. OpenFold</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../monday/6-chai1.html">
+ <span class="dropdown-text">6. Chai-1</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../monday/7-boltz2.html">
+ <span class="dropdown-text">7. Boltz-2</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../monday/8-diffdock-pp.html">
+ <span class="dropdown-text">8. DiffDock-PP</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../monday/9-placer.html">
+ <span class="dropdown-text">9. PLACER</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../monday/10-bindcraft.html">
+ <span class="dropdown-text">10. BindCraft</span></a>
+  </li>  
+        <li><hr class="dropdown-divider"></li>
+        <li>
+    <a class="dropdown-item" href="../monday/11-esm3.html">
+ <span class="dropdown-text">11. ESM3 (Optional)</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../monday/12-rfdiffusion-aa.html">
+ <span class="dropdown-text">12. RFdiffusion AA (Optional)</span></a>
   </li>  
     </ul>
   </li>
@@ -192,9 +273,11 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#learning-objectives" id="toc-learning-objectives" class="nav-link active" data-scroll-target="#learning-objectives">Learning Objectives</a></li>
-  <li><a href="#section-1" id="toc-section-1" class="nav-link" data-scroll-target="#section-1">Section 1</a></li>
-  <li><a href="#section-2" id="toc-section-2" class="nav-link" data-scroll-target="#section-2">Section 2</a></li>
+  <li><a href="#preparation-work" id="toc-preparation-work" class="nav-link active" data-scroll-target="#preparation-work">Preparation Work</a></li>
+  <li><a href="#installation-steps" id="toc-installation-steps" class="nav-link" data-scroll-target="#installation-steps">Installation Steps</a></li>
+  <li><a href="#testing-the-installation" id="toc-testing-the-installation" class="nav-link" data-scroll-target="#testing-the-installation">Testing the Installation</a></li>
+  <li><a href="#hpc-job-submission" id="toc-hpc-job-submission" class="nav-link" data-scroll-target="#hpc-job-submission">HPC Job Submission</a></li>
+  <li><a href="#troubleshooting" id="toc-troubleshooting" class="nav-link" data-scroll-target="#troubleshooting">Troubleshooting</a></li>
   </ul>
 </nav>
     </div>
@@ -203,7 +286,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">1.1 Placeholder Module</h1>
+<h1 class="title">1. LocalColabFold</h1>
 </div>
 
 
@@ -220,21 +303,76 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="learning-objectives" class="level2">
-<h2 class="anchored" data-anchor-id="learning-objectives">Learning Objectives</h2>
-<p><em>Content coming soon.</em></p>
+<p>LocalColabFold (<a href="https://github.com/YoshitakaMo/localcolabfold">code</a>) is a local installation of ColabFold, which provides an efficient implementation of AlphaFold2 protein structure prediction. ColabFold combines fast MSA generation from MMseqs2 with AlphaFold2’s structure prediction capabilities, making it significantly faster than the original AlphaFold2 implementation.</p>
+<p>LocalColabFold is useful for high-throughput protein structure prediction on your own HPC infrastructure without relying on Google Colab. It enables batch processing of structure predictions without time limits or GPU restrictions.</p>
+<p>The goal of this module is to install LocalColabFold on your HPC cluster.</p>
+<section id="preparation-work" class="level2">
+<h2 class="anchored" data-anchor-id="preparation-work">Preparation Work</h2>
+<p><input type="checkbox" class="module-checkbox" data-module-id="localcolabfold-prep"> Mark as complete</p>
+<p>This assignment assumes that you have access to a computing cluster that allows installation of new software.</p>
+<p><strong>Important</strong>: Make sure you have access to a GPU node for testing, as AlphaFold2 requires GPUs for efficient structure prediction.</p>
 </section>
-<section id="section-1" class="level2">
-<h2 class="anchored" data-anchor-id="section-1">Section 1</h2>
-<p><input type="checkbox" class="module-checkbox" data-module-id="1.1-section1"> Mark Section 1 as complete</p>
-<p><em>Placeholder content for Section 1.</em></p>
+<section id="installation-steps" class="level2">
+<h2 class="anchored" data-anchor-id="installation-steps">Installation Steps</h2>
+<p><input type="checkbox" class="module-checkbox" data-module-id="localcolabfold-install"> Mark as complete</p>
+<ol type="1">
+<li>Download the installation script:</li>
+</ol>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wget</span> https://raw.githubusercontent.com/YoshitakaMo/localcolabfold/main/install_colabbatch_linux.sh</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<ol start="2" type="1">
+<li>Make the script executable and run it:</li>
+</ol>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">chmod</span> +x install_colabbatch_linux.sh</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ex">./install_colabbatch_linux.sh</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This will create a directory called <code>localcolabfold</code> with a conda environment called <code>colabfold_batch</code>.</p>
+<p>The script will automatically:</p>
+<ul>
+<li>Install Miniconda (if not already present)</li>
+<li>Create a conda environment with ColabFold and all dependencies</li>
+<li>Download necessary model weights (~10-15 GB)</li>
+</ul>
+<ol start="3" type="1">
+<li>Add the environment to your PATH (add to your <code>~/.bashrc</code> for permanent access):</li>
+</ol>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">PATH</span><span class="op">=</span><span class="st">"/path/to/your/localcolabfold/colabfold-conda/bin:</span><span class="va">$PATH</span><span class="st">"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="section-2" class="level2">
-<h2 class="anchored" data-anchor-id="section-2">Section 2</h2>
-<p><input type="checkbox" class="module-checkbox" data-module-id="1.1-section2"> Mark Section 2 as complete</p>
-<p><em>Placeholder content for Section 2.</em></p>
+<section id="testing-the-installation" class="level2">
+<h2 class="anchored" data-anchor-id="testing-the-installation">Testing the Installation</h2>
+<p><input type="checkbox" class="module-checkbox" data-module-id="localcolabfold-test"> Mark as complete</p>
+<ol type="1">
+<li>Activate the ColabFold environment:</li>
+</ol>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> localcolabfold/colabfold-conda/bin/activate</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<ol start="2" type="1">
+<li>Create a test FASTA file with a small protein sequence:</li>
+</ol>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"&gt;test_protein</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="st">MKFLKFSLLTAVLLSVVFAFSSCGDDDDTYPYDVPDYAGTCGDDDDTYPYDVPDYA"</span> <span class="op">&gt;</span> test.fasta</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<ol start="3" type="1">
+<li>Run ColabFold on the test sequence:</li>
+</ol>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">colabfold_batch</span> test.fasta test_output/</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>If the command completes successfully and creates PDB files in <code>test_output/</code>, your installation was successful!</p>
+</section>
+<section id="hpc-job-submission" class="level2">
+<h2 class="anchored" data-anchor-id="hpc-job-submission">HPC Job Submission</h2>
+<p>For HPC clusters using SLURM, create a job script like this:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/bin/bash</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --job-name=colabfold</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --gpus=1</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --time=04:00:00</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --mem=32G</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> /path/to/localcolabfold/colabfold-conda/bin/activate</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="ex">colabfold_batch</span> input.fasta output_dir/</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="troubleshooting" class="level2">
+<h2 class="anchored" data-anchor-id="troubleshooting">Troubleshooting</h2>
+<p><strong>Database Location</strong>: By default, ColabFold downloads databases to <code>~/.cache/colabfold/</code>. On shared clusters, you may want to set <code>COLABFOLD_DOWNLOAD_DIR</code> to a shared location to avoid duplicate downloads:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">COLABFOLD_DOWNLOAD_DIR</span><span class="op">=</span>/shared/path/colabfold_db</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <hr>
-<p><strong>Navigation:</strong> <a href="../monday/index.html">← Monday Overview</a> | <a href="../monday/1.1-placeholder.html">Next Module →</a></p>
+<p><strong>Navigation:</strong> <a href="../monday/index.html">← Monday Overview</a> | <a href="../monday/2-ligandmpnn.html">Next: LigandMPNN →</a></p>
 
 
 </section>

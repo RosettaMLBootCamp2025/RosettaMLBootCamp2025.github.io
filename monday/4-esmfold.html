@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>ML Protein Design Bootcamp 2025</title>
+<title>4. ESMFold – ML Protein Design Bootcamp 2025</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,27 +20,62 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-b3b235ae6ba71d6e5c2a90c00144237d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-b3b235ae6ba71d6e5c2a90c00144237d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -70,17 +105,17 @@ ul.task-list li input[type="checkbox"] {
 }</script>
 
 
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="../styles.css">
 </head>
 
-<body class="nav-fixed fullcontent quarto-light">
+<body class="nav-fixed quarto-light">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="./index.html">
+    <a class="navbar-brand" href="../index.html">
     <span class="navbar-title">ML Protein Design Bootcamp 2025</span>
     </a>
   </div>
@@ -91,7 +126,7 @@ ul.task-list li input[type="checkbox"] {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link active" href="./index.html" aria-current="page"> 
+    <a class="nav-link" href="../index.html"> 
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item dropdown ">
@@ -100,57 +135,57 @@ ul.task-list li input[type="checkbox"] {
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-monday">    
         <li>
-    <a class="dropdown-item" href="./monday/index.html">
+    <a class="dropdown-item" href="../monday/index.html">
  <span class="dropdown-text">Monday Overview</span></a>
   </li>  
         <li><hr class="dropdown-divider"></li>
         <li>
-    <a class="dropdown-item" href="./monday/1-localcolabfold.html">
+    <a class="dropdown-item" href="../monday/1-localcolabfold.html">
  <span class="dropdown-text">1. LocalColabFold</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./monday/2-ligandmpnn.html">
+    <a class="dropdown-item" href="../monday/2-ligandmpnn.html">
  <span class="dropdown-text">2. LigandMPNN</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./monday/3-rfdiffusion2.html">
+    <a class="dropdown-item" href="../monday/3-rfdiffusion2.html">
  <span class="dropdown-text">3. RFdiffusion2</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./monday/4-esmfold.html">
+    <a class="dropdown-item" href="../monday/4-esmfold.html">
  <span class="dropdown-text">4. ESMFold</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./monday/5-openfold.html">
+    <a class="dropdown-item" href="../monday/5-openfold.html">
  <span class="dropdown-text">5. OpenFold</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./monday/6-chai1.html">
+    <a class="dropdown-item" href="../monday/6-chai1.html">
  <span class="dropdown-text">6. Chai-1</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./monday/7-boltz2.html">
+    <a class="dropdown-item" href="../monday/7-boltz2.html">
  <span class="dropdown-text">7. Boltz-2</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./monday/8-diffdock-pp.html">
+    <a class="dropdown-item" href="../monday/8-diffdock-pp.html">
  <span class="dropdown-text">8. DiffDock-PP</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./monday/9-placer.html">
+    <a class="dropdown-item" href="../monday/9-placer.html">
  <span class="dropdown-text">9. PLACER</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./monday/10-bindcraft.html">
+    <a class="dropdown-item" href="../monday/10-bindcraft.html">
  <span class="dropdown-text">10. BindCraft</span></a>
   </li>  
         <li><hr class="dropdown-divider"></li>
         <li>
-    <a class="dropdown-item" href="./monday/11-esm3.html">
+    <a class="dropdown-item" href="../monday/11-esm3.html">
  <span class="dropdown-text">11. ESM3 (Optional)</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./monday/12-rfdiffusion-aa.html">
+    <a class="dropdown-item" href="../monday/12-rfdiffusion-aa.html">
  <span class="dropdown-text">12. RFdiffusion AA (Optional)</span></a>
   </li>  
     </ul>
@@ -161,11 +196,11 @@ ul.task-list li input[type="checkbox"] {
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-tuesday">    
         <li>
-    <a class="dropdown-item" href="./tuesday/index.html">
+    <a class="dropdown-item" href="../tuesday/index.html">
  <span class="dropdown-text">Tuesday Overview</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./tuesday/2.1-placeholder.html">
+    <a class="dropdown-item" href="../tuesday/2.1-placeholder.html">
  <span class="dropdown-text">2.1 Module Placeholder</span></a>
   </li>  
     </ul>
@@ -176,11 +211,11 @@ ul.task-list li input[type="checkbox"] {
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-wednesday">    
         <li>
-    <a class="dropdown-item" href="./wednesday/index.html">
+    <a class="dropdown-item" href="../wednesday/index.html">
  <span class="dropdown-text">Wednesday Overview</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./wednesday/3.1-placeholder.html">
+    <a class="dropdown-item" href="../wednesday/3.1-placeholder.html">
  <span class="dropdown-text">3.1 Module Placeholder</span></a>
   </li>  
     </ul>
@@ -191,11 +226,11 @@ ul.task-list li input[type="checkbox"] {
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-thursday">    
         <li>
-    <a class="dropdown-item" href="./thursday/index.html">
+    <a class="dropdown-item" href="../thursday/index.html">
  <span class="dropdown-text">Thursday Overview</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./thursday/4.1-placeholder.html">
+    <a class="dropdown-item" href="../thursday/4.1-placeholder.html">
  <span class="dropdown-text">4.1 Module Placeholder</span></a>
   </li>  
     </ul>
@@ -206,7 +241,7 @@ ul.task-list li input[type="checkbox"] {
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-capstone">    
         <li>
-    <a class="dropdown-item" href="./capstone/index.html">
+    <a class="dropdown-item" href="../capstone/index.html">
  <span class="dropdown-text">Capstone Overview</span></a>
   </li>  
     </ul>
@@ -214,7 +249,7 @@ ul.task-list li input[type="checkbox"] {
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./about.html"> 
+    <a class="nav-link" href="../about.html"> 
 <span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item">
@@ -233,13 +268,27 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#preparation-work" id="toc-preparation-work" class="nav-link active" data-scroll-target="#preparation-work">Preparation Work</a></li>
+  <li><a href="#installation-steps" id="toc-installation-steps" class="nav-link" data-scroll-target="#installation-steps">Installation Steps</a></li>
+  <li><a href="#alternative-use-conda-environment-file" id="toc-alternative-use-conda-environment-file" class="nav-link" data-scroll-target="#alternative-use-conda-environment-file">Alternative: Use Conda Environment File</a></li>
+  <li><a href="#testing-the-installation" id="toc-testing-the-installation" class="nav-link" data-scroll-target="#testing-the-installation">Testing the Installation</a></li>
+  <li><a href="#command-line-interface" id="toc-command-line-interface" class="nav-link" data-scroll-target="#command-line-interface">Command Line Interface</a></li>
+  <li><a href="#hpc-job-script-example" id="toc-hpc-job-script-example" class="nav-link" data-scroll-target="#hpc-job-script-example">HPC Job Script Example</a></li>
+  <li><a href="#troubleshooting" id="toc-troubleshooting" class="nav-link" data-scroll-target="#troubleshooting">Troubleshooting</a></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">ML Protein Design Bootcamp 2025</h1>
+<h1 class="title">4. ESMFold</h1>
 </div>
 
 
@@ -256,67 +305,121 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<div id="resume-banner" style="display: none; background: #e7f3ff; border: 1px solid #0066cc; border-radius: 8px; padding: 15px; margin-bottom: 20px;">
-<p><strong>Welcome back!</strong> You were last on: <span id="last-page-title"></span> <br> <a id="resume-link" href="#" class="btn btn-primary btn-sm" style="margin-top: 10px;">Resume where you left off</a></p>
-</div>
-<p>Welcome to the ML Protein Design Bootcamp 2025! This self-paced course covers machine learning tools for protein structure prediction and design.</p>
-<section id="course-overview" class="level2">
-<h2 class="anchored" data-anchor-id="course-overview">Course Overview</h2>
-<p>This bootcamp is organized into 4 days of content plus a capstone project. Each day contains sequential modules that build on each other.</p>
-<div class="grid">
-<section id="monday" class="level3 day-card g-col-6">
-<h3 class="day-card anchored" data-anchor-id="monday"><a href="./monday/index.html">Monday</a></h3>
-<p><em>Coming soon</em></p>
-<p>Introduction and setup modules.</p>
+<p>ESMFold (<a href="https://www.science.org/doi/abs/10.1126/science.ade2574">paper</a>, <a href="https://github.com/facebookresearch/esm">code</a>) is an end-to-end single sequence structure predictor that uses the ESM-2 language model to generate accurate 3D protein structures directly from sequence.</p>
+<p>ESMFold is useful for fast, accurate protein structure prediction without requiring MSAs (though MSAs can be used to improve performance). It’s significantly faster than AlphaFold2 while maintaining competitive accuracy.</p>
+<p>The goal of this module is to install ESMFold on your HPC cluster.</p>
+<section id="preparation-work" class="level2">
+<h2 class="anchored" data-anchor-id="preparation-work">Preparation Work</h2>
+<p><input type="checkbox" class="module-checkbox" data-module-id="esmfold-prep"> Mark as complete</p>
+<p>This assignment assumes that you have access to a computing cluster that allows installation of new software. We’ll be creating virtual environments using Conda/Mamba.</p>
+<p><strong>Requirements</strong>:</p>
+<ul>
+<li>Python ≤ 3.9</li>
+<li>PyTorch installed</li>
+<li><code>nvcc</code> available (for compiling OpenFold dependencies)</li>
+<li>CUDA-capable GPU recommended</li>
+</ul>
 </section>
-<section id="tuesday" class="level3 day-card g-col-6">
-<h3 class="day-card anchored" data-anchor-id="tuesday"><a href="./tuesday/index.html">Tuesday</a></h3>
-<p><em>Coming soon</em></p>
-<p>Modules for Tuesday.</p>
-</section>
-<section id="wednesday" class="level3 day-card g-col-6">
-<h3 class="day-card anchored" data-anchor-id="wednesday"><a href="./wednesday/index.html">Wednesday</a></h3>
-<p><em>Coming soon</em></p>
-<p>Modules for Wednesday.</p>
-</section>
-<section id="thursday" class="level3 day-card g-col-6">
-<h3 class="day-card anchored" data-anchor-id="thursday"><a href="./thursday/index.html">Thursday</a></h3>
-<p><em>Coming soon</em></p>
-<p>Modules for Thursday.</p>
-</section>
-<section id="capstone" class="level3 day-card g-col-12">
-<h3 class="day-card anchored" data-anchor-id="capstone"><a href="./capstone/index.html">Capstone</a></h3>
-<p><em>Coming soon</em></p>
-<p>Capstone project bringing together everything you’ve learned.</p>
-</section>
-</div>
-</section>
-<section id="your-progress" class="level2">
-<h2 class="anchored" data-anchor-id="your-progress">Your Progress</h2>
-<div id="progress-summary">
-<p>
-<strong>Completed modules:</strong> <span id="completed-count">0</span>
-</p>
-<div class="progress" style="height: 25px;">
-<pre><code>&lt;div id="progress-bar" class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"&gt;0%&lt;/div&gt;</code></pre>
-</div>
-<p style="margin-top: 10px;">
-<button onclick="clearProgress()" class="btn btn-outline-secondary btn-sm">
-Reset Progress
-</button>
-</p>
-</div>
-</section>
-<section id="getting-started" class="level2">
-<h2 class="anchored" data-anchor-id="getting-started">Getting Started</h2>
+<section id="installation-steps" class="level2">
+<h2 class="anchored" data-anchor-id="installation-steps">Installation Steps</h2>
+<p><input type="checkbox" class="module-checkbox" data-module-id="esmfold-install"> Mark as complete</p>
 <ol type="1">
-<li><strong>Choose a day</strong> from the navigation above or the cards below</li>
-<li><strong>Work through modules</strong> in order - each builds on the previous</li>
-<li><strong>Check off sections</strong> as you complete them - your progress is saved automatically</li>
-<li><strong>Return anytime</strong> - use the “Resume” button to pick up where you left off</li>
+<li>Create a conda environment with Python 3.9:</li>
 </ol>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">mamba</span> create <span class="at">-n</span> esmfold python=3.9</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">mamba</span> activate esmfold</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<ol start="2" type="1">
+<li>Install PyTorch (adjust CUDA version as needed):</li>
+</ol>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">mamba</span> install pytorch pytorch-cuda=12.1 <span class="at">-c</span> pytorch <span class="at">-c</span> nvidia</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<ol start="3" type="1">
+<li>Install ESM with ESMFold dependencies:</li>
+</ol>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install <span class="st">"fair-esm[esmfold]"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<ol start="4" type="1">
+<li>Install remaining OpenFold dependencies:</li>
+</ol>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install <span class="st">'dllogger @ git+https://github.com/NVIDIA/dllogger.git'</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install <span class="st">'openfold @ git+https://github.com/aqlaboratory/openfold.git@4b41059694619831a7db195b7e0988fc4ff3a307'</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Note</strong>: If OpenFold installation fails, verify that <code>nvcc</code> is available and a CUDA-compatible PyTorch is installed.</p>
+</section>
+<section id="alternative-use-conda-environment-file" class="level2">
+<h2 class="anchored" data-anchor-id="alternative-use-conda-environment-file">Alternative: Use Conda Environment File</h2>
+<p>Alternatively, you can use a pre-configured environment:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wget</span> https://raw.githubusercontent.com/facebookresearch/esm/main/environment.yml</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="ex">mamba</span> env create <span class="at">-f</span> environment.yml</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="ex">mamba</span> activate esmfold</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="testing-the-installation" class="level2">
+<h2 class="anchored" data-anchor-id="testing-the-installation">Testing the Installation</h2>
+<p><input type="checkbox" class="module-checkbox" data-module-id="esmfold-test"> Mark as complete</p>
+<p>Create a test script <code>test_esmfold.py</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> esm</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Load ESMFold model</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> esm.pretrained.esmfold_v1()</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> model.<span class="bu">eval</span>().cuda()  <span class="co"># Remove .cuda() if using CPU</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Test sequence</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>sequence <span class="op">=</span> <span class="st">"MKTVRQERLKSIVRILERSKEPVSGAQLAEELSVSRQVIVQDIAYLRSLGYNIVATPRGYVLAGG"</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Run prediction</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> torch.no_grad():</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>    output <span class="op">=</span> model.infer_pdb(sequence)</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Save output</span></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">"test_result.pdb"</span>, <span class="st">"w"</span>) <span class="im">as</span> f:</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>    f.write(output)</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Structure prediction successful! Output saved to test_result.pdb"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Run the test:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> test_esmfold.py</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>If this creates <code>test_result.pdb</code>, your installation was successful!</p>
+</section>
+<section id="command-line-interface" class="level2">
+<h2 class="anchored" data-anchor-id="command-line-interface">Command Line Interface</h2>
+<p>ESM also provides a command line tool for batch prediction:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">esm-fold</span> <span class="at">-i</span> sequences.fasta <span class="at">-o</span> output_pdbs/</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Additional options:</p>
+<ul>
+<li><code>--num-recycles</code>: Number of recycles (default: 4)</li>
+<li><code>--max-tokens-per-batch</code>: Batch shorter sequences together</li>
+<li><code>--chunk-size</code>: Reduce memory usage (values: 128, 64, 32)</li>
+<li><code>--cpu-only</code>: Run on CPU only</li>
+<li><code>--cpu-offload</code>: Offload to CPU RAM for longer sequences</li>
+</ul>
+</section>
+<section id="hpc-job-script-example" class="level2">
+<h2 class="anchored" data-anchor-id="hpc-job-script-example">HPC Job Script Example</h2>
+<p>For SLURM clusters:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/bin/bash</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --job-name=esmfold</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --gpus=1</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --time=04:00:00</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --mem=32G</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load cuda/12.1</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="ex">mamba</span> activate esmfold</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Predict structures for all sequences in FASTA file</span></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="ex">esm-fold</span> <span class="at">-i</span> my_proteins.fasta <span class="at">-o</span> predictions/ <span class="dt">\</span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">--num-recycles</span> 4 <span class="dt">\</span></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">--max-tokens-per-batch</span> 1024</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="troubleshooting" class="level2">
+<h2 class="anchored" data-anchor-id="troubleshooting">Troubleshooting</h2>
+<p><strong>OpenFold installation fails</strong>: Double-check that <code>nvcc</code> is available:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nvcc</span> <span class="at">--version</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Load CUDA modules if needed:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load cuda</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Out of memory errors</strong>: Use <code>--chunk-size</code> to reduce memory:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="ex">esm-fold</span> <span class="at">-i</span> input.fasta <span class="at">-o</span> output/ <span class="at">--chunk-size</span> 64</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>For very long sequences</strong>: Use CPU offloading:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">esm-fold</span> <span class="at">-i</span> input.fasta <span class="at">-o</span> output/ <span class="at">--cpu-offload</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <hr>
-<p><a href="https://github.com/RosettaMLBootCamp2025/RosettaMLBootCamp2025.github.io/issues/new" class="btn btn-primary">Report an Issue / Ask a Question</a></p>
+<p><strong>Navigation:</strong> <a href="../monday/3-rfdiffusion2.html">← RFdiffusion2</a> | <a href="../monday/index.html">Monday Overview</a> | <a href="../monday/5-openfold.html">Next: OpenFold →</a></p>
 
 
 </section>
