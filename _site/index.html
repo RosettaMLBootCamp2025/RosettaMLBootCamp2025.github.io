@@ -199,6 +199,9 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<div id="resume-banner" style="display: none; background: #e7f3ff; border: 1px solid #0066cc; border-radius: 8px; padding: 15px; margin-bottom: 20px;">
+<p><strong>Welcome back!</strong> You were last on: <span id="last-page-title"></span> <br> <a id="resume-link" href="#" class="btn btn-primary btn-sm" style="margin-top: 10px;">Resume where you left off</a></p>
+</div>
 <p>Welcome to the ML Protein Design Bootcamp 2025! This self-paced course covers machine learning tools for protein structure prediction and design.</p>
 <section id="course-overview" class="level2">
 <h2 class="anchored" data-anchor-id="course-overview">Course Overview</h2>
@@ -248,7 +251,7 @@ Reset Progress
 <li><strong>Choose a day</strong> from the navigation above or the cards below</li>
 <li><strong>Work through modules</strong> in order - each builds on the previous</li>
 <li><strong>Check off sections</strong> as you complete them - your progress is saved automatically</li>
-<li><strong>Return anytime</strong> - the site automatically resumes where you left off</li>
+<li><strong>Return anytime</strong> - use the “Resume” button to pick up where you left off</li>
 </ol>
 <hr>
 <p><a href="https://github.com/RosettaMLBootCamp2025/RosettaMLBootCamp2025.github.io/issues/new" class="btn btn-primary">Report an Issue / Ask a Question</a></p>
@@ -265,18 +268,6 @@ Reset Progress
   // Get current page path
   const currentPath = window.location.pathname;
   const isHomePage = currentPath === '/' || currentPath.endsWith('/index.html') || currentPath === '/index.html' || currentPath.match(/^\/[^\/]*\/?$/);
-
-  // Auto-redirect to last page if on homepage
-  function autoResume() {
-    const lastPage = localStorage.getItem(LAST_PAGE_KEY);
-    if (lastPage && isHomePage) {
-      const data = JSON.parse(lastPage);
-      // Only redirect if the last page wasn't the homepage
-      if (data.path && !data.path.endsWith('/index.html') && data.path !== '/' && data.path !== '/index.html') {
-        window.location.href = data.path;
-      }
-    }
-  }
 
   // Save current page as last visited (except homepage)
   if (!isHomePage) {
@@ -320,6 +311,23 @@ Reset Progress
     }
   }
 
+  // Show resume banner on homepage if there's a saved page
+  function showResumeBanner() {
+    const lastPage = localStorage.getItem(LAST_PAGE_KEY);
+    if (lastPage && isHomePage) {
+      const data = JSON.parse(lastPage);
+      const banner = document.getElementById('resume-banner');
+      const link = document.getElementById('resume-link');
+      const title = document.getElementById('last-page-title');
+
+      if (banner && link && title && data.path) {
+        title.textContent = data.title;
+        link.href = data.path;
+        banner.style.display = 'block';
+      }
+    }
+  }
+
   // Initialize checkboxes on module pages
   function initCheckboxes() {
     const checkboxes = document.querySelectorAll('.module-checkbox');
@@ -349,44 +357,18 @@ Reset Progress
     });
   }
 
-  // Clear all progress and go home
+  // Clear all progress
   window.clearProgress = function() {
     localStorage.removeItem(STORAGE_KEY);
     localStorage.removeItem(LAST_PAGE_KEY);
-    window.location.href = '/';
+    location.reload();
   };
-
-  // Go to homepage (clears last page so you stay there)
-  window.goHome = function(e) {
-    if (e) e.preventDefault();
-    localStorage.removeItem(LAST_PAGE_KEY);
-    window.location.href = '/';
-  };
-
-  // Intercept Home link clicks in navbar
-  function interceptHomeLink() {
-    // Find navbar Home links (links to / or index.html with "Home" text)
-    const navLinks = document.querySelectorAll('.navbar-nav a.nav-link, .navbar a');
-    navLinks.forEach(link => {
-      const href = link.getAttribute('href');
-      const text = link.textContent.trim();
-      if (text === 'Home' || href === '/' || href === '/index.html' || href === 'index.html') {
-        link.addEventListener('click', function(e) {
-          e.preventDefault();
-          goHome();
-        });
-      }
-    });
-  }
-
-  // Run auto-resume immediately (before DOM loads for faster redirect)
-  autoResume();
 
   // Run on page load
   document.addEventListener('DOMContentLoaded', function() {
+    showResumeBanner();
     initCheckboxes();
     updateProgressBar();
-    interceptHomeLink();
   });
 })();
 </script>
