@@ -16,4 +16,7 @@ title: "Day 1"
 
 ---
 
-[← Back to Home](../index.qmd)
+<div style="display: flex; justify-content: space-between; align-items: center;">
+<div>[← Back to Home](../index.qmd)</div>
+<div>[Day 2 →](../day2/index.qmd)</div>
+</div>
