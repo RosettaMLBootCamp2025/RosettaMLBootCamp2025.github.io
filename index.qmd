@@ -1,7 +1,68 @@
 ---
 title: "ML Protein Design Bootcamp 2025"
+toc: false
 ---
 
-Welcome to the ML Protein Design Bootcamp 2025!
+<div id="resume-banner" style="display: none; background: #e7f3ff; border: 1px solid #0066cc; border-radius: 8px; padding: 15px; margin-bottom: 20px;">
+  <strong>Welcome back!</strong> You were last on: <span id="last-page-title"></span>
+  <br><a id="resume-link" href="#" class="btn btn-primary btn-sm" style="margin-top: 10px;">Resume where you left off</a>
+  <button onclick="clearProgress()" class="btn btn-outline-secondary btn-sm" style="margin-top: 10px; margin-left: 10px;">Start Fresh</button>
+</div>
 
-*Site under construction - content coming soon.*
+Welcome to the ML Protein Design Bootcamp 2025! This self-paced course covers machine learning tools for protein structure prediction and design.
+
+## Course Overview
+
+This bootcamp is organized into 4 days of content. Each day contains sequential modules that build on each other.
+
+::: {.grid}
+
+::: {.g-col-6}
+### [Day 1](day1/index.qmd) {.day-card}
+*Coming soon*
+
+Introduction and setup modules.
+:::
+
+::: {.g-col-6}
+### [Day 2](day2/index.qmd) {.day-card}
+*Coming soon*
+
+Modules for Day 2.
+:::
+
+::: {.g-col-6}
+### [Day 3](day3/index.qmd) {.day-card}
+*Coming soon*
+
+Modules for Day 3.
+:::
+
+::: {.g-col-6}
+### [Day 4](day4/index.qmd) {.day-card}
+*Coming soon*
+
+Modules for Day 4.
+:::
+
+:::
+
+## Your Progress
+
+<div id="progress-summary">
+  <p><strong>Completed modules:</strong> <span id="completed-count">0</span></p>
+  <div class="progress" style="height: 25px;">
+    <div id="progress-bar" class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>
+  </div>
+</div>
+
+## Getting Started
+
+1. **Choose a day** from the navigation above or the cards below
+2. **Work through modules** in order - each builds on the previous
+3. **Check off sections** as you complete them - your progress is saved automatically
+4. **Return anytime** - the site remembers where you left off
+
+---
+
+*Questions? Contact: icanderson@ucdavis.edu*

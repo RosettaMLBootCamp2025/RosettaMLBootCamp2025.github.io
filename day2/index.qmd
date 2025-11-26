@@ -1,0 +1,19 @@
+---
+title: "Day 2"
+---
+
+## Overview
+
+*Day 2 content coming soon.*
+
+## Modules
+
+| Module | Topic | Status |
+|--------|-------|--------|
+| [2.1](2.1-placeholder.qmd) | Placeholder Module | Coming soon |
+
+*More modules will be added here.*
+
+---
+
+[← Back to Home](../index.qmd)

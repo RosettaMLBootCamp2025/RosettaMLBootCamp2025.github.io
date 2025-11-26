@@ -1,0 +1,112 @@
+<script>
+(function() {
+  const STORAGE_KEY = 'bootcamp2025_progress';
+  const LAST_PAGE_KEY = 'bootcamp2025_lastpage';
+
+  // Get current page path
+  const currentPath = window.location.pathname;
+  const isHomePage = currentPath === '/' || currentPath.endsWith('index.html') || currentPath === '/index.html';
+
+  // Save current page as last visited (except homepage)
+  if (!isHomePage) {
+    const pageTitle = document.title.replace(' - ML Protein Design Bootcamp 2025', '');
+    localStorage.setItem(LAST_PAGE_KEY, JSON.stringify({
+      path: currentPath,
+      title: pageTitle,
+      timestamp: Date.now()
+    }));
+  }
+
+  // Load progress data
+  function getProgress() {
+    const data = localStorage.getItem(STORAGE_KEY);
+    return data ? JSON.parse(data) : { completed: [] };
+  }
+
+  // Save progress data
+  function saveProgress(progress) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
+  }
+
+  // Update progress bar on homepage
+  function updateProgressBar() {
+    const progress = getProgress();
+    const totalModules = document.querySelectorAll('.module-checkbox').length ||
+                         parseInt(document.body.dataset.totalModules) || 8; // fallback
+    const completed = progress.completed.length;
+    const percent = Math.round((completed / totalModules) * 100);
+
+    const bar = document.getElementById('progress-bar');
+    const count = document.getElementById('completed-count');
+
+    if (bar) {
+      bar.style.width = percent + '%';
+      bar.textContent = percent + '%';
+      bar.setAttribute('aria-valuenow', percent);
+    }
+    if (count) {
+      count.textContent = completed;
+    }
+  }
+
+  // Show resume banner on homepage
+  function showResumeBanner() {
+    const lastPage = localStorage.getItem(LAST_PAGE_KEY);
+    if (lastPage && isHomePage) {
+      const data = JSON.parse(lastPage);
+      const banner = document.getElementById('resume-banner');
+      const link = document.getElementById('resume-link');
+      const title = document.getElementById('last-page-title');
+
+      if (banner && link && title) {
+        title.textContent = data.title;
+        link.href = data.path;
+        banner.style.display = 'block';
+      }
+    }
+  }
+
+  // Initialize checkboxes on module pages
+  function initCheckboxes() {
+    const checkboxes = document.querySelectorAll('.module-checkbox');
+    const progress = getProgress();
+
+    checkboxes.forEach(cb => {
+      const id = cb.dataset.moduleId;
+
+      // Restore state
+      if (progress.completed.includes(id)) {
+        cb.checked = true;
+      }
+
+      // Save on change
+      cb.addEventListener('change', function() {
+        const progress = getProgress();
+        if (this.checked) {
+          if (!progress.completed.includes(id)) {
+            progress.completed.push(id);
+          }
+        } else {
+          progress.completed = progress.completed.filter(x => x !== id);
+        }
+        saveProgress(progress);
+        updateProgressBar();
+      });
+    });
+  }
+
+  // Clear all progress
+  window.clearProgress = function() {
+    localStorage.removeItem(STORAGE_KEY);
+    localStorage.removeItem(LAST_PAGE_KEY);
+    location.reload();
+  };
+
+  // Run on page load
+  document.addEventListener('DOMContentLoaded', function() {
+    showResumeBanner();
+    initCheckboxes();
+    updateProgressBar();
+  });
+})();
+</script>

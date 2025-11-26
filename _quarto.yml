@@ -1,6 +1,6 @@
 project:
   type: website
-  output-dir: docs
+  output-dir: _site
 
 website:
   title: "ML Protein Design Bootcamp 2025"
@@ -8,6 +8,31 @@ website:
     left:
       - href: index.qmd
         text: Home
+      - text: "Day 1"
+        menu:
+          - href: day1/index.qmd
+            text: "Day 1 Overview"
+          - href: day1/1.1-placeholder.qmd
+            text: "1.1 Module Placeholder"
+      - text: "Day 2"
+        menu:
+          - href: day2/index.qmd
+            text: "Day 2 Overview"
+          - href: day2/2.1-placeholder.qmd
+            text: "2.1 Module Placeholder"
+      - text: "Day 3"
+        menu:
+          - href: day3/index.qmd
+            text: "Day 3 Overview"
+          - href: day3/3.1-placeholder.qmd
+            text: "3.1 Module Placeholder"
+      - text: "Day 4"
+        menu:
+          - href: day4/index.qmd
+            text: "Day 4 Overview"
+          - href: day4/4.1-placeholder.qmd
+            text: "4.1 Module Placeholder"
+    right:
       - href: about.qmd
         text: About
 
@@ -18,3 +43,4 @@ format:
     toc: true
     code-copy: true
     code-overflow: wrap
+    include-after-body: _includes/progress-tracker.html
