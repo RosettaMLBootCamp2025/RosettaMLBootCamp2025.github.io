@@ -7,12 +7,27 @@
   const currentPath = window.location.pathname;
   const isHomePage = currentPath === '/' || currentPath.endsWith('/index.html') || currentPath === '/index.html' || currentPath.match(/^\/[^\/]*\/?$/);
 
+  // Extract day from path
+  function getDayFromPath(path) {
+    const dayMap = {
+      'monday': 'Monday',
+      'tuesday': 'Tuesday',
+      'wednesday': 'Wednesday',
+      'thursday': 'Thursday',
+      'capstone': 'Capstone'
+    };
+    const match = path.match(/\/(monday|tuesday|wednesday|thursday|capstone)\//i);
+    return match ? dayMap[match[1].toLowerCase()] : null;
+  }
+
   // Save current page as last visited (except homepage)
   if (!isHomePage) {
     const pageTitle = document.title.replace(' - ML Protein Design Bootcamp 2025', '');
+    const day = getDayFromPath(currentPath);
     localStorage.setItem(LAST_PAGE_KEY, JSON.stringify({
       path: currentPath,
       title: pageTitle,
+      day: day,
       timestamp: Date.now()
     }));
   }
@@ -59,7 +74,9 @@
       const title = document.getElementById('last-page-title');
 
       if (banner && link && title && data.path) {
-        title.textContent = data.title;
+        // Format title with day prefix if available
+        const displayTitle = data.day ? `${data.day}: ${data.title}` : data.title;
+        title.textContent = displayTitle;
         link.href = data.path;
         banner.style.display = 'block';
       }
