@@ -116,532 +116,798 @@
     "href": "monday/10-bindcraft.html",
     "title": "10. BindCraft",
     "section": "",
-    "text": "BindCraft (paper, code) is an end-to-end binder design pipeline that combines AlphaFold2 backpropagation, ProteinMPNN, and PyRosetta to design protein binders against target proteins.\nBindCraft is useful for de novo binder design, allowing you to select a target protein and automatically generate, optimize, and validate designed binders. It integrates multiple ML tools into a complete workflow, making it ideal for learning how protein design pipelines work in practice.\nThe goal of this module is to install BindCraft on your HPC cluster."
+    "text": "BindCraft (paper, code) is an end-to-end binder design pipeline that combines AlphaFold2 backpropagation, ProteinMPNN, and PyRosetta to design protein binders against target proteins."
   },
   {
-    "objectID": "monday/10-bindcraft.html#preparation-work",
-    "href": "monday/10-bindcraft.html#preparation-work",
+    "objectID": "monday/10-bindcraft.html#why-use-bindcraft",
+    "href": "monday/10-bindcraft.html#why-use-bindcraft",
     "title": "10. BindCraft",
-    "section": "Preparation Work",
-    "text": "Preparation Work\n Mark as complete\nThis assignment assumes that you have access to a computing cluster that allows installation of new software.\nRequirements:\n\nCUDA-compatible Nvidia GPU (recommended: at least 32 GB GPU memory)\nStorage space: ~2 MB for code + ~5.3 GB for AlphaFold2 weights\nConda or Mamba package manager\n\nImportant: BindCraft requires a PyRosetta license for commercial use. Academic use is typically covered by standard PyRosetta licensing."
+    "section": "Why Use BindCraft?",
+    "text": "Why Use BindCraft?\n\nComplete pipeline: Integrates structure prediction, sequence design, and scoring\nAutomated optimization: Multi-stage design with confidence-based filtering\nProduction ready: Validated binders in published work\nLearning resource: See how professional protein design pipelines work\n\nRelated Tools: For backbone design, see RFdiffusion2. For sequence design, see LigandMPNN. For structure prediction, see LocalColabFold."
   },
   {
-    "objectID": "monday/10-bindcraft.html#installation-steps",
-    "href": "monday/10-bindcraft.html#installation-steps",
+    "objectID": "monday/10-bindcraft.html#resource-requirements",
+    "href": "monday/10-bindcraft.html#resource-requirements",
     "title": "10. BindCraft",
-    "section": "Installation Steps",
-    "text": "Installation Steps\n Mark as complete\n\nClone the BindCraft repository (replace [install_folder] with your desired path):\n\ngit clone https://github.com/martinpacesa/BindCraft [install_folder]\n\nNavigate into the install folder:\n\ncd [install_folder]\n\nRun the installation script with your CUDA version:\n\nbash install_bindcraft.sh --cuda '12.4' --pkg_manager 'conda'\nNotes:\n\nReplace 12.4 with your cluster’s CUDA version (check with nvcc --version)\nUse --pkg_manager 'mamba' if you prefer mamba (faster)\nIf you leave --cuda blank, the installer will try to detect the version automatically (may not always work correctly)\n\nThe installation creates a conda environment called BindCraft with all dependencies."
+    "section": "Resource Requirements",
+    "text": "Resource Requirements\n\n\n\nResource\nMinimum\nRecommended\nNotes\n\n\n\n\nGPU RAM\n24 GB\n32+ GB\nLarge targets need more\n\n\nCPU RAM\n32 GB\n64 GB\nFor PyRosetta scoring\n\n\nDisk Space\n2 MB + 5.3 GB\n10 GB\nCode + AlphaFold2 weights\n\n\nTime\nHours\nDays\nPer design campaign\n\n\n\nImportant: BindCraft requires a PyRosetta license. Academic use is typically covered by standard PyRosetta licensing."
+  },
+  {
+    "objectID": "monday/10-bindcraft.html#preparation",
+    "href": "monday/10-bindcraft.html#preparation",
+    "title": "10. BindCraft",
+    "section": "Preparation",
+    "text": "Preparation\n Mark as complete\nPrerequisites:\n\nCompleted HPC Setup guide\nConda/Mamba installed\nPyRosetta license (academic or commercial)\nCUDA-compatible GPU\n\nCheck your CUDA version:\nnvcc --version\n# Note the version number (e.g., 12.4)"
+  },
+  {
+    "objectID": "monday/10-bindcraft.html#installation",
+    "href": "monday/10-bindcraft.html#installation",
+    "title": "10. BindCraft",
+    "section": "Installation",
+    "text": "Installation\n Mark as complete\n\nClone the BindCraft repository:\n\ngit clone https://github.com/martinpacesa/BindCraft /path/to/bindcraft\ncd /path/to/bindcraft\n\nRun the installation script:\n\nbash install_bindcraft.sh --cuda '12.4' --pkg_manager 'conda'\nImportant options:\n\nReplace 12.4 with your actual CUDA version\nUse --pkg_manager 'mamba' for faster installation\nIf --cuda is left blank, auto-detection may fail\n\nExpected time: 20-40 minutes.\nThe script creates a conda environment called BindCraft with all dependencies."
   },
   {
     "objectID": "monday/10-bindcraft.html#testing-the-installation",
     "href": "monday/10-bindcraft.html#testing-the-installation",
     "title": "10. BindCraft",
     "section": "Testing the Installation",
-    "text": "Testing the Installation\n Mark as complete\nBindCraft comes with example settings. To test:\n\nActivate the BindCraft environment:\n\nconda activate BindCraft\n\nNavigate to your BindCraft folder and run a test design:\n\ncd /path/to/bindcraft/folder/\npython -u ./bindcraft.py \\\n    --settings './settings_target/PDL1.json' \\\n    --filters './settings_filters/default_filters.json' \\\n    --advanced './settings_advanced/default_4stage_multimer.json'\nThis runs binder design against the PDL1 example target. If it starts generating trajectories without errors, your installation was successful!\nNote: A complete binder design run can take hours to days depending on settings. For testing, you can stop it after a few trajectories complete."
+    "text": "Testing the Installation\n Mark as complete\n\nActivate the environment:\n\nconda activate BindCraft\n\nRun a test design against the example target (PDL1):\n\ncd /path/to/bindcraft\npython -u ./bindcraft.py \\\n    --settings './settings_target/PDL1.json' \\\n    --filters './settings_filters/default_filters.json' \\\n    --advanced './settings_advanced/default_4stage_multimer.json'\nSuccess indicators:\n\nStarts generating trajectories without errors\nLog shows design iterations progressing\nCreates output directory with design files\n\nNote: A complete run takes hours to days. For testing, stop after a few trajectories complete (Ctrl+C)."
   },
   {
-    "objectID": "monday/10-bindcraft.html#hpc-job-submission",
-    "href": "monday/10-bindcraft.html#hpc-job-submission",
+    "objectID": "monday/10-bindcraft.html#hpc-job-script",
+    "href": "monday/10-bindcraft.html#hpc-job-script",
     "title": "10. BindCraft",
-    "section": "HPC Job Submission",
-    "text": "HPC Job Submission\nFor SLURM clusters, BindCraft provides a template job script:\nsbatch ./bindcraft.slurm \\\n    --settings './settings_target/PDL1.json' \\\n    --filters './settings_filters/default_filters.json' \\\n    --advanced './settings_advanced/default_4stage_multimer.json'\nOr create your own job script:\n#!/bin/bash\n#SBATCH --job-name=bindcraft\n#SBATCH --gpus=1\n#SBATCH --mem=64G\n#SBATCH --time=24:00:00\n\nconda activate BindCraft\ncd /path/to/bindcraft/folder/\n\npython -u ./bindcraft.py \\\n    --settings './settings_target/my_target.json' \\\n    --filters './settings_filters/default_filters.json' \\\n    --advanced './settings_advanced/default_4stage_multimer.json'"
+    "section": "HPC Job Script",
+    "text": "HPC Job Script\nUsing the provided template:\nsbatch ./bindcraft.slurm \\\n    --settings './settings_target/PDL1.json' \\\n    --filters './settings_filters/default_filters.json' \\\n    --advanced './settings_advanced/default_4stage_multimer.json'\nOr create your own:\n#!/bin/bash\n#SBATCH --job-name=bindcraft\n#SBATCH --partition=gpu\n#SBATCH --gpus=1\n#SBATCH --cpus-per-task=8\n#SBATCH --mem=64G\n#SBATCH --time=48:00:00\n#SBATCH --output=%x_%j.out\n\nsource ~/.bashrc\nconda activate BindCraft\n\ncd /path/to/bindcraft\n\npython -u ./bindcraft.py \\\n    --settings './settings_target/my_target.json' \\\n    --filters './settings_filters/default_filters.json' \\\n    --advanced './settings_advanced/default_4stage_multimer.json'"
   },
   {
-    "objectID": "monday/10-bindcraft.html#basic-usage-workflow",
-    "href": "monday/10-bindcraft.html#basic-usage-workflow",
+    "objectID": "monday/10-bindcraft.html#setting-up-your-own-target",
+    "href": "monday/10-bindcraft.html#setting-up-your-own-target",
     "title": "10. BindCraft",
-    "section": "Basic Usage Workflow",
-    "text": "Basic Usage Workflow\n\nPrepare your target: Place your target protein PDB file in the BindCraft folder\nConfigure target settings: Edit or create a JSON file in settings_target/:\n\n{\n    \"design_path\": \"./my_binder_designs\",\n    \"binder_name\": \"my_binder\",\n    \"starting_pdb\": \"./my_target.pdb\",\n    \"chains\": \"A\",\n    \"target_hotspot_residues\": \"A10-20\",\n    \"lengths\": \"50-100\",\n    \"number_of_final_designs\": 100\n}\n\nRun the pipeline: Submit the job to design binders\nAnalyze results: BindCraft generates statistics and filtered designs in the output folder"
+    "section": "Setting Up Your Own Target",
+    "text": "Setting Up Your Own Target\nStep 1: Prepare your target PDB\n\nPlace your target protein PDB in the BindCraft folder\nTrim unnecessary chains/residues to reduce memory and speed up design\n\nStep 2: Create target settings (settings_target/my_target.json):\n{\n    \"design_path\": \"./my_binder_designs\",\n    \"binder_name\": \"my_binder\",\n    \"starting_pdb\": \"./my_target.pdb\",\n    \"chains\": \"A\",\n    \"target_hotspot_residues\": \"A10-20\",\n    \"lengths\": \"50-100\",\n    \"number_of_final_designs\": 100\n}\nStep 3: Run the pipeline:\npython -u ./bindcraft.py \\\n    --settings './settings_target/my_target.json' \\\n    --filters './settings_filters/default_filters.json' \\\n    --advanced './settings_advanced/default_4stage_multimer.json'"
   },
   {
     "objectID": "monday/10-bindcraft.html#key-settings-explained",
     "href": "monday/10-bindcraft.html#key-settings-explained",
     "title": "10. BindCraft",
     "section": "Key Settings Explained",
-    "text": "Key Settings Explained\nTarget Settings (settings_target/*.json):\n\nstarting_pdb: Your target protein structure\nchains: Which chains to target\ntarget_hotspot_residues: Specific residues to target (or null for automatic selection)\nlengths: Range of binder lengths to design (e.g., 50-100)\nnumber_of_final_designs: How many designs passing filters to generate before stopping\n\nFilters (settings_filters/*.json):\n\nControl which designs to keep based on confidence scores (pLDDT, pTM, i_pTM)\nInterface quality metrics (shape complementarity, energy, etc.)\nDefault filters are usually a good starting point\n\nAdvanced Settings (settings_advanced/*.json):\n\nDesign algorithm (default: 4stage)\nNumber of iterations for each design stage\nAF2 and MPNN parameters\nDesign weights for various objectives"
+    "text": "Key Settings Explained\n\nTarget Settings (settings_target/*.json)\n\n\n\n\n\n\n\n\nSetting\nDescription\nExample\n\n\n\n\nstarting_pdb\nPath to target structure\n\"./my_target.pdb\"\n\n\nchains\nWhich chain(s) to target\n\"A\" or \"A,B\"\n\n\ntarget_hotspot_residues\nResidues to target\n\"A10-20\" or null (auto)\n\n\nlengths\nBinder length range\n\"50-100\"\n\n\nnumber_of_final_designs\nDesigns to generate\n100\n\n\n\n\n\nFilter Settings (settings_filters/*.json)\nControls which designs pass quality thresholds:\n\nConfidence scores (pLDDT, pTM, i_pTM)\nInterface quality (shape complementarity, energy)\nDefault filters are good starting points\n\n\n\nAdvanced Settings (settings_advanced/*.json)\n\nDesign algorithm (default: 4-stage)\nNumber of iterations per stage\nAlphaFold2 and ProteinMPNN parameters"
+  },
+  {
+    "objectID": "monday/10-bindcraft.html#understanding-the-pipeline",
+    "href": "monday/10-bindcraft.html#understanding-the-pipeline",
+    "title": "10. BindCraft",
+    "section": "Understanding the Pipeline",
+    "text": "Understanding the Pipeline\nBindCraft demonstrates a complete protein design workflow:\n1. DESIGN        → AlphaFold2 backpropagation generates binder backbones\n       ↓\n2. OPTIMIZE      → ProteinMPNN designs sequences for backbones\n       ↓\n3. VALIDATE      → AlphaFold2 predicts designed complex structure\n       ↓\n4. SCORE         → PyRosetta evaluates interface quality\n       ↓\n5. FILTER        → Keep designs passing confidence thresholds"
   },
   {
     "objectID": "monday/10-bindcraft.html#tips-for-success",
     "href": "monday/10-bindcraft.html#tips-for-success",
     "title": "10. BindCraft",
     "section": "Tips for Success",
-    "text": "Tips for Success\n\nTrim your target PDB: Remove unnecessary chains/residues to reduce memory requirements and speed up design\nStart with defaults: Use the default filter and advanced settings initially, then adjust based on results\nGenerate enough designs: Aim for at least 100 final designs passing filters (the script recommends ordering top 5-20 for experiments)\nBe patient: Expect to generate hundreds to thousands of trajectories to get enough accepted binders, especially for difficult targets\nMonitor acceptance rate: If very few trajectories pass filters, you may need to adjust design weights or filters"
+    "text": "Tips for Success\n\nTrim your target: Remove unnecessary chains/residues to reduce memory\nStart with defaults: Use default filter and advanced settings initially\nGenerate enough designs: Aim for 100+ final designs (top 5-20 for experiments)\nBe patient: Expect hundreds to thousands of trajectories for enough accepted binders\nMonitor acceptance rate: Low acceptance → adjust design weights or filters\nCheck the wiki: BindCraft Wiki"
   },
   {
-    "objectID": "monday/10-bindcraft.html#understanding-bindcrafts-integration",
-    "href": "monday/10-bindcraft.html#understanding-bindcrafts-integration",
+    "objectID": "monday/10-bindcraft.html#understanding-the-output",
+    "href": "monday/10-bindcraft.html#understanding-the-output",
     "title": "10. BindCraft",
-    "section": "Understanding BindCraft’s Integration",
-    "text": "Understanding BindCraft’s Integration\nBindCraft demonstrates a complete protein design workflow:\n\nDesign: Uses AlphaFold2 backpropagation to generate binder backbones\nOptimize: Uses ProteinMPNN to design sequences for the backbones\nValidate: Uses AlphaFold2 to predict the designed complex\nScore: Uses PyRosetta to evaluate interface quality\n\nThis integration showcases how real-world protein design combines multiple tools into a pipeline."
+    "section": "Understanding the Output",
+    "text": "Understanding the Output\nOutput directory structure:\nmy_binder_designs/\n├── accepted/\n│   ├── design_001.pdb        # Passing designs\n│   ├── design_002.pdb\n│   └── ...\n├── rejected/                  # Filtered out designs\n├── trajectories/              # All generated trajectories\n├── scores.csv                 # All metrics for each design\n└── summary.txt                # Run statistics"
   },
   {
     "objectID": "monday/10-bindcraft.html#troubleshooting",
     "href": "monday/10-bindcraft.html#troubleshooting",
     "title": "10. BindCraft",
     "section": "Troubleshooting",
-    "text": "Troubleshooting\nGPU memory errors: Reduce the size of your target PDB or request more GPU memory. BindCraft recommends at least 32 GB GPU memory for larger complexes.\nCUDA version mismatch: Make sure you specified the correct CUDA version during installation. Check with nvcc --version.\nLow acceptance rate: If very few designs pass filters, you may need to:\n\nAdjust design weights in advanced settings\nRelax filter thresholds\nChange target hotspot selection\nIncrease the target site area\n\nWiki for detailed help: Before posting issues, check the complete wiki at https://github.com/martinpacesa/BindCraft/wiki/De-novo-binder-design-with-BindCraft\n\nNavigation: ← PLACER | Monday Overview | Next: ESM3 (Optional) →"
+    "text": "Troubleshooting\nGPU memory errors:\n\nReduce target PDB size (trim chains)\nRequest more GPU memory (32+ GB recommended)\nCheck with: nvidia-smi\n\nCUDA version mismatch:\n\nRe-run install with correct CUDA version\nCheck: nvcc --version\n\nLow acceptance rate (few designs pass filters):\n\nAdjust design weights in advanced settings\nRelax filter thresholds\nChange target hotspot selection\nIncrease target site area\n\nPyRosetta license errors:\n\nVerify PyRosetta license is valid\nCheck license file location\nContact PyRosetta for academic license\n\nSlow progress:\n\nThis is normal - protein design takes time\nMonitor trajectory count, not clock time\nLarge targets are slower\n\n\nNavigation: ← PLACER | Monday Overview | Next: ESM3 (Optional) →"
   },
   {
     "objectID": "monday/6-chai1.html",
     "href": "monday/6-chai1.html",
     "title": "6. Chai-1",
     "section": "",
-    "text": "Chai-1 (paper, code) is a multi-modal foundation model for molecular structure prediction that achieves state-of-the-art performance across diverse benchmarks. Chai-1 enables unified prediction of proteins, small molecules, DNA, RNA, glycosylations, and more.\nChai-1 is useful for predicting complex biomolecular structures including protein-ligand complexes, protein-nucleic acid complexes, and multi-component assemblies. It can handle modified residues and incorporate experimental restraints.\nThe goal of this module is to install Chai-1 on your HPC cluster."
+    "text": "Chai-1 (paper, code) is a multi-modal foundation model for molecular structure prediction that achieves state-of-the-art performance across diverse benchmarks. Chai-1 enables unified prediction of proteins, small molecules, DNA, RNA, glycosylations, and more."
   },
   {
-    "objectID": "monday/6-chai1.html#preparation-work",
-    "href": "monday/6-chai1.html#preparation-work",
+    "objectID": "monday/6-chai1.html#why-use-chai-1",
+    "href": "monday/6-chai1.html#why-use-chai-1",
     "title": "6. Chai-1",
-    "section": "Preparation Work",
-    "text": "Preparation Work\n Mark as complete\nRequirements:\n\nLinux operating system\nPython 3.10 or later\nGPU with CUDA and bfloat16 support\nRecommended: A100 80GB, H100 80GB, or L40S 48GB\nAlso works on: A10, A30, RTX 4090"
+    "section": "Why Use Chai-1?",
+    "text": "Why Use Chai-1?\n\nMulti-modal: Predict proteins, nucleic acids, small molecules, and modifications in one model\nState-of-the-art: Top performance on structure prediction benchmarks\nFlexible inputs: Handles complex multi-component assemblies\nExperimental restraints: Can incorporate known distance constraints\n\nRelated Tools: For protein-only predictions, see ESMFold (faster) or LocalColabFold (MSA-based). For binding affinity predictions, see Boltz-2."
   },
   {
-    "objectID": "monday/6-chai1.html#installation-steps",
-    "href": "monday/6-chai1.html#installation-steps",
+    "objectID": "monday/6-chai1.html#resource-requirements",
+    "href": "monday/6-chai1.html#resource-requirements",
     "title": "6. Chai-1",
-    "section": "Installation Steps",
-    "text": "Installation Steps\n Mark as complete\n\nCreate a conda environment with Python 3.10+:\n\nmamba create -n chailab python=3.11\nmamba activate chailab\n\nInstall Chai-1:\n\npip install chai_lab==0.6.1\nOr for the latest development version:\npip install git+https://github.com/chaidiscovery/chai-lab.git"
+    "section": "Resource Requirements",
+    "text": "Resource Requirements\n\n\n\nResource\nMinimum\nRecommended\nNotes\n\n\n\n\nGPU RAM\n24 GB\n80 GB\nA100 80GB or H100 ideal\n\n\nCPU RAM\n32 GB\n64 GB\nFor preprocessing\n\n\nDisk Space\n10 GB\n20 GB\nModel weights\n\n\nPython\n3.10+\n3.11\nRequired\n\n\n\nGPU Compatibility: Requires bfloat16 support. Compatible GPUs include:\n\nA100, H100, L40S (recommended)\nA10, A30, RTX 4090 (works)\nOlder GPUs may not support bfloat16"
+  },
+  {
+    "objectID": "monday/6-chai1.html#preparation",
+    "href": "monday/6-chai1.html#preparation",
+    "title": "6. Chai-1",
+    "section": "Preparation",
+    "text": "Preparation\n Mark as complete\nPrerequisites:\n\nCompleted HPC Setup guide\nGPU with bfloat16 support\nPython 3.10+\n\nVerify bfloat16 support:\nimport torch\nprint(torch.cuda.is_bf16_supported())  # Should print True"
+  },
+  {
+    "objectID": "monday/6-chai1.html#installation",
+    "href": "monday/6-chai1.html#installation",
+    "title": "6. Chai-1",
+    "section": "Installation",
+    "text": "Installation\n Mark as complete\n\nCreate a conda environment:\n\nmamba create -n chailab python=3.11\nmamba activate chailab\n\nInstall Chai-1:\n\npip install chai_lab==0.6.1\nExpected download: ~5-10 GB of model weights (downloaded on first run).\nAlternative: Latest development version:\npip install git+https://github.com/chaidiscovery/chai-lab.git"
   },
   {
     "objectID": "monday/6-chai1.html#testing-the-installation",
     "href": "monday/6-chai1.html#testing-the-installation",
     "title": "6. Chai-1",
     "section": "Testing the Installation",
-    "text": "Testing the Installation\n Mark as complete\nCreate a test FASTA file test.fasta:\n&gt;protein|name=example\nMKTVRQERLKSIVRILERSKEPVSGAQLAEELSVSRQVIVQDIAYLRSLGYNIVATPRGYVLAGG\nRun prediction:\nchai-lab fold test.fasta output_folder/\nBy default, this generates 5 sample predictions using embeddings without MSAs."
+    "text": "Testing the Installation\n Mark as complete\nCreate a test FASTA file test.fasta:\n&gt;protein|name=example\nMKTVRQERLKSIVRILERSKEPVSGAQLAEELSVSRQVIVQDIAYLRSLGYNIVATPRGYVLAGG\nRun prediction:\nchai-lab fold test.fasta output_folder/\nSuccess indicators:\n\nCommand completes without errors\noutput_folder/ contains:\n\npred.model_idx_0.cif - Predicted structure\nscores.model_idx_0.npz - Confidence scores\n\n\nExpected runtime: 2-5 minutes for first run (includes model download), ~30 seconds for subsequent runs.\nNote: By default, this generates 5 sample predictions using embeddings without MSAs."
   },
   {
-    "objectID": "monday/6-chai1.html#using-msas-for-better-performance",
-    "href": "monday/6-chai1.html#using-msas-for-better-performance",
+    "objectID": "monday/6-chai1.html#hpc-job-script",
+    "href": "monday/6-chai1.html#hpc-job-script",
     "title": "6. Chai-1",
-    "section": "Using MSAs for Better Performance",
-    "text": "Using MSAs for Better Performance\nFor improved performance, use MSAs via the ColabFold server:\nchai-lab fold --use-msa-server --use-templates-server input.fasta output_folder/\nNote: This uses the public ColabFold MMseqs2 server, which is a shared resource. Please be considerate of usage."
+    "section": "HPC Job Script",
+    "text": "HPC Job Script\n#!/bin/bash\n#SBATCH --job-name=chai\n#SBATCH --partition=gpu\n#SBATCH --gpus=a100:1\n#SBATCH --cpus-per-task=8\n#SBATCH --mem=64G\n#SBATCH --time=04:00:00\n#SBATCH --output=%x_%j.out\n\nmodule load cuda/12.1\n\nsource ~/.bashrc\nmamba activate chailab\n\n# Set custom download directory (avoid filling home)\nexport CHAI_DOWNLOADS_DIR=/scratch/$USER/chai_models\n\n# Run prediction with MSAs\nchai-lab fold --use-msa-server --use-templates-server \\\n    my_complex.fasta \\\n    predictions/"
   },
   {
-    "objectID": "monday/6-chai1.html#for-hpc-internal-colabfold-server",
-    "href": "monday/6-chai1.html#for-hpc-internal-colabfold-server",
+    "objectID": "monday/6-chai1.html#usage-examples",
+    "href": "monday/6-chai1.html#usage-examples",
     "title": "6. Chai-1",
-    "section": "For HPC Internal ColabFold Server",
-    "text": "For HPC Internal ColabFold Server\nIf your HPC has an internal ColabFold server:\nchai-lab fold --use-msa-server \\\n    --msa-server-url \"https://internal.colabserver.edu\" \\\n    input.fasta output_folder/"
+    "section": "Usage Examples",
+    "text": "Usage Examples\nBasic prediction (no MSAs, fast):\nchai-lab fold input.fasta output/\nWith MSAs (higher accuracy, uses ColabFold server):\nchai-lab fold --use-msa-server --use-templates-server input.fasta output/\nUsing internal MSA server (if your HPC has one):\nchai-lab fold --use-msa-server \\\n    --msa-server-url \"https://internal.colabserver.edu\" \\\n    input.fasta output/\nGenerate more samples:\nchai-lab fold --num-trunk-recycles 5 --num-diffn-timesteps 200 \\\n    input.fasta output/"
   },
   {
-    "objectID": "monday/6-chai1.html#hpc-job-script-example",
-    "href": "monday/6-chai1.html#hpc-job-script-example",
+    "objectID": "monday/6-chai1.html#input-format",
+    "href": "monday/6-chai1.html#input-format",
     "title": "6. Chai-1",
-    "section": "HPC Job Script Example",
-    "text": "HPC Job Script Example\nFor SLURM clusters:\n#!/bin/bash\n#SBATCH --job-name=chai\n#SBATCH --gpus=1\n#SBATCH --time=04:00:00\n#SBATCH --mem=64G\n\nmodule load cuda/12.1\n\nmamba activate chailab\n\n# Set custom download directory if needed\nexport CHAI_DOWNLOADS_DIR=/scratch/chai_models\n\n# Run prediction with MSAs\nchai-lab fold --use-msa-server --use-templates-server \\\n    my_complex.fasta \\\n    predictions/"
+    "section": "Input Format",
+    "text": "Input Format\nChai-1 uses a modified FASTA format with entity type headers:\nProtein:\n&gt;protein|name=my_protein\nMKTVRQERLKSIVRILERSKEPVSG...\nLigand (SMILES):\n&gt;ligand|name=my_drug\nCC(C)CC1=CC=C(C=C1)C(C)C(=O)O\nDNA:\n&gt;dna|name=promoter\nATGCATGCATGCATGC\nRNA:\n&gt;rna|name=aptamer\nAUGCAUGCAUGCAUGC\nProtein complex (multiple chains):\n&gt;protein|name=chain_A\nMKTVRQERLK...\n&gt;protein|name=chain_B\nMVKLTAEGSE..."
   },
   {
-    "objectID": "monday/6-chai1.html#python-api-usage",
-    "href": "monday/6-chai1.html#python-api-usage",
+    "objectID": "monday/6-chai1.html#python-api",
+    "href": "monday/6-chai1.html#python-api",
     "title": "6. Chai-1",
-    "section": "Python API Usage",
-    "text": "Python API Usage\nYou can also use Chai-1 programmatically:\nfrom chai_lab.chai1 import run_inference\n\n# Run inference\nresults = run_inference(\n    fasta_file=\"input.fasta\",\n    output_dir=\"output/\",\n    num_trunk_recycles=3,\n    num_diffn_timesteps=200,\n    seed=42\n)\nSee examples/predict_structure.py in the repository for more details."
+    "section": "Python API",
+    "text": "Python API\nfrom chai_lab.chai1 import run_inference\n\nresults = run_inference(\n    fasta_file=\"input.fasta\",\n    output_dir=\"output/\",\n    num_trunk_recycles=3,\n    num_diffn_timesteps=200,\n    seed=42\n)\nSee examples/predict_structure.py in the repository for more details."
   },
   {
     "objectID": "monday/6-chai1.html#advanced-features",
     "href": "monday/6-chai1.html#advanced-features",
     "title": "6. Chai-1",
     "section": "Advanced Features",
-    "text": "Advanced Features\nCustom Templates: Provide your own structure templates\nExperimental Restraints: Specify inter-chain contacts or covalent bonds\nCustom MSAs: Provide MSAs in aligned.pqt format\nSee the restraints documentation and covalent bonds documentation for advanced usage."
+    "text": "Advanced Features\nCustom Templates:\nchai-lab fold --custom-template template.cif input.fasta output/\nExperimental Restraints: Specify inter-chain contacts:\n# See: github.com/chaidiscovery/chai-lab/tree/main/examples/restraints\nCovalent Bonds: Specify covalent modifications:\n# See: github.com/chaidiscovery/chai-lab/tree/main/examples/covalent_bonds"
+  },
+  {
+    "objectID": "monday/6-chai1.html#understanding-the-output",
+    "href": "monday/6-chai1.html#understanding-the-output",
+    "title": "6. Chai-1",
+    "section": "Understanding the Output",
+    "text": "Understanding the Output\n\n\n\nFile\nDescription\n\n\n\n\npred.model_idx_N.cif\nPredicted structure (mmCIF format)\n\n\nscores.model_idx_N.npz\nConfidence scores\n\n\nmsa_*.a3m\nGenerated MSAs (if using MSA server)\n\n\n\nConfidence metrics (in scores file):\n\npLDDT: Per-residue confidence\npTM: Predicted TM-score\npAE: Predicted aligned error\ninterface scores: For multi-chain predictions"
   },
   {
     "objectID": "monday/6-chai1.html#web-server",
     "href": "monday/6-chai1.html#web-server",
     "title": "6. Chai-1",
     "section": "Web Server",
-    "text": "Web Server\nYou can also test Chai-1 via the web interface: https://lab.chaidiscovery.com"
+    "text": "Web Server\nFor quick tests without installation: lab.chaidiscovery.com"
   },
   {
     "objectID": "monday/6-chai1.html#troubleshooting",
     "href": "monday/6-chai1.html#troubleshooting",
     "title": "6. Chai-1",
     "section": "Troubleshooting",
-    "text": "Troubleshooting\nGPU compatibility: Chai-1 requires bfloat16 support. Older GPUs may not work.\nOut of memory: Use smaller complexes or request more GPU memory.\nDownload location: Control where models are downloaded:\nexport CHAI_DOWNLOADS_DIR=/path/to/storage\n\nNavigation: ← OpenFold | Monday Overview | Next: Boltz-2 →"
+    "text": "Troubleshooting\n“bfloat16 not supported”:\n\nYour GPU doesn’t support bfloat16\nTry a newer GPU (A100, H100, RTX 4090)\nOlder GPUs (V100, etc.) may not work\n\nOut of memory:\n\nRequest GPU with more memory\nReduce --num-diffn-timesteps\nFor very large complexes, split into smaller units\n\nModel download location:\n# Set before running\nexport CHAI_DOWNLOADS_DIR=/scratch/$USER/chai_models\nMSA server rate limits:\n\nThe public ColabFold MMseqs2 server is a shared resource\nFor batch jobs, space out requests\nConsider setting up a local MSA server for high-throughput\n\nSlow first run:\n\nFirst run downloads ~5-10 GB of model weights\nSubsequent runs are much faster\nSet CHAI_DOWNLOADS_DIR to avoid re-downloading\n\n\nNavigation: ← OpenFold | Monday Overview | Next: Boltz-2 →"
   },
   {
     "objectID": "monday/2-ligandmpnn.html",
     "href": "monday/2-ligandmpnn.html",
     "title": "2. LigandMPNN",
     "section": "",
-    "text": "LigandMPNN (paper, code) is a deep learning model for context-aware protein sequence design. It extends ProteinMPNN to handle small molecules, metal ions, and other non-protein components in protein design tasks.\nLigandMPNN is useful for designing protein sequences that interact with ligands, cofactors, or other small molecules. It can also be used for side chain packing and evaluating sequence-structure compatibility.\nThe goal of this module is to install LigandMPNN on your HPC cluster."
+    "text": "LigandMPNN (paper, code) is a deep learning model for context-aware protein sequence design. It extends ProteinMPNN to handle small molecules, metal ions, and other non-protein components in protein design tasks."
   },
   {
-    "objectID": "monday/2-ligandmpnn.html#preparation-work",
-    "href": "monday/2-ligandmpnn.html#preparation-work",
+    "objectID": "monday/2-ligandmpnn.html#why-use-ligandmpnn",
+    "href": "monday/2-ligandmpnn.html#why-use-ligandmpnn",
     "title": "2. LigandMPNN",
-    "section": "Preparation Work",
-    "text": "Preparation Work\n Mark as complete\nThis assignment assumes that you have access to a computing cluster that allows installation of new software. We’ll be creating virtual environments using Conda/Mamba.\n(If you don’t have Mamba or prefer using Conda, just swap mamba for conda in the install commands below)"
+    "section": "Why Use LigandMPNN?",
+    "text": "Why Use LigandMPNN?\n\nLigand-aware design: Design sequences that account for bound cofactors, substrates, or drug molecules\nContext preservation: Maintain interactions with metals, DNA, RNA, or other molecules\nSide chain packing: Evaluate and optimize side chain conformations\nFlexible residue control: Fix, bias, or vary specific positions\n\nRelated Tools: Use with RFdiffusion2 for backbone design, or BindCraft for complete binder design pipelines."
   },
   {
-    "objectID": "monday/2-ligandmpnn.html#installation-steps",
-    "href": "monday/2-ligandmpnn.html#installation-steps",
+    "objectID": "monday/2-ligandmpnn.html#resource-requirements",
+    "href": "monday/2-ligandmpnn.html#resource-requirements",
     "title": "2. LigandMPNN",
-    "section": "Installation Steps",
-    "text": "Installation Steps\n Mark as complete\n\nClone the LigandMPNN repository:\n\ngit clone https://github.com/dauparas/LigandMPNN.git\ncd LigandMPNN\n\nDownload the model parameters:\n\nbash get_model_params.sh \"./model_params\"\n\nCreate a new conda environment:\n\nmamba create -n ligandmpnn_env python=3.11\n\nActivate the environment:\n\nmamba activate ligandmpnn_env\n\nInstall dependencies:\n\npip3 install -r requirements.txt\nThe requirements include PyTorch, NumPy, and ProDy for reading/writing PDB files."
+    "section": "Resource Requirements",
+    "text": "Resource Requirements\n\n\n\nResource\nMinimum\nRecommended\nNotes\n\n\n\n\nGPU RAM\n4 GB\n16 GB\nScales with protein size\n\n\nCPU RAM\n8 GB\n16 GB\nCPU-only is viable but slower\n\n\nDisk Space\n2 GB\n5 GB\nModel weights\n\n\nPython\n3.9+\n3.11\nRequired"
+  },
+  {
+    "objectID": "monday/2-ligandmpnn.html#preparation",
+    "href": "monday/2-ligandmpnn.html#preparation",
+    "title": "2. LigandMPNN",
+    "section": "Preparation",
+    "text": "Preparation\n Mark as complete\nPrerequisites:\n\nCompleted HPC Setup guide\nConda/Mamba installed\nGit installed\n\nVerify your environment:\npython --version    # Should be 3.9+\nnvcc --version      # For GPU support (optional)"
+  },
+  {
+    "objectID": "monday/2-ligandmpnn.html#installation",
+    "href": "monday/2-ligandmpnn.html#installation",
+    "title": "2. LigandMPNN",
+    "section": "Installation",
+    "text": "Installation\n Mark as complete\n\nClone the LigandMPNN repository:\n\ngit clone https://github.com/dauparas/LigandMPNN.git\ncd LigandMPNN\n\nDownload the model parameters:\n\nbash get_model_params.sh \"./model_params\"\nExpected download: ~500 MB of model weights.\n\nCreate a new conda environment:\n\nmamba create -n ligandmpnn_env python=3.11\nmamba activate ligandmpnn_env\n\nInstall dependencies:\n\npip install -r requirements.txt\nThis installs PyTorch, NumPy, and ProDy for PDB file handling."
   },
   {
     "objectID": "monday/2-ligandmpnn.html#testing-the-installation",
     "href": "monday/2-ligandmpnn.html#testing-the-installation",
     "title": "2. LigandMPNN",
     "section": "Testing the Installation",
-    "text": "Testing the Installation\n Mark as complete\nRun a test design on the provided example structure:\npython run.py \\\n    --seed 111 \\\n    --pdb_path \"./inputs/1BC8.pdb\" \\\n    --out_folder \"./outputs/test_output\"\nIf this completes successfully and generates output files in ./outputs/test_output/, your installation was successful!"
+    "text": "Testing the Installation\n Mark as complete\nRun a test design on the provided example structure:\npython run.py \\\n    --seed 111 \\\n    --pdb_path \"./inputs/1BC8.pdb\" \\\n    --out_folder \"./outputs/test_output\"\nSuccess indicators:\n\nCommand completes without errors\nOutput folder contains:\n\nseqs/1BC8.fa - Designed sequences in FASTA format\nbackbones/1BC8.pdb - Input backbone (for reference)\npacked/1BC8_1.pdb - Structure with designed side chains\n\n\nExpected runtime: &lt;1 minute on GPU, ~5 minutes on CPU."
   },
   {
-    "objectID": "monday/2-ligandmpnn.html#hpc-specific-notes",
-    "href": "monday/2-ligandmpnn.html#hpc-specific-notes",
+    "objectID": "monday/2-ligandmpnn.html#hpc-job-script",
+    "href": "monday/2-ligandmpnn.html#hpc-job-script",
     "title": "2. LigandMPNN",
-    "section": "HPC-Specific Notes",
-    "text": "HPC-Specific Notes\nGPU Requirements: LigandMPNN can run on both CPU and GPU. GPU is recommended for faster processing. Make sure to request GPU resources when submitting jobs on your cluster.\nBatch Processing: For designing multiple structures, use the --pdb_path_multi option with a JSON file listing all input PDBs. This is more efficient since the model is loaded only once."
+    "section": "HPC Job Script",
+    "text": "HPC Job Script\n#!/bin/bash\n#SBATCH --job-name=ligandmpnn\n#SBATCH --partition=gpu\n#SBATCH --gpus=1\n#SBATCH --cpus-per-task=4\n#SBATCH --mem=16G\n#SBATCH --time=02:00:00\n#SBATCH --output=%x_%j.out\n\nmodule load cuda/12.1\n\nsource ~/.bashrc\nmamba activate ligandmpnn_env\n\ncd /path/to/LigandMPNN\n\npython run.py \\\n    --model_type \"ligand_mpnn\" \\\n    --seed 111 \\\n    --pdb_path \"./inputs/my_protein.pdb\" \\\n    --out_folder \"./outputs/my_design\" \\\n    --number_of_batches 10"
   },
   {
-    "objectID": "monday/2-ligandmpnn.html#example-hpc-job-script",
-    "href": "monday/2-ligandmpnn.html#example-hpc-job-script",
+    "objectID": "monday/2-ligandmpnn.html#usage-examples",
+    "href": "monday/2-ligandmpnn.html#usage-examples",
     "title": "2. LigandMPNN",
-    "section": "Example HPC Job Script",
-    "text": "Example HPC Job Script\nFor SLURM clusters:\n#!/bin/bash\n#SBATCH --job-name=ligandmpnn\n#SBATCH --gpus=1\n#SBATCH --time=02:00:00\n#SBATCH --mem=16G\n\nmodule load cuda/12.1  # Adjust to your cluster\n\nmamba activate ligandmpnn_env\n\npython run.py \\\n    --model_type \"ligand_mpnn\" \\\n    --seed 111 \\\n    --pdb_path \"./inputs/my_protein.pdb\" \\\n    --out_folder \"./outputs/my_design\" \\\n    --number_of_batches 5"
+    "section": "Usage Examples",
+    "text": "Usage Examples\nBasic protein design (no ligand):\npython run.py \\\n    --pdb_path \"protein.pdb\" \\\n    --out_folder \"output/\"\nDesign with ligand context:\npython run.py \\\n    --model_type \"ligand_mpnn\" \\\n    --pdb_path \"protein_ligand.pdb\" \\\n    --out_folder \"output/\"\nFix specific residues (keep them unchanged):\npython run.py \\\n    --pdb_path \"protein.pdb\" \\\n    --fixed_residues \"A10 A20 A30\" \\\n    --out_folder \"output/\"\nDesign only specific positions:\npython run.py \\\n    --pdb_path \"protein.pdb\" \\\n    --redesigned_residues \"A50 A51 A52 A53\" \\\n    --out_folder \"output/\"\nBatch processing multiple structures:\n# Create a JSON file listing inputs\necho '{\"1\": \"input1.pdb\", \"2\": \"input2.pdb\"}' &gt; input_list.json\n\npython run.py \\\n    --pdb_path_multi \"input_list.json\" \\\n    --out_folder \"batch_output/\"\nWith temperature control (higher = more diverse):\npython run.py \\\n    --pdb_path \"protein.pdb\" \\\n    --temperature 0.2 \\\n    --out_folder \"output/\""
   },
   {
-    "objectID": "monday/2-ligandmpnn.html#common-use-cases",
-    "href": "monday/2-ligandmpnn.html#common-use-cases",
+    "objectID": "monday/2-ligandmpnn.html#key-parameters",
+    "href": "monday/2-ligandmpnn.html#key-parameters",
     "title": "2. LigandMPNN",
-    "section": "Common Use Cases",
-    "text": "Common Use Cases\nDesign with ligand context:\npython run.py \\\n    --model_type \"ligand_mpnn\" \\\n    --pdb_path \"./input.pdb\" \\\n    --ligand \"HEM\" \\\n    --out_folder \"./output\"\nFix specific residues:\npython run.py \\\n    --pdb_path \"./input.pdb\" \\\n    --fixed_residues \"A10 A20 A30\" \\\n    --out_folder \"./output\"\n\nNavigation: ← LocalColabFold | Monday Overview | Next: RFdiffusion2 →"
+    "section": "Key Parameters",
+    "text": "Key Parameters\n\n\n\n\n\n\n\n\nParameter\nDescription\nDefault\n\n\n\n\n--model_type\nModel variant: protein_mpnn, ligand_mpnn, soluble_mpnn, etc.\nprotein_mpnn\n\n\n--temperature\nSampling temperature (0.1-1.0). Lower = more conservative\n0.1\n\n\n--number_of_batches\nNumber of sequences to generate\n1\n\n\n--batch_size\nSequences per batch\n1\n\n\n--fixed_residues\nSpace-separated residues to keep unchanged\nNone\n\n\n--redesigned_residues\nOnly design these residues\nAll\n\n\n--bias_AA\nBias toward specific amino acids\nNone"
+  },
+  {
+    "objectID": "monday/2-ligandmpnn.html#model-types",
+    "href": "monday/2-ligandmpnn.html#model-types",
+    "title": "2. LigandMPNN",
+    "section": "Model Types",
+    "text": "Model Types\n\n\n\nModel\nUse Case\n\n\n\n\nprotein_mpnn\nStandard protein sequence design\n\n\nligand_mpnn\nDesign with small molecule context\n\n\nsoluble_mpnn\nBias toward soluble sequences\n\n\nglobal_label_membrane_mpnn\nMembrane protein design\n\n\nper_residue_label_membrane_mpnn\nFine-grained membrane design"
+  },
+  {
+    "objectID": "monday/2-ligandmpnn.html#understanding-the-output",
+    "href": "monday/2-ligandmpnn.html#understanding-the-output",
+    "title": "2. LigandMPNN",
+    "section": "Understanding the Output",
+    "text": "Understanding the Output\nOutput directory structure:\noutput/\n├── seqs/\n│   └── protein.fa          # Designed sequences\n├── backbones/\n│   └── protein.pdb         # Input structure\n└── packed/\n    ├── protein_1.pdb       # Design 1 with side chains\n    └── protein_2.pdb       # Design 2 with side chains\nFASTA output format:\n&gt;protein, score=1.234, seq_recovery=0.456\nMVKLTAEGSE...\n\nscore: Negative log-likelihood (lower = better fit to backbone)\nseq_recovery: Fraction matching native sequence (if provided)"
+  },
+  {
+    "objectID": "monday/2-ligandmpnn.html#troubleshooting",
+    "href": "monday/2-ligandmpnn.html#troubleshooting",
+    "title": "2. LigandMPNN",
+    "section": "Troubleshooting",
+    "text": "Troubleshooting\n“RuntimeError: CUDA out of memory”:\n\nUse CPU instead: remove CUDA module and run without GPU\nReduce --batch_size\nLigandMPNN is efficient; usually not memory-limited\n\nPDB parsing errors:\n\nEnsure PDB has proper formatting\nRemove alternate conformations: keep only “A” conformers\nCheck that ligand has proper atom naming\n\nLigand not recognized:\n\nEnsure ligand is in the PDB file with HETATM records\nUse --ligand flag to specify ligand residue name\nCheck that ligand coordinates are reasonable\n\nLow sequence diversity:\n\nIncrease --temperature (e.g., 0.2 or 0.3)\nIncrease --number_of_batches\nUse different random seeds\n\nSide chain clashes in output:\n\nThis is expected - downstream relaxation is recommended\nUse PyRosetta or Rosetta FastRelax\nOr validate with your structure prediction tool of choice\n\n\nNavigation: ← LocalColabFold | Monday Overview | Next: RFdiffusion2 →"
   },
   {
     "objectID": "monday/7-boltz2.html",
     "href": "monday/7-boltz2.html",
     "title": "7. Boltz-2",
     "section": "",
-    "text": "Boltz-2 (paper, code) is a biomolecular foundation model that jointly models complex structures and binding affinities. It’s the first deep learning model to approach the accuracy of physics-based free-energy perturbation (FEP) methods while running 1000x faster.\nBoltz-2 is useful for structure prediction of biomolecular complexes AND binding affinity prediction, making it valuable for drug discovery and protein design. It can predict structures for proteins, nucleic acids, small molecules, and covalent modifications.\nThe goal of this module is to install Boltz-2 on your HPC cluster."
+    "text": "Boltz-2 (paper, code) is a biomolecular foundation model that jointly models complex structures and binding affinities. It’s the first deep learning model to approach the accuracy of physics-based free-energy perturbation (FEP) methods while running 1000x faster."
   },
   {
-    "objectID": "monday/7-boltz2.html#preparation-work",
-    "href": "monday/7-boltz2.html#preparation-work",
+    "objectID": "monday/7-boltz2.html#why-use-boltz-2",
+    "href": "monday/7-boltz2.html#why-use-boltz-2",
     "title": "7. Boltz-2",
-    "section": "Preparation Work",
-    "text": "Preparation Work\n Mark as complete\nThis assignment assumes that you have access to a computing cluster that allows installation of new software. We’ll be creating virtual environments using Conda/Mamba.\nNote: It’s recommended to install Boltz in a fresh Python environment."
+    "section": "Why Use Boltz-2?",
+    "text": "Why Use Boltz-2?\n\nStructure + Affinity: Predict both binding pose and binding strength\nDrug discovery ready: Affinity predictions useful for hit-to-lead optimization\nMulti-modal: Handles proteins, nucleic acids, small molecules, covalent modifications\nSpeed: 1000x faster than FEP methods for affinity prediction\n\nRelated Tools: For structure prediction only, see Chai-1. For protein-ligand docking, see PLACER or DiffDock-PP."
   },
   {
-    "objectID": "monday/7-boltz2.html#installation-steps",
-    "href": "monday/7-boltz2.html#installation-steps",
+    "objectID": "monday/7-boltz2.html#resource-requirements",
+    "href": "monday/7-boltz2.html#resource-requirements",
     "title": "7. Boltz-2",
-    "section": "Installation Steps",
-    "text": "Installation Steps\n Mark as complete\nOption 1: Install from PyPI (recommended):\npip install boltz[cuda] -U\nOption 2: Install from GitHub for daily updates:\ngit clone https://github.com/jwohlwend/boltz.git\ncd boltz\npip install -e .[cuda]\nFor CPU-only or non-CUDA GPUs: Remove [cuda] from the commands above (note: CPU version is significantly slower)."
+    "section": "Resource Requirements",
+    "text": "Resource Requirements\n\n\n\nResource\nMinimum\nRecommended\nNotes\n\n\n\n\nGPU RAM\n16 GB\n32+ GB\nScales with complex size\n\n\nCPU RAM\n16 GB\n32 GB\nFor preprocessing\n\n\nDisk Space\n5 GB\n10 GB\nModel weights\n\n\nPython\n3.9+\n3.11\nRequired"
+  },
+  {
+    "objectID": "monday/7-boltz2.html#preparation",
+    "href": "monday/7-boltz2.html#preparation",
+    "title": "7. Boltz-2",
+    "section": "Preparation",
+    "text": "Preparation\n Mark as complete\nPrerequisites:\n\nCompleted HPC Setup guide\nConda/Mamba installed\nCUDA-capable GPU (recommended) or CPU\n\nImportant: Install Boltz in a fresh Python environment to avoid dependency conflicts."
+  },
+  {
+    "objectID": "monday/7-boltz2.html#installation",
+    "href": "monday/7-boltz2.html#installation",
+    "title": "7. Boltz-2",
+    "section": "Installation",
+    "text": "Installation\n Mark as complete\n\nCreate a fresh environment:\n\nmamba create -n boltz python=3.11\nmamba activate boltz\n\nInstall Boltz with CUDA support:\n\npip install boltz[cuda] -U\nFor CPU-only or non-CUDA GPUs:\npip install boltz -U\nAlternative: Install from GitHub (for latest updates):\ngit clone https://github.com/jwohlwend/boltz.git\ncd boltz\npip install -e .[cuda]"
   },
   {
     "objectID": "monday/7-boltz2.html#testing-the-installation",
     "href": "monday/7-boltz2.html#testing-the-installation",
     "title": "7. Boltz-2",
     "section": "Testing the Installation",
-    "text": "Testing the Installation\n Mark as complete\nCreate a test YAML file test_input.yaml:\nversion: 1\nsequences:\n  - protein:\n      id: [A, B]\n      sequence: MKTVRQERLKSIVRILERSKEPVSGAQLAEELSVSRQVIVQDIAYLRSLGYNIVATPRGYVLAGG\nRun prediction:\nboltz predict test_input.yaml --use_msa_server\nThis will predict the structure and save results in the output directory."
+    "text": "Testing the Installation\n Mark as complete\nCreate a test YAML file test_input.yaml:\nversion: 1\nsequences:\n  - protein:\n      id: [A, B]\n      sequence: MKTVRQERLKSIVRILERSKEPVSGAQLAEELSVSRQVIVQDIAYLRSLGYNIVATPRGYVLAGG\nRun prediction:\nboltz predict test_input.yaml --use_msa_server\nSuccess indicators:\n\nCommand completes without errors\nOutput directory contains:\n\nPredicted structure files (CIF format)\nConfidence scores\n\n\nExpected runtime: 1-3 minutes for this small test."
   },
   {
-    "objectID": "monday/7-boltz2.html#input-format",
-    "href": "monday/7-boltz2.html#input-format",
+    "objectID": "monday/7-boltz2.html#hpc-job-script",
+    "href": "monday/7-boltz2.html#hpc-job-script",
     "title": "7. Boltz-2",
-    "section": "Input Format",
-    "text": "Input Format\nBoltz uses YAML files to describe biomolecules and properties to predict. For detailed input format information, see the prediction instructions."
+    "section": "HPC Job Script",
+    "text": "HPC Job Script\n#!/bin/bash\n#SBATCH --job-name=boltz\n#SBATCH --partition=gpu\n#SBATCH --gpus=1\n#SBATCH --cpus-per-task=8\n#SBATCH --mem=32G\n#SBATCH --time=04:00:00\n#SBATCH --output=%x_%j.out\n\nmodule load cuda/12.1\n\nsource ~/.bashrc\nmamba activate boltz\n\n# Run prediction\nboltz predict my_complex.yaml --use_msa_server --out_dir results/"
   },
   {
-    "objectID": "monday/7-boltz2.html#binding-affinity-prediction",
-    "href": "monday/7-boltz2.html#binding-affinity-prediction",
+    "objectID": "monday/7-boltz2.html#usage-examples",
+    "href": "monday/7-boltz2.html#usage-examples",
     "title": "7. Boltz-2",
-    "section": "Binding Affinity Prediction",
-    "text": "Binding Affinity Prediction\nBoltz-2 provides two affinity predictions:\n\naffinity_probability_binary (0-1 scale):\n\nUse for: Hit discovery, detecting binders from decoys\nRepresents: Probability that ligand is a binder\n\naffinity_pred_value (log10(IC50) in μM):\n\nUse for: Hit-to-lead and lead optimization\nRepresents: Specific binding affinity for comparison"
+    "section": "Usage Examples",
+    "text": "Usage Examples\nStructure prediction only:\nboltz predict structure.yaml\nWith MSA server (higher accuracy):\nboltz predict input.yaml --use_msa_server\nWith affinity prediction:\n# input.yaml\nversion: 1\nsequences:\n  - protein:\n      id: A\n      sequence: MKTVRQERLK...\n  - ligand:\n      id: L\n      smiles: \"CC(C)CC1=CC=C(C=C1)C(C)C(=O)O\"\nproperties:\n  - affinity\nboltz predict input.yaml"
+  },
+  {
+    "objectID": "monday/7-boltz2.html#input-format-yaml",
+    "href": "monday/7-boltz2.html#input-format-yaml",
+    "title": "7. Boltz-2",
+    "section": "Input Format (YAML)",
+    "text": "Input Format (YAML)\nBoltz uses YAML files to describe biomolecules:\nSimple protein:\nversion: 1\nsequences:\n  - protein:\n      id: A\n      sequence: MKTVRQERLKSIVRILERSKEPVSG...\nProtein-ligand complex:\nversion: 1\nsequences:\n  - protein:\n      id: A\n      sequence: MKTVRQERLK...\n  - ligand:\n      id: L\n      smiles: \"CCO\"\nProtein complex (homodimer):\nversion: 1\nsequences:\n  - protein:\n      id: [A, B]  # Same sequence for both chains\n      sequence: MKTVRQERLK...\nWith affinity prediction:\nversion: 1\nsequences:\n  - protein:\n      id: A\n      sequence: MKTVRQERLK...\n  - ligand:\n      id: L\n      smiles: \"CC(=O)NC1=CC=C(O)C=C1\"\nproperties:\n  - affinity\nSee prediction documentation for full format details."
+  },
+  {
+    "objectID": "monday/7-boltz2.html#binding-affinity-predictions",
+    "href": "monday/7-boltz2.html#binding-affinity-predictions",
+    "title": "7. Boltz-2",
+    "section": "Binding Affinity Predictions",
+    "text": "Binding Affinity Predictions\nBoltz-2 provides two affinity metrics:\n\n\n\n\n\n\n\n\nMetric\nRange\nUse Case\n\n\n\n\naffinity_probability_binary\n0-1\nHit discovery - probability that ligand is a binder\n\n\naffinity_pred_value\nlog10(IC50) in μM\nLead optimization - compare binding strengths\n\n\n\nInterpretation:\n\naffinity_probability_binary: Higher = more likely to bind\naffinity_pred_value: Lower = stronger binding (lower IC50)"
   },
   {
     "objectID": "monday/7-boltz2.html#msa-server-authentication",
     "href": "monday/7-boltz2.html#msa-server-authentication",
     "title": "7. Boltz-2",
     "section": "MSA Server Authentication",
-    "text": "MSA Server Authentication\nWhen using --use_msa_server with servers requiring authentication, provide credentials:\nexport BOLTZ_MSA_TOKEN=\"your_token_here\"\nboltz predict input.yaml --use_msa_server\nSee the prediction documentation for more details."
+    "text": "MSA Server Authentication\nFor servers requiring authentication:\nexport BOLTZ_MSA_TOKEN=\"your_token_here\"\nboltz predict input.yaml --use_msa_server"
   },
   {
-    "objectID": "monday/7-boltz2.html#hpc-job-script-example",
-    "href": "monday/7-boltz2.html#hpc-job-script-example",
+    "objectID": "monday/7-boltz2.html#understanding-the-output",
+    "href": "monday/7-boltz2.html#understanding-the-output",
     "title": "7. Boltz-2",
-    "section": "HPC Job Script Example",
-    "text": "HPC Job Script Example\nFor SLURM clusters:\n#!/bin/bash\n#SBATCH --job-name=boltz\n#SBATCH --gpus=1\n#SBATCH --time=04:00:00\n#SBATCH --mem=32G\n\nmodule load cuda/12.1\n\n# Activate environment\nsource ~/.bashrc\n# or: mamba activate boltz_env\n\n# Run prediction\nboltz predict my_complex.yaml --use_msa_server --out_dir results/"
+    "section": "Understanding the Output",
+    "text": "Understanding the Output\nOutput directory structure:\nboltz_results_&lt;input&gt;/\n├── predictions/\n│   ├── model_0.cif      # Predicted structure\n│   └── confidence.json  # Confidence scores\n├── msa/                 # Generated MSAs (if using server)\n└── affinity/            # Affinity predictions (if requested)\nConfidence metrics:\n\npLDDT: Per-residue confidence\npTM: Predicted TM-score\ninterface pTM: For complexes"
   },
   {
-    "objectID": "monday/7-boltz2.html#performance-notes",
-    "href": "monday/7-boltz2.html#performance-notes",
+    "objectID": "monday/7-boltz2.html#performance-comparison",
+    "href": "monday/7-boltz2.html#performance-comparison",
     "title": "7. Boltz-2",
-    "section": "Performance Notes",
-    "text": "Performance Notes\n\nGPU: Boltz runs efficiently on recent NVIDIA GPUs\nCPU: Functional but significantly slower than GPU\nSpeed: Approximately 1000x faster than FEP methods for affinity prediction"
-  },
-  {
-    "objectID": "monday/7-boltz2.html#example-use-cases",
-    "href": "monday/7-boltz2.html#example-use-cases",
-    "title": "7. Boltz-2",
-    "section": "Example Use Cases",
-    "text": "Example Use Cases\nStructure prediction only:\nboltz predict structure.yaml\nStructure + Affinity prediction:\n# In your YAML file, specify affinity prediction\nversion: 1\nsequences:\n  - protein:\n      id: A\n      sequence: MKTVRQERLK...\n  - ligand:\n      id: L\n      smiles: \"CC(C)CC1=CC=C(C=C1)C(C)C\"\nproperties:\n  - affinity"
+    "section": "Performance Comparison",
+    "text": "Performance Comparison\n\n\n\nMethod\nSpeed\nAffinity Accuracy\n\n\n\n\nFEP (physics-based)\nHours-days\nGold standard\n\n\nBoltz-2\nSeconds-minutes\nComparable to FEP\n\n\nTraditional docking\nSeconds\nLower accuracy"
   },
   {
     "objectID": "monday/7-boltz2.html#troubleshooting",
     "href": "monday/7-boltz2.html#troubleshooting",
     "title": "7. Boltz-2",
     "section": "Troubleshooting",
-    "text": "Troubleshooting\nInstallation issues: Ensure you’re in a fresh environment and have compatible CUDA version.\nMSA server errors: Check authentication credentials and server availability.\n\nNavigation: ← Chai-1 | Monday Overview | Next: DiffDock-PP →"
+    "text": "Troubleshooting\nInstallation issues:\n\nUse a fresh environment\nTry removing [cuda] if CUDA issues arise\nVerify CUDA version compatibility\n\n“MSA server error”:\n\nCheck network connectivity\nVerify authentication token if required\nTry without --use_msa_server for testing\n\nOut of memory:\n\nRequest more GPU memory\nReduce complex size\nTry CPU-only mode for testing\n\nSlow without GPU:\n\nCPU mode is functional but significantly slower\nAlways use GPU for production runs\n\nYAML parsing errors:\n\nCheck YAML syntax (indentation matters)\nEnsure SMILES strings are quoted\nVerify sequence format\n\n\nNavigation: ← Chai-1 | Monday Overview | Next: DiffDock-PP →"
   },
   {
     "objectID": "monday/9-placer.html",
     "href": "monday/9-placer.html",
     "title": "9. PLACER",
     "section": "",
-    "text": "PLACER (paper, code) stands for Protein-Ligand Atomistic Conformational Ensemble Resolver. It’s a graph neural network that operates entirely at the atomic level to generate conformational ensembles of protein-ligand complexes.\nPLACER is useful for:\nThe goal of this module is to install PLACER on your HPC cluster."
+    "text": "PLACER (paper, code) stands for Protein-Ligand Atomistic Conformational Ensemble Resolver. It’s a graph neural network that operates entirely at the atomic level to generate conformational ensembles of protein-ligand complexes."
   },
   {
-    "objectID": "monday/9-placer.html#preparation-work",
-    "href": "monday/9-placer.html#preparation-work",
+    "objectID": "monday/9-placer.html#why-use-placer",
+    "href": "monday/9-placer.html#why-use-placer",
     "title": "9. PLACER",
-    "section": "Preparation Work",
-    "text": "Preparation Work\n Mark as complete\nThis assignment assumes that you have access to a computing cluster that allows installation of new software. We’ll be creating virtual environments using Conda/Mamba."
+    "section": "Why Use PLACER?",
+    "text": "Why Use PLACER?\n\nEnsemble predictions: Generates multiple conformations to capture binding uncertainty\nAll-atom accuracy: Operates at atomic level for precise interactions\nSide chain flexibility: Predicts side chain conformations alongside ligand poses\nConfidence scores: Multiple metrics for ranking and validating predictions\n\nRelated Tools: For protein-protein docking, see DiffDock-PP. For structure prediction of complexes, see Chai-1 or Boltz-2."
   },
   {
-    "objectID": "monday/9-placer.html#installation-steps",
-    "href": "monday/9-placer.html#installation-steps",
+    "objectID": "monday/9-placer.html#resource-requirements",
+    "href": "monday/9-placer.html#resource-requirements",
     "title": "9. PLACER",
-    "section": "Installation Steps",
-    "text": "Installation Steps\n Mark as complete\n\nClone the repository:\n\ngit clone https://github.com/baker-laboratory/PLACER.git\ncd PLACER\nThe repository contains model weights and is ready to run after environment setup.\n\nCreate the conda environment from the provided file:\n\nmamba env create -f envs/placer_env.yml\n\nActivate the environment:\n\nmamba activate placer_env"
+    "section": "Resource Requirements",
+    "text": "Resource Requirements\n\n\n\nResource\nMinimum\nRecommended\nNotes\n\n\n\n\nGPU RAM\n8 GB\n16 GB\n1-3 sec/model on GPU\n\n\nCPU RAM\n16 GB\n32 GB\n~1 min/model on 8 cores\n\n\nDisk Space\n2 GB\n5 GB\nModel weights included\n\n\nPython\n3.9+\n3.10\nRequired\n\n\n\nPerformance:\n\nGPU: 1-3 seconds per model\nCPU (8 cores): ~1 minute per model\nLigands with many symmetric groups take longer"
+  },
+  {
+    "objectID": "monday/9-placer.html#preparation",
+    "href": "monday/9-placer.html#preparation",
+    "title": "9. PLACER",
+    "section": "Preparation",
+    "text": "Preparation\n Mark as complete\nPrerequisites:\n\nCompleted HPC Setup guide\nConda/Mamba installed\nGPU recommended for reasonable throughput"
+  },
+  {
+    "objectID": "monday/9-placer.html#installation",
+    "href": "monday/9-placer.html#installation",
+    "title": "9. PLACER",
+    "section": "Installation",
+    "text": "Installation\n Mark as complete\n\nClone the repository:\n\ngit clone https://github.com/baker-laboratory/PLACER.git\ncd PLACER\nThe repository includes model weights - no separate download needed.\n\nCreate the conda environment from the provided file:\n\nmamba env create -f envs/placer_env.yml\n\nActivate the environment:\n\nmamba activate placer_env"
   },
   {
     "objectID": "monday/9-placer.html#testing-the-installation",
     "href": "monday/9-placer.html#testing-the-installation",
     "title": "9. PLACER",
     "section": "Testing the Installation",
-    "text": "Testing the Installation\n Mark as complete\nRun a simple heme docking prediction:\npython run_PLACER.py \\\n    --ifile examples/inputs/dnHEM1.pdb \\\n    --odir test_output \\\n    --rerank prmsd \\\n    -n 10 \\\n    --ligand_file HEM:examples/ligands/HEM.mol2\nIf this completes successfully and creates output files in test_output/, your installation was successful!"
+    "text": "Testing the Installation\n Mark as complete\nRun a simple heme docking prediction:\npython run_PLACER.py \\\n    --ifile examples/inputs/dnHEM1.pdb \\\n    --odir test_output \\\n    --rerank prmsd \\\n    -n 10 \\\n    --ligand_file HEM:examples/ligands/HEM.mol2\nSuccess indicators:\n\nCommand completes without errors\ntest_output/ directory is created\nContains ranked PDB files of docked complexes\n\nExpected runtime: 30-60 seconds on GPU, 10-15 minutes on CPU."
   },
   {
-    "objectID": "monday/9-placer.html#command-line-usage",
-    "href": "monday/9-placer.html#command-line-usage",
+    "objectID": "monday/9-placer.html#hpc-job-script",
+    "href": "monday/9-placer.html#hpc-job-script",
     "title": "9. PLACER",
-    "section": "Command Line Usage",
-    "text": "Command Line Usage\nBasic syntax:\npython run_PLACER.py -f INPUT.pdb -o OUTPUT_DIR -n NUM_SAMPLES\nKey parameters:\n\n-f or --ifile: Input PDB/mmCIF file\n-o or --odir: Output directory\n-n or --nsamples: Number of ensemble samples (50-100 recommended for docking)\n--rerank: Rank outputs by confidence metric (prmsd, plddt, or plddt_pde)\n--predict_ligand: Specify which ligand(s) to predict\n--fixed_ligand: Keep certain ligands fixed in place\n--ligand_file: Provide SDF/MOL2 files for correct atom typing"
+    "section": "HPC Job Script",
+    "text": "HPC Job Script\n#!/bin/bash\n#SBATCH --job-name=placer\n#SBATCH --partition=gpu\n#SBATCH --gpus=1\n#SBATCH --cpus-per-task=8\n#SBATCH --mem=32G\n#SBATCH --time=04:00:00\n#SBATCH --output=%x_%j.out\n\nmodule load cuda/12.1\n\nsource ~/.bashrc\nmamba activate placer_env\n\ncd /path/to/PLACER\n\n# Predict ligand binding with 100 samples\npython run_PLACER.py \\\n    --ifile my_complex.pdb \\\n    --odir results/ \\\n    --predict_ligand LIG-501 \\\n    --rerank prmsd \\\n    -n 100 \\\n    --ligand_file LIG:ligand.sdf"
   },
   {
-    "objectID": "monday/9-placer.html#hpc-job-script-example",
-    "href": "monday/9-placer.html#hpc-job-script-example",
+    "objectID": "monday/9-placer.html#usage-examples",
+    "href": "monday/9-placer.html#usage-examples",
     "title": "9. PLACER",
-    "section": "HPC Job Script Example",
-    "text": "HPC Job Script Example\nFor SLURM clusters:\n#!/bin/bash\n#SBATCH --job-name=placer\n#SBATCH --gpus=1\n#SBATCH --time=04:00:00\n#SBATCH --mem=32G\n\nmodule load cuda/12.1\n\nmamba activate placer_env\n\n# Predict ligand binding with 100 samples\npython run_PLACER.py \\\n    --ifile my_complex.pdb \\\n    --odir results/ \\\n    --predict_ligand LIG-501 \\\n    --rerank prmsd \\\n    -n 100 \\\n    --ligand_file LIG:ligand.sdf"
+    "section": "Usage Examples",
+    "text": "Usage Examples\nBasic ligand docking:\npython run_PLACER.py \\\n    -f INPUT.pdb \\\n    -o OUTPUT_DIR \\\n    -n 50\nLigand docking with cofactor fixed:\npython run_PLACER.py \\\n    --ifile 4dtz.cif \\\n    --odir output/ \\\n    --predict_ligand D-LDP-501 \\\n    --fixed_ligand C-HEM-500 \\\n    -n 100 \\\n    --rerank prmsd\nSide chain prediction (apo mode, no ligand):\npython run_PLACER.py \\\n    --ifile protein.pdb \\\n    --odir output/ \\\n    --target_res A-149 \\\n    -n 50 \\\n    --no-use_sm\nMultiple ligands simultaneously:\npython run_PLACER.py \\\n    --ifile complex.pdb \\\n    --odir output/ \\\n    --predict_multi \\\n    --predict_ligand LIG1 LIG2 \\\n    -n 100"
+  },
+  {
+    "objectID": "monday/9-placer.html#key-parameters",
+    "href": "monday/9-placer.html#key-parameters",
+    "title": "9. PLACER",
+    "section": "Key Parameters",
+    "text": "Key Parameters\n\n\n\n\n\n\n\nParameter\nDescription\n\n\n\n\n-f or --ifile\nInput PDB/mmCIF file\n\n\n-o or --odir\nOutput directory\n\n\n-n or --nsamples\nNumber of ensemble samples (50-100 recommended)\n\n\n--rerank\nRank by confidence: prmsd, plddt, or plddt_pde\n\n\n--predict_ligand\nSpecify which ligand(s) to predict\n\n\n--fixed_ligand\nKeep certain ligands fixed in place\n\n\n--ligand_file\nProvide SDF/MOL2 for correct atom typing\n\n\n--target_res\nSpecific residue(s) for side chain prediction\n\n\n--no-use_sm\nApo mode - predict without small molecules"
   },
   {
     "objectID": "monday/9-placer.html#understanding-confidence-scores",
     "href": "monday/9-placer.html#understanding-confidence-scores",
     "title": "9. PLACER",
     "section": "Understanding Confidence Scores",
-    "text": "Understanding Confidence Scores\nPLACER provides several confidence metrics:\n\nprmsd: Predicted RMSD (recommended for docking). Good: &lt;2.0, Acceptable: &lt;4.0\nplddt: Predicted lDDT from 1D track. Good: &gt;0.8\nplddt_pde: Predicted lDDT from 2D track. Good: &gt;0.8\nfape: All-atom FAPE loss\nrmsd: Actual RMSD to reference (if available)\nkabsch: Superimposed RMSD (conformation accuracy)"
-  },
-  {
-    "objectID": "monday/9-placer.html#example-use-cases",
-    "href": "monday/9-placer.html#example-use-cases",
-    "title": "9. PLACER",
-    "section": "Example Use Cases",
-    "text": "Example Use Cases\nLigand docking with cofactor fixed:\npython run_PLACER.py \\\n    --ifile 4dtz.cif \\\n    --odir output/ \\\n    --predict_ligand D-LDP-501 \\\n    --fixed_ligand C-HEM-500 \\\n    -n 100 \\\n    --rerank prmsd\nSide chain prediction:\npython run_PLACER.py \\\n    --ifile protein.pdb \\\n    --odir output/ \\\n    --target_res A-149 \\\n    -n 50 \\\n    --no-use_sm  # apo mode, no small molecule\nMultiple ligands simultaneously:\npython run_PLACER.py \\\n    --ifile complex.pdb \\\n    --odir output/ \\\n    --predict_multi \\\n    --predict_ligand LIG1 LIG2 \\\n    -n 100"
+    "text": "Understanding Confidence Scores\nPLACER provides multiple confidence metrics:\n\n\n\n\n\n\n\n\nMetric\nDescription\nGood Values\n\n\n\n\nprmsd\nPredicted RMSD to true pose\n&lt;2.0 Å (excellent), &lt;4.0 Å (acceptable)\n\n\nplddt\nPer-residue confidence (1D track)\n&gt;0.8\n\n\nplddt_pde\nPer-residue confidence (2D track)\n&gt;0.8\n\n\nfape\nAll-atom FAPE loss\nLower is better\n\n\nrmsd\nActual RMSD to reference (if available)\n&lt;2.0 Å\n\n\nkabsch\nSuperimposed RMSD\nMeasures conformation accuracy\n\n\n\nRecommendation: Use --rerank prmsd for docking tasks."
   },
   {
     "objectID": "monday/9-placer.html#python-api",
     "href": "monday/9-placer.html#python-api",
     "title": "9. PLACER",
     "section": "Python API",
-    "text": "Python API\nPLACER can also be imported as a Python module:\nimport sys\nsys.path.append(\"/path/to/PLACER\")\nimport PLACER\n\nplacer = PLACER.PLACER()  # Load model\n\npl_input = PLACER.PLACERinput()\npl_input.pdb(\"complex.pdb\")\npl_input.name(\"my_prediction\")\npl_input.ligand_reference({\"HEM\": \"heme.mol2\"})\n\n# Run 50 predictions\noutputs = placer.run(pl_input, 50)"
+    "text": "Python API\nPLACER can be imported as a Python module:\nimport sys\nsys.path.append(\"/path/to/PLACER\")\nimport PLACER\n\n# Load model\nplacer = PLACER.PLACER()\n\n# Set up input\npl_input = PLACER.PLACERinput()\npl_input.pdb(\"complex.pdb\")\npl_input.name(\"my_prediction\")\npl_input.ligand_reference({\"HEM\": \"heme.mol2\"})\n\n# Run 50 predictions\noutputs = placer.run(pl_input, 50)\n\n# Access results\nfor out in outputs:\n    print(f\"pRMSD: {out.prmsd:.2f}, pLDDT: {out.plddt:.2f}\")"
   },
   {
-    "objectID": "monday/9-placer.html#performance-notes",
-    "href": "monday/9-placer.html#performance-notes",
+    "objectID": "monday/9-placer.html#understanding-the-output",
+    "href": "monday/9-placer.html#understanding-the-output",
     "title": "9. PLACER",
-    "section": "Performance Notes",
-    "text": "Performance Notes\nGPU: 1-3 seconds per model (typical ligand-protein complex)\nCPU (1 core): ~7 minutes per model\nCPU (8 cores): ~1 minute per model\nLigands with many symmetric groups take longer."
+    "section": "Understanding the Output",
+    "text": "Understanding the Output\nOutput directory structure:\noutput/\n├── ranked_0.pdb          # Best pose by confidence\n├── ranked_1.pdb          # Second best\n├── ranked_2.pdb          # ...\n├── scores.csv            # All confidence metrics\n└── ensemble/             # All generated samples\nInterpreting ensemble results:\n\nMultiple similar poses = high confidence\nDiverse poses = uncertain binding mode\nCompare top-ranked poses to assess convergence"
+  },
+  {
+    "objectID": "monday/9-placer.html#input-format-requirements",
+    "href": "monday/9-placer.html#input-format-requirements",
+    "title": "9. PLACER",
+    "section": "Input Format Requirements",
+    "text": "Input Format Requirements\nLigand must be in input structure:\n\nPLACER requires the ligand to be present in the PDB\nSMILES-only input is not supported\nUse --ligand_file to provide correct bonding information\n\nLigand file formats:\n\nSDF files: Best for drug-like molecules\nMOL2 files: Good for cofactors\nHelps with: aromatic rings, stereochemistry, bond orders"
   },
   {
     "objectID": "monday/9-placer.html#troubleshooting",
     "href": "monday/9-placer.html#troubleshooting",
     "title": "9. PLACER",
     "section": "Troubleshooting",
-    "text": "Troubleshooting\nNon-planar aromatic rings: Provide SDF/MOL2 file with --ligand_file for correct bonding information.\nMissing ligands in PDB: Currently, ligands must be in the input PDB. SMILES-only input not supported.\nCustom residues: Use --residue_json to define non-canonical amino acids.\n\nNavigation: ← DiffDock-PP | Monday Overview | Next: BindCraft →"
-  },
-  {
-    "objectID": "monday/5-openfold.html",
-    "href": "monday/5-openfold.html",
-    "title": "5. OpenFold",
-    "section": "",
-    "text": "OpenFold (paper, code) is a faithful, trainable PyTorch reproduction of DeepMind’s AlphaFold2. It achieves performance comparable to AlphaFold2 and provides a fully open-source implementation for protein structure prediction.\nOpenFold is useful for protein structure prediction with full transparency into the model architecture and training process. It’s particularly valuable for researchers who want to understand, modify, or retrain structure prediction models.\nThe goal of this module is to install OpenFold on your HPC cluster."
-  },
-  {
-    "objectID": "monday/5-openfold.html#preparation-work",
-    "href": "monday/5-openfold.html#preparation-work",
-    "title": "5. OpenFold",
-    "section": "Preparation Work",
-    "text": "Preparation Work\n Mark as complete\nThis assignment assumes that you have access to a computing cluster that allows installation of new software.\nNote: OpenFold installation can be complex. Please refer to the official documentation at openfold.readthedocs.io for the most up-to-date installation instructions."
-  },
-  {
-    "objectID": "monday/5-openfold.html#recommended-installation-method",
-    "href": "monday/5-openfold.html#recommended-installation-method",
-    "title": "5. OpenFold",
-    "section": "Recommended Installation Method",
-    "text": "Recommended Installation Method\n Mark as complete\nThe easiest way to install OpenFold on an HPC is to follow the official documentation:\n\nVisit the OpenFold documentation: https://openfold.readthedocs.io\nFollow the installation instructions for your system\nThe documentation provides detailed guidance for:\n\nEnvironment setup\nDependency installation\nModel weight downloads\nRunning inference\nTraining (if desired)"
-  },
-  {
-    "objectID": "monday/5-openfold.html#key-requirements",
-    "href": "monday/5-openfold.html#key-requirements",
-    "title": "5. OpenFold",
-    "section": "Key Requirements",
-    "text": "Key Requirements\n\nPython 3.7+\nPyTorch\nCUDA-capable GPU\nSignificant disk space for databases (if using MSAs)"
-  },
-  {
-    "objectID": "monday/5-openfold.html#basic-installation-overview",
-    "href": "monday/5-openfold.html#basic-installation-overview",
-    "title": "5. OpenFold",
-    "section": "Basic Installation Overview",
-    "text": "Basic Installation Overview\nWhile exact commands may change, the general process involves:\n\nClone the repository:\n\ngit clone https://github.com/aqlaboratory/openfold.git\ncd openfold\n\nSet up the conda environment:\n\n# Follow instructions from official docs\nconda env create -f environment.yml\nconda activate openfold\n\nInstall OpenFold:\n\n# Follow instructions from official docs\npython setup.py install\n\nDownload model weights:\n\n# Scripts provided in the repository\nbash scripts/download_openfold_params.sh openfold/resources"
-  },
-  {
-    "objectID": "monday/5-openfold.html#hpc-specific-notes",
-    "href": "monday/5-openfold.html#hpc-specific-notes",
-    "title": "5. OpenFold",
-    "section": "HPC-Specific Notes",
-    "text": "HPC-Specific Notes\nDatabase Requirements: If using MSAs, OpenFold requires access to large sequence databases (similar to AlphaFold2). These may already be available on your HPC system. Check with your system administrator.\nGPU Requirements: Structure prediction requires CUDA-capable GPUs. Request appropriate GPU resources when submitting jobs.\nDocker/Singularity: If OpenFold provides Docker containers, remember that most academic HPCs use Singularity/Apptainer instead of Docker."
-  },
-  {
-    "objectID": "monday/5-openfold.html#testing-your-installation",
-    "href": "monday/5-openfold.html#testing-your-installation",
-    "title": "5. OpenFold",
-    "section": "Testing Your Installation",
-    "text": "Testing Your Installation\n Mark as complete\nOnce installed, test with a simple prediction:\n# Example command (exact syntax from official docs)\npython run_pretrained_openfold.py \\\n    --fasta_paths example.fasta \\\n    --output_dir predictions/\nConsult the official documentation for exact command syntax and options."
-  },
-  {
-    "objectID": "monday/5-openfold.html#why-openfold",
-    "href": "monday/5-openfold.html#why-openfold",
-    "title": "5. OpenFold",
-    "section": "Why OpenFold?",
-    "text": "Why OpenFold?\n\nTransparency: Full access to model architecture and training code\nReproducibility: Can retrain models with custom data\nResearch: Understand how structure prediction models work\nCustomization: Modify model architecture for specific applications"
-  },
-  {
-    "objectID": "monday/5-openfold.html#documentation-and-support",
-    "href": "monday/5-openfold.html#documentation-and-support",
-    "title": "5. OpenFold",
-    "section": "Documentation and Support",
-    "text": "Documentation and Support\nFor the most accurate and up-to-date information:\n\nOfficial Documentation: https://openfold.readthedocs.io\nGitHub Repository: https://github.com/aqlaboratory/openfold\nOriginal README: Available in the repository\n\n\nNavigation: ← ESMFold | Monday Overview | Next: Chai-1 →"
-  },
-  {
-    "objectID": "monday/8-diffdock-pp.html",
-    "href": "monday/8-diffdock-pp.html",
-    "title": "8. DiffDock-PP",
-    "section": "",
-    "text": "DiffDock-PP (paper, code) is a graph neural network trained to complete de-noising of rigid transformations (rotation and translation) that parameterize the docking orientation between two rigid protein subunits.\nDiffDock-PP is useful for predicting binding orientations between protein chains and can be used to orthogonally validate structure predictions, particularly for protein-protein docking.\nThe goal of this module is to install DiffDock-PP on your HPC cluster."
-  },
-  {
-    "objectID": "monday/8-diffdock-pp.html#preparation-work",
-    "href": "monday/8-diffdock-pp.html#preparation-work",
-    "title": "8. DiffDock-PP",
-    "section": "Preparation Work",
-    "text": "Preparation Work\n Mark as complete\nThis assignment assumes that you have access to a computing cluster that allows installation of new software. We’ll be creating virtual environments using Conda/Mamba.\n(If you don’t have Mamba or prefer using Conda, just swap mamba for conda in the install commands below)"
-  },
-  {
-    "objectID": "monday/8-diffdock-pp.html#installation-steps",
-    "href": "monday/8-diffdock-pp.html#installation-steps",
-    "title": "8. DiffDock-PP",
-    "section": "Installation Steps",
-    "text": "Installation Steps\n Mark as complete\n\nClone the DiffDock-PP repository:\n\ngit clone https://github.com/ketatam/DiffDock-PP.git\ncd DiffDock-PP\n\nCreate a new environment called “diffdock_pp”:\n\nmamba create -n diffdock_pp\n\nActivate the new environment:\n\nmamba activate diffdock_pp\n\nInstall PyTorch:\n\nmamba install pytorch=1.13.0 pytorch-cuda=11.6 -c pytorch -c nvidia\n\nInstall PyG (PyTorch Geometric) packages:\n\nmamba install pytorch-scatter pytorch-sparse pytorch-cluster pytorch-spline-conv pyg -c pyg\n\nInstall the remaining dependencies:\n\nmamba install mkl=2024.0 \"numpy&lt;2.0\" dill tqdm pyyaml pandas biopandas scikit-learn biopython e3nn wandb tensorboard tensorboardX matplotlib"
-  },
-  {
-    "objectID": "monday/8-diffdock-pp.html#testing-the-installation",
-    "href": "monday/8-diffdock-pp.html#testing-the-installation",
-    "title": "8. DiffDock-PP",
-    "section": "Testing the Installation",
-    "text": "Testing the Installation\n Mark as complete\n\nCreate required directories:\n\nmkdir storage\n\nRun the test script on the DB5 benchmark:\n\nbash DiffDock-PP/src/db5_inference.sh\nIf the command works without errors and the output folder visualization/epoch-0/ contains PDB files of docked complexes, your installation was successful!"
-  },
-  {
-    "objectID": "monday/8-diffdock-pp.html#hpc-job-script-example",
-    "href": "monday/8-diffdock-pp.html#hpc-job-script-example",
-    "title": "8. DiffDock-PP",
-    "section": "HPC Job Script Example",
-    "text": "HPC Job Script Example\nFor SLURM clusters:\n#!/bin/bash\n#SBATCH --job-name=diffdock_pp\n#SBATCH --gpus=1\n#SBATCH --time=02:00:00\n#SBATCH --mem=16G\n\nmodule load cuda/11.6  # Adjust to match PyTorch CUDA version\n\nmamba activate diffdock_pp\n\n# Create output directory\nmkdir -p storage\n\n# Run inference\nbash DiffDock-PP/src/db5_inference.sh"
-  },
-  {
-    "objectID": "monday/8-diffdock-pp.html#hpc-specific-notes",
-    "href": "monday/8-diffdock-pp.html#hpc-specific-notes",
-    "title": "8. DiffDock-PP",
-    "section": "HPC-Specific Notes",
-    "text": "HPC-Specific Notes\nCUDA Version: DiffDock-PP was tested with PyTorch 1.13.0 and CUDA 11.6. Make sure your HPC has compatible CUDA modules:\nmodule avail cuda\nGPU Requirements: Docking predictions benefit from GPU acceleration. Request GPU resources when submitting jobs."
-  },
-  {
-    "objectID": "monday/8-diffdock-pp.html#understanding-the-output",
-    "href": "monday/8-diffdock-pp.html#understanding-the-output",
-    "title": "8. DiffDock-PP",
-    "section": "Understanding the Output",
-    "text": "Understanding the Output\nThe script generates:\n\nPDB files of predicted protein-protein complexes in visualization/epoch-0/\nEach PDB file represents a predicted docking pose\nMultiple poses may be generated for ensemble predictions"
-  },
-  {
-    "objectID": "monday/8-diffdock-pp.html#use-cases",
-    "href": "monday/8-diffdock-pp.html#use-cases",
-    "title": "8. DiffDock-PP",
-    "section": "Use Cases",
-    "text": "Use Cases\n\nProtein-Protein Docking: Predict binding orientations between protein chains\nComplex Validation: Validate predicted protein-protein interfaces\nEnsemble Generation: Generate multiple docking poses to capture uncertainty"
-  },
-  {
-    "objectID": "monday/8-diffdock-pp.html#troubleshooting",
-    "href": "monday/8-diffdock-pp.html#troubleshooting",
-    "title": "8. DiffDock-PP",
-    "section": "Troubleshooting",
-    "text": "Troubleshooting\nPyG installation failures: Ensure CUDA toolkit is available and PyTorch is installed first.\nCUDA version mismatch: Make sure the CUDA version for PyTorch matches your system’s CUDA:\nnvcc --version\nNumPy version: The environment specifies numpy&lt;2.0 for compatibility. Don’t upgrade NumPy beyond 2.0.\n\nNavigation: ← Boltz-2 | Monday Overview | Next: PLACER →"
+    "text": "Troubleshooting\nNon-planar aromatic rings:\n\nProvide SDF/MOL2 file with --ligand_file\nThis ensures correct bonding information\n\nMissing ligands in PDB:\n\nLigands must be in the input structure\nSMILES-only input is not currently supported\n\nCustom/non-canonical residues:\npython run_PLACER.py \\\n    --ifile input.pdb \\\n    --residue_json custom_residues.json \\\n    --odir output/\nSlow predictions:\n\nSymmetric ligands (many equivalent atoms) are slower\nUse GPU for production runs\nReduce -n for initial testing\n\nOut of memory:\n\nPLACER is generally memory-efficient\nIf issues persist, try reducing ensemble size\nOr use CPU with multiple cores\n\n\nNavigation: ← DiffDock-PP | Monday Overview | Next: BindCraft →"
   },
   {
     "objectID": "monday/3-rfdiffusion2.html",
     "href": "monday/3-rfdiffusion2.html",
     "title": "3. RFdiffusion2",
     "section": "",
-    "text": "RFdiffusion2 (paper, code) is a protein design model capable of atom-level active site scaffolding. It extends the original RFdiffusion to enable more precise control over protein-ligand interactions at the atomic level.\nRFdiffusion2 is useful for designing proteins with specific active site geometries, enzyme design with atomic-level motif constraints, and designing binders to small molecules with precise interaction patterns.\nThe goal of this module is to install RFdiffusion2 on your HPC cluster."
+    "text": "RFdiffusion2 (paper, code) is a protein design model capable of atom-level active site scaffolding. It extends the original RFdiffusion to enable precise control over protein-ligand interactions at the atomic level."
   },
   {
-    "objectID": "monday/3-rfdiffusion2.html#preparation-work",
-    "href": "monday/3-rfdiffusion2.html#preparation-work",
+    "objectID": "monday/3-rfdiffusion2.html#why-use-rfdiffusion2",
+    "href": "monday/3-rfdiffusion2.html#why-use-rfdiffusion2",
     "title": "3. RFdiffusion2",
-    "section": "Preparation Work",
-    "text": "Preparation Work\n Mark as complete\nThis assignment assumes that you have access to a computing cluster that allows installation of new software.\nIMPORTANT: RFdiffusion2 uses Apptainer/Singularity containers. Most academic HPCs support Singularity/Apptainer, but verify with your system administrator if unsure."
+    "section": "Why Use RFdiffusion2?",
+    "text": "Why Use RFdiffusion2?\n\nAtomic-level control: Design proteins with precise active site geometries\nLigand scaffolding: Build proteins around small molecules with atomic accuracy\nMotif grafting: Incorporate functional motifs into new scaffolds\nFlexible backbone design: Generate novel folds with specific functional constraints\n\nRelated Tools: Use with LigandMPNN for sequence design after backbone generation. For the earlier version without atomic control, see RFdiffusion All Atom (Optional)."
   },
   {
-    "objectID": "monday/3-rfdiffusion2.html#installation-steps",
-    "href": "monday/3-rfdiffusion2.html#installation-steps",
+    "objectID": "monday/3-rfdiffusion2.html#resource-requirements",
+    "href": "monday/3-rfdiffusion2.html#resource-requirements",
     "title": "3. RFdiffusion2",
-    "section": "Installation Steps",
-    "text": "Installation Steps\n Mark as complete\n\nClone the repository:\n\ngit clone https://github.com/RosettaCommons/RFdiffusion2.git\ncd RFdiffusion2\n\nAdd the repo to your PYTHONPATH (add this to your ~/.bashrc):\n\nexport PYTHONPATH=\"/path/to/your/RFdiffusion2:$PYTHONPATH\"\n\nDownload the model weights and containers:\n\npython setup.py\nNote: This downloads large files (~several GB) and can take 30+ minutes. If the download is interrupted, run python setup.py overwrite to resume.\n\nInstall Apptainer/Singularity\n\nFor Apptainer on Ubuntu/Debian:\nsudo add-apt-repository -y ppa:apptainer/ppa\nsudo apt update\nsudo apt install -y apptainer\nFor HPC clusters: Apptainer/Singularity is usually pre-installed. Load the module:\nmodule load apptainer\n# or\nmodule load singularity"
+    "section": "Resource Requirements",
+    "text": "Resource Requirements\n\n\n\n\n\n\n\n\n\nResource\nMinimum\nRecommended\nNotes\n\n\n\n\nGPU RAM\n16 GB\n32+ GB\nA100 for larger designs\n\n\nCPU RAM\n16 GB\n32 GB\nContainer-based execution\n\n\nDisk Space\n10 GB\n20 GB\nContainer + weights\n\n\nContainer\nApptainer/Singularity\nRequired\nNo native Docker on HPC"
   },
   {
-    "objectID": "monday/3-rfdiffusion2.html#docker-alternative-for-hpc",
-    "href": "monday/3-rfdiffusion2.html#docker-alternative-for-hpc",
+    "objectID": "monday/3-rfdiffusion2.html#preparation",
+    "href": "monday/3-rfdiffusion2.html#preparation",
     "title": "3. RFdiffusion2",
-    "section": "Docker Alternative for HPC",
-    "text": "Docker Alternative for HPC\nIMPORTANT HPC NOTE: Most academic HPCs do NOT support Docker for security reasons. If the official documentation mentions Docker, use Singularity/Apptainer instead. The downloaded .sif file in rf_diffusion/exec/ is a Singularity/Apptainer container that works on HPCs."
+    "section": "Preparation",
+    "text": "Preparation\n Mark as complete\nPrerequisites:\n\nCompleted HPC Setup guide\nApptainer/Singularity available on your cluster\nCUDA-capable GPU\n\nVerify your environment:\nmodule load apptainer    # or: module load singularity\napptainer --version\nnvidia-smi\nImportant: RFdiffusion2 uses containers. Most academic HPCs do NOT support Docker for security reasons - use Apptainer/Singularity instead."
+  },
+  {
+    "objectID": "monday/3-rfdiffusion2.html#installation",
+    "href": "monday/3-rfdiffusion2.html#installation",
+    "title": "3. RFdiffusion2",
+    "section": "Installation",
+    "text": "Installation\n Mark as complete\n\nClone the repository:\n\ngit clone https://github.com/RosettaCommons/RFdiffusion2.git\ncd RFdiffusion2\n\nAdd the repo to your PYTHONPATH (add to ~/.bashrc):\n\nexport PYTHONPATH=\"/path/to/your/RFdiffusion2:$PYTHONPATH\"\n\nDownload the model weights and container:\n\npython setup.py\nExpected download: ~5-10 GB (container + weights). This can take 30+ minutes.\nIf download is interrupted:\npython setup.py overwrite\n\nVerify Apptainer/Singularity is available:\n\nmodule load apptainer\n# or: module load singularity\nThe downloaded .sif file in rf_diffusion/exec/ is the Singularity container."
   },
   {
     "objectID": "monday/3-rfdiffusion2.html#testing-the-installation",
     "href": "monday/3-rfdiffusion2.html#testing-the-installation",
     "title": "3. RFdiffusion2",
     "section": "Testing the Installation",
-    "text": "Testing the Installation\n Mark as complete\nRun a demo case:\napptainer exec --nv rf_diffusion/exec/bakerlab_rf_diffusion_aa.sif \\\n    rf_diffusion/benchmark/pipeline.py \\\n    --config-name=open_source_demo \\\n    sweep.benchmarks=active_site_unindexed_atomic_partial_ligand\nNote: Omit the --nv flag if running without GPU.\nThis will generate a protein design with an atomized active site motif. The output will be in:\npipeline_outputs/&lt;timestamp&gt;_open_source_demo"
+    "text": "Testing the Installation\n Mark as complete\nRun a demo case:\napptainer exec --nv rf_diffusion/exec/bakerlab_rf_diffusion_aa.sif \\\n    rf_diffusion/benchmark/pipeline.py \\\n    --config-name=open_source_demo \\\n    sweep.benchmarks=active_site_unindexed_atomic_partial_ligand\nNote: Omit --nv flag if running without GPU (will be very slow).\nSuccess indicators:\n\nCommand completes without errors\nOutput directory created at pipeline_outputs/&lt;timestamp&gt;_open_source_demo/\nContains PDB files with designed structures\n\nExpected runtime: 5-15 minutes on GPU, 30+ minutes on CPU."
   },
   {
-    "objectID": "monday/3-rfdiffusion2.html#hpc-specific-notes",
-    "href": "monday/3-rfdiffusion2.html#hpc-specific-notes",
+    "objectID": "monday/3-rfdiffusion2.html#hpc-job-script",
+    "href": "monday/3-rfdiffusion2.html#hpc-job-script",
     "title": "3. RFdiffusion2",
-    "section": "HPC-Specific Notes",
-    "text": "HPC-Specific Notes\nGPU Requirements: RFdiffusion2 requires CUDA-capable GPUs for reasonable performance. Request GPU nodes when submitting jobs.\nContainer Execution: Use apptainer (or singularity) instead of docker:\n# NOT: docker run ...\n# INSTEAD:\napptainer exec --nv &lt;container.sif&gt; &lt;command&gt;"
+    "section": "HPC Job Script",
+    "text": "HPC Job Script\n#!/bin/bash\n#SBATCH --job-name=rfdiff2\n#SBATCH --partition=gpu\n#SBATCH --gpus=1\n#SBATCH --cpus-per-task=4\n#SBATCH --mem=32G\n#SBATCH --time=04:00:00\n#SBATCH --output=%x_%j.out\n\nmodule load apptainer\nmodule load cuda/12.1\n\ncd /path/to/RFdiffusion2\n\napptainer exec --nv rf_diffusion/exec/bakerlab_rf_diffusion_aa.sif \\\n    rf_diffusion/benchmark/pipeline.py \\\n    --config-name=open_source_demo"
   },
   {
-    "objectID": "monday/3-rfdiffusion2.html#example-hpc-job-script",
-    "href": "monday/3-rfdiffusion2.html#example-hpc-job-script",
+    "objectID": "monday/3-rfdiffusion2.html#usage-examples",
+    "href": "monday/3-rfdiffusion2.html#usage-examples",
     "title": "3. RFdiffusion2",
-    "section": "Example HPC Job Script",
-    "text": "Example HPC Job Script\nFor SLURM clusters:\n#!/bin/bash\n#SBATCH --job-name=rfd2\n#SBATCH --gpus=1\n#SBATCH --time=04:00:00\n#SBATCH --mem=32G\n\nmodule load apptainer\nmodule load cuda/12.1\n\ncd /path/to/RFdiffusion2\n\napptainer exec --nv rf_diffusion/exec/bakerlab_rf_diffusion_aa.sif \\\n    rf_diffusion/benchmark/pipeline.py \\\n    --config-name=open_source_demo"
+    "section": "Usage Examples",
+    "text": "Usage Examples\nBasic backbone design:\napptainer exec --nv rf_diffusion/exec/bakerlab_rf_diffusion_aa.sif \\\n    rf_diffusion/benchmark/pipeline.py \\\n    --config-name=my_config\nWith custom output directory:\napptainer exec --nv rf_diffusion/exec/bakerlab_rf_diffusion_aa.sif \\\n    rf_diffusion/benchmark/pipeline.py \\\n    --config-name=open_source_demo \\\n    sweep.output_dir=/path/to/output\nMultiple design benchmarks:\napptainer exec --nv rf_diffusion/exec/bakerlab_rf_diffusion_aa.sif \\\n    rf_diffusion/benchmark/pipeline.py \\\n    --config-name=open_source_demo \\\n    sweep.benchmarks=\"[benchmark1,benchmark2]\""
+  },
+  {
+    "objectID": "monday/3-rfdiffusion2.html#docker-to-apptainer-translation",
+    "href": "monday/3-rfdiffusion2.html#docker-to-apptainer-translation",
+    "title": "3. RFdiffusion2",
+    "section": "Docker to Apptainer Translation",
+    "text": "Docker to Apptainer Translation\nThe official documentation may show Docker commands. Here’s how to translate:\n\n\n\nDocker Command\nApptainer Equivalent\n\n\n\n\ndocker run --gpus all image\napptainer exec --nv image.sif\n\n\ndocker run -v /path:/path\napptainer exec --bind /path:/path\n\n\n-it (interactive)\napptainer shell --nv\n\n\n\nExample conversion:\n# Docker (won't work on HPC):\ndocker run --gpus all -v $(pwd):/workspace rfdiffusion:latest python script.py\n\n# Apptainer (works on HPC):\napptainer exec --nv --bind $(pwd):/workspace rfdiffusion.sif python script.py"
+  },
+  {
+    "objectID": "monday/3-rfdiffusion2.html#understanding-the-output",
+    "href": "monday/3-rfdiffusion2.html#understanding-the-output",
+    "title": "3. RFdiffusion2",
+    "section": "Understanding the Output",
+    "text": "Understanding the Output\nOutput structure:\npipeline_outputs/\n└── &lt;timestamp&gt;_&lt;config_name&gt;/\n    ├── designs/\n    │   ├── design_0.pdb    # Designed backbone\n    │   ├── design_1.pdb\n    │   └── ...\n    ├── logs/\n    │   └── run.log         # Execution log\n    └── config.yaml         # Configuration used"
+  },
+  {
+    "objectID": "monday/3-rfdiffusion2.html#configuration-system",
+    "href": "monday/3-rfdiffusion2.html#configuration-system",
+    "title": "3. RFdiffusion2",
+    "section": "Configuration System",
+    "text": "Configuration System\nRFdiffusion2 uses Hydra for configuration. Key config options:\n\n\n\nParameter\nDescription\n\n\n\n\nsweep.benchmarks\nWhich design task(s) to run\n\n\nsweep.output_dir\nOutput directory\n\n\ndiffuser.T\nNumber of diffusion timesteps\n\n\ninference.num_designs\nNumber of designs to generate"
   },
   {
     "objectID": "monday/3-rfdiffusion2.html#troubleshooting",
     "href": "monday/3-rfdiffusion2.html#troubleshooting",
     "title": "3. RFdiffusion2",
     "section": "Troubleshooting",
-    "text": "Troubleshooting\nNo GPU available: The demo will be extremely slow on CPU (30+ minutes per case). Always use GPUs for production runs.\nContainer permission errors: Ensure you have read/execute permissions on the .sif file.\n\nNavigation: ← LigandMPNN | Monday Overview | Next: ESMFold →"
+    "text": "Troubleshooting\n“No GPU available” / extremely slow:\n\nEnsure --nv flag is included\nVerify GPU allocation: nvidia-smi\nLoad CUDA module: module load cuda/12.1\n\nContainer permission errors:\nchmod +x rf_diffusion/exec/bakerlab_rf_diffusion_aa.sif\n“FileNotFoundError” for weights:\n\nRe-run python setup.py to ensure all files downloaded\nCheck rf_diffusion/weights/ directory exists\n\nContainer not found:\n\nProvide full path to .sif file\nOr run from the RFdiffusion2 directory\n\nSetup script hangs during download:\n\nLarge files may take 30+ minutes\nCheck network connectivity\nIf interrupted, run python setup.py overwrite\n\nModule not found errors inside container:\n\nEnsure PYTHONPATH is set correctly\nContainer may need --bind for additional paths\n\n\nNavigation: ← LigandMPNN | Monday Overview | Next: ESMFold →"
+  },
+  {
+    "objectID": "monday/8-diffdock-pp.html",
+    "href": "monday/8-diffdock-pp.html",
+    "title": "8. DiffDock-PP",
+    "section": "",
+    "text": "DiffDock-PP (paper, code) is a graph neural network trained for de-noising of rigid transformations (rotation and translation) to predict protein-protein docking orientations between two rigid protein subunits."
+  },
+  {
+    "objectID": "monday/8-diffdock-pp.html#why-use-diffdock-pp",
+    "href": "monday/8-diffdock-pp.html#why-use-diffdock-pp",
+    "title": "8. DiffDock-PP",
+    "section": "Why Use DiffDock-PP?",
+    "text": "Why Use DiffDock-PP?\n\nFast protein-protein docking: Predicts binding orientations without expensive sampling\nValidation tool: Orthogonally validate structure predictions from other methods\nEnsemble predictions: Generate multiple docking poses for uncertainty estimation\nRigid-body docking: Efficient for cases where backbone flexibility is minimal\n\nRelated Tools: For protein-ligand docking, see PLACER. For flexible ligand binding with ensemble generation, see PLACER. For structure prediction of complexes, see Chai-1 or Boltz-2."
+  },
+  {
+    "objectID": "monday/8-diffdock-pp.html#resource-requirements",
+    "href": "monday/8-diffdock-pp.html#resource-requirements",
+    "title": "8. DiffDock-PP",
+    "section": "Resource Requirements",
+    "text": "Resource Requirements\n\n\n\nResource\nMinimum\nRecommended\nNotes\n\n\n\n\nGPU RAM\n8 GB\n16 GB\nScales with protein size\n\n\nCPU RAM\n8 GB\n16 GB\nFor preprocessing\n\n\nDisk Space\n2 GB\n5 GB\nModel weights\n\n\nCUDA\n11.6\n11.6-11.7\nSpecific version required"
+  },
+  {
+    "objectID": "monday/8-diffdock-pp.html#preparation",
+    "href": "monday/8-diffdock-pp.html#preparation",
+    "title": "8. DiffDock-PP",
+    "section": "Preparation",
+    "text": "Preparation\n Mark as complete\nPrerequisites:\n\nCompleted HPC Setup guide\nConda/Mamba installed\nCUDA 11.6 or 11.7 available\n\nCheck CUDA availability:\nmodule avail cuda\n# Look for cuda/11.6 or cuda/11.7"
+  },
+  {
+    "objectID": "monday/8-diffdock-pp.html#installation",
+    "href": "monday/8-diffdock-pp.html#installation",
+    "title": "8. DiffDock-PP",
+    "section": "Installation",
+    "text": "Installation\n Mark as complete\n\nClone the DiffDock-PP repository:\n\ngit clone https://github.com/ketatam/DiffDock-PP.git\ncd DiffDock-PP\n\nCreate a new environment:\n\nmamba create -n diffdock_pp python=3.9\nmamba activate diffdock_pp\n\nInstall PyTorch with CUDA 11.6:\n\nmamba install pytorch=1.13.0 pytorch-cuda=11.6 -c pytorch -c nvidia\nWhy CUDA 11.6? DiffDock-PP was developed and tested with this version. Using different versions may cause compatibility issues with PyG.\n\nInstall PyTorch Geometric (PyG) packages:\n\nmamba install pytorch-scatter pytorch-sparse pytorch-cluster pytorch-spline-conv pyg -c pyg\n\nInstall remaining dependencies:\n\nmamba install mkl=2024.0 \"numpy&lt;2.0\" dill tqdm pyyaml pandas biopandas scikit-learn biopython e3nn wandb tensorboard tensorboardX matplotlib\nWhy numpy&lt;2.0? NumPy 2.0 introduced breaking changes that affect many scientific packages. Keeping NumPy below 2.0 ensures compatibility."
+  },
+  {
+    "objectID": "monday/8-diffdock-pp.html#testing-the-installation",
+    "href": "monday/8-diffdock-pp.html#testing-the-installation",
+    "title": "8. DiffDock-PP",
+    "section": "Testing the Installation",
+    "text": "Testing the Installation\n Mark as complete\n\nCreate required directories:\n\nmkdir storage\n\nRun the test script on the DB5 benchmark:\n\nbash src/db5_inference.sh\nSuccess indicators:\n\nCommand completes without errors\nOutput folder visualization/epoch-0/ is created\nDirectory contains PDB files of docked complexes (multiple .pdb files)\n\nExpected runtime: 5-15 minutes depending on GPU.\nVerify output:\nls visualization/epoch-0/*.pdb | wc -l\n# Should show multiple PDB files"
+  },
+  {
+    "objectID": "monday/8-diffdock-pp.html#hpc-job-script",
+    "href": "monday/8-diffdock-pp.html#hpc-job-script",
+    "title": "8. DiffDock-PP",
+    "section": "HPC Job Script",
+    "text": "HPC Job Script\n#!/bin/bash\n#SBATCH --job-name=diffdock_pp\n#SBATCH --partition=gpu\n#SBATCH --gpus=1\n#SBATCH --cpus-per-task=4\n#SBATCH --mem=16G\n#SBATCH --time=02:00:00\n#SBATCH --output=%x_%j.out\n\nmodule load cuda/11.6\n\nsource ~/.bashrc\nmamba activate diffdock_pp\n\ncd /path/to/DiffDock-PP\n\n# Create output directory\nmkdir -p storage\n\n# Run inference\nbash src/db5_inference.sh"
+  },
+  {
+    "objectID": "monday/8-diffdock-pp.html#usage-examples",
+    "href": "monday/8-diffdock-pp.html#usage-examples",
+    "title": "8. DiffDock-PP",
+    "section": "Usage Examples",
+    "text": "Usage Examples\nRun DB5 benchmark (default test):\nbash src/db5_inference.sh\nCustom docking (requires understanding the codebase):\nDiffDock-PP requires input data in a specific format. For custom proteins:\n\nPrepare receptor and ligand PDB files\nCreate data configuration files\nRun inference script\n\nSee the repository documentation for detailed input format requirements."
+  },
+  {
+    "objectID": "monday/8-diffdock-pp.html#understanding-the-output",
+    "href": "monday/8-diffdock-pp.html#understanding-the-output",
+    "title": "8. DiffDock-PP",
+    "section": "Understanding the Output",
+    "text": "Understanding the Output\nOutput structure:\nvisualization/\n└── epoch-0/\n    ├── complex_1_pose_0.pdb    # Docking pose 1\n    ├── complex_1_pose_1.pdb    # Docking pose 2\n    ├── complex_1_pose_2.pdb    # Docking pose 3\n    └── ...                      # More poses\nEach PDB file contains:\n\nBoth protein chains with predicted relative orientation\nMultiple poses represent different docking predictions\nCompare poses to assess uncertainty"
+  },
+  {
+    "objectID": "monday/8-diffdock-pp.html#use-cases",
+    "href": "monday/8-diffdock-pp.html#use-cases",
+    "title": "8. DiffDock-PP",
+    "section": "Use Cases",
+    "text": "Use Cases\n\nProtein-Protein Docking: Predict binding orientations between protein chains\nComplex Validation: Validate predicted protein-protein interfaces from other methods\nEnsemble Generation: Generate multiple docking poses to capture uncertainty\nBenchmarking: Compare against other docking methods"
+  },
+  {
+    "objectID": "monday/8-diffdock-pp.html#when-to-use-diffdock-pp-vs-other-tools",
+    "href": "monday/8-diffdock-pp.html#when-to-use-diffdock-pp-vs-other-tools",
+    "title": "8. DiffDock-PP",
+    "section": "When to Use DiffDock-PP vs Other Tools",
+    "text": "When to Use DiffDock-PP vs Other Tools\n\n\n\nTool\nBest For\n\n\n\n\nDiffDock-PP\nRigid protein-protein docking\n\n\nPLACER\nProtein-ligand docking with conformational sampling\n\n\nChai-1/Boltz-2\nAb initio complex structure prediction\n\n\nBindCraft\nDe novo binder design"
+  },
+  {
+    "objectID": "monday/8-diffdock-pp.html#troubleshooting",
+    "href": "monday/8-diffdock-pp.html#troubleshooting",
+    "title": "8. DiffDock-PP",
+    "section": "Troubleshooting",
+    "text": "Troubleshooting\nPyG installation fails:\n\nEnsure CUDA toolkit is loaded before installing\nInstall PyTorch first, then PyG packages\nVerify versions match:\npython -c \"import torch; print(torch.__version__, torch.cuda.is_available())\"\n\nCUDA version mismatch:\nCheck your system’s CUDA version:\nnvcc --version\nThis should match the pytorch-cuda version (11.6). If not:\nmodule load cuda/11.6\n“ModuleNotFoundError” for PyG components:\n\nInstall all PyG packages together:\nmamba install pytorch-scatter pytorch-sparse pytorch-cluster pytorch-spline-conv pyg -c pyg\n\nNumPy errors:\n\nEnsure numpy&lt;2.0 is installed\nDon’t upgrade NumPy even if prompted\n\nGPU not detected:\n# Verify CUDA is available to PyTorch\npython -c \"import torch; print(torch.cuda.is_available())\"\n# Should print: True\nEmpty output directory:\n\nCheck for error messages in terminal output\nVerify input files exist and are formatted correctly\nEnsure storage/ directory was created\n\n\nNavigation: ← Boltz-2 | Monday Overview | Next: PLACER →"
+  },
+  {
+    "objectID": "monday/5-openfold.html",
+    "href": "monday/5-openfold.html",
+    "title": "5. OpenFold",
+    "section": "",
+    "text": "OpenFold (paper, code) is a faithful, trainable PyTorch reproduction of DeepMind’s AlphaFold2. It achieves performance comparable to AlphaFold2 and provides a fully open-source implementation for protein structure prediction."
+  },
+  {
+    "objectID": "monday/5-openfold.html#why-use-openfold",
+    "href": "monday/5-openfold.html#why-use-openfold",
+    "title": "5. OpenFold",
+    "section": "Why Use OpenFold?",
+    "text": "Why Use OpenFold?\n\nFull transparency: Open-source model architecture and training code\nTrainable: Can be fine-tuned or retrained on custom data\nResearch-friendly: Ideal for understanding how structure prediction works\nMSA-based accuracy: Uses evolutionary information for high-accuracy predictions\n\nRelated Tools: For faster predictions without MSAs, see ESMFold. For a more user-friendly MSA-based option, see LocalColabFold."
+  },
+  {
+    "objectID": "monday/5-openfold.html#resource-requirements",
+    "href": "monday/5-openfold.html#resource-requirements",
+    "title": "5. OpenFold",
+    "section": "Resource Requirements",
+    "text": "Resource Requirements\n\n\n\nResource\nMinimum\nRecommended\nNotes\n\n\n\n\nGPU RAM\n16 GB\n40+ GB\nA100 for large proteins\n\n\nCPU RAM\n32 GB\n64+ GB\nMSA generation is memory-intensive\n\n\nDisk Space\n500 GB\n2+ TB\nSequence databases are large\n\n\nCUDA\n11.3+\n12.1+\nRequired for compilation\n\n\n\nNote: OpenFold requires significant disk space for sequence databases if generating MSAs locally. Check if your HPC already has AlphaFold/OpenFold databases installed."
+  },
+  {
+    "objectID": "monday/5-openfold.html#preparation",
+    "href": "monday/5-openfold.html#preparation",
+    "title": "5. OpenFold",
+    "section": "Preparation",
+    "text": "Preparation\n Mark as complete\nPrerequisites:\n\nCompleted HPC Setup guide\nConda/Mamba installed\nnvcc available for CUDA compilation\nSignificant disk space (or access to shared databases)\n\nCheck for existing databases:\n# Ask your HPC admins or check common locations\nls /shared/databases/alphafold/\nls /shared/databases/openfold/\nMany HPCs have pre-installed AlphaFold databases that OpenFold can use."
+  },
+  {
+    "objectID": "monday/5-openfold.html#installation",
+    "href": "monday/5-openfold.html#installation",
+    "title": "5. OpenFold",
+    "section": "Installation",
+    "text": "Installation\n Mark as complete\nImportant: OpenFold installation can be complex. The official documentation at openfold.readthedocs.io has the most current instructions.\n\nClone the repository:\n\ngit clone https://github.com/aqlaboratory/openfold.git\ncd openfold\n\nCreate the conda environment:\n\nmamba env create -f environment.yml\nmamba activate openfold_venv\nExpected time: 10-20 minutes for environment creation.\n\nInstall OpenFold:\n\npip install -e .\n\nDownload model weights:\n\nbash scripts/download_openfold_params.sh openfold/resources\nExpected download: ~1-2 GB of model weights.\n\n(Optional) Download sequence databases for MSA generation:\n\n# This downloads ~2TB of data - skip if using HPC shared databases\nbash scripts/download_alphafold_dbs.sh /path/to/database/directory"
+  },
+  {
+    "objectID": "monday/5-openfold.html#testing-the-installation",
+    "href": "monday/5-openfold.html#testing-the-installation",
+    "title": "5. OpenFold",
+    "section": "Testing the Installation",
+    "text": "Testing the Installation\n Mark as complete\nCreate a test FASTA file test.fasta:\n&gt;test_protein\nMKTVRQERLKSIVRILERSKEPVSGAQLAEELSVSRQVIVQDIAYLRSLGYNIVATPRGYVLAGG\nRun a prediction (using pre-computed MSAs or without MSAs for testing):\npython run_pretrained_openfold.py \\\n    test.fasta \\\n    /path/to/database/directory \\\n    --output_dir predictions/ \\\n    --config_preset model_1_ptm \\\n    --model_device cuda:0\nNote: For testing without databases, you can use --use_precomputed_alignments with a directory containing pre-computed MSA files.\nSuccess indicators:\n\nCommand completes without errors\npredictions/ directory contains PDB files\nOutput includes confidence metrics (pLDDT, pTM)\n\nExpected runtime: 5-30 minutes depending on MSA availability and protein size."
+  },
+  {
+    "objectID": "monday/5-openfold.html#hpc-job-script",
+    "href": "monday/5-openfold.html#hpc-job-script",
+    "title": "5. OpenFold",
+    "section": "HPC Job Script",
+    "text": "HPC Job Script\n#!/bin/bash\n#SBATCH --job-name=openfold\n#SBATCH --partition=gpu\n#SBATCH --gpus=1\n#SBATCH --cpus-per-task=8\n#SBATCH --mem=64G\n#SBATCH --time=08:00:00\n#SBATCH --output=%x_%j.out\n\nmodule load cuda/12.1\n\nsource ~/.bashrc\nmamba activate openfold_venv\n\ncd /path/to/openfold\n\n# Using HPC shared databases\nDATABASE_DIR=/shared/databases/alphafold\n\npython run_pretrained_openfold.py \\\n    my_protein.fasta \\\n    $DATABASE_DIR \\\n    --output_dir predictions/ \\\n    --config_preset model_1_ptm \\\n    --model_device cuda:0"
+  },
+  {
+    "objectID": "monday/5-openfold.html#usage-examples",
+    "href": "monday/5-openfold.html#usage-examples",
+    "title": "5. OpenFold",
+    "section": "Usage Examples",
+    "text": "Usage Examples\nBasic prediction with local databases:\npython run_pretrained_openfold.py \\\n    input.fasta \\\n    /path/to/databases \\\n    --output_dir output/ \\\n    --config_preset model_1_ptm\nUsing pre-computed MSAs:\npython run_pretrained_openfold.py \\\n    input.fasta \\\n    /path/to/databases \\\n    --use_precomputed_alignments /path/to/msas/ \\\n    --output_dir output/\nMultiple model presets (ensemble):\nfor preset in model_1_ptm model_2_ptm model_3_ptm; do\n    python run_pretrained_openfold.py \\\n        input.fasta \\\n        /path/to/databases \\\n        --config_preset $preset \\\n        --output_dir output_${preset}/\ndone"
+  },
+  {
+    "objectID": "monday/5-openfold.html#model-presets",
+    "href": "monday/5-openfold.html#model-presets",
+    "title": "5. OpenFold",
+    "section": "Model Presets",
+    "text": "Model Presets\n\n\n\nPreset\nDescription\n\n\n\n\nmodel_1_ptm\nStandard model with pTM head\n\n\nmodel_2_ptm\nAlternative model with pTM\n\n\nmodel_3_ptm\nThird model variant\n\n\nmodel_1_multimer_v3\nFor protein complexes"
+  },
+  {
+    "objectID": "monday/5-openfold.html#understanding-the-output",
+    "href": "monday/5-openfold.html#understanding-the-output",
+    "title": "5. OpenFold",
+    "section": "Understanding the Output",
+    "text": "Understanding the Output\nOutput directory structure:\npredictions/\n├── test_protein_model_1_ptm_unrelaxed.pdb    # Predicted structure\n├── test_protein_model_1_ptm_confidences.json # Confidence scores\n└── test_protein_model_1_ptm_timings.json     # Runtime statistics\nConfidence metrics:\n\npLDDT: Per-residue confidence (0-100, higher is better)\npTM: Predicted TM-score (0-1, &gt;0.8 is confident)\nPAE: Predicted Aligned Error matrix"
+  },
+  {
+    "objectID": "monday/5-openfold.html#database-requirements",
+    "href": "monday/5-openfold.html#database-requirements",
+    "title": "5. OpenFold",
+    "section": "Database Requirements",
+    "text": "Database Requirements\nIf generating MSAs locally, OpenFold needs these databases:\n\n\n\nDatabase\nSize\nPurpose\n\n\n\n\nBFD\n~1.7 TB\nSequence alignments\n\n\nMGnify\n~120 GB\nMetagenomic sequences\n\n\nUniRef90\n~100 GB\nSequence clustering\n\n\nUniRef30\n~200 GB\nHHblits templates\n\n\nPDB70\n~60 GB\nStructure templates\n\n\n\nTotal: ~2+ TB\nCheck HPC shared databases first - most research HPCs have these pre-installed."
+  },
+  {
+    "objectID": "monday/5-openfold.html#troubleshooting",
+    "href": "monday/5-openfold.html#troubleshooting",
+    "title": "5. OpenFold",
+    "section": "Troubleshooting",
+    "text": "Troubleshooting\nCompilation errors during install:\n# Ensure CUDA toolkit is loaded\nmodule load cuda/12.1\nnvcc --version\n\n# Clean and retry\npip uninstall openfold\npip install -e .\n“Database not found” errors:\n\nVerify database paths exist\nCheck HPC documentation for shared database locations\nContact HPC admins about AlphaFold database availability\n\nOut of memory:\n\nRequest more GPU memory\nReduce --max_recycling_iters\nUse gradient checkpointing for training\n\nSlow MSA generation:\n\nMSA generation is CPU-bound and can take hours\nUse pre-computed MSAs when possible\nConsider using ColabFold’s MMseqs2 server instead\n\nModel weights not found:\n# Re-download weights\nbash scripts/download_openfold_params.sh openfold/resources\n\n# Verify files exist\nls openfold/resources/*.pt"
+  },
+  {
+    "objectID": "monday/5-openfold.html#for-researchers-training",
+    "href": "monday/5-openfold.html#for-researchers-training",
+    "title": "5. OpenFold",
+    "section": "For Researchers: Training",
+    "text": "For Researchers: Training\nOpenFold can be retrained or fine-tuned:\npython train_openfold.py \\\n    /path/to/training/data \\\n    /path/to/template_mmcif \\\n    /path/to/output \\\n    --config_preset initial_training\nSee the training documentation for details.\n\nNavigation: ← ESMFold | Monday Overview | Next: Chai-1 →"
+  },
+  {
+    "objectID": "monday/0-hpc-setup.html",
+    "href": "monday/0-hpc-setup.html",
+    "title": "0. Common HPC Setup",
+    "section": "",
+    "text": "Before installing individual ML tools, ensure your HPC environment is properly configured. This guide covers the foundational setup that all subsequent modules depend on."
+  },
+  {
+    "objectID": "monday/0-hpc-setup.html#resource-requirements-overview",
+    "href": "monday/0-hpc-setup.html#resource-requirements-overview",
+    "title": "0. Common HPC Setup",
+    "section": "Resource Requirements Overview",
+    "text": "Resource Requirements Overview\nMost ML protein tools share similar computational requirements. Here’s a general guide:\n\n\n\nResource\nMinimum\nRecommended\nNotes\n\n\n\n\nGPU RAM\n16 GB\n40+ GB\nA100 80GB ideal for large proteins\n\n\nCPU RAM\n32 GB\n64 GB\nMore for MSA generation\n\n\nDisk Space\n50 GB\n200+ GB\nModel weights + databases\n\n\nCUDA\n11.6+\n12.1+\nCheck tool-specific requirements"
+  },
+  {
+    "objectID": "monday/0-hpc-setup.html#checking-your-hpc-environment",
+    "href": "monday/0-hpc-setup.html#checking-your-hpc-environment",
+    "title": "0. Common HPC Setup",
+    "section": "Checking Your HPC Environment",
+    "text": "Checking Your HPC Environment\n Mark as complete\n\n1. Check Available CUDA Modules\nmodule avail cuda\nThis shows all CUDA versions installed on your cluster. Note the versions - you’ll need to match them to tool requirements.\n\n\n2. Check GPU Availability\nRequest an interactive GPU session:\n# SLURM example\nsrun --gpus=1 --pty bash\nThen check GPU status:\nnvidia-smi\nThis shows: - GPU model (A100, V100, RTX 4090, etc.) - GPU memory (important for large models) - Current CUDA driver version\n\n\n3. Check CUDA Toolkit Version\nnvcc --version\nIf this fails, load a CUDA module first:\nmodule load cuda/12.1\nnvcc --version"
+  },
+  {
+    "objectID": "monday/0-hpc-setup.html#condamamba-setup",
+    "href": "monday/0-hpc-setup.html#condamamba-setup",
+    "title": "0. Common HPC Setup",
+    "section": "Conda/Mamba Setup",
+    "text": "Conda/Mamba Setup\n Mark as complete\nMost tools use Conda environments. Mamba is recommended as it’s significantly faster than Conda for dependency resolution.\n\nInstalling Mamba (if not available)\nIf your HPC doesn’t have Mamba, install Miniforge:\nwget https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-Linux-x86_64.sh\nbash Miniforge3-Linux-x86_64.sh\nFollow prompts, then restart your shell or run:\nsource ~/.bashrc\n\n\nBest Practices for HPC Conda Usage\n\nUse dedicated environment directories: Set environment location to avoid filling home directory quota:\n\n# Add to ~/.condarc\nenvs_dirs:\n  - /scratch/$USER/conda_envs\npkgs_dirs:\n  - /scratch/$USER/conda_pkgs\n\nOne environment per tool: Don’t try to install all tools in one environment - dependency conflicts are common.\nExport environments for reproducibility:\n\nmamba env export &gt; environment.yml"
+  },
+  {
+    "objectID": "monday/0-hpc-setup.html#docker-vs-singularityapptainer",
+    "href": "monday/0-hpc-setup.html#docker-vs-singularityapptainer",
+    "title": "0. Common HPC Setup",
+    "section": "Docker vs Singularity/Apptainer",
+    "text": "Docker vs Singularity/Apptainer\n Mark as complete\nIMPORTANT: Most academic HPCs do NOT support Docker for security reasons. Use Singularity or Apptainer instead.\n\nLoading Container Runtime\nmodule load apptainer\n# or on older systems:\nmodule load singularity\n\n\nConverting Docker Commands to Apptainer\nMany tool READMEs show Docker commands. Here’s how to translate them:\n\n\n\nDocker Command\nApptainer Equivalent\n\n\n\n\ndocker run\napptainer run\n\n\ndocker run --gpus all\napptainer run --nv\n\n\ndocker run -v /path:/path\napptainer run --bind /path:/path\n\n\ndocker pull image:tag\napptainer pull docker://image:tag\n\n\n\nExample conversion:\n# Docker (won't work on HPC):\ndocker run --gpus all -v $(pwd):/workspace myimage:latest python script.py\n\n# Apptainer (works on HPC):\napptainer run --nv --bind $(pwd):/workspace myimage.sif python script.py\n\n\nPulling Docker Images as Singularity Files\napptainer pull docker://nvcr.io/nvidia/pytorch:23.10-py3\n# Creates: pytorch_23.10-py3.sif"
+  },
+  {
+    "objectID": "monday/0-hpc-setup.html#slurm-job-submission-basics",
+    "href": "monday/0-hpc-setup.html#slurm-job-submission-basics",
+    "title": "0. Common HPC Setup",
+    "section": "SLURM Job Submission Basics",
+    "text": "SLURM Job Submission Basics\n Mark as complete\nMost HPCs use SLURM for job scheduling. Here’s a template for ML jobs:\n#!/bin/bash\n#SBATCH --job-name=my_ml_job\n#SBATCH --partition=gpu          # GPU partition name (varies by cluster)\n#SBATCH --gpus=1                  # Number of GPUs\n#SBATCH --cpus-per-task=8         # CPUs for data loading\n#SBATCH --mem=64G                 # RAM\n#SBATCH --time=04:00:00           # Wall time (HH:MM:SS)\n#SBATCH --output=%x_%j.out        # Output file (%x=job name, %j=job ID)\n#SBATCH --error=%x_%j.err         # Error file\n\n# Load required modules\nmodule load cuda/12.1\nmodule load apptainer\n\n# Activate conda environment\nsource ~/.bashrc\nmamba activate my_env\n\n# Run your command\npython my_script.py\n\nCommon SLURM Commands\n\n\n\nCommand\nDescription\n\n\n\n\nsbatch script.sh\nSubmit job\n\n\nsqueue -u $USER\nCheck your jobs\n\n\nscancel JOB_ID\nCancel a job\n\n\nsinfo\nShow partition info\n\n\nsacct -j JOB_ID\nJob accounting info\n\n\n\n\n\nGPU Partition Names\nGPU partition names vary by cluster. Common names:\n\ngpu, gpus, gpu-shared\na100, v100, rtx\ngpu-debug (for testing)\n\nCheck your cluster’s documentation or run sinfo to see available partitions."
+  },
+  {
+    "objectID": "monday/0-hpc-setup.html#environment-variables",
+    "href": "monday/0-hpc-setup.html#environment-variables",
+    "title": "0. Common HPC Setup",
+    "section": "Environment Variables",
+    "text": "Environment Variables\n Mark as complete\nSeveral tools use environment variables. Add these to your ~/.bashrc:\n# Model weight storage (prevents filling home directory)\nexport TORCH_HOME=/scratch/$USER/torch_cache\nexport HF_HOME=/scratch/$USER/huggingface_cache\nexport TRANSFORMERS_CACHE=/scratch/$USER/transformers_cache\n\n# ColabFold databases\nexport COLABFOLD_DOWNLOAD_DIR=/scratch/$USER/colabfold_db\n\n# Chai-1 models\nexport CHAI_DOWNLOADS_DIR=/scratch/$USER/chai_models\n\n# General cache\nexport XDG_CACHE_HOME=/scratch/$USER/.cache\nReplace /scratch/$USER with your cluster’s scratch or work directory path."
+  },
+  {
+    "objectID": "monday/0-hpc-setup.html#verifying-gpu-works-with-pytorch",
+    "href": "monday/0-hpc-setup.html#verifying-gpu-works-with-pytorch",
+    "title": "0. Common HPC Setup",
+    "section": "Verifying GPU Works with PyTorch",
+    "text": "Verifying GPU Works with PyTorch\n Mark as complete\nAfter setting up an environment with PyTorch, verify GPU access:\nimport torch\n\nprint(f\"PyTorch version: {torch.__version__}\")\nprint(f\"CUDA available: {torch.cuda.is_available()}\")\nprint(f\"CUDA version: {torch.version.cuda}\")\nprint(f\"GPU count: {torch.cuda.device_count()}\")\n\nif torch.cuda.is_available():\n    print(f\"GPU name: {torch.cuda.get_device_name(0)}\")\n    print(f\"GPU memory: {torch.cuda.get_device_properties(0).total_memory / 1e9:.1f} GB\")\n\n    # Quick computation test\n    x = torch.randn(1000, 1000, device='cuda')\n    y = torch.matmul(x, x)\n    print(\"GPU computation test: PASSED\")\nSave as test_gpu.py and run:\npython test_gpu.py\nExpected output (example):\nPyTorch version: 2.1.0\nCUDA available: True\nCUDA version: 12.1\nGPU count: 1\nGPU name: NVIDIA A100-SXM4-80GB\nGPU memory: 84.9 GB\nGPU computation test: PASSED"
+  },
+  {
+    "objectID": "monday/0-hpc-setup.html#understanding-gpu-memory-requirements",
+    "href": "monday/0-hpc-setup.html#understanding-gpu-memory-requirements",
+    "title": "0. Common HPC Setup",
+    "section": "Understanding GPU Memory Requirements",
+    "text": "Understanding GPU Memory Requirements\nDifferent tasks require different GPU memory:\n\n\n\nTask\nTypical GPU Memory\n\n\n\n\nStructure prediction (small protein &lt;200 aa)\n8-16 GB\n\n\nStructure prediction (large protein &gt;500 aa)\n32-80 GB\n\n\nProtein design (RFdiffusion2)\n16-32 GB\n\n\nDocking (DiffDock-PP, PLACER)\n8-16 GB\n\n\nLanguage model inference (ESM3)\n16-40 GB\n\n\nBinder design (BindCraft)\n32-80 GB\n\n\n\nIf you get out-of-memory errors: 1. Request a GPU with more memory 2. Reduce batch size or sequence length 3. Use CPU offloading if available 4. Process sequences in chunks"
+  },
+  {
+    "objectID": "monday/0-hpc-setup.html#troubleshooting-common-issues",
+    "href": "monday/0-hpc-setup.html#troubleshooting-common-issues",
+    "title": "0. Common HPC Setup",
+    "section": "Troubleshooting Common Issues",
+    "text": "Troubleshooting Common Issues\n\n“CUDA out of memory”\n\nRequest more GPU memory\nReduce batch size\nUse gradient checkpointing if training\n\n\n\n“No CUDA runtime found”\nmodule load cuda/12.1  # Load CUDA module\nnvcc --version         # Verify it loaded\n\n\n“Singularity: command not found”\nmodule load apptainer  # or: module load singularity\n\n\nConda environment activation fails in SLURM\nAdd to your job script:\nsource ~/.bashrc\n# or explicitly:\nsource /path/to/miniforge3/etc/profile.d/conda.sh\nmamba activate my_env\n\n\nPermission denied on container\nchmod +x container.sif\n\nNavigation: Monday Overview | Next: LocalColabFold →"
   },
   {
     "objectID": "monday/index.html",
@@ -658,18 +924,39 @@
     "text": "Monday is dedicated to installing the essential ML-based protein design and structure prediction tools on your HPC cluster. Each module guides you through installing a specific tool, from structure predictors like LocalColabFold and ESMFold to design tools like LigandMPNN and BindCraft.\nGoal: By the end of Monday, you should have all major tools installed and tested on your HPC cluster."
   },
   {
-    "objectID": "monday/index.html#modules",
-    "href": "monday/index.html#modules",
+    "objectID": "monday/index.html#getting-started",
+    "href": "monday/index.html#getting-started",
     "title": "Monday: Tool Installation",
-    "section": "Modules",
-    "text": "Modules\n\n\n\n#\nTool\nDescription\nStatus\n\n\n\n\n1\nLocalColabFold\nFast AlphaFold2 structure prediction\nRequired\n\n\n2\nLigandMPNN\nContext-aware protein sequence design\nRequired\n\n\n3\nRFdiffusion2\nAtom-level active site scaffolding\nRequired\n\n\n4\nESMFold\nSingle-sequence structure prediction\nRequired\n\n\n5\nOpenFold\nOpen-source AlphaFold2 reproduction\nRequired\n\n\n6\nChai-1\nMulti-modal biomolecular structure prediction\nRequired\n\n\n7\nBoltz-2\nStructure + binding affinity prediction\nRequired\n\n\n8\nDiffDock-PP\nProtein-protein docking\nRequired\n\n\n9\nPLACER\nProtein-ligand conformational ensemble prediction\nRequired\n\n\n10\nBindCraft\nEnd-to-end binder design pipeline\nRequired\n\n\n11\nESM3\nMultimodal protein generation\nOptional\n\n\n12\nRFdiffusion All Atom\nAll-atom protein design (predecessor to RFd2)\nOptional"
+    "section": "Getting Started",
+    "text": "Getting Started\nBefore installing individual tools, complete the HPC Setup module to ensure your environment is properly configured:\n\n\n\n#\nModule\nDescription\nStatus\n\n\n\n\n0\nCommon HPC Setup\nCUDA, Conda, containers, and environment setup\nStart Here"
+  },
+  {
+    "objectID": "monday/index.html#tool-installation-modules",
+    "href": "monday/index.html#tool-installation-modules",
+    "title": "Monday: Tool Installation",
+    "section": "Tool Installation Modules",
+    "text": "Tool Installation Modules\n\n\n\n#\nTool\nDescription\nStatus\n\n\n\n\n1\nLocalColabFold\nFast AlphaFold2 structure prediction\nRequired\n\n\n2\nLigandMPNN\nContext-aware protein sequence design\nRequired\n\n\n3\nRFdiffusion2\nAtom-level active site scaffolding\nRequired\n\n\n4\nESMFold\nSingle-sequence structure prediction\nRequired\n\n\n5\nOpenFold\nOpen-source AlphaFold2 reproduction\nRequired\n\n\n6\nChai-1\nMulti-modal biomolecular structure prediction\nRequired\n\n\n7\nBoltz-2\nStructure + binding affinity prediction\nRequired\n\n\n8\nDiffDock-PP\nProtein-protein docking\nRequired\n\n\n9\nPLACER\nProtein-ligand conformational ensemble prediction\nRequired\n\n\n10\nBindCraft\nEnd-to-end binder design pipeline\nRequired\n\n\n11\nESM3\nMultimodal protein generation\nOptional\n\n\n12\nRFdiffusion All Atom\nAll-atom protein design (predecessor to RFd2)\nOptional"
+  },
+  {
+    "objectID": "monday/index.html#tool-categories",
+    "href": "monday/index.html#tool-categories",
+    "title": "Monday: Tool Installation",
+    "section": "Tool Categories",
+    "text": "Tool Categories\n\nStructure Prediction\n\n\n\n\n\n\n\n\n\n\nTool\nInput\nOutput\nSpeed\nBest For\n\n\n\n\nLocalColabFold\nSequence + MSA\nStructure\nMedium\nHigh-accuracy single proteins\n\n\nESMFold\nSequence only\nStructure\nFast\nQuick predictions, no MSA needed\n\n\nOpenFold\nSequence + MSA\nStructure\nMedium\nResearch, custom training\n\n\nChai-1\nMulti-modal\nComplex structures\nMedium\nProteins + ligands + nucleic acids\n\n\nBoltz-2\nMulti-modal\nStructure + affinity\nMedium\nDrug discovery\n\n\n\n\n\nProtein Design\n\n\n\n\n\n\n\n\n\nTool\nInput\nOutput\nBest For\n\n\n\n\nLigandMPNN\nBackbone\nSequence\nSequence design with ligand context\n\n\nRFdiffusion2\nConstraints\nBackbone\nActive site scaffolding\n\n\nBindCraft\nTarget structure\nBinder designs\nEnd-to-end binder design\n\n\n\n\n\nDocking\n\n\n\n\n\n\n\n\n\nTool\nInput\nOutput\nBest For\n\n\n\n\nDiffDock-PP\nTwo proteins\nDocked complex\nProtein-protein docking\n\n\nPLACER\nProtein + ligand\nEnsemble poses\nProtein-ligand docking"
   },
   {
     "objectID": "monday/index.html#tips-for-success",
     "href": "monday/index.html#tips-for-success",
     "title": "Monday: Tool Installation",
     "section": "Tips for Success",
-    "text": "Tips for Success\n\nWork sequentially - Some tools share dependencies, so installing in order may help avoid conflicts\nUse separate conda environments - Each tool should have its own environment to avoid dependency conflicts\nCheck GPU availability - Most tools require GPU access; make sure you can request GPU nodes on your cluster\nNote your paths - Keep track of where you install each tool; you’ll need these paths later\nTest each installation - Don’t move on until you’ve verified each tool works"
+    "text": "Tips for Success\n\nStart with HPC Setup - Complete Module 0 before installing any tools\nUse separate conda environments - Each tool should have its own environment to avoid dependency conflicts\nCheck GPU availability - Most tools require GPU access; make sure you can request GPU nodes on your cluster\nNote your paths - Keep track of where you install each tool; you’ll need these paths later\nTest each installation - Don’t move on until you’ve verified each tool works\nCheck shared resources - Your HPC may already have databases (AlphaFold, ColabFold) installed"
+  },
+  {
+    "objectID": "monday/index.html#resource-overview",
+    "href": "monday/index.html#resource-overview",
+    "title": "Monday: Tool Installation",
+    "section": "Resource Overview",
+    "text": "Resource Overview\nApproximate requirements across all tools:\n\n\n\nResource\nTotal Needed\n\n\n\n\nDisk Space\n50-100 GB (tools only), 2+ TB (with databases)\n\n\nGPU RAM\n16-80 GB depending on task\n\n\nCPU RAM\n32-64 GB"
   },
   {
     "objectID": "monday/index.html#getting-help",
@@ -683,217 +970,336 @@
     "href": "monday/4-esmfold.html",
     "title": "4. ESMFold",
     "section": "",
-    "text": "ESMFold (paper, code) is an end-to-end single sequence structure predictor that uses the ESM-2 language model to generate accurate 3D protein structures directly from sequence.\nESMFold is useful for fast, accurate protein structure prediction without requiring MSAs (though MSAs can be used to improve performance). It’s significantly faster than AlphaFold2 while maintaining competitive accuracy.\nThe goal of this module is to install ESMFold on your HPC cluster."
+    "text": "ESMFold (paper, code) is an end-to-end single-sequence structure predictor that uses the ESM-2 language model to generate accurate 3D protein structures directly from sequence, without requiring multiple sequence alignments (MSAs)."
   },
   {
-    "objectID": "monday/4-esmfold.html#preparation-work",
-    "href": "monday/4-esmfold.html#preparation-work",
+    "objectID": "monday/4-esmfold.html#why-use-esmfold",
+    "href": "monday/4-esmfold.html#why-use-esmfold",
     "title": "4. ESMFold",
-    "section": "Preparation Work",
-    "text": "Preparation Work\n Mark as complete\nThis assignment assumes that you have access to a computing cluster that allows installation of new software. We’ll be creating virtual environments using Conda/Mamba.\nRequirements:\n\nPython ≤ 3.9\nPyTorch installed\nnvcc available (for compiling OpenFold dependencies)\nCUDA-capable GPU recommended"
+    "section": "Why Use ESMFold?",
+    "text": "Why Use ESMFold?\n\nSpeed: Significantly faster than AlphaFold2 (seconds vs minutes)\nNo MSA required: Works directly from sequence alone\nCompetitive accuracy: Often comparable to AlphaFold2 for well-folded domains\nLower resource usage: Can run on smaller GPUs\n\nRelated Tools: For MSA-based prediction with potentially higher accuracy, see LocalColabFold or OpenFold. For protein language model embeddings only, see ESM3."
   },
   {
-    "objectID": "monday/4-esmfold.html#installation-steps",
-    "href": "monday/4-esmfold.html#installation-steps",
+    "objectID": "monday/4-esmfold.html#resource-requirements",
+    "href": "monday/4-esmfold.html#resource-requirements",
     "title": "4. ESMFold",
-    "section": "Installation Steps",
-    "text": "Installation Steps\n Mark as complete\n\nCreate a conda environment with Python 3.9:\n\nmamba create -n esmfold python=3.9\nmamba activate esmfold\n\nInstall PyTorch (adjust CUDA version as needed):\n\nmamba install pytorch pytorch-cuda=12.1 -c pytorch -c nvidia\n\nInstall ESM with ESMFold dependencies:\n\npip install \"fair-esm[esmfold]\"\n\nInstall remaining OpenFold dependencies:\n\npip install 'dllogger @ git+https://github.com/NVIDIA/dllogger.git'\npip install 'openfold @ git+https://github.com/aqlaboratory/openfold.git@4b41059694619831a7db195b7e0988fc4ff3a307'\nNote: If OpenFold installation fails, verify that nvcc is available and a CUDA-compatible PyTorch is installed."
+    "section": "Resource Requirements",
+    "text": "Resource Requirements\n\n\n\nResource\nMinimum\nRecommended\nNotes\n\n\n\n\nGPU RAM\n16 GB\n40+ GB\nLarger proteins need more memory\n\n\nCPU RAM\n16 GB\n32 GB\nCPU-only is possible but slow\n\n\nDisk Space\n5 GB\n10 GB\nModel weights\n\n\nPython\n≤3.9\n3.9\nImportant: Python 3.10+ may have issues\n\n\n\nWhy Python ≤3.9? ESMFold depends on OpenFold, which has compatibility issues with newer Python versions."
   },
   {
-    "objectID": "monday/4-esmfold.html#alternative-use-conda-environment-file",
-    "href": "monday/4-esmfold.html#alternative-use-conda-environment-file",
+    "objectID": "monday/4-esmfold.html#preparation",
+    "href": "monday/4-esmfold.html#preparation",
     "title": "4. ESMFold",
-    "section": "Alternative: Use Conda Environment File",
-    "text": "Alternative: Use Conda Environment File\nAlternatively, you can use a pre-configured environment:\nwget https://raw.githubusercontent.com/facebookresearch/esm/main/environment.yml\nmamba env create -f environment.yml\nmamba activate esmfold"
+    "section": "Preparation",
+    "text": "Preparation\n Mark as complete\nPrerequisites:\n\nCompleted HPC Setup guide\nConda/Mamba installed\nnvcc available (for compiling OpenFold dependencies)\n\nVerify your environment:\nnvcc --version      # Required for OpenFold compilation\nmodule load cuda    # If nvcc not found"
+  },
+  {
+    "objectID": "monday/4-esmfold.html#installation",
+    "href": "monday/4-esmfold.html#installation",
+    "title": "4. ESMFold",
+    "section": "Installation",
+    "text": "Installation\n Mark as complete\n\nCreate a conda environment with Python 3.9:\n\nmamba create -n esmfold python=3.9\nmamba activate esmfold\n\nInstall PyTorch (adjust CUDA version to match your cluster):\n\nmamba install pytorch pytorch-cuda=12.1 -c pytorch -c nvidia\n\nInstall ESM with ESMFold dependencies:\n\npip install \"fair-esm[esmfold]\"\n\nInstall OpenFold dependencies:\n\npip install 'dllogger @ git+https://github.com/NVIDIA/dllogger.git'\npip install 'openfold @ git+https://github.com/aqlaboratory/openfold.git@4b41059694619831a7db195b7e0988fc4ff3a307'\nNote: OpenFold compilation requires nvcc. If it fails, verify CUDA toolkit is loaded.\nAlternative method (using environment file):\nwget https://raw.githubusercontent.com/facebookresearch/esm/main/environment.yml\nmamba env create -f environment.yml\nmamba activate esmfold"
   },
   {
     "objectID": "monday/4-esmfold.html#testing-the-installation",
     "href": "monday/4-esmfold.html#testing-the-installation",
     "title": "4. ESMFold",
     "section": "Testing the Installation",
-    "text": "Testing the Installation\n Mark as complete\nCreate a test script test_esmfold.py:\nimport torch\nimport esm\n\n# Load ESMFold model\nmodel = esm.pretrained.esmfold_v1()\nmodel = model.eval().cuda()  # Remove .cuda() if using CPU\n\n# Test sequence\nsequence = \"MKTVRQERLKSIVRILERSKEPVSGAQLAEELSVSRQVIVQDIAYLRSLGYNIVATPRGYVLAGG\"\n\n# Run prediction\nwith torch.no_grad():\n    output = model.infer_pdb(sequence)\n\n# Save output\nwith open(\"test_result.pdb\", \"w\") as f:\n    f.write(output)\n\nprint(\"Structure prediction successful! Output saved to test_result.pdb\")\nRun the test:\npython test_esmfold.py\nIf this creates test_result.pdb, your installation was successful!"
+    "text": "Testing the Installation\n Mark as complete\nCreate a test script test_esmfold.py:\nimport torch\nimport esm\n\n# Load ESMFold model\nmodel = esm.pretrained.esmfold_v1()\nmodel = model.eval().cuda()  # Remove .cuda() if using CPU\n\n# Test sequence (65 residues)\nsequence = \"MKTVRQERLKSIVRILERSKEPVSGAQLAEELSVSRQVIVQDIAYLRSLGYNIVATPRGYVLAGG\"\n\n# Run prediction\nwith torch.no_grad():\n    output = model.infer_pdb(sequence)\n\n# Save output\nwith open(\"test_result.pdb\", \"w\") as f:\n    f.write(output)\n\nprint(\"Structure prediction successful!\")\nprint(f\"Output saved to test_result.pdb\")\nprint(f\"Sequence length: {len(sequence)} residues\")\nRun the test:\npython test_esmfold.py\nSuccess indicators:\n\nCommand completes without errors\ntest_result.pdb file is created\nFile contains valid PDB coordinates\n\nExpected runtime: ~10-30 seconds on GPU for this small protein."
   },
   {
-    "objectID": "monday/4-esmfold.html#command-line-interface",
-    "href": "monday/4-esmfold.html#command-line-interface",
+    "objectID": "monday/4-esmfold.html#hpc-job-script",
+    "href": "monday/4-esmfold.html#hpc-job-script",
     "title": "4. ESMFold",
-    "section": "Command Line Interface",
-    "text": "Command Line Interface\nESM also provides a command line tool for batch prediction:\nesm-fold -i sequences.fasta -o output_pdbs/\nAdditional options:\n\n--num-recycles: Number of recycles (default: 4)\n--max-tokens-per-batch: Batch shorter sequences together\n--chunk-size: Reduce memory usage (values: 128, 64, 32)\n--cpu-only: Run on CPU only\n--cpu-offload: Offload to CPU RAM for longer sequences"
+    "section": "HPC Job Script",
+    "text": "HPC Job Script\n#!/bin/bash\n#SBATCH --job-name=esmfold\n#SBATCH --partition=gpu\n#SBATCH --gpus=1\n#SBATCH --cpus-per-task=4\n#SBATCH --mem=32G\n#SBATCH --time=04:00:00\n#SBATCH --output=%x_%j.out\n\nmodule load cuda/12.1\n\nsource ~/.bashrc\nmamba activate esmfold\n\n# Predict structures for all sequences in FASTA file\nesm-fold -i my_proteins.fasta -o predictions/ \\\n    --num-recycles 4 \\\n    --max-tokens-per-batch 1024"
   },
   {
-    "objectID": "monday/4-esmfold.html#hpc-job-script-example",
-    "href": "monday/4-esmfold.html#hpc-job-script-example",
+    "objectID": "monday/4-esmfold.html#usage-examples",
+    "href": "monday/4-esmfold.html#usage-examples",
     "title": "4. ESMFold",
-    "section": "HPC Job Script Example",
-    "text": "HPC Job Script Example\nFor SLURM clusters:\n#!/bin/bash\n#SBATCH --job-name=esmfold\n#SBATCH --gpus=1\n#SBATCH --time=04:00:00\n#SBATCH --mem=32G\n\nmodule load cuda/12.1\n\nmamba activate esmfold\n\n# Predict structures for all sequences in FASTA file\nesm-fold -i my_proteins.fasta -o predictions/ \\\n    --num-recycles 4 \\\n    --max-tokens-per-batch 1024"
+    "section": "Usage Examples",
+    "text": "Usage Examples\nCommand line interface:\nesm-fold -i sequences.fasta -o output_pdbs/\nKey CLI options:\n\n\n\nOption\nDescription\n\n\n\n\n-i\nInput FASTA file\n\n\n-o\nOutput directory for PDB files\n\n\n--num-recycles\nNumber of recycles (default: 4)\n\n\n--max-tokens-per-batch\nBatch shorter sequences together\n\n\n--chunk-size\nReduce memory (values: 128, 64, 32)\n\n\n--cpu-only\nRun on CPU only\n\n\n--cpu-offload\nOffload to CPU RAM for long sequences\n\n\n\nReduce memory for large proteins:\nesm-fold -i large_proteins.fasta -o output/ --chunk-size 64\nProcess very long sequences:\nesm-fold -i long_sequences.fasta -o output/ --cpu-offload\nPython API:\nimport torch\nimport esm\n\n# Load model\nmodel = esm.pretrained.esmfold_v1()\nmodel = model.eval().cuda()\n\n# Predict structure\nsequence = \"MVKLTAEGSEVSRQVIVQDIAYLRSLG\"\nwith torch.no_grad():\n    pdb_string = model.infer_pdb(sequence)\n\n# Save\nwith open(\"prediction.pdb\", \"w\") as f:\n    f.write(pdb_string)\nGet confidence scores:\nimport torch\nimport esm\n\nmodel = esm.pretrained.esmfold_v1()\nmodel = model.eval().cuda()\n\nsequence = \"MVKLTAEGSEVSRQVIVQDIAYLRSLG\"\nwith torch.no_grad():\n    output = model.infer(sequence)\n\n# Per-residue confidence (pLDDT)\nplddt = output[\"plddt\"]  # Shape: (1, L)\nprint(f\"Mean pLDDT: {plddt.mean().item():.2f}\")\n\n# Predicted TM-score\nptm = output[\"ptm\"]\nprint(f\"pTM: {ptm.item():.3f}\")"
+  },
+  {
+    "objectID": "monday/4-esmfold.html#understanding-the-output",
+    "href": "monday/4-esmfold.html#understanding-the-output",
+    "title": "4. ESMFold",
+    "section": "Understanding the Output",
+    "text": "Understanding the Output\nPDB output:\n\nStandard PDB format with predicted coordinates\nB-factor column contains pLDDT confidence scores (0-100)\nHigher pLDDT = higher confidence\n\nConfidence score interpretation:\n\n\n\npLDDT Range\nInterpretation\n\n\n\n\n90-100\nVery high confidence\n\n\n70-90\nConfident\n\n\n50-70\nLow confidence (may be disordered)\n\n\n&lt;50\nVery low confidence (likely disordered)"
+  },
+  {
+    "objectID": "monday/4-esmfold.html#memory-usage-guide",
+    "href": "monday/4-esmfold.html#memory-usage-guide",
+    "title": "4. ESMFold",
+    "section": "Memory Usage Guide",
+    "text": "Memory Usage Guide\nApproximate GPU memory by sequence length:\n\n\n\nSequence Length\nGPU Memory Needed\n\n\n\n\n&lt;200 aa\n8-16 GB\n\n\n200-400 aa\n16-24 GB\n\n\n400-600 aa\n24-40 GB\n\n\n600-1000 aa\n40-80 GB\n\n\n&gt;1000 aa\nUse --cpu-offload"
   },
   {
     "objectID": "monday/4-esmfold.html#troubleshooting",
     "href": "monday/4-esmfold.html#troubleshooting",
     "title": "4. ESMFold",
     "section": "Troubleshooting",
-    "text": "Troubleshooting\nOpenFold installation fails: Double-check that nvcc is available:\nnvcc --version\nLoad CUDA modules if needed:\nmodule load cuda\nOut of memory errors: Use --chunk-size to reduce memory:\nesm-fold -i input.fasta -o output/ --chunk-size 64\nFor very long sequences: Use CPU offloading:\nesm-fold -i input.fasta -o output/ --cpu-offload\n\nNavigation: ← RFdiffusion2 | Monday Overview | Next: OpenFold →"
+    "text": "Troubleshooting\nOpenFold installation fails:\n\nVerify nvcc is available:\nnvcc --version\n# If not found:\nmodule load cuda\nEnsure PyTorch CUDA version matches system CUDA\n\n“CUDA out of memory”:\n# Use chunking to reduce memory\nesm-fold -i input.fasta -o output/ --chunk-size 64\n\n# Or use CPU offloading for very long sequences\nesm-fold -i input.fasta -o output/ --cpu-offload\nSlow on GPU (should be fast):\n# Verify CUDA is detected\npython -c \"import torch; print(torch.cuda.is_available())\"\n# Should print: True\nPython version errors:\n\nESMFold requires Python ≤3.9 due to OpenFold dependencies\nCreate a new environment with Python 3.9 if needed\n\nModel download hangs:\n\nFirst run downloads ~2GB of weights\nSet custom cache location:\nexport TORCH_HOME=/scratch/$USER/torch_cache\n\n\nNavigation: ← RFdiffusion2 | Monday Overview | Next: OpenFold →"
   },
   {
     "objectID": "monday/12-rfdiffusion-aa.html",
     "href": "monday/12-rfdiffusion-aa.html",
     "title": "12. RFdiffusion All Atom (Optional)",
     "section": "",
-    "text": "RFdiffusion All Atom (code) is the predecessor to RFdiffusion2 and enables all-atom protein design with small molecule binding. It can design protein binders to ligands with all-atom precision.\nNote: This tool is marked as OPTIONAL because RFdiffusion2 is the newer, more capable version. Install this only if you’re interested in exploring the earlier methodology or if specific features are needed.\nRFdiffusion All Atom is useful for designing small molecule binders and incorporating protein motifs in the design process.\nThe goal of this module is to install RFdiffusion All Atom on your HPC cluster (optional)."
+    "text": "RFdiffusion All Atom (code) is the predecessor to RFdiffusion2, enabling all-atom protein design with small molecule binding. It can design protein binders to ligands with all-atom precision.\nNote: This tool is marked as OPTIONAL because RFdiffusion2 is the newer, more capable version. Install this only if you need the earlier methodology or specific features."
   },
   {
-    "objectID": "monday/12-rfdiffusion-aa.html#preparation-work",
-    "href": "monday/12-rfdiffusion-aa.html#preparation-work",
+    "objectID": "monday/12-rfdiffusion-aa.html#why-use-rfdiffusion-all-atom",
+    "href": "monday/12-rfdiffusion-aa.html#why-use-rfdiffusion-all-atom",
     "title": "12. RFdiffusion All Atom (Optional)",
-    "section": "Preparation Work",
-    "text": "Preparation Work\n Mark as complete\nThis assignment assumes that you have access to a computing cluster that allows installation of new software.\nIMPORTANT: Like RFdiffusion2, this uses Apptainer/Singularity containers, not Docker (which most academic HPCs don’t support)."
+    "section": "Why Use RFdiffusion All Atom?",
+    "text": "Why Use RFdiffusion All Atom?\n\nSmall molecule binding: Design proteins that bind specific ligands\nMotif incorporation: Include functional motifs in designs\nHistorical reference: Understand the evolution of diffusion-based design\nSpecific workflows: Some published protocols may reference this version\n\nRelated Tools: For the newer version, see RFdiffusion2. For sequence design, see LigandMPNN."
   },
   {
-    "objectID": "monday/12-rfdiffusion-aa.html#installation-steps",
-    "href": "monday/12-rfdiffusion-aa.html#installation-steps",
+    "objectID": "monday/12-rfdiffusion-aa.html#resource-requirements",
+    "href": "monday/12-rfdiffusion-aa.html#resource-requirements",
     "title": "12. RFdiffusion All Atom (Optional)",
-    "section": "Installation Steps",
-    "text": "Installation Steps\n Mark as complete\n\nClone the repository:\n\ngit clone https://github.com/baker-laboratory/rf_diffusion_all_atom.git\ncd rf_diffusion_all_atom\n\nDownload the Singularity container:\n\nwget http://files.ipd.uw.edu/pub/RF-All-Atom/containers/rf_se3_diffusion.sif\n\nDownload the model weights:\n\nwget http://files.ipd.uw.edu/pub/RF-All-Atom/weights/RFDiffusionAA_paper_weights.pt\n\nInitialize git submodules:\n\ngit submodule init\ngit submodule update\n\nInstall Apptainer (if not already available):\n\nFor HPC clusters:\nmodule load apptainer\n# or\nmodule load singularity"
+    "section": "Resource Requirements",
+    "text": "Resource Requirements\n\n\n\nResource\nMinimum\nRecommended\nNotes\n\n\n\n\nGPU RAM\n8 GB\n16 GB\nScales with design size\n\n\nCPU RAM\n8 GB\n16 GB\nContainer-based\n\n\nDisk Space\n5 GB\n10 GB\nContainer + weights\n\n\nContainer\nApptainer/Singularity\nRequired\nNot Docker"
   },
   {
-    "objectID": "monday/12-rfdiffusion-aa.html#docker-vs-singularityapptainer-for-hpc",
-    "href": "monday/12-rfdiffusion-aa.html#docker-vs-singularityapptainer-for-hpc",
+    "objectID": "monday/12-rfdiffusion-aa.html#preparation",
+    "href": "monday/12-rfdiffusion-aa.html#preparation",
     "title": "12. RFdiffusion All Atom (Optional)",
-    "section": "Docker vs Singularity/Apptainer for HPC",
-    "text": "Docker vs Singularity/Apptainer for HPC\nIMPORTANT: The official documentation uses Docker commands, but most academic HPCs do NOT support Docker. Replace Docker commands with Apptainer/Singularity:\n# ORIGINAL (Docker - won't work on most HPCs):\n# docker run --gpus all -v $(pwd):/workspace rf_se3_diffusion.sif ...\n\n# CORRECTED (Apptainer - works on HPCs):\napptainer run --nv rf_se3_diffusion.sif ..."
+    "section": "Preparation",
+    "text": "Preparation\n Mark as complete\nPrerequisites:\n\nCompleted HPC Setup guide\nApptainer/Singularity available\nGPU access recommended\n\nImportant: Like RFdiffusion2, this uses Apptainer/Singularity containers. Most academic HPCs do NOT support Docker.\nVerify container runtime:\nmodule load apptainer    # or: module load singularity\napptainer --version"
+  },
+  {
+    "objectID": "monday/12-rfdiffusion-aa.html#installation",
+    "href": "monday/12-rfdiffusion-aa.html#installation",
+    "title": "12. RFdiffusion All Atom (Optional)",
+    "section": "Installation",
+    "text": "Installation\n Mark as complete\n\nClone the repository:\n\ngit clone https://github.com/baker-laboratory/rf_diffusion_all_atom.git\ncd rf_diffusion_all_atom\n\nDownload the Singularity container:\n\nwget http://files.ipd.uw.edu/pub/RF-All-Atom/containers/rf_se3_diffusion.sif\nExpected download: ~2-3 GB.\n\nDownload the model weights:\n\nwget http://files.ipd.uw.edu/pub/RF-All-Atom/weights/RFDiffusionAA_paper_weights.pt\nExpected download: ~500 MB.\n\nInitialize git submodules:\n\ngit submodule init\ngit submodule update"
   },
   {
     "objectID": "monday/12-rfdiffusion-aa.html#testing-the-installation",
     "href": "monday/12-rfdiffusion-aa.html#testing-the-installation",
     "title": "12. RFdiffusion All Atom (Optional)",
     "section": "Testing the Installation",
-    "text": "Testing the Installation\n Mark as complete\nRun a ligand binder design example:\napptainer run --nv rf_se3_diffusion.sif -u run_inference.py \\\n    inference.deterministic=True \\\n    diffuser.T=100 \\\n    inference.output_prefix=output/ligand_test/sample \\\n    inference.input_pdb=input/7v11.pdb \\\n    contigmap.contigs=\"['150-150']\" \\\n    inference.ligand=OQO \\\n    inference.num_designs=1 \\\n    inference.design_startnum=0\nNote: Omit --nv flag if running without GPU.\nExpected outputs:\n\noutput/ligand_test/sample_0.pdb - The design PDB\noutput/ligand_test/sample_0_Xt-1_traj.pdb - Denoising trajectory\noutput/ligand_test/sample_0_X0-1_traj.pdb - Predicted ground truth at each step"
+    "text": "Testing the Installation\n Mark as complete\nRun a ligand binder design example:\napptainer run --nv rf_se3_diffusion.sif -u run_inference.py \\\n    inference.deterministic=True \\\n    diffuser.T=100 \\\n    inference.output_prefix=output/ligand_test/sample \\\n    inference.input_pdb=input/7v11.pdb \\\n    contigmap.contigs=\"['150-150']\" \\\n    inference.ligand=OQO \\\n    inference.num_designs=1 \\\n    inference.design_startnum=0\nNote: Omit --nv flag if running without GPU.\nSuccess indicators:\n\nCommand completes without errors\nOutput files created:\n\noutput/ligand_test/sample_0.pdb - The designed structure\noutput/ligand_test/sample_0_Xt-1_traj.pdb - Denoising trajectory\noutput/ligand_test/sample_0_X0-1_traj.pdb - Predicted ground truth at each step\n\n\nExpected runtime: 5-10 minutes on GPU, 30+ minutes on CPU."
   },
   {
-    "objectID": "monday/12-rfdiffusion-aa.html#hpc-job-script-example",
-    "href": "monday/12-rfdiffusion-aa.html#hpc-job-script-example",
+    "objectID": "monday/12-rfdiffusion-aa.html#hpc-job-script",
+    "href": "monday/12-rfdiffusion-aa.html#hpc-job-script",
     "title": "12. RFdiffusion All Atom (Optional)",
-    "section": "HPC Job Script Example",
-    "text": "HPC Job Script Example\nFor SLURM clusters:\n#!/bin/bash\n#SBATCH --job-name=rfdaa\n#SBATCH --gpus=1\n#SBATCH --time=02:00:00\n#SBATCH --mem=16G\n\nmodule load apptainer\nmodule load cuda/12.1\n\ncd /path/to/rf_diffusion_all_atom\n\napptainer run --nv rf_se3_diffusion.sif -u run_inference.py \\\n    inference.deterministic=True \\\n    diffuser.T=100 \\\n    inference.output_prefix=output/my_design/sample \\\n    inference.input_pdb=input/my_protein.pdb \\\n    contigmap.contigs=\"['150-150']\" \\\n    inference.ligand=HEM \\\n    inference.num_designs=10"
+    "section": "HPC Job Script",
+    "text": "HPC Job Script\n#!/bin/bash\n#SBATCH --job-name=rfdaa\n#SBATCH --partition=gpu\n#SBATCH --gpus=1\n#SBATCH --cpus-per-task=4\n#SBATCH --mem=16G\n#SBATCH --time=02:00:00\n#SBATCH --output=%x_%j.out\n\nmodule load apptainer\nmodule load cuda/12.1\n\ncd /path/to/rf_diffusion_all_atom\n\napptainer run --nv rf_se3_diffusion.sif -u run_inference.py \\\n    inference.deterministic=True \\\n    diffuser.T=100 \\\n    inference.output_prefix=output/my_design/sample \\\n    inference.input_pdb=input/my_protein.pdb \\\n    contigmap.contigs=\"['150-150']\" \\\n    inference.ligand=HEM \\\n    inference.num_designs=10"
+  },
+  {
+    "objectID": "monday/12-rfdiffusion-aa.html#usage-examples",
+    "href": "monday/12-rfdiffusion-aa.html#usage-examples",
+    "title": "12. RFdiffusion All Atom (Optional)",
+    "section": "Usage Examples",
+    "text": "Usage Examples\nBasic ligand binder design:\napptainer run --nv rf_se3_diffusion.sif -u run_inference.py \\\n    inference.input_pdb=input/complex.pdb \\\n    inference.output_prefix=output/design \\\n    inference.ligand=LIG \\\n    contigmap.contigs=\"['100-100']\" \\\n    inference.num_designs=10\nMultiple designs with different lengths:\napptainer run --nv rf_se3_diffusion.sif -u run_inference.py \\\n    inference.input_pdb=input/complex.pdb \\\n    inference.output_prefix=output/design \\\n    inference.ligand=LIG \\\n    contigmap.contigs=\"['80-120']\" \\\n    inference.num_designs=20"
+  },
+  {
+    "objectID": "monday/12-rfdiffusion-aa.html#key-parameters",
+    "href": "monday/12-rfdiffusion-aa.html#key-parameters",
+    "title": "12. RFdiffusion All Atom (Optional)",
+    "section": "Key Parameters",
+    "text": "Key Parameters\n\n\n\nParameter\nDescription\n\n\n\n\ninference.input_pdb\nInput PDB with ligand\n\n\ninference.output_prefix\nOutput path prefix\n\n\ninference.ligand\nLigand residue name\n\n\ncontigmap.contigs\nProtein length range (e.g., ['100-100'])\n\n\ninference.num_designs\nNumber of designs\n\n\ndiffuser.T\nDiffusion timesteps (100 typical)\n\n\ninference.deterministic\nReproducible results"
+  },
+  {
+    "objectID": "monday/12-rfdiffusion-aa.html#docker-to-apptainer-translation",
+    "href": "monday/12-rfdiffusion-aa.html#docker-to-apptainer-translation",
+    "title": "12. RFdiffusion All Atom (Optional)",
+    "section": "Docker to Apptainer Translation",
+    "text": "Docker to Apptainer Translation\nThe official docs may show Docker commands. Translate as follows:\n\n\n\n\n\n\n\nDocker\nApptainer\n\n\n\n\ndocker run --gpus all\napptainer run --nv\n\n\ndocker run -v $(pwd):/workspace\napptainer run --bind $(pwd):/workspace\n\n\n-it (interactive)\nUse apptainer shell --nv"
+  },
+  {
+    "objectID": "monday/12-rfdiffusion-aa.html#understanding-the-output",
+    "href": "monday/12-rfdiffusion-aa.html#understanding-the-output",
+    "title": "12. RFdiffusion All Atom (Optional)",
+    "section": "Understanding the Output",
+    "text": "Understanding the Output\n\n\n\n\n\n\n\nOutput File\nDescription\n\n\n\n\nsample_N.pdb\nFinal designed structure\n\n\nsample_N_Xt-1_traj.pdb\nDenoising trajectory (animation of design)\n\n\nsample_N_X0-1_traj.pdb\nModel predictions at each step\n\n\n\nThe trajectory files can be loaded into PyMOL to visualize the diffusion process."
+  },
+  {
+    "objectID": "monday/12-rfdiffusion-aa.html#comparison-with-rfdiffusion2",
+    "href": "monday/12-rfdiffusion-aa.html#comparison-with-rfdiffusion2",
+    "title": "12. RFdiffusion All Atom (Optional)",
+    "section": "Comparison with RFdiffusion2",
+    "text": "Comparison with RFdiffusion2\n\n\n\nFeature\nRFdiffusion AA\nRFdiffusion2\n\n\n\n\nAtomic precision\nYes\nYes (improved)\n\n\nLigand binding\nYes\nYes\n\n\nActive site scaffolding\nLimited\nAdvanced\n\n\nModel architecture\nEarlier\nUpdated\n\n\nRecommended\nLegacy workflows\nNew projects\n\n\n\nRecommendation: Use RFdiffusion2 for new projects unless you have specific reasons to use this version."
   },
   {
     "objectID": "monday/12-rfdiffusion-aa.html#troubleshooting",
     "href": "monday/12-rfdiffusion-aa.html#troubleshooting",
     "title": "12. RFdiffusion All Atom (Optional)",
     "section": "Troubleshooting",
-    "text": "Troubleshooting\nContainer not found: Ensure the .sif file is in the current directory or provide the full path.\nGPU errors: Make sure CUDA modules are loaded and GPU is available in your allocation.\n\nNavigation: ← ESM3 (Optional) | Monday Overview"
+    "text": "Troubleshooting\nContainer not found:\n\nEnsure .sif file is in current directory\nOr provide full path to container\n\nGPU errors:\n\nEnsure --nv flag is included for GPU\nLoad CUDA module: module load cuda/12.1\nVerify GPU availability: nvidia-smi\n\nPermission denied on container:\nchmod +x rf_se3_diffusion.sif\nInput PDB errors:\n\nVerify ligand is present in input PDB\nCheck ligand residue name matches inference.ligand\nEnsure PDB has proper formatting\n\nSubmodule errors:\ngit submodule init\ngit submodule update\n\nNavigation: ← ESM3 (Optional) | Monday Overview"
   },
   {
     "objectID": "monday/11-esm3.html",
     "href": "monday/11-esm3.html",
     "title": "11. ESM3 (Optional)",
     "section": "",
-    "text": "ESM3 (paper, code) is a frontier generative model for biology that can jointly reason across three fundamental biological properties of proteins: sequence, structure, and function. It represents a multimodal generative masked language model.\nNote: This tool is marked as OPTIONAL as it’s primarily a research/generative model. Install if you’re interested in protein generation and design beyond structure prediction.\nESM3 is useful for protein generation, function prediction, and multimodal protein design tasks. It can generate novel proteins with desired properties.\nThe goal of this module is to install ESM3 on your HPC cluster (optional)."
+    "text": "ESM3 (paper, code) is a frontier generative model for biology that jointly reasons across three fundamental biological properties of proteins: sequence, structure, and function. It represents a multimodal generative masked language model.\nNote: This tool is marked as OPTIONAL. Install if you’re interested in protein generation and multimodal design beyond structure prediction."
   },
   {
-    "objectID": "monday/11-esm3.html#preparation-work",
-    "href": "monday/11-esm3.html#preparation-work",
+    "objectID": "monday/11-esm3.html#why-use-esm3",
+    "href": "monday/11-esm3.html#why-use-esm3",
     "title": "11. ESM3 (Optional)",
-    "section": "Preparation Work",
-    "text": "Preparation Work\n Mark as complete\nThis assignment assumes that you have access to a computing cluster that allows installation of new software. We’ll be creating virtual environments using Conda/Mamba."
+    "section": "Why Use ESM3?",
+    "text": "Why Use ESM3?\n\nMultimodal generation: Jointly reason about sequence, structure, and function\nProtein generation: Create novel proteins with desired properties\nSequence completion: Fill in masked or missing regions\nEmbeddings: Extract rich protein representations (ESM C)\n\nRelated Tools: For structure prediction only, see ESMFold. For sequence design given structure, see LigandMPNN."
   },
   {
-    "objectID": "monday/11-esm3.html#installation-steps",
-    "href": "monday/11-esm3.html#installation-steps",
+    "objectID": "monday/11-esm3.html#resource-requirements",
+    "href": "monday/11-esm3.html#resource-requirements",
     "title": "11. ESM3 (Optional)",
-    "section": "Installation Steps",
-    "text": "Installation Steps\n Mark as complete\n\nCreate a conda environment:\n\nmamba create -n esm3 python=3.10\nmamba activate esm3\n\nInstall the ESM library:\n\npip install esm"
+    "section": "Resource Requirements",
+    "text": "Resource Requirements\n\n\n\nResource\nMinimum\nRecommended\nNotes\n\n\n\n\nGPU RAM\n16 GB\n24+ GB\nFor esm3-small (1.4B params)\n\n\nCPU RAM\n16 GB\n32 GB\nFor preprocessing\n\n\nDisk Space\n10 GB\n20 GB\nModel weights\n\n\nPython\n3.10+\n3.10\nRequired\n\n\n\nModel sizes:\n\nesm3-small-2024-08 (1.4B params): Runs locally\nesm3-medium-2024-08 (7B params): Via Forge API\nesm3-large-2024-03 (98B params): Via Forge API"
+  },
+  {
+    "objectID": "monday/11-esm3.html#preparation",
+    "href": "monday/11-esm3.html#preparation",
+    "title": "11. ESM3 (Optional)",
+    "section": "Preparation",
+    "text": "Preparation\n Mark as complete\nPrerequisites:\n\nCompleted HPC Setup guide\nConda/Mamba installed\nHuggingFace account (for model access)"
+  },
+  {
+    "objectID": "monday/11-esm3.html#installation",
+    "href": "monday/11-esm3.html#installation",
+    "title": "11. ESM3 (Optional)",
+    "section": "Installation",
+    "text": "Installation\n Mark as complete\n\nCreate a conda environment:\n\nmamba create -n esm3 python=3.10\nmamba activate esm3\n\nInstall the ESM library:\n\npip install esm"
   },
   {
     "objectID": "monday/11-esm3.html#huggingface-authentication",
     "href": "monday/11-esm3.html#huggingface-authentication",
     "title": "11. ESM3 (Optional)",
     "section": "HuggingFace Authentication",
-    "text": "HuggingFace Authentication\nESM3 weights are stored on HuggingFace Hub. You’ll need to authenticate:\n\nCreate a HuggingFace account at huggingface.co\nGenerate an API token with “Read” permission\nAuthenticate:\n\nfrom huggingface_hub import login\nlogin()  # Follow prompts to enter your token"
+    "text": "HuggingFace Authentication\nESM3 weights are stored on HuggingFace Hub. You need to authenticate:\n\nCreate a HuggingFace account at huggingface.co\nGenerate an API token with “Read” permission at huggingface.co/settings/tokens\nAuthenticate in Python:\n\nfrom huggingface_hub import login\nlogin()  # Follow prompts to enter your token\nOr set environment variable:\nexport HF_TOKEN=\"your_token_here\""
   },
   {
     "objectID": "monday/11-esm3.html#testing-the-installation",
     "href": "monday/11-esm3.html#testing-the-installation",
     "title": "11. ESM3 (Optional)",
     "section": "Testing the Installation",
-    "text": "Testing the Installation\n Mark as complete\nCreate a test script test_esm3.py:\nfrom huggingface_hub import login\nfrom esm.models.esm3 import ESM3\nfrom esm.sdk.api import ESMProtein, GenerationConfig\n\n# Authenticate (first time only)\nlogin()\n\n# Load the model (this downloads weights on first run)\nmodel = ESM3.from_pretrained(\"esm3-small-2024-08\").to(\"cuda\")  # or \"cpu\"\n\n# Generate a protein sequence completion\nprompt = \"MKTVRQ_______________QLAEELSVSRQVIVQDIAYLRSLG\"\nprotein = ESMProtein(sequence=prompt)\n\n# Generate sequence\nprotein = model.generate(\n    protein,\n    GenerationConfig(track=\"sequence\", num_steps=8, temperature=0.7)\n)\n\nprint(\"Generated sequence:\")\nprint(protein.sequence)\n\n# Generate structure\nprotein = model.generate(\n    protein,\n    GenerationConfig(track=\"structure\", num_steps=8)\n)\n\n# Save structure\nprotein.to_pdb(\"./generated.pdb\")\nprint(\"Structure saved to generated.pdb\")\nRun the test:\npython test_esm3.py"
+    "text": "Testing the Installation\n Mark as complete\nCreate a test script test_esm3.py:\nfrom huggingface_hub import login\nfrom esm.models.esm3 import ESM3\nfrom esm.sdk.api import ESMProtein, GenerationConfig\n\n# Authenticate (first time only)\nlogin()\n\n# Load the model (downloads weights on first run)\nmodel = ESM3.from_pretrained(\"esm3-small-2024-08\").to(\"cuda\")  # or \"cpu\"\n\n# Generate a protein sequence completion\nprompt = \"MKTVRQ_______________QLAEELSVSRQVIVQDIAYLRSLG\"\nprotein = ESMProtein(sequence=prompt)\n\n# Generate sequence\nprotein = model.generate(\n    protein,\n    GenerationConfig(track=\"sequence\", num_steps=8, temperature=0.7)\n)\n\nprint(\"Generated sequence:\")\nprint(protein.sequence)\n\n# Generate structure\nprotein = model.generate(\n    protein,\n    GenerationConfig(track=\"structure\", num_steps=8)\n)\n\n# Save structure\nprotein.to_pdb(\"./generated.pdb\")\nprint(\"Structure saved to generated.pdb\")\nRun the test:\npython test_esm3.py\nSuccess indicators:\n\nModel loads without errors\nSequence completion fills in the masked region\nStructure is generated and saved as PDB\n\nExpected runtime: 2-5 minutes (first run downloads ~3GB weights)."
   },
   {
-    "objectID": "monday/11-esm3.html#available-esm3-models",
-    "href": "monday/11-esm3.html#available-esm3-models",
+    "objectID": "monday/11-esm3.html#hpc-job-script",
+    "href": "monday/11-esm3.html#hpc-job-script",
     "title": "11. ESM3 (Optional)",
-    "section": "Available ESM3 Models",
-    "text": "Available ESM3 Models\n\nesm3-small-2024-08 (1.4B parameters) - Fastest, runs locally\nesm3-medium-2024-08 (7B parameters) - Via Forge API\nesm3-large-2024-03 (98B parameters) - Via Forge API"
+    "section": "HPC Job Script",
+    "text": "HPC Job Script\n#!/bin/bash\n#SBATCH --job-name=esm3\n#SBATCH --partition=gpu\n#SBATCH --gpus=1\n#SBATCH --cpus-per-task=4\n#SBATCH --mem=32G\n#SBATCH --time=02:00:00\n#SBATCH --output=%x_%j.out\n\nmodule load cuda/12.1\n\nsource ~/.bashrc\nmamba activate esm3\n\n# Set HuggingFace token\nexport HF_TOKEN=\"your_token_here\"\n\npython generate_protein.py"
   },
   {
-    "objectID": "monday/11-esm3.html#esm-c-for-embeddings",
-    "href": "monday/11-esm3.html#esm-c-for-embeddings",
+    "objectID": "monday/11-esm3.html#usage-examples",
+    "href": "monday/11-esm3.html#usage-examples",
     "title": "11. ESM3 (Optional)",
-    "section": "ESM C for Embeddings",
-    "text": "ESM C for Embeddings\nIf you only need protein embeddings (not generation), use ESM C instead:\nfrom esm.models.esmc import ESMC\nfrom esm.sdk.api import ESMProtein, LogitsConfig\n\nprotein = ESMProtein(sequence=\"MKTVRQERLK\")\nclient = ESMC.from_pretrained(\"esmc_300m\").to(\"cuda\")\n\n# Get embeddings\nprotein_tensor = client.encode(protein)\nlogits_output = client.logits(\n    protein_tensor,\n    LogitsConfig(sequence=True, return_embeddings=True)\n)\n\nprint(logits_output.embeddings)"
+    "section": "Usage Examples",
+    "text": "Usage Examples\nSequence generation (fill masked regions):\nfrom esm.models.esm3 import ESM3\nfrom esm.sdk.api import ESMProtein, GenerationConfig\n\nmodel = ESM3.from_pretrained(\"esm3-small-2024-08\").to(\"cuda\")\n\n# Use underscores for masked positions\nprotein = ESMProtein(sequence=\"MKTVRQ_______________QLAEELSVSRQVIVQDIAYLRSLG\")\n\n# Generate\nprotein = model.generate(\n    protein,\n    GenerationConfig(track=\"sequence\", num_steps=8, temperature=0.7)\n)\nprint(protein.sequence)\nStructure prediction:\nprotein = ESMProtein(sequence=\"MKTVRQERLKSIVRILERSKEPVSGAQLAEELSVSRQVIVQDIAYLRSLG\")\n\nprotein = model.generate(\n    protein,\n    GenerationConfig(track=\"structure\", num_steps=8)\n)\n\nprotein.to_pdb(\"predicted.pdb\")\nUsing ESM C for embeddings only (faster, smaller):\nfrom esm.models.esmc import ESMC\nfrom esm.sdk.api import ESMProtein, LogitsConfig\n\nprotein = ESMProtein(sequence=\"MKTVRQERLK\")\nclient = ESMC.from_pretrained(\"esmc_300m\").to(\"cuda\")\n\n# Get embeddings\nprotein_tensor = client.encode(protein)\nlogits_output = client.logits(\n    protein_tensor,\n    LogitsConfig(sequence=True, return_embeddings=True)\n)\n\nprint(f\"Embedding shape: {logits_output.embeddings.shape}\")"
   },
   {
-    "objectID": "monday/11-esm3.html#hpc-job-script-example",
-    "href": "monday/11-esm3.html#hpc-job-script-example",
+    "objectID": "monday/11-esm3.html#available-models",
+    "href": "monday/11-esm3.html#available-models",
     "title": "11. ESM3 (Optional)",
-    "section": "HPC Job Script Example",
-    "text": "HPC Job Script Example\nFor SLURM clusters:\n#!/bin/bash\n#SBATCH --job-name=esm3\n#SBATCH --gpus=1\n#SBATCH --time=02:00:00\n#SBATCH --mem=32G\n\nmodule load cuda/12.1\n\nmamba activate esm3\n\npython generate_protein.py"
+    "section": "Available Models",
+    "text": "Available Models\n\n\n\nModel\nParameters\nAvailability\n\n\n\n\nesm3-small-2024-08\n1.4B\nLocal (free)\n\n\nesmc_300m\n300M\nLocal (fast embeddings)\n\n\nesmc_600m\n600M\nLocal\n\n\nesm3-medium-2024-08\n7B\nForge API\n\n\nesm3-large-2024-03\n98B\nForge API"
+  },
+  {
+    "objectID": "monday/11-esm3.html#generation-tracks",
+    "href": "monday/11-esm3.html#generation-tracks",
+    "title": "11. ESM3 (Optional)",
+    "section": "Generation Tracks",
+    "text": "Generation Tracks\nESM3 can generate different “tracks”:\n\n\n\nTrack\nDescription\n\n\n\n\nsequence\nGenerate amino acid sequence\n\n\nstructure\nGenerate 3D coordinates\n\n\nfunction\nGenerate functional annotations"
+  },
+  {
+    "objectID": "monday/11-esm3.html#key-parameters",
+    "href": "monday/11-esm3.html#key-parameters",
+    "title": "11. ESM3 (Optional)",
+    "section": "Key Parameters",
+    "text": "Key Parameters\n\n\n\nParameter\nDescription\n\n\n\n\ntrack\nWhat to generate: sequence, structure, function\n\n\nnum_steps\nNumber of generation steps (more = better quality)\n\n\ntemperature\nSampling diversity (higher = more diverse)"
   },
   {
     "objectID": "monday/11-esm3.html#use-cases",
     "href": "monday/11-esm3.html#use-cases",
     "title": "11. ESM3 (Optional)",
     "section": "Use Cases",
-    "text": "Use Cases\n\nProtein generation: Create novel proteins with desired properties\nSequence completion: Fill in missing regions\nStructure prediction: Generate 3D structures from sequence\nFunction prediction: Predict protein function from sequence/structure\nProtein embeddings: Extract representations (use ESM C)"
+    "text": "Use Cases\n\nProtein generation: Create novel proteins\nSequence completion: Fill in missing regions\nStructure prediction: Generate 3D structures\nFunction prediction: Predict functional properties\nEmbeddings: Extract protein representations for ML"
   },
   {
     "objectID": "monday/11-esm3.html#troubleshooting",
     "href": "monday/11-esm3.html#troubleshooting",
     "title": "11. ESM3 (Optional)",
     "section": "Troubleshooting",
-    "text": "Troubleshooting\nAuthentication errors: Ensure you’ve created a HuggingFace token and run login().\nDownload issues: Model weights are large. Ensure adequate storage and network.\nGPU memory: The small model (1.4B) requires significant GPU memory. Use CPU if needed.\n\nNavigation: ← BindCraft | Monday Overview | Next: RFdiffusion All Atom (Optional) →"
+    "text": "Troubleshooting\nHuggingFace authentication errors:\n\nVerify token has “Read” permission\nRun login() in Python and follow prompts\nOr set HF_TOKEN environment variable\n\nModel download issues:\n\nCheck network connectivity\nWeights are large (~3GB for small model)\nSet HF_HOME to location with space:\nexport HF_HOME=/scratch/$USER/huggingface\n\nGPU memory issues:\n\nUse CPU if GPU is insufficient: .to(\"cpu\")\nReduce batch size if processing multiple proteins\nesmc_300m is smaller and faster for embeddings\n\nSlow generation:\n\nGPU strongly recommended\nReduce num_steps for faster (lower quality) results\nUse ESM C for embeddings (no structure generation)\n\n\nNavigation: ← BindCraft | Monday Overview | Next: RFdiffusion All Atom (Optional) →"
   },
   {
     "objectID": "monday/1-localcolabfold.html",
     "href": "monday/1-localcolabfold.html",
     "title": "1. LocalColabFold",
     "section": "",
-    "text": "LocalColabFold (code) is a local installation of ColabFold, which provides an efficient implementation of AlphaFold2 protein structure prediction. ColabFold combines fast MSA generation from MMseqs2 with AlphaFold2’s structure prediction capabilities, making it significantly faster than the original AlphaFold2 implementation.\nLocalColabFold is useful for high-throughput protein structure prediction on your own HPC infrastructure without relying on Google Colab. It enables batch processing of structure predictions without time limits or GPU restrictions.\nThe goal of this module is to install LocalColabFold on your HPC cluster."
+    "text": "LocalColabFold (code) is a local installation of ColabFold, which provides an efficient implementation of AlphaFold2 protein structure prediction. ColabFold combines fast MSA generation from MMseqs2 with AlphaFold2’s structure prediction capabilities, making it significantly faster than the original AlphaFold2 implementation."
   },
   {
-    "objectID": "monday/1-localcolabfold.html#preparation-work",
-    "href": "monday/1-localcolabfold.html#preparation-work",
+    "objectID": "monday/1-localcolabfold.html#why-use-localcolabfold",
+    "href": "monday/1-localcolabfold.html#why-use-localcolabfold",
     "title": "1. LocalColabFold",
-    "section": "Preparation Work",
-    "text": "Preparation Work\n Mark as complete\nThis assignment assumes that you have access to a computing cluster that allows installation of new software.\nImportant: Make sure you have access to a GPU node for testing, as AlphaFold2 requires GPUs for efficient structure prediction."
+    "section": "Why Use LocalColabFold?",
+    "text": "Why Use LocalColabFold?\n\nHigh-throughput predictions: Run batch jobs without Colab time limits\nNo internet dependency: All computations run locally after setup\nHPC integration: Leverage your cluster’s GPUs for faster predictions\nMSA flexibility: Use pre-computed MSAs or generate them on-the-fly\n\nRelated Tools: For structure prediction without MSAs, see ESMFold. For multi-modal complexes, see Chai-1 or Boltz-2."
   },
   {
-    "objectID": "monday/1-localcolabfold.html#installation-steps",
-    "href": "monday/1-localcolabfold.html#installation-steps",
+    "objectID": "monday/1-localcolabfold.html#resource-requirements",
+    "href": "monday/1-localcolabfold.html#resource-requirements",
     "title": "1. LocalColabFold",
-    "section": "Installation Steps",
-    "text": "Installation Steps\n Mark as complete\n\nDownload the installation script:\n\nwget https://raw.githubusercontent.com/YoshitakaMo/localcolabfold/main/install_colabbatch_linux.sh\n\nMake the script executable and run it:\n\nchmod +x install_colabbatch_linux.sh\n./install_colabbatch_linux.sh\nThis will create a directory called localcolabfold with a conda environment called colabfold_batch.\nThe script will automatically:\n\nInstall Miniconda (if not already present)\nCreate a conda environment with ColabFold and all dependencies\nDownload necessary model weights (~10-15 GB)\n\n\nAdd the environment to your PATH (add to your ~/.bashrc for permanent access):\n\nexport PATH=\"/path/to/your/localcolabfold/colabfold-conda/bin:$PATH\""
+    "section": "Resource Requirements",
+    "text": "Resource Requirements\n\n\n\nResource\nMinimum\nRecommended\nNotes\n\n\n\n\nGPU RAM\n16 GB\n40+ GB\nA100 recommended for proteins &gt;500 aa\n\n\nCPU RAM\n32 GB\n64 GB\nMSA generation is memory-intensive\n\n\nDisk Space\n15 GB\n100+ GB\nModel weights + optional databases\n\n\nCUDA\n11.1+\n12.1+\nCheck compatibility"
+  },
+  {
+    "objectID": "monday/1-localcolabfold.html#preparation",
+    "href": "monday/1-localcolabfold.html#preparation",
+    "title": "1. LocalColabFold",
+    "section": "Preparation",
+    "text": "Preparation\n Mark as complete\nPrerequisites:\n\nCompleted HPC Setup guide\nAccess to a GPU node for testing\n~15 GB disk space for installation\n\nVerify your environment:\nnvidia-smi          # Check GPU is available\nnvcc --version      # Check CUDA version"
+  },
+  {
+    "objectID": "monday/1-localcolabfold.html#installation",
+    "href": "monday/1-localcolabfold.html#installation",
+    "title": "1. LocalColabFold",
+    "section": "Installation",
+    "text": "Installation\n Mark as complete\n\nDownload the installation script:\n\nwget https://raw.githubusercontent.com/YoshitakaMo/localcolabfold/main/install_colabbatch_linux.sh\n\nMake the script executable and run it:\n\nchmod +x install_colabbatch_linux.sh\n./install_colabbatch_linux.sh\nThis creates a localcolabfold directory containing: - A conda environment (colabfold_batch) - ColabFold and all dependencies - Model weights (~10-15 GB, downloaded automatically)\nExpected install time: 15-30 minutes depending on network speed.\n\nAdd the environment to your PATH (add to ~/.bashrc for permanent access):\n\nexport PATH=\"/path/to/your/localcolabfold/colabfold-conda/bin:$PATH\""
   },
   {
     "objectID": "monday/1-localcolabfold.html#testing-the-installation",
     "href": "monday/1-localcolabfold.html#testing-the-installation",
     "title": "1. LocalColabFold",
     "section": "Testing the Installation",
-    "text": "Testing the Installation\n Mark as complete\n\nActivate the ColabFold environment:\n\nsource localcolabfold/colabfold-conda/bin/activate\n\nCreate a test FASTA file with a small protein sequence:\n\necho \"&gt;test_protein\nMKFLKFSLLTAVLLSVVFAFSSCGDDDDTYPYDVPDYAGTCGDDDDTYPYDVPDYA\" &gt; test.fasta\n\nRun ColabFold on the test sequence:\n\ncolabfold_batch test.fasta test_output/\nIf the command completes successfully and creates PDB files in test_output/, your installation was successful!"
+    "text": "Testing the Installation\n Mark as complete\n\nActivate the ColabFold environment:\n\nsource localcolabfold/colabfold-conda/bin/activate\n\nCreate a test FASTA file:\n\necho \"&gt;test_protein\nMKFLKFSLLTAVLLSVVFAFSSCGDDDDTYPYDVPDYAGTCGDDDDTYPYDVPDYA\" &gt; test.fasta\n\nRun prediction:\n\ncolabfold_batch test.fasta test_output/\nSuccess indicators:\n\nCommand completes without errors\ntest_output/ directory contains:\n\ntest_protein_relaxed_rank_001_*.pdb (predicted structure)\ntest_protein_scores_rank_001_*.json (confidence scores)\ntest_protein_coverage.png (MSA coverage plot)\n\n\nExpected runtime: 2-5 minutes for this small test protein.\nVerify GPU is being used:\n# In another terminal while prediction runs:\nnvidia-smi\n# Look for python process using GPU memory"
   },
   {
-    "objectID": "monday/1-localcolabfold.html#hpc-job-submission",
-    "href": "monday/1-localcolabfold.html#hpc-job-submission",
+    "objectID": "monday/1-localcolabfold.html#hpc-job-script",
+    "href": "monday/1-localcolabfold.html#hpc-job-script",
     "title": "1. LocalColabFold",
-    "section": "HPC Job Submission",
-    "text": "HPC Job Submission\nFor HPC clusters using SLURM, create a job script like this:\n#!/bin/bash\n#SBATCH --job-name=colabfold\n#SBATCH --gpus=1\n#SBATCH --time=04:00:00\n#SBATCH --mem=32G\n\nsource /path/to/localcolabfold/colabfold-conda/bin/activate\n\ncolabfold_batch input.fasta output_dir/"
+    "section": "HPC Job Script",
+    "text": "HPC Job Script\n#!/bin/bash\n#SBATCH --job-name=colabfold\n#SBATCH --partition=gpu\n#SBATCH --gpus=1\n#SBATCH --cpus-per-task=8\n#SBATCH --mem=64G\n#SBATCH --time=04:00:00\n#SBATCH --output=%x_%j.out\n\n# Activate environment\nsource /path/to/localcolabfold/colabfold-conda/bin/activate\n\n# Optional: Use shared database location\nexport COLABFOLD_DOWNLOAD_DIR=/shared/colabfold_db\n\n# Run prediction\ncolabfold_batch input.fasta output_dir/"
+  },
+  {
+    "objectID": "monday/1-localcolabfold.html#usage-examples",
+    "href": "monday/1-localcolabfold.html#usage-examples",
+    "title": "1. LocalColabFold",
+    "section": "Usage Examples",
+    "text": "Usage Examples\nBasic prediction:\ncolabfold_batch sequences.fasta predictions/\nWith custom MSA server (if your HPC has one):\ncolabfold_batch --msa-server \"https://internal.server.edu\" sequences.fasta predictions/\nMultimer prediction (protein complexes):\n# Separate chains with : in the FASTA file\n# &gt;complex\n# SEQUENCEA:SEQUENCEB\ncolabfold_batch complex.fasta complex_output/\nBatch with templates:\ncolabfold_batch --templates sequences.fasta predictions/\nReduce memory usage (for large proteins):\ncolabfold_batch --amber --num-recycle 3 large_protein.fasta output/"
+  },
+  {
+    "objectID": "monday/1-localcolabfold.html#understanding-the-output",
+    "href": "monday/1-localcolabfold.html#understanding-the-output",
+    "title": "1. LocalColabFold",
+    "section": "Understanding the Output",
+    "text": "Understanding the Output\n\n\n\n\n\n\n\nFile\nDescription\n\n\n\n\n*_relaxed_rank_001_*.pdb\nBest predicted structure (Amber-relaxed)\n\n\n*_unrelaxed_rank_001_*.pdb\nBest prediction before relaxation\n\n\n*_scores_rank_001_*.json\npLDDT and pTM scores\n\n\n*_coverage.png\nMSA coverage visualization\n\n\n*_pae.png\nPredicted Aligned Error heatmap\n\n\n\nConfidence scores:\n\npLDDT (per-residue): &gt;90 high confidence, 70-90 confident, 50-70 low, &lt;50 very low\npTM (overall): &gt;0.8 high confidence for whole structure\nPAE (pairwise): Lower is better, indicates domain organization confidence"
   },
   {
     "objectID": "monday/1-localcolabfold.html#troubleshooting",
     "href": "monday/1-localcolabfold.html#troubleshooting",
     "title": "1. LocalColabFold",
     "section": "Troubleshooting",
-    "text": "Troubleshooting\nDatabase Location: By default, ColabFold downloads databases to ~/.cache/colabfold/. On shared clusters, you may want to set COLABFOLD_DOWNLOAD_DIR to a shared location to avoid duplicate downloads:\nexport COLABFOLD_DOWNLOAD_DIR=/shared/path/colabfold_db\n\nNavigation: ← Monday Overview | Next: LigandMPNN →"
+    "text": "Troubleshooting\n“CUDA out of memory”:\n\nRequest GPU with more memory (#SBATCH --gpus=a100:1)\nUse --amber flag to reduce peak memory\nFor very large proteins (&gt;1000 aa), use Chai-1 or Boltz-2 instead\n\nMSA generation is slow:\n\nUse the MMseqs2 server option for faster MSA generation\nPre-compute MSAs for frequently used sequences\n\nDatabase location filling home directory:\n# Set in ~/.bashrc before running\nexport COLABFOLD_DOWNLOAD_DIR=/scratch/$USER/colabfold_db\nModel weights download fails:\n\nCheck network connectivity\nManually download from: https://storage.googleapis.com/alphafold/\nPlace in ~/.cache/colabfold/params/\n\nGPU not being used (slow prediction):\n# Verify CUDA is detected\npython -c \"import torch; print(torch.cuda.is_available())\"\n# Should print: True\n\nNavigation: ← HPC Setup | Monday Overview | Next: LigandMPNN →"
   },
   {
     "objectID": "about.html",

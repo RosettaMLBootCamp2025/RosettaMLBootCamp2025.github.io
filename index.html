@@ -105,6 +105,10 @@ ul.task-list li input[type="checkbox"] {
   </li>  
         <li><hr class="dropdown-divider"></li>
         <li>
+    <a class="dropdown-item" href="./monday/0-hpc-setup.html">
+ <span class="dropdown-text">0. HPC Setup</span></a>
+  </li>  
+        <li>
     <a class="dropdown-item" href="./monday/1-localcolabfold.html">
  <span class="dropdown-text">1. LocalColabFold</span></a>
   </li>  
@@ -256,7 +260,7 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<div id="resume-banner" style="display: none; background: #e7f3ff; border: 1px solid #0066cc; border-radius: 8px; padding: 15px; margin-bottom: 20px;">
+<div id="resume-banner" style="display: none; background: #e8eef5; border: 1px solid #022851; border-radius: 8px; padding: 15px; margin-bottom: 20px;">
 <p><strong>Welcome back!</strong> You were last on: <span id="last-page-title"></span> <br> <a id="resume-link" href="#" class="btn btn-primary btn-sm" style="margin-top: 10px;">Resume where you left off</a></p>
 </div>
 <p>Welcome to the ML Protein Design Bootcamp 2025! This self-paced course covers machine learning tools for protein structure prediction and design.</p>
@@ -331,12 +335,27 @@ Reset Progress
   const currentPath = window.location.pathname;
   const isHomePage = currentPath === '/' || currentPath.endsWith('/index.html') || currentPath === '/index.html' || currentPath.match(/^\/[^\/]*\/?$/);
 
+  // Extract day from path
+  function getDayFromPath(path) {
+    const dayMap = {
+      'monday': 'Monday',
+      'tuesday': 'Tuesday',
+      'wednesday': 'Wednesday',
+      'thursday': 'Thursday',
+      'capstone': 'Capstone'
+    };
+    const match = path.match(/\/(monday|tuesday|wednesday|thursday|capstone)\//i);
+    return match ? dayMap[match[1].toLowerCase()] : null;
+  }
+
   // Save current page as last visited (except homepage)
   if (!isHomePage) {
     const pageTitle = document.title.replace(' - ML Protein Design Bootcamp 2025', '');
+    const day = getDayFromPath(currentPath);
     localStorage.setItem(LAST_PAGE_KEY, JSON.stringify({
       path: currentPath,
       title: pageTitle,
+      day: day,
       timestamp: Date.now()
     }));
   }
@@ -383,7 +402,9 @@ Reset Progress
       const title = document.getElementById('last-page-title');
 
       if (banner && link && title && data.path) {
-        title.textContent = data.title;
+        // Format title with day prefix if available
+        const displayTitle = data.day ? `${data.day}: ${data.title}` : data.title;
+        title.textContent = displayTitle;
         link.href = data.path;
         banner.style.display = 'block';
       }
@@ -426,11 +447,46 @@ Reset Progress
     location.reload();
   };
 
+  // Mark all checkboxes on current page as complete
+  window.markAllComplete = function() {
+    const checkboxes = document.querySelectorAll('.module-checkbox');
+    const progress = getProgress();
+
+    checkboxes.forEach(cb => {
+      const id = cb.dataset.moduleId;
+      cb.checked = true;
+      if (!progress.completed.includes(id)) {
+        progress.completed.push(id);
+      }
+    });
+
+    saveProgress(progress);
+    updateProgressBar();
+  };
+
+  // Add "Mark all as complete" button to pages with checkboxes
+  function addMarkAllButton() {
+    const checkboxes = document.querySelectorAll('.module-checkbox');
+    if (checkboxes.length > 0 && !isHomePage) {
+      // Find the title element and add button after it
+      const title = document.querySelector('h1.title, .quarto-title h1');
+      if (title) {
+        const btn = document.createElement('button');
+        btn.textContent = 'Mark all as complete';
+        btn.className = 'btn btn-outline-success btn-sm mark-all-btn';
+        btn.style.cssText = 'margin-top: 0.5rem; margin-bottom: 1rem;';
+        btn.onclick = window.markAllComplete;
+        title.insertAdjacentElement('afterend', btn);
+      }
+    }
+  }
+
   // Run on page load
   document.addEventListener('DOMContentLoaded', function() {
     showResumeBanner();
     initCheckboxes();
     updateProgressBar();
+    addMarkAllButton();
   });
 })();
 </script>
@@ -507,7 +563,7 @@ Reset Progress
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp('/' + window.location.host + '/');
+        var filterRegex = new RegExp("https:\/\/RosettaMLBootCamp2025\.github\.io\/");
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }

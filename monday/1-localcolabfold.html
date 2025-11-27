@@ -140,6 +140,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>  
         <li><hr class="dropdown-divider"></li>
         <li>
+    <a class="dropdown-item" href="../monday/0-hpc-setup.html">
+ <span class="dropdown-text">0. HPC Setup</span></a>
+  </li>  
+        <li>
     <a class="dropdown-item" href="../monday/1-localcolabfold.html">
  <span class="dropdown-text">1. LocalColabFold</span></a>
   </li>  
@@ -273,10 +277,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#preparation-work" id="toc-preparation-work" class="nav-link active" data-scroll-target="#preparation-work">Preparation Work</a></li>
-  <li><a href="#installation-steps" id="toc-installation-steps" class="nav-link" data-scroll-target="#installation-steps">Installation Steps</a></li>
+  <li><a href="#why-use-localcolabfold" id="toc-why-use-localcolabfold" class="nav-link active" data-scroll-target="#why-use-localcolabfold">Why Use LocalColabFold?</a></li>
+  <li><a href="#resource-requirements" id="toc-resource-requirements" class="nav-link" data-scroll-target="#resource-requirements">Resource Requirements</a></li>
+  <li><a href="#preparation" id="toc-preparation" class="nav-link" data-scroll-target="#preparation">Preparation</a></li>
+  <li><a href="#installation" id="toc-installation" class="nav-link" data-scroll-target="#installation">Installation</a></li>
   <li><a href="#testing-the-installation" id="toc-testing-the-installation" class="nav-link" data-scroll-target="#testing-the-installation">Testing the Installation</a></li>
-  <li><a href="#hpc-job-submission" id="toc-hpc-job-submission" class="nav-link" data-scroll-target="#hpc-job-submission">HPC Job Submission</a></li>
+  <li><a href="#hpc-job-script" id="toc-hpc-job-script" class="nav-link" data-scroll-target="#hpc-job-script">HPC Job Script</a></li>
+  <li><a href="#usage-examples" id="toc-usage-examples" class="nav-link" data-scroll-target="#usage-examples">Usage Examples</a></li>
+  <li><a href="#understanding-the-output" id="toc-understanding-the-output" class="nav-link" data-scroll-target="#understanding-the-output">Understanding the Output</a></li>
   <li><a href="#troubleshooting" id="toc-troubleshooting" class="nav-link" data-scroll-target="#troubleshooting">Troubleshooting</a></li>
   </ul>
 </nav>
@@ -304,37 +312,86 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <p>LocalColabFold (<a href="https://github.com/YoshitakaMo/localcolabfold">code</a>) is a local installation of ColabFold, which provides an efficient implementation of AlphaFold2 protein structure prediction. ColabFold combines fast MSA generation from MMseqs2 with AlphaFold2’s structure prediction capabilities, making it significantly faster than the original AlphaFold2 implementation.</p>
-<p>LocalColabFold is useful for high-throughput protein structure prediction on your own HPC infrastructure without relying on Google Colab. It enables batch processing of structure predictions without time limits or GPU restrictions.</p>
-<p>The goal of this module is to install LocalColabFold on your HPC cluster.</p>
-<section id="preparation-work" class="level2">
-<h2 class="anchored" data-anchor-id="preparation-work">Preparation Work</h2>
-<p><input type="checkbox" class="module-checkbox" data-module-id="localcolabfold-prep"> Mark as complete</p>
-<p>This assignment assumes that you have access to a computing cluster that allows installation of new software.</p>
-<p><strong>Important</strong>: Make sure you have access to a GPU node for testing, as AlphaFold2 requires GPUs for efficient structure prediction.</p>
+<section id="why-use-localcolabfold" class="level2">
+<h2 class="anchored" data-anchor-id="why-use-localcolabfold">Why Use LocalColabFold?</h2>
+<ul>
+<li><strong>High-throughput predictions</strong>: Run batch jobs without Colab time limits</li>
+<li><strong>No internet dependency</strong>: All computations run locally after setup</li>
+<li><strong>HPC integration</strong>: Leverage your cluster’s GPUs for faster predictions</li>
+<li><strong>MSA flexibility</strong>: Use pre-computed MSAs or generate them on-the-fly</li>
+</ul>
+<p><strong>Related Tools</strong>: For structure prediction without MSAs, see <a href="../monday/4-esmfold.html">ESMFold</a>. For multi-modal complexes, see <a href="../monday/6-chai1.html">Chai-1</a> or <a href="../monday/7-boltz2.html">Boltz-2</a>.</p>
 </section>
-<section id="installation-steps" class="level2">
-<h2 class="anchored" data-anchor-id="installation-steps">Installation Steps</h2>
+<section id="resource-requirements" class="level2">
+<h2 class="anchored" data-anchor-id="resource-requirements">Resource Requirements</h2>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Resource</th>
+<th>Minimum</th>
+<th>Recommended</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>GPU RAM</td>
+<td>16 GB</td>
+<td>40+ GB</td>
+<td>A100 recommended for proteins &gt;500 aa</td>
+</tr>
+<tr class="even">
+<td>CPU RAM</td>
+<td>32 GB</td>
+<td>64 GB</td>
+<td>MSA generation is memory-intensive</td>
+</tr>
+<tr class="odd">
+<td>Disk Space</td>
+<td>15 GB</td>
+<td>100+ GB</td>
+<td>Model weights + optional databases</td>
+</tr>
+<tr class="even">
+<td>CUDA</td>
+<td>11.1+</td>
+<td>12.1+</td>
+<td>Check compatibility</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="preparation" class="level2">
+<h2 class="anchored" data-anchor-id="preparation">Preparation</h2>
+<p><input type="checkbox" class="module-checkbox" data-module-id="localcolabfold-prep"> Mark as complete</p>
+<p><strong>Prerequisites</strong>:</p>
+<ul>
+<li>Completed <a href="../monday/0-hpc-setup.html">HPC Setup</a> guide</li>
+<li>Access to a GPU node for testing</li>
+<li>~15 GB disk space for installation</li>
+</ul>
+<p><strong>Verify your environment</strong>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nvidia-smi</span>          <span class="co"># Check GPU is available</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">nvcc</span> <span class="at">--version</span>      <span class="co"># Check CUDA version</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="installation" class="level2">
+<h2 class="anchored" data-anchor-id="installation">Installation</h2>
 <p><input type="checkbox" class="module-checkbox" data-module-id="localcolabfold-install"> Mark as complete</p>
 <ol type="1">
 <li>Download the installation script:</li>
 </ol>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wget</span> https://raw.githubusercontent.com/YoshitakaMo/localcolabfold/main/install_colabbatch_linux.sh</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wget</span> https://raw.githubusercontent.com/YoshitakaMo/localcolabfold/main/install_colabbatch_linux.sh</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ol start="2" type="1">
 <li>Make the script executable and run it:</li>
 </ol>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">chmod</span> +x install_colabbatch_linux.sh</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ex">./install_colabbatch_linux.sh</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>This will create a directory called <code>localcolabfold</code> with a conda environment called <code>colabfold_batch</code>.</p>
-<p>The script will automatically:</p>
-<ul>
-<li>Install Miniconda (if not already present)</li>
-<li>Create a conda environment with ColabFold and all dependencies</li>
-<li>Download necessary model weights (~10-15 GB)</li>
-</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">chmod</span> +x install_colabbatch_linux.sh</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">./install_colabbatch_linux.sh</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This creates a <code>localcolabfold</code> directory containing: - A conda environment (<code>colabfold_batch</code>) - ColabFold and all dependencies - Model weights (~10-15 GB, downloaded automatically)</p>
+<p><strong>Expected install time</strong>: 15-30 minutes depending on network speed.</p>
 <ol start="3" type="1">
-<li>Add the environment to your PATH (add to your <code>~/.bashrc</code> for permanent access):</li>
+<li>Add the environment to your PATH (add to <code>~/.bashrc</code> for permanent access):</li>
 </ol>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">PATH</span><span class="op">=</span><span class="st">"/path/to/your/localcolabfold/colabfold-conda/bin:</span><span class="va">$PATH</span><span class="st">"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">PATH</span><span class="op">=</span><span class="st">"/path/to/your/localcolabfold/colabfold-conda/bin:</span><span class="va">$PATH</span><span class="st">"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="testing-the-installation" class="level2">
 <h2 class="anchored" data-anchor-id="testing-the-installation">Testing the Installation</h2>
@@ -342,37 +399,139 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ol type="1">
 <li>Activate the ColabFold environment:</li>
 </ol>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> localcolabfold/colabfold-conda/bin/activate</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> localcolabfold/colabfold-conda/bin/activate</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ol start="2" type="1">
-<li>Create a test FASTA file with a small protein sequence:</li>
+<li>Create a test FASTA file:</li>
 </ol>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"&gt;test_protein</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="st">MKFLKFSLLTAVLLSVVFAFSSCGDDDDTYPYDVPDYAGTCGDDDDTYPYDVPDYA"</span> <span class="op">&gt;</span> test.fasta</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"&gt;test_protein</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="st">MKFLKFSLLTAVLLSVVFAFSSCGDDDDTYPYDVPDYAGTCGDDDDTYPYDVPDYA"</span> <span class="op">&gt;</span> test.fasta</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ol start="3" type="1">
-<li>Run ColabFold on the test sequence:</li>
+<li>Run prediction:</li>
 </ol>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">colabfold_batch</span> test.fasta test_output/</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>If the command completes successfully and creates PDB files in <code>test_output/</code>, your installation was successful!</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">colabfold_batch</span> test.fasta test_output/</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Success indicators</strong>:</p>
+<ul>
+<li>Command completes without errors</li>
+<li><code>test_output/</code> directory contains:
+<ul>
+<li><code>test_protein_relaxed_rank_001_*.pdb</code> (predicted structure)</li>
+<li><code>test_protein_scores_rank_001_*.json</code> (confidence scores)</li>
+<li><code>test_protein_coverage.png</code> (MSA coverage plot)</li>
+</ul></li>
+</ul>
+<p><strong>Expected runtime</strong>: 2-5 minutes for this small test protein.</p>
+<p><strong>Verify GPU is being used</strong>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># In another terminal while prediction runs:</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="ex">nvidia-smi</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Look for python process using GPU memory</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="hpc-job-submission" class="level2">
-<h2 class="anchored" data-anchor-id="hpc-job-submission">HPC Job Submission</h2>
-<p>For HPC clusters using SLURM, create a job script like this:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/bin/bash</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --job-name=colabfold</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --gpus=1</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --time=04:00:00</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --mem=32G</span></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> /path/to/localcolabfold/colabfold-conda/bin/activate</span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="ex">colabfold_batch</span> input.fasta output_dir/</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="hpc-job-script" class="level2">
+<h2 class="anchored" data-anchor-id="hpc-job-script">HPC Job Script</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/bin/bash</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --job-name=colabfold</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --partition=gpu</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --gpus=1</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --cpus-per-task=8</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --mem=64G</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --time=04:00:00</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --output=%x_%j.out</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Activate environment</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> /path/to/localcolabfold/colabfold-conda/bin/activate</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Optional: Use shared database location</span></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">COLABFOLD_DOWNLOAD_DIR</span><span class="op">=</span>/shared/colabfold_db</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Run prediction</span></span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a><span class="ex">colabfold_batch</span> input.fasta output_dir/</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="usage-examples" class="level2">
+<h2 class="anchored" data-anchor-id="usage-examples">Usage Examples</h2>
+<p><strong>Basic prediction</strong>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">colabfold_batch</span> sequences.fasta predictions/</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>With custom MSA server</strong> (if your HPC has one):</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">colabfold_batch</span> <span class="at">--msa-server</span> <span class="st">"https://internal.server.edu"</span> sequences.fasta predictions/</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Multimer prediction</strong> (protein complexes):</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Separate chains with : in the FASTA file</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="co"># &gt;complex</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="co"># SEQUENCEA:SEQUENCEB</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="ex">colabfold_batch</span> complex.fasta complex_output/</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Batch with templates</strong>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">colabfold_batch</span> <span class="at">--templates</span> sequences.fasta predictions/</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Reduce memory usage</strong> (for large proteins):</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="ex">colabfold_batch</span> <span class="at">--amber</span> <span class="at">--num-recycle</span> 3 large_protein.fasta output/</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="understanding-the-output" class="level2">
+<h2 class="anchored" data-anchor-id="understanding-the-output">Understanding the Output</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 31%">
+<col style="width: 68%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>File</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>*_relaxed_rank_001_*.pdb</code></td>
+<td>Best predicted structure (Amber-relaxed)</td>
+</tr>
+<tr class="even">
+<td><code>*_unrelaxed_rank_001_*.pdb</code></td>
+<td>Best prediction before relaxation</td>
+</tr>
+<tr class="odd">
+<td><code>*_scores_rank_001_*.json</code></td>
+<td>pLDDT and pTM scores</td>
+</tr>
+<tr class="even">
+<td><code>*_coverage.png</code></td>
+<td>MSA coverage visualization</td>
+</tr>
+<tr class="odd">
+<td><code>*_pae.png</code></td>
+<td>Predicted Aligned Error heatmap</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Confidence scores</strong>:</p>
+<ul>
+<li><strong>pLDDT</strong> (per-residue): &gt;90 high confidence, 70-90 confident, 50-70 low, &lt;50 very low</li>
+<li><strong>pTM</strong> (overall): &gt;0.8 high confidence for whole structure</li>
+<li><strong>PAE</strong> (pairwise): Lower is better, indicates domain organization confidence</li>
+</ul>
 </section>
 <section id="troubleshooting" class="level2">
 <h2 class="anchored" data-anchor-id="troubleshooting">Troubleshooting</h2>
-<p><strong>Database Location</strong>: By default, ColabFold downloads databases to <code>~/.cache/colabfold/</code>. On shared clusters, you may want to set <code>COLABFOLD_DOWNLOAD_DIR</code> to a shared location to avoid duplicate downloads:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">COLABFOLD_DOWNLOAD_DIR</span><span class="op">=</span>/shared/path/colabfold_db</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>“CUDA out of memory”</strong>:</p>
+<ul>
+<li>Request GPU with more memory (<code>#SBATCH --gpus=a100:1</code>)</li>
+<li>Use <code>--amber</code> flag to reduce peak memory</li>
+<li>For very large proteins (&gt;1000 aa), use Chai-1 or Boltz-2 instead</li>
+</ul>
+<p><strong>MSA generation is slow</strong>:</p>
+<ul>
+<li>Use the MMseqs2 server option for faster MSA generation</li>
+<li>Pre-compute MSAs for frequently used sequences</li>
+</ul>
+<p><strong>Database location filling home directory</strong>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set in ~/.bashrc before running</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">COLABFOLD_DOWNLOAD_DIR</span><span class="op">=</span>/scratch/<span class="va">$USER</span>/colabfold_db</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Model weights download fails</strong>:</p>
+<ul>
+<li>Check network connectivity</li>
+<li>Manually download from: https://storage.googleapis.com/alphafold/</li>
+<li>Place in <code>~/.cache/colabfold/params/</code></li>
+</ul>
+<p><strong>GPU not being used</strong> (slow prediction):</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Verify CUDA is detected</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-c</span> <span class="st">"import torch; print(torch.cuda.is_available())"</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Should print: True</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <hr>
-<p><strong>Navigation:</strong> <a href="../monday/index.html">← Monday Overview</a> | <a href="../monday/2-ligandmpnn.html">Next: LigandMPNN →</a></p>
+<p><strong>Navigation:</strong> <a href="../monday/0-hpc-setup.html">← HPC Setup</a> | <a href="../monday/index.html">Monday Overview</a> | <a href="../monday/2-ligandmpnn.html">Next: LigandMPNN →</a></p>
 
 
 </section>
@@ -387,12 +546,27 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   const currentPath = window.location.pathname;
   const isHomePage = currentPath === '/' || currentPath.endsWith('/index.html') || currentPath === '/index.html' || currentPath.match(/^\/[^\/]*\/?$/);
 
+  // Extract day from path
+  function getDayFromPath(path) {
+    const dayMap = {
+      'monday': 'Monday',
+      'tuesday': 'Tuesday',
+      'wednesday': 'Wednesday',
+      'thursday': 'Thursday',
+      'capstone': 'Capstone'
+    };
+    const match = path.match(/\/(monday|tuesday|wednesday|thursday|capstone)\//i);
+    return match ? dayMap[match[1].toLowerCase()] : null;
+  }
+
   // Save current page as last visited (except homepage)
   if (!isHomePage) {
     const pageTitle = document.title.replace(' - ML Protein Design Bootcamp 2025', '');
+    const day = getDayFromPath(currentPath);
     localStorage.setItem(LAST_PAGE_KEY, JSON.stringify({
       path: currentPath,
       title: pageTitle,
+      day: day,
       timestamp: Date.now()
     }));
   }
@@ -439,7 +613,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       const title = document.getElementById('last-page-title');
 
       if (banner && link && title && data.path) {
-        title.textContent = data.title;
+        // Format title with day prefix if available
+        const displayTitle = data.day ? `${data.day}: ${data.title}` : data.title;
+        title.textContent = displayTitle;
         link.href = data.path;
         banner.style.display = 'block';
       }
@@ -482,11 +658,46 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     location.reload();
   };
 
+  // Mark all checkboxes on current page as complete
+  window.markAllComplete = function() {
+    const checkboxes = document.querySelectorAll('.module-checkbox');
+    const progress = getProgress();
+
+    checkboxes.forEach(cb => {
+      const id = cb.dataset.moduleId;
+      cb.checked = true;
+      if (!progress.completed.includes(id)) {
+        progress.completed.push(id);
+      }
+    });
+
+    saveProgress(progress);
+    updateProgressBar();
+  };
+
+  // Add "Mark all as complete" button to pages with checkboxes
+  function addMarkAllButton() {
+    const checkboxes = document.querySelectorAll('.module-checkbox');
+    if (checkboxes.length > 0 && !isHomePage) {
+      // Find the title element and add button after it
+      const title = document.querySelector('h1.title, .quarto-title h1');
+      if (title) {
+        const btn = document.createElement('button');
+        btn.textContent = 'Mark all as complete';
+        btn.className = 'btn btn-outline-success btn-sm mark-all-btn';
+        btn.style.cssText = 'margin-top: 0.5rem; margin-bottom: 1rem;';
+        btn.onclick = window.markAllComplete;
+        title.insertAdjacentElement('afterend', btn);
+      }
+    }
+  }
+
   // Run on page load
   document.addEventListener('DOMContentLoaded', function() {
     showResumeBanner();
     initCheckboxes();
     updateProgressBar();
+    addMarkAllButton();
   });
 })();
 </script>
@@ -563,7 +774,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp('/' + window.location.host + '/');
+        var filterRegex = new RegExp("https:\/\/RosettaMLBootCamp2025\.github\.io\/");
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }

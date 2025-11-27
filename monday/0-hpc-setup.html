@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>2. LigandMPNN – ML Protein Design Bootcamp 2025</title>
+<title>0. Common HPC Setup – ML Protein Design Bootcamp 2025</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -277,17 +277,40 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#why-use-ligandmpnn" id="toc-why-use-ligandmpnn" class="nav-link active" data-scroll-target="#why-use-ligandmpnn">Why Use LigandMPNN?</a></li>
-  <li><a href="#resource-requirements" id="toc-resource-requirements" class="nav-link" data-scroll-target="#resource-requirements">Resource Requirements</a></li>
-  <li><a href="#preparation" id="toc-preparation" class="nav-link" data-scroll-target="#preparation">Preparation</a></li>
-  <li><a href="#installation" id="toc-installation" class="nav-link" data-scroll-target="#installation">Installation</a></li>
-  <li><a href="#testing-the-installation" id="toc-testing-the-installation" class="nav-link" data-scroll-target="#testing-the-installation">Testing the Installation</a></li>
-  <li><a href="#hpc-job-script" id="toc-hpc-job-script" class="nav-link" data-scroll-target="#hpc-job-script">HPC Job Script</a></li>
-  <li><a href="#usage-examples" id="toc-usage-examples" class="nav-link" data-scroll-target="#usage-examples">Usage Examples</a></li>
-  <li><a href="#key-parameters" id="toc-key-parameters" class="nav-link" data-scroll-target="#key-parameters">Key Parameters</a></li>
-  <li><a href="#model-types" id="toc-model-types" class="nav-link" data-scroll-target="#model-types">Model Types</a></li>
-  <li><a href="#understanding-the-output" id="toc-understanding-the-output" class="nav-link" data-scroll-target="#understanding-the-output">Understanding the Output</a></li>
-  <li><a href="#troubleshooting" id="toc-troubleshooting" class="nav-link" data-scroll-target="#troubleshooting">Troubleshooting</a></li>
+  <li><a href="#resource-requirements-overview" id="toc-resource-requirements-overview" class="nav-link active" data-scroll-target="#resource-requirements-overview">Resource Requirements Overview</a></li>
+  <li><a href="#checking-your-hpc-environment" id="toc-checking-your-hpc-environment" class="nav-link" data-scroll-target="#checking-your-hpc-environment">Checking Your HPC Environment</a>
+  <ul class="collapse">
+  <li><a href="#check-available-cuda-modules" id="toc-check-available-cuda-modules" class="nav-link" data-scroll-target="#check-available-cuda-modules">1. Check Available CUDA Modules</a></li>
+  <li><a href="#check-gpu-availability" id="toc-check-gpu-availability" class="nav-link" data-scroll-target="#check-gpu-availability">2. Check GPU Availability</a></li>
+  <li><a href="#check-cuda-toolkit-version" id="toc-check-cuda-toolkit-version" class="nav-link" data-scroll-target="#check-cuda-toolkit-version">3. Check CUDA Toolkit Version</a></li>
+  </ul></li>
+  <li><a href="#condamamba-setup" id="toc-condamamba-setup" class="nav-link" data-scroll-target="#condamamba-setup">Conda/Mamba Setup</a>
+  <ul class="collapse">
+  <li><a href="#installing-mamba-if-not-available" id="toc-installing-mamba-if-not-available" class="nav-link" data-scroll-target="#installing-mamba-if-not-available">Installing Mamba (if not available)</a></li>
+  <li><a href="#best-practices-for-hpc-conda-usage" id="toc-best-practices-for-hpc-conda-usage" class="nav-link" data-scroll-target="#best-practices-for-hpc-conda-usage">Best Practices for HPC Conda Usage</a></li>
+  </ul></li>
+  <li><a href="#docker-vs-singularityapptainer" id="toc-docker-vs-singularityapptainer" class="nav-link" data-scroll-target="#docker-vs-singularityapptainer">Docker vs Singularity/Apptainer</a>
+  <ul class="collapse">
+  <li><a href="#loading-container-runtime" id="toc-loading-container-runtime" class="nav-link" data-scroll-target="#loading-container-runtime">Loading Container Runtime</a></li>
+  <li><a href="#converting-docker-commands-to-apptainer" id="toc-converting-docker-commands-to-apptainer" class="nav-link" data-scroll-target="#converting-docker-commands-to-apptainer">Converting Docker Commands to Apptainer</a></li>
+  <li><a href="#pulling-docker-images-as-singularity-files" id="toc-pulling-docker-images-as-singularity-files" class="nav-link" data-scroll-target="#pulling-docker-images-as-singularity-files">Pulling Docker Images as Singularity Files</a></li>
+  </ul></li>
+  <li><a href="#slurm-job-submission-basics" id="toc-slurm-job-submission-basics" class="nav-link" data-scroll-target="#slurm-job-submission-basics">SLURM Job Submission Basics</a>
+  <ul class="collapse">
+  <li><a href="#common-slurm-commands" id="toc-common-slurm-commands" class="nav-link" data-scroll-target="#common-slurm-commands">Common SLURM Commands</a></li>
+  <li><a href="#gpu-partition-names" id="toc-gpu-partition-names" class="nav-link" data-scroll-target="#gpu-partition-names">GPU Partition Names</a></li>
+  </ul></li>
+  <li><a href="#environment-variables" id="toc-environment-variables" class="nav-link" data-scroll-target="#environment-variables">Environment Variables</a></li>
+  <li><a href="#verifying-gpu-works-with-pytorch" id="toc-verifying-gpu-works-with-pytorch" class="nav-link" data-scroll-target="#verifying-gpu-works-with-pytorch">Verifying GPU Works with PyTorch</a></li>
+  <li><a href="#understanding-gpu-memory-requirements" id="toc-understanding-gpu-memory-requirements" class="nav-link" data-scroll-target="#understanding-gpu-memory-requirements">Understanding GPU Memory Requirements</a></li>
+  <li><a href="#troubleshooting-common-issues" id="toc-troubleshooting-common-issues" class="nav-link" data-scroll-target="#troubleshooting-common-issues">Troubleshooting Common Issues</a>
+  <ul class="collapse">
+  <li><a href="#cuda-out-of-memory" id="toc-cuda-out-of-memory" class="nav-link" data-scroll-target="#cuda-out-of-memory">“CUDA out of memory”</a></li>
+  <li><a href="#no-cuda-runtime-found" id="toc-no-cuda-runtime-found" class="nav-link" data-scroll-target="#no-cuda-runtime-found">“No CUDA runtime found”</a></li>
+  <li><a href="#singularity-command-not-found" id="toc-singularity-command-not-found" class="nav-link" data-scroll-target="#singularity-command-not-found">“Singularity: command not found”</a></li>
+  <li><a href="#conda-environment-activation-fails-in-slurm" id="toc-conda-environment-activation-fails-in-slurm" class="nav-link" data-scroll-target="#conda-environment-activation-fails-in-slurm">Conda environment activation fails in SLURM</a></li>
+  <li><a href="#permission-denied-on-container" id="toc-permission-denied-on-container" class="nav-link" data-scroll-target="#permission-denied-on-container">Permission denied on container</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -296,7 +319,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">2. LigandMPNN</h1>
+<h1 class="title">0. Common HPC Setup</h1>
 </div>
 
 
@@ -313,19 +336,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>LigandMPNN (<a href="https://www.biorxiv.org/content/10.1101/2023.12.22.573103v1">paper</a>, <a href="https://github.com/dauparas/LigandMPNN">code</a>) is a deep learning model for context-aware protein sequence design. It extends ProteinMPNN to handle small molecules, metal ions, and other non-protein components in protein design tasks.</p>
-<section id="why-use-ligandmpnn" class="level2">
-<h2 class="anchored" data-anchor-id="why-use-ligandmpnn">Why Use LigandMPNN?</h2>
-<ul>
-<li><strong>Ligand-aware design</strong>: Design sequences that account for bound cofactors, substrates, or drug molecules</li>
-<li><strong>Context preservation</strong>: Maintain interactions with metals, DNA, RNA, or other molecules</li>
-<li><strong>Side chain packing</strong>: Evaluate and optimize side chain conformations</li>
-<li><strong>Flexible residue control</strong>: Fix, bias, or vary specific positions</li>
-</ul>
-<p><strong>Related Tools</strong>: Use with <a href="../monday/3-rfdiffusion2.html">RFdiffusion2</a> for backbone design, or <a href="../monday/10-bindcraft.html">BindCraft</a> for complete binder design pipelines.</p>
-</section>
-<section id="resource-requirements" class="level2">
-<h2 class="anchored" data-anchor-id="resource-requirements">Resource Requirements</h2>
+<p>Before installing individual ML tools, ensure your HPC environment is properly configured. This guide covers the foundational setup that all subsequent modules depend on.</p>
+<section id="resource-requirements-overview" class="level2">
+<h2 class="anchored" data-anchor-id="resource-requirements-overview">Resource Requirements Overview</h2>
+<p>Most ML protein tools share similar computational requirements. Here’s a general guide:</p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
@@ -338,289 +352,328 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tbody>
 <tr class="odd">
 <td>GPU RAM</td>
-<td>4 GB</td>
 <td>16 GB</td>
-<td>Scales with protein size</td>
+<td>40+ GB</td>
+<td>A100 80GB ideal for large proteins</td>
 </tr>
 <tr class="even">
 <td>CPU RAM</td>
-<td>8 GB</td>
-<td>16 GB</td>
-<td>CPU-only is viable but slower</td>
+<td>32 GB</td>
+<td>64 GB</td>
+<td>More for MSA generation</td>
 </tr>
 <tr class="odd">
 <td>Disk Space</td>
-<td>2 GB</td>
-<td>5 GB</td>
-<td>Model weights</td>
+<td>50 GB</td>
+<td>200+ GB</td>
+<td>Model weights + databases</td>
 </tr>
 <tr class="even">
-<td>Python</td>
-<td>3.9+</td>
-<td>3.11</td>
-<td>Required</td>
+<td>CUDA</td>
+<td>11.6+</td>
+<td>12.1+</td>
+<td>Check tool-specific requirements</td>
 </tr>
 </tbody>
 </table>
 </section>
-<section id="preparation" class="level2">
-<h2 class="anchored" data-anchor-id="preparation">Preparation</h2>
-<p><input type="checkbox" class="module-checkbox" data-module-id="ligandmpnn-prep"> Mark as complete</p>
-<p><strong>Prerequisites</strong>:</p>
-<ul>
-<li>Completed <a href="../monday/0-hpc-setup.html">HPC Setup</a> guide</li>
-<li>Conda/Mamba installed</li>
-<li>Git installed</li>
-</ul>
-<p><strong>Verify your environment</strong>:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">--version</span>    <span class="co"># Should be 3.9+</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">nvcc</span> <span class="at">--version</span>      <span class="co"># For GPU support (optional)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="checking-your-hpc-environment" class="level2">
+<h2 class="anchored" data-anchor-id="checking-your-hpc-environment">Checking Your HPC Environment</h2>
+<p><input type="checkbox" class="module-checkbox" data-module-id="hpc-setup-check"> Mark as complete</p>
+<section id="check-available-cuda-modules" class="level3">
+<h3 class="anchored" data-anchor-id="check-available-cuda-modules">1. Check Available CUDA Modules</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> avail cuda</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This shows all CUDA versions installed on your cluster. Note the versions - you’ll need to match them to tool requirements.</p>
 </section>
-<section id="installation" class="level2">
-<h2 class="anchored" data-anchor-id="installation">Installation</h2>
-<p><input type="checkbox" class="module-checkbox" data-module-id="ligandmpnn-install"> Mark as complete</p>
+<section id="check-gpu-availability" class="level3">
+<h3 class="anchored" data-anchor-id="check-gpu-availability">2. Check GPU Availability</h3>
+<p>Request an interactive GPU session:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># SLURM example</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ex">srun</span> <span class="at">--gpus</span><span class="op">=</span>1 <span class="at">--pty</span> bash</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Then check GPU status:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nvidia-smi</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This shows: - GPU model (A100, V100, RTX 4090, etc.) - GPU memory (important for large models) - Current CUDA driver version</p>
+</section>
+<section id="check-cuda-toolkit-version" class="level3">
+<h3 class="anchored" data-anchor-id="check-cuda-toolkit-version">3. Check CUDA Toolkit Version</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nvcc</span> <span class="at">--version</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>If this fails, load a CUDA module first:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load cuda/12.1</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="ex">nvcc</span> <span class="at">--version</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+</section>
+<section id="condamamba-setup" class="level2">
+<h2 class="anchored" data-anchor-id="condamamba-setup">Conda/Mamba Setup</h2>
+<p><input type="checkbox" class="module-checkbox" data-module-id="hpc-setup-conda"> Mark as complete</p>
+<p>Most tools use Conda environments. <strong>Mamba is recommended</strong> as it’s significantly faster than Conda for dependency resolution.</p>
+<section id="installing-mamba-if-not-available" class="level3">
+<h3 class="anchored" data-anchor-id="installing-mamba-if-not-available">Installing Mamba (if not available)</h3>
+<p>If your HPC doesn’t have Mamba, install Miniforge:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wget</span> https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-Linux-x86_64.sh</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> Miniforge3-Linux-x86_64.sh</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Follow prompts, then restart your shell or run:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> ~/.bashrc</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="best-practices-for-hpc-conda-usage" class="level3">
+<h3 class="anchored" data-anchor-id="best-practices-for-hpc-conda-usage">Best Practices for HPC Conda Usage</h3>
 <ol type="1">
-<li>Clone the LigandMPNN repository:</li>
+<li><strong>Use dedicated environment directories</strong>: Set environment location to avoid filling home directory quota:</li>
 </ol>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/dauparas/LigandMPNN.git</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> LigandMPNN</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Add to ~/.condarc</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="ex">envs_dirs:</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="ex">-</span> /scratch/<span class="va">$USER</span>/conda_envs</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="ex">pkgs_dirs:</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="ex">-</span> /scratch/<span class="va">$USER</span>/conda_pkgs</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ol start="2" type="1">
-<li>Download the model parameters:</li>
+<li><p><strong>One environment per tool</strong>: Don’t try to install all tools in one environment - dependency conflicts are common.</p></li>
+<li><p><strong>Export environments for reproducibility</strong>:</p></li>
 </ol>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> get_model_params.sh <span class="st">"./model_params"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><strong>Expected download</strong>: ~500 MB of model weights.</p>
-<ol start="3" type="1">
-<li>Create a new conda environment:</li>
-</ol>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">mamba</span> create <span class="at">-n</span> ligandmpnn_env python=3.11</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="ex">mamba</span> activate ligandmpnn_env</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<ol start="4" type="1">
-<li>Install dependencies:</li>
-</ol>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install <span class="at">-r</span> requirements.txt</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>This installs PyTorch, NumPy, and ProDy for PDB file handling.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">mamba</span> env export <span class="op">&gt;</span> environment.yml</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="testing-the-installation" class="level2">
-<h2 class="anchored" data-anchor-id="testing-the-installation">Testing the Installation</h2>
-<p><input type="checkbox" class="module-checkbox" data-module-id="ligandmpnn-test"> Mark as complete</p>
-<p>Run a test design on the provided example structure:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> run.py <span class="dt">\</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">--seed</span> 111 <span class="dt">\</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">--pdb_path</span> <span class="st">"./inputs/1BC8.pdb"</span> <span class="dt">\</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">--out_folder</span> <span class="st">"./outputs/test_output"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><strong>Success indicators</strong>:</p>
-<ul>
-<li>Command completes without errors</li>
-<li>Output folder contains:
-<ul>
-<li><code>seqs/1BC8.fa</code> - Designed sequences in FASTA format</li>
-<li><code>backbones/1BC8.pdb</code> - Input backbone (for reference)</li>
-<li><code>packed/1BC8_1.pdb</code> - Structure with designed side chains</li>
-</ul></li>
-</ul>
-<p><strong>Expected runtime</strong>: &lt;1 minute on GPU, ~5 minutes on CPU.</p>
 </section>
-<section id="hpc-job-script" class="level2">
-<h2 class="anchored" data-anchor-id="hpc-job-script">HPC Job Script</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/bin/bash</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --job-name=ligandmpnn</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --partition=gpu</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --gpus=1</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --cpus-per-task=4</span></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --mem=16G</span></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --time=02:00:00</span></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --output=%x_%j.out</span></span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load cuda/12.1</span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> ~/.bashrc</span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="ex">mamba</span> activate ligandmpnn_env</span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> /path/to/LigandMPNN</span>
-<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> run.py <span class="dt">\</span></span>
-<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">--model_type</span> <span class="st">"ligand_mpnn"</span> <span class="dt">\</span></span>
-<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">--seed</span> 111 <span class="dt">\</span></span>
-<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">--pdb_path</span> <span class="st">"./inputs/my_protein.pdb"</span> <span class="dt">\</span></span>
-<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">--out_folder</span> <span class="st">"./outputs/my_design"</span> <span class="dt">\</span></span>
-<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">--number_of_batches</span> 10</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="docker-vs-singularityapptainer" class="level2">
+<h2 class="anchored" data-anchor-id="docker-vs-singularityapptainer">Docker vs Singularity/Apptainer</h2>
+<p><input type="checkbox" class="module-checkbox" data-module-id="hpc-setup-containers"> Mark as complete</p>
+<p><strong>IMPORTANT</strong>: Most academic HPCs do NOT support Docker for security reasons. Use <strong>Singularity</strong> or <strong>Apptainer</strong> instead.</p>
+<section id="loading-container-runtime" class="level3">
+<h3 class="anchored" data-anchor-id="loading-container-runtime">Loading Container Runtime</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load apptainer</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="co"># or on older systems:</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load singularity</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="usage-examples" class="level2">
-<h2 class="anchored" data-anchor-id="usage-examples">Usage Examples</h2>
-<p><strong>Basic protein design</strong> (no ligand):</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> run.py <span class="dt">\</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">--pdb_path</span> <span class="st">"protein.pdb"</span> <span class="dt">\</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">--out_folder</span> <span class="st">"output/"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><strong>Design with ligand context</strong>:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> run.py <span class="dt">\</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">--model_type</span> <span class="st">"ligand_mpnn"</span> <span class="dt">\</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">--pdb_path</span> <span class="st">"protein_ligand.pdb"</span> <span class="dt">\</span></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">--out_folder</span> <span class="st">"output/"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><strong>Fix specific residues</strong> (keep them unchanged):</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> run.py <span class="dt">\</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">--pdb_path</span> <span class="st">"protein.pdb"</span> <span class="dt">\</span></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">--fixed_residues</span> <span class="st">"A10 A20 A30"</span> <span class="dt">\</span></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">--out_folder</span> <span class="st">"output/"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><strong>Design only specific positions</strong>:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> run.py <span class="dt">\</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">--pdb_path</span> <span class="st">"protein.pdb"</span> <span class="dt">\</span></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">--redesigned_residues</span> <span class="st">"A50 A51 A52 A53"</span> <span class="dt">\</span></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">--out_folder</span> <span class="st">"output/"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><strong>Batch processing multiple structures</strong>:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a JSON file listing inputs</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">'{"1": "input1.pdb", "2": "input2.pdb"}'</span> <span class="op">&gt;</span> input_list.json</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> run.py <span class="dt">\</span></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">--pdb_path_multi</span> <span class="st">"input_list.json"</span> <span class="dt">\</span></span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">--out_folder</span> <span class="st">"batch_output/"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><strong>With temperature control</strong> (higher = more diverse):</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> run.py <span class="dt">\</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">--pdb_path</span> <span class="st">"protein.pdb"</span> <span class="dt">\</span></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">--temperature</span> 0.2 <span class="dt">\</span></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">--out_folder</span> <span class="st">"output/"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-<section id="key-parameters" class="level2">
-<h2 class="anchored" data-anchor-id="key-parameters">Key Parameters</h2>
+<section id="converting-docker-commands-to-apptainer" class="level3">
+<h3 class="anchored" data-anchor-id="converting-docker-commands-to-apptainer">Converting Docker Commands to Apptainer</h3>
+<p>Many tool READMEs show Docker commands. Here’s how to translate them:</p>
 <table class="caption-top table">
-<colgroup>
-<col style="width: 33%">
-<col style="width: 39%">
-<col style="width: 27%">
-</colgroup>
 <thead>
 <tr class="header">
-<th>Parameter</th>
+<th>Docker Command</th>
+<th>Apptainer Equivalent</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>docker run</code></td>
+<td><code>apptainer run</code></td>
+</tr>
+<tr class="even">
+<td><code>docker run --gpus all</code></td>
+<td><code>apptainer run --nv</code></td>
+</tr>
+<tr class="odd">
+<td><code>docker run -v /path:/path</code></td>
+<td><code>apptainer run --bind /path:/path</code></td>
+</tr>
+<tr class="even">
+<td><code>docker pull image:tag</code></td>
+<td><code>apptainer pull docker://image:tag</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example conversion</strong>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Docker (won't work on HPC):</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> run <span class="at">--gpus</span> all <span class="at">-v</span> <span class="va">$(</span><span class="bu">pwd</span><span class="va">)</span>:/workspace myimage:latest python script.py</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Apptainer (works on HPC):</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="ex">apptainer</span> run <span class="at">--nv</span> <span class="at">--bind</span> <span class="va">$(</span><span class="bu">pwd</span><span class="va">)</span>:/workspace myimage.sif python script.py</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="pulling-docker-images-as-singularity-files" class="level3">
+<h3 class="anchored" data-anchor-id="pulling-docker-images-as-singularity-files">Pulling Docker Images as Singularity Files</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="ex">apptainer</span> pull docker://nvcr.io/nvidia/pytorch:23.10-py3</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Creates: pytorch_23.10-py3.sif</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+</section>
+<section id="slurm-job-submission-basics" class="level2">
+<h2 class="anchored" data-anchor-id="slurm-job-submission-basics">SLURM Job Submission Basics</h2>
+<p><input type="checkbox" class="module-checkbox" data-module-id="hpc-setup-slurm"> Mark as complete</p>
+<p>Most HPCs use SLURM for job scheduling. Here’s a template for ML jobs:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/bin/bash</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --job-name=my_ml_job</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --partition=gpu          # GPU partition name (varies by cluster)</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --gpus=1                  # Number of GPUs</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --cpus-per-task=8         # CPUs for data loading</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --mem=64G                 # RAM</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --time=04:00:00           # Wall time (HH:MM:SS)</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --output=%x_%j.out        # Output file (%x=job name, %j=job ID)</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --error=%x_%j.err         # Error file</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Load required modules</span></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load cuda/12.1</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load apptainer</span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Activate conda environment</span></span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> ~/.bashrc</span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a><span class="ex">mamba</span> activate my_env</span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Run your command</span></span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> my_script.py</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="common-slurm-commands" class="level3">
+<h3 class="anchored" data-anchor-id="common-slurm-commands">Common SLURM Commands</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Command</th>
 <th>Description</th>
-<th>Default</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td><code>--model_type</code></td>
-<td>Model variant: <code>protein_mpnn</code>, <code>ligand_mpnn</code>, <code>soluble_mpnn</code>, etc.</td>
-<td><code>protein_mpnn</code></td>
+<td><code>sbatch script.sh</code></td>
+<td>Submit job</td>
 </tr>
 <tr class="even">
-<td><code>--temperature</code></td>
-<td>Sampling temperature (0.1-1.0). Lower = more conservative</td>
-<td>0.1</td>
+<td><code>squeue -u $USER</code></td>
+<td>Check your jobs</td>
 </tr>
 <tr class="odd">
-<td><code>--number_of_batches</code></td>
-<td>Number of sequences to generate</td>
-<td>1</td>
+<td><code>scancel JOB_ID</code></td>
+<td>Cancel a job</td>
 </tr>
 <tr class="even">
-<td><code>--batch_size</code></td>
-<td>Sequences per batch</td>
-<td>1</td>
+<td><code>sinfo</code></td>
+<td>Show partition info</td>
 </tr>
 <tr class="odd">
-<td><code>--fixed_residues</code></td>
-<td>Space-separated residues to keep unchanged</td>
-<td>None</td>
-</tr>
-<tr class="even">
-<td><code>--redesigned_residues</code></td>
-<td>Only design these residues</td>
-<td>All</td>
-</tr>
-<tr class="odd">
-<td><code>--bias_AA</code></td>
-<td>Bias toward specific amino acids</td>
-<td>None</td>
+<td><code>sacct -j JOB_ID</code></td>
+<td>Job accounting info</td>
 </tr>
 </tbody>
 </table>
 </section>
-<section id="model-types" class="level2">
-<h2 class="anchored" data-anchor-id="model-types">Model Types</h2>
+<section id="gpu-partition-names" class="level3">
+<h3 class="anchored" data-anchor-id="gpu-partition-names">GPU Partition Names</h3>
+<p>GPU partition names vary by cluster. Common names:</p>
+<ul>
+<li><code>gpu</code>, <code>gpus</code>, <code>gpu-shared</code></li>
+<li><code>a100</code>, <code>v100</code>, <code>rtx</code></li>
+<li><code>gpu-debug</code> (for testing)</li>
+</ul>
+<p>Check your cluster’s documentation or run <code>sinfo</code> to see available partitions.</p>
+</section>
+</section>
+<section id="environment-variables" class="level2">
+<h2 class="anchored" data-anchor-id="environment-variables">Environment Variables</h2>
+<p><input type="checkbox" class="module-checkbox" data-module-id="hpc-setup-env"> Mark as complete</p>
+<p>Several tools use environment variables. Add these to your <code>~/.bashrc</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Model weight storage (prevents filling home directory)</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">TORCH_HOME</span><span class="op">=</span>/scratch/<span class="va">$USER</span>/torch_cache</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">HF_HOME</span><span class="op">=</span>/scratch/<span class="va">$USER</span>/huggingface_cache</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">TRANSFORMERS_CACHE</span><span class="op">=</span>/scratch/<span class="va">$USER</span>/transformers_cache</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="co"># ColabFold databases</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">COLABFOLD_DOWNLOAD_DIR</span><span class="op">=</span>/scratch/<span class="va">$USER</span>/colabfold_db</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Chai-1 models</span></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">CHAI_DOWNLOADS_DIR</span><span class="op">=</span>/scratch/<span class="va">$USER</span>/chai_models</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a><span class="co"># General cache</span></span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">XDG_CACHE_HOME</span><span class="op">=</span>/scratch/<span class="va">$USER</span>/.cache</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Replace <code>/scratch/$USER</code> with your cluster’s scratch or work directory path.</p>
+</section>
+<section id="verifying-gpu-works-with-pytorch" class="level2">
+<h2 class="anchored" data-anchor-id="verifying-gpu-works-with-pytorch">Verifying GPU Works with PyTorch</h2>
+<p><input type="checkbox" class="module-checkbox" data-module-id="hpc-setup-verify"> Mark as complete</p>
+<p>After setting up an environment with PyTorch, verify GPU access:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"PyTorch version: </span><span class="sc">{</span>torch<span class="sc">.</span>__version__<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"CUDA available: </span><span class="sc">{</span>torch<span class="sc">.</span>cuda<span class="sc">.</span>is_available()<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"CUDA version: </span><span class="sc">{</span>torch<span class="sc">.</span>version<span class="sc">.</span>cuda<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"GPU count: </span><span class="sc">{</span>torch<span class="sc">.</span>cuda<span class="sc">.</span>device_count()<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> torch.cuda.is_available():</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"GPU name: </span><span class="sc">{</span>torch<span class="sc">.</span>cuda<span class="sc">.</span>get_device_name(<span class="dv">0</span>)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"GPU memory: </span><span class="sc">{</span>torch<span class="sc">.</span>cuda<span class="sc">.</span>get_device_properties(<span class="dv">0</span>)<span class="sc">.</span>total_memory <span class="op">/</span> <span class="fl">1e9</span><span class="sc">:.1f}</span><span class="ss"> GB"</span>)</span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Quick computation test</span></span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>    x <span class="op">=</span> torch.randn(<span class="dv">1000</span>, <span class="dv">1000</span>, device<span class="op">=</span><span class="st">'cuda'</span>)</span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>    y <span class="op">=</span> torch.matmul(x, x)</span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"GPU computation test: PASSED"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Save as <code>test_gpu.py</code> and run:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> test_gpu.py</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Expected output</strong> (example):</p>
+<pre><code>PyTorch version: 2.1.0
+CUDA available: True
+CUDA version: 12.1
+GPU count: 1
+GPU name: NVIDIA A100-SXM4-80GB
+GPU memory: 84.9 GB
+GPU computation test: PASSED</code></pre>
+</section>
+<section id="understanding-gpu-memory-requirements" class="level2">
+<h2 class="anchored" data-anchor-id="understanding-gpu-memory-requirements">Understanding GPU Memory Requirements</h2>
+<p>Different tasks require different GPU memory:</p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
-<th>Model</th>
-<th>Use Case</th>
+<th>Task</th>
+<th>Typical GPU Memory</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td><code>protein_mpnn</code></td>
-<td>Standard protein sequence design</td>
+<td>Structure prediction (small protein &lt;200 aa)</td>
+<td>8-16 GB</td>
 </tr>
 <tr class="even">
-<td><code>ligand_mpnn</code></td>
-<td>Design with small molecule context</td>
+<td>Structure prediction (large protein &gt;500 aa)</td>
+<td>32-80 GB</td>
 </tr>
 <tr class="odd">
-<td><code>soluble_mpnn</code></td>
-<td>Bias toward soluble sequences</td>
+<td>Protein design (RFdiffusion2)</td>
+<td>16-32 GB</td>
 </tr>
 <tr class="even">
-<td><code>global_label_membrane_mpnn</code></td>
-<td>Membrane protein design</td>
+<td>Docking (DiffDock-PP, PLACER)</td>
+<td>8-16 GB</td>
 </tr>
 <tr class="odd">
-<td><code>per_residue_label_membrane_mpnn</code></td>
-<td>Fine-grained membrane design</td>
+<td>Language model inference (ESM3)</td>
+<td>16-40 GB</td>
+</tr>
+<tr class="even">
+<td>Binder design (BindCraft)</td>
+<td>32-80 GB</td>
 </tr>
 </tbody>
 </table>
+<p>If you get out-of-memory errors: 1. Request a GPU with more memory 2. Reduce batch size or sequence length 3. Use CPU offloading if available 4. Process sequences in chunks</p>
 </section>
-<section id="understanding-the-output" class="level2">
-<h2 class="anchored" data-anchor-id="understanding-the-output">Understanding the Output</h2>
-<p><strong>Output directory structure</strong>:</p>
-<pre><code>output/
-├── seqs/
-│   └── protein.fa          # Designed sequences
-├── backbones/
-│   └── protein.pdb         # Input structure
-└── packed/
-    ├── protein_1.pdb       # Design 1 with side chains
-    └── protein_2.pdb       # Design 2 with side chains</code></pre>
-<p><strong>FASTA output format</strong>:</p>
-<pre><code>&gt;protein, score=1.234, seq_recovery=0.456
-MVKLTAEGSE...</code></pre>
+<section id="troubleshooting-common-issues" class="level2">
+<h2 class="anchored" data-anchor-id="troubleshooting-common-issues">Troubleshooting Common Issues</h2>
+<section id="cuda-out-of-memory" class="level3">
+<h3 class="anchored" data-anchor-id="cuda-out-of-memory">“CUDA out of memory”</h3>
 <ul>
-<li><code>score</code>: Negative log-likelihood (lower = better fit to backbone)</li>
-<li><code>seq_recovery</code>: Fraction matching native sequence (if provided)</li>
+<li>Request more GPU memory</li>
+<li>Reduce batch size</li>
+<li>Use gradient checkpointing if training</li>
 </ul>
 </section>
-<section id="troubleshooting" class="level2">
-<h2 class="anchored" data-anchor-id="troubleshooting">Troubleshooting</h2>
-<p><strong>“RuntimeError: CUDA out of memory”</strong>:</p>
-<ul>
-<li>Use CPU instead: remove CUDA module and run without GPU</li>
-<li>Reduce <code>--batch_size</code></li>
-<li>LigandMPNN is efficient; usually not memory-limited</li>
-</ul>
-<p><strong>PDB parsing errors</strong>:</p>
-<ul>
-<li>Ensure PDB has proper formatting</li>
-<li>Remove alternate conformations: keep only “A” conformers</li>
-<li>Check that ligand has proper atom naming</li>
-</ul>
-<p><strong>Ligand not recognized</strong>:</p>
-<ul>
-<li>Ensure ligand is in the PDB file with HETATM records</li>
-<li>Use <code>--ligand</code> flag to specify ligand residue name</li>
-<li>Check that ligand coordinates are reasonable</li>
-</ul>
-<p><strong>Low sequence diversity</strong>:</p>
-<ul>
-<li>Increase <code>--temperature</code> (e.g., 0.2 or 0.3)</li>
-<li>Increase <code>--number_of_batches</code></li>
-<li>Use different random seeds</li>
-</ul>
-<p><strong>Side chain clashes in output</strong>:</p>
-<ul>
-<li>This is expected - downstream relaxation is recommended</li>
-<li>Use PyRosetta or Rosetta FastRelax</li>
-<li>Or validate with your structure prediction tool of choice</li>
-</ul>
+<section id="no-cuda-runtime-found" class="level3">
+<h3 class="anchored" data-anchor-id="no-cuda-runtime-found">“No CUDA runtime found”</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load cuda/12.1  <span class="co"># Load CUDA module</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="ex">nvcc</span> <span class="at">--version</span>         <span class="co"># Verify it loaded</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="singularity-command-not-found" class="level3">
+<h3 class="anchored" data-anchor-id="singularity-command-not-found">“Singularity: command not found”</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load apptainer  <span class="co"># or: module load singularity</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="conda-environment-activation-fails-in-slurm" class="level3">
+<h3 class="anchored" data-anchor-id="conda-environment-activation-fails-in-slurm">Conda environment activation fails in SLURM</h3>
+<p>Add to your job script:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> ~/.bashrc</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="co"># or explicitly:</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> /path/to/miniforge3/etc/profile.d/conda.sh</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="ex">mamba</span> activate my_env</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="permission-denied-on-container" class="level3">
+<h3 class="anchored" data-anchor-id="permission-denied-on-container">Permission denied on container</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">chmod</span> +x container.sif</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <hr>
-<p><strong>Navigation:</strong> <a href="../monday/1-localcolabfold.html">← LocalColabFold</a> | <a href="../monday/index.html">Monday Overview</a> | <a href="../monday/3-rfdiffusion2.html">Next: RFdiffusion2 →</a></p>
+<p><strong>Navigation:</strong> <a href="../monday/index.html">Monday Overview</a> | <a href="../monday/1-localcolabfold.html">Next: LocalColabFold →</a></p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->

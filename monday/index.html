@@ -105,6 +105,10 @@ ul.task-list li input[type="checkbox"] {
   </li>  
         <li><hr class="dropdown-divider"></li>
         <li>
+    <a class="dropdown-item" href="../monday/0-hpc-setup.html">
+ <span class="dropdown-text">0. HPC Setup</span></a>
+  </li>  
+        <li>
     <a class="dropdown-item" href="../monday/1-localcolabfold.html">
  <span class="dropdown-text">1. LocalColabFold</span></a>
   </li>  
@@ -239,8 +243,16 @@ ul.task-list li input[type="checkbox"] {
    
   <ul>
   <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">Overview</a></li>
-  <li><a href="#modules" id="toc-modules" class="nav-link" data-scroll-target="#modules">Modules</a></li>
+  <li><a href="#getting-started" id="toc-getting-started" class="nav-link" data-scroll-target="#getting-started">Getting Started</a></li>
+  <li><a href="#tool-installation-modules" id="toc-tool-installation-modules" class="nav-link" data-scroll-target="#tool-installation-modules">Tool Installation Modules</a></li>
+  <li><a href="#tool-categories" id="toc-tool-categories" class="nav-link" data-scroll-target="#tool-categories">Tool Categories</a>
+  <ul class="collapse">
+  <li><a href="#structure-prediction" id="toc-structure-prediction" class="nav-link" data-scroll-target="#structure-prediction">Structure Prediction</a></li>
+  <li><a href="#protein-design" id="toc-protein-design" class="nav-link" data-scroll-target="#protein-design">Protein Design</a></li>
+  <li><a href="#docking" id="toc-docking" class="nav-link" data-scroll-target="#docking">Docking</a></li>
+  </ul></li>
   <li><a href="#tips-for-success" id="toc-tips-for-success" class="nav-link" data-scroll-target="#tips-for-success">Tips for Success</a></li>
+  <li><a href="#resource-overview" id="toc-resource-overview" class="nav-link" data-scroll-target="#resource-overview">Resource Overview</a></li>
   <li><a href="#getting-help" id="toc-getting-help" class="nav-link" data-scroll-target="#getting-help">Getting Help</a></li>
   </ul>
 </nav>
@@ -272,8 +284,30 @@ ul.task-list li input[type="checkbox"] {
 <p>Monday is dedicated to installing the essential ML-based protein design and structure prediction tools on your HPC cluster. Each module guides you through installing a specific tool, from structure predictors like LocalColabFold and ESMFold to design tools like LigandMPNN and BindCraft.</p>
 <p><strong>Goal</strong>: By the end of Monday, you should have all major tools installed and tested on your HPC cluster.</p>
 </section>
-<section id="modules" class="level2">
-<h2 class="anchored" data-anchor-id="modules">Modules</h2>
+<section id="getting-started" class="level2">
+<h2 class="anchored" data-anchor-id="getting-started">Getting Started</h2>
+<p>Before installing individual tools, complete the <strong>HPC Setup</strong> module to ensure your environment is properly configured:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>#</th>
+<th>Module</th>
+<th>Description</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0</td>
+<td><a href="../monday/0-hpc-setup.html">Common HPC Setup</a></td>
+<td>CUDA, Conda, containers, and environment setup</td>
+<td><strong>Start Here</strong></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="tool-installation-modules" class="level2">
+<h2 class="anchored" data-anchor-id="tool-installation-modules">Tool Installation Modules</h2>
 <table class="caption-top table">
 <thead>
 <tr class="header">
@@ -359,15 +393,175 @@ ul.task-list li input[type="checkbox"] {
 </tbody>
 </table>
 </section>
+<section id="tool-categories" class="level2">
+<h2 class="anchored" data-anchor-id="tool-categories">Tool Categories</h2>
+<section id="structure-prediction" class="level3">
+<h3 class="anchored" data-anchor-id="structure-prediction">Structure Prediction</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 15%">
+<col style="width: 18%">
+<col style="width: 21%">
+<col style="width: 18%">
+<col style="width: 26%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Tool</th>
+<th>Input</th>
+<th>Output</th>
+<th>Speed</th>
+<th>Best For</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>LocalColabFold</td>
+<td>Sequence + MSA</td>
+<td>Structure</td>
+<td>Medium</td>
+<td>High-accuracy single proteins</td>
+</tr>
+<tr class="even">
+<td>ESMFold</td>
+<td>Sequence only</td>
+<td>Structure</td>
+<td>Fast</td>
+<td>Quick predictions, no MSA needed</td>
+</tr>
+<tr class="odd">
+<td>OpenFold</td>
+<td>Sequence + MSA</td>
+<td>Structure</td>
+<td>Medium</td>
+<td>Research, custom training</td>
+</tr>
+<tr class="even">
+<td>Chai-1</td>
+<td>Multi-modal</td>
+<td>Complex structures</td>
+<td>Medium</td>
+<td>Proteins + ligands + nucleic acids</td>
+</tr>
+<tr class="odd">
+<td>Boltz-2</td>
+<td>Multi-modal</td>
+<td>Structure + affinity</td>
+<td>Medium</td>
+<td>Drug discovery</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="protein-design" class="level3">
+<h3 class="anchored" data-anchor-id="protein-design">Protein Design</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 19%">
+<col style="width: 22%">
+<col style="width: 25%">
+<col style="width: 32%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Tool</th>
+<th>Input</th>
+<th>Output</th>
+<th>Best For</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>LigandMPNN</td>
+<td>Backbone</td>
+<td>Sequence</td>
+<td>Sequence design with ligand context</td>
+</tr>
+<tr class="even">
+<td>RFdiffusion2</td>
+<td>Constraints</td>
+<td>Backbone</td>
+<td>Active site scaffolding</td>
+</tr>
+<tr class="odd">
+<td>BindCraft</td>
+<td>Target structure</td>
+<td>Binder designs</td>
+<td>End-to-end binder design</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="docking" class="level3">
+<h3 class="anchored" data-anchor-id="docking">Docking</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 19%">
+<col style="width: 22%">
+<col style="width: 25%">
+<col style="width: 32%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Tool</th>
+<th>Input</th>
+<th>Output</th>
+<th>Best For</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>DiffDock-PP</td>
+<td>Two proteins</td>
+<td>Docked complex</td>
+<td>Protein-protein docking</td>
+</tr>
+<tr class="even">
+<td>PLACER</td>
+<td>Protein + ligand</td>
+<td>Ensemble poses</td>
+<td>Protein-ligand docking</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
 <section id="tips-for-success" class="level2">
 <h2 class="anchored" data-anchor-id="tips-for-success">Tips for Success</h2>
 <ol type="1">
-<li><p><strong>Work sequentially</strong> - Some tools share dependencies, so installing in order may help avoid conflicts</p></li>
+<li><p><strong>Start with HPC Setup</strong> - Complete Module 0 before installing any tools</p></li>
 <li><p><strong>Use separate conda environments</strong> - Each tool should have its own environment to avoid dependency conflicts</p></li>
 <li><p><strong>Check GPU availability</strong> - Most tools require GPU access; make sure you can request GPU nodes on your cluster</p></li>
 <li><p><strong>Note your paths</strong> - Keep track of where you install each tool; you’ll need these paths later</p></li>
 <li><p><strong>Test each installation</strong> - Don’t move on until you’ve verified each tool works</p></li>
+<li><p><strong>Check shared resources</strong> - Your HPC may already have databases (AlphaFold, ColabFold) installed</p></li>
 </ol>
+</section>
+<section id="resource-overview" class="level2">
+<h2 class="anchored" data-anchor-id="resource-overview">Resource Overview</h2>
+<p>Approximate requirements across all tools:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Resource</th>
+<th>Total Needed</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Disk Space</td>
+<td>50-100 GB (tools only), 2+ TB (with databases)</td>
+</tr>
+<tr class="even">
+<td>GPU RAM</td>
+<td>16-80 GB depending on task</td>
+</tr>
+<tr class="odd">
+<td>CPU RAM</td>
+<td>32-64 GB</td>
+</tr>
+</tbody>
+</table>
 </section>
 <section id="getting-help" class="level2">
 <h2 class="anchored" data-anchor-id="getting-help">Getting Help</h2>
@@ -400,12 +594,27 @@ ul.task-list li input[type="checkbox"] {
   const currentPath = window.location.pathname;
   const isHomePage = currentPath === '/' || currentPath.endsWith('/index.html') || currentPath === '/index.html' || currentPath.match(/^\/[^\/]*\/?$/);
 
+  // Extract day from path
+  function getDayFromPath(path) {
+    const dayMap = {
+      'monday': 'Monday',
+      'tuesday': 'Tuesday',
+      'wednesday': 'Wednesday',
+      'thursday': 'Thursday',
+      'capstone': 'Capstone'
+    };
+    const match = path.match(/\/(monday|tuesday|wednesday|thursday|capstone)\//i);
+    return match ? dayMap[match[1].toLowerCase()] : null;
+  }
+
   // Save current page as last visited (except homepage)
   if (!isHomePage) {
     const pageTitle = document.title.replace(' - ML Protein Design Bootcamp 2025', '');
+    const day = getDayFromPath(currentPath);
     localStorage.setItem(LAST_PAGE_KEY, JSON.stringify({
       path: currentPath,
       title: pageTitle,
+      day: day,
       timestamp: Date.now()
     }));
   }
@@ -452,7 +661,9 @@ ul.task-list li input[type="checkbox"] {
       const title = document.getElementById('last-page-title');
 
       if (banner && link && title && data.path) {
-        title.textContent = data.title;
+        // Format title with day prefix if available
+        const displayTitle = data.day ? `${data.day}: ${data.title}` : data.title;
+        title.textContent = displayTitle;
         link.href = data.path;
         banner.style.display = 'block';
       }
@@ -495,11 +706,46 @@ ul.task-list li input[type="checkbox"] {
     location.reload();
   };
 
+  // Mark all checkboxes on current page as complete
+  window.markAllComplete = function() {
+    const checkboxes = document.querySelectorAll('.module-checkbox');
+    const progress = getProgress();
+
+    checkboxes.forEach(cb => {
+      const id = cb.dataset.moduleId;
+      cb.checked = true;
+      if (!progress.completed.includes(id)) {
+        progress.completed.push(id);
+      }
+    });
+
+    saveProgress(progress);
+    updateProgressBar();
+  };
+
+  // Add "Mark all as complete" button to pages with checkboxes
+  function addMarkAllButton() {
+    const checkboxes = document.querySelectorAll('.module-checkbox');
+    if (checkboxes.length > 0 && !isHomePage) {
+      // Find the title element and add button after it
+      const title = document.querySelector('h1.title, .quarto-title h1');
+      if (title) {
+        const btn = document.createElement('button');
+        btn.textContent = 'Mark all as complete';
+        btn.className = 'btn btn-outline-success btn-sm mark-all-btn';
+        btn.style.cssText = 'margin-top: 0.5rem; margin-bottom: 1rem;';
+        btn.onclick = window.markAllComplete;
+        title.insertAdjacentElement('afterend', btn);
+      }
+    }
+  }
+
   // Run on page load
   document.addEventListener('DOMContentLoaded', function() {
     showResumeBanner();
     initCheckboxes();
     updateProgressBar();
+    addMarkAllButton();
   });
 })();
 </script>
@@ -576,7 +822,7 @@ ul.task-list li input[type="checkbox"] {
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp('/' + window.location.host + '/');
+        var filterRegex = new RegExp("https:\/\/RosettaMLBootCamp2025\.github\.io\/");
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }

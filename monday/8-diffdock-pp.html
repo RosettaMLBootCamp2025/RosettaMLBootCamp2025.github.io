@@ -140,6 +140,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>  
         <li><hr class="dropdown-divider"></li>
         <li>
+    <a class="dropdown-item" href="../monday/0-hpc-setup.html">
+ <span class="dropdown-text">0. HPC Setup</span></a>
+  </li>  
+        <li>
     <a class="dropdown-item" href="../monday/1-localcolabfold.html">
  <span class="dropdown-text">1. LocalColabFold</span></a>
   </li>  
@@ -273,13 +277,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#preparation-work" id="toc-preparation-work" class="nav-link active" data-scroll-target="#preparation-work">Preparation Work</a></li>
-  <li><a href="#installation-steps" id="toc-installation-steps" class="nav-link" data-scroll-target="#installation-steps">Installation Steps</a></li>
+  <li><a href="#why-use-diffdock-pp" id="toc-why-use-diffdock-pp" class="nav-link active" data-scroll-target="#why-use-diffdock-pp">Why Use DiffDock-PP?</a></li>
+  <li><a href="#resource-requirements" id="toc-resource-requirements" class="nav-link" data-scroll-target="#resource-requirements">Resource Requirements</a></li>
+  <li><a href="#preparation" id="toc-preparation" class="nav-link" data-scroll-target="#preparation">Preparation</a></li>
+  <li><a href="#installation" id="toc-installation" class="nav-link" data-scroll-target="#installation">Installation</a></li>
   <li><a href="#testing-the-installation" id="toc-testing-the-installation" class="nav-link" data-scroll-target="#testing-the-installation">Testing the Installation</a></li>
-  <li><a href="#hpc-job-script-example" id="toc-hpc-job-script-example" class="nav-link" data-scroll-target="#hpc-job-script-example">HPC Job Script Example</a></li>
-  <li><a href="#hpc-specific-notes" id="toc-hpc-specific-notes" class="nav-link" data-scroll-target="#hpc-specific-notes">HPC-Specific Notes</a></li>
+  <li><a href="#hpc-job-script" id="toc-hpc-job-script" class="nav-link" data-scroll-target="#hpc-job-script">HPC Job Script</a></li>
+  <li><a href="#usage-examples" id="toc-usage-examples" class="nav-link" data-scroll-target="#usage-examples">Usage Examples</a></li>
   <li><a href="#understanding-the-output" id="toc-understanding-the-output" class="nav-link" data-scroll-target="#understanding-the-output">Understanding the Output</a></li>
   <li><a href="#use-cases" id="toc-use-cases" class="nav-link" data-scroll-target="#use-cases">Use Cases</a></li>
+  <li><a href="#when-to-use-diffdock-pp-vs-other-tools" id="toc-when-to-use-diffdock-pp-vs-other-tools" class="nav-link" data-scroll-target="#when-to-use-diffdock-pp-vs-other-tools">When to Use DiffDock-PP vs Other Tools</a></li>
   <li><a href="#troubleshooting" id="toc-troubleshooting" class="nav-link" data-scroll-target="#troubleshooting">Troubleshooting</a></li>
   </ul>
 </nav>
@@ -306,43 +313,96 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>DiffDock-PP (<a href="https://arxiv.org/abs/2304.03889">paper</a>, <a href="https://github.com/ketatam/DiffDock-PP">code</a>) is a graph neural network trained to complete de-noising of rigid transformations (rotation and translation) that parameterize the docking orientation between two rigid protein subunits.</p>
-<p>DiffDock-PP is useful for predicting binding orientations between protein chains and can be used to orthogonally validate structure predictions, particularly for protein-protein docking.</p>
-<p>The goal of this module is to install DiffDock-PP on your HPC cluster.</p>
-<section id="preparation-work" class="level2">
-<h2 class="anchored" data-anchor-id="preparation-work">Preparation Work</h2>
-<p><input type="checkbox" class="module-checkbox" data-module-id="diffdock-pp-prep"> Mark as complete</p>
-<p>This assignment assumes that you have access to a computing cluster that allows installation of new software. We’ll be creating virtual environments using Conda/Mamba.</p>
-<p>(If you don’t have Mamba or prefer using Conda, just swap <code>mamba</code> for <code>conda</code> in the install commands below)</p>
+<p>DiffDock-PP (<a href="https://arxiv.org/abs/2304.03889">paper</a>, <a href="https://github.com/ketatam/DiffDock-PP">code</a>) is a graph neural network trained for de-noising of rigid transformations (rotation and translation) to predict protein-protein docking orientations between two rigid protein subunits.</p>
+<section id="why-use-diffdock-pp" class="level2">
+<h2 class="anchored" data-anchor-id="why-use-diffdock-pp">Why Use DiffDock-PP?</h2>
+<ul>
+<li><strong>Fast protein-protein docking</strong>: Predicts binding orientations without expensive sampling</li>
+<li><strong>Validation tool</strong>: Orthogonally validate structure predictions from other methods</li>
+<li><strong>Ensemble predictions</strong>: Generate multiple docking poses for uncertainty estimation</li>
+<li><strong>Rigid-body docking</strong>: Efficient for cases where backbone flexibility is minimal</li>
+</ul>
+<p><strong>Related Tools</strong>: For protein-ligand docking, see <a href="../monday/9-placer.html">PLACER</a>. For flexible ligand binding with ensemble generation, see <a href="../monday/9-placer.html">PLACER</a>. For structure prediction of complexes, see <a href="../monday/6-chai1.html">Chai-1</a> or <a href="../monday/7-boltz2.html">Boltz-2</a>.</p>
 </section>
-<section id="installation-steps" class="level2">
-<h2 class="anchored" data-anchor-id="installation-steps">Installation Steps</h2>
+<section id="resource-requirements" class="level2">
+<h2 class="anchored" data-anchor-id="resource-requirements">Resource Requirements</h2>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Resource</th>
+<th>Minimum</th>
+<th>Recommended</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>GPU RAM</td>
+<td>8 GB</td>
+<td>16 GB</td>
+<td>Scales with protein size</td>
+</tr>
+<tr class="even">
+<td>CPU RAM</td>
+<td>8 GB</td>
+<td>16 GB</td>
+<td>For preprocessing</td>
+</tr>
+<tr class="odd">
+<td>Disk Space</td>
+<td>2 GB</td>
+<td>5 GB</td>
+<td>Model weights</td>
+</tr>
+<tr class="even">
+<td>CUDA</td>
+<td>11.6</td>
+<td>11.6-11.7</td>
+<td>Specific version required</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="preparation" class="level2">
+<h2 class="anchored" data-anchor-id="preparation">Preparation</h2>
+<p><input type="checkbox" class="module-checkbox" data-module-id="diffdock-pp-prep"> Mark as complete</p>
+<p><strong>Prerequisites</strong>:</p>
+<ul>
+<li>Completed <a href="../monday/0-hpc-setup.html">HPC Setup</a> guide</li>
+<li>Conda/Mamba installed</li>
+<li>CUDA 11.6 or 11.7 available</li>
+</ul>
+<p><strong>Check CUDA availability</strong>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> avail cuda</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Look for cuda/11.6 or cuda/11.7</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="installation" class="level2">
+<h2 class="anchored" data-anchor-id="installation">Installation</h2>
 <p><input type="checkbox" class="module-checkbox" data-module-id="diffdock-pp-install"> Mark as complete</p>
 <ol type="1">
 <li>Clone the DiffDock-PP repository:</li>
 </ol>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/ketatam/DiffDock-PP.git</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> DiffDock-PP</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/ketatam/DiffDock-PP.git</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> DiffDock-PP</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ol start="2" type="1">
-<li>Create a new environment called “diffdock_pp”:</li>
+<li>Create a new environment:</li>
 </ol>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">mamba</span> create <span class="at">-n</span> diffdock_pp</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">mamba</span> create <span class="at">-n</span> diffdock_pp python=3.9</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">mamba</span> activate diffdock_pp</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ol start="3" type="1">
-<li>Activate the new environment:</li>
-</ol>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">mamba</span> activate diffdock_pp</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<ol start="4" type="1">
-<li>Install PyTorch:</li>
+<li>Install PyTorch with CUDA 11.6:</li>
 </ol>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">mamba</span> install pytorch=1.13.0 pytorch-cuda=11.6 <span class="at">-c</span> pytorch <span class="at">-c</span> nvidia</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<ol start="5" type="1">
-<li>Install PyG (PyTorch Geometric) packages:</li>
+<p><strong>Why CUDA 11.6?</strong> DiffDock-PP was developed and tested with this version. Using different versions may cause compatibility issues with PyG.</p>
+<ol start="4" type="1">
+<li>Install PyTorch Geometric (PyG) packages:</li>
 </ol>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">mamba</span> install pytorch-scatter pytorch-sparse pytorch-cluster pytorch-spline-conv pyg <span class="at">-c</span> pyg</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<ol start="6" type="1">
-<li>Install the remaining dependencies:</li>
+<ol start="5" type="1">
+<li>Install remaining dependencies:</li>
 </ol>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">mamba</span> install mkl=2024.0 <span class="st">"numpy&lt;2.0"</span> dill tqdm pyyaml pandas biopandas scikit-learn biopython e3nn wandb tensorboard tensorboardX matplotlib</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Why <code>numpy&lt;2.0</code>?</strong> NumPy 2.0 introduced breaking changes that affect many scientific packages. Keeping NumPy below 2.0 ensures compatibility.</p>
 </section>
 <section id="testing-the-installation" class="level2">
 <h2 class="anchored" data-anchor-id="testing-the-installation">Testing the Installation</h2>
@@ -354,57 +414,143 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ol start="2" type="1">
 <li>Run the test script on the DB5 benchmark:</li>
 </ol>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> DiffDock-PP/src/db5_inference.sh</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>If the command works without errors and the output folder <code>visualization/epoch-0/</code> contains PDB files of docked complexes, your installation was successful!</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> src/db5_inference.sh</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Success indicators</strong>:</p>
+<ul>
+<li>Command completes without errors</li>
+<li>Output folder <code>visualization/epoch-0/</code> is created</li>
+<li>Directory contains PDB files of docked complexes (multiple <code>.pdb</code> files)</li>
+</ul>
+<p><strong>Expected runtime</strong>: 5-15 minutes depending on GPU.</p>
+<p><strong>Verify output</strong>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> visualization/epoch-0/<span class="pp">*</span>.pdb <span class="kw">|</span> <span class="fu">wc</span> <span class="at">-l</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Should show multiple PDB files</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="hpc-job-script-example" class="level2">
-<h2 class="anchored" data-anchor-id="hpc-job-script-example">HPC Job Script Example</h2>
-<p>For SLURM clusters:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/bin/bash</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --job-name=diffdock_pp</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --gpus=1</span></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --time=02:00:00</span></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --mem=16G</span></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load cuda/11.6  <span class="co"># Adjust to match PyTorch CUDA version</span></span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="ex">mamba</span> activate diffdock_pp</span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Create output directory</span></span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> storage</span>
-<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Run inference</span></span>
-<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> DiffDock-PP/src/db5_inference.sh</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="hpc-job-script" class="level2">
+<h2 class="anchored" data-anchor-id="hpc-job-script">HPC Job Script</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/bin/bash</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --job-name=diffdock_pp</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --partition=gpu</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --gpus=1</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --cpus-per-task=4</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --mem=16G</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --time=02:00:00</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --output=%x_%j.out</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load cuda/11.6</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> ~/.bashrc</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a><span class="ex">mamba</span> activate diffdock_pp</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> /path/to/DiffDock-PP</span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Create output directory</span></span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> storage</span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Run inference</span></span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> src/db5_inference.sh</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="hpc-specific-notes" class="level2">
-<h2 class="anchored" data-anchor-id="hpc-specific-notes">HPC-Specific Notes</h2>
-<p><strong>CUDA Version</strong>: DiffDock-PP was tested with PyTorch 1.13.0 and CUDA 11.6. Make sure your HPC has compatible CUDA modules:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> avail cuda</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><strong>GPU Requirements</strong>: Docking predictions benefit from GPU acceleration. Request GPU resources when submitting jobs.</p>
+<section id="usage-examples" class="level2">
+<h2 class="anchored" data-anchor-id="usage-examples">Usage Examples</h2>
+<p><strong>Run DB5 benchmark</strong> (default test):</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> src/db5_inference.sh</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Custom docking</strong> (requires understanding the codebase):</p>
+<p>DiffDock-PP requires input data in a specific format. For custom proteins:</p>
+<ol type="1">
+<li>Prepare receptor and ligand PDB files</li>
+<li>Create data configuration files</li>
+<li>Run inference script</li>
+</ol>
+<p>See the repository documentation for detailed input format requirements.</p>
 </section>
 <section id="understanding-the-output" class="level2">
 <h2 class="anchored" data-anchor-id="understanding-the-output">Understanding the Output</h2>
-<p>The script generates:</p>
+<p>Output structure:</p>
+<pre><code>visualization/
+└── epoch-0/
+    ├── complex_1_pose_0.pdb    # Docking pose 1
+    ├── complex_1_pose_1.pdb    # Docking pose 2
+    ├── complex_1_pose_2.pdb    # Docking pose 3
+    └── ...                      # More poses</code></pre>
+<p><strong>Each PDB file contains</strong>:</p>
 <ul>
-<li>PDB files of predicted protein-protein complexes in <code>visualization/epoch-0/</code></li>
-<li>Each PDB file represents a predicted docking pose</li>
-<li>Multiple poses may be generated for ensemble predictions</li>
+<li>Both protein chains with predicted relative orientation</li>
+<li>Multiple poses represent different docking predictions</li>
+<li>Compare poses to assess uncertainty</li>
 </ul>
 </section>
 <section id="use-cases" class="level2">
 <h2 class="anchored" data-anchor-id="use-cases">Use Cases</h2>
 <ul>
 <li><strong>Protein-Protein Docking</strong>: Predict binding orientations between protein chains</li>
-<li><strong>Complex Validation</strong>: Validate predicted protein-protein interfaces</li>
+<li><strong>Complex Validation</strong>: Validate predicted protein-protein interfaces from other methods</li>
 <li><strong>Ensemble Generation</strong>: Generate multiple docking poses to capture uncertainty</li>
+<li><strong>Benchmarking</strong>: Compare against other docking methods</li>
 </ul>
+</section>
+<section id="when-to-use-diffdock-pp-vs-other-tools" class="level2">
+<h2 class="anchored" data-anchor-id="when-to-use-diffdock-pp-vs-other-tools">When to Use DiffDock-PP vs Other Tools</h2>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Tool</th>
+<th>Best For</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>DiffDock-PP</td>
+<td>Rigid protein-protein docking</td>
+</tr>
+<tr class="even">
+<td>PLACER</td>
+<td>Protein-ligand docking with conformational sampling</td>
+</tr>
+<tr class="odd">
+<td>Chai-1/Boltz-2</td>
+<td>Ab initio complex structure prediction</td>
+</tr>
+<tr class="even">
+<td>BindCraft</td>
+<td>De novo binder design</td>
+</tr>
+</tbody>
+</table>
 </section>
 <section id="troubleshooting" class="level2">
 <h2 class="anchored" data-anchor-id="troubleshooting">Troubleshooting</h2>
-<p><strong>PyG installation failures</strong>: Ensure CUDA toolkit is available and PyTorch is installed first.</p>
-<p><strong>CUDA version mismatch</strong>: Make sure the CUDA version for PyTorch matches your system’s CUDA:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nvcc</span> <span class="at">--version</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><strong>NumPy version</strong>: The environment specifies <code>numpy&lt;2.0</code> for compatibility. Don’t upgrade NumPy beyond 2.0.</p>
+<p><strong>PyG installation fails</strong>:</p>
+<ul>
+<li><p>Ensure CUDA toolkit is loaded before installing</p></li>
+<li><p>Install PyTorch first, then PyG packages</p></li>
+<li><p>Verify versions match:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-c</span> <span class="st">"import torch; print(torch.__version__, torch.cuda.is_available())"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
+</ul>
+<p><strong>CUDA version mismatch</strong>:</p>
+<p>Check your system’s CUDA version:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nvcc</span> <span class="at">--version</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This should match the <code>pytorch-cuda</code> version (11.6). If not:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load cuda/11.6</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>“ModuleNotFoundError” for PyG components</strong>:</p>
+<ul>
+<li><p>Install all PyG packages together:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="ex">mamba</span> install pytorch-scatter pytorch-sparse pytorch-cluster pytorch-spline-conv pyg <span class="at">-c</span> pyg</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
+</ul>
+<p><strong>NumPy errors</strong>:</p>
+<ul>
+<li>Ensure <code>numpy&lt;2.0</code> is installed</li>
+<li>Don’t upgrade NumPy even if prompted</li>
+</ul>
+<p><strong>GPU not detected</strong>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Verify CUDA is available to PyTorch</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-c</span> <span class="st">"import torch; print(torch.cuda.is_available())"</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Should print: True</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Empty output directory</strong>:</p>
+<ul>
+<li>Check for error messages in terminal output</li>
+<li>Verify input files exist and are formatted correctly</li>
+<li>Ensure <code>storage/</code> directory was created</li>
+</ul>
 <hr>
 <p><strong>Navigation:</strong> <a href="../monday/7-boltz2.html">← Boltz-2</a> | <a href="../monday/index.html">Monday Overview</a> | <a href="../monday/9-placer.html">Next: PLACER →</a></p>
 
@@ -421,12 +567,27 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   const currentPath = window.location.pathname;
   const isHomePage = currentPath === '/' || currentPath.endsWith('/index.html') || currentPath === '/index.html' || currentPath.match(/^\/[^\/]*\/?$/);
 
+  // Extract day from path
+  function getDayFromPath(path) {
+    const dayMap = {
+      'monday': 'Monday',
+      'tuesday': 'Tuesday',
+      'wednesday': 'Wednesday',
+      'thursday': 'Thursday',
+      'capstone': 'Capstone'
+    };
+    const match = path.match(/\/(monday|tuesday|wednesday|thursday|capstone)\//i);
+    return match ? dayMap[match[1].toLowerCase()] : null;
+  }
+
   // Save current page as last visited (except homepage)
   if (!isHomePage) {
     const pageTitle = document.title.replace(' - ML Protein Design Bootcamp 2025', '');
+    const day = getDayFromPath(currentPath);
     localStorage.setItem(LAST_PAGE_KEY, JSON.stringify({
       path: currentPath,
       title: pageTitle,
+      day: day,
       timestamp: Date.now()
     }));
   }
@@ -473,7 +634,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       const title = document.getElementById('last-page-title');
 
       if (banner && link && title && data.path) {
-        title.textContent = data.title;
+        // Format title with day prefix if available
+        const displayTitle = data.day ? `${data.day}: ${data.title}` : data.title;
+        title.textContent = displayTitle;
         link.href = data.path;
         banner.style.display = 'block';
       }
@@ -516,11 +679,46 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     location.reload();
   };
 
+  // Mark all checkboxes on current page as complete
+  window.markAllComplete = function() {
+    const checkboxes = document.querySelectorAll('.module-checkbox');
+    const progress = getProgress();
+
+    checkboxes.forEach(cb => {
+      const id = cb.dataset.moduleId;
+      cb.checked = true;
+      if (!progress.completed.includes(id)) {
+        progress.completed.push(id);
+      }
+    });
+
+    saveProgress(progress);
+    updateProgressBar();
+  };
+
+  // Add "Mark all as complete" button to pages with checkboxes
+  function addMarkAllButton() {
+    const checkboxes = document.querySelectorAll('.module-checkbox');
+    if (checkboxes.length > 0 && !isHomePage) {
+      // Find the title element and add button after it
+      const title = document.querySelector('h1.title, .quarto-title h1');
+      if (title) {
+        const btn = document.createElement('button');
+        btn.textContent = 'Mark all as complete';
+        btn.className = 'btn btn-outline-success btn-sm mark-all-btn';
+        btn.style.cssText = 'margin-top: 0.5rem; margin-bottom: 1rem;';
+        btn.onclick = window.markAllComplete;
+        title.insertAdjacentElement('afterend', btn);
+      }
+    }
+  }
+
   // Run on page load
   document.addEventListener('DOMContentLoaded', function() {
     showResumeBanner();
     initCheckboxes();
     updateProgressBar();
+    addMarkAllButton();
   });
 })();
 </script>
@@ -597,7 +795,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp('/' + window.location.host + '/');
+        var filterRegex = new RegExp("https:\/\/RosettaMLBootCamp2025\.github\.io\/");
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }
