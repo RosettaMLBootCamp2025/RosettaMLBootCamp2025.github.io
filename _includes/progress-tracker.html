@@ -102,11 +102,46 @@
     location.reload();
   };
 
+  // Mark all checkboxes on current page as complete
+  window.markAllComplete = function() {
+    const checkboxes = document.querySelectorAll('.module-checkbox');
+    const progress = getProgress();
+
+    checkboxes.forEach(cb => {
+      const id = cb.dataset.moduleId;
+      cb.checked = true;
+      if (!progress.completed.includes(id)) {
+        progress.completed.push(id);
+      }
+    });
+
+    saveProgress(progress);
+    updateProgressBar();
+  };
+
+  // Add "Mark all as complete" button to pages with checkboxes
+  function addMarkAllButton() {
+    const checkboxes = document.querySelectorAll('.module-checkbox');
+    if (checkboxes.length > 0 && !isHomePage) {
+      // Find the title element and add button after it
+      const title = document.querySelector('h1.title, .quarto-title h1');
+      if (title) {
+        const btn = document.createElement('button');
+        btn.textContent = 'Mark all as complete';
+        btn.className = 'btn btn-outline-success btn-sm mark-all-btn';
+        btn.style.cssText = 'margin-top: 0.5rem; margin-bottom: 1rem;';
+        btn.onclick = window.markAllComplete;
+        title.insertAdjacentElement('afterend', btn);
+      }
+    }
+  }
+
   // Run on page load
   document.addEventListener('DOMContentLoaded', function() {
     showResumeBanner();
     initCheckboxes();
     updateProgressBar();
+    addMarkAllButton();
   });
 })();
 </script>
