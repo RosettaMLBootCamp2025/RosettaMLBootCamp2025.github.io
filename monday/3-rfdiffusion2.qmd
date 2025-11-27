@@ -24,7 +24,7 @@ RFdiffusion2 ([paper](https://www.biorxiv.org/content/10.1101/2025.04.10.488300v
 
 ## Preparation
 
-<input type="checkbox" class="module-checkbox" data-module-id="rfdiffusion2-prep"> Mark as complete
+[Mark as complete]{.task module-id="rfdiffusion2-prep"}
 
 **Prerequisites**:
 
@@ -43,7 +43,7 @@ nvidia-smi
 
 ## Installation
 
-<input type="checkbox" class="module-checkbox" data-module-id="rfdiffusion2-install"> Mark as complete
+[Mark as complete]{.task module-id="rfdiffusion2-install"}
 
 1. Clone the repository:
 ```bash
@@ -78,7 +78,7 @@ The downloaded `.sif` file in `rf_diffusion/exec/` is the Singularity container.
 
 ## Testing the Installation
 
-<input type="checkbox" class="module-checkbox" data-module-id="rfdiffusion2-test"> Mark as complete
+[Mark as complete]{.task module-id="rfdiffusion2-test"}
 
 Run a demo case:
 
@@ -224,7 +224,3 @@ chmod +x rf_diffusion/exec/bakerlab_rf_diffusion_aa.sif
 
 - Ensure PYTHONPATH is set correctly
 - Container may need `--bind` for additional paths
-
----
-
-**Navigation:** [← LigandMPNN](2-ligandmpnn.qmd) | [Monday Overview](index.qmd) | [Next: ESMFold →](4-esmfold.qmd)

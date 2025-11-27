@@ -24,7 +24,7 @@ DiffDock-PP ([paper](https://arxiv.org/abs/2304.03889), [code](https://github.co
 
 ## Preparation
 
-<input type="checkbox" class="module-checkbox" data-module-id="diffdock-pp-prep"> Mark as complete
+[Mark as complete]{.task module-id="diffdock-pp-prep"}
 
 **Prerequisites**:
 
@@ -40,7 +40,7 @@ module avail cuda
 
 ## Installation
 
-<input type="checkbox" class="module-checkbox" data-module-id="diffdock-pp-install"> Mark as complete
+[Mark as complete]{.task module-id="diffdock-pp-install"}
 
 1. Clone the DiffDock-PP repository:
 ```bash
@@ -75,7 +75,7 @@ mamba install mkl=2024.0 "numpy<2.0" dill tqdm pyyaml pandas biopandas scikit-le
 
 ## Testing the Installation
 
-<input type="checkbox" class="module-checkbox" data-module-id="diffdock-pp-test"> Mark as complete
+[Mark as complete]{.task module-id="diffdock-pp-test"}
 
 1. Create required directories:
 ```bash
@@ -225,7 +225,3 @@ python -c "import torch; print(torch.cuda.is_available())"
 - Check for error messages in terminal output
 - Verify input files exist and are formatted correctly
 - Ensure `storage/` directory was created
-
----
-
-**Navigation:** [← Boltz-2](7-boltz2.qmd) | [Monday Overview](index.qmd) | [Next: PLACER →](9-placer.qmd)

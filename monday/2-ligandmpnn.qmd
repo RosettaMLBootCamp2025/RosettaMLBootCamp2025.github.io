@@ -24,7 +24,7 @@ LigandMPNN ([paper](https://www.biorxiv.org/content/10.1101/2023.12.22.573103v1)
 
 ## Preparation
 
-<input type="checkbox" class="module-checkbox" data-module-id="ligandmpnn-prep"> Mark as complete
+[Mark as complete]{.task module-id="ligandmpnn-prep"}
 
 **Prerequisites**:
 
@@ -40,7 +40,7 @@ nvcc --version      # For GPU support (optional)
 
 ## Installation
 
-<input type="checkbox" class="module-checkbox" data-module-id="ligandmpnn-install"> Mark as complete
+[Mark as complete]{.task module-id="ligandmpnn-install"}
 
 1. Clone the LigandMPNN repository:
 ```bash
@@ -70,7 +70,7 @@ This installs PyTorch, NumPy, and ProDy for PDB file handling.
 
 ## Testing the Installation
 
-<input type="checkbox" class="module-checkbox" data-module-id="ligandmpnn-test"> Mark as complete
+[Mark as complete]{.task module-id="ligandmpnn-test"}
 
 Run a test design on the provided example structure:
 
@@ -245,7 +245,3 @@ MVKLTAEGSE...
 - This is expected - downstream relaxation is recommended
 - Use PyRosetta or Rosetta FastRelax
 - Or validate with your structure prediction tool of choice
-
----
-
-**Navigation:** [← LocalColabFold](1-localcolabfold.qmd) | [Monday Overview](index.qmd) | [Next: RFdiffusion2 →](3-rfdiffusion2.qmd)

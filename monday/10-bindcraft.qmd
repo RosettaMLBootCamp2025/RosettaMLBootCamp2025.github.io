@@ -26,7 +26,7 @@ BindCraft ([paper](https://www.nature.com/articles/s41586-025-09429-6), [code](h
 
 ## Preparation
 
-<input type="checkbox" class="module-checkbox" data-module-id="bindcraft-prep"> Mark as complete
+[Mark as complete]{.task module-id="bindcraft-prep"}
 
 **Prerequisites**:
 
@@ -43,7 +43,7 @@ nvcc --version
 
 ## Installation
 
-<input type="checkbox" class="module-checkbox" data-module-id="bindcraft-install"> Mark as complete
+[Mark as complete]{.task module-id="bindcraft-install"}
 
 1. Clone the BindCraft repository:
 ```bash
@@ -68,7 +68,7 @@ The script creates a conda environment called `BindCraft` with all dependencies.
 
 ## Testing the Installation
 
-<input type="checkbox" class="module-checkbox" data-module-id="bindcraft-test"> Mark as complete
+[Mark as complete]{.task module-id="bindcraft-test"}
 
 1. Activate the environment:
 ```bash
@@ -255,7 +255,3 @@ my_binder_designs/
 - This is normal - protein design takes time
 - Monitor trajectory count, not clock time
 - Large targets are slower
-
----
-
-**Navigation:** [← PLACER](9-placer.qmd) | [Monday Overview](index.qmd) | [Next: ESM3 (Optional) →](11-esm3.qmd)

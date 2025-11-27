@@ -8,16 +8,12 @@ title: "4.1 Placeholder Module"
 
 ## Section 1
 
-<input type="checkbox" class="module-checkbox" data-module-id="4.1-section1"> Mark Section 1 as complete
+[Mark Section 1 as complete]{.task module-id="4.1-section1"}
 
 *Placeholder content for Section 1.*
 
 ## Section 2
 
-<input type="checkbox" class="module-checkbox" data-module-id="4.1-section2"> Mark Section 2 as complete
+[Mark Section 2 as complete]{.task module-id="4.1-section2"}
 
 *Placeholder content for Section 2.*
-
----
-
-**Navigation:** [← Thursday Overview](index.qmd) | [Next Module →](4.1-placeholder.qmd)

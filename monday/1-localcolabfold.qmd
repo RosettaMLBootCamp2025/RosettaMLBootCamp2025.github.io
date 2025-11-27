@@ -24,23 +24,26 @@ LocalColabFold ([code](https://github.com/YoshitakaMo/localcolabfold)) is a loca
 
 ## Preparation
 
-<input type="checkbox" class="module-checkbox" data-module-id="localcolabfold-prep"> Mark as complete
+[Mark as complete]{.task module-id="localcolabfold-prep"}
 
-**Prerequisites**:
-
+::: {.callout-important}
+## Prerequisites
 - Completed [HPC Setup](0-hpc-setup.qmd) guide
 - Access to a GPU node for testing
 - ~15 GB disk space for installation
+:::
 
-**Verify your environment**:
+::: {.callout-note}
+## Verify your environment
 ```bash
 nvidia-smi          # Check GPU is available
 nvcc --version      # Check CUDA version
 ```
+:::
 
 ## Installation
 
-<input type="checkbox" class="module-checkbox" data-module-id="localcolabfold-install"> Mark as complete
+[Mark as complete]{.task module-id="localcolabfold-install"}
 
 1. Download the installation script:
 ```bash
@@ -67,7 +70,7 @@ export PATH="/path/to/your/localcolabfold/colabfold-conda/bin:$PATH"
 
 ## Testing the Installation
 
-<input type="checkbox" class="module-checkbox" data-module-id="localcolabfold-test"> Mark as complete
+[Mark as complete]{.task module-id="localcolabfold-test"}
 
 1. Activate the ColabFold environment:
 ```bash
@@ -172,6 +175,9 @@ colabfold_batch --amber --num-recycle 3 large_protein.fasta output/
 
 ## Troubleshooting
 
+::: {.callout-warning}
+## Common Issues
+
 **"CUDA out of memory"**:
 
 - Request GPU with more memory (`#SBATCH --gpus=a100:1`)
@@ -201,7 +207,4 @@ export COLABFOLD_DOWNLOAD_DIR=/scratch/$USER/colabfold_db
 python -c "import torch; print(torch.cuda.is_available())"
 # Should print: True
 ```
-
----
-
-**Navigation:** [← HPC Setup](0-hpc-setup.qmd) | [Monday Overview](index.qmd) | [Next: LigandMPNN →](2-ligandmpnn.qmd)
+:::

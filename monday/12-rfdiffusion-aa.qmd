@@ -26,7 +26,7 @@ RFdiffusion All Atom ([code](https://github.com/baker-laboratory/rf_diffusion_al
 
 ## Preparation
 
-<input type="checkbox" class="module-checkbox" data-module-id="rfdiffusion-aa-prep"> Mark as complete
+[Mark as complete]{.task module-id="rfdiffusion-aa-prep"}
 
 **Prerequisites**:
 
@@ -44,7 +44,7 @@ apptainer --version
 
 ## Installation
 
-<input type="checkbox" class="module-checkbox" data-module-id="rfdiffusion-aa-install"> Mark as complete
+[Mark as complete]{.task module-id="rfdiffusion-aa-install"}
 
 1. Clone the repository:
 ```bash
@@ -74,7 +74,7 @@ git submodule update
 
 ## Testing the Installation
 
-<input type="checkbox" class="module-checkbox" data-module-id="rfdiffusion-aa-test"> Mark as complete
+[Mark as complete]{.task module-id="rfdiffusion-aa-test"}
 
 Run a ligand binder design example:
 
@@ -224,7 +224,3 @@ chmod +x rf_se3_diffusion.sif
 git submodule init
 git submodule update
 ```
-
----
-
-**Navigation:** [← ESM3 (Optional)](11-esm3.qmd) | [Monday Overview](index.qmd)

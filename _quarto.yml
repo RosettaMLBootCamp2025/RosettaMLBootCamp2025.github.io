@@ -2,6 +2,9 @@ project:
   type: website
   output-dir: _site
 
+filters:
+  - filters/task.lua
+
 website:
   title: "ML Protein Design Bootcamp 2025"
   navbar:
@@ -9,65 +12,55 @@ website:
       - text: "Home"
         href: index.qmd
       - text: "Monday"
-        menu:
-          - href: monday/index.qmd
-            text: "Monday Overview"
-          - text: "---"
-          - href: monday/0-hpc-setup.qmd
-            text: "0. HPC Setup"
-          - href: monday/1-localcolabfold.qmd
-            text: "1. LocalColabFold"
-          - href: monday/2-ligandmpnn.qmd
-            text: "2. LigandMPNN"
-          - href: monday/3-rfdiffusion2.qmd
-            text: "3. RFdiffusion2"
-          - href: monday/4-esmfold.qmd
-            text: "4. ESMFold"
-          - href: monday/5-openfold.qmd
-            text: "5. OpenFold"
-          - href: monday/6-chai1.qmd
-            text: "6. Chai-1"
-          - href: monday/7-boltz2.qmd
-            text: "7. Boltz-2"
-          - href: monday/8-diffdock-pp.qmd
-            text: "8. DiffDock-PP"
-          - href: monday/9-placer.qmd
-            text: "9. PLACER"
-          - href: monday/10-bindcraft.qmd
-            text: "10. BindCraft"
-          - text: "---"
-          - href: monday/11-esm3.qmd
-            text: "11. ESM3 (Optional)"
-          - href: monday/12-rfdiffusion-aa.qmd
-            text: "12. RFdiffusion AA (Optional)"
+        href: monday/index.qmd
       - text: "Tuesday"
-        menu:
-          - href: tuesday/index.qmd
-            text: "Tuesday Overview"
-          - href: tuesday/2.1-placeholder.qmd
-            text: "2.1 Module Placeholder"
+        href: tuesday/index.qmd
       - text: "Wednesday"
-        menu:
-          - href: wednesday/index.qmd
-            text: "Wednesday Overview"
-          - href: wednesday/3.1-placeholder.qmd
-            text: "3.1 Module Placeholder"
+        href: wednesday/index.qmd
       - text: "Thursday"
-        menu:
-          - href: thursday/index.qmd
-            text: "Thursday Overview"
-          - href: thursday/4.1-placeholder.qmd
-            text: "4.1 Module Placeholder"
+        href: thursday/index.qmd
       - text: "Capstone"
-        menu:
-          - href: capstone/index.qmd
-            text: "Capstone Overview"
+        href: capstone/index.qmd
     right:
       - href: about.qmd
         text: About
       - icon: github
         href: https://github.com/RosettaMLBootCamp2025/RosettaMLBootCamp2025.github.io/issues/new
         text: Report Issue
+  sidebar:
+    - title: "Monday"
+      contents:
+        - monday/index.qmd
+        - text: "---"
+        - monday/0-hpc-setup.qmd
+        - monday/1-localcolabfold.qmd
+        - monday/2-ligandmpnn.qmd
+        - monday/3-rfdiffusion2.qmd
+        - monday/4-esmfold.qmd
+        - monday/5-openfold.qmd
+        - monday/6-chai1.qmd
+        - monday/7-boltz2.qmd
+        - monday/8-diffdock-pp.qmd
+        - monday/9-placer.qmd
+        - monday/10-bindcraft.qmd
+        - text: "---"
+        - monday/11-esm3.qmd
+        - monday/12-rfdiffusion-aa.qmd
+    - title: "Tuesday"
+      contents:
+        - tuesday/index.qmd
+        - tuesday/2.1-placeholder.qmd
+    - title: "Wednesday"
+      contents:
+        - wednesday/index.qmd
+        - wednesday/3.1-placeholder.qmd
+    - title: "Thursday"
+      contents:
+        - thursday/index.qmd
+        - thursday/4.1-placeholder.qmd
+    - title: "Capstone"
+      contents:
+        - capstone/index.qmd
 
 format:
   html:

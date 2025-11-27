@@ -26,7 +26,7 @@ ESMFold ([paper](https://www.science.org/doi/abs/10.1126/science.ade2574), [code
 
 ## Preparation
 
-<input type="checkbox" class="module-checkbox" data-module-id="esmfold-prep"> Mark as complete
+[Mark as complete]{.task module-id="esmfold-prep"}
 
 **Prerequisites**:
 
@@ -42,7 +42,7 @@ module load cuda    # If nvcc not found
 
 ## Installation
 
-<input type="checkbox" class="module-checkbox" data-module-id="esmfold-install"> Mark as complete
+[Mark as complete]{.task module-id="esmfold-install"}
 
 1. Create a conda environment with Python 3.9:
 ```bash
@@ -77,7 +77,7 @@ mamba activate esmfold
 
 ## Testing the Installation
 
-<input type="checkbox" class="module-checkbox" data-module-id="esmfold-test"> Mark as complete
+[Mark as complete]{.task module-id="esmfold-test"}
 
 Create a test script `test_esmfold.py`:
 
@@ -279,7 +279,3 @@ python -c "import torch; print(torch.cuda.is_available())"
   ```bash
   export TORCH_HOME=/scratch/$USER/torch_cache
   ```
-
----
-
-**Navigation:** [← RFdiffusion2](3-rfdiffusion2.qmd) | [Monday Overview](index.qmd) | [Next: OpenFold →](5-openfold.qmd)

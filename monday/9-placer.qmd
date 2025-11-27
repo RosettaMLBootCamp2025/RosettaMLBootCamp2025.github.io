@@ -30,7 +30,7 @@ PLACER ([paper](https://www.biorxiv.org/content/10.1101/2024.09.25.614868v1), [c
 
 ## Preparation
 
-<input type="checkbox" class="module-checkbox" data-module-id="placer-prep"> Mark as complete
+[Mark as complete]{.task module-id="placer-prep"}
 
 **Prerequisites**:
 
@@ -40,7 +40,7 @@ PLACER ([paper](https://www.biorxiv.org/content/10.1101/2024.09.25.614868v1), [c
 
 ## Installation
 
-<input type="checkbox" class="module-checkbox" data-module-id="placer-install"> Mark as complete
+[Mark as complete]{.task module-id="placer-install"}
 
 1. Clone the repository:
 ```bash
@@ -62,7 +62,7 @@ mamba activate placer_env
 
 ## Testing the Installation
 
-<input type="checkbox" class="module-checkbox" data-module-id="placer-test"> Mark as complete
+[Mark as complete]{.task module-id="placer-test"}
 
 Run a simple heme docking prediction:
 
@@ -271,7 +271,3 @@ python run_PLACER.py \
 - PLACER is generally memory-efficient
 - If issues persist, try reducing ensemble size
 - Or use CPU with multiple cores
-
----
-
-**Navigation:** [← DiffDock-PP](8-diffdock-pp.qmd) | [Monday Overview](index.qmd) | [Next: BindCraft →](10-bindcraft.qmd)

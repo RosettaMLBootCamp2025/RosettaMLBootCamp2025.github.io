@@ -17,7 +17,7 @@ Most ML protein tools share similar computational requirements. Here's a general
 
 ## Checking Your HPC Environment
 
-<input type="checkbox" class="module-checkbox" data-module-id="hpc-setup-check"> Mark as complete
+[Mark as complete]{.task module-id="hpc-setup-check"}
 
 ### 1. Check Available CUDA Modules
 
@@ -59,7 +59,7 @@ nvcc --version
 
 ## Conda/Mamba Setup
 
-<input type="checkbox" class="module-checkbox" data-module-id="hpc-setup-conda"> Mark as complete
+[Mark as complete]{.task module-id="hpc-setup-conda"}
 
 Most tools use Conda environments. **Mamba is recommended** as it's significantly faster than Conda for dependency resolution.
 
@@ -97,7 +97,7 @@ mamba env export > environment.yml
 
 ## Docker vs Singularity/Apptainer
 
-<input type="checkbox" class="module-checkbox" data-module-id="hpc-setup-containers"> Mark as complete
+[Mark as complete]{.task module-id="hpc-setup-containers"}
 
 **IMPORTANT**: Most academic HPCs do NOT support Docker for security reasons. Use **Singularity** or **Apptainer** instead.
 
@@ -138,7 +138,7 @@ apptainer pull docker://nvcr.io/nvidia/pytorch:23.10-py3
 
 ## SLURM Job Submission Basics
 
-<input type="checkbox" class="module-checkbox" data-module-id="hpc-setup-slurm"> Mark as complete
+[Mark as complete]{.task module-id="hpc-setup-slurm"}
 
 Most HPCs use SLURM for job scheduling. Here's a template for ML jobs:
 
@@ -187,7 +187,7 @@ Check your cluster's documentation or run `sinfo` to see available partitions.
 
 ## Environment Variables
 
-<input type="checkbox" class="module-checkbox" data-module-id="hpc-setup-env"> Mark as complete
+[Mark as complete]{.task module-id="hpc-setup-env"}
 
 Several tools use environment variables. Add these to your `~/.bashrc`:
 
@@ -211,7 +211,7 @@ Replace `/scratch/$USER` with your cluster's scratch or work directory path.
 
 ## Verifying GPU Works with PyTorch
 
-<input type="checkbox" class="module-checkbox" data-module-id="hpc-setup-verify"> Mark as complete
+[Mark as complete]{.task module-id="hpc-setup-verify"}
 
 After setting up an environment with PyTorch, verify GPU access:
 
@@ -299,7 +299,3 @@ mamba activate my_env
 ```bash
 chmod +x container.sif
 ```
-
----
-
-**Navigation:** [Monday Overview](index.qmd) | [Next: LocalColabFold →](1-localcolabfold.qmd)

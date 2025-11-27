@@ -24,7 +24,7 @@ Boltz-2 ([paper](https://doi.org/10.1101/2025.06.14.659707), [code](https://gith
 
 ## Preparation
 
-<input type="checkbox" class="module-checkbox" data-module-id="boltz2-prep"> Mark as complete
+[Mark as complete]{.task module-id="boltz2-prep"}
 
 **Prerequisites**:
 
@@ -36,7 +36,7 @@ Boltz-2 ([paper](https://doi.org/10.1101/2025.06.14.659707), [code](https://gith
 
 ## Installation
 
-<input type="checkbox" class="module-checkbox" data-module-id="boltz2-install"> Mark as complete
+[Mark as complete]{.task module-id="boltz2-install"}
 
 1. Create a fresh environment:
 ```bash
@@ -63,7 +63,7 @@ pip install -e .[cuda]
 
 ## Testing the Installation
 
-<input type="checkbox" class="module-checkbox" data-module-id="boltz2-test"> Mark as complete
+[Mark as complete]{.task module-id="boltz2-test"}
 
 Create a test YAML file `test_input.yaml`:
 
@@ -269,7 +269,3 @@ boltz_results_<input>/
 - Check YAML syntax (indentation matters)
 - Ensure SMILES strings are quoted
 - Verify sequence format
-
----
-
-**Navigation:** [← Chai-1](6-chai1.qmd) | [Monday Overview](index.qmd) | [Next: DiffDock-PP →](8-diffdock-pp.qmd)

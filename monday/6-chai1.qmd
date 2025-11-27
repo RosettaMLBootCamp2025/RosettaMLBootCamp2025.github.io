@@ -30,7 +30,7 @@ Chai-1 ([paper](https://www.biorxiv.org/content/10.1101/2024.10.10.615955), [cod
 
 ## Preparation
 
-<input type="checkbox" class="module-checkbox" data-module-id="chai1-prep"> Mark as complete
+[Mark as complete]{.task module-id="chai1-prep"}
 
 **Prerequisites**:
 
@@ -46,7 +46,7 @@ print(torch.cuda.is_bf16_supported())  # Should print True
 
 ## Installation
 
-<input type="checkbox" class="module-checkbox" data-module-id="chai1-install"> Mark as complete
+[Mark as complete]{.task module-id="chai1-install"}
 
 1. Create a conda environment:
 ```bash
@@ -68,7 +68,7 @@ pip install git+https://github.com/chaidiscovery/chai-lab.git
 
 ## Testing the Installation
 
-<input type="checkbox" class="module-checkbox" data-module-id="chai1-test"> Mark as complete
+[Mark as complete]{.task module-id="chai1-test"}
 
 Create a test FASTA file `test.fasta`:
 ```
@@ -262,7 +262,3 @@ export CHAI_DOWNLOADS_DIR=/scratch/$USER/chai_models
 - First run downloads ~5-10 GB of model weights
 - Subsequent runs are much faster
 - Set `CHAI_DOWNLOADS_DIR` to avoid re-downloading
-
----
-
-**Navigation:** [← OpenFold](5-openfold.qmd) | [Monday Overview](index.qmd) | [Next: Boltz-2 →](7-boltz2.qmd)

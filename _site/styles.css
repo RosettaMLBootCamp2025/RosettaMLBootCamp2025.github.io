@@ -1,5 +1,33 @@
 /* css styles */
 
+/* Aggie Blue color scheme */
+:root {
+  --aggie-blue: #022851;
+  --aggie-gold: #FFBF00;
+}
+
+/* Override Bootstrap primary buttons with Aggie Blue */
+.btn-primary {
+  background-color: var(--aggie-blue) !important;
+  border-color: var(--aggie-blue) !important;
+}
+
+.btn-primary:hover {
+  background-color: #011a38 !important;
+  border-color: #011a38 !important;
+}
+
+.btn-outline-primary {
+  color: var(--aggie-blue) !important;
+  border-color: var(--aggie-blue) !important;
+}
+
+.btn-outline-primary:hover {
+  background-color: var(--aggie-blue) !important;
+  border-color: var(--aggie-blue) !important;
+  color: white !important;
+}
+
 /* Day cards on homepage */
 .day-card {
   border: 1px solid #ddd;

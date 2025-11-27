@@ -32,7 +32,7 @@ ESM3 ([paper](https://www.science.org/doi/10.1126/science.ads0018), [code](https
 
 ## Preparation
 
-<input type="checkbox" class="module-checkbox" data-module-id="esm3-prep"> Mark as complete
+[Mark as complete]{.task module-id="esm3-prep"}
 
 **Prerequisites**:
 
@@ -42,7 +42,7 @@ ESM3 ([paper](https://www.science.org/doi/10.1126/science.ads0018), [code](https
 
 ## Installation
 
-<input type="checkbox" class="module-checkbox" data-module-id="esm3-install"> Mark as complete
+[Mark as complete]{.task module-id="esm3-install"}
 
 1. Create a conda environment:
 ```bash
@@ -75,7 +75,7 @@ export HF_TOKEN="your_token_here"
 
 ## Testing the Installation
 
-<input type="checkbox" class="module-checkbox" data-module-id="esm3-test"> Mark as complete
+[Mark as complete]{.task module-id="esm3-test"}
 
 Create a test script `test_esm3.py`:
 
@@ -264,7 +264,3 @@ ESM3 can generate different "tracks":
 - GPU strongly recommended
 - Reduce `num_steps` for faster (lower quality) results
 - Use ESM C for embeddings (no structure generation)
-
----
-
-**Navigation:** [← BindCraft](10-bindcraft.qmd) | [Monday Overview](index.qmd) | [Next: RFdiffusion All Atom (Optional) →](12-rfdiffusion-aa.qmd)

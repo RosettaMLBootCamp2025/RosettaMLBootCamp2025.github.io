@@ -26,7 +26,7 @@ OpenFold ([paper](https://www.biorxiv.org/content/10.1101/2022.11.20.517210v1), 
 
 ## Preparation
 
-<input type="checkbox" class="module-checkbox" data-module-id="openfold-prep"> Mark as complete
+[Mark as complete]{.task module-id="openfold-prep"}
 
 **Prerequisites**:
 
@@ -46,7 +46,7 @@ Many HPCs have pre-installed AlphaFold databases that OpenFold can use.
 
 ## Installation
 
-<input type="checkbox" class="module-checkbox" data-module-id="openfold-install"> Mark as complete
+[Mark as complete]{.task module-id="openfold-install"}
 
 **Important**: OpenFold installation can be complex. The official documentation at [openfold.readthedocs.io](https://openfold.readthedocs.io/en/latest/) has the most current instructions.
 
@@ -84,7 +84,7 @@ bash scripts/download_alphafold_dbs.sh /path/to/database/directory
 
 ## Testing the Installation
 
-<input type="checkbox" class="module-checkbox" data-module-id="openfold-test"> Mark as complete
+[Mark as complete]{.task module-id="openfold-test"}
 
 Create a test FASTA file `test.fasta`:
 ```
@@ -268,7 +268,3 @@ python train_openfold.py \
 ```
 
 See the [training documentation](https://openfold.readthedocs.io/en/latest/Training.html) for details.
-
----
-
-**Navigation:** [← ESMFold](4-esmfold.qmd) | [Monday Overview](index.qmd) | [Next: Chai-1 →](6-chai1.qmd)
