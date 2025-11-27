@@ -2,21 +2,43 @@
 title: "8. DiffDock-PP"
 ---
 
-DiffDock-PP ([paper](https://arxiv.org/abs/2304.03889), [code](https://github.com/ketatam/DiffDock-PP)) is a graph neural network trained to complete de-noising of rigid transformations (rotation and translation) that parameterize the docking orientation between two rigid protein subunits.
+DiffDock-PP ([paper](https://arxiv.org/abs/2304.03889), [code](https://github.com/ketatam/DiffDock-PP)) is a graph neural network trained for de-noising of rigid transformations (rotation and translation) to predict protein-protein docking orientations between two rigid protein subunits.
 
-DiffDock-PP is useful for predicting binding orientations between protein chains and can be used to orthogonally validate structure predictions, particularly for protein-protein docking.
+## Why Use DiffDock-PP?
 
-The goal of this module is to install DiffDock-PP on your HPC cluster.
+- **Fast protein-protein docking**: Predicts binding orientations without expensive sampling
+- **Validation tool**: Orthogonally validate structure predictions from other methods
+- **Ensemble predictions**: Generate multiple docking poses for uncertainty estimation
+- **Rigid-body docking**: Efficient for cases where backbone flexibility is minimal
 
-## Preparation Work
+**Related Tools**: For protein-ligand docking, see [PLACER](9-placer.qmd). For flexible ligand binding with ensemble generation, see [PLACER](9-placer.qmd). For structure prediction of complexes, see [Chai-1](6-chai1.qmd) or [Boltz-2](7-boltz2.qmd).
+
+## Resource Requirements
+
+| Resource | Minimum | Recommended | Notes |
+|----------|---------|-------------|-------|
+| GPU RAM | 8 GB | 16 GB | Scales with protein size |
+| CPU RAM | 8 GB | 16 GB | For preprocessing |
+| Disk Space | 2 GB | 5 GB | Model weights |
+| CUDA | 11.6 | 11.6-11.7 | Specific version required |
+
+## Preparation
 
 <input type="checkbox" class="module-checkbox" data-module-id="diffdock-pp-prep"> Mark as complete
 
-This assignment assumes that you have access to a computing cluster that allows installation of new software. We'll be creating virtual environments using Conda/Mamba.
+**Prerequisites**:
 
-(If you don't have Mamba or prefer using Conda, just swap `mamba` for `conda` in the install commands below)
+- Completed [HPC Setup](0-hpc-setup.qmd) guide
+- Conda/Mamba installed
+- CUDA 11.6 or 11.7 available
 
-## Installation Steps
+**Check CUDA availability**:
+```bash
+module avail cuda
+# Look for cuda/11.6 or cuda/11.7
+```
+
+## Installation
 
 <input type="checkbox" class="module-checkbox" data-module-id="diffdock-pp-install"> Mark as complete
 
@@ -26,30 +48,30 @@ git clone https://github.com/ketatam/DiffDock-PP.git
 cd DiffDock-PP
 ```
 
-2. Create a new environment called "diffdock_pp":
+2. Create a new environment:
 ```bash
-mamba create -n diffdock_pp
-```
-
-3. Activate the new environment:
-```bash
+mamba create -n diffdock_pp python=3.9
 mamba activate diffdock_pp
 ```
 
-4. Install PyTorch:
+3. Install PyTorch with CUDA 11.6:
 ```bash
 mamba install pytorch=1.13.0 pytorch-cuda=11.6 -c pytorch -c nvidia
 ```
 
-5. Install PyG (PyTorch Geometric) packages:
+**Why CUDA 11.6?** DiffDock-PP was developed and tested with this version. Using different versions may cause compatibility issues with PyG.
+
+4. Install PyTorch Geometric (PyG) packages:
 ```bash
 mamba install pytorch-scatter pytorch-sparse pytorch-cluster pytorch-spline-conv pyg -c pyg
 ```
 
-6. Install the remaining dependencies:
+5. Install remaining dependencies:
 ```bash
 mamba install mkl=2024.0 "numpy<2.0" dill tqdm pyyaml pandas biopandas scikit-learn biopython e3nn wandb tensorboard tensorboardX matplotlib
 ```
+
+**Why `numpy<2.0`?** NumPy 2.0 introduced breaking changes that affect many scientific packages. Keeping NumPy below 2.0 ensures compatibility.
 
 ## Testing the Installation
 
@@ -62,66 +84,147 @@ mkdir storage
 
 2. Run the test script on the DB5 benchmark:
 ```bash
-bash DiffDock-PP/src/db5_inference.sh
+bash src/db5_inference.sh
 ```
 
-If the command works without errors and the output folder `visualization/epoch-0/` contains PDB files of docked complexes, your installation was successful!
+**Success indicators**:
 
-## HPC Job Script Example
+- Command completes without errors
+- Output folder `visualization/epoch-0/` is created
+- Directory contains PDB files of docked complexes (multiple `.pdb` files)
 
-For SLURM clusters:
+**Expected runtime**: 5-15 minutes depending on GPU.
+
+**Verify output**:
+```bash
+ls visualization/epoch-0/*.pdb | wc -l
+# Should show multiple PDB files
+```
+
+## HPC Job Script
 
 ```bash
 #!/bin/bash
 #SBATCH --job-name=diffdock_pp
+#SBATCH --partition=gpu
 #SBATCH --gpus=1
-#SBATCH --time=02:00:00
+#SBATCH --cpus-per-task=4
 #SBATCH --mem=16G
+#SBATCH --time=02:00:00
+#SBATCH --output=%x_%j.out
 
-module load cuda/11.6  # Adjust to match PyTorch CUDA version
+module load cuda/11.6
 
+source ~/.bashrc
 mamba activate diffdock_pp
+
+cd /path/to/DiffDock-PP
 
 # Create output directory
 mkdir -p storage
 
 # Run inference
-bash DiffDock-PP/src/db5_inference.sh
+bash src/db5_inference.sh
 ```
 
-## HPC-Specific Notes
+## Usage Examples
 
-**CUDA Version**: DiffDock-PP was tested with PyTorch 1.13.0 and CUDA 11.6. Make sure your HPC has compatible CUDA modules:
+**Run DB5 benchmark** (default test):
 ```bash
-module avail cuda
+bash src/db5_inference.sh
 ```
 
-**GPU Requirements**: Docking predictions benefit from GPU acceleration. Request GPU resources when submitting jobs.
+**Custom docking** (requires understanding the codebase):
+
+DiffDock-PP requires input data in a specific format. For custom proteins:
+
+1. Prepare receptor and ligand PDB files
+2. Create data configuration files
+3. Run inference script
+
+See the repository documentation for detailed input format requirements.
 
 ## Understanding the Output
 
-The script generates:
+Output structure:
+```
+visualization/
+└── epoch-0/
+    ├── complex_1_pose_0.pdb    # Docking pose 1
+    ├── complex_1_pose_1.pdb    # Docking pose 2
+    ├── complex_1_pose_2.pdb    # Docking pose 3
+    └── ...                      # More poses
+```
 
-- PDB files of predicted protein-protein complexes in `visualization/epoch-0/`
-- Each PDB file represents a predicted docking pose
-- Multiple poses may be generated for ensemble predictions
+**Each PDB file contains**:
+
+- Both protein chains with predicted relative orientation
+- Multiple poses represent different docking predictions
+- Compare poses to assess uncertainty
 
 ## Use Cases
 
 - **Protein-Protein Docking**: Predict binding orientations between protein chains
-- **Complex Validation**: Validate predicted protein-protein interfaces
+- **Complex Validation**: Validate predicted protein-protein interfaces from other methods
 - **Ensemble Generation**: Generate multiple docking poses to capture uncertainty
+- **Benchmarking**: Compare against other docking methods
+
+## When to Use DiffDock-PP vs Other Tools
+
+| Tool | Best For |
+|------|----------|
+| DiffDock-PP | Rigid protein-protein docking |
+| PLACER | Protein-ligand docking with conformational sampling |
+| Chai-1/Boltz-2 | Ab initio complex structure prediction |
+| BindCraft | De novo binder design |
 
 ## Troubleshooting
 
-**PyG installation failures**: Ensure CUDA toolkit is available and PyTorch is installed first.
+**PyG installation fails**:
 
-**CUDA version mismatch**: Make sure the CUDA version for PyTorch matches your system's CUDA:
+- Ensure CUDA toolkit is loaded before installing
+- Install PyTorch first, then PyG packages
+- Verify versions match:
+  ```bash
+  python -c "import torch; print(torch.__version__, torch.cuda.is_available())"
+  ```
+
+**CUDA version mismatch**:
+
+Check your system's CUDA version:
 ```bash
 nvcc --version
 ```
 
-**NumPy version**: The environment specifies `numpy<2.0` for compatibility. Don't upgrade NumPy beyond 2.0.
+This should match the `pytorch-cuda` version (11.6). If not:
+```bash
+module load cuda/11.6
+```
+
+**"ModuleNotFoundError" for PyG components**:
+
+- Install all PyG packages together:
+  ```bash
+  mamba install pytorch-scatter pytorch-sparse pytorch-cluster pytorch-spline-conv pyg -c pyg
+  ```
+
+**NumPy errors**:
+
+- Ensure `numpy<2.0` is installed
+- Don't upgrade NumPy even if prompted
+
+**GPU not detected**:
+```bash
+# Verify CUDA is available to PyTorch
+python -c "import torch; print(torch.cuda.is_available())"
+# Should print: True
+```
+
+**Empty output directory**:
+
+- Check for error messages in terminal output
+- Verify input files exist and are formatted correctly
+- Ensure `storage/` directory was created
 
 ---
 

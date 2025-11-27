@@ -4,19 +4,41 @@ title: "2. LigandMPNN"
 
 LigandMPNN ([paper](https://www.biorxiv.org/content/10.1101/2023.12.22.573103v1), [code](https://github.com/dauparas/LigandMPNN)) is a deep learning model for context-aware protein sequence design. It extends ProteinMPNN to handle small molecules, metal ions, and other non-protein components in protein design tasks.
 
-LigandMPNN is useful for designing protein sequences that interact with ligands, cofactors, or other small molecules. It can also be used for side chain packing and evaluating sequence-structure compatibility.
+## Why Use LigandMPNN?
 
-The goal of this module is to install LigandMPNN on your HPC cluster.
+- **Ligand-aware design**: Design sequences that account for bound cofactors, substrates, or drug molecules
+- **Context preservation**: Maintain interactions with metals, DNA, RNA, or other molecules
+- **Side chain packing**: Evaluate and optimize side chain conformations
+- **Flexible residue control**: Fix, bias, or vary specific positions
 
-## Preparation Work
+**Related Tools**: Use with [RFdiffusion2](3-rfdiffusion2.qmd) for backbone design, or [BindCraft](10-bindcraft.qmd) for complete binder design pipelines.
+
+## Resource Requirements
+
+| Resource | Minimum | Recommended | Notes |
+|----------|---------|-------------|-------|
+| GPU RAM | 4 GB | 16 GB | Scales with protein size |
+| CPU RAM | 8 GB | 16 GB | CPU-only is viable but slower |
+| Disk Space | 2 GB | 5 GB | Model weights |
+| Python | 3.9+ | 3.11 | Required |
+
+## Preparation
 
 <input type="checkbox" class="module-checkbox" data-module-id="ligandmpnn-prep"> Mark as complete
 
-This assignment assumes that you have access to a computing cluster that allows installation of new software. We'll be creating virtual environments using Conda/Mamba.
+**Prerequisites**:
 
-(If you don't have Mamba or prefer using Conda, just swap `mamba` for `conda` in the install commands below)
+- Completed [HPC Setup](0-hpc-setup.qmd) guide
+- Conda/Mamba installed
+- Git installed
 
-## Installation Steps
+**Verify your environment**:
+```bash
+python --version    # Should be 3.9+
+nvcc --version      # For GPU support (optional)
+```
+
+## Installation
 
 <input type="checkbox" class="module-checkbox" data-module-id="ligandmpnn-install"> Mark as complete
 
@@ -31,22 +53,20 @@ cd LigandMPNN
 bash get_model_params.sh "./model_params"
 ```
 
+**Expected download**: ~500 MB of model weights.
+
 3. Create a new conda environment:
 ```bash
 mamba create -n ligandmpnn_env python=3.11
-```
-
-4. Activate the environment:
-```bash
 mamba activate ligandmpnn_env
 ```
 
-5. Install dependencies:
+4. Install dependencies:
 ```bash
-pip3 install -r requirements.txt
+pip install -r requirements.txt
 ```
 
-The requirements include PyTorch, NumPy, and ProDy for reading/writing PDB files.
+This installs PyTorch, NumPy, and ProDy for PDB file handling.
 
 ## Testing the Installation
 
@@ -61,55 +81,170 @@ python run.py \
     --out_folder "./outputs/test_output"
 ```
 
-If this completes successfully and generates output files in `./outputs/test_output/`, your installation was successful!
+**Success indicators**:
 
-## HPC-Specific Notes
+- Command completes without errors
+- Output folder contains:
+  - `seqs/1BC8.fa` - Designed sequences in FASTA format
+  - `backbones/1BC8.pdb` - Input backbone (for reference)
+  - `packed/1BC8_1.pdb` - Structure with designed side chains
 
-**GPU Requirements**: LigandMPNN can run on both CPU and GPU. GPU is recommended for faster processing. Make sure to request GPU resources when submitting jobs on your cluster.
+**Expected runtime**: <1 minute on GPU, ~5 minutes on CPU.
 
-**Batch Processing**: For designing multiple structures, use the `--pdb_path_multi` option with a JSON file listing all input PDBs. This is more efficient since the model is loaded only once.
-
-## Example HPC Job Script
-
-For SLURM clusters:
+## HPC Job Script
 
 ```bash
 #!/bin/bash
 #SBATCH --job-name=ligandmpnn
+#SBATCH --partition=gpu
 #SBATCH --gpus=1
-#SBATCH --time=02:00:00
+#SBATCH --cpus-per-task=4
 #SBATCH --mem=16G
+#SBATCH --time=02:00:00
+#SBATCH --output=%x_%j.out
 
-module load cuda/12.1  # Adjust to your cluster
+module load cuda/12.1
 
+source ~/.bashrc
 mamba activate ligandmpnn_env
+
+cd /path/to/LigandMPNN
 
 python run.py \
     --model_type "ligand_mpnn" \
     --seed 111 \
     --pdb_path "./inputs/my_protein.pdb" \
     --out_folder "./outputs/my_design" \
-    --number_of_batches 5
+    --number_of_batches 10
 ```
 
-## Common Use Cases
+## Usage Examples
+
+**Basic protein design** (no ligand):
+```bash
+python run.py \
+    --pdb_path "protein.pdb" \
+    --out_folder "output/"
+```
 
 **Design with ligand context**:
 ```bash
 python run.py \
     --model_type "ligand_mpnn" \
-    --pdb_path "./input.pdb" \
-    --ligand "HEM" \
-    --out_folder "./output"
+    --pdb_path "protein_ligand.pdb" \
+    --out_folder "output/"
 ```
 
-**Fix specific residues**:
+**Fix specific residues** (keep them unchanged):
 ```bash
 python run.py \
-    --pdb_path "./input.pdb" \
+    --pdb_path "protein.pdb" \
     --fixed_residues "A10 A20 A30" \
-    --out_folder "./output"
+    --out_folder "output/"
 ```
+
+**Design only specific positions**:
+```bash
+python run.py \
+    --pdb_path "protein.pdb" \
+    --redesigned_residues "A50 A51 A52 A53" \
+    --out_folder "output/"
+```
+
+**Batch processing multiple structures**:
+```bash
+# Create a JSON file listing inputs
+echo '{"1": "input1.pdb", "2": "input2.pdb"}' > input_list.json
+
+python run.py \
+    --pdb_path_multi "input_list.json" \
+    --out_folder "batch_output/"
+```
+
+**With temperature control** (higher = more diverse):
+```bash
+python run.py \
+    --pdb_path "protein.pdb" \
+    --temperature 0.2 \
+    --out_folder "output/"
+```
+
+## Key Parameters
+
+| Parameter | Description | Default |
+|-----------|-------------|---------|
+| `--model_type` | Model variant: `protein_mpnn`, `ligand_mpnn`, `soluble_mpnn`, etc. | `protein_mpnn` |
+| `--temperature` | Sampling temperature (0.1-1.0). Lower = more conservative | 0.1 |
+| `--number_of_batches` | Number of sequences to generate | 1 |
+| `--batch_size` | Sequences per batch | 1 |
+| `--fixed_residues` | Space-separated residues to keep unchanged | None |
+| `--redesigned_residues` | Only design these residues | All |
+| `--bias_AA` | Bias toward specific amino acids | None |
+
+## Model Types
+
+| Model | Use Case |
+|-------|----------|
+| `protein_mpnn` | Standard protein sequence design |
+| `ligand_mpnn` | Design with small molecule context |
+| `soluble_mpnn` | Bias toward soluble sequences |
+| `global_label_membrane_mpnn` | Membrane protein design |
+| `per_residue_label_membrane_mpnn` | Fine-grained membrane design |
+
+## Understanding the Output
+
+**Output directory structure**:
+```
+output/
+├── seqs/
+│   └── protein.fa          # Designed sequences
+├── backbones/
+│   └── protein.pdb         # Input structure
+└── packed/
+    ├── protein_1.pdb       # Design 1 with side chains
+    └── protein_2.pdb       # Design 2 with side chains
+```
+
+**FASTA output format**:
+```
+>protein, score=1.234, seq_recovery=0.456
+MVKLTAEGSE...
+```
+
+- `score`: Negative log-likelihood (lower = better fit to backbone)
+- `seq_recovery`: Fraction matching native sequence (if provided)
+
+## Troubleshooting
+
+**"RuntimeError: CUDA out of memory"**:
+
+- Use CPU instead: remove CUDA module and run without GPU
+- Reduce `--batch_size`
+- LigandMPNN is efficient; usually not memory-limited
+
+**PDB parsing errors**:
+
+- Ensure PDB has proper formatting
+- Remove alternate conformations: keep only "A" conformers
+- Check that ligand has proper atom naming
+
+**Ligand not recognized**:
+
+- Ensure ligand is in the PDB file with HETATM records
+- Use `--ligand` flag to specify ligand residue name
+- Check that ligand coordinates are reasonable
+
+**Low sequence diversity**:
+
+- Increase `--temperature` (e.g., 0.2 or 0.3)
+- Increase `--number_of_batches`
+- Use different random seeds
+
+**Side chain clashes in output**:
+
+- This is expected - downstream relaxation is recommended
+- Use PyRosetta or Rosetta FastRelax
+- Or validate with your structure prediction tool of choice
 
 ---
 

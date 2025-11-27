@@ -4,45 +4,51 @@ title: "5. OpenFold"
 
 OpenFold ([paper](https://www.biorxiv.org/content/10.1101/2022.11.20.517210v1), [code](https://github.com/aqlaboratory/openfold)) is a faithful, trainable PyTorch reproduction of DeepMind's AlphaFold2. It achieves performance comparable to AlphaFold2 and provides a fully open-source implementation for protein structure prediction.
 
-OpenFold is useful for protein structure prediction with full transparency into the model architecture and training process. It's particularly valuable for researchers who want to understand, modify, or retrain structure prediction models.
+## Why Use OpenFold?
 
-The goal of this module is to install OpenFold on your HPC cluster.
+- **Full transparency**: Open-source model architecture and training code
+- **Trainable**: Can be fine-tuned or retrained on custom data
+- **Research-friendly**: Ideal for understanding how structure prediction works
+- **MSA-based accuracy**: Uses evolutionary information for high-accuracy predictions
 
-## Preparation Work
+**Related Tools**: For faster predictions without MSAs, see [ESMFold](4-esmfold.qmd). For a more user-friendly MSA-based option, see [LocalColabFold](1-localcolabfold.qmd).
+
+## Resource Requirements
+
+| Resource | Minimum | Recommended | Notes |
+|----------|---------|-------------|-------|
+| GPU RAM | 16 GB | 40+ GB | A100 for large proteins |
+| CPU RAM | 32 GB | 64+ GB | MSA generation is memory-intensive |
+| Disk Space | 500 GB | 2+ TB | Sequence databases are large |
+| CUDA | 11.3+ | 12.1+ | Required for compilation |
+
+**Note**: OpenFold requires significant disk space for sequence databases if generating MSAs locally. Check if your HPC already has AlphaFold/OpenFold databases installed.
+
+## Preparation
 
 <input type="checkbox" class="module-checkbox" data-module-id="openfold-prep"> Mark as complete
 
-This assignment assumes that you have access to a computing cluster that allows installation of new software.
+**Prerequisites**:
 
-**Note**: OpenFold installation can be complex. Please refer to the official documentation at [openfold.readthedocs.io](https://openfold.readthedocs.io/en/latest/) for the most up-to-date installation instructions.
+- Completed [HPC Setup](0-hpc-setup.qmd) guide
+- Conda/Mamba installed
+- `nvcc` available for CUDA compilation
+- Significant disk space (or access to shared databases)
 
-## Recommended Installation Method
+**Check for existing databases**:
+```bash
+# Ask your HPC admins or check common locations
+ls /shared/databases/alphafold/
+ls /shared/databases/openfold/
+```
+
+Many HPCs have pre-installed AlphaFold databases that OpenFold can use.
+
+## Installation
 
 <input type="checkbox" class="module-checkbox" data-module-id="openfold-install"> Mark as complete
 
-The easiest way to install OpenFold on an HPC is to follow the official documentation:
-
-1. Visit the OpenFold documentation: [https://openfold.readthedocs.io](https://openfold.readthedocs.io/en/latest/)
-
-2. Follow the installation instructions for your system
-
-3. The documentation provides detailed guidance for:
-   - Environment setup
-   - Dependency installation
-   - Model weight downloads
-   - Running inference
-   - Training (if desired)
-
-## Key Requirements
-
-- Python 3.7+
-- PyTorch
-- CUDA-capable GPU
-- Significant disk space for databases (if using MSAs)
-
-## Basic Installation Overview
-
-While exact commands may change, the general process involves:
+**Important**: OpenFold installation can be complex. The official documentation at [openfold.readthedocs.io](https://openfold.readthedocs.io/en/latest/) has the most current instructions.
 
 1. Clone the repository:
 ```bash
@@ -50,62 +56,218 @@ git clone https://github.com/aqlaboratory/openfold.git
 cd openfold
 ```
 
-2. Set up the conda environment:
+2. Create the conda environment:
 ```bash
-# Follow instructions from official docs
-conda env create -f environment.yml
-conda activate openfold
+mamba env create -f environment.yml
+mamba activate openfold_venv
 ```
+
+**Expected time**: 10-20 minutes for environment creation.
 
 3. Install OpenFold:
 ```bash
-# Follow instructions from official docs
-python setup.py install
+pip install -e .
 ```
 
 4. Download model weights:
 ```bash
-# Scripts provided in the repository
 bash scripts/download_openfold_params.sh openfold/resources
 ```
 
-## HPC-Specific Notes
+**Expected download**: ~1-2 GB of model weights.
 
-**Database Requirements**: If using MSAs, OpenFold requires access to large sequence databases (similar to AlphaFold2). These may already be available on your HPC system. Check with your system administrator.
+5. (Optional) Download sequence databases for MSA generation:
+```bash
+# This downloads ~2TB of data - skip if using HPC shared databases
+bash scripts/download_alphafold_dbs.sh /path/to/database/directory
+```
 
-**GPU Requirements**: Structure prediction requires CUDA-capable GPUs. Request appropriate GPU resources when submitting jobs.
-
-**Docker/Singularity**: If OpenFold provides Docker containers, remember that most academic HPCs use Singularity/Apptainer instead of Docker.
-
-## Testing Your Installation
+## Testing the Installation
 
 <input type="checkbox" class="module-checkbox" data-module-id="openfold-test"> Mark as complete
 
-Once installed, test with a simple prediction:
-
-```bash
-# Example command (exact syntax from official docs)
-python run_pretrained_openfold.py \
-    --fasta_paths example.fasta \
-    --output_dir predictions/
+Create a test FASTA file `test.fasta`:
+```
+>test_protein
+MKTVRQERLKSIVRILERSKEPVSGAQLAEELSVSRQVIVQDIAYLRSLGYNIVATPRGYVLAGG
 ```
 
-Consult the official documentation for exact command syntax and options.
+Run a prediction (using pre-computed MSAs or without MSAs for testing):
 
-## Why OpenFold?
+```bash
+python run_pretrained_openfold.py \
+    test.fasta \
+    /path/to/database/directory \
+    --output_dir predictions/ \
+    --config_preset model_1_ptm \
+    --model_device cuda:0
+```
 
-- **Transparency**: Full access to model architecture and training code
-- **Reproducibility**: Can retrain models with custom data
-- **Research**: Understand how structure prediction models work
-- **Customization**: Modify model architecture for specific applications
+**Note**: For testing without databases, you can use `--use_precomputed_alignments` with a directory containing pre-computed MSA files.
 
-## Documentation and Support
+**Success indicators**:
 
-For the most accurate and up-to-date information:
+- Command completes without errors
+- `predictions/` directory contains PDB files
+- Output includes confidence metrics (pLDDT, pTM)
 
-- **Official Documentation**: [https://openfold.readthedocs.io](https://openfold.readthedocs.io/en/latest/)
-- **GitHub Repository**: [https://github.com/aqlaboratory/openfold](https://github.com/aqlaboratory/openfold)
-- **Original README**: Available in the repository
+**Expected runtime**: 5-30 minutes depending on MSA availability and protein size.
+
+## HPC Job Script
+
+```bash
+#!/bin/bash
+#SBATCH --job-name=openfold
+#SBATCH --partition=gpu
+#SBATCH --gpus=1
+#SBATCH --cpus-per-task=8
+#SBATCH --mem=64G
+#SBATCH --time=08:00:00
+#SBATCH --output=%x_%j.out
+
+module load cuda/12.1
+
+source ~/.bashrc
+mamba activate openfold_venv
+
+cd /path/to/openfold
+
+# Using HPC shared databases
+DATABASE_DIR=/shared/databases/alphafold
+
+python run_pretrained_openfold.py \
+    my_protein.fasta \
+    $DATABASE_DIR \
+    --output_dir predictions/ \
+    --config_preset model_1_ptm \
+    --model_device cuda:0
+```
+
+## Usage Examples
+
+**Basic prediction with local databases**:
+```bash
+python run_pretrained_openfold.py \
+    input.fasta \
+    /path/to/databases \
+    --output_dir output/ \
+    --config_preset model_1_ptm
+```
+
+**Using pre-computed MSAs**:
+```bash
+python run_pretrained_openfold.py \
+    input.fasta \
+    /path/to/databases \
+    --use_precomputed_alignments /path/to/msas/ \
+    --output_dir output/
+```
+
+**Multiple model presets** (ensemble):
+```bash
+for preset in model_1_ptm model_2_ptm model_3_ptm; do
+    python run_pretrained_openfold.py \
+        input.fasta \
+        /path/to/databases \
+        --config_preset $preset \
+        --output_dir output_${preset}/
+done
+```
+
+## Model Presets
+
+| Preset | Description |
+|--------|-------------|
+| `model_1_ptm` | Standard model with pTM head |
+| `model_2_ptm` | Alternative model with pTM |
+| `model_3_ptm` | Third model variant |
+| `model_1_multimer_v3` | For protein complexes |
+
+## Understanding the Output
+
+Output directory structure:
+```
+predictions/
+├── test_protein_model_1_ptm_unrelaxed.pdb    # Predicted structure
+├── test_protein_model_1_ptm_confidences.json # Confidence scores
+└── test_protein_model_1_ptm_timings.json     # Runtime statistics
+```
+
+**Confidence metrics**:
+
+- **pLDDT**: Per-residue confidence (0-100, higher is better)
+- **pTM**: Predicted TM-score (0-1, >0.8 is confident)
+- **PAE**: Predicted Aligned Error matrix
+
+## Database Requirements
+
+If generating MSAs locally, OpenFold needs these databases:
+
+| Database | Size | Purpose |
+|----------|------|---------|
+| BFD | ~1.7 TB | Sequence alignments |
+| MGnify | ~120 GB | Metagenomic sequences |
+| UniRef90 | ~100 GB | Sequence clustering |
+| UniRef30 | ~200 GB | HHblits templates |
+| PDB70 | ~60 GB | Structure templates |
+
+**Total**: ~2+ TB
+
+**Check HPC shared databases first** - most research HPCs have these pre-installed.
+
+## Troubleshooting
+
+**Compilation errors during install**:
+```bash
+# Ensure CUDA toolkit is loaded
+module load cuda/12.1
+nvcc --version
+
+# Clean and retry
+pip uninstall openfold
+pip install -e .
+```
+
+**"Database not found" errors**:
+
+- Verify database paths exist
+- Check HPC documentation for shared database locations
+- Contact HPC admins about AlphaFold database availability
+
+**Out of memory**:
+
+- Request more GPU memory
+- Reduce `--max_recycling_iters`
+- Use gradient checkpointing for training
+
+**Slow MSA generation**:
+
+- MSA generation is CPU-bound and can take hours
+- Use pre-computed MSAs when possible
+- Consider using ColabFold's MMseqs2 server instead
+
+**Model weights not found**:
+```bash
+# Re-download weights
+bash scripts/download_openfold_params.sh openfold/resources
+
+# Verify files exist
+ls openfold/resources/*.pt
+```
+
+## For Researchers: Training
+
+OpenFold can be retrained or fine-tuned:
+
+```bash
+python train_openfold.py \
+    /path/to/training/data \
+    /path/to/template_mmcif \
+    /path/to/output \
+    --config_preset initial_training
+```
+
+See the [training documentation](https://openfold.readthedocs.io/en/latest/Training.html) for details.
 
 ---
 

@@ -4,19 +4,41 @@ title: "1. LocalColabFold"
 
 LocalColabFold ([code](https://github.com/YoshitakaMo/localcolabfold)) is a local installation of ColabFold, which provides an efficient implementation of AlphaFold2 protein structure prediction. ColabFold combines fast MSA generation from MMseqs2 with AlphaFold2's structure prediction capabilities, making it significantly faster than the original AlphaFold2 implementation.
 
-LocalColabFold is useful for high-throughput protein structure prediction on your own HPC infrastructure without relying on Google Colab. It enables batch processing of structure predictions without time limits or GPU restrictions.
+## Why Use LocalColabFold?
 
-The goal of this module is to install LocalColabFold on your HPC cluster.
+- **High-throughput predictions**: Run batch jobs without Colab time limits
+- **No internet dependency**: All computations run locally after setup
+- **HPC integration**: Leverage your cluster's GPUs for faster predictions
+- **MSA flexibility**: Use pre-computed MSAs or generate them on-the-fly
 
-## Preparation Work
+**Related Tools**: For structure prediction without MSAs, see [ESMFold](4-esmfold.qmd). For multi-modal complexes, see [Chai-1](6-chai1.qmd) or [Boltz-2](7-boltz2.qmd).
+
+## Resource Requirements
+
+| Resource | Minimum | Recommended | Notes |
+|----------|---------|-------------|-------|
+| GPU RAM | 16 GB | 40+ GB | A100 recommended for proteins >500 aa |
+| CPU RAM | 32 GB | 64 GB | MSA generation is memory-intensive |
+| Disk Space | 15 GB | 100+ GB | Model weights + optional databases |
+| CUDA | 11.1+ | 12.1+ | Check compatibility |
+
+## Preparation
 
 <input type="checkbox" class="module-checkbox" data-module-id="localcolabfold-prep"> Mark as complete
 
-This assignment assumes that you have access to a computing cluster that allows installation of new software.
+**Prerequisites**:
 
-**Important**: Make sure you have access to a GPU node for testing, as AlphaFold2 requires GPUs for efficient structure prediction.
+- Completed [HPC Setup](0-hpc-setup.qmd) guide
+- Access to a GPU node for testing
+- ~15 GB disk space for installation
 
-## Installation Steps
+**Verify your environment**:
+```bash
+nvidia-smi          # Check GPU is available
+nvcc --version      # Check CUDA version
+```
+
+## Installation
 
 <input type="checkbox" class="module-checkbox" data-module-id="localcolabfold-install"> Mark as complete
 
@@ -31,15 +53,14 @@ chmod +x install_colabbatch_linux.sh
 ./install_colabbatch_linux.sh
 ```
 
-This will create a directory called `localcolabfold` with a conda environment called `colabfold_batch`.
+This creates a `localcolabfold` directory containing:
+- A conda environment (`colabfold_batch`)
+- ColabFold and all dependencies
+- Model weights (~10-15 GB, downloaded automatically)
 
-The script will automatically:
+**Expected install time**: 15-30 minutes depending on network speed.
 
-- Install Miniconda (if not already present)
-- Create a conda environment with ColabFold and all dependencies
-- Download necessary model weights (~10-15 GB)
-
-3. Add the environment to your PATH (add to your `~/.bashrc` for permanent access):
+3. Add the environment to your PATH (add to `~/.bashrc` for permanent access):
 ```bash
 export PATH="/path/to/your/localcolabfold/colabfold-conda/bin:$PATH"
 ```
@@ -53,42 +74,134 @@ export PATH="/path/to/your/localcolabfold/colabfold-conda/bin:$PATH"
 source localcolabfold/colabfold-conda/bin/activate
 ```
 
-2. Create a test FASTA file with a small protein sequence:
+2. Create a test FASTA file:
 ```bash
 echo ">test_protein
 MKFLKFSLLTAVLLSVVFAFSSCGDDDDTYPYDVPDYAGTCGDDDDTYPYDVPDYA" > test.fasta
 ```
 
-3. Run ColabFold on the test sequence:
+3. Run prediction:
 ```bash
 colabfold_batch test.fasta test_output/
 ```
 
-If the command completes successfully and creates PDB files in `test_output/`, your installation was successful!
+**Success indicators**:
 
-## HPC Job Submission
+- Command completes without errors
+- `test_output/` directory contains:
+  - `test_protein_relaxed_rank_001_*.pdb` (predicted structure)
+  - `test_protein_scores_rank_001_*.json` (confidence scores)
+  - `test_protein_coverage.png` (MSA coverage plot)
 
-For HPC clusters using SLURM, create a job script like this:
+**Expected runtime**: 2-5 minutes for this small test protein.
+
+**Verify GPU is being used**:
+```bash
+# In another terminal while prediction runs:
+nvidia-smi
+# Look for python process using GPU memory
+```
+
+## HPC Job Script
 
 ```bash
 #!/bin/bash
 #SBATCH --job-name=colabfold
+#SBATCH --partition=gpu
 #SBATCH --gpus=1
+#SBATCH --cpus-per-task=8
+#SBATCH --mem=64G
 #SBATCH --time=04:00:00
-#SBATCH --mem=32G
+#SBATCH --output=%x_%j.out
 
+# Activate environment
 source /path/to/localcolabfold/colabfold-conda/bin/activate
 
+# Optional: Use shared database location
+export COLABFOLD_DOWNLOAD_DIR=/shared/colabfold_db
+
+# Run prediction
 colabfold_batch input.fasta output_dir/
 ```
 
+## Usage Examples
+
+**Basic prediction**:
+```bash
+colabfold_batch sequences.fasta predictions/
+```
+
+**With custom MSA server** (if your HPC has one):
+```bash
+colabfold_batch --msa-server "https://internal.server.edu" sequences.fasta predictions/
+```
+
+**Multimer prediction** (protein complexes):
+```bash
+# Separate chains with : in the FASTA file
+# >complex
+# SEQUENCEA:SEQUENCEB
+colabfold_batch complex.fasta complex_output/
+```
+
+**Batch with templates**:
+```bash
+colabfold_batch --templates sequences.fasta predictions/
+```
+
+**Reduce memory usage** (for large proteins):
+```bash
+colabfold_batch --amber --num-recycle 3 large_protein.fasta output/
+```
+
+## Understanding the Output
+
+| File | Description |
+|------|-------------|
+| `*_relaxed_rank_001_*.pdb` | Best predicted structure (Amber-relaxed) |
+| `*_unrelaxed_rank_001_*.pdb` | Best prediction before relaxation |
+| `*_scores_rank_001_*.json` | pLDDT and pTM scores |
+| `*_coverage.png` | MSA coverage visualization |
+| `*_pae.png` | Predicted Aligned Error heatmap |
+
+**Confidence scores**:
+
+- **pLDDT** (per-residue): >90 high confidence, 70-90 confident, 50-70 low, <50 very low
+- **pTM** (overall): >0.8 high confidence for whole structure
+- **PAE** (pairwise): Lower is better, indicates domain organization confidence
+
 ## Troubleshooting
 
-**Database Location**: By default, ColabFold downloads databases to `~/.cache/colabfold/`. On shared clusters, you may want to set `COLABFOLD_DOWNLOAD_DIR` to a shared location to avoid duplicate downloads:
+**"CUDA out of memory"**:
+
+- Request GPU with more memory (`#SBATCH --gpus=a100:1`)
+- Use `--amber` flag to reduce peak memory
+- For very large proteins (>1000 aa), use Chai-1 or Boltz-2 instead
+
+**MSA generation is slow**:
+
+- Use the MMseqs2 server option for faster MSA generation
+- Pre-compute MSAs for frequently used sequences
+
+**Database location filling home directory**:
 ```bash
-export COLABFOLD_DOWNLOAD_DIR=/shared/path/colabfold_db
+# Set in ~/.bashrc before running
+export COLABFOLD_DOWNLOAD_DIR=/scratch/$USER/colabfold_db
+```
+
+**Model weights download fails**:
+
+- Check network connectivity
+- Manually download from: https://storage.googleapis.com/alphafold/
+- Place in `~/.cache/colabfold/params/`
+
+**GPU not being used** (slow prediction):
+```bash
+# Verify CUDA is detected
+python -c "import torch; print(torch.cuda.is_available())"
+# Should print: True
 ```
 
 ---
 
-**Navigation:** [← Monday Overview](index.qmd) | [Next: LigandMPNN →](2-ligandmpnn.qmd)
+**Navigation:** [← HPC Setup](0-hpc-setup.qmd) | [Monday Overview](index.qmd) | [Next: LigandMPNN →](2-ligandmpnn.qmd)

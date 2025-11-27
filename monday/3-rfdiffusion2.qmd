@@ -2,21 +2,46 @@
 title: "3. RFdiffusion2"
 ---
 
-RFdiffusion2 ([paper](https://www.biorxiv.org/content/10.1101/2025.04.10.488300v1), [code](https://github.com/RosettaCommons/RFdiffusion2)) is a protein design model capable of atom-level active site scaffolding. It extends the original RFdiffusion to enable more precise control over protein-ligand interactions at the atomic level.
+RFdiffusion2 ([paper](https://www.biorxiv.org/content/10.1101/2025.04.10.488300v1), [code](https://github.com/RosettaCommons/RFdiffusion2)) is a protein design model capable of atom-level active site scaffolding. It extends the original RFdiffusion to enable precise control over protein-ligand interactions at the atomic level.
 
-RFdiffusion2 is useful for designing proteins with specific active site geometries, enzyme design with atomic-level motif constraints, and designing binders to small molecules with precise interaction patterns.
+## Why Use RFdiffusion2?
 
-The goal of this module is to install RFdiffusion2 on your HPC cluster.
+- **Atomic-level control**: Design proteins with precise active site geometries
+- **Ligand scaffolding**: Build proteins around small molecules with atomic accuracy
+- **Motif grafting**: Incorporate functional motifs into new scaffolds
+- **Flexible backbone design**: Generate novel folds with specific functional constraints
 
-## Preparation Work
+**Related Tools**: Use with [LigandMPNN](2-ligandmpnn.qmd) for sequence design after backbone generation. For the earlier version without atomic control, see [RFdiffusion All Atom](12-rfdiffusion-aa.qmd) (Optional).
+
+## Resource Requirements
+
+| Resource | Minimum | Recommended | Notes |
+|----------|---------|-------------|-------|
+| GPU RAM | 16 GB | 32+ GB | A100 for larger designs |
+| CPU RAM | 16 GB | 32 GB | Container-based execution |
+| Disk Space | 10 GB | 20 GB | Container + weights |
+| Container | Apptainer/Singularity | Required | No native Docker on HPC |
+
+## Preparation
 
 <input type="checkbox" class="module-checkbox" data-module-id="rfdiffusion2-prep"> Mark as complete
 
-This assignment assumes that you have access to a computing cluster that allows installation of new software.
+**Prerequisites**:
 
-**IMPORTANT**: RFdiffusion2 uses Apptainer/Singularity containers. Most academic HPCs support Singularity/Apptainer, but verify with your system administrator if unsure.
+- Completed [HPC Setup](0-hpc-setup.qmd) guide
+- Apptainer/Singularity available on your cluster
+- CUDA-capable GPU
 
-## Installation Steps
+**Verify your environment**:
+```bash
+module load apptainer    # or: module load singularity
+apptainer --version
+nvidia-smi
+```
+
+**Important**: RFdiffusion2 uses containers. Most academic HPCs do NOT support Docker for security reasons - use Apptainer/Singularity instead.
+
+## Installation
 
 <input type="checkbox" class="module-checkbox" data-module-id="rfdiffusion2-install"> Mark as complete
 
@@ -26,37 +51,30 @@ git clone https://github.com/RosettaCommons/RFdiffusion2.git
 cd RFdiffusion2
 ```
 
-2. Add the repo to your PYTHONPATH (add this to your `~/.bashrc`):
+2. Add the repo to your PYTHONPATH (add to `~/.bashrc`):
 ```bash
 export PYTHONPATH="/path/to/your/RFdiffusion2:$PYTHONPATH"
 ```
 
-3. Download the model weights and containers:
+3. Download the model weights and container:
 ```bash
 python setup.py
 ```
 
-**Note**: This downloads large files (~several GB) and can take 30+ minutes. If the download is interrupted, run `python setup.py overwrite` to resume.
+**Expected download**: ~5-10 GB (container + weights). This can take 30+ minutes.
 
-4. Install Apptainer/Singularity
-
-**For Apptainer on Ubuntu/Debian**:
+**If download is interrupted**:
 ```bash
-sudo add-apt-repository -y ppa:apptainer/ppa
-sudo apt update
-sudo apt install -y apptainer
+python setup.py overwrite
 ```
 
-**For HPC clusters**: Apptainer/Singularity is usually pre-installed. Load the module:
+4. Verify Apptainer/Singularity is available:
 ```bash
 module load apptainer
-# or
-module load singularity
+# or: module load singularity
 ```
 
-## Docker Alternative for HPC
-
-**IMPORTANT HPC NOTE**: Most academic HPCs do NOT support Docker for security reasons. If the official documentation mentions Docker, use Singularity/Apptainer instead. The downloaded `.sif` file in `rf_diffusion/exec/` is a Singularity/Apptainer container that works on HPCs.
+The downloaded `.sif` file in `rf_diffusion/exec/` is the Singularity container.
 
 ## Testing the Installation
 
@@ -71,34 +89,27 @@ apptainer exec --nv rf_diffusion/exec/bakerlab_rf_diffusion_aa.sif \
     sweep.benchmarks=active_site_unindexed_atomic_partial_ligand
 ```
 
-**Note**: Omit the `--nv` flag if running without GPU.
+**Note**: Omit `--nv` flag if running without GPU (will be very slow).
 
-This will generate a protein design with an atomized active site motif. The output will be in:
-```
-pipeline_outputs/<timestamp>_open_source_demo
-```
+**Success indicators**:
 
-## HPC-Specific Notes
+- Command completes without errors
+- Output directory created at `pipeline_outputs/<timestamp>_open_source_demo/`
+- Contains PDB files with designed structures
 
-**GPU Requirements**: RFdiffusion2 requires CUDA-capable GPUs for reasonable performance. Request GPU nodes when submitting jobs.
+**Expected runtime**: 5-15 minutes on GPU, 30+ minutes on CPU.
 
-**Container Execution**: Use `apptainer` (or `singularity`) instead of `docker`:
-```bash
-# NOT: docker run ...
-# INSTEAD:
-apptainer exec --nv <container.sif> <command>
-```
-
-## Example HPC Job Script
-
-For SLURM clusters:
+## HPC Job Script
 
 ```bash
 #!/bin/bash
-#SBATCH --job-name=rfd2
+#SBATCH --job-name=rfdiff2
+#SBATCH --partition=gpu
 #SBATCH --gpus=1
-#SBATCH --time=04:00:00
+#SBATCH --cpus-per-task=4
 #SBATCH --mem=32G
+#SBATCH --time=04:00:00
+#SBATCH --output=%x_%j.out
 
 module load apptainer
 module load cuda/12.1
@@ -110,11 +121,109 @@ apptainer exec --nv rf_diffusion/exec/bakerlab_rf_diffusion_aa.sif \
     --config-name=open_source_demo
 ```
 
+## Usage Examples
+
+**Basic backbone design**:
+```bash
+apptainer exec --nv rf_diffusion/exec/bakerlab_rf_diffusion_aa.sif \
+    rf_diffusion/benchmark/pipeline.py \
+    --config-name=my_config
+```
+
+**With custom output directory**:
+```bash
+apptainer exec --nv rf_diffusion/exec/bakerlab_rf_diffusion_aa.sif \
+    rf_diffusion/benchmark/pipeline.py \
+    --config-name=open_source_demo \
+    sweep.output_dir=/path/to/output
+```
+
+**Multiple design benchmarks**:
+```bash
+apptainer exec --nv rf_diffusion/exec/bakerlab_rf_diffusion_aa.sif \
+    rf_diffusion/benchmark/pipeline.py \
+    --config-name=open_source_demo \
+    sweep.benchmarks="[benchmark1,benchmark2]"
+```
+
+## Docker to Apptainer Translation
+
+The official documentation may show Docker commands. Here's how to translate:
+
+| Docker Command | Apptainer Equivalent |
+|----------------|---------------------|
+| `docker run --gpus all image` | `apptainer exec --nv image.sif` |
+| `docker run -v /path:/path` | `apptainer exec --bind /path:/path` |
+| `-it` (interactive) | `apptainer shell --nv` |
+
+**Example conversion**:
+```bash
+# Docker (won't work on HPC):
+docker run --gpus all -v $(pwd):/workspace rfdiffusion:latest python script.py
+
+# Apptainer (works on HPC):
+apptainer exec --nv --bind $(pwd):/workspace rfdiffusion.sif python script.py
+```
+
+## Understanding the Output
+
+Output structure:
+```
+pipeline_outputs/
+└── <timestamp>_<config_name>/
+    ├── designs/
+    │   ├── design_0.pdb    # Designed backbone
+    │   ├── design_1.pdb
+    │   └── ...
+    ├── logs/
+    │   └── run.log         # Execution log
+    └── config.yaml         # Configuration used
+```
+
+## Configuration System
+
+RFdiffusion2 uses Hydra for configuration. Key config options:
+
+| Parameter | Description |
+|-----------|-------------|
+| `sweep.benchmarks` | Which design task(s) to run |
+| `sweep.output_dir` | Output directory |
+| `diffuser.T` | Number of diffusion timesteps |
+| `inference.num_designs` | Number of designs to generate |
+
 ## Troubleshooting
 
-**No GPU available**: The demo will be extremely slow on CPU (30+ minutes per case). Always use GPUs for production runs.
+**"No GPU available" / extremely slow**:
 
-**Container permission errors**: Ensure you have read/execute permissions on the `.sif` file.
+- Ensure `--nv` flag is included
+- Verify GPU allocation: `nvidia-smi`
+- Load CUDA module: `module load cuda/12.1`
+
+**Container permission errors**:
+```bash
+chmod +x rf_diffusion/exec/bakerlab_rf_diffusion_aa.sif
+```
+
+**"FileNotFoundError" for weights**:
+
+- Re-run `python setup.py` to ensure all files downloaded
+- Check `rf_diffusion/weights/` directory exists
+
+**Container not found**:
+
+- Provide full path to `.sif` file
+- Or run from the RFdiffusion2 directory
+
+**Setup script hangs during download**:
+
+- Large files may take 30+ minutes
+- Check network connectivity
+- If interrupted, run `python setup.py overwrite`
+
+**Module not found errors inside container**:
+
+- Ensure PYTHONPATH is set correctly
+- Container may need `--bind` for additional paths
 
 ---
 

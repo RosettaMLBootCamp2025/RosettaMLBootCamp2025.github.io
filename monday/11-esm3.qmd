@@ -2,21 +2,45 @@
 title: "11. ESM3 (Optional)"
 ---
 
-ESM3 ([paper](https://www.science.org/doi/10.1126/science.ads0018), [code](https://github.com/evolutionaryscale/esm)) is a frontier generative model for biology that can jointly reason across three fundamental biological properties of proteins: sequence, structure, and function. It represents a multimodal generative masked language model.
+ESM3 ([paper](https://www.science.org/doi/10.1126/science.ads0018), [code](https://github.com/evolutionaryscale/esm)) is a frontier generative model for biology that jointly reasons across three fundamental biological properties of proteins: sequence, structure, and function. It represents a multimodal generative masked language model.
 
-**Note**: This tool is marked as OPTIONAL as it's primarily a research/generative model. Install if you're interested in protein generation and design beyond structure prediction.
+**Note**: This tool is marked as **OPTIONAL**. Install if you're interested in protein generation and multimodal design beyond structure prediction.
 
-ESM3 is useful for protein generation, function prediction, and multimodal protein design tasks. It can generate novel proteins with desired properties.
+## Why Use ESM3?
 
-The goal of this module is to install ESM3 on your HPC cluster (optional).
+- **Multimodal generation**: Jointly reason about sequence, structure, and function
+- **Protein generation**: Create novel proteins with desired properties
+- **Sequence completion**: Fill in masked or missing regions
+- **Embeddings**: Extract rich protein representations (ESM C)
 
-## Preparation Work
+**Related Tools**: For structure prediction only, see [ESMFold](4-esmfold.qmd). For sequence design given structure, see [LigandMPNN](2-ligandmpnn.qmd).
+
+## Resource Requirements
+
+| Resource | Minimum | Recommended | Notes |
+|----------|---------|-------------|-------|
+| GPU RAM | 16 GB | 24+ GB | For esm3-small (1.4B params) |
+| CPU RAM | 16 GB | 32 GB | For preprocessing |
+| Disk Space | 10 GB | 20 GB | Model weights |
+| Python | 3.10+ | 3.10 | Required |
+
+**Model sizes**:
+
+- `esm3-small-2024-08` (1.4B params): Runs locally
+- `esm3-medium-2024-08` (7B params): Via Forge API
+- `esm3-large-2024-03` (98B params): Via Forge API
+
+## Preparation
 
 <input type="checkbox" class="module-checkbox" data-module-id="esm3-prep"> Mark as complete
 
-This assignment assumes that you have access to a computing cluster that allows installation of new software. We'll be creating virtual environments using Conda/Mamba.
+**Prerequisites**:
 
-## Installation Steps
+- Completed [HPC Setup](0-hpc-setup.qmd) guide
+- Conda/Mamba installed
+- HuggingFace account (for model access)
+
+## Installation
 
 <input type="checkbox" class="module-checkbox" data-module-id="esm3-install"> Mark as complete
 
@@ -33,15 +57,20 @@ pip install esm
 
 ## HuggingFace Authentication
 
-ESM3 weights are stored on HuggingFace Hub. You'll need to authenticate:
+ESM3 weights are stored on HuggingFace Hub. You need to authenticate:
 
 1. Create a HuggingFace account at [huggingface.co](https://huggingface.co)
-2. Generate an API token with "Read" permission
-3. Authenticate:
+2. Generate an API token with "Read" permission at [huggingface.co/settings/tokens](https://huggingface.co/settings/tokens)
+3. Authenticate in Python:
 
 ```python
 from huggingface_hub import login
 login()  # Follow prompts to enter your token
+```
+
+Or set environment variable:
+```bash
+export HF_TOKEN="your_token_here"
 ```
 
 ## Testing the Installation
@@ -58,7 +87,7 @@ from esm.sdk.api import ESMProtein, GenerationConfig
 # Authenticate (first time only)
 login()
 
-# Load the model (this downloads weights on first run)
+# Load the model (downloads weights on first run)
 model = ESM3.from_pretrained("esm3-small-2024-08").to("cuda")  # or "cpu"
 
 # Generate a protein sequence completion
@@ -90,16 +119,70 @@ Run the test:
 python test_esm3.py
 ```
 
-## Available ESM3 Models
+**Success indicators**:
 
-- `esm3-small-2024-08` (1.4B parameters) - Fastest, runs locally
-- `esm3-medium-2024-08` (7B parameters) - Via Forge API
-- `esm3-large-2024-03` (98B parameters) - Via Forge API
+- Model loads without errors
+- Sequence completion fills in the masked region
+- Structure is generated and saved as PDB
 
-## ESM C for Embeddings
+**Expected runtime**: 2-5 minutes (first run downloads ~3GB weights).
 
-If you only need protein embeddings (not generation), use ESM C instead:
+## HPC Job Script
 
+```bash
+#!/bin/bash
+#SBATCH --job-name=esm3
+#SBATCH --partition=gpu
+#SBATCH --gpus=1
+#SBATCH --cpus-per-task=4
+#SBATCH --mem=32G
+#SBATCH --time=02:00:00
+#SBATCH --output=%x_%j.out
+
+module load cuda/12.1
+
+source ~/.bashrc
+mamba activate esm3
+
+# Set HuggingFace token
+export HF_TOKEN="your_token_here"
+
+python generate_protein.py
+```
+
+## Usage Examples
+
+**Sequence generation** (fill masked regions):
+```python
+from esm.models.esm3 import ESM3
+from esm.sdk.api import ESMProtein, GenerationConfig
+
+model = ESM3.from_pretrained("esm3-small-2024-08").to("cuda")
+
+# Use underscores for masked positions
+protein = ESMProtein(sequence="MKTVRQ_______________QLAEELSVSRQVIVQDIAYLRSLG")
+
+# Generate
+protein = model.generate(
+    protein,
+    GenerationConfig(track="sequence", num_steps=8, temperature=0.7)
+)
+print(protein.sequence)
+```
+
+**Structure prediction**:
+```python
+protein = ESMProtein(sequence="MKTVRQERLKSIVRILERSKEPVSGAQLAEELSVSRQVIVQDIAYLRSLG")
+
+protein = model.generate(
+    protein,
+    GenerationConfig(track="structure", num_steps=8)
+)
+
+protein.to_pdb("predicted.pdb")
+```
+
+**Using ESM C for embeddings only** (faster, smaller):
 ```python
 from esm.models.esmc import ESMC
 from esm.sdk.api import ESMProtein, LogitsConfig
@@ -114,42 +197,73 @@ logits_output = client.logits(
     LogitsConfig(sequence=True, return_embeddings=True)
 )
 
-print(logits_output.embeddings)
+print(f"Embedding shape: {logits_output.embeddings.shape}")
 ```
 
-## HPC Job Script Example
+## Available Models
 
-For SLURM clusters:
+| Model | Parameters | Availability |
+|-------|------------|--------------|
+| `esm3-small-2024-08` | 1.4B | Local (free) |
+| `esmc_300m` | 300M | Local (fast embeddings) |
+| `esmc_600m` | 600M | Local |
+| `esm3-medium-2024-08` | 7B | Forge API |
+| `esm3-large-2024-03` | 98B | Forge API |
 
-```bash
-#!/bin/bash
-#SBATCH --job-name=esm3
-#SBATCH --gpus=1
-#SBATCH --time=02:00:00
-#SBATCH --mem=32G
+## Generation Tracks
 
-module load cuda/12.1
+ESM3 can generate different "tracks":
 
-mamba activate esm3
+| Track | Description |
+|-------|-------------|
+| `sequence` | Generate amino acid sequence |
+| `structure` | Generate 3D coordinates |
+| `function` | Generate functional annotations |
 
-python generate_protein.py
-```
+## Key Parameters
+
+| Parameter | Description |
+|-----------|-------------|
+| `track` | What to generate: `sequence`, `structure`, `function` |
+| `num_steps` | Number of generation steps (more = better quality) |
+| `temperature` | Sampling diversity (higher = more diverse) |
 
 ## Use Cases
 
-- **Protein generation**: Create novel proteins with desired properties
+- **Protein generation**: Create novel proteins
 - **Sequence completion**: Fill in missing regions
-- **Structure prediction**: Generate 3D structures from sequence
-- **Function prediction**: Predict protein function from sequence/structure
-- **Protein embeddings**: Extract representations (use ESM C)
+- **Structure prediction**: Generate 3D structures
+- **Function prediction**: Predict functional properties
+- **Embeddings**: Extract protein representations for ML
 
 ## Troubleshooting
 
-**Authentication errors**: Ensure you've created a HuggingFace token and run `login()`.
+**HuggingFace authentication errors**:
 
-**Download issues**: Model weights are large. Ensure adequate storage and network.
+- Verify token has "Read" permission
+- Run `login()` in Python and follow prompts
+- Or set `HF_TOKEN` environment variable
 
-**GPU memory**: The small model (1.4B) requires significant GPU memory. Use CPU if needed.
+**Model download issues**:
+
+- Check network connectivity
+- Weights are large (~3GB for small model)
+- Set `HF_HOME` to location with space:
+  ```bash
+  export HF_HOME=/scratch/$USER/huggingface
+  ```
+
+**GPU memory issues**:
+
+- Use CPU if GPU is insufficient: `.to("cpu")`
+- Reduce batch size if processing multiple proteins
+- `esmc_300m` is smaller and faster for embeddings
+
+**Slow generation**:
+
+- GPU strongly recommended
+- Reduce `num_steps` for faster (lower quality) results
+- Use ESM C for embeddings (no structure generation)
 
 ---
 

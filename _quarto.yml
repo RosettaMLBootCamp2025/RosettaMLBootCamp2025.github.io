@@ -13,6 +13,8 @@ website:
           - href: monday/index.qmd
             text: "Monday Overview"
           - text: "---"
+          - href: monday/0-hpc-setup.qmd
+            text: "0. HPC Setup"
           - href: monday/1-localcolabfold.qmd
             text: "1. LocalColabFold"
           - href: monday/2-ligandmpnn.qmd

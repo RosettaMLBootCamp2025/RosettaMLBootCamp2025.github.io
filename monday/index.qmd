@@ -8,7 +8,15 @@ Monday is dedicated to installing the essential ML-based protein design and stru
 
 **Goal**: By the end of Monday, you should have all major tools installed and tested on your HPC cluster.
 
-## Modules
+## Getting Started
+
+Before installing individual tools, complete the **HPC Setup** module to ensure your environment is properly configured:
+
+| # | Module | Description | Status |
+|---|--------|-------------|--------|
+| 0 | [Common HPC Setup](0-hpc-setup.qmd) | CUDA, Conda, containers, and environment setup | **Start Here** |
+
+## Tool Installation Modules
 
 | # | Tool | Description | Status |
 |---|------|-------------|--------|
@@ -25,9 +33,36 @@ Monday is dedicated to installing the essential ML-based protein design and stru
 | 11 | [ESM3](11-esm3.qmd) | Multimodal protein generation | Optional |
 | 12 | [RFdiffusion All Atom](12-rfdiffusion-aa.qmd) | All-atom protein design (predecessor to RFd2) | Optional |
 
+## Tool Categories
+
+### Structure Prediction
+
+| Tool | Input | Output | Speed | Best For |
+|------|-------|--------|-------|----------|
+| LocalColabFold | Sequence + MSA | Structure | Medium | High-accuracy single proteins |
+| ESMFold | Sequence only | Structure | Fast | Quick predictions, no MSA needed |
+| OpenFold | Sequence + MSA | Structure | Medium | Research, custom training |
+| Chai-1 | Multi-modal | Complex structures | Medium | Proteins + ligands + nucleic acids |
+| Boltz-2 | Multi-modal | Structure + affinity | Medium | Drug discovery |
+
+### Protein Design
+
+| Tool | Input | Output | Best For |
+|------|-------|--------|----------|
+| LigandMPNN | Backbone | Sequence | Sequence design with ligand context |
+| RFdiffusion2 | Constraints | Backbone | Active site scaffolding |
+| BindCraft | Target structure | Binder designs | End-to-end binder design |
+
+### Docking
+
+| Tool | Input | Output | Best For |
+|------|-------|--------|----------|
+| DiffDock-PP | Two proteins | Docked complex | Protein-protein docking |
+| PLACER | Protein + ligand | Ensemble poses | Protein-ligand docking |
+
 ## Tips for Success
 
-1. **Work sequentially** - Some tools share dependencies, so installing in order may help avoid conflicts
+1. **Start with HPC Setup** - Complete Module 0 before installing any tools
 
 2. **Use separate conda environments** - Each tool should have its own environment to avoid dependency conflicts
 
@@ -36,6 +71,18 @@ Monday is dedicated to installing the essential ML-based protein design and stru
 4. **Note your paths** - Keep track of where you install each tool; you'll need these paths later
 
 5. **Test each installation** - Don't move on until you've verified each tool works
+
+6. **Check shared resources** - Your HPC may already have databases (AlphaFold, ColabFold) installed
+
+## Resource Overview
+
+Approximate requirements across all tools:
+
+| Resource | Total Needed |
+|----------|--------------|
+| Disk Space | 50-100 GB (tools only), 2+ TB (with databases) |
+| GPU RAM | 16-80 GB depending on task |
+| CPU RAM | 32-64 GB |
 
 ## Getting Help
 

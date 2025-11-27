@@ -4,22 +4,41 @@ title: "9. PLACER"
 
 PLACER ([paper](https://www.biorxiv.org/content/10.1101/2024.09.25.614868v1), [code](https://github.com/baker-laboratory/PLACER)) stands for **P**rotein-**L**igand **A**tomistic **C**onformational **E**nsemble **R**esolver. It's a graph neural network that operates entirely at the atomic level to generate conformational ensembles of protein-ligand complexes.
 
-PLACER is useful for:
+## Why Use PLACER?
 
-- Protein-ligand docking with conformational sampling
-- Side chain prediction and refinement
-- Modeling conformational heterogeneity through ensemble generation
-- Predicting binding poses with uncertainty quantification
+- **Ensemble predictions**: Generates multiple conformations to capture binding uncertainty
+- **All-atom accuracy**: Operates at atomic level for precise interactions
+- **Side chain flexibility**: Predicts side chain conformations alongside ligand poses
+- **Confidence scores**: Multiple metrics for ranking and validating predictions
 
-The goal of this module is to install PLACER on your HPC cluster.
+**Related Tools**: For protein-protein docking, see [DiffDock-PP](8-diffdock-pp.qmd). For structure prediction of complexes, see [Chai-1](6-chai1.qmd) or [Boltz-2](7-boltz2.qmd).
 
-## Preparation Work
+## Resource Requirements
+
+| Resource | Minimum | Recommended | Notes |
+|----------|---------|-------------|-------|
+| GPU RAM | 8 GB | 16 GB | 1-3 sec/model on GPU |
+| CPU RAM | 16 GB | 32 GB | ~1 min/model on 8 cores |
+| Disk Space | 2 GB | 5 GB | Model weights included |
+| Python | 3.9+ | 3.10 | Required |
+
+**Performance**:
+
+- GPU: 1-3 seconds per model
+- CPU (8 cores): ~1 minute per model
+- Ligands with many symmetric groups take longer
+
+## Preparation
 
 <input type="checkbox" class="module-checkbox" data-module-id="placer-prep"> Mark as complete
 
-This assignment assumes that you have access to a computing cluster that allows installation of new software. We'll be creating virtual environments using Conda/Mamba.
+**Prerequisites**:
 
-## Installation Steps
+- Completed [HPC Setup](0-hpc-setup.qmd) guide
+- Conda/Mamba installed
+- GPU recommended for reasonable throughput
+
+## Installation
 
 <input type="checkbox" class="module-checkbox" data-module-id="placer-install"> Mark as complete
 
@@ -29,7 +48,7 @@ git clone https://github.com/baker-laboratory/PLACER.git
 cd PLACER
 ```
 
-The repository contains model weights and is ready to run after environment setup.
+The repository includes model weights - no separate download needed.
 
 2. Create the conda environment from the provided file:
 ```bash
@@ -56,39 +75,32 @@ python run_PLACER.py \
     --ligand_file HEM:examples/ligands/HEM.mol2
 ```
 
-If this completes successfully and creates output files in `test_output/`, your installation was successful!
+**Success indicators**:
 
-## Command Line Usage
+- Command completes without errors
+- `test_output/` directory is created
+- Contains ranked PDB files of docked complexes
 
-Basic syntax:
-```bash
-python run_PLACER.py -f INPUT.pdb -o OUTPUT_DIR -n NUM_SAMPLES
-```
+**Expected runtime**: 30-60 seconds on GPU, 10-15 minutes on CPU.
 
-Key parameters:
-
-- `-f` or `--ifile`: Input PDB/mmCIF file
-- `-o` or `--odir`: Output directory
-- `-n` or `--nsamples`: Number of ensemble samples (50-100 recommended for docking)
-- `--rerank`: Rank outputs by confidence metric (prmsd, plddt, or plddt_pde)
-- `--predict_ligand`: Specify which ligand(s) to predict
-- `--fixed_ligand`: Keep certain ligands fixed in place
-- `--ligand_file`: Provide SDF/MOL2 files for correct atom typing
-
-## HPC Job Script Example
-
-For SLURM clusters:
+## HPC Job Script
 
 ```bash
 #!/bin/bash
 #SBATCH --job-name=placer
+#SBATCH --partition=gpu
 #SBATCH --gpus=1
-#SBATCH --time=04:00:00
+#SBATCH --cpus-per-task=8
 #SBATCH --mem=32G
+#SBATCH --time=04:00:00
+#SBATCH --output=%x_%j.out
 
 module load cuda/12.1
 
+source ~/.bashrc
 mamba activate placer_env
+
+cd /path/to/PLACER
 
 # Predict ligand binding with 100 samples
 python run_PLACER.py \
@@ -100,18 +112,15 @@ python run_PLACER.py \
     --ligand_file LIG:ligand.sdf
 ```
 
-## Understanding Confidence Scores
+## Usage Examples
 
-PLACER provides several confidence metrics:
-
-- **prmsd**: Predicted RMSD (recommended for docking). Good: <2.0, Acceptable: <4.0
-- **plddt**: Predicted lDDT from 1D track. Good: >0.8
-- **plddt_pde**: Predicted lDDT from 2D track. Good: >0.8
-- **fape**: All-atom FAPE loss
-- **rmsd**: Actual RMSD to reference (if available)
-- **kabsch**: Superimposed RMSD (conformation accuracy)
-
-## Example Use Cases
+**Basic ligand docking**:
+```bash
+python run_PLACER.py \
+    -f INPUT.pdb \
+    -o OUTPUT_DIR \
+    -n 50
+```
 
 **Ligand docking with cofactor fixed**:
 ```bash
@@ -124,14 +133,14 @@ python run_PLACER.py \
     --rerank prmsd
 ```
 
-**Side chain prediction**:
+**Side chain prediction** (apo mode, no ligand):
 ```bash
 python run_PLACER.py \
     --ifile protein.pdb \
     --odir output/ \
     --target_res A-149 \
     -n 50 \
-    --no-use_sm  # apo mode, no small molecule
+    --no-use_sm
 ```
 
 **Multiple ligands simultaneously**:
@@ -144,17 +153,48 @@ python run_PLACER.py \
     -n 100
 ```
 
+## Key Parameters
+
+| Parameter | Description |
+|-----------|-------------|
+| `-f` or `--ifile` | Input PDB/mmCIF file |
+| `-o` or `--odir` | Output directory |
+| `-n` or `--nsamples` | Number of ensemble samples (50-100 recommended) |
+| `--rerank` | Rank by confidence: `prmsd`, `plddt`, or `plddt_pde` |
+| `--predict_ligand` | Specify which ligand(s) to predict |
+| `--fixed_ligand` | Keep certain ligands fixed in place |
+| `--ligand_file` | Provide SDF/MOL2 for correct atom typing |
+| `--target_res` | Specific residue(s) for side chain prediction |
+| `--no-use_sm` | Apo mode - predict without small molecules |
+
+## Understanding Confidence Scores
+
+PLACER provides multiple confidence metrics:
+
+| Metric | Description | Good Values |
+|--------|-------------|-------------|
+| **prmsd** | Predicted RMSD to true pose | <2.0 Å (excellent), <4.0 Å (acceptable) |
+| **plddt** | Per-residue confidence (1D track) | >0.8 |
+| **plddt_pde** | Per-residue confidence (2D track) | >0.8 |
+| **fape** | All-atom FAPE loss | Lower is better |
+| **rmsd** | Actual RMSD to reference (if available) | <2.0 Å |
+| **kabsch** | Superimposed RMSD | Measures conformation accuracy |
+
+**Recommendation**: Use `--rerank prmsd` for docking tasks.
+
 ## Python API
 
-PLACER can also be imported as a Python module:
+PLACER can be imported as a Python module:
 
 ```python
 import sys
 sys.path.append("/path/to/PLACER")
 import PLACER
 
-placer = PLACER.PLACER()  # Load model
+# Load model
+placer = PLACER.PLACER()
 
+# Set up input
 pl_input = PLACER.PLACERinput()
 pl_input.pdb("complex.pdb")
 pl_input.name("my_prediction")
@@ -162,25 +202,75 @@ pl_input.ligand_reference({"HEM": "heme.mol2"})
 
 # Run 50 predictions
 outputs = placer.run(pl_input, 50)
+
+# Access results
+for out in outputs:
+    print(f"pRMSD: {out.prmsd:.2f}, pLDDT: {out.plddt:.2f}")
 ```
 
-## Performance Notes
+## Understanding the Output
 
-**GPU**: 1-3 seconds per model (typical ligand-protein complex)
+Output directory structure:
+```
+output/
+├── ranked_0.pdb          # Best pose by confidence
+├── ranked_1.pdb          # Second best
+├── ranked_2.pdb          # ...
+├── scores.csv            # All confidence metrics
+└── ensemble/             # All generated samples
+```
 
-**CPU (1 core)**: ~7 minutes per model
+**Interpreting ensemble results**:
 
-**CPU (8 cores)**: ~1 minute per model
+- Multiple similar poses = high confidence
+- Diverse poses = uncertain binding mode
+- Compare top-ranked poses to assess convergence
 
-Ligands with many symmetric groups take longer.
+## Input Format Requirements
+
+**Ligand must be in input structure**:
+
+- PLACER requires the ligand to be present in the PDB
+- SMILES-only input is not supported
+- Use `--ligand_file` to provide correct bonding information
+
+**Ligand file formats**:
+
+- SDF files: Best for drug-like molecules
+- MOL2 files: Good for cofactors
+- Helps with: aromatic rings, stereochemistry, bond orders
 
 ## Troubleshooting
 
-**Non-planar aromatic rings**: Provide SDF/MOL2 file with `--ligand_file` for correct bonding information.
+**Non-planar aromatic rings**:
 
-**Missing ligands in PDB**: Currently, ligands must be in the input PDB. SMILES-only input not supported.
+- Provide SDF/MOL2 file with `--ligand_file`
+- This ensures correct bonding information
 
-**Custom residues**: Use `--residue_json` to define non-canonical amino acids.
+**Missing ligands in PDB**:
+
+- Ligands must be in the input structure
+- SMILES-only input is not currently supported
+
+**Custom/non-canonical residues**:
+```bash
+python run_PLACER.py \
+    --ifile input.pdb \
+    --residue_json custom_residues.json \
+    --odir output/
+```
+
+**Slow predictions**:
+
+- Symmetric ligands (many equivalent atoms) are slower
+- Use GPU for production runs
+- Reduce `-n` for initial testing
+
+**Out of memory**:
+
+- PLACER is generally memory-efficient
+- If issues persist, try reducing ensemble size
+- Or use CPU with multiple cores
 
 ---
 

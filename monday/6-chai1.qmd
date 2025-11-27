@@ -4,27 +4,51 @@ title: "6. Chai-1"
 
 Chai-1 ([paper](https://www.biorxiv.org/content/10.1101/2024.10.10.615955), [code](https://github.com/chaidiscovery/chai-lab)) is a multi-modal foundation model for molecular structure prediction that achieves state-of-the-art performance across diverse benchmarks. Chai-1 enables unified prediction of proteins, small molecules, DNA, RNA, glycosylations, and more.
 
-Chai-1 is useful for predicting complex biomolecular structures including protein-ligand complexes, protein-nucleic acid complexes, and multi-component assemblies. It can handle modified residues and incorporate experimental restraints.
+## Why Use Chai-1?
 
-The goal of this module is to install Chai-1 on your HPC cluster.
+- **Multi-modal**: Predict proteins, nucleic acids, small molecules, and modifications in one model
+- **State-of-the-art**: Top performance on structure prediction benchmarks
+- **Flexible inputs**: Handles complex multi-component assemblies
+- **Experimental restraints**: Can incorporate known distance constraints
 
-## Preparation Work
+**Related Tools**: For protein-only predictions, see [ESMFold](4-esmfold.qmd) (faster) or [LocalColabFold](1-localcolabfold.qmd) (MSA-based). For binding affinity predictions, see [Boltz-2](7-boltz2.qmd).
+
+## Resource Requirements
+
+| Resource | Minimum | Recommended | Notes |
+|----------|---------|-------------|-------|
+| GPU RAM | 24 GB | 80 GB | A100 80GB or H100 ideal |
+| CPU RAM | 32 GB | 64 GB | For preprocessing |
+| Disk Space | 10 GB | 20 GB | Model weights |
+| Python | 3.10+ | 3.11 | Required |
+
+**GPU Compatibility**: Requires bfloat16 support. Compatible GPUs include:
+
+- A100, H100, L40S (recommended)
+- A10, A30, RTX 4090 (works)
+- Older GPUs may not support bfloat16
+
+## Preparation
 
 <input type="checkbox" class="module-checkbox" data-module-id="chai1-prep"> Mark as complete
 
-**Requirements**:
+**Prerequisites**:
 
-- Linux operating system
-- Python 3.10 or later
-- GPU with CUDA and bfloat16 support
-- Recommended: A100 80GB, H100 80GB, or L40S 48GB
-- Also works on: A10, A30, RTX 4090
+- Completed [HPC Setup](0-hpc-setup.qmd) guide
+- GPU with bfloat16 support
+- Python 3.10+
 
-## Installation Steps
+**Verify bfloat16 support**:
+```python
+import torch
+print(torch.cuda.is_bf16_supported())  # Should print True
+```
+
+## Installation
 
 <input type="checkbox" class="module-checkbox" data-module-id="chai1-install"> Mark as complete
 
-1. Create a conda environment with Python 3.10+:
+1. Create a conda environment:
 ```bash
 mamba create -n chailab python=3.11
 mamba activate chailab
@@ -35,7 +59,9 @@ mamba activate chailab
 pip install chai_lab==0.6.1
 ```
 
-Or for the latest development version:
+**Expected download**: ~5-10 GB of model weights (downloaded on first run).
+
+**Alternative: Latest development version**:
 ```bash
 pip install git+https://github.com/chaidiscovery/chai-lab.git
 ```
@@ -55,45 +81,36 @@ Run prediction:
 chai-lab fold test.fasta output_folder/
 ```
 
-By default, this generates 5 sample predictions using embeddings without MSAs.
+**Success indicators**:
 
-## Using MSAs for Better Performance
+- Command completes without errors
+- `output_folder/` contains:
+  - `pred.model_idx_0.cif` - Predicted structure
+  - `scores.model_idx_0.npz` - Confidence scores
 
-For improved performance, use MSAs via the ColabFold server:
+**Expected runtime**: 2-5 minutes for first run (includes model download), ~30 seconds for subsequent runs.
 
-```bash
-chai-lab fold --use-msa-server --use-templates-server input.fasta output_folder/
-```
+**Note**: By default, this generates 5 sample predictions using embeddings without MSAs.
 
-**Note**: This uses the public ColabFold MMseqs2 server, which is a shared resource. Please be considerate of usage.
-
-## For HPC Internal ColabFold Server
-
-If your HPC has an internal ColabFold server:
-
-```bash
-chai-lab fold --use-msa-server \
-    --msa-server-url "https://internal.colabserver.edu" \
-    input.fasta output_folder/
-```
-
-## HPC Job Script Example
-
-For SLURM clusters:
+## HPC Job Script
 
 ```bash
 #!/bin/bash
 #SBATCH --job-name=chai
-#SBATCH --gpus=1
-#SBATCH --time=04:00:00
+#SBATCH --partition=gpu
+#SBATCH --gpus=a100:1
+#SBATCH --cpus-per-task=8
 #SBATCH --mem=64G
+#SBATCH --time=04:00:00
+#SBATCH --output=%x_%j.out
 
 module load cuda/12.1
 
+source ~/.bashrc
 mamba activate chailab
 
-# Set custom download directory if needed
-export CHAI_DOWNLOADS_DIR=/scratch/chai_models
+# Set custom download directory (avoid filling home)
+export CHAI_DOWNLOADS_DIR=/scratch/$USER/chai_models
 
 # Run prediction with MSAs
 chai-lab fold --use-msa-server --use-templates-server \
@@ -101,14 +118,72 @@ chai-lab fold --use-msa-server --use-templates-server \
     predictions/
 ```
 
-## Python API Usage
+## Usage Examples
 
-You can also use Chai-1 programmatically:
+**Basic prediction** (no MSAs, fast):
+```bash
+chai-lab fold input.fasta output/
+```
+
+**With MSAs** (higher accuracy, uses ColabFold server):
+```bash
+chai-lab fold --use-msa-server --use-templates-server input.fasta output/
+```
+
+**Using internal MSA server** (if your HPC has one):
+```bash
+chai-lab fold --use-msa-server \
+    --msa-server-url "https://internal.colabserver.edu" \
+    input.fasta output/
+```
+
+**Generate more samples**:
+```bash
+chai-lab fold --num-trunk-recycles 5 --num-diffn-timesteps 200 \
+    input.fasta output/
+```
+
+## Input Format
+
+Chai-1 uses a modified FASTA format with entity type headers:
+
+**Protein**:
+```
+>protein|name=my_protein
+MKTVRQERLKSIVRILERSKEPVSG...
+```
+
+**Ligand** (SMILES):
+```
+>ligand|name=my_drug
+CC(C)CC1=CC=C(C=C1)C(C)C(=O)O
+```
+
+**DNA**:
+```
+>dna|name=promoter
+ATGCATGCATGCATGC
+```
+
+**RNA**:
+```
+>rna|name=aptamer
+AUGCAUGCAUGCAUGC
+```
+
+**Protein complex** (multiple chains):
+```
+>protein|name=chain_A
+MKTVRQERLK...
+>protein|name=chain_B
+MVKLTAEGSE...
+```
+
+## Python API
 
 ```python
 from chai_lab.chai1 import run_inference
 
-# Run inference
 results = run_inference(
     fasta_file="input.fasta",
     output_dir="output/",
@@ -122,28 +197,71 @@ See `examples/predict_structure.py` in the repository for more details.
 
 ## Advanced Features
 
-**Custom Templates**: Provide your own structure templates
+**Custom Templates**:
+```bash
+chai-lab fold --custom-template template.cif input.fasta output/
+```
 
-**Experimental Restraints**: Specify inter-chain contacts or covalent bonds
+**Experimental Restraints**: Specify inter-chain contacts:
+```python
+# See: github.com/chaidiscovery/chai-lab/tree/main/examples/restraints
+```
 
-**Custom MSAs**: Provide MSAs in `aligned.pqt` format
+**Covalent Bonds**: Specify covalent modifications:
+```python
+# See: github.com/chaidiscovery/chai-lab/tree/main/examples/covalent_bonds
+```
 
-See the [restraints documentation](https://github.com/chaidiscovery/chai-lab/tree/main/examples/restraints) and [covalent bonds documentation](https://github.com/chaidiscovery/chai-lab/tree/main/examples/covalent_bonds) for advanced usage.
+## Understanding the Output
+
+| File | Description |
+|------|-------------|
+| `pred.model_idx_N.cif` | Predicted structure (mmCIF format) |
+| `scores.model_idx_N.npz` | Confidence scores |
+| `msa_*.a3m` | Generated MSAs (if using MSA server) |
+
+**Confidence metrics** (in scores file):
+
+- **pLDDT**: Per-residue confidence
+- **pTM**: Predicted TM-score
+- **pAE**: Predicted aligned error
+- **interface scores**: For multi-chain predictions
 
 ## Web Server
 
-You can also test Chai-1 via the web interface: [https://lab.chaidiscovery.com](https://lab.chaidiscovery.com)
+For quick tests without installation: [lab.chaidiscovery.com](https://lab.chaidiscovery.com)
 
 ## Troubleshooting
 
-**GPU compatibility**: Chai-1 requires bfloat16 support. Older GPUs may not work.
+**"bfloat16 not supported"**:
 
-**Out of memory**: Use smaller complexes or request more GPU memory.
+- Your GPU doesn't support bfloat16
+- Try a newer GPU (A100, H100, RTX 4090)
+- Older GPUs (V100, etc.) may not work
 
-**Download location**: Control where models are downloaded:
+**Out of memory**:
+
+- Request GPU with more memory
+- Reduce `--num-diffn-timesteps`
+- For very large complexes, split into smaller units
+
+**Model download location**:
 ```bash
-export CHAI_DOWNLOADS_DIR=/path/to/storage
+# Set before running
+export CHAI_DOWNLOADS_DIR=/scratch/$USER/chai_models
 ```
+
+**MSA server rate limits**:
+
+- The public ColabFold MMseqs2 server is a shared resource
+- For batch jobs, space out requests
+- Consider setting up a local MSA server for high-throughput
+
+**Slow first run**:
+
+- First run downloads ~5-10 GB of model weights
+- Subsequent runs are much faster
+- Set `CHAI_DOWNLOADS_DIR` to avoid re-downloading
 
 ---
 

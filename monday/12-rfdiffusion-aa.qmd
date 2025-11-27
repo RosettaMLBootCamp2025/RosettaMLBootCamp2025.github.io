@@ -2,23 +2,47 @@
 title: "12. RFdiffusion All Atom (Optional)"
 ---
 
-RFdiffusion All Atom ([code](https://github.com/baker-laboratory/rf_diffusion_all_atom)) is the predecessor to RFdiffusion2 and enables all-atom protein design with small molecule binding. It can design protein binders to ligands with all-atom precision.
+RFdiffusion All Atom ([code](https://github.com/baker-laboratory/rf_diffusion_all_atom)) is the predecessor to RFdiffusion2, enabling all-atom protein design with small molecule binding. It can design protein binders to ligands with all-atom precision.
 
-**Note**: This tool is marked as OPTIONAL because RFdiffusion2 is the newer, more capable version. Install this only if you're interested in exploring the earlier methodology or if specific features are needed.
+**Note**: This tool is marked as **OPTIONAL** because [RFdiffusion2](3-rfdiffusion2.qmd) is the newer, more capable version. Install this only if you need the earlier methodology or specific features.
 
-RFdiffusion All Atom is useful for designing small molecule binders and incorporating protein motifs in the design process.
+## Why Use RFdiffusion All Atom?
 
-The goal of this module is to install RFdiffusion All Atom on your HPC cluster (optional).
+- **Small molecule binding**: Design proteins that bind specific ligands
+- **Motif incorporation**: Include functional motifs in designs
+- **Historical reference**: Understand the evolution of diffusion-based design
+- **Specific workflows**: Some published protocols may reference this version
 
-## Preparation Work
+**Related Tools**: For the newer version, see [RFdiffusion2](3-rfdiffusion2.qmd). For sequence design, see [LigandMPNN](2-ligandmpnn.qmd).
+
+## Resource Requirements
+
+| Resource | Minimum | Recommended | Notes |
+|----------|---------|-------------|-------|
+| GPU RAM | 8 GB | 16 GB | Scales with design size |
+| CPU RAM | 8 GB | 16 GB | Container-based |
+| Disk Space | 5 GB | 10 GB | Container + weights |
+| Container | Apptainer/Singularity | Required | Not Docker |
+
+## Preparation
 
 <input type="checkbox" class="module-checkbox" data-module-id="rfdiffusion-aa-prep"> Mark as complete
 
-This assignment assumes that you have access to a computing cluster that allows installation of new software.
+**Prerequisites**:
 
-**IMPORTANT**: Like RFdiffusion2, this uses Apptainer/Singularity containers, not Docker (which most academic HPCs don't support).
+- Completed [HPC Setup](0-hpc-setup.qmd) guide
+- Apptainer/Singularity available
+- GPU access recommended
 
-## Installation Steps
+**Important**: Like RFdiffusion2, this uses Apptainer/Singularity containers. Most academic HPCs do NOT support Docker.
+
+**Verify container runtime**:
+```bash
+module load apptainer    # or: module load singularity
+apptainer --version
+```
+
+## Installation
 
 <input type="checkbox" class="module-checkbox" data-module-id="rfdiffusion-aa-install"> Mark as complete
 
@@ -33,36 +57,19 @@ cd rf_diffusion_all_atom
 wget http://files.ipd.uw.edu/pub/RF-All-Atom/containers/rf_se3_diffusion.sif
 ```
 
+**Expected download**: ~2-3 GB.
+
 3. Download the model weights:
 ```bash
 wget http://files.ipd.uw.edu/pub/RF-All-Atom/weights/RFDiffusionAA_paper_weights.pt
 ```
 
+**Expected download**: ~500 MB.
+
 4. Initialize git submodules:
 ```bash
 git submodule init
 git submodule update
-```
-
-5. Install Apptainer (if not already available):
-
-**For HPC clusters**:
-```bash
-module load apptainer
-# or
-module load singularity
-```
-
-## Docker vs Singularity/Apptainer for HPC
-
-**IMPORTANT**: The official documentation uses Docker commands, but most academic HPCs do NOT support Docker. Replace Docker commands with Apptainer/Singularity:
-
-```bash
-# ORIGINAL (Docker - won't work on most HPCs):
-# docker run --gpus all -v $(pwd):/workspace rf_se3_diffusion.sif ...
-
-# CORRECTED (Apptainer - works on HPCs):
-apptainer run --nv rf_se3_diffusion.sif ...
 ```
 
 ## Testing the Installation
@@ -85,22 +92,27 @@ apptainer run --nv rf_se3_diffusion.sif -u run_inference.py \
 
 **Note**: Omit `--nv` flag if running without GPU.
 
-Expected outputs:
+**Success indicators**:
 
-- `output/ligand_test/sample_0.pdb` - The design PDB
-- `output/ligand_test/sample_0_Xt-1_traj.pdb` - Denoising trajectory
-- `output/ligand_test/sample_0_X0-1_traj.pdb` - Predicted ground truth at each step
+- Command completes without errors
+- Output files created:
+  - `output/ligand_test/sample_0.pdb` - The designed structure
+  - `output/ligand_test/sample_0_Xt-1_traj.pdb` - Denoising trajectory
+  - `output/ligand_test/sample_0_X0-1_traj.pdb` - Predicted ground truth at each step
 
-## HPC Job Script Example
+**Expected runtime**: 5-10 minutes on GPU, 30+ minutes on CPU.
 
-For SLURM clusters:
+## HPC Job Script
 
 ```bash
 #!/bin/bash
 #SBATCH --job-name=rfdaa
+#SBATCH --partition=gpu
 #SBATCH --gpus=1
-#SBATCH --time=02:00:00
+#SBATCH --cpus-per-task=4
 #SBATCH --mem=16G
+#SBATCH --time=02:00:00
+#SBATCH --output=%x_%j.out
 
 module load apptainer
 module load cuda/12.1
@@ -117,11 +129,101 @@ apptainer run --nv rf_se3_diffusion.sif -u run_inference.py \
     inference.num_designs=10
 ```
 
+## Usage Examples
+
+**Basic ligand binder design**:
+```bash
+apptainer run --nv rf_se3_diffusion.sif -u run_inference.py \
+    inference.input_pdb=input/complex.pdb \
+    inference.output_prefix=output/design \
+    inference.ligand=LIG \
+    contigmap.contigs="['100-100']" \
+    inference.num_designs=10
+```
+
+**Multiple designs with different lengths**:
+```bash
+apptainer run --nv rf_se3_diffusion.sif -u run_inference.py \
+    inference.input_pdb=input/complex.pdb \
+    inference.output_prefix=output/design \
+    inference.ligand=LIG \
+    contigmap.contigs="['80-120']" \
+    inference.num_designs=20
+```
+
+## Key Parameters
+
+| Parameter | Description |
+|-----------|-------------|
+| `inference.input_pdb` | Input PDB with ligand |
+| `inference.output_prefix` | Output path prefix |
+| `inference.ligand` | Ligand residue name |
+| `contigmap.contigs` | Protein length range (e.g., `['100-100']`) |
+| `inference.num_designs` | Number of designs |
+| `diffuser.T` | Diffusion timesteps (100 typical) |
+| `inference.deterministic` | Reproducible results |
+
+## Docker to Apptainer Translation
+
+The official docs may show Docker commands. Translate as follows:
+
+| Docker | Apptainer |
+|--------|-----------|
+| `docker run --gpus all` | `apptainer run --nv` |
+| `docker run -v $(pwd):/workspace` | `apptainer run --bind $(pwd):/workspace` |
+| `-it` (interactive) | Use `apptainer shell --nv` |
+
+## Understanding the Output
+
+| Output File | Description |
+|-------------|-------------|
+| `sample_N.pdb` | Final designed structure |
+| `sample_N_Xt-1_traj.pdb` | Denoising trajectory (animation of design) |
+| `sample_N_X0-1_traj.pdb` | Model predictions at each step |
+
+The trajectory files can be loaded into PyMOL to visualize the diffusion process.
+
+## Comparison with RFdiffusion2
+
+| Feature | RFdiffusion AA | RFdiffusion2 |
+|---------|----------------|--------------|
+| Atomic precision | Yes | Yes (improved) |
+| Ligand binding | Yes | Yes |
+| Active site scaffolding | Limited | Advanced |
+| Model architecture | Earlier | Updated |
+| Recommended | Legacy workflows | New projects |
+
+**Recommendation**: Use [RFdiffusion2](3-rfdiffusion2.qmd) for new projects unless you have specific reasons to use this version.
+
 ## Troubleshooting
 
-**Container not found**: Ensure the `.sif` file is in the current directory or provide the full path.
+**Container not found**:
 
-**GPU errors**: Make sure CUDA modules are loaded and GPU is available in your allocation.
+- Ensure `.sif` file is in current directory
+- Or provide full path to container
+
+**GPU errors**:
+
+- Ensure `--nv` flag is included for GPU
+- Load CUDA module: `module load cuda/12.1`
+- Verify GPU availability: `nvidia-smi`
+
+**Permission denied on container**:
+```bash
+chmod +x rf_se3_diffusion.sif
+```
+
+**Input PDB errors**:
+
+- Verify ligand is present in input PDB
+- Check ligand residue name matches `inference.ligand`
+- Ensure PDB has proper formatting
+
+**Submodule errors**:
+```bash
+git submodule init
+git submodule update
+```
 
 ---
 

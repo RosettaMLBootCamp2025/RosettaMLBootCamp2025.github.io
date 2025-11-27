@@ -2,26 +2,45 @@
 title: "4. ESMFold"
 ---
 
-ESMFold ([paper](https://www.science.org/doi/abs/10.1126/science.ade2574), [code](https://github.com/facebookresearch/esm)) is an end-to-end single sequence structure predictor that uses the ESM-2 language model to generate accurate 3D protein structures directly from sequence.
+ESMFold ([paper](https://www.science.org/doi/abs/10.1126/science.ade2574), [code](https://github.com/facebookresearch/esm)) is an end-to-end single-sequence structure predictor that uses the ESM-2 language model to generate accurate 3D protein structures directly from sequence, without requiring multiple sequence alignments (MSAs).
 
-ESMFold is useful for fast, accurate protein structure prediction without requiring MSAs (though MSAs can be used to improve performance). It's significantly faster than AlphaFold2 while maintaining competitive accuracy.
+## Why Use ESMFold?
 
-The goal of this module is to install ESMFold on your HPC cluster.
+- **Speed**: Significantly faster than AlphaFold2 (seconds vs minutes)
+- **No MSA required**: Works directly from sequence alone
+- **Competitive accuracy**: Often comparable to AlphaFold2 for well-folded domains
+- **Lower resource usage**: Can run on smaller GPUs
 
-## Preparation Work
+**Related Tools**: For MSA-based prediction with potentially higher accuracy, see [LocalColabFold](1-localcolabfold.qmd) or [OpenFold](5-openfold.qmd). For protein language model embeddings only, see [ESM3](11-esm3.qmd).
+
+## Resource Requirements
+
+| Resource | Minimum | Recommended | Notes |
+|----------|---------|-------------|-------|
+| GPU RAM | 16 GB | 40+ GB | Larger proteins need more memory |
+| CPU RAM | 16 GB | 32 GB | CPU-only is possible but slow |
+| Disk Space | 5 GB | 10 GB | Model weights |
+| Python | ≤3.9 | 3.9 | **Important**: Python 3.10+ may have issues |
+
+**Why Python ≤3.9?** ESMFold depends on OpenFold, which has compatibility issues with newer Python versions.
+
+## Preparation
 
 <input type="checkbox" class="module-checkbox" data-module-id="esmfold-prep"> Mark as complete
 
-This assignment assumes that you have access to a computing cluster that allows installation of new software. We'll be creating virtual environments using Conda/Mamba.
+**Prerequisites**:
 
-**Requirements**:
-
-- Python ≤ 3.9
-- PyTorch installed
+- Completed [HPC Setup](0-hpc-setup.qmd) guide
+- Conda/Mamba installed
 - `nvcc` available (for compiling OpenFold dependencies)
-- CUDA-capable GPU recommended
 
-## Installation Steps
+**Verify your environment**:
+```bash
+nvcc --version      # Required for OpenFold compilation
+module load cuda    # If nvcc not found
+```
+
+## Installation
 
 <input type="checkbox" class="module-checkbox" data-module-id="esmfold-install"> Mark as complete
 
@@ -31,7 +50,7 @@ mamba create -n esmfold python=3.9
 mamba activate esmfold
 ```
 
-2. Install PyTorch (adjust CUDA version as needed):
+2. Install PyTorch (adjust CUDA version to match your cluster):
 ```bash
 mamba install pytorch pytorch-cuda=12.1 -c pytorch -c nvidia
 ```
@@ -41,17 +60,15 @@ mamba install pytorch pytorch-cuda=12.1 -c pytorch -c nvidia
 pip install "fair-esm[esmfold]"
 ```
 
-4. Install remaining OpenFold dependencies:
+4. Install OpenFold dependencies:
 ```bash
 pip install 'dllogger @ git+https://github.com/NVIDIA/dllogger.git'
 pip install 'openfold @ git+https://github.com/aqlaboratory/openfold.git@4b41059694619831a7db195b7e0988fc4ff3a307'
 ```
 
-**Note**: If OpenFold installation fails, verify that `nvcc` is available and a CUDA-compatible PyTorch is installed.
+**Note**: OpenFold compilation requires `nvcc`. If it fails, verify CUDA toolkit is loaded.
 
-## Alternative: Use Conda Environment File
-
-Alternatively, you can use a pre-configured environment:
+**Alternative method** (using environment file):
 ```bash
 wget https://raw.githubusercontent.com/facebookresearch/esm/main/environment.yml
 mamba env create -f environment.yml
@@ -72,7 +89,7 @@ import esm
 model = esm.pretrained.esmfold_v1()
 model = model.eval().cuda()  # Remove .cuda() if using CPU
 
-# Test sequence
+# Test sequence (65 residues)
 sequence = "MKTVRQERLKSIVRILERSKEPVSGAQLAEELSVSRQVIVQDIAYLRSLGYNIVATPRGYVLAGG"
 
 # Run prediction
@@ -83,7 +100,9 @@ with torch.no_grad():
 with open("test_result.pdb", "w") as f:
     f.write(output)
 
-print("Structure prediction successful! Output saved to test_result.pdb")
+print("Structure prediction successful!")
+print(f"Output saved to test_result.pdb")
+print(f"Sequence length: {len(sequence)} residues")
 ```
 
 Run the test:
@@ -91,37 +110,29 @@ Run the test:
 python test_esmfold.py
 ```
 
-If this creates `test_result.pdb`, your installation was successful!
+**Success indicators**:
 
-## Command Line Interface
+- Command completes without errors
+- `test_result.pdb` file is created
+- File contains valid PDB coordinates
 
-ESM also provides a command line tool for batch prediction:
+**Expected runtime**: ~10-30 seconds on GPU for this small protein.
 
-```bash
-esm-fold -i sequences.fasta -o output_pdbs/
-```
-
-Additional options:
-
-- `--num-recycles`: Number of recycles (default: 4)
-- `--max-tokens-per-batch`: Batch shorter sequences together
-- `--chunk-size`: Reduce memory usage (values: 128, 64, 32)
-- `--cpu-only`: Run on CPU only
-- `--cpu-offload`: Offload to CPU RAM for longer sequences
-
-## HPC Job Script Example
-
-For SLURM clusters:
+## HPC Job Script
 
 ```bash
 #!/bin/bash
 #SBATCH --job-name=esmfold
+#SBATCH --partition=gpu
 #SBATCH --gpus=1
-#SBATCH --time=04:00:00
+#SBATCH --cpus-per-task=4
 #SBATCH --mem=32G
+#SBATCH --time=04:00:00
+#SBATCH --output=%x_%j.out
 
 module load cuda/12.1
 
+source ~/.bashrc
 mamba activate esmfold
 
 # Predict structures for all sequences in FASTA file
@@ -130,26 +141,144 @@ esm-fold -i my_proteins.fasta -o predictions/ \
     --max-tokens-per-batch 1024
 ```
 
+## Usage Examples
+
+**Command line interface**:
+```bash
+esm-fold -i sequences.fasta -o output_pdbs/
+```
+
+**Key CLI options**:
+
+| Option | Description |
+|--------|-------------|
+| `-i` | Input FASTA file |
+| `-o` | Output directory for PDB files |
+| `--num-recycles` | Number of recycles (default: 4) |
+| `--max-tokens-per-batch` | Batch shorter sequences together |
+| `--chunk-size` | Reduce memory (values: 128, 64, 32) |
+| `--cpu-only` | Run on CPU only |
+| `--cpu-offload` | Offload to CPU RAM for long sequences |
+
+**Reduce memory for large proteins**:
+```bash
+esm-fold -i large_proteins.fasta -o output/ --chunk-size 64
+```
+
+**Process very long sequences**:
+```bash
+esm-fold -i long_sequences.fasta -o output/ --cpu-offload
+```
+
+**Python API**:
+```python
+import torch
+import esm
+
+# Load model
+model = esm.pretrained.esmfold_v1()
+model = model.eval().cuda()
+
+# Predict structure
+sequence = "MVKLTAEGSEVSRQVIVQDIAYLRSLG"
+with torch.no_grad():
+    pdb_string = model.infer_pdb(sequence)
+
+# Save
+with open("prediction.pdb", "w") as f:
+    f.write(pdb_string)
+```
+
+**Get confidence scores**:
+```python
+import torch
+import esm
+
+model = esm.pretrained.esmfold_v1()
+model = model.eval().cuda()
+
+sequence = "MVKLTAEGSEVSRQVIVQDIAYLRSLG"
+with torch.no_grad():
+    output = model.infer(sequence)
+
+# Per-residue confidence (pLDDT)
+plddt = output["plddt"]  # Shape: (1, L)
+print(f"Mean pLDDT: {plddt.mean().item():.2f}")
+
+# Predicted TM-score
+ptm = output["ptm"]
+print(f"pTM: {ptm.item():.3f}")
+```
+
+## Understanding the Output
+
+**PDB output**:
+
+- Standard PDB format with predicted coordinates
+- B-factor column contains pLDDT confidence scores (0-100)
+- Higher pLDDT = higher confidence
+
+**Confidence score interpretation**:
+
+| pLDDT Range | Interpretation |
+|-------------|----------------|
+| 90-100 | Very high confidence |
+| 70-90 | Confident |
+| 50-70 | Low confidence (may be disordered) |
+| <50 | Very low confidence (likely disordered) |
+
+## Memory Usage Guide
+
+Approximate GPU memory by sequence length:
+
+| Sequence Length | GPU Memory Needed |
+|-----------------|-------------------|
+| <200 aa | 8-16 GB |
+| 200-400 aa | 16-24 GB |
+| 400-600 aa | 24-40 GB |
+| 600-1000 aa | 40-80 GB |
+| >1000 aa | Use `--cpu-offload` |
+
 ## Troubleshooting
 
-**OpenFold installation fails**: Double-check that `nvcc` is available:
-```bash
-nvcc --version
-```
-Load CUDA modules if needed:
-```bash
-module load cuda
-```
+**OpenFold installation fails**:
 
-**Out of memory errors**: Use `--chunk-size` to reduce memory:
+- Verify `nvcc` is available:
+  ```bash
+  nvcc --version
+  # If not found:
+  module load cuda
+  ```
+- Ensure PyTorch CUDA version matches system CUDA
+
+**"CUDA out of memory"**:
 ```bash
+# Use chunking to reduce memory
 esm-fold -i input.fasta -o output/ --chunk-size 64
-```
 
-**For very long sequences**: Use CPU offloading:
-```bash
+# Or use CPU offloading for very long sequences
 esm-fold -i input.fasta -o output/ --cpu-offload
 ```
+
+**Slow on GPU** (should be fast):
+```bash
+# Verify CUDA is detected
+python -c "import torch; print(torch.cuda.is_available())"
+# Should print: True
+```
+
+**Python version errors**:
+
+- ESMFold requires Python ≤3.9 due to OpenFold dependencies
+- Create a new environment with Python 3.9 if needed
+
+**Model download hangs**:
+
+- First run downloads ~2GB of weights
+- Set custom cache location:
+  ```bash
+  export TORCH_HOME=/scratch/$USER/torch_cache
+  ```
 
 ---
 

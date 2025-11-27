@@ -4,79 +4,97 @@ title: "10. BindCraft"
 
 BindCraft ([paper](https://www.nature.com/articles/s41586-025-09429-6), [code](https://github.com/martinpacesa/BindCraft)) is an end-to-end binder design pipeline that combines AlphaFold2 backpropagation, ProteinMPNN, and PyRosetta to design protein binders against target proteins.
 
-BindCraft is useful for de novo binder design, allowing you to select a target protein and automatically generate, optimize, and validate designed binders. It integrates multiple ML tools into a complete workflow, making it ideal for learning how protein design pipelines work in practice.
+## Why Use BindCraft?
 
-The goal of this module is to install BindCraft on your HPC cluster.
+- **Complete pipeline**: Integrates structure prediction, sequence design, and scoring
+- **Automated optimization**: Multi-stage design with confidence-based filtering
+- **Production ready**: Validated binders in published work
+- **Learning resource**: See how professional protein design pipelines work
 
-## Preparation Work
+**Related Tools**: For backbone design, see [RFdiffusion2](3-rfdiffusion2.qmd). For sequence design, see [LigandMPNN](2-ligandmpnn.qmd). For structure prediction, see [LocalColabFold](1-localcolabfold.qmd).
+
+## Resource Requirements
+
+| Resource | Minimum | Recommended | Notes |
+|----------|---------|-------------|-------|
+| GPU RAM | 24 GB | 32+ GB | Large targets need more |
+| CPU RAM | 32 GB | 64 GB | For PyRosetta scoring |
+| Disk Space | 2 MB + 5.3 GB | 10 GB | Code + AlphaFold2 weights |
+| Time | Hours | Days | Per design campaign |
+
+**Important**: BindCraft requires a PyRosetta license. Academic use is typically covered by standard PyRosetta licensing.
+
+## Preparation
 
 <input type="checkbox" class="module-checkbox" data-module-id="bindcraft-prep"> Mark as complete
 
-This assignment assumes that you have access to a computing cluster that allows installation of new software.
+**Prerequisites**:
 
-**Requirements**:
+- Completed [HPC Setup](0-hpc-setup.qmd) guide
+- Conda/Mamba installed
+- PyRosetta license (academic or commercial)
+- CUDA-compatible GPU
 
-- CUDA-compatible Nvidia GPU (recommended: at least 32 GB GPU memory)
-- Storage space: ~2 MB for code + ~5.3 GB for AlphaFold2 weights
-- Conda or Mamba package manager
+**Check your CUDA version**:
+```bash
+nvcc --version
+# Note the version number (e.g., 12.4)
+```
 
-**Important**: BindCraft requires a PyRosetta license for commercial use. Academic use is typically covered by standard PyRosetta licensing.
-
-## Installation Steps
+## Installation
 
 <input type="checkbox" class="module-checkbox" data-module-id="bindcraft-install"> Mark as complete
 
-1. Clone the BindCraft repository (replace `[install_folder]` with your desired path):
+1. Clone the BindCraft repository:
 ```bash
-git clone https://github.com/martinpacesa/BindCraft [install_folder]
+git clone https://github.com/martinpacesa/BindCraft /path/to/bindcraft
+cd /path/to/bindcraft
 ```
 
-2. Navigate into the install folder:
-```bash
-cd [install_folder]
-```
-
-3. Run the installation script with your CUDA version:
+2. Run the installation script:
 ```bash
 bash install_bindcraft.sh --cuda '12.4' --pkg_manager 'conda'
 ```
 
-**Notes**:
+**Important options**:
 
-- Replace `12.4` with your cluster's CUDA version (check with `nvcc --version`)
-- Use `--pkg_manager 'mamba'` if you prefer mamba (faster)
-- If you leave `--cuda` blank, the installer will try to detect the version automatically (may not always work correctly)
+- Replace `12.4` with your actual CUDA version
+- Use `--pkg_manager 'mamba'` for faster installation
+- If `--cuda` is left blank, auto-detection may fail
 
-The installation creates a conda environment called `BindCraft` with all dependencies.
+**Expected time**: 20-40 minutes.
+
+The script creates a conda environment called `BindCraft` with all dependencies.
 
 ## Testing the Installation
 
 <input type="checkbox" class="module-checkbox" data-module-id="bindcraft-test"> Mark as complete
 
-BindCraft comes with example settings. To test:
-
-1. Activate the BindCraft environment:
+1. Activate the environment:
 ```bash
 conda activate BindCraft
 ```
 
-2. Navigate to your BindCraft folder and run a test design:
+2. Run a test design against the example target (PDL1):
 ```bash
-cd /path/to/bindcraft/folder/
+cd /path/to/bindcraft
 python -u ./bindcraft.py \
     --settings './settings_target/PDL1.json' \
     --filters './settings_filters/default_filters.json' \
     --advanced './settings_advanced/default_4stage_multimer.json'
 ```
 
-This runs binder design against the PDL1 example target. If it starts generating trajectories without errors, your installation was successful!
+**Success indicators**:
 
-**Note**: A complete binder design run can take hours to days depending on settings. For testing, you can stop it after a few trajectories complete.
+- Starts generating trajectories without errors
+- Log shows design iterations progressing
+- Creates output directory with design files
 
-## HPC Job Submission
+**Note**: A complete run takes hours to days. For testing, stop after a few trajectories complete (Ctrl+C).
 
-For SLURM clusters, BindCraft provides a template job script:
+## HPC Job Script
 
+Using the provided template:
 ```bash
 sbatch ./bindcraft.slurm \
     --settings './settings_target/PDL1.json' \
@@ -84,17 +102,21 @@ sbatch ./bindcraft.slurm \
     --advanced './settings_advanced/default_4stage_multimer.json'
 ```
 
-Or create your own job script:
-
+Or create your own:
 ```bash
 #!/bin/bash
 #SBATCH --job-name=bindcraft
+#SBATCH --partition=gpu
 #SBATCH --gpus=1
+#SBATCH --cpus-per-task=8
 #SBATCH --mem=64G
-#SBATCH --time=24:00:00
+#SBATCH --time=48:00:00
+#SBATCH --output=%x_%j.out
 
+source ~/.bashrc
 conda activate BindCraft
-cd /path/to/bindcraft/folder/
+
+cd /path/to/bindcraft
 
 python -u ./bindcraft.py \
     --settings './settings_target/my_target.json' \
@@ -102,11 +124,15 @@ python -u ./bindcraft.py \
     --advanced './settings_advanced/default_4stage_multimer.json'
 ```
 
-## Basic Usage Workflow
+## Setting Up Your Own Target
 
-1. **Prepare your target**: Place your target protein PDB file in the BindCraft folder
+**Step 1: Prepare your target PDB**
 
-2. **Configure target settings**: Edit or create a JSON file in `settings_target/`:
+- Place your target protein PDB in the BindCraft folder
+- Trim unnecessary chains/residues to reduce memory and speed up design
+
+**Step 2: Create target settings** (`settings_target/my_target.json`):
+
 ```json
 {
     "design_path": "./my_binder_designs",
@@ -119,70 +145,116 @@ python -u ./bindcraft.py \
 }
 ```
 
-3. **Run the pipeline**: Submit the job to design binders
-
-4. **Analyze results**: BindCraft generates statistics and filtered designs in the output folder
+**Step 3: Run the pipeline**:
+```bash
+python -u ./bindcraft.py \
+    --settings './settings_target/my_target.json' \
+    --filters './settings_filters/default_filters.json' \
+    --advanced './settings_advanced/default_4stage_multimer.json'
+```
 
 ## Key Settings Explained
 
-**Target Settings** (`settings_target/*.json`):
+### Target Settings (`settings_target/*.json`)
 
-- `starting_pdb`: Your target protein structure
-- `chains`: Which chains to target
-- `target_hotspot_residues`: Specific residues to target (or `null` for automatic selection)
-- `lengths`: Range of binder lengths to design (e.g., `50-100`)
-- `number_of_final_designs`: How many designs passing filters to generate before stopping
+| Setting | Description | Example |
+|---------|-------------|---------|
+| `starting_pdb` | Path to target structure | `"./my_target.pdb"` |
+| `chains` | Which chain(s) to target | `"A"` or `"A,B"` |
+| `target_hotspot_residues` | Residues to target | `"A10-20"` or `null` (auto) |
+| `lengths` | Binder length range | `"50-100"` |
+| `number_of_final_designs` | Designs to generate | `100` |
 
-**Filters** (`settings_filters/*.json`):
+### Filter Settings (`settings_filters/*.json`)
 
-- Control which designs to keep based on confidence scores (pLDDT, pTM, i_pTM)
-- Interface quality metrics (shape complementarity, energy, etc.)
-- Default filters are usually a good starting point
+Controls which designs pass quality thresholds:
 
-**Advanced Settings** (`settings_advanced/*.json`):
+- Confidence scores (pLDDT, pTM, i_pTM)
+- Interface quality (shape complementarity, energy)
+- Default filters are good starting points
 
-- Design algorithm (default: `4stage`)
-- Number of iterations for each design stage
-- AF2 and MPNN parameters
-- Design weights for various objectives
+### Advanced Settings (`settings_advanced/*.json`)
 
-## Tips for Success
+- Design algorithm (default: 4-stage)
+- Number of iterations per stage
+- AlphaFold2 and ProteinMPNN parameters
 
-1. **Trim your target PDB**: Remove unnecessary chains/residues to reduce memory requirements and speed up design
-
-2. **Start with defaults**: Use the default filter and advanced settings initially, then adjust based on results
-
-3. **Generate enough designs**: Aim for at least 100 final designs passing filters (the script recommends ordering top 5-20 for experiments)
-
-4. **Be patient**: Expect to generate hundreds to thousands of trajectories to get enough accepted binders, especially for difficult targets
-
-5. **Monitor acceptance rate**: If very few trajectories pass filters, you may need to adjust design weights or filters
-
-## Understanding BindCraft's Integration
+## Understanding the Pipeline
 
 BindCraft demonstrates a complete protein design workflow:
 
-1. **Design**: Uses AlphaFold2 backpropagation to generate binder backbones
-2. **Optimize**: Uses ProteinMPNN to design sequences for the backbones
-3. **Validate**: Uses AlphaFold2 to predict the designed complex
-4. **Score**: Uses PyRosetta to evaluate interface quality
+```
+1. DESIGN        → AlphaFold2 backpropagation generates binder backbones
+       ↓
+2. OPTIMIZE      → ProteinMPNN designs sequences for backbones
+       ↓
+3. VALIDATE      → AlphaFold2 predicts designed complex structure
+       ↓
+4. SCORE         → PyRosetta evaluates interface quality
+       ↓
+5. FILTER        → Keep designs passing confidence thresholds
+```
 
-This integration showcases how real-world protein design combines multiple tools into a pipeline.
+## Tips for Success
+
+1. **Trim your target**: Remove unnecessary chains/residues to reduce memory
+
+2. **Start with defaults**: Use default filter and advanced settings initially
+
+3. **Generate enough designs**: Aim for 100+ final designs (top 5-20 for experiments)
+
+4. **Be patient**: Expect hundreds to thousands of trajectories for enough accepted binders
+
+5. **Monitor acceptance rate**: Low acceptance → adjust design weights or filters
+
+6. **Check the wiki**: [BindCraft Wiki](https://github.com/martinpacesa/BindCraft/wiki/De-novo-binder-design-with-BindCraft)
+
+## Understanding the Output
+
+Output directory structure:
+```
+my_binder_designs/
+├── accepted/
+│   ├── design_001.pdb        # Passing designs
+│   ├── design_002.pdb
+│   └── ...
+├── rejected/                  # Filtered out designs
+├── trajectories/              # All generated trajectories
+├── scores.csv                 # All metrics for each design
+└── summary.txt                # Run statistics
+```
 
 ## Troubleshooting
 
-**GPU memory errors**: Reduce the size of your target PDB or request more GPU memory. BindCraft recommends at least 32 GB GPU memory for larger complexes.
+**GPU memory errors**:
 
-**CUDA version mismatch**: Make sure you specified the correct CUDA version during installation. Check with `nvcc --version`.
+- Reduce target PDB size (trim chains)
+- Request more GPU memory (32+ GB recommended)
+- Check with: `nvidia-smi`
 
-**Low acceptance rate**: If very few designs pass filters, you may need to:
+**CUDA version mismatch**:
+
+- Re-run install with correct CUDA version
+- Check: `nvcc --version`
+
+**Low acceptance rate** (few designs pass filters):
 
 - Adjust design weights in advanced settings
 - Relax filter thresholds
 - Change target hotspot selection
-- Increase the target site area
+- Increase target site area
 
-**Wiki for detailed help**: Before posting issues, check the complete wiki at https://github.com/martinpacesa/BindCraft/wiki/De-novo-binder-design-with-BindCraft
+**PyRosetta license errors**:
+
+- Verify PyRosetta license is valid
+- Check license file location
+- Contact PyRosetta for academic license
+
+**Slow progress**:
+
+- This is normal - protein design takes time
+- Monitor trajectory count, not clock time
+- Large targets are slower
 
 ---
 
