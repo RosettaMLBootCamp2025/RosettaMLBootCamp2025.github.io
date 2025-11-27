@@ -3,7 +3,7 @@ title: "ML Protein Design Bootcamp 2025"
 toc: false
 ---
 
-<div id="resume-banner" style="display: none; background: #e7f3ff; border: 1px solid #0066cc; border-radius: 8px; padding: 15px; margin-bottom: 20px;">
+<div id="resume-banner" style="display: none; background: #e8eef5; border: 1px solid #022851; border-radius: 8px; padding: 15px; margin-bottom: 20px;">
   <strong>Welcome back!</strong> You were last on: <span id="last-page-title"></span>
   <br>
   <a id="resume-link" href="#" class="btn btn-primary btn-sm" style="margin-top: 10px;">Resume where you left off</a>
