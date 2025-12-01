@@ -8,6 +8,16 @@ Monday is dedicated to installing the essential ML-based protein design and stru
 
 **Goal**: By the end of Monday, you should have all major tools installed and tested on your HPC cluster.
 
+## Pre-work
+
+Before starting the main modules, complete these pre-work assignments to ensure your local environment is ready.
+
+| # | Module | Description | Status |
+|---|--------|-------------|--------|
+| P1 | [Environment & GitHub](prework-1-env-git.qmd) | Setup conda, git, and GitHub | Required |
+| P2 | [PyMOL & VS Code](prework-2-pymol-vscode.qmd) | Install visualization and coding tools | Required |
+| P3 | [Python Refresher](prework-3-python.qmd) | Refresh Python skills for bioinformatics | Recommended |
+
 ## Getting Started
 
 Before installing individual tools, complete the **HPC Setup** module to ensure your environment is properly configured:

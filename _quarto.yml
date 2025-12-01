@@ -32,6 +32,9 @@ website:
       contents:
         - monday/index.qmd
         - text: "---"
+        - monday/prework-1-env-git.qmd
+        - monday/prework-2-pymol-vscode.qmd
+        - monday/prework-3-python.qmd
         - monday/0-hpc-setup.qmd
         - monday/1-localcolabfold.qmd
         - monday/2-ligandmpnn.qmd
