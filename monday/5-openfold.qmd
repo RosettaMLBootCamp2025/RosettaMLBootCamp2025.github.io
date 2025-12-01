@@ -1,5 +1,5 @@
 ---
-title: "5. OpenFold"
+title: "5. OpenFold (Optional)"
 ---
 
 OpenFold ([paper](https://www.biorxiv.org/content/10.1101/2022.11.20.517210v1), [code](https://github.com/aqlaboratory/openfold)) is a faithful, trainable PyTorch reproduction of DeepMind's AlphaFold2. It achieves performance comparable to AlphaFold2 and provides a fully open-source implementation for protein structure prediction.
@@ -127,7 +127,7 @@ python run_pretrained_openfold.py \
 
 module load cuda/12.1
 
-source ~/.bashrc
+# source ~/.bashrc # Source shell profile if needed
 mamba activate openfold_venv
 
 cd /path/to/openfold

@@ -24,7 +24,7 @@ Before installing individual tools, complete the **HPC Setup** module to ensure 
 | 2 | [LigandMPNN](2-ligandmpnn.qmd) | Context-aware protein sequence design | Required |
 | 3 | [RFdiffusion2](3-rfdiffusion2.qmd) | Atom-level active site scaffolding | Required |
 | 4 | [ESMFold](4-esmfold.qmd) | Single-sequence structure prediction | Required |
-| 5 | [OpenFold](5-openfold.qmd) | Open-source AlphaFold2 reproduction | Required |
+| 5 | [OpenFold](5-openfold.qmd) | Open-source AlphaFold2 reproduction | Optional |
 | 6 | [Chai-1](6-chai1.qmd) | Multi-modal biomolecular structure prediction | Required |
 | 7 | [Boltz-2](7-boltz2.qmd) | Structure + binding affinity prediction | Required |
 | 8 | [DiffDock-PP](8-diffdock-pp.qmd) | Protein-protein docking | Required |
