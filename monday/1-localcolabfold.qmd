@@ -46,6 +46,7 @@ nvcc --version      # Check CUDA version
 [Mark as complete]{.task module-id="localcolabfold-install"}
 
 1. Download the installation script:
+Navigate to the directory where you want to install LocalColabFold (e.g., your scratch directory or apps folder).
 ```bash
 wget https://raw.githubusercontent.com/YoshitakaMo/localcolabfold/main/install_colabbatch_linux.sh
 ```
@@ -77,21 +78,22 @@ export PATH="/path/to/your/localcolabfold/colabfold-conda/bin:$PATH"
 source localcolabfold/colabfold-conda/bin/activate
 ```
 
-2. Create a test FASTA file:
+2. Create a directory for testing and a test FASTA file:
 ```bash
+mkdir -p tests
 echo ">test_protein
-MKFLKFSLLTAVLLSVVFAFSSCGDDDDTYPYDVPDYAGTCGDDDDTYPYDVPDYA" > test.fasta
+MKFLKFSLLTAVLLSVVFAFSSCGDDDDTYPYDVPDYAGTCGDDDDTYPYDVPDYA" > tests/test.fasta
 ```
 
 3. Run prediction:
 ```bash
-colabfold_batch test.fasta test_output/
+colabfold_batch tests/test.fasta tests/test_output/
 ```
 
 **Success indicators**:
 
 - Command completes without errors
-- `test_output/` directory contains:
+- `tests/test_output/` directory contains:
   - `test_protein_relaxed_rank_001_*.pdb` (predicted structure)
   - `test_protein_scores_rank_001_*.json` (confidence scores)
   - `test_protein_coverage.png` (MSA coverage plot)
