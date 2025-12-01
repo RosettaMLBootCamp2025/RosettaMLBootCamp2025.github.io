@@ -22,7 +22,7 @@ BindCraft ([paper](https://www.nature.com/articles/s41586-025-09429-6), [code](h
 | Disk Space | 2 MB + 5.3 GB | 10 GB | Code + AlphaFold2 weights |
 | Time | Hours | Days | Per design campaign |
 
-**Important**: BindCraft requires a PyRosetta license. Academic use is typically covered by standard PyRosetta licensing.
+**Important**: BindCraft requires PyRosetta. Ensure you have a valid installation or license if required by your institution.
 
 ## Preparation
 
@@ -32,7 +32,7 @@ BindCraft ([paper](https://www.nature.com/articles/s41586-025-09429-6), [code](h
 
 - Completed [HPC Setup](0-hpc-setup.qmd) guide
 - Conda/Mamba installed
-- PyRosetta license (academic or commercial)
+- PyRosetta installed (or accessible via license)
 - CUDA-compatible GPU
 
 **Check your CUDA version**:
@@ -113,7 +113,7 @@ Or create your own:
 #SBATCH --time=48:00:00
 #SBATCH --output=%x_%j.out
 
-source ~/.bashrc
+# source ~/.bashrc
 conda activate BindCraft
 
 cd /path/to/bindcraft
