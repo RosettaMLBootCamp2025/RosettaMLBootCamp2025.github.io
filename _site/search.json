@@ -92,31 +92,67 @@
   {
     "objectID": "capstone/index.html",
     "href": "capstone/index.html",
-    "title": "Capstone",
+    "title": "Capstone Project",
     "section": "",
-    "text": "Capstone project details coming soon.\nThe capstone project brings together everything you’ve learned throughout the bootcamp.",
+    "text": "Binder design is often formulated as “given a target protein (and optionally a specific epitope on that protein), design a (often smaller) protein capable of binding the target”. It is one of the most ubiquitous protein design problems and has many potential applications, largely functioning by blocking or competing with natural interactions involving the target protein.\nIn this bootcamp, you’ll have the opportunity to explore the computational binder design problem across three different categories of targets. Students will choose from a curated list of targets that have been validated with BindCraft and other computational binder design tools.",
     "crumbs": [
-      "Capstone"
+      "Capstone",
+      "Capstone Project"
     ]
   },
   {
     "objectID": "capstone/index.html#overview",
     "href": "capstone/index.html#overview",
-    "title": "Capstone",
+    "title": "Capstone Project",
     "section": "",
-    "text": "Capstone project details coming soon.\nThe capstone project brings together everything you’ve learned throughout the bootcamp.",
+    "text": "Binder design is often formulated as “given a target protein (and optionally a specific epitope on that protein), design a (often smaller) protein capable of binding the target”. It is one of the most ubiquitous protein design problems and has many potential applications, largely functioning by blocking or competing with natural interactions involving the target protein.\nIn this bootcamp, you’ll have the opportunity to explore the computational binder design problem across three different categories of targets. Students will choose from a curated list of targets that have been validated with BindCraft and other computational binder design tools.",
     "crumbs": [
-      "Capstone"
+      "Capstone",
+      "Capstone Project"
     ]
   },
   {
-    "objectID": "capstone/index.html#project-description",
-    "href": "capstone/index.html#project-description",
-    "title": "Capstone",
-    "section": "Project Description",
-    "text": "Project Description\nComing soon.\n\n\n\n← Thursday\n\n\nBack to Home",
+    "objectID": "capstone/index.html#target-categories-and-options",
+    "href": "capstone/index.html#target-categories-and-options",
+    "title": "Capstone Project",
+    "section": "Target Categories and Options",
+    "text": "Target Categories and Options\n\nImmune Checkpoint / Receptor Targets\n\n\n\nTarget\nUniProt\nNotes\n\n\n\n\nPD-L1\nQ9NZQ7\nBindCraft uses this protein as their example\n\n\nIFNAR2\nP48551\n\n\n\nIL-7Rα\nP16871\n\n\n\n\n\n\nAntibody-like Targets\n\n\n\nTarget\nUniProt\nNotes\n\n\n\n\nBet v 1\nP15494\n\n\n\n\n\n\nEnzyme / Small Molecule Binders\n\n\n\nTarget\nPDB\nNotes\n\n\n\n\nTrkA receptor\nP04629\n\n\n\nTEM-1 Beta-Lactamase\n1FQG\n\n\n\nHuman GM3 Activator\n1G13\n\n\n\nBeta-Glucosidase\n2JIE",
     "crumbs": [
-      "Capstone"
+      "Capstone",
+      "Capstone Project"
+    ]
+  },
+  {
+    "objectID": "capstone/index.html#project-structure",
+    "href": "capstone/index.html#project-structure",
+    "title": "Capstone Project",
+    "section": "Project Structure",
+    "text": "Project Structure\nSelect a target from the list above and work through the binder design process. As you learn about each tool in the preceding lessons, explore how that tool works for your particular protein. Be sure to make note of any quirks or nuances related to your protein, e.g. any particular settings used or any issues encountered.\n\n\n\n\n\n\nTipDocumentation Tip\n\n\n\nKeep a lab notebook (digital or physical) to document your predictions, results, settings tried, and commands used. This will be invaluable when synthesizing your findings at the end of the project.",
+    "crumbs": [
+      "Capstone",
+      "Capstone Project"
+    ]
+  },
+  {
+    "objectID": "capstone/index.html#goals",
+    "href": "capstone/index.html#goals",
+    "title": "Capstone Project",
+    "section": "Goals",
+    "text": "Goals\n\nGain hands-on experience running DL-based tools on specific proteins\nTroubleshoot and address any issues related to your target protein\nLearn about tips and tricks used to get more favorable outputs\nGain experience communicating about computational tools and settings\nGain experience interpreting results and exploring various settings",
+    "crumbs": [
+      "Capstone",
+      "Capstone Project"
+    ]
+  },
+  {
+    "objectID": "capstone/index.html#synthesizing-your-work",
+    "href": "capstone/index.html#synthesizing-your-work",
+    "title": "Capstone Project",
+    "section": "Synthesizing Your Work",
+    "text": "Synthesizing Your Work\nA key part of learning is synthesizing and communicating what you’ve done. In the live workshop, students gave 20-minute group presentations. For self-paced learners, consider one of these formats to consolidate your learning:\n\nWritten report summarizing your process and findings\nVideo walkthrough explaining your approach and results\nJupyter notebook with narrative text alongside code and figures\nGitHub repository with a comprehensive README documenting your project\n\n\n\n\n\n\n\nTip\n\n\n\nEven if you’re not presenting to anyone, creating slides is a great way to learn! The process of organizing your work into a clear narrative helps solidify your understanding.\n\n\nHowever you choose to document your work, aim to cover the following:\n\nBackground and introduction to target protein\nStructure prediction results\nBackbone generation results\nSequence design results\nDesign rationale - explain the specific choices, settings, and approaches used and why\n\n\n\n\n\n\n\nNote\n\n\n\nI find the design rationale section to be the most helpful to my learning and understanding.\n\n\n\nResults from miscellaneous tools\nSummary and takeaways\n\n\n\n← Thursday\nBack to Home",
+    "crumbs": [
+      "Capstone",
+      "Capstone Project"
     ]
   },
   {
@@ -131,7 +167,7 @@
     "href": "index.html#course-overview",
     "title": "ML Protein Design Bootcamp 2025",
     "section": "Course Overview",
-    "text": "Course Overview\nThis bootcamp is organized into 4 days of content plus a capstone project. Each day contains sequential modules that build on each other.\n\n\nMonday\nComing soon\nIntroduction and setup modules.\n\n\nTuesday\nComing soon\nModules for Tuesday.\n\n\nWednesday\nComing soon\nModules for Wednesday.\n\n\nThursday\nComing soon\nModules for Thursday.\n\n\nCapstone\nComing soon\nCapstone project bringing together everything you’ve learned."
+    "text": "Course Overview\nThis bootcamp is organized into 4 days of content plus a capstone project. Each day contains sequential modules that build on each other.\n\n\nMonday\nIntroduction and setup modules.\n\n\nTuesday\nComing soon\nModules for Tuesday.\n\n\nWednesday\nComing soon\nModules for Wednesday.\n\n\nThursday\nComing soon\nModules for Thursday.\n\n\nCapstone\nCapstone project bringing together everything you’ve learned."
   },
   {
     "objectID": "index.html#your-progress",
@@ -966,7 +1002,7 @@
     "href": "monday/prework-3-python.html#questions-and-getting-help",
     "title": "Pre-work 3: Python Refresher",
     "section": "Questions and Getting Help",
-    "text": "Questions and Getting Help\nWe strongly encourage you to use our Slack workspace for questions and collaboration! One of the best ways to learn is by discussing problems with your peers and seeing how others approach challenges.\nJoin the Bootcamp Slack channel: https://rosettacommons.slack.com/archives/C09MXL9NBFB\nIn the Slack channel, you can: - Ask questions and get help from fellow students - Share tips and solutions you’ve discovered - Learn from others’ questions and answers - Collaborate on troubleshooting issues\nThe TAs and I will be active in the Slack channel to help guide discussions and answer questions. Don’t hesitate to jump in - chances are if you’re stuck on something, others are too!\nOf course, you’re also welcome to email me directly at icanderson@ucdavis.edu if needed.",
+    "text": "Questions and Getting Help\nWe strongly encourage you to use our Slack workspace for questions and collaboration! One of the best ways to learn is by discussing problems with your peers and seeing how others approach challenges.\nJoin the Bootcamp Slack channel: The Slack workspace is currently reserved for in-person bootcamp participants. We apologize for the inconvenience.\nIn the Slack channel, you can: - Ask questions and get help from fellow students - Share tips and solutions you’ve discovered - Learn from others’ questions and answers - Collaborate on troubleshooting issues\nThe TAs and I will be active in the Slack channel to help guide discussions and answer questions. Don’t hesitate to jump in - chances are if you’re stuck on something, others are too!\nIf you have questions, please open an issue on the GitHub repository instead of emailing directly.",
     "crumbs": [
       "Monday",
       "Pre-work 3: Python Refresher"
@@ -1054,7 +1090,7 @@
     "href": "monday/prework-1-env-git.html#questions-and-getting-help",
     "title": "Pre-work 1: Environment Setup & GitHub Basics",
     "section": "Questions and Getting Help",
-    "text": "Questions and Getting Help\nWe strongly encourage you to use our Slack workspace for questions and collaboration! One of the best ways to learn is by discussing problems with your peers and seeing how others approach challenges.\nJoin the Bootcamp Slack channel: SorrY!!! For now the slack is just for the live course!\nIn the Slack channel, you can: - Ask questions and get help from fellow students - Share tips and solutions you’ve discovered - Learn from others’ questions and answers - Collaborate on troubleshooting issues\nThe TAs and I will be active in the Slack channel to help guide discussions and answer questions. Don’t hesitate to jump in - chances are if you’re stuck on something, others are too!",
+    "text": "Questions and Getting Help\nWe strongly encourage you to use our Slack workspace for questions and collaboration! One of the best ways to learn is by discussing problems with your peers and seeing how others approach challenges.\nJoin the Bootcamp Slack channel: The Slack workspace is currently reserved for in-person bootcamp participants. We apologize for the inconvenience.\nIn the Slack channel, you can: - Ask questions and get help from fellow students - Share tips and solutions you’ve discovered - Learn from others’ questions and answers - Collaborate on troubleshooting issues\nThe TAs and I will be active in the Slack channel to help guide discussions and answer questions. Don’t hesitate to jump in - chances are if you’re stuck on something, others are too!\nIf you have questions, please open an issue on the GitHub repository instead of emailing directly.",
     "crumbs": [
       "Monday",
       "Pre-work 1: Environment Setup & GitHub Basics"
@@ -1571,7 +1607,7 @@
     "href": "monday/prework-2-pymol-vscode.html#questions-and-getting-help",
     "title": "Pre-work 2: PyMOL and VS Code Setup",
     "section": "Questions and Getting Help",
-    "text": "Questions and Getting Help\nWe strongly encourage you to use our Slack workspace for questions and collaboration! One of the best ways to learn is by discussing problems with your peers and seeing how others approach challenges.\nJoin the Bootcamp Slack channel: (Sorry! Only for bootcamp for live bootcamp for now :())\nIn the Slack channel, you can: - Ask questions and get help from fellow students - Share tips and solutions you’ve discovered - Learn from others’ questions and answers - Collaborate on troubleshooting issues\nThe TAs and I will be active in the Slack channel to help guide discussions and answer questions. Don’t hesitate to jump in - chances are if you’re stuck on something, others are too!",
+    "text": "Questions and Getting Help\nWe strongly encourage you to use our Slack workspace for questions and collaboration! One of the best ways to learn is by discussing problems with your peers and seeing how others approach challenges.\nJoin the Bootcamp Slack channel: The Slack workspace is currently reserved for in-person bootcamp participants. We apologize for the inconvenience.\nIn the Slack channel, you can: - Ask questions and get help from fellow students - Share tips and solutions you’ve discovered - Learn from others’ questions and answers - Collaborate on troubleshooting issues\nThe TAs and I will be active in the Slack channel to help guide discussions and answer questions. Don’t hesitate to jump in - chances are if you’re stuck on something, others are too!\nIf you have questions, please open an issue on the GitHub repository instead of emailing directly.",
     "crumbs": [
       "Monday",
       "Pre-work 2: PyMOL and VS Code Setup"

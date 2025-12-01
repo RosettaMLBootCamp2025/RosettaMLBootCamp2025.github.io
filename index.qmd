@@ -19,7 +19,6 @@ This bootcamp is organized into 4 days of content plus a capstone project. Each 
 
 ::: {.g-col-6}
 ### [Monday](monday/index.qmd) {.day-card}
-*Coming soon*
 
 Introduction and setup modules.
 :::
@@ -47,7 +46,6 @@ Modules for Thursday.
 
 ::: {.g-col-12}
 ### [Capstone](capstone/index.qmd) {.day-card}
-*Coming soon*
 
 Capstone project bringing together everything you've learned.
 :::
