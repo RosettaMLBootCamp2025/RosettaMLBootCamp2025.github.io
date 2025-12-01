@@ -1,0 +1,75 @@
+---
+title: "IL-7R Target Deep Dive"
+subtitle: "Autoimmune Disease Targeting"
+---
+
+## Biological Context
+
+**Interleukin-7 Receptor alpha (IL-7R)** is crucial for the development and survival of T-cells.
+
+**Why it matters:** Dysregulation of IL-7 signaling is implicated in T-cell acute lymphoblastic leukemia (T-ALL) and various autoimmune conditions like Multiple Sclerosis.
+
+**The Goal:** Design a binder that blocks the interaction between IL-7 and IL-7R. A high-affinity binder could serve as a therapeutic antagonist to dampen the immune response in autoimmune settings.
+
+## Interactive Structure
+
+The viewer below shows **IL-7R alpha (Chain B)** bound to its cytokine **IL-7 (Chain A)**.
+
+<!-- Mol* Viewer -->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/pdbe-molstar@latest/build/pdbe-molstar-component.js"></script>
+<style>
+  .molstar-container {
+    width: 100%;
+    height: 500px;
+    position: relative;
+    margin-bottom: 20px;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+</style>
+
+<div class="molstar-container">
+    <!-- 
+      PDB 3DI2: IL-7 in complex with IL-7R alpha
+    -->
+    <pdbe-molstar 
+      id="il7r-viewer" 
+      molecule-id="3di2" 
+      hide-controls="true"
+      bg-color-r="255" 
+      bg-color-g="255" 
+      bg-color-b="255">
+    </pdbe-molstar>
+</div>
+
+::: {.callout-tip}
+## Viewer Controls
+- **Rotate:** Left-click and drag
+- **Zoom:** Scroll wheel
+- **Pan:** Right-click (or Ctrl+Left-click) and drag
+:::
+
+## Design Mission
+
+Create a binder that occupies the ligand-binding groove of IL-7R, preventing native IL-7 from binding.
+
+### Target Specifications
+
+| Feature | Detail |
+|:---|:---|
+| **Target Name** | IL-7R alpha |
+| **PDB ID** | `3DI2` |
+| **Target Chain** | Chain B |
+| **Binder to Mimic**| Chain A (IL-7) |
+| **Interface / Hotspot** | The groove where Chain A sits. |
+
+### Strategy Tips
+
+1.  **Download PDB `3DI2`**.
+2.  **Clean the structure:** Keep Chain B.
+3.  **Hotspot Definition:** Use the residues on Chain B that contact Chain A to define the binding site.
+
+---
+
+[← Back to Capstone Overview](../index.qmd)

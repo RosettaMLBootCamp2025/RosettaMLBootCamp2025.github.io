@@ -1,0 +1,74 @@
+---
+title: "Beta-Glucosidase Deep Dive"
+subtitle: "Enzymatic Catalyst"
+---
+
+## Biological Context
+
+**Beta-Glucosidase** is an enzyme that breaks down complex sugars (glucosides) into glucose. It is relevant in both human metabolism (Gaucher's disease) and industrial biofuel production.
+
+**Why it matters:** In industrial applications, thermostable or stabilized versions of this enzyme are highly valuable. In health, chaperones (binders) that help fold unstable mutants can be therapeutic.
+
+**The Goal:** Design a binder that stabilizes the enzyme without blocking its active site, or conversely, an inhibitor that blocks it.
+
+## Interactive Structure
+
+The viewer below shows **Beta-Glucosidase A**.
+
+<!-- Mol* Viewer -->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/pdbe-molstar@latest/build/pdbe-molstar-component.js"></script>
+<style>
+  .molstar-container {
+    width: 100%;
+    height: 500px;
+    position: relative;
+    margin-bottom: 20px;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+</style>
+
+<div class="molstar-container">
+    <!-- 
+      PDB 2JIE: Structure of Beta-Glucosidase
+    -->
+    <pdbe-molstar 
+      id="bgl-viewer" 
+      molecule-id="2jie" 
+      hide-controls="true"
+      bg-color-r="255" 
+      bg-color-g="255" 
+      bg-color-b="255">
+    </pdbe-molstar>
+</div>
+
+::: {.callout-tip}
+## Viewer Controls
+- **Rotate:** Left-click and drag
+- **Zoom:** Scroll wheel
+- **Pan:** Right-click (or Ctrl+Left-click) and drag
+:::
+
+## Design Mission
+
+Target a surface patch on Beta-Glucosidase.
+
+### Target Specifications
+
+| Feature | Detail |
+|:---|:---|
+| **Target Name** | Beta-Glucosidase |
+| **PDB ID** | `2JIE` |
+| **Target Chain** | Chain A |
+| **Interface / Hotspot** | Surface patches away from the active site (for stabilization) or the active site (for inhibition). |
+
+### Strategy Tips
+
+1.  **Download PDB `2JIE`**.
+2.  **Define your Goal:** Decide if you want to inhibit or stabilize.
+3.  **Select Hotspot:** Choose residues accordingly.
+
+---
+
+[← Back to Capstone Overview](../index.qmd)

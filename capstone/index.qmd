@@ -13,26 +13,26 @@ In this bootcamp, you'll have the opportunity to explore the computational binde
 
 ### Immune Checkpoint / Receptor Targets
 
-| Target | UniProt | Notes |
+| Target | UniProt | Description |
 |--------|---------|-------|
-| PD-L1 | [Q9NZQ7](https://www.uniprot.org/uniprotkb/Q9NZQ7/entry) | BindCraft uses this protein as their example |
-| IFNAR2 | [P48551](https://www.uniprot.org/uniprotkb/P48551/entry) | |
-| IL-7Rα | [P16871](https://www.uniprot.org/uniprotkb/P16871/entry) | |
+| [PD-L1](targets/pd-l1.qmd) | [Q9NZQ7](https://www.uniprot.org/uniprotkb/Q9NZQ7/entry) | Immune Checkpoint |
+| [IFNAR2](targets/ifnar2.qmd) | [P48551](https://www.uniprot.org/uniprotkb/P48551/entry) | Interferon receptor |
+| [IL-7Rα](targets/il-7r.qmd) | [P16871](https://www.uniprot.org/uniprotkb/P16871/entry) | Interleukin receptor |
 
 ### Antibody-like Targets
 
-| Target | UniProt | Notes |
+| Target | UniProt | Description |
 |--------|---------|-------|
-| Bet v 1 | [P15494](https://www.uniprot.org/uniprotkb/P15494/entry) | |
+| [Bet v 1](targets/bet-v-1.qmd) | [P15494](https://www.uniprot.org/uniprotkb/P15494/entry) | Birch pollen allergen |
 
 ### Enzyme / Small Molecule Binders
 
-| Target | PDB | Notes |
+| Target | PDB | Description |
 |--------|-----|-------|
-| TrkA receptor | [P04629](https://www.uniprot.org/uniprotkb/P04629/entry) | |
-| TEM-1 Beta-Lactamase | [1FQG](https://www.rcsb.org/structure/1FQG) | |
-| Human GM3 Activator | [1G13](https://www.rcsb.org/structure/1G13) | |
-| Beta-Glucosidase | [2JIE](https://www.rcsb.org/structure/2JIE) | |
+| [TrkA receptor](targets/trka.qmd) | [P04629](https://www.uniprot.org/uniprotkb/P04629/entry) | Nerve Growth Factor Receptor |
+| [TEM-1 Beta-Lactamase](targets/tem-1.qmd) | [1FQG](https://www.rcsb.org/structure/1FQG) | Antibiotic Resistance Enzyme |
+| [Human GM3 Activator](targets/gm3.qmd) | [1G13](https://www.rcsb.org/structure/1G13) | Lipid Transport Protein |
+| [Beta-Glucosidase](targets/beta-glucosidase.qmd) | [2JIE](https://www.rcsb.org/structure/2JIE) | Enzymatic Catalyst |
 
 ## Project Structure
 

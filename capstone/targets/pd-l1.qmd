@@ -1,0 +1,78 @@
+---
+title: "PD-L1 Target Deep Dive"
+subtitle: "Immune Checkpoint Inhibitor Design"
+---
+
+## Biological Context
+
+**Programmed Death-Ligand 1 (PD-L1)** is a critical protein expressed on the surface of many cells, including cancer cells. Under normal conditions, it acts as a "brake" on the immune system. When PD-L1 binds to the **PD-1 receptor** on T-cells, it signals the T-cell to become inactive.
+
+**Why it matters:** Cancer cells often hijack this mechanism by over-expressing PD-L1. This allows them to "trick" the immune system into ignoring the tumor.
+
+**The Goal:** By designing a protein binder that sticks tightly to PD-L1, we can block it from interacting with PD-1. This releases the "brake," allowing T-cells to recognize and attack the cancer.
+
+## Interactive Structure
+
+Explore the native interaction between PD-L1 (the target) and PD-1 (the natural binder) below.
+*   **Target (PD-L1):** The surface we want to bind to.
+*   **Binder (PD-1):** The natural partner we want to compete with.
+
+<!-- Mol* Viewer -->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/pdbe-molstar@latest/build/pdbe-molstar-component.js"></script>
+<style>
+  .molstar-container {
+    width: 100%;
+    height: 500px;
+    position: relative;
+    margin-bottom: 20px;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+</style>
+
+<div class="molstar-container">
+    <!-- 
+      PDB 4ZQK: Crystal structure of human PD-1 (Chain A) complexed with PD-L1 (Chain B)
+      hide-controls="true" keeps the UI simple for this overview 
+    -->
+    <pdbe-molstar 
+      id="pd-l1-viewer" 
+      molecule-id="4zqk" 
+      hide-controls="true"
+      bg-color-r="255" 
+      bg-color-g="255" 
+      bg-color-b="255">
+    </pdbe-molstar>
+</div>
+
+::: {.callout-tip}
+## Viewer Controls
+- **Rotate:** Left-click and drag
+- **Zoom:** Scroll wheel
+- **Pan:** Right-click (or Ctrl+Left-click) and drag
+:::
+
+## Design Mission
+
+Your objective is to create a **de novo protein binder** that binds to the same interface on PD-L1 that PD-1 currently occupies.
+
+### Target Specifications
+
+| Feature | Detail |
+|:---|:---|
+| **Target Name** | PD-L1 (Programmed Death-Ligand 1) |
+| **PDB ID** | `4ZQK` |
+| **Target Chain** | Chain A |
+| **Interface / Hotspot** | Residues **54-66** and **113-123** (approximate binding loop area) |
+
+
+### Strategy Tips
+
+1.  **Download PDB `4ZQK`**.
+2.  **Clean the structure:** You only need Chain A (PD-L1). You can remove Chain B (PD-1) and any water molecules.
+3.  **Define the Interface:** When running tools like **RFdiffusion** or **BindCraft**, specify the hotspot residues listed above to guide the diffusion process to the correct face of the protein.
+
+---
+
+[← Back to Capstone Overview](../index.qmd)

@@ -64,6 +64,15 @@ website:
     - title: "Capstone"
       contents:
         - capstone/index.qmd
+        - text: "Targets"
+        - capstone/targets/pd-l1.qmd
+        - capstone/targets/ifnar2.qmd
+        - capstone/targets/il-7r.qmd
+        - capstone/targets/bet-v-1.qmd
+        - capstone/targets/trka.qmd
+        - capstone/targets/tem-1.qmd
+        - capstone/targets/gm3.qmd
+        - capstone/targets/beta-glucosidase.qmd
 
 format:
   html:
