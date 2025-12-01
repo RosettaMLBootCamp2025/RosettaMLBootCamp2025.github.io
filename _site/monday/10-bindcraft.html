@@ -192,6 +192,24 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="px-0"><hr class="sidebar-divider hi "></li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../monday/prework-1-env-git.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Pre-work 1: Environment Setup &amp; GitHub Basics</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../monday/prework-2-pymol-vscode.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Pre-work 2: PyMOL and VS Code Setup</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../monday/prework-3-python.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Pre-work 3: Python Refresher</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../monday/0-hpc-setup.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">0. Common HPC Setup</span></a>
   </div>
@@ -223,7 +241,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../monday/5-openfold.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">5. OpenFold</span></a>
+ <span class="menu-text">5. OpenFold (Optional)</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -370,7 +388,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tr>
 </tbody>
 </table>
-<p><strong>Important</strong>: BindCraft requires a PyRosetta license. Academic use is typically covered by standard PyRosetta licensing.</p>
+<p><strong>Important</strong>: BindCraft requires PyRosetta. Ensure you have a valid installation or license if required by your institution.</p>
 </section>
 <section id="preparation" class="level2">
 <h2 class="anchored" data-anchor-id="preparation">Preparation</h2>
@@ -379,7 +397,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ul>
 <li>Completed <a href="../monday/0-hpc-setup.html">HPC Setup</a> guide</li>
 <li>Conda/Mamba installed</li>
-<li>PyRosetta license (academic or commercial)</li>
+<li>PyRosetta installed (or accessible via license)</li>
 <li>CUDA-compatible GPU</li>
 </ul>
 <p><strong>Check your CUDA version</strong>:</p>
@@ -447,7 +465,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --time=48:00:00</span></span>
 <span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --output=%x_%j.out</span></span>
 <span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> ~/.bashrc</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="co"># source ~/.bashrc</span></span>
 <span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> activate BindCraft</span>
 <span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> /path/to/bindcraft</span>
@@ -855,7 +873,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp('/' + window.location.host + '/');
+        var filterRegex = new RegExp("https:\/\/RosettaMLBootCamp2025\.github\.io\/");
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }

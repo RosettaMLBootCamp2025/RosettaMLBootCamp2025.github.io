@@ -192,6 +192,24 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="px-0"><hr class="sidebar-divider hi "></li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../monday/prework-1-env-git.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Pre-work 1: Environment Setup &amp; GitHub Basics</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../monday/prework-2-pymol-vscode.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Pre-work 2: PyMOL and VS Code Setup</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../monday/prework-3-python.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Pre-work 3: Python Refresher</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../monday/0-hpc-setup.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">0. Common HPC Setup</span></a>
   </div>
@@ -223,7 +241,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../monday/5-openfold.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">5. OpenFold</span></a>
+ <span class="menu-text">5. OpenFold (Optional)</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -382,6 +400,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="checking-your-hpc-environment" class="level2">
 <h2 class="anchored" data-anchor-id="checking-your-hpc-environment">Checking Your HPC Environment</h2>
 <p><input type="checkbox" class="module-checkbox" data-module-id="hpc-setup-check"> Mark as complete</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Internet Access on HPC
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Many HPC clusters do <strong>not</strong> have internet access on compute nodes (the nodes where your heavy jobs run). They often only have internet on “login” or “head” nodes.</p>
+<ul>
+<li><strong>Downloads</strong>: Always run installation and download commands on a login node.</li>
+<li><strong>Execution</strong>: When running jobs, ensure your tools don’t try to download models on the fly. Pre-download all weights and databases.</li>
+</ul>
+</div>
+</div>
 <section id="check-available-cuda-modules" class="level3">
 <h3 class="anchored" data-anchor-id="check-available-cuda-modules">1. Check Available CUDA Modules</h3>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> avail cuda</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -504,11 +539,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load apptainer</span>
 <span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Activate conda environment</span></span>
-<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> ~/.bashrc</span>
-<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a><span class="ex">mamba</span> activate my_env</span>
-<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Run your command</span></span>
-<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> my_script.py</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a><span class="co"># source ~/.bashrc  # Source your shell profile if needed</span></span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> /path/to/your/miniconda3/etc/profile.d/conda.sh <span class="co"># Better: source conda.sh directly</span></span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a><span class="ex">mamba</span> activate my_env</span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Run your command</span></span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> my_script.py</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <section id="common-slurm-commands" class="level3">
 <h3 class="anchored" data-anchor-id="common-slurm-commands">Common SLURM Commands</h3>
 <table class="caption-top table">
@@ -663,10 +699,9 @@ GPU computation test: PASSED</code></pre>
 <section id="conda-environment-activation-fails-in-slurm" class="level3">
 <h3 class="anchored" data-anchor-id="conda-environment-activation-fails-in-slurm">Conda environment activation fails in SLURM</h3>
 <p>Add to your job script:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> ~/.bashrc</span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="co"># or explicitly:</span></span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> /path/to/miniforge3/etc/profile.d/conda.sh</span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="ex">mamba</span> activate my_env</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Source conda.sh directly (adjust path to your installation)</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> /path/to/miniforge3/etc/profile.d/conda.sh</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="ex">mamba</span> activate my_env</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="permission-denied-on-container" class="level3">
 <h3 class="anchored" data-anchor-id="permission-denied-on-container">Permission denied on container</h3>
@@ -914,7 +949,7 @@ GPU computation test: PASSED</code></pre>
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp('/' + window.location.host + '/');
+        var filterRegex = new RegExp("https:\/\/RosettaMLBootCamp2025\.github\.io\/");
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }

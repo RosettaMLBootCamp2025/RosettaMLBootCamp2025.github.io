@@ -174,7 +174,7 @@
     "href": "monday/10-bindcraft.html#resource-requirements",
     "title": "10. BindCraft",
     "section": "Resource Requirements",
-    "text": "Resource Requirements\n\n\n\nResource\nMinimum\nRecommended\nNotes\n\n\n\n\nGPU RAM\n24 GB\n32+ GB\nLarge targets need more\n\n\nCPU RAM\n32 GB\n64 GB\nFor PyRosetta scoring\n\n\nDisk Space\n2 MB + 5.3 GB\n10 GB\nCode + AlphaFold2 weights\n\n\nTime\nHours\nDays\nPer design campaign\n\n\n\nImportant: BindCraft requires a PyRosetta license. Academic use is typically covered by standard PyRosetta licensing.",
+    "text": "Resource Requirements\n\n\n\nResource\nMinimum\nRecommended\nNotes\n\n\n\n\nGPU RAM\n24 GB\n32+ GB\nLarge targets need more\n\n\nCPU RAM\n32 GB\n64 GB\nFor PyRosetta scoring\n\n\nDisk Space\n2 MB + 5.3 GB\n10 GB\nCode + AlphaFold2 weights\n\n\nTime\nHours\nDays\nPer design campaign\n\n\n\nImportant: BindCraft requires PyRosetta. Ensure you have a valid installation or license if required by your institution.",
     "crumbs": [
       "Monday",
       "10. BindCraft"
@@ -185,7 +185,7 @@
     "href": "monday/10-bindcraft.html#preparation",
     "title": "10. BindCraft",
     "section": "Preparation",
-    "text": "Preparation\n Mark as complete\nPrerequisites:\n\nCompleted HPC Setup guide\nConda/Mamba installed\nPyRosetta license (academic or commercial)\nCUDA-compatible GPU\n\nCheck your CUDA version:\nnvcc --version\n# Note the version number (e.g., 12.4)",
+    "text": "Preparation\n Mark as complete\nPrerequisites:\n\nCompleted HPC Setup guide\nConda/Mamba installed\nPyRosetta installed (or accessible via license)\nCUDA-compatible GPU\n\nCheck your CUDA version:\nnvcc --version\n# Note the version number (e.g., 12.4)",
     "crumbs": [
       "Monday",
       "10. BindCraft"
@@ -218,7 +218,7 @@
     "href": "monday/10-bindcraft.html#hpc-job-script",
     "title": "10. BindCraft",
     "section": "HPC Job Script",
-    "text": "HPC Job Script\nUsing the provided template:\nsbatch ./bindcraft.slurm \\\n    --settings './settings_target/PDL1.json' \\\n    --filters './settings_filters/default_filters.json' \\\n    --advanced './settings_advanced/default_4stage_multimer.json'\nOr create your own:\n#!/bin/bash\n#SBATCH --job-name=bindcraft\n#SBATCH --partition=gpu\n#SBATCH --gpus=1\n#SBATCH --cpus-per-task=8\n#SBATCH --mem=64G\n#SBATCH --time=48:00:00\n#SBATCH --output=%x_%j.out\n\nsource ~/.bashrc\nconda activate BindCraft\n\ncd /path/to/bindcraft\n\npython -u ./bindcraft.py \\\n    --settings './settings_target/my_target.json' \\\n    --filters './settings_filters/default_filters.json' \\\n    --advanced './settings_advanced/default_4stage_multimer.json'",
+    "text": "HPC Job Script\nUsing the provided template:\nsbatch ./bindcraft.slurm \\\n    --settings './settings_target/PDL1.json' \\\n    --filters './settings_filters/default_filters.json' \\\n    --advanced './settings_advanced/default_4stage_multimer.json'\nOr create your own:\n#!/bin/bash\n#SBATCH --job-name=bindcraft\n#SBATCH --partition=gpu\n#SBATCH --gpus=1\n#SBATCH --cpus-per-task=8\n#SBATCH --mem=64G\n#SBATCH --time=48:00:00\n#SBATCH --output=%x_%j.out\n\n# source ~/.bashrc\nconda activate BindCraft\n\ncd /path/to/bindcraft\n\npython -u ./bindcraft.py \\\n    --settings './settings_target/my_target.json' \\\n    --filters './settings_filters/default_filters.json' \\\n    --advanced './settings_advanced/default_4stage_multimer.json'",
     "crumbs": [
       "Monday",
       "10. BindCraft"
@@ -361,7 +361,7 @@
     "href": "monday/6-chai1.html#hpc-job-script",
     "title": "6. Chai-1",
     "section": "HPC Job Script",
-    "text": "HPC Job Script\n#!/bin/bash\n#SBATCH --job-name=chai\n#SBATCH --partition=gpu\n#SBATCH --gpus=a100:1\n#SBATCH --cpus-per-task=8\n#SBATCH --mem=64G\n#SBATCH --time=04:00:00\n#SBATCH --output=%x_%j.out\n\nmodule load cuda/12.1\n\nsource ~/.bashrc\nmamba activate chailab\n\n# Set custom download directory (avoid filling home)\nexport CHAI_DOWNLOADS_DIR=/scratch/$USER/chai_models\n\n# Run prediction with MSAs\nchai-lab fold --use-msa-server --use-templates-server \\\n    my_complex.fasta \\\n    predictions/",
+    "text": "HPC Job Script\n#!/bin/bash\n#SBATCH --job-name=chai\n#SBATCH --partition=gpu\n#SBATCH --gpus=a100:1\n#SBATCH --cpus-per-task=8\n#SBATCH --mem=64G\n#SBATCH --time=04:00:00\n#SBATCH --output=%x_%j.out\n\nmodule load cuda/12.1\n\n# source ~/.bashrc\nmamba activate chailab\n\n# Set custom download directory (avoid filling home)\nexport CHAI_DOWNLOADS_DIR=/scratch/$USER/chai_models\n\n# Run prediction with MSAs\nchai-lab fold --use-msa-server --use-templates-server \\\n    my_complex.fasta \\\n    predictions/",
     "crumbs": [
       "Monday",
       "6. Chai-1"
@@ -493,7 +493,7 @@
     "href": "monday/2-ligandmpnn.html#installation",
     "title": "2. LigandMPNN",
     "section": "Installation",
-    "text": "Installation\n Mark as complete\n\nClone the LigandMPNN repository:\n\ngit clone https://github.com/dauparas/LigandMPNN.git\ncd LigandMPNN\n\nDownload the model parameters:\n\nbash get_model_params.sh \"./model_params\"\nExpected download: ~500 MB of model weights.\n\nCreate a new conda environment:\n\nmamba create -n ligandmpnn_env python=3.11\nmamba activate ligandmpnn_env\n\nInstall dependencies:\n\npip install -r requirements.txt\nThis installs PyTorch, NumPy, and ProDy for PDB file handling.",
+    "text": "Installation\n Mark as complete\n\nClone the LigandMPNN repository:\n\ngit clone https://github.com/dauparas/LigandMPNN.git\ncd LigandMPNN\n\nDownload the model parameters: Note: This step requires internet access. If your compute node doesn’t have internet, run this on a login node.\n\nbash get_model_params.sh \"./model_params\"\nExpected download: ~500 MB of model weights.\n\nCreate a new conda environment:\n\nmamba create -n ligandmpnn_env python=3.11\nmamba activate ligandmpnn_env\n\nInstall dependencies:\n\npip install -r requirements.txt\nThis installs PyTorch, NumPy, and ProDy for PDB file handling.",
     "crumbs": [
       "Monday",
       "2. LigandMPNN"
@@ -515,7 +515,7 @@
     "href": "monday/2-ligandmpnn.html#hpc-job-script",
     "title": "2. LigandMPNN",
     "section": "HPC Job Script",
-    "text": "HPC Job Script\n#!/bin/bash\n#SBATCH --job-name=ligandmpnn\n#SBATCH --partition=gpu\n#SBATCH --gpus=1\n#SBATCH --cpus-per-task=4\n#SBATCH --mem=16G\n#SBATCH --time=02:00:00\n#SBATCH --output=%x_%j.out\n\nmodule load cuda/12.1\n\nsource ~/.bashrc\nmamba activate ligandmpnn_env\n\ncd /path/to/LigandMPNN\n\npython run.py \\\n    --model_type \"ligand_mpnn\" \\\n    --seed 111 \\\n    --pdb_path \"./inputs/my_protein.pdb\" \\\n    --out_folder \"./outputs/my_design\" \\\n    --number_of_batches 10",
+    "text": "HPC Job Script\n#!/bin/bash\n#SBATCH --job-name=ligandmpnn\n#SBATCH --partition=gpu\n#SBATCH --gpus=1\n#SBATCH --cpus-per-task=4\n#SBATCH --mem=16G\n#SBATCH --time=02:00:00\n#SBATCH --output=%x_%j.out\n\nmodule load cuda/12.1\n\n# source ~/.bashrc  # Optional: Source shell profile if needed\nmamba activate ligandmpnn_env\n\ncd /path/to/LigandMPNN\n\npython run.py \\\n    --model_type \"ligand_mpnn\" \\\n    --seed 111 \\\n    --pdb_path \"./inputs/my_protein.pdb\" \\\n    --out_folder \"./outputs/my_design\" \\\n    --number_of_batches 10",
     "crumbs": [
       "Monday",
       "2. LigandMPNN"
@@ -647,7 +647,7 @@
     "href": "monday/7-boltz2.html#hpc-job-script",
     "title": "7. Boltz-2",
     "section": "HPC Job Script",
-    "text": "HPC Job Script\n#!/bin/bash\n#SBATCH --job-name=boltz\n#SBATCH --partition=gpu\n#SBATCH --gpus=1\n#SBATCH --cpus-per-task=8\n#SBATCH --mem=32G\n#SBATCH --time=04:00:00\n#SBATCH --output=%x_%j.out\n\nmodule load cuda/12.1\n\nsource ~/.bashrc\nmamba activate boltz\n\n# Run prediction\nboltz predict my_complex.yaml --use_msa_server --out_dir results/",
+    "text": "HPC Job Script\n#!/bin/bash\n#SBATCH --job-name=boltz\n#SBATCH --partition=gpu\n#SBATCH --gpus=1\n#SBATCH --cpus-per-task=8\n#SBATCH --mem=32G\n#SBATCH --time=04:00:00\n#SBATCH --output=%x_%j.out\n\nmodule load cuda/12.1\n\n# source ~/.bashrc\nmamba activate boltz\n\n# Run prediction\nboltz predict my_complex.yaml --use_msa_server --out_dir results/",
     "crumbs": [
       "Monday",
       "7. Boltz-2"
@@ -801,7 +801,7 @@
     "href": "monday/9-placer.html#hpc-job-script",
     "title": "9. PLACER",
     "section": "HPC Job Script",
-    "text": "HPC Job Script\n#!/bin/bash\n#SBATCH --job-name=placer\n#SBATCH --partition=gpu\n#SBATCH --gpus=1\n#SBATCH --cpus-per-task=8\n#SBATCH --mem=32G\n#SBATCH --time=04:00:00\n#SBATCH --output=%x_%j.out\n\nmodule load cuda/12.1\n\nsource ~/.bashrc\nmamba activate placer_env\n\ncd /path/to/PLACER\n\n# Predict ligand binding with 100 samples\npython run_PLACER.py \\\n    --ifile my_complex.pdb \\\n    --odir results/ \\\n    --predict_ligand LIG-501 \\\n    --rerank prmsd \\\n    -n 100 \\\n    --ligand_file LIG:ligand.sdf",
+    "text": "HPC Job Script\n#!/bin/bash\n#SBATCH --job-name=placer\n#SBATCH --partition=gpu\n#SBATCH --gpus=1\n#SBATCH --cpus-per-task=8\n#SBATCH --mem=32G\n#SBATCH --time=04:00:00\n#SBATCH --output=%x_%j.out\n\nmodule load cuda/12.1\n\n# source ~/.bashrc\nmamba activate placer_env\n\ncd /path/to/PLACER\n\n# Predict ligand binding with 100 samples\npython run_PLACER.py \\\n    --ifile my_complex.pdb \\\n    --odir results/ \\\n    --predict_ligand LIG-501 \\\n    --rerank prmsd \\\n    -n 100 \\\n    --ligand_file LIG:ligand.sdf",
     "crumbs": [
       "Monday",
       "9. PLACER"
@@ -882,6 +882,457 @@
     "crumbs": [
       "Monday",
       "9. PLACER"
+    ]
+  },
+  {
+    "objectID": "monday/prework-3-python.html",
+    "href": "monday/prework-3-python.html",
+    "title": "Pre-work 3: Python Refresher",
+    "section": "",
+    "text": "This assignment is designed as a Python refresher for biologists and bioinformaticians who may be a bit rusty. You’ll complete a series of small exercises that build up to creating a simple sequence analysis tool. This assignment should take approximately 30-45 minutes to complete.\nIMPORTANT: Each Python file contains function templates with TODO comments. Your job is to fill in the missing code where you see # TODO: comments. The scripts won’t work until you complete the TODO sections!",
+    "crumbs": [
+      "Monday",
+      "Pre-work 3: Python Refresher"
+    ]
+  },
+  {
+    "objectID": "monday/prework-3-python.html#overview",
+    "href": "monday/prework-3-python.html#overview",
+    "title": "Pre-work 3: Python Refresher",
+    "section": "",
+    "text": "This assignment is designed as a Python refresher for biologists and bioinformaticians who may be a bit rusty. You’ll complete a series of small exercises that build up to creating a simple sequence analysis tool. This assignment should take approximately 30-45 minutes to complete.\nIMPORTANT: Each Python file contains function templates with TODO comments. Your job is to fill in the missing code where you see # TODO: comments. The scripts won’t work until you complete the TODO sections!",
+    "crumbs": [
+      "Monday",
+      "Pre-work 3: Python Refresher"
+    ]
+  },
+  {
+    "objectID": "monday/prework-3-python.html#prerequisites",
+    "href": "monday/prework-3-python.html#prerequisites",
+    "title": "Pre-work 3: Python Refresher",
+    "section": "Prerequisites",
+    "text": "Prerequisites\n\nHW1 completed (Python environment set up)",
+    "crumbs": [
+      "Monday",
+      "Pre-work 3: Python Refresher"
+    ]
+  },
+  {
+    "objectID": "monday/prework-3-python.html#download-assignment-files",
+    "href": "monday/prework-3-python.html#download-assignment-files",
+    "title": "Pre-work 3: Python Refresher",
+    "section": "Download Assignment Files",
+    "text": "Download Assignment Files\n  Download Assignment Files (ZIP) \n\nDownload the ZIP file above.\nUnzip the folder on your computer.\nOpen the folder in VS Code.",
+    "crumbs": [
+      "Monday",
+      "Pre-work 3: Python Refresher"
+    ]
+  },
+  {
+    "objectID": "monday/prework-3-python.html#how-to-complete-this-assignment",
+    "href": "monday/prework-3-python.html#how-to-complete-this-assignment",
+    "title": "Pre-work 3: Python Refresher",
+    "section": "How to Complete This Assignment",
+    "text": "How to Complete This Assignment\nEach Python file is a template with incomplete functions. Look for # TODO: comments - these mark where you need to write code. Read the docstrings and hints carefully, then implement the missing functionality.\nThe scripts will not work until you complete the TODO sections!\n\nPart 1: Python Basics Warmup (basics.py)\nOpen basics.py and fill in the TODO sections for these exercises: - reverse_string() - Write a function to reverse a string - count_characters() - Use a for loop to count characters in a string - amino_acid_composition() - Create a dictionary to calculate amino acid percentages - filter_sequences_by_length() - Use a list comprehension to filter sequences\nTo test your work:\n# Navigate to the unzipped directory first!\ncd path/to/python-refresher\n\nconda activate bootcamp2025_HW1\npython basics.py\nIf you see None or errors, you haven’t completed all the TODOs yet!\n\n\nPart 2: Sequence Utilities (sequence_utils.py)\nOpen sequence_utils.py and implement the TODO sections for these bioinformatics functions: - molecular_weight() - Calculate the molecular weight of a protein - count_hydrophobic() - Count hydrophobic amino acids - find_motif() - Find all positions of a motif in a sequence - count_charged_residues() - Count positive and negative charges\nTo test your work:\npython sequence_utils.py\nThe test cases at the bottom will only work once you’ve filled in all the TODOs!\n\n\nPart 3: FASTA File Parsing (read_fasta.py)\nOpen read_fasta.py and complete the TODO sections to: - read_fasta() - Read and parse a FASTA file, storing sequences in a dictionary (header → sequence) - print_fasta_stats() - Print basic statistics about the sequences\nTo test your work:\npython read_fasta.py sample.fasta\nYou should see information about each protein sequence. If not, check your TODOs!\n\n\nPart 4: Sequence Analysis Tool (analyze_sequence.py)\nOpen analyze_sequence.py and fill in the TODO sections to create a complete analysis script: - analyze_sequences() - Use your sequence_utils functions to analyze each protein - write_results() - Write the analysis results to a file\nThis part brings together everything from Parts 1-3!\nTo run your completed analysis:\npython analyze_sequence.py sample.fasta\nThis should create an analysis_results.txt file with your results. If it doesn’t work, you’re missing some TODOs!",
+    "crumbs": [
+      "Monday",
+      "Pre-work 3: Python Refresher"
+    ]
+  },
+  {
+    "objectID": "monday/prework-3-python.html#tips",
+    "href": "monday/prework-3-python.html#tips",
+    "title": "Pre-work 3: Python Refresher",
+    "section": "Tips",
+    "text": "Tips\n\nTest frequently: Run your code after each function to catch errors early\nUse print statements: Debug by printing intermediate values\nRead the TODO comments carefully: They contain hints and requirements\nDon’t worry about edge cases: Focus on getting the basic functionality working\nAsk for help: If you’re stuck, reach out!",
+    "crumbs": [
+      "Monday",
+      "Pre-work 3: Python Refresher"
+    ]
+  },
+  {
+    "objectID": "monday/prework-3-python.html#expected-output",
+    "href": "monday/prework-3-python.html#expected-output",
+    "title": "Pre-work 3: Python Refresher",
+    "section": "Expected Output",
+    "text": "Expected Output\nWhen you run analyze_sequence.py, you should see output similar to:\nAnalyzing sequences from sample.fasta...\n\nSequence: gene_example_1\n  Length: 120 bp\n  GC Content: 45.83%\n  Reverse Complement: CGATCG...\n\nResults written to analysis_results.txt",
+    "crumbs": [
+      "Monday",
+      "Pre-work 3: Python Refresher"
+    ]
+  },
+  {
+    "objectID": "monday/prework-3-python.html#questions-and-getting-help",
+    "href": "monday/prework-3-python.html#questions-and-getting-help",
+    "title": "Pre-work 3: Python Refresher",
+    "section": "Questions and Getting Help",
+    "text": "Questions and Getting Help\nWe strongly encourage you to use our Slack workspace for questions and collaboration! One of the best ways to learn is by discussing problems with your peers and seeing how others approach challenges.\nJoin the Bootcamp Slack channel: https://rosettacommons.slack.com/archives/C09MXL9NBFB\nIn the Slack channel, you can: - Ask questions and get help from fellow students - Share tips and solutions you’ve discovered - Learn from others’ questions and answers - Collaborate on troubleshooting issues\nThe TAs and I will be active in the Slack channel to help guide discussions and answer questions. Don’t hesitate to jump in - chances are if you’re stuck on something, others are too!\nOf course, you’re also welcome to email me directly at icanderson@ucdavis.edu if needed.",
+    "crumbs": [
+      "Monday",
+      "Pre-work 3: Python Refresher"
+    ]
+  },
+  {
+    "objectID": "monday/prework-1-env-git.html",
+    "href": "monday/prework-1-env-git.html",
+    "title": "Pre-work 1: Environment Setup & GitHub Basics",
+    "section": "",
+    "text": "This assignment ensures you have properly set up your development environment and can use GitHub for version control. By completing this assignment, you will:\n\nInstall Anaconda (if not already installed)\nCreate a conda environment with all required packages for the bootcamp\nVerify your installation with a Python script\nCommit and push your verification results to GitHub",
+    "crumbs": [
+      "Monday",
+      "Pre-work 1: Environment Setup & GitHub Basics"
+    ]
+  },
+  {
+    "objectID": "monday/prework-1-env-git.html#overview",
+    "href": "monday/prework-1-env-git.html#overview",
+    "title": "Pre-work 1: Environment Setup & GitHub Basics",
+    "section": "",
+    "text": "This assignment ensures you have properly set up your development environment and can use GitHub for version control. By completing this assignment, you will:\n\nInstall Anaconda (if not already installed)\nCreate a conda environment with all required packages for the bootcamp\nVerify your installation with a Python script\nCommit and push your verification results to GitHub",
+    "crumbs": [
+      "Monday",
+      "Pre-work 1: Environment Setup & GitHub Basics"
+    ]
+  },
+  {
+    "objectID": "monday/prework-1-env-git.html#about-autograding",
+    "href": "monday/prework-1-env-git.html#about-autograding",
+    "title": "Pre-work 1: Environment Setup & GitHub Basics",
+    "section": "About Autograding",
+    "text": "About Autograding\nNote: This assignment has automated tests that run when you push your code. You’ll see a score out of 100 points. These points are just for feedback - they help you know if you’ve completed everything correctly. This is a bootcamp focused on learning, not grades!",
+    "crumbs": [
+      "Monday",
+      "Pre-work 1: Environment Setup & GitHub Basics"
+    ]
+  },
+  {
+    "objectID": "monday/prework-1-env-git.html#prerequisites",
+    "href": "monday/prework-1-env-git.html#prerequisites",
+    "title": "Pre-work 1: Environment Setup & GitHub Basics",
+    "section": "Prerequisites",
+    "text": "Prerequisites\n\nWindows Users: Install WSL (Windows Subsystem for Linux)\nIMPORTANT for Windows Users: This bootcamp requires PyRosetta, which only runs on Unix-based systems (Linux/Mac). Windows users must use Windows Subsystem for Linux (WSL) to complete this assignment.\nInstall WSL:\n\nOpen PowerShell or Windows Command Prompt as Administrator (right-click and “Run as administrator”)\nInstall WSL with Ubuntu:\nwsl --install\nRestart your computer when prompted\nAfter restart, Ubuntu will automatically open and ask you to create a username and password. Remember these credentials!\nUpdate your WSL installation:\nsudo apt update && sudo apt upgrade -y\n\nUsing WSL: - Launch Ubuntu from your Start menu, or type wsl in PowerShell/Command Prompt - All commands in this assignment should be run in the WSL Ubuntu terminal - Your Windows files are accessible at /mnt/c/ (C: drive), /mnt/d/ (D: drive), etc. - We recommend working in your Linux home directory: cd ~\nFor more detailed WSL documentation, see: https://learn.microsoft.com/en-us/windows/wsl/install\n\n\nGitHub Account\nIf you don’t have a GitHub account yet, create one at: https://github.com/signup\n\n\nGit Installation\nMac Users: Install Xcode Command Line Tools, which includes git:\nxcode-select --install\nThis will open a dialog to install the command line developer tools. Once installed, you’ll have git available.\nWindows Users (in WSL): Git should be pre-installed in WSL Ubuntu. If not, install it with:\nsudo apt install git\nLinux Users: Download and install git from: https://git-scm.com/downloads Or use your distribution’s package manager (e.g., sudo apt install git for Ubuntu/Debian)\nVerify git is installed by running:\ngit --version\n\n\nGitHub CLI (Recommended)\nWe recommend installing the GitHub CLI for easier GitHub integration: - Installation instructions: https://cli.github.com/ - After installing, authenticate with: gh auth login\n\n\nBasic Command Line Familiarity\nYou should be comfortable navigating directories and running commands in a terminal.\nHere is a popular GitHub and command line tutorial video: https://www.youtube.com/watch?v=HVsySz-h9r4",
+    "crumbs": [
+      "Monday",
+      "Pre-work 1: Environment Setup & GitHub Basics"
+    ]
+  },
+  {
+    "objectID": "monday/prework-1-env-git.html#instructions",
+    "href": "monday/prework-1-env-git.html#instructions",
+    "title": "Pre-work 1: Environment Setup & GitHub Basics",
+    "section": "Instructions",
+    "text": "Instructions\n\nStep 1: Install Anaconda (or Alternative)\nNote: If you already have Miniconda, Miniforge, Mambaforge, or Mamba installed, you can use those instead - they all work with this assignment!\nOption 1: Download Anaconda (Mac/Windows/Linux)\nFor Mac/Windows, download and install from: https://www.anaconda.com/download\nFor Windows users in WSL, use the Linux installer:\n# Download the Linux installer in WSL\nwget https://repo.anaconda.com/archive/Anaconda3-2024.10-1-Linux-x86_64.sh\n\n# Run the installer\nbash Anaconda3-2024.10-1-Linux-x86_64.sh\n\n# Follow the prompts and accept the license\n# When asked to initialize conda, type 'yes'\n\n# Restart your terminal or run:\nsource ~/.bashrc\nOption 2: Install via Homebrew (Mac users only) If you have Homebrew installed:\nbrew install --cask anaconda\nThen add conda to your PATH (follow the instructions shown after installation).\nVerify installation by running:\nconda --version\n\n\nStep 2: Clone Your GitHub Classroom Repository\nWhen you accepted the GitHub Classroom assignment, a repository was created specifically for you. You need to clone this repository to your computer.\nFinding your repository URL: 1. After accepting the assignment, you should see a link to your repository 2. Go to your repository on GitHub 3. Click the green “Code” button 4. Copy the repository URL (HTTPS or SSH)\nClone the repository:\n# Replace YOUR_REPO_URL with your actual repository URL\ngit clone YOUR_REPO_URL\n\n# Navigate into the cloned directory\n# (The directory name will match your repository name)\ncd HW1-setup-verification-YOUR_USERNAME\nNote: Your repository URL will be unique to you and will look something like: - HTTPS: https://github.com/YOUR_ORGANIZATION/HW1-setup-verification-YOUR_USERNAME.git - SSH: git@github.com:YOUR_ORGANIZATION/HW1-setup-verification-YOUR_USERNAME.git\n\n\nStep 3: Create the Conda Environment\nNow that you’re in the repository directory (which contains this README and the environment.yml file), run:\nconda env create -f environment.yml\nThis will create an environment named bootcamp2025_HW1 with all required packages: - Python 3.11 - PyRosetta (for protein structure manipulation - channels configured in environment.yml) - NumPy (numerical computing) - Pandas (data analysis) - Matplotlib & Seaborn (visualization) - Jupyter (interactive notebooks) - SciPy (scientific computing) - scikit-learn (machine learning) - Biopython (bioinformatics tools)\nNote: The environment.yml file includes the RosettaCommons conda channel, so you don’t need to configure it manually.\n\n\nStep 4: Activate the Environment\nconda activate bootcamp2025_HW1\nYou should see (bootcamp2025_HW1) in your terminal prompt.\n\n\nStep 5: Run the Verification Script\npython verify_setup.py\nThis script will: - Check that all required packages are installed - Display version information for each package - Generate a verification_result.json file\nIf all checks pass, you should see:\n🎉 SUCCESS! All packages are installed correctly!\nIf some checks fail, the script will provide guidance on what went wrong.\n\n\nStep 6: Update the Verification File\nOpen verification_result.json in a text editor and replace \"REPLACE_WITH_YOUR_NAME\" with your actual name.\n\n\nStep 7: Commit and Push Your Verification\nNow that you have your verification file, commit and push it to your GitHub Classroom repository:\n# Add the verification file\ngit add verification_result.json\n\n# Create your commit\ngit commit -m \"Add environment verification\"\n\n# Push to GitHub\ngit push\n\n\nStep 8: Verify Your Submission\nGo to your GitHub repository (the one created when you accepted the assignment) and verify that: - The verification_result.json file is present - It contains your name (not “REPLACE_WITH_YOUR_NAME”) - The verification_passed field is true",
+    "crumbs": [
+      "Monday",
+      "Pre-work 1: Environment Setup & GitHub Basics"
+    ]
+  },
+  {
+    "objectID": "monday/prework-1-env-git.html#submission",
+    "href": "monday/prework-1-env-git.html#submission",
+    "title": "Pre-work 1: Environment Setup & GitHub Basics",
+    "section": "Submission",
+    "text": "Submission\nYour work is automatically submitted when you push to your GitHub Classroom repository. The instructor will be able to see your verification file and check that all requirements are met.",
+    "crumbs": [
+      "Monday",
+      "Pre-work 1: Environment Setup & GitHub Basics"
+    ]
+  },
+  {
+    "objectID": "monday/prework-1-env-git.html#troubleshooting",
+    "href": "monday/prework-1-env-git.html#troubleshooting",
+    "title": "Pre-work 1: Environment Setup & GitHub Basics",
+    "section": "Troubleshooting",
+    "text": "Troubleshooting\n\nPyRosetta Installation Issues\nIf PyRosetta fails to install: 1. Make sure you’re using the environment.yml file which includes the RosettaCommons channel 2. Try creating the environment again with verbose output: conda env create -f environment.yml --verbose 3. If that fails, try installing PyRosetta separately: conda install -c https://conda.rosettacommons.org pyrosetta 4. Check that you’re using a compatible Python version (3.11 is specified in environment.yml)\n\n\nImport Errors\nIf packages are installed but imports fail: 1. Make sure you’ve activated the environment: conda activate bootcamp2025_HW1 2. Try reinstalling the problematic package: conda install --force-reinstall &lt;package-name&gt;\n\n\nGit Issues\nIf you have trouble with git: - Make sure git is installed: git --version - Configure your git identity if needed: bash   git config --global user.name \"Your Name\"   git config --global user.email \"your.email@example.com\"\n\n\nAuthentication with GitHub\nIf you have trouble pushing to GitHub, you may need to set up authentication: - Use GitHub’s personal access token: https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token - Or set up SSH keys: https://docs.github.com/en/authentication/connecting-to-github-with-ssh",
+    "crumbs": [
+      "Monday",
+      "Pre-work 1: Environment Setup & GitHub Basics"
+    ]
+  },
+  {
+    "objectID": "monday/prework-1-env-git.html#questions-and-getting-help",
+    "href": "monday/prework-1-env-git.html#questions-and-getting-help",
+    "title": "Pre-work 1: Environment Setup & GitHub Basics",
+    "section": "Questions and Getting Help",
+    "text": "Questions and Getting Help\nWe strongly encourage you to use our Slack workspace for questions and collaboration! One of the best ways to learn is by discussing problems with your peers and seeing how others approach challenges.\nJoin the Bootcamp Slack channel: SorrY!!! For now the slack is just for the live course!\nIn the Slack channel, you can: - Ask questions and get help from fellow students - Share tips and solutions you’ve discovered - Learn from others’ questions and answers - Collaborate on troubleshooting issues\nThe TAs and I will be active in the Slack channel to help guide discussions and answer questions. Don’t hesitate to jump in - chances are if you’re stuck on something, others are too!",
+    "crumbs": [
+      "Monday",
+      "Pre-work 1: Environment Setup & GitHub Basics"
+    ]
+  },
+  {
+    "objectID": "monday/5-openfold.html",
+    "href": "monday/5-openfold.html",
+    "title": "5. OpenFold (Optional)",
+    "section": "",
+    "text": "OpenFold (paper, code) is a faithful, trainable PyTorch reproduction of DeepMind’s AlphaFold2. It achieves performance comparable to AlphaFold2 and provides a fully open-source implementation for protein structure prediction.",
+    "crumbs": [
+      "Monday",
+      "5. OpenFold (Optional)"
+    ]
+  },
+  {
+    "objectID": "monday/5-openfold.html#why-use-openfold",
+    "href": "monday/5-openfold.html#why-use-openfold",
+    "title": "5. OpenFold (Optional)",
+    "section": "Why Use OpenFold?",
+    "text": "Why Use OpenFold?\n\nFull transparency: Open-source model architecture and training code\nTrainable: Can be fine-tuned or retrained on custom data\nResearch-friendly: Ideal for understanding how structure prediction works\nMSA-based accuracy: Uses evolutionary information for high-accuracy predictions\n\nRelated Tools: For faster predictions without MSAs, see ESMFold. For a more user-friendly MSA-based option, see LocalColabFold.",
+    "crumbs": [
+      "Monday",
+      "5. OpenFold (Optional)"
+    ]
+  },
+  {
+    "objectID": "monday/5-openfold.html#resource-requirements",
+    "href": "monday/5-openfold.html#resource-requirements",
+    "title": "5. OpenFold (Optional)",
+    "section": "Resource Requirements",
+    "text": "Resource Requirements\n\n\n\nResource\nMinimum\nRecommended\nNotes\n\n\n\n\nGPU RAM\n16 GB\n40+ GB\nA100 for large proteins\n\n\nCPU RAM\n32 GB\n64+ GB\nMSA generation is memory-intensive\n\n\nDisk Space\n500 GB\n2+ TB\nSequence databases are large\n\n\nCUDA\n11.3+\n12.1+\nRequired for compilation\n\n\n\nNote: OpenFold requires significant disk space for sequence databases if generating MSAs locally. Check if your HPC already has AlphaFold/OpenFold databases installed.",
+    "crumbs": [
+      "Monday",
+      "5. OpenFold (Optional)"
+    ]
+  },
+  {
+    "objectID": "monday/5-openfold.html#preparation",
+    "href": "monday/5-openfold.html#preparation",
+    "title": "5. OpenFold (Optional)",
+    "section": "Preparation",
+    "text": "Preparation\n Mark as complete\nPrerequisites:\n\nCompleted HPC Setup guide\nConda/Mamba installed\nnvcc available for CUDA compilation\nSignificant disk space (or access to shared databases)\n\nCheck for existing databases:\n# Ask your HPC admins or check common locations\nls /shared/databases/alphafold/\nls /shared/databases/openfold/\nMany HPCs have pre-installed AlphaFold databases that OpenFold can use.",
+    "crumbs": [
+      "Monday",
+      "5. OpenFold (Optional)"
+    ]
+  },
+  {
+    "objectID": "monday/5-openfold.html#installation",
+    "href": "monday/5-openfold.html#installation",
+    "title": "5. OpenFold (Optional)",
+    "section": "Installation",
+    "text": "Installation\n Mark as complete\nImportant: OpenFold installation can be complex. The official documentation at openfold.readthedocs.io has the most current instructions.\n\nClone the repository:\n\ngit clone https://github.com/aqlaboratory/openfold.git\ncd openfold\n\nCreate the conda environment:\n\nmamba env create -f environment.yml\nmamba activate openfold_venv\nExpected time: 10-20 minutes for environment creation.\n\nInstall OpenFold:\n\npip install -e .\n\nDownload model weights:\n\nbash scripts/download_openfold_params.sh openfold/resources\nExpected download: ~1-2 GB of model weights.\n\n(Optional) Download sequence databases for MSA generation:\n\n# This downloads ~2TB of data - skip if using HPC shared databases\nbash scripts/download_alphafold_dbs.sh /path/to/database/directory",
+    "crumbs": [
+      "Monday",
+      "5. OpenFold (Optional)"
+    ]
+  },
+  {
+    "objectID": "monday/5-openfold.html#testing-the-installation",
+    "href": "monday/5-openfold.html#testing-the-installation",
+    "title": "5. OpenFold (Optional)",
+    "section": "Testing the Installation",
+    "text": "Testing the Installation\n Mark as complete\nCreate a test FASTA file test.fasta:\n&gt;test_protein\nMKTVRQERLKSIVRILERSKEPVSGAQLAEELSVSRQVIVQDIAYLRSLGYNIVATPRGYVLAGG\nRun a prediction (using pre-computed MSAs or without MSAs for testing):\npython run_pretrained_openfold.py \\\n    test.fasta \\\n    /path/to/database/directory \\\n    --output_dir predictions/ \\\n    --config_preset model_1_ptm \\\n    --model_device cuda:0\nNote: For testing without databases, you can use --use_precomputed_alignments with a directory containing pre-computed MSA files.\nSuccess indicators:\n\nCommand completes without errors\npredictions/ directory contains PDB files\nOutput includes confidence metrics (pLDDT, pTM)\n\nExpected runtime: 5-30 minutes depending on MSA availability and protein size.",
+    "crumbs": [
+      "Monday",
+      "5. OpenFold (Optional)"
+    ]
+  },
+  {
+    "objectID": "monday/5-openfold.html#hpc-job-script",
+    "href": "monday/5-openfold.html#hpc-job-script",
+    "title": "5. OpenFold (Optional)",
+    "section": "HPC Job Script",
+    "text": "HPC Job Script\n#!/bin/bash\n#SBATCH --job-name=openfold\n#SBATCH --partition=gpu\n#SBATCH --gpus=1\n#SBATCH --cpus-per-task=8\n#SBATCH --mem=64G\n#SBATCH --time=08:00:00\n#SBATCH --output=%x_%j.out\n\nmodule load cuda/12.1\n\n# source ~/.bashrc # Source shell profile if needed\nmamba activate openfold_venv\n\ncd /path/to/openfold\n\n# Using HPC shared databases\nDATABASE_DIR=/shared/databases/alphafold\n\npython run_pretrained_openfold.py \\\n    my_protein.fasta \\\n    $DATABASE_DIR \\\n    --output_dir predictions/ \\\n    --config_preset model_1_ptm \\\n    --model_device cuda:0",
+    "crumbs": [
+      "Monday",
+      "5. OpenFold (Optional)"
+    ]
+  },
+  {
+    "objectID": "monday/5-openfold.html#usage-examples",
+    "href": "monday/5-openfold.html#usage-examples",
+    "title": "5. OpenFold (Optional)",
+    "section": "Usage Examples",
+    "text": "Usage Examples\nBasic prediction with local databases:\npython run_pretrained_openfold.py \\\n    input.fasta \\\n    /path/to/databases \\\n    --output_dir output/ \\\n    --config_preset model_1_ptm\nUsing pre-computed MSAs:\npython run_pretrained_openfold.py \\\n    input.fasta \\\n    /path/to/databases \\\n    --use_precomputed_alignments /path/to/msas/ \\\n    --output_dir output/\nMultiple model presets (ensemble):\nfor preset in model_1_ptm model_2_ptm model_3_ptm; do\n    python run_pretrained_openfold.py \\\n        input.fasta \\\n        /path/to/databases \\\n        --config_preset $preset \\\n        --output_dir output_${preset}/\ndone",
+    "crumbs": [
+      "Monday",
+      "5. OpenFold (Optional)"
+    ]
+  },
+  {
+    "objectID": "monday/5-openfold.html#model-presets",
+    "href": "monday/5-openfold.html#model-presets",
+    "title": "5. OpenFold (Optional)",
+    "section": "Model Presets",
+    "text": "Model Presets\n\n\n\nPreset\nDescription\n\n\n\n\nmodel_1_ptm\nStandard model with pTM head\n\n\nmodel_2_ptm\nAlternative model with pTM\n\n\nmodel_3_ptm\nThird model variant\n\n\nmodel_1_multimer_v3\nFor protein complexes",
+    "crumbs": [
+      "Monday",
+      "5. OpenFold (Optional)"
+    ]
+  },
+  {
+    "objectID": "monday/5-openfold.html#understanding-the-output",
+    "href": "monday/5-openfold.html#understanding-the-output",
+    "title": "5. OpenFold (Optional)",
+    "section": "Understanding the Output",
+    "text": "Understanding the Output\nOutput directory structure:\npredictions/\n├── test_protein_model_1_ptm_unrelaxed.pdb    # Predicted structure\n├── test_protein_model_1_ptm_confidences.json # Confidence scores\n└── test_protein_model_1_ptm_timings.json     # Runtime statistics\nConfidence metrics:\n\npLDDT: Per-residue confidence (0-100, higher is better)\npTM: Predicted TM-score (0-1, &gt;0.8 is confident)\nPAE: Predicted Aligned Error matrix",
+    "crumbs": [
+      "Monday",
+      "5. OpenFold (Optional)"
+    ]
+  },
+  {
+    "objectID": "monday/5-openfold.html#database-requirements",
+    "href": "monday/5-openfold.html#database-requirements",
+    "title": "5. OpenFold (Optional)",
+    "section": "Database Requirements",
+    "text": "Database Requirements\nIf generating MSAs locally, OpenFold needs these databases:\n\n\n\nDatabase\nSize\nPurpose\n\n\n\n\nBFD\n~1.7 TB\nSequence alignments\n\n\nMGnify\n~120 GB\nMetagenomic sequences\n\n\nUniRef90\n~100 GB\nSequence clustering\n\n\nUniRef30\n~200 GB\nHHblits templates\n\n\nPDB70\n~60 GB\nStructure templates\n\n\n\nTotal: ~2+ TB\nCheck HPC shared databases first - most research HPCs have these pre-installed.",
+    "crumbs": [
+      "Monday",
+      "5. OpenFold (Optional)"
+    ]
+  },
+  {
+    "objectID": "monday/5-openfold.html#troubleshooting",
+    "href": "monday/5-openfold.html#troubleshooting",
+    "title": "5. OpenFold (Optional)",
+    "section": "Troubleshooting",
+    "text": "Troubleshooting\nCompilation errors during install:\n# Ensure CUDA toolkit is loaded\nmodule load cuda/12.1\nnvcc --version\n\n# Clean and retry\npip uninstall openfold\npip install -e .\n“Database not found” errors:\n\nVerify database paths exist\nCheck HPC documentation for shared database locations\nContact HPC admins about AlphaFold database availability\n\nOut of memory:\n\nRequest more GPU memory\nReduce --max_recycling_iters\nUse gradient checkpointing for training\n\nSlow MSA generation:\n\nMSA generation is CPU-bound and can take hours\nUse pre-computed MSAs when possible\nConsider using ColabFold’s MMseqs2 server instead\n\nModel weights not found:\n# Re-download weights\nbash scripts/download_openfold_params.sh openfold/resources\n\n# Verify files exist\nls openfold/resources/*.pt",
+    "crumbs": [
+      "Monday",
+      "5. OpenFold (Optional)"
+    ]
+  },
+  {
+    "objectID": "monday/5-openfold.html#for-researchers-training",
+    "href": "monday/5-openfold.html#for-researchers-training",
+    "title": "5. OpenFold (Optional)",
+    "section": "For Researchers: Training",
+    "text": "For Researchers: Training\nOpenFold can be retrained or fine-tuned:\npython train_openfold.py \\\n    /path/to/training/data \\\n    /path/to/template_mmcif \\\n    /path/to/output \\\n    --config_preset initial_training\nSee the training documentation for details.",
+    "crumbs": [
+      "Monday",
+      "5. OpenFold (Optional)"
+    ]
+  },
+  {
+    "objectID": "monday/8-diffdock-pp.html",
+    "href": "monday/8-diffdock-pp.html",
+    "title": "8. DiffDock-PP",
+    "section": "",
+    "text": "DiffDock-PP (paper, code) is a graph neural network trained for de-noising of rigid transformations (rotation and translation) to predict protein-protein docking orientations between two rigid protein subunits.",
+    "crumbs": [
+      "Monday",
+      "8. DiffDock-PP"
+    ]
+  },
+  {
+    "objectID": "monday/8-diffdock-pp.html#why-use-diffdock-pp",
+    "href": "monday/8-diffdock-pp.html#why-use-diffdock-pp",
+    "title": "8. DiffDock-PP",
+    "section": "Why Use DiffDock-PP?",
+    "text": "Why Use DiffDock-PP?\n\nFast protein-protein docking: Predicts binding orientations without expensive sampling\nValidation tool: Orthogonally validate structure predictions from other methods\nEnsemble predictions: Generate multiple docking poses for uncertainty estimation\nRigid-body docking: Efficient for cases where backbone flexibility is minimal\n\nRelated Tools: For protein-ligand docking, see PLACER. For flexible ligand binding with ensemble generation, see PLACER. For structure prediction of complexes, see Chai-1 or Boltz-2.",
+    "crumbs": [
+      "Monday",
+      "8. DiffDock-PP"
+    ]
+  },
+  {
+    "objectID": "monday/8-diffdock-pp.html#resource-requirements",
+    "href": "monday/8-diffdock-pp.html#resource-requirements",
+    "title": "8. DiffDock-PP",
+    "section": "Resource Requirements",
+    "text": "Resource Requirements\n\n\n\nResource\nMinimum\nRecommended\nNotes\n\n\n\n\nGPU RAM\n8 GB\n16 GB\nScales with protein size\n\n\nCPU RAM\n8 GB\n16 GB\nFor preprocessing\n\n\nDisk Space\n2 GB\n5 GB\nModel weights\n\n\nCUDA\n11.6\n11.6-11.7\nSpecific version required",
+    "crumbs": [
+      "Monday",
+      "8. DiffDock-PP"
+    ]
+  },
+  {
+    "objectID": "monday/8-diffdock-pp.html#preparation",
+    "href": "monday/8-diffdock-pp.html#preparation",
+    "title": "8. DiffDock-PP",
+    "section": "Preparation",
+    "text": "Preparation\n Mark as complete\nPrerequisites:\n\nCompleted HPC Setup guide\nConda/Mamba installed\nCUDA 11.6 or 11.7 available\n\nCheck CUDA availability:\nmodule avail cuda\n# Look for cuda/11.6 or cuda/11.7",
+    "crumbs": [
+      "Monday",
+      "8. DiffDock-PP"
+    ]
+  },
+  {
+    "objectID": "monday/8-diffdock-pp.html#installation",
+    "href": "monday/8-diffdock-pp.html#installation",
+    "title": "8. DiffDock-PP",
+    "section": "Installation",
+    "text": "Installation\n Mark as complete\n\nClone the DiffDock-PP repository:\n\ngit clone https://github.com/ketatam/DiffDock-PP.git\ncd DiffDock-PP\n\nCreate a new environment:\n\nmamba create -n diffdock_pp python=3.9\nmamba activate diffdock_pp\n\nInstall PyTorch with CUDA 11.6:\n\nmamba install pytorch=1.13.0 pytorch-cuda=11.6 -c pytorch -c nvidia\nWhy CUDA 11.6? DiffDock-PP was developed and tested with this version. Using different versions may cause compatibility issues with PyG.\n\nInstall PyTorch Geometric (PyG) packages:\n\nmamba install pytorch-scatter pytorch-sparse pytorch-cluster pytorch-spline-conv pyg -c pyg\n\nInstall remaining dependencies:\n\nmamba install mkl=2024.0 \"numpy&lt;2.0\" dill tqdm pyyaml pandas biopandas scikit-learn biopython e3nn wandb tensorboard tensorboardX matplotlib\nWhy numpy&lt;2.0? NumPy 2.0 introduced breaking changes that affect many scientific packages. Keeping NumPy below 2.0 ensures compatibility.",
+    "crumbs": [
+      "Monday",
+      "8. DiffDock-PP"
+    ]
+  },
+  {
+    "objectID": "monday/8-diffdock-pp.html#testing-the-installation",
+    "href": "monday/8-diffdock-pp.html#testing-the-installation",
+    "title": "8. DiffDock-PP",
+    "section": "Testing the Installation",
+    "text": "Testing the Installation\n Mark as complete\n\nCreate required directories:\n\nmkdir storage\n\nRun the test script on the DB5 benchmark:\n\nbash src/db5_inference.sh\nSuccess indicators:\n\nCommand completes without errors\nOutput folder visualization/epoch-0/ is created\nDirectory contains PDB files of docked complexes (multiple .pdb files)\n\nExpected runtime: 5-15 minutes depending on GPU.\nVerify output:\nls visualization/epoch-0/*.pdb | wc -l\n# Should show multiple PDB files",
+    "crumbs": [
+      "Monday",
+      "8. DiffDock-PP"
+    ]
+  },
+  {
+    "objectID": "monday/8-diffdock-pp.html#hpc-job-script",
+    "href": "monday/8-diffdock-pp.html#hpc-job-script",
+    "title": "8. DiffDock-PP",
+    "section": "HPC Job Script",
+    "text": "HPC Job Script\n#!/bin/bash\n#SBATCH --job-name=diffdock_pp\n#SBATCH --partition=gpu\n#SBATCH --gpus=1\n#SBATCH --cpus-per-task=4\n#SBATCH --mem=16G\n#SBATCH --time=02:00:00\n#SBATCH --output=%x_%j.out\n\nmodule load cuda/11.6\n\n# source ~/.bashrc\nmamba activate diffdock_pp\n\ncd /path/to/DiffDock-PP\n\n# Create output directory\nmkdir -p storage\n\n# Run inference\nbash src/db5_inference.sh",
+    "crumbs": [
+      "Monday",
+      "8. DiffDock-PP"
+    ]
+  },
+  {
+    "objectID": "monday/8-diffdock-pp.html#usage-examples",
+    "href": "monday/8-diffdock-pp.html#usage-examples",
+    "title": "8. DiffDock-PP",
+    "section": "Usage Examples",
+    "text": "Usage Examples\nRun DB5 benchmark (default test):\nbash src/db5_inference.sh\nCustom docking (requires understanding the codebase):\nDiffDock-PP requires input data in a specific format. For custom proteins:\n\nPrepare receptor and ligand PDB files\nCreate data configuration files\nRun inference script\n\nSee the repository documentation for detailed input format requirements.",
+    "crumbs": [
+      "Monday",
+      "8. DiffDock-PP"
+    ]
+  },
+  {
+    "objectID": "monday/8-diffdock-pp.html#understanding-the-output",
+    "href": "monday/8-diffdock-pp.html#understanding-the-output",
+    "title": "8. DiffDock-PP",
+    "section": "Understanding the Output",
+    "text": "Understanding the Output\nOutput structure:\nvisualization/\n└── epoch-0/\n    ├── complex_1_pose_0.pdb    # Docking pose 1\n    ├── complex_1_pose_1.pdb    # Docking pose 2\n    ├── complex_1_pose_2.pdb    # Docking pose 3\n    └── ...                      # More poses\nEach PDB file contains:\n\nBoth protein chains with predicted relative orientation\nMultiple poses represent different docking predictions\nCompare poses to assess uncertainty",
+    "crumbs": [
+      "Monday",
+      "8. DiffDock-PP"
+    ]
+  },
+  {
+    "objectID": "monday/8-diffdock-pp.html#use-cases",
+    "href": "monday/8-diffdock-pp.html#use-cases",
+    "title": "8. DiffDock-PP",
+    "section": "Use Cases",
+    "text": "Use Cases\n\nProtein-Protein Docking: Predict binding orientations between protein chains\nComplex Validation: Validate predicted protein-protein interfaces from other methods\nEnsemble Generation: Generate multiple docking poses to capture uncertainty\nBenchmarking: Compare against other docking methods",
+    "crumbs": [
+      "Monday",
+      "8. DiffDock-PP"
+    ]
+  },
+  {
+    "objectID": "monday/8-diffdock-pp.html#when-to-use-diffdock-pp-vs-other-tools",
+    "href": "monday/8-diffdock-pp.html#when-to-use-diffdock-pp-vs-other-tools",
+    "title": "8. DiffDock-PP",
+    "section": "When to Use DiffDock-PP vs Other Tools",
+    "text": "When to Use DiffDock-PP vs Other Tools\n\n\n\nTool\nBest For\n\n\n\n\nDiffDock-PP\nRigid protein-protein docking\n\n\nPLACER\nProtein-ligand docking with conformational sampling\n\n\nChai-1/Boltz-2\nAb initio complex structure prediction\n\n\nBindCraft\nDe novo binder design",
+    "crumbs": [
+      "Monday",
+      "8. DiffDock-PP"
+    ]
+  },
+  {
+    "objectID": "monday/8-diffdock-pp.html#troubleshooting",
+    "href": "monday/8-diffdock-pp.html#troubleshooting",
+    "title": "8. DiffDock-PP",
+    "section": "Troubleshooting",
+    "text": "Troubleshooting\nPyG installation fails:\n\nEnsure CUDA toolkit is loaded before installing\nInstall PyTorch first, then PyG packages\nVerify versions match:\npython -c \"import torch; print(torch.__version__, torch.cuda.is_available())\"\n\nCUDA version mismatch:\nCheck your system’s CUDA version:\nnvcc --version\nThis should match the pytorch-cuda version (11.6). If not:\nmodule load cuda/11.6\n“ModuleNotFoundError” for PyG components:\n\nInstall all PyG packages together:\nmamba install pytorch-scatter pytorch-sparse pytorch-cluster pytorch-spline-conv pyg -c pyg\n\nNumPy errors:\n\nEnsure numpy&lt;2.0 is installed\nDon’t upgrade NumPy even if prompted\n\nGPU not detected:\n# Verify CUDA is available to PyTorch\npython -c \"import torch; print(torch.cuda.is_available())\"\n# Should print: True\nEmpty output directory:\n\nCheck for error messages in terminal output\nVerify input files exist and are formatted correctly\nEnsure storage/ directory was created",
+    "crumbs": [
+      "Monday",
+      "8. DiffDock-PP"
     ]
   },
   {
@@ -1017,278 +1468,113 @@
     ]
   },
   {
-    "objectID": "monday/8-diffdock-pp.html",
-    "href": "monday/8-diffdock-pp.html",
-    "title": "8. DiffDock-PP",
+    "objectID": "monday/prework-2-pymol-vscode.html",
+    "href": "monday/prework-2-pymol-vscode.html",
+    "title": "Pre-work 2: PyMOL and VS Code Setup",
     "section": "",
-    "text": "DiffDock-PP (paper, code) is a graph neural network trained for de-noising of rigid transformations (rotation and translation) to predict protein-protein docking orientations between two rigid protein subunits.",
+    "text": "This assignment ensures you have PyMOL and VS Code installed and configured for the bootcamp. You will:\n\nInstall PyMOL (a molecular visualization tool)\nInstall VS Code (a powerful code editor/IDE)\nVerify your installations by completing hands-on tasks\nCommit your work to GitHub",
     "crumbs": [
       "Monday",
-      "8. DiffDock-PP"
+      "Pre-work 2: PyMOL and VS Code Setup"
     ]
   },
   {
-    "objectID": "monday/8-diffdock-pp.html#why-use-diffdock-pp",
-    "href": "monday/8-diffdock-pp.html#why-use-diffdock-pp",
-    "title": "8. DiffDock-PP",
-    "section": "Why Use DiffDock-PP?",
-    "text": "Why Use DiffDock-PP?\n\nFast protein-protein docking: Predicts binding orientations without expensive sampling\nValidation tool: Orthogonally validate structure predictions from other methods\nEnsemble predictions: Generate multiple docking poses for uncertainty estimation\nRigid-body docking: Efficient for cases where backbone flexibility is minimal\n\nRelated Tools: For protein-ligand docking, see PLACER. For flexible ligand binding with ensemble generation, see PLACER. For structure prediction of complexes, see Chai-1 or Boltz-2.",
-    "crumbs": [
-      "Monday",
-      "8. DiffDock-PP"
-    ]
-  },
-  {
-    "objectID": "monday/8-diffdock-pp.html#resource-requirements",
-    "href": "monday/8-diffdock-pp.html#resource-requirements",
-    "title": "8. DiffDock-PP",
-    "section": "Resource Requirements",
-    "text": "Resource Requirements\n\n\n\nResource\nMinimum\nRecommended\nNotes\n\n\n\n\nGPU RAM\n8 GB\n16 GB\nScales with protein size\n\n\nCPU RAM\n8 GB\n16 GB\nFor preprocessing\n\n\nDisk Space\n2 GB\n5 GB\nModel weights\n\n\nCUDA\n11.6\n11.6-11.7\nSpecific version required",
-    "crumbs": [
-      "Monday",
-      "8. DiffDock-PP"
-    ]
-  },
-  {
-    "objectID": "monday/8-diffdock-pp.html#preparation",
-    "href": "monday/8-diffdock-pp.html#preparation",
-    "title": "8. DiffDock-PP",
-    "section": "Preparation",
-    "text": "Preparation\n Mark as complete\nPrerequisites:\n\nCompleted HPC Setup guide\nConda/Mamba installed\nCUDA 11.6 or 11.7 available\n\nCheck CUDA availability:\nmodule avail cuda\n# Look for cuda/11.6 or cuda/11.7",
-    "crumbs": [
-      "Monday",
-      "8. DiffDock-PP"
-    ]
-  },
-  {
-    "objectID": "monday/8-diffdock-pp.html#installation",
-    "href": "monday/8-diffdock-pp.html#installation",
-    "title": "8. DiffDock-PP",
-    "section": "Installation",
-    "text": "Installation\n Mark as complete\n\nClone the DiffDock-PP repository:\n\ngit clone https://github.com/ketatam/DiffDock-PP.git\ncd DiffDock-PP\n\nCreate a new environment:\n\nmamba create -n diffdock_pp python=3.9\nmamba activate diffdock_pp\n\nInstall PyTorch with CUDA 11.6:\n\nmamba install pytorch=1.13.0 pytorch-cuda=11.6 -c pytorch -c nvidia\nWhy CUDA 11.6? DiffDock-PP was developed and tested with this version. Using different versions may cause compatibility issues with PyG.\n\nInstall PyTorch Geometric (PyG) packages:\n\nmamba install pytorch-scatter pytorch-sparse pytorch-cluster pytorch-spline-conv pyg -c pyg\n\nInstall remaining dependencies:\n\nmamba install mkl=2024.0 \"numpy&lt;2.0\" dill tqdm pyyaml pandas biopandas scikit-learn biopython e3nn wandb tensorboard tensorboardX matplotlib\nWhy numpy&lt;2.0? NumPy 2.0 introduced breaking changes that affect many scientific packages. Keeping NumPy below 2.0 ensures compatibility.",
-    "crumbs": [
-      "Monday",
-      "8. DiffDock-PP"
-    ]
-  },
-  {
-    "objectID": "monday/8-diffdock-pp.html#testing-the-installation",
-    "href": "monday/8-diffdock-pp.html#testing-the-installation",
-    "title": "8. DiffDock-PP",
-    "section": "Testing the Installation",
-    "text": "Testing the Installation\n Mark as complete\n\nCreate required directories:\n\nmkdir storage\n\nRun the test script on the DB5 benchmark:\n\nbash src/db5_inference.sh\nSuccess indicators:\n\nCommand completes without errors\nOutput folder visualization/epoch-0/ is created\nDirectory contains PDB files of docked complexes (multiple .pdb files)\n\nExpected runtime: 5-15 minutes depending on GPU.\nVerify output:\nls visualization/epoch-0/*.pdb | wc -l\n# Should show multiple PDB files",
-    "crumbs": [
-      "Monday",
-      "8. DiffDock-PP"
-    ]
-  },
-  {
-    "objectID": "monday/8-diffdock-pp.html#hpc-job-script",
-    "href": "monday/8-diffdock-pp.html#hpc-job-script",
-    "title": "8. DiffDock-PP",
-    "section": "HPC Job Script",
-    "text": "HPC Job Script\n#!/bin/bash\n#SBATCH --job-name=diffdock_pp\n#SBATCH --partition=gpu\n#SBATCH --gpus=1\n#SBATCH --cpus-per-task=4\n#SBATCH --mem=16G\n#SBATCH --time=02:00:00\n#SBATCH --output=%x_%j.out\n\nmodule load cuda/11.6\n\nsource ~/.bashrc\nmamba activate diffdock_pp\n\ncd /path/to/DiffDock-PP\n\n# Create output directory\nmkdir -p storage\n\n# Run inference\nbash src/db5_inference.sh",
-    "crumbs": [
-      "Monday",
-      "8. DiffDock-PP"
-    ]
-  },
-  {
-    "objectID": "monday/8-diffdock-pp.html#usage-examples",
-    "href": "monday/8-diffdock-pp.html#usage-examples",
-    "title": "8. DiffDock-PP",
-    "section": "Usage Examples",
-    "text": "Usage Examples\nRun DB5 benchmark (default test):\nbash src/db5_inference.sh\nCustom docking (requires understanding the codebase):\nDiffDock-PP requires input data in a specific format. For custom proteins:\n\nPrepare receptor and ligand PDB files\nCreate data configuration files\nRun inference script\n\nSee the repository documentation for detailed input format requirements.",
-    "crumbs": [
-      "Monday",
-      "8. DiffDock-PP"
-    ]
-  },
-  {
-    "objectID": "monday/8-diffdock-pp.html#understanding-the-output",
-    "href": "monday/8-diffdock-pp.html#understanding-the-output",
-    "title": "8. DiffDock-PP",
-    "section": "Understanding the Output",
-    "text": "Understanding the Output\nOutput structure:\nvisualization/\n└── epoch-0/\n    ├── complex_1_pose_0.pdb    # Docking pose 1\n    ├── complex_1_pose_1.pdb    # Docking pose 2\n    ├── complex_1_pose_2.pdb    # Docking pose 3\n    └── ...                      # More poses\nEach PDB file contains:\n\nBoth protein chains with predicted relative orientation\nMultiple poses represent different docking predictions\nCompare poses to assess uncertainty",
-    "crumbs": [
-      "Monday",
-      "8. DiffDock-PP"
-    ]
-  },
-  {
-    "objectID": "monday/8-diffdock-pp.html#use-cases",
-    "href": "monday/8-diffdock-pp.html#use-cases",
-    "title": "8. DiffDock-PP",
-    "section": "Use Cases",
-    "text": "Use Cases\n\nProtein-Protein Docking: Predict binding orientations between protein chains\nComplex Validation: Validate predicted protein-protein interfaces from other methods\nEnsemble Generation: Generate multiple docking poses to capture uncertainty\nBenchmarking: Compare against other docking methods",
-    "crumbs": [
-      "Monday",
-      "8. DiffDock-PP"
-    ]
-  },
-  {
-    "objectID": "monday/8-diffdock-pp.html#when-to-use-diffdock-pp-vs-other-tools",
-    "href": "monday/8-diffdock-pp.html#when-to-use-diffdock-pp-vs-other-tools",
-    "title": "8. DiffDock-PP",
-    "section": "When to Use DiffDock-PP vs Other Tools",
-    "text": "When to Use DiffDock-PP vs Other Tools\n\n\n\nTool\nBest For\n\n\n\n\nDiffDock-PP\nRigid protein-protein docking\n\n\nPLACER\nProtein-ligand docking with conformational sampling\n\n\nChai-1/Boltz-2\nAb initio complex structure prediction\n\n\nBindCraft\nDe novo binder design",
-    "crumbs": [
-      "Monday",
-      "8. DiffDock-PP"
-    ]
-  },
-  {
-    "objectID": "monday/8-diffdock-pp.html#troubleshooting",
-    "href": "monday/8-diffdock-pp.html#troubleshooting",
-    "title": "8. DiffDock-PP",
-    "section": "Troubleshooting",
-    "text": "Troubleshooting\nPyG installation fails:\n\nEnsure CUDA toolkit is loaded before installing\nInstall PyTorch first, then PyG packages\nVerify versions match:\npython -c \"import torch; print(torch.__version__, torch.cuda.is_available())\"\n\nCUDA version mismatch:\nCheck your system’s CUDA version:\nnvcc --version\nThis should match the pytorch-cuda version (11.6). If not:\nmodule load cuda/11.6\n“ModuleNotFoundError” for PyG components:\n\nInstall all PyG packages together:\nmamba install pytorch-scatter pytorch-sparse pytorch-cluster pytorch-spline-conv pyg -c pyg\n\nNumPy errors:\n\nEnsure numpy&lt;2.0 is installed\nDon’t upgrade NumPy even if prompted\n\nGPU not detected:\n# Verify CUDA is available to PyTorch\npython -c \"import torch; print(torch.cuda.is_available())\"\n# Should print: True\nEmpty output directory:\n\nCheck for error messages in terminal output\nVerify input files exist and are formatted correctly\nEnsure storage/ directory was created",
-    "crumbs": [
-      "Monday",
-      "8. DiffDock-PP"
-    ]
-  },
-  {
-    "objectID": "monday/5-openfold.html",
-    "href": "monday/5-openfold.html",
-    "title": "5. OpenFold",
+    "objectID": "monday/prework-2-pymol-vscode.html#overview",
+    "href": "monday/prework-2-pymol-vscode.html#overview",
+    "title": "Pre-work 2: PyMOL and VS Code Setup",
     "section": "",
-    "text": "OpenFold (paper, code) is a faithful, trainable PyTorch reproduction of DeepMind’s AlphaFold2. It achieves performance comparable to AlphaFold2 and provides a fully open-source implementation for protein structure prediction.",
+    "text": "This assignment ensures you have PyMOL and VS Code installed and configured for the bootcamp. You will:\n\nInstall PyMOL (a molecular visualization tool)\nInstall VS Code (a powerful code editor/IDE)\nVerify your installations by completing hands-on tasks\nCommit your work to GitHub",
     "crumbs": [
       "Monday",
-      "5. OpenFold"
+      "Pre-work 2: PyMOL and VS Code Setup"
     ]
   },
   {
-    "objectID": "monday/5-openfold.html#why-use-openfold",
-    "href": "monday/5-openfold.html#why-use-openfold",
-    "title": "5. OpenFold",
-    "section": "Why Use OpenFold?",
-    "text": "Why Use OpenFold?\n\nFull transparency: Open-source model architecture and training code\nTrainable: Can be fine-tuned or retrained on custom data\nResearch-friendly: Ideal for understanding how structure prediction works\nMSA-based accuracy: Uses evolutionary information for high-accuracy predictions\n\nRelated Tools: For faster predictions without MSAs, see ESMFold. For a more user-friendly MSA-based option, see LocalColabFold.",
+    "objectID": "monday/prework-2-pymol-vscode.html#about-autograding",
+    "href": "monday/prework-2-pymol-vscode.html#about-autograding",
+    "title": "Pre-work 2: PyMOL and VS Code Setup",
+    "section": "About Autograding",
+    "text": "About Autograding\nNote: This assignment has automated tests that run when you push your code. You’ll see a score out of 100 points. These points are just for feedback - they help you know if you’ve completed everything correctly. This is a bootcamp focused on learning, not grades!",
     "crumbs": [
       "Monday",
-      "5. OpenFold"
+      "Pre-work 2: PyMOL and VS Code Setup"
     ]
   },
   {
-    "objectID": "monday/5-openfold.html#resource-requirements",
-    "href": "monday/5-openfold.html#resource-requirements",
-    "title": "5. OpenFold",
-    "section": "Resource Requirements",
-    "text": "Resource Requirements\n\n\n\nResource\nMinimum\nRecommended\nNotes\n\n\n\n\nGPU RAM\n16 GB\n40+ GB\nA100 for large proteins\n\n\nCPU RAM\n32 GB\n64+ GB\nMSA generation is memory-intensive\n\n\nDisk Space\n500 GB\n2+ TB\nSequence databases are large\n\n\nCUDA\n11.3+\n12.1+\nRequired for compilation\n\n\n\nNote: OpenFold requires significant disk space for sequence databases if generating MSAs locally. Check if your HPC already has AlphaFold/OpenFold databases installed.",
+    "objectID": "monday/prework-2-pymol-vscode.html#prerequisites",
+    "href": "monday/prework-2-pymol-vscode.html#prerequisites",
+    "title": "Pre-work 2: PyMOL and VS Code Setup",
+    "section": "Prerequisites",
+    "text": "Prerequisites\n\nHW1 completed",
     "crumbs": [
       "Monday",
-      "5. OpenFold"
+      "Pre-work 2: PyMOL and VS Code Setup"
     ]
   },
   {
-    "objectID": "monday/5-openfold.html#preparation",
-    "href": "monday/5-openfold.html#preparation",
-    "title": "5. OpenFold",
-    "section": "Preparation",
-    "text": "Preparation\n Mark as complete\nPrerequisites:\n\nCompleted HPC Setup guide\nConda/Mamba installed\nnvcc available for CUDA compilation\nSignificant disk space (or access to shared databases)\n\nCheck for existing databases:\n# Ask your HPC admins or check common locations\nls /shared/databases/alphafold/\nls /shared/databases/openfold/\nMany HPCs have pre-installed AlphaFold databases that OpenFold can use.",
+    "objectID": "monday/prework-2-pymol-vscode.html#part-1-pymol-installation",
+    "href": "monday/prework-2-pymol-vscode.html#part-1-pymol-installation",
+    "title": "Pre-work 2: PyMOL and VS Code Setup",
+    "section": "Part 1: PyMOL Installation",
+    "text": "Part 1: PyMOL Installation\nPyMOL is a molecular visualization tool that is super useful for visualizing, manipulating, and analyzing molecular structures, especially proteins. We will use PyMOL to explore protein structures during bootcamp. We recognize that it’s likely you are already quite familiar with PyMOL but if you have been using an alternative visualization software, this is a great opportunity to explore PyMOL. Please be ready to use this in the Bootcamp.\n\nInstallation Options\nOption 1: Official PyMOL (Requires Educational License) 1. Visit the PyMOL website: https://pymol.org/ 2. Obtain a free educational license: https://pymol.org/edu/ 3. Download and install PyMOL\nOption 2: Open-Source PyMOL via Homebrew (Mac users) If you have Homebrew installed:\nbrew install pymol\nVerify installation by launching PyMOL (GUI) from your applications or by running:\npymol\n\n\nOptional PyMOL Learning Resources\nThough a comprehensive understanding of the various features in PyMOL is not within the scope of this course, it may be a useful tool for your future work and presentations.\n\nPyMOL Tutorial Video - Complete this tutorial using a protein of interest\nPyMOL Guide - Comprehensive written guide\nPyMOL Wiki - Explore more PyMOL features and tools\n\n\n\nCustomizing PyMOL (Optional)\nIf you would like to alter your visual defaults, you may do so by editing your .pymolrc, which is a script that gets read every time PyMOL opens. To do so, go to File &gt; Edit pymolrc. Here are the defaults that Rosetta member Joey Lubin uses, which can be pasted into the window that opens.",
     "crumbs": [
       "Monday",
-      "5. OpenFold"
+      "Pre-work 2: PyMOL and VS Code Setup"
     ]
   },
   {
-    "objectID": "monday/5-openfold.html#installation",
-    "href": "monday/5-openfold.html#installation",
-    "title": "5. OpenFold",
-    "section": "Installation",
-    "text": "Installation\n Mark as complete\nImportant: OpenFold installation can be complex. The official documentation at openfold.readthedocs.io has the most current instructions.\n\nClone the repository:\n\ngit clone https://github.com/aqlaboratory/openfold.git\ncd openfold\n\nCreate the conda environment:\n\nmamba env create -f environment.yml\nmamba activate openfold_venv\nExpected time: 10-20 minutes for environment creation.\n\nInstall OpenFold:\n\npip install -e .\n\nDownload model weights:\n\nbash scripts/download_openfold_params.sh openfold/resources\nExpected download: ~1-2 GB of model weights.\n\n(Optional) Download sequence databases for MSA generation:\n\n# This downloads ~2TB of data - skip if using HPC shared databases\nbash scripts/download_alphafold_dbs.sh /path/to/database/directory",
+    "objectID": "monday/prework-2-pymol-vscode.html#part-2-vs-code-installation",
+    "href": "monday/prework-2-pymol-vscode.html#part-2-vs-code-installation",
+    "title": "Pre-work 2: PyMOL and VS Code Setup",
+    "section": "Part 2: VS Code Installation",
+    "text": "Part 2: VS Code Installation\nVS Code is a powerful IDE that is largely customizable and can incorporate many different extensions and features. If you do not have VS Code or an alternative IDE, please install it before the bootcamp.\n\nInstallation Options\nOption 1: Download from Website Visit the VS Code website: https://code.visualstudio.com/\nOption 2: Install via Homebrew (Mac users) If you have Homebrew installed:\nbrew install --cask visual-studio-code\nVerify installation by launching VS Code or running:\ncode --version\n\n\nRecommended VS Code Extensions\nOnce VS Code is installed, we recommend installing the following extensions:\n\nPython (Microsoft) - Python language support\nPylance (Microsoft) - Fast Python language server\nJupyter (Microsoft) - Jupyter notebook support\n\nTo install extensions: 1. Open VS Code 2. Click the Extensions icon in the sidebar (or press Cmd+Shift+X / Ctrl+Shift+X) 3. Search for each extension and click “Install”",
     "crumbs": [
       "Monday",
-      "5. OpenFold"
+      "Pre-work 2: PyMOL and VS Code Setup"
     ]
   },
   {
-    "objectID": "monday/5-openfold.html#testing-the-installation",
-    "href": "monday/5-openfold.html#testing-the-installation",
-    "title": "5. OpenFold",
-    "section": "Testing the Installation",
-    "text": "Testing the Installation\n Mark as complete\nCreate a test FASTA file test.fasta:\n&gt;test_protein\nMKTVRQERLKSIVRILERSKEPVSGAQLAEELSVSRQVIVQDIAYLRSLGYNIVATPRGYVLAGG\nRun a prediction (using pre-computed MSAs or without MSAs for testing):\npython run_pretrained_openfold.py \\\n    test.fasta \\\n    /path/to/database/directory \\\n    --output_dir predictions/ \\\n    --config_preset model_1_ptm \\\n    --model_device cuda:0\nNote: For testing without databases, you can use --use_precomputed_alignments with a directory containing pre-computed MSA files.\nSuccess indicators:\n\nCommand completes without errors\npredictions/ directory contains PDB files\nOutput includes confidence metrics (pLDDT, pTM)\n\nExpected runtime: 5-30 minutes depending on MSA availability and protein size.",
+    "objectID": "monday/prework-2-pymol-vscode.html#part-3-verification-tasks",
+    "href": "monday/prework-2-pymol-vscode.html#part-3-verification-tasks",
+    "title": "Pre-work 2: PyMOL and VS Code Setup",
+    "section": "Part 3: Verification Tasks",
+    "text": "Part 3: Verification Tasks\nNow let’s verify that everything is working correctly!\n\nTask 1: PyMOL Verification\n\nFetch a protein structure:\n\nOpen PyMOL\nIn the PyMOL command line, type: fetch 1ubq\nThis fetches ubiquitin (PDB ID: 1UBQ), a small regulatory protein\n\nStyle your visualization:\n\nTry different representations (cartoon, sticks, surface, etc.)\nColor the structure in a way you find visually appealing\nFeel free to experiment!\n\nSave your work:\n\nSave the PyMOL session: File &gt; Save Session As...\nName it 1ubq_session.pse and save it in this assignment directory\nExport an image: File &gt; Export Image As &gt; PNG...\nName it 1ubq_visualization.png and save it in this assignment directory\n\n\n\n\nTask 2: VS Code Verification\n\nOpen VS Code\nCreate a Python script:\n\nOpen this assignment folder in VS Code: File &gt; Open Folder...\nCreate a new file called verify_setup.py\nCopy and paste the verification script (provided in this repository)\nRun the script to verify your setup\n\nRun the verification script:\n\nOpen the integrated terminal in VS Code: Terminal &gt; New Terminal\nActivate your conda environment from HW1: conda activate bootcamp2025_HW1\nRun: python verify_setup.py\nThe script will check your installations and create a verification_result.txt file",
     "crumbs": [
       "Monday",
-      "5. OpenFold"
+      "Pre-work 2: PyMOL and VS Code Setup"
     ]
   },
   {
-    "objectID": "monday/5-openfold.html#hpc-job-script",
-    "href": "monday/5-openfold.html#hpc-job-script",
-    "title": "5. OpenFold",
-    "section": "HPC Job Script",
-    "text": "HPC Job Script\n#!/bin/bash\n#SBATCH --job-name=openfold\n#SBATCH --partition=gpu\n#SBATCH --gpus=1\n#SBATCH --cpus-per-task=8\n#SBATCH --mem=64G\n#SBATCH --time=08:00:00\n#SBATCH --output=%x_%j.out\n\nmodule load cuda/12.1\n\nsource ~/.bashrc\nmamba activate openfold_venv\n\ncd /path/to/openfold\n\n# Using HPC shared databases\nDATABASE_DIR=/shared/databases/alphafold\n\npython run_pretrained_openfold.py \\\n    my_protein.fasta \\\n    $DATABASE_DIR \\\n    --output_dir predictions/ \\\n    --config_preset model_1_ptm \\\n    --model_device cuda:0",
+    "objectID": "monday/prework-2-pymol-vscode.html#part-4-submission",
+    "href": "monday/prework-2-pymol-vscode.html#part-4-submission",
+    "title": "Pre-work 2: PyMOL and VS Code Setup",
+    "section": "Part 4: Submission",
+    "text": "Part 4: Submission\nOnce you’ve completed both tasks, commit your work to your GitHub Classroom repository:\n# Add all the files you created\ngit add 1ubq_session.pse 1ubq_visualization.png verification_result.txt\n\n# Commit your work\ngit commit -m \"Complete PyMOL and VS Code setup verification\"\n\n# Push to GitHub\ngit push\n\nRequired Files for Submission\nMake sure your repository contains: - [ ] 1ubq_session.pse - Your PyMOL session file - [ ] 1ubq_visualization.png - Your exported PyMOL visualization - [ ] verification_result.txt - Output from the VS Code verification script",
     "crumbs": [
       "Monday",
-      "5. OpenFold"
+      "Pre-work 2: PyMOL and VS Code Setup"
     ]
   },
   {
-    "objectID": "monday/5-openfold.html#usage-examples",
-    "href": "monday/5-openfold.html#usage-examples",
-    "title": "5. OpenFold",
-    "section": "Usage Examples",
-    "text": "Usage Examples\nBasic prediction with local databases:\npython run_pretrained_openfold.py \\\n    input.fasta \\\n    /path/to/databases \\\n    --output_dir output/ \\\n    --config_preset model_1_ptm\nUsing pre-computed MSAs:\npython run_pretrained_openfold.py \\\n    input.fasta \\\n    /path/to/databases \\\n    --use_precomputed_alignments /path/to/msas/ \\\n    --output_dir output/\nMultiple model presets (ensemble):\nfor preset in model_1_ptm model_2_ptm model_3_ptm; do\n    python run_pretrained_openfold.py \\\n        input.fasta \\\n        /path/to/databases \\\n        --config_preset $preset \\\n        --output_dir output_${preset}/\ndone",
-    "crumbs": [
-      "Monday",
-      "5. OpenFold"
-    ]
-  },
-  {
-    "objectID": "monday/5-openfold.html#model-presets",
-    "href": "monday/5-openfold.html#model-presets",
-    "title": "5. OpenFold",
-    "section": "Model Presets",
-    "text": "Model Presets\n\n\n\nPreset\nDescription\n\n\n\n\nmodel_1_ptm\nStandard model with pTM head\n\n\nmodel_2_ptm\nAlternative model with pTM\n\n\nmodel_3_ptm\nThird model variant\n\n\nmodel_1_multimer_v3\nFor protein complexes",
-    "crumbs": [
-      "Monday",
-      "5. OpenFold"
-    ]
-  },
-  {
-    "objectID": "monday/5-openfold.html#understanding-the-output",
-    "href": "monday/5-openfold.html#understanding-the-output",
-    "title": "5. OpenFold",
-    "section": "Understanding the Output",
-    "text": "Understanding the Output\nOutput directory structure:\npredictions/\n├── test_protein_model_1_ptm_unrelaxed.pdb    # Predicted structure\n├── test_protein_model_1_ptm_confidences.json # Confidence scores\n└── test_protein_model_1_ptm_timings.json     # Runtime statistics\nConfidence metrics:\n\npLDDT: Per-residue confidence (0-100, higher is better)\npTM: Predicted TM-score (0-1, &gt;0.8 is confident)\nPAE: Predicted Aligned Error matrix",
-    "crumbs": [
-      "Monday",
-      "5. OpenFold"
-    ]
-  },
-  {
-    "objectID": "monday/5-openfold.html#database-requirements",
-    "href": "monday/5-openfold.html#database-requirements",
-    "title": "5. OpenFold",
-    "section": "Database Requirements",
-    "text": "Database Requirements\nIf generating MSAs locally, OpenFold needs these databases:\n\n\n\nDatabase\nSize\nPurpose\n\n\n\n\nBFD\n~1.7 TB\nSequence alignments\n\n\nMGnify\n~120 GB\nMetagenomic sequences\n\n\nUniRef90\n~100 GB\nSequence clustering\n\n\nUniRef30\n~200 GB\nHHblits templates\n\n\nPDB70\n~60 GB\nStructure templates\n\n\n\nTotal: ~2+ TB\nCheck HPC shared databases first - most research HPCs have these pre-installed.",
-    "crumbs": [
-      "Monday",
-      "5. OpenFold"
-    ]
-  },
-  {
-    "objectID": "monday/5-openfold.html#troubleshooting",
-    "href": "monday/5-openfold.html#troubleshooting",
-    "title": "5. OpenFold",
+    "objectID": "monday/prework-2-pymol-vscode.html#troubleshooting",
+    "href": "monday/prework-2-pymol-vscode.html#troubleshooting",
+    "title": "Pre-work 2: PyMOL and VS Code Setup",
     "section": "Troubleshooting",
-    "text": "Troubleshooting\nCompilation errors during install:\n# Ensure CUDA toolkit is loaded\nmodule load cuda/12.1\nnvcc --version\n\n# Clean and retry\npip uninstall openfold\npip install -e .\n“Database not found” errors:\n\nVerify database paths exist\nCheck HPC documentation for shared database locations\nContact HPC admins about AlphaFold database availability\n\nOut of memory:\n\nRequest more GPU memory\nReduce --max_recycling_iters\nUse gradient checkpointing for training\n\nSlow MSA generation:\n\nMSA generation is CPU-bound and can take hours\nUse pre-computed MSAs when possible\nConsider using ColabFold’s MMseqs2 server instead\n\nModel weights not found:\n# Re-download weights\nbash scripts/download_openfold_params.sh openfold/resources\n\n# Verify files exist\nls openfold/resources/*.pt",
+    "text": "Troubleshooting\n\nPyMOL Issues\nPyMOL won’t launch: - Make sure you’ve completed the installation fully - Mac users: Try the Homebrew installation method - Make sure you’re launching the GUI application, not just the Python package\nCan’t fetch PDB structures: - Check your internet connection - Try: fetch 1ubq, type=pdb1 if the default doesn’t work\n\n\nVS Code Issues\ncode command not found: - On Mac: Open VS Code, press Cmd+Shift+P, type “shell command”, and select “Install ‘code’ command in PATH” - On Windows: VS Code should be in your PATH automatically after installation\nPython extension not working: - Make sure Python is installed (you should have this from HW1) - Restart VS Code after installing extensions",
     "crumbs": [
       "Monday",
-      "5. OpenFold"
+      "Pre-work 2: PyMOL and VS Code Setup"
     ]
   },
   {
-    "objectID": "monday/5-openfold.html#for-researchers-training",
-    "href": "monday/5-openfold.html#for-researchers-training",
-    "title": "5. OpenFold",
-    "section": "For Researchers: Training",
-    "text": "For Researchers: Training\nOpenFold can be retrained or fine-tuned:\npython train_openfold.py \\\n    /path/to/training/data \\\n    /path/to/template_mmcif \\\n    /path/to/output \\\n    --config_preset initial_training\nSee the training documentation for details.",
+    "objectID": "monday/prework-2-pymol-vscode.html#questions-and-getting-help",
+    "href": "monday/prework-2-pymol-vscode.html#questions-and-getting-help",
+    "title": "Pre-work 2: PyMOL and VS Code Setup",
+    "section": "Questions and Getting Help",
+    "text": "Questions and Getting Help\nWe strongly encourage you to use our Slack workspace for questions and collaboration! One of the best ways to learn is by discussing problems with your peers and seeing how others approach challenges.\nJoin the Bootcamp Slack channel: (Sorry! Only for bootcamp for live bootcamp for now :())\nIn the Slack channel, you can: - Ask questions and get help from fellow students - Share tips and solutions you’ve discovered - Learn from others’ questions and answers - Collaborate on troubleshooting issues\nThe TAs and I will be active in the Slack channel to help guide discussions and answer questions. Don’t hesitate to jump in - chances are if you’re stuck on something, others are too!",
     "crumbs": [
       "Monday",
-      "5. OpenFold"
+      "Pre-work 2: PyMOL and VS Code Setup"
     ]
   },
   {
@@ -1318,7 +1604,7 @@
     "href": "monday/0-hpc-setup.html#checking-your-hpc-environment",
     "title": "0. Common HPC Setup",
     "section": "Checking Your HPC Environment",
-    "text": "Checking Your HPC Environment\n Mark as complete\n\n1. Check Available CUDA Modules\nmodule avail cuda\nThis shows all CUDA versions installed on your cluster. Note the versions - you’ll need to match them to tool requirements.\n\n\n2. Check GPU Availability\nRequest an interactive GPU session:\n# SLURM example\nsrun --gpus=1 --pty bash\nThen check GPU status:\nnvidia-smi\nThis shows: - GPU model (A100, V100, RTX 4090, etc.) - GPU memory (important for large models) - Current CUDA driver version\n\n\n3. Check CUDA Toolkit Version\nnvcc --version\nIf this fails, load a CUDA module first:\nmodule load cuda/12.1\nnvcc --version",
+    "text": "Checking Your HPC Environment\n Mark as complete\n\n\n\n\n\n\nTipInternet Access on HPC\n\n\n\nMany HPC clusters do not have internet access on compute nodes (the nodes where your heavy jobs run). They often only have internet on “login” or “head” nodes.\n\nDownloads: Always run installation and download commands on a login node.\nExecution: When running jobs, ensure your tools don’t try to download models on the fly. Pre-download all weights and databases.\n\n\n\n\n1. Check Available CUDA Modules\nmodule avail cuda\nThis shows all CUDA versions installed on your cluster. Note the versions - you’ll need to match them to tool requirements.\n\n\n2. Check GPU Availability\nRequest an interactive GPU session:\n# SLURM example\nsrun --gpus=1 --pty bash\nThen check GPU status:\nnvidia-smi\nThis shows: - GPU model (A100, V100, RTX 4090, etc.) - GPU memory (important for large models) - Current CUDA driver version\n\n\n3. Check CUDA Toolkit Version\nnvcc --version\nIf this fails, load a CUDA module first:\nmodule load cuda/12.1\nnvcc --version",
     "crumbs": [
       "Monday",
       "0. Common HPC Setup"
@@ -1351,7 +1637,7 @@
     "href": "monday/0-hpc-setup.html#slurm-job-submission-basics",
     "title": "0. Common HPC Setup",
     "section": "SLURM Job Submission Basics",
-    "text": "SLURM Job Submission Basics\n Mark as complete\nMost HPCs use SLURM for job scheduling. Here’s a template for ML jobs:\n#!/bin/bash\n#SBATCH --job-name=my_ml_job\n#SBATCH --partition=gpu          # GPU partition name (varies by cluster)\n#SBATCH --gpus=1                  # Number of GPUs\n#SBATCH --cpus-per-task=8         # CPUs for data loading\n#SBATCH --mem=64G                 # RAM\n#SBATCH --time=04:00:00           # Wall time (HH:MM:SS)\n#SBATCH --output=%x_%j.out        # Output file (%x=job name, %j=job ID)\n#SBATCH --error=%x_%j.err         # Error file\n\n# Load required modules\nmodule load cuda/12.1\nmodule load apptainer\n\n# Activate conda environment\nsource ~/.bashrc\nmamba activate my_env\n\n# Run your command\npython my_script.py\n\nCommon SLURM Commands\n\n\n\nCommand\nDescription\n\n\n\n\nsbatch script.sh\nSubmit job\n\n\nsqueue -u $USER\nCheck your jobs\n\n\nscancel JOB_ID\nCancel a job\n\n\nsinfo\nShow partition info\n\n\nsacct -j JOB_ID\nJob accounting info\n\n\n\n\n\nGPU Partition Names\nGPU partition names vary by cluster. Common names:\n\ngpu, gpus, gpu-shared\na100, v100, rtx\ngpu-debug (for testing)\n\nCheck your cluster’s documentation or run sinfo to see available partitions.",
+    "text": "SLURM Job Submission Basics\n Mark as complete\nMost HPCs use SLURM for job scheduling. Here’s a template for ML jobs:\n#!/bin/bash\n#SBATCH --job-name=my_ml_job\n#SBATCH --partition=gpu          # GPU partition name (varies by cluster)\n#SBATCH --gpus=1                  # Number of GPUs\n#SBATCH --cpus-per-task=8         # CPUs for data loading\n#SBATCH --mem=64G                 # RAM\n#SBATCH --time=04:00:00           # Wall time (HH:MM:SS)\n#SBATCH --output=%x_%j.out        # Output file (%x=job name, %j=job ID)\n#SBATCH --error=%x_%j.err         # Error file\n\n# Load required modules\nmodule load cuda/12.1\nmodule load apptainer\n\n# Activate conda environment\n# source ~/.bashrc  # Source your shell profile if needed\nsource /path/to/your/miniconda3/etc/profile.d/conda.sh # Better: source conda.sh directly\nmamba activate my_env\n\n# Run your command\npython my_script.py\n\nCommon SLURM Commands\n\n\n\nCommand\nDescription\n\n\n\n\nsbatch script.sh\nSubmit job\n\n\nsqueue -u $USER\nCheck your jobs\n\n\nscancel JOB_ID\nCancel a job\n\n\nsinfo\nShow partition info\n\n\nsacct -j JOB_ID\nJob accounting info\n\n\n\n\n\nGPU Partition Names\nGPU partition names vary by cluster. Common names:\n\ngpu, gpus, gpu-shared\na100, v100, rtx\ngpu-debug (for testing)\n\nCheck your cluster’s documentation or run sinfo to see available partitions.",
     "crumbs": [
       "Monday",
       "0. Common HPC Setup"
@@ -1395,7 +1681,7 @@
     "href": "monday/0-hpc-setup.html#troubleshooting-common-issues",
     "title": "0. Common HPC Setup",
     "section": "Troubleshooting Common Issues",
-    "text": "Troubleshooting Common Issues\n\n“CUDA out of memory”\n\nRequest more GPU memory\nReduce batch size\nUse gradient checkpointing if training\n\n\n\n“No CUDA runtime found”\nmodule load cuda/12.1  # Load CUDA module\nnvcc --version         # Verify it loaded\n\n\n“Singularity: command not found”\nmodule load apptainer  # or: module load singularity\n\n\nConda environment activation fails in SLURM\nAdd to your job script:\nsource ~/.bashrc\n# or explicitly:\nsource /path/to/miniforge3/etc/profile.d/conda.sh\nmamba activate my_env\n\n\nPermission denied on container\nchmod +x container.sif",
+    "text": "Troubleshooting Common Issues\n\n“CUDA out of memory”\n\nRequest more GPU memory\nReduce batch size\nUse gradient checkpointing if training\n\n\n\n“No CUDA runtime found”\nmodule load cuda/12.1  # Load CUDA module\nnvcc --version         # Verify it loaded\n\n\n“Singularity: command not found”\nmodule load apptainer  # or: module load singularity\n\n\nConda environment activation fails in SLURM\nAdd to your job script:\n# Source conda.sh directly (adjust path to your installation)\nsource /path/to/miniforge3/etc/profile.d/conda.sh\nmamba activate my_env\n\n\nPermission denied on container\nchmod +x container.sif",
     "crumbs": [
       "Monday",
       "0. Common HPC Setup"
@@ -1424,6 +1710,17 @@
     ]
   },
   {
+    "objectID": "monday/index.html#pre-work",
+    "href": "monday/index.html#pre-work",
+    "title": "Monday: Tool Installation",
+    "section": "Pre-work",
+    "text": "Pre-work\nBefore starting the main modules, complete these pre-work assignments to ensure your local environment is ready.\n\n\n\n#\nModule\nDescription\nStatus\n\n\n\n\nP1\nEnvironment & GitHub\nSetup conda, git, and GitHub\nRequired\n\n\nP2\nPyMOL & VS Code\nInstall visualization and coding tools\nRequired\n\n\nP3\nPython Refresher\nRefresh Python skills for bioinformatics\nRecommended",
+    "crumbs": [
+      "Monday",
+      "Monday: Tool Installation"
+    ]
+  },
+  {
     "objectID": "monday/index.html#getting-started",
     "href": "monday/index.html#getting-started",
     "title": "Monday: Tool Installation",
@@ -1439,7 +1736,7 @@
     "href": "monday/index.html#tool-installation-modules",
     "title": "Monday: Tool Installation",
     "section": "Tool Installation Modules",
-    "text": "Tool Installation Modules\n\n\n\n#\nTool\nDescription\nStatus\n\n\n\n\n1\nLocalColabFold\nFast AlphaFold2 structure prediction\nRequired\n\n\n2\nLigandMPNN\nContext-aware protein sequence design\nRequired\n\n\n3\nRFdiffusion2\nAtom-level active site scaffolding\nRequired\n\n\n4\nESMFold\nSingle-sequence structure prediction\nRequired\n\n\n5\nOpenFold\nOpen-source AlphaFold2 reproduction\nRequired\n\n\n6\nChai-1\nMulti-modal biomolecular structure prediction\nRequired\n\n\n7\nBoltz-2\nStructure + binding affinity prediction\nRequired\n\n\n8\nDiffDock-PP\nProtein-protein docking\nRequired\n\n\n9\nPLACER\nProtein-ligand conformational ensemble prediction\nRequired\n\n\n10\nBindCraft\nEnd-to-end binder design pipeline\nRequired\n\n\n11\nESM3\nMultimodal protein generation\nOptional\n\n\n12\nRFdiffusion All Atom\nAll-atom protein design (predecessor to RFd2)\nOptional",
+    "text": "Tool Installation Modules\n\n\n\n#\nTool\nDescription\nStatus\n\n\n\n\n1\nLocalColabFold\nFast AlphaFold2 structure prediction\nRequired\n\n\n2\nLigandMPNN\nContext-aware protein sequence design\nRequired\n\n\n3\nRFdiffusion2\nAtom-level active site scaffolding\nRequired\n\n\n4\nESMFold\nSingle-sequence structure prediction\nRequired\n\n\n5\nOpenFold\nOpen-source AlphaFold2 reproduction\nOptional\n\n\n6\nChai-1\nMulti-modal biomolecular structure prediction\nRequired\n\n\n7\nBoltz-2\nStructure + binding affinity prediction\nRequired\n\n\n8\nDiffDock-PP\nProtein-protein docking\nRequired\n\n\n9\nPLACER\nProtein-ligand conformational ensemble prediction\nRequired\n\n\n10\nBindCraft\nEnd-to-end binder design pipeline\nRequired\n\n\n11\nESM3\nMultimodal protein generation\nOptional\n\n\n12\nRFdiffusion All Atom\nAll-atom protein design (predecessor to RFd2)\nOptional",
     "crumbs": [
       "Monday",
       "Monday: Tool Installation"
@@ -1560,7 +1857,7 @@
     "href": "monday/4-esmfold.html#hpc-job-script",
     "title": "4. ESMFold",
     "section": "HPC Job Script",
-    "text": "HPC Job Script\n#!/bin/bash\n#SBATCH --job-name=esmfold\n#SBATCH --partition=gpu\n#SBATCH --gpus=1\n#SBATCH --cpus-per-task=4\n#SBATCH --mem=32G\n#SBATCH --time=04:00:00\n#SBATCH --output=%x_%j.out\n\nmodule load cuda/12.1\n\nsource ~/.bashrc\nmamba activate esmfold\n\n# Predict structures for all sequences in FASTA file\nesm-fold -i my_proteins.fasta -o predictions/ \\\n    --num-recycles 4 \\\n    --max-tokens-per-batch 1024",
+    "text": "HPC Job Script\n#!/bin/bash\n#SBATCH --job-name=esmfold\n#SBATCH --partition=gpu\n#SBATCH --gpus=1\n#SBATCH --cpus-per-task=4\n#SBATCH --mem=32G\n#SBATCH --time=04:00:00\n#SBATCH --output=%x_%j.out\n\nmodule load cuda/12.1\n\n# source ~/.bashrc\nmamba activate esmfold\n\n# Predict structures for all sequences in FASTA file\nesm-fold -i my_proteins.fasta -o predictions/ \\\n    --num-recycles 4 \\\n    --max-tokens-per-batch 1024",
     "crumbs": [
       "Monday",
       "4. ESMFold"
@@ -1824,7 +2121,7 @@
     "href": "monday/11-esm3.html#testing-the-installation",
     "title": "11. ESM3 (Optional)",
     "section": "Testing the Installation",
-    "text": "Testing the Installation\n Mark as complete\nCreate a test script test_esm3.py:\nfrom huggingface_hub import login\nfrom esm.models.esm3 import ESM3\nfrom esm.sdk.api import ESMProtein, GenerationConfig\n\n# Authenticate (first time only)\nlogin()\n\n# Load the model (downloads weights on first run)\nmodel = ESM3.from_pretrained(\"esm3-small-2024-08\").to(\"cuda\")  # or \"cpu\"\n\n# Generate a protein sequence completion\nprompt = \"MKTVRQ_______________QLAEELSVSRQVIVQDIAYLRSLG\"\nprotein = ESMProtein(sequence=prompt)\n\n# Generate sequence\nprotein = model.generate(\n    protein,\n    GenerationConfig(track=\"sequence\", num_steps=8, temperature=0.7)\n)\n\nprint(\"Generated sequence:\")\nprint(protein.sequence)\n\n# Generate structure\nprotein = model.generate(\n    protein,\n    GenerationConfig(track=\"structure\", num_steps=8)\n)\n\n# Save structure\nprotein.to_pdb(\"./generated.pdb\")\nprint(\"Structure saved to generated.pdb\")\nRun the test:\npython test_esm3.py\nSuccess indicators:\n\nModel loads without errors\nSequence completion fills in the masked region\nStructure is generated and saved as PDB\n\nExpected runtime: 2-5 minutes (first run downloads ~3GB weights).",
+    "text": "Testing the Installation\n Mark as complete\nCreate a test script test_esm3.py:\nimport os\nfrom huggingface_hub import login\nfrom esm.models.esm3 import ESM3\nfrom esm.sdk.api import ESMProtein, GenerationConfig\n\n# Authenticate\n# Method 1: Environment variable (Recommended for HPC jobs)\nif \"HF_TOKEN\" in os.environ:\n    login(token=os.environ[\"HF_TOKEN\"])\n# Method 2: Interactive login (Run once on login node)\nelse:\n    login()\n\n# Load the model (downloads weights on first run)\nmodel = ESM3.from_pretrained(\"esm3-small-2024-08\").to(\"cuda\")  # or \"cpu\"\n\n# Generate a protein sequence completion\nprompt = \"MKTVRQ_______________QLAEELSVSRQVIVQDIAYLRSLG\"\nprotein = ESMProtein(sequence=prompt)\n\n# Generate sequence\nprotein = model.generate(\n    protein,\n    GenerationConfig(track=\"sequence\", num_steps=8, temperature=0.7)\n)\n\nprint(\"Generated sequence:\")\nprint(protein.sequence)\n\n# Generate structure\nprotein = model.generate(\n    protein,\n    GenerationConfig(track=\"structure\", num_steps=8)\n)\n\n# Save structure\nprotein.to_pdb(\"./generated.pdb\")\nprint(\"Structure saved to generated.pdb\")\nRun the test:\npython test_esm3.py\nSuccess indicators:\n\nModel loads without errors\nSequence completion fills in the masked region\nStructure is generated and saved as PDB\n\nExpected runtime: 2-5 minutes (first run downloads ~3GB weights).",
     "crumbs": [
       "Monday",
       "11. ESM3 (Optional)"
@@ -1835,7 +2132,7 @@
     "href": "monday/11-esm3.html#hpc-job-script",
     "title": "11. ESM3 (Optional)",
     "section": "HPC Job Script",
-    "text": "HPC Job Script\n#!/bin/bash\n#SBATCH --job-name=esm3\n#SBATCH --partition=gpu\n#SBATCH --gpus=1\n#SBATCH --cpus-per-task=4\n#SBATCH --mem=32G\n#SBATCH --time=02:00:00\n#SBATCH --output=%x_%j.out\n\nmodule load cuda/12.1\n\nsource ~/.bashrc\nmamba activate esm3\n\n# Set HuggingFace token\nexport HF_TOKEN=\"your_token_here\"\n\npython generate_protein.py",
+    "text": "HPC Job Script\n#!/bin/bash\n#SBATCH --job-name=esm3\n#SBATCH --partition=gpu\n#SBATCH --gpus=1\n#SBATCH --cpus-per-task=4\n#SBATCH --mem=32G\n#SBATCH --time=02:00:00\n#SBATCH --output=%x_%j.out\n\nmodule load cuda/12.1\n\n# source ~/.bashrc\nmamba activate esm3\n\n# Set HuggingFace token\nexport HF_TOKEN=\"your_token_here\"\n\npython generate_protein.py",
     "crumbs": [
       "Monday",
       "11. ESM3 (Optional)"
@@ -1956,7 +2253,7 @@
     "href": "monday/1-localcolabfold.html#installation",
     "title": "1. LocalColabFold",
     "section": "Installation",
-    "text": "Installation\n Mark as complete\n\nDownload the installation script:\n\nwget https://raw.githubusercontent.com/YoshitakaMo/localcolabfold/main/install_colabbatch_linux.sh\n\nMake the script executable and run it:\n\nchmod +x install_colabbatch_linux.sh\n./install_colabbatch_linux.sh\nThis creates a localcolabfold directory containing: - A conda environment (colabfold_batch) - ColabFold and all dependencies - Model weights (~10-15 GB, downloaded automatically)\nExpected install time: 15-30 minutes depending on network speed.\n\nAdd the environment to your PATH (add to ~/.bashrc for permanent access):\n\nexport PATH=\"/path/to/your/localcolabfold/colabfold-conda/bin:$PATH\"",
+    "text": "Installation\n Mark as complete\n\nDownload the installation script: Navigate to the directory where you want to install LocalColabFold (e.g., your scratch directory or apps folder).\n\nwget https://raw.githubusercontent.com/YoshitakaMo/localcolabfold/main/install_colabbatch_linux.sh\n\nMake the script executable and run it:\n\nchmod +x install_colabbatch_linux.sh\n./install_colabbatch_linux.sh\nThis creates a localcolabfold directory containing: - A conda environment (colabfold_batch) - ColabFold and all dependencies - Model weights (~10-15 GB, downloaded automatically)\nExpected install time: 15-30 minutes depending on network speed.\n\nAdd the environment to your PATH (add to ~/.bashrc for permanent access):\n\nexport PATH=\"/path/to/your/localcolabfold/colabfold-conda/bin:$PATH\"",
     "crumbs": [
       "Monday",
       "1. LocalColabFold"
@@ -1967,7 +2264,7 @@
     "href": "monday/1-localcolabfold.html#testing-the-installation",
     "title": "1. LocalColabFold",
     "section": "Testing the Installation",
-    "text": "Testing the Installation\n Mark as complete\n\nActivate the ColabFold environment:\n\nsource localcolabfold/colabfold-conda/bin/activate\n\nCreate a test FASTA file:\n\necho \"&gt;test_protein\nMKFLKFSLLTAVLLSVVFAFSSCGDDDDTYPYDVPDYAGTCGDDDDTYPYDVPDYA\" &gt; test.fasta\n\nRun prediction:\n\ncolabfold_batch test.fasta test_output/\nSuccess indicators:\n\nCommand completes without errors\ntest_output/ directory contains:\n\ntest_protein_relaxed_rank_001_*.pdb (predicted structure)\ntest_protein_scores_rank_001_*.json (confidence scores)\ntest_protein_coverage.png (MSA coverage plot)\n\n\nExpected runtime: 2-5 minutes for this small test protein.\nVerify GPU is being used:\n# In another terminal while prediction runs:\nnvidia-smi\n# Look for python process using GPU memory",
+    "text": "Testing the Installation\n Mark as complete\n\nActivate the ColabFold environment:\n\nsource localcolabfold/colabfold-conda/bin/activate\n\nCreate a directory for testing and a test FASTA file:\n\nmkdir -p tests\necho \"&gt;test_protein\nMKFLKFSLLTAVLLSVVFAFSSCGDDDDTYPYDVPDYAGTCGDDDDTYPYDVPDYA\" &gt; tests/test.fasta\n\nRun prediction:\n\ncolabfold_batch tests/test.fasta tests/test_output/\nSuccess indicators:\n\nCommand completes without errors\ntests/test_output/ directory contains:\n\ntest_protein_relaxed_rank_001_*.pdb (predicted structure)\ntest_protein_scores_rank_001_*.json (confidence scores)\ntest_protein_coverage.png (MSA coverage plot)\n\n\nExpected runtime: 2-5 minutes for this small test protein.\nVerify GPU is being used:\n# In another terminal while prediction runs:\nnvidia-smi\n# Look for python process using GPU memory",
     "crumbs": [
       "Monday",
       "1. LocalColabFold"

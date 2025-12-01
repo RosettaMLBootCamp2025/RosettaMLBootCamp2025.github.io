@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Wednesday – ML Protein Design Bootcamp 2025</title>
+<title>Pre-work 2: PyMOL and VS Code Setup – ML Protein Design Bootcamp 2025</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -19,6 +19,41 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -95,7 +130,7 @@ ul.task-list li input[type="checkbox"] {
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../monday/index.html"> 
+    <a class="nav-link active" href="../monday/index.html" aria-current="page"> 
 <span class="menu-text">Monday</span></a>
   </li>  
   <li class="nav-item">
@@ -103,7 +138,7 @@ ul.task-list li input[type="checkbox"] {
 <span class="menu-text">Tuesday</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="../wednesday/index.html" aria-current="page"> 
+    <a class="nav-link" href="../wednesday/index.html"> 
 <span class="menu-text">Wednesday</span></a>
   </li>  
   <li class="nav-item">
@@ -136,7 +171,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../wednesday/index.html">Wednesday</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../monday/prework-2-pymol-vscode.html">Pre-work 2: PyMOL and VS Code Setup</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -150,14 +185,106 @@ ul.task-list li input[type="checkbox"] {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../wednesday/index.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Wednesday</span></a>
+  <a href="../monday/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Monday: Tool Installation</span></a>
+  </div>
+</li>
+        <li class="px-0"><hr class="sidebar-divider hi "></li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../monday/prework-1-env-git.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Pre-work 1: Environment Setup &amp; GitHub Basics</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../wednesday/3.1-placeholder.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">3.1 Placeholder Module</span></a>
+  <a href="../monday/prework-2-pymol-vscode.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Pre-work 2: PyMOL and VS Code Setup</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../monday/prework-3-python.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Pre-work 3: Python Refresher</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../monday/0-hpc-setup.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">0. Common HPC Setup</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../monday/1-localcolabfold.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1. LocalColabFold</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../monday/2-ligandmpnn.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2. LigandMPNN</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../monday/3-rfdiffusion2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3. RFdiffusion2</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../monday/4-esmfold.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">4. ESMFold</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../monday/5-openfold.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">5. OpenFold (Optional)</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../monday/6-chai1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">6. Chai-1</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../monday/7-boltz2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">7. Boltz-2</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../monday/8-diffdock-pp.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">8. DiffDock-PP</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../monday/9-placer.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">9. PLACER</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../monday/10-bindcraft.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">10. BindCraft</span></a>
+  </div>
+</li>
+        <li class="px-0"><hr class="sidebar-divider hi "></li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../monday/11-esm3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">11. ESM3 (Optional)</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../monday/12-rfdiffusion-aa.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">12. RFdiffusion All Atom (Optional)</span></a>
   </div>
 </li>
     </ul>
@@ -171,7 +298,34 @@ ul.task-list li input[type="checkbox"] {
    
   <ul>
   <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">Overview</a></li>
-  <li><a href="#modules" id="toc-modules" class="nav-link" data-scroll-target="#modules">Modules</a></li>
+  <li><a href="#about-autograding" id="toc-about-autograding" class="nav-link" data-scroll-target="#about-autograding">About Autograding</a></li>
+  <li><a href="#prerequisites" id="toc-prerequisites" class="nav-link" data-scroll-target="#prerequisites">Prerequisites</a></li>
+  <li><a href="#part-1-pymol-installation" id="toc-part-1-pymol-installation" class="nav-link" data-scroll-target="#part-1-pymol-installation">Part 1: PyMOL Installation</a>
+  <ul class="collapse">
+  <li><a href="#installation-options" id="toc-installation-options" class="nav-link" data-scroll-target="#installation-options">Installation Options</a></li>
+  <li><a href="#optional-pymol-learning-resources" id="toc-optional-pymol-learning-resources" class="nav-link" data-scroll-target="#optional-pymol-learning-resources">Optional PyMOL Learning Resources</a></li>
+  <li><a href="#customizing-pymol-optional" id="toc-customizing-pymol-optional" class="nav-link" data-scroll-target="#customizing-pymol-optional">Customizing PyMOL (Optional)</a></li>
+  </ul></li>
+  <li><a href="#part-2-vs-code-installation" id="toc-part-2-vs-code-installation" class="nav-link" data-scroll-target="#part-2-vs-code-installation">Part 2: VS Code Installation</a>
+  <ul class="collapse">
+  <li><a href="#installation-options-1" id="toc-installation-options-1" class="nav-link" data-scroll-target="#installation-options-1">Installation Options</a></li>
+  <li><a href="#recommended-vs-code-extensions" id="toc-recommended-vs-code-extensions" class="nav-link" data-scroll-target="#recommended-vs-code-extensions">Recommended VS Code Extensions</a></li>
+  </ul></li>
+  <li><a href="#part-3-verification-tasks" id="toc-part-3-verification-tasks" class="nav-link" data-scroll-target="#part-3-verification-tasks">Part 3: Verification Tasks</a>
+  <ul class="collapse">
+  <li><a href="#task-1-pymol-verification" id="toc-task-1-pymol-verification" class="nav-link" data-scroll-target="#task-1-pymol-verification">Task 1: PyMOL Verification</a></li>
+  <li><a href="#task-2-vs-code-verification" id="toc-task-2-vs-code-verification" class="nav-link" data-scroll-target="#task-2-vs-code-verification">Task 2: VS Code Verification</a></li>
+  </ul></li>
+  <li><a href="#part-4-submission" id="toc-part-4-submission" class="nav-link" data-scroll-target="#part-4-submission">Part 4: Submission</a>
+  <ul class="collapse">
+  <li><a href="#required-files-for-submission" id="toc-required-files-for-submission" class="nav-link" data-scroll-target="#required-files-for-submission">Required Files for Submission</a></li>
+  </ul></li>
+  <li><a href="#troubleshooting" id="toc-troubleshooting" class="nav-link" data-scroll-target="#troubleshooting">Troubleshooting</a>
+  <ul class="collapse">
+  <li><a href="#pymol-issues" id="toc-pymol-issues" class="nav-link" data-scroll-target="#pymol-issues">PyMOL Issues</a></li>
+  <li><a href="#vs-code-issues" id="toc-vs-code-issues" class="nav-link" data-scroll-target="#vs-code-issues">VS Code Issues</a></li>
+  </ul></li>
+  <li><a href="#questions-and-getting-help" id="toc-questions-and-getting-help" class="nav-link" data-scroll-target="#questions-and-getting-help">Questions and Getting Help</a></li>
   </ul>
 </nav>
     </div>
@@ -180,7 +334,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Wednesday</h1>
+<h1 class="title">Pre-work 2: PyMOL and VS Code Setup</h1>
 </div>
 
 
@@ -199,39 +353,154 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="overview" class="level2">
 <h2 class="anchored" data-anchor-id="overview">Overview</h2>
-<p><em>Wednesday content coming soon.</em></p>
+<p>This assignment ensures you have PyMOL and VS Code installed and configured for the bootcamp. You will:</p>
+<ol type="1">
+<li>Install PyMOL (a molecular visualization tool)</li>
+<li>Install VS Code (a powerful code editor/IDE)</li>
+<li>Verify your installations by completing hands-on tasks</li>
+<li>Commit your work to GitHub</li>
+</ol>
 </section>
-<section id="modules" class="level2">
-<h2 class="anchored" data-anchor-id="modules">Modules</h2>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Module</th>
-<th>Topic</th>
-<th>Status</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><a href="../wednesday/3.1-placeholder.html">3.1</a></td>
-<td>Placeholder Module</td>
-<td>Coming soon</td>
-</tr>
-</tbody>
-</table>
-<p><em>More modules will be added here.</em></p>
-<hr>
-<div style="display: flex; justify-content: space-between; align-items: center;">
-<div>
-<a href="../tuesday/index.html">← Tuesday</a>
-</div>
-<div>
-<a href="../index.html">Back to Home</a>
-</div>
-<div>
-<a href="../thursday/index.html">Thursday →</a>
-</div>
-</div>
+<section id="about-autograding" class="level2">
+<h2 class="anchored" data-anchor-id="about-autograding">About Autograding</h2>
+<p><strong>Note:</strong> This assignment has automated tests that run when you push your code. You’ll see a score out of 100 points. <strong>These points are just for feedback</strong> - they help you know if you’ve completed everything correctly. This is a bootcamp focused on learning, not grades!</p>
+</section>
+<section id="prerequisites" class="level2">
+<h2 class="anchored" data-anchor-id="prerequisites">Prerequisites</h2>
+<ul>
+<li>HW1 completed</li>
+</ul>
+</section>
+<section id="part-1-pymol-installation" class="level2">
+<h2 class="anchored" data-anchor-id="part-1-pymol-installation">Part 1: PyMOL Installation</h2>
+<p>PyMOL is a molecular visualization tool that is super useful for visualizing, manipulating, and analyzing molecular structures, especially proteins. We will use PyMOL to explore protein structures during bootcamp. We recognize that it’s likely you are already quite familiar with PyMOL but if you have been using an alternative visualization software, this is a great opportunity to explore PyMOL. Please be ready to use this in the Bootcamp.</p>
+<section id="installation-options" class="level3">
+<h3 class="anchored" data-anchor-id="installation-options">Installation Options</h3>
+<p><strong>Option 1: Official PyMOL (Requires Educational License)</strong> 1. Visit the PyMOL website: https://pymol.org/ 2. Obtain a free educational license: https://pymol.org/edu/ 3. Download and install PyMOL</p>
+<p><strong>Option 2: Open-Source PyMOL via Homebrew (Mac users)</strong> If you have Homebrew installed:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">brew</span> install pymol</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Verify installation by launching PyMOL (GUI) from your applications or by running:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pymol</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="optional-pymol-learning-resources" class="level3">
+<h3 class="anchored" data-anchor-id="optional-pymol-learning-resources">Optional PyMOL Learning Resources</h3>
+<p>Though a comprehensive understanding of the various features in PyMOL is not within the scope of this course, it may be a useful tool for your future work and presentations.</p>
+<ul>
+<li><a href="https://www.youtube.com/watch?v=h5wKppcyzOw">PyMOL Tutorial Video</a> - Complete this tutorial using a protein of interest</li>
+<li><a href="https://docs.google.com/document/d/1ocdlrfUPerFWDb_QSMvAfxt_RVG4ArQkUeGh6q4Leys/edit#heading=h.4pohw9oi2g04">PyMOL Guide</a> - Comprehensive written guide</li>
+<li><a href="https://pymolwiki.org/index.php/Main_Page">PyMOL Wiki</a> - Explore more PyMOL features and tools</li>
+</ul>
+</section>
+<section id="customizing-pymol-optional" class="level3">
+<h3 class="anchored" data-anchor-id="customizing-pymol-optional">Customizing PyMOL (Optional)</h3>
+<p>If you would like to alter your visual defaults, you may do so by editing your <code>.pymolrc</code>, which is a script that gets read every time PyMOL opens. To do so, go to File &gt; Edit pymolrc. <a href="https://drive.google.com/file/d/1W5h-jVch1KVdripRdiu856kICsZRjO-0/view?usp=sharing">Here are the defaults that Rosetta member Joey Lubin uses</a>, which can be pasted into the window that opens.</p>
+</section>
+</section>
+<section id="part-2-vs-code-installation" class="level2">
+<h2 class="anchored" data-anchor-id="part-2-vs-code-installation">Part 2: VS Code Installation</h2>
+<p>VS Code is a powerful IDE that is largely customizable and can incorporate many different extensions and features. If you do not have VS Code or an alternative IDE, please install it before the bootcamp.</p>
+<section id="installation-options-1" class="level3">
+<h3 class="anchored" data-anchor-id="installation-options-1">Installation Options</h3>
+<p><strong>Option 1: Download from Website</strong> Visit the VS Code website: https://code.visualstudio.com/</p>
+<p><strong>Option 2: Install via Homebrew (Mac users)</strong> If you have Homebrew installed:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">brew</span> install <span class="at">--cask</span> visual-studio-code</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Verify installation by launching VS Code or running:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">code</span> <span class="at">--version</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="recommended-vs-code-extensions" class="level3">
+<h3 class="anchored" data-anchor-id="recommended-vs-code-extensions">Recommended VS Code Extensions</h3>
+<p>Once VS Code is installed, we recommend installing the following extensions:</p>
+<ol type="1">
+<li><strong>Python</strong> (Microsoft) - Python language support</li>
+<li><strong>Pylance</strong> (Microsoft) - Fast Python language server</li>
+<li><strong>Jupyter</strong> (Microsoft) - Jupyter notebook support</li>
+</ol>
+<p>To install extensions: 1. Open VS Code 2. Click the Extensions icon in the sidebar (or press Cmd+Shift+X / Ctrl+Shift+X) 3. Search for each extension and click “Install”</p>
+</section>
+</section>
+<section id="part-3-verification-tasks" class="level2">
+<h2 class="anchored" data-anchor-id="part-3-verification-tasks">Part 3: Verification Tasks</h2>
+<p>Now let’s verify that everything is working correctly!</p>
+<section id="task-1-pymol-verification" class="level3">
+<h3 class="anchored" data-anchor-id="task-1-pymol-verification">Task 1: PyMOL Verification</h3>
+<ol type="1">
+<li><strong>Fetch a protein structure:</strong>
+<ul>
+<li>Open PyMOL</li>
+<li>In the PyMOL command line, type: <code>fetch 1ubq</code></li>
+<li>This fetches ubiquitin (PDB ID: 1UBQ), a small regulatory protein</li>
+</ul></li>
+<li><strong>Style your visualization:</strong>
+<ul>
+<li>Try different representations (cartoon, sticks, surface, etc.)</li>
+<li>Color the structure in a way you find visually appealing</li>
+<li>Feel free to experiment!</li>
+</ul></li>
+<li><strong>Save your work:</strong>
+<ul>
+<li>Save the PyMOL session: <code>File &gt; Save Session As...</code></li>
+<li>Name it <code>1ubq_session.pse</code> and save it in this assignment directory</li>
+<li>Export an image: <code>File &gt; Export Image As &gt; PNG...</code></li>
+<li>Name it <code>1ubq_visualization.png</code> and save it in this assignment directory</li>
+</ul></li>
+</ol>
+</section>
+<section id="task-2-vs-code-verification" class="level3">
+<h3 class="anchored" data-anchor-id="task-2-vs-code-verification">Task 2: VS Code Verification</h3>
+<ol type="1">
+<li><p><strong>Open VS Code</strong></p></li>
+<li><p><strong>Create a Python script:</strong></p>
+<ul>
+<li>Open this assignment folder in VS Code: <code>File &gt; Open Folder...</code></li>
+<li>Create a new file called <code>verify_setup.py</code></li>
+<li>Copy and paste the verification script (provided in this repository)</li>
+<li>Run the script to verify your setup</li>
+</ul></li>
+<li><p><strong>Run the verification script:</strong></p>
+<ul>
+<li>Open the integrated terminal in VS Code: <code>Terminal &gt; New Terminal</code></li>
+<li>Activate your conda environment from HW1: <code>conda activate bootcamp2025_HW1</code></li>
+<li>Run: <code>python verify_setup.py</code></li>
+<li>The script will check your installations and create a <code>verification_result.txt</code> file</li>
+</ul></li>
+</ol>
+</section>
+</section>
+<section id="part-4-submission" class="level2">
+<h2 class="anchored" data-anchor-id="part-4-submission">Part 4: Submission</h2>
+<p>Once you’ve completed both tasks, commit your work to your GitHub Classroom repository:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Add all the files you created</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add 1ubq_session.pse 1ubq_visualization.png verification_result.txt</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Commit your work</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"Complete PyMOL and VS Code setup verification"</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Push to GitHub</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="required-files-for-submission" class="level3">
+<h3 class="anchored" data-anchor-id="required-files-for-submission">Required Files for Submission</h3>
+<p>Make sure your repository contains: - [ ] <code>1ubq_session.pse</code> - Your PyMOL session file - [ ] <code>1ubq_visualization.png</code> - Your exported PyMOL visualization - [ ] <code>verification_result.txt</code> - Output from the VS Code verification script</p>
+</section>
+</section>
+<section id="troubleshooting" class="level2">
+<h2 class="anchored" data-anchor-id="troubleshooting">Troubleshooting</h2>
+<section id="pymol-issues" class="level3">
+<h3 class="anchored" data-anchor-id="pymol-issues">PyMOL Issues</h3>
+<p><strong>PyMOL won’t launch:</strong> - Make sure you’ve completed the installation fully - Mac users: Try the Homebrew installation method - Make sure you’re launching the GUI application, not just the Python package</p>
+<p><strong>Can’t fetch PDB structures:</strong> - Check your internet connection - Try: <code>fetch 1ubq, type=pdb1</code> if the default doesn’t work</p>
+</section>
+<section id="vs-code-issues" class="level3">
+<h3 class="anchored" data-anchor-id="vs-code-issues">VS Code Issues</h3>
+<p><strong><code>code</code> command not found:</strong> - On Mac: Open VS Code, press Cmd+Shift+P, type “shell command”, and select “Install ‘code’ command in PATH” - On Windows: VS Code should be in your PATH automatically after installation</p>
+<p><strong>Python extension not working:</strong> - Make sure Python is installed (you should have this from HW1) - Restart VS Code after installing extensions</p>
+</section>
+</section>
+<section id="questions-and-getting-help" class="level2">
+<h2 class="anchored" data-anchor-id="questions-and-getting-help">Questions and Getting Help</h2>
+<p>We strongly encourage you to use our Slack workspace for questions and collaboration! One of the best ways to learn is by discussing problems with your peers and seeing how others approach challenges.</p>
+<p><strong>Join the Bootcamp Slack channel</strong>: (Sorry! Only for bootcamp for live bootcamp for now :())</p>
+<p>In the Slack channel, you can: - Ask questions and get help from fellow students - Share tips and solutions you’ve discovered - Learn from others’ questions and answers - Collaborate on troubleshooting issues</p>
+<p>The TAs and I will be active in the Slack channel to help guide discussions and answer questions. Don’t hesitate to jump in - chances are if you’re stuck on something, others are too!</p>
 
 
 </section>

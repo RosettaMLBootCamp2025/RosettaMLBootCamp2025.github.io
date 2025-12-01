@@ -173,7 +173,7 @@ Make sure your repository contains:
 
 We strongly encourage you to use our Slack workspace for questions and collaboration! One of the best ways to learn is by discussing problems with your peers and seeing how others approach challenges.
 
-**Join the Bootcamp Slack channel**: (Sorry! Only for bootcamp for live bootcamp for now :())
+**Join the Bootcamp Slack channel**: *The Slack workspace is currently reserved for in-person bootcamp participants. We apologize for the inconvenience.*
 
 In the Slack channel, you can:
 - Ask questions and get help from fellow students
@@ -182,3 +182,5 @@ In the Slack channel, you can:
 - Collaborate on troubleshooting issues
 
 The TAs and I will be active in the Slack channel to help guide discussions and answer questions. Don't hesitate to jump in - chances are if you're stuck on something, others are too!
+
+If you have questions, please open an issue on the [GitHub repository](https://github.com/RosettaMLBootCamp2025/RosettaMLBootCamp2025.github.io/issues) instead of emailing directly.
