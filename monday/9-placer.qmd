@@ -97,7 +97,7 @@ python run_PLACER.py \
 
 module load cuda/12.1
 
-source ~/.bashrc
+# source ~/.bashrc
 mamba activate placer_env
 
 cd /path/to/PLACER

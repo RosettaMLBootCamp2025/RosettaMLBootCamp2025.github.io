@@ -132,7 +132,7 @@ python test_esmfold.py
 
 module load cuda/12.1
 
-source ~/.bashrc
+# source ~/.bashrc
 mamba activate esmfold
 
 # Predict structures for all sequences in FASTA file

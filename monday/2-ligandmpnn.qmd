@@ -49,6 +49,7 @@ cd LigandMPNN
 ```
 
 2. Download the model parameters:
+*Note: This step requires internet access. If your compute node doesn't have internet, run this on a login node.*
 ```bash
 bash get_model_params.sh "./model_params"
 ```
@@ -105,7 +106,7 @@ python run.py \
 
 module load cuda/12.1
 
-source ~/.bashrc
+# source ~/.bashrc  # Optional: Source shell profile if needed
 mamba activate ligandmpnn_env
 
 cd /path/to/LigandMPNN

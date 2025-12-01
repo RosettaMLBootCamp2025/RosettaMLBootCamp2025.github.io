@@ -115,7 +115,7 @@ ls visualization/epoch-0/*.pdb | wc -l
 
 module load cuda/11.6
 
-source ~/.bashrc
+# source ~/.bashrc
 mamba activate diffdock_pp
 
 cd /path/to/DiffDock-PP

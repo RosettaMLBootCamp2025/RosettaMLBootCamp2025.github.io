@@ -106,7 +106,7 @@ chai-lab fold test.fasta output_folder/
 
 module load cuda/12.1
 
-source ~/.bashrc
+# source ~/.bashrc
 mamba activate chailab
 
 # Set custom download directory (avoid filling home)

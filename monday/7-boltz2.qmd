@@ -103,7 +103,7 @@ boltz predict test_input.yaml --use_msa_server
 
 module load cuda/12.1
 
-source ~/.bashrc
+# source ~/.bashrc
 mamba activate boltz
 
 # Run prediction
