@@ -46,31 +46,67 @@
   {
     "objectID": "capstone/index.html",
     "href": "capstone/index.html",
-    "title": "Capstone",
+    "title": "Capstone Project",
     "section": "",
-    "text": "Capstone project details coming soon.\nThe capstone project brings together everything you’ve learned throughout the bootcamp.",
+    "text": "Binder design is often formulated as “given a target protein (and optionally a specific epitope on that protein), design a (often smaller) protein capable of binding the target”. It is one of the most ubiquitous protein design problems and has many potential applications, largely functioning by blocking or competing with natural interactions involving the target protein.\nIn this bootcamp, you’ll have the opportunity to explore the computational binder design problem across three different categories of targets. Students will choose from a curated list of targets that have been validated with BindCraft and other computational binder design tools.",
     "crumbs": [
-      "Capstone"
+      "Capstone",
+      "Capstone Project"
     ]
   },
   {
     "objectID": "capstone/index.html#overview",
     "href": "capstone/index.html#overview",
-    "title": "Capstone",
+    "title": "Capstone Project",
     "section": "",
-    "text": "Capstone project details coming soon.\nThe capstone project brings together everything you’ve learned throughout the bootcamp.",
+    "text": "Binder design is often formulated as “given a target protein (and optionally a specific epitope on that protein), design a (often smaller) protein capable of binding the target”. It is one of the most ubiquitous protein design problems and has many potential applications, largely functioning by blocking or competing with natural interactions involving the target protein.\nIn this bootcamp, you’ll have the opportunity to explore the computational binder design problem across three different categories of targets. Students will choose from a curated list of targets that have been validated with BindCraft and other computational binder design tools.",
     "crumbs": [
-      "Capstone"
+      "Capstone",
+      "Capstone Project"
     ]
   },
   {
-    "objectID": "capstone/index.html#project-description",
-    "href": "capstone/index.html#project-description",
-    "title": "Capstone",
-    "section": "Project Description",
-    "text": "Project Description\nComing soon.\n\n\n\n← Thursday\n\n\nBack to Home",
+    "objectID": "capstone/index.html#target-categories-and-options",
+    "href": "capstone/index.html#target-categories-and-options",
+    "title": "Capstone Project",
+    "section": "Target Categories and Options",
+    "text": "Target Categories and Options\n\nImmune Checkpoint / Receptor Targets\n\n\n\nTarget\nUniProt\nNotes\n\n\n\n\nPD-L1\nQ9NZQ7\nBindCraft uses this protein as their example\n\n\nIFNAR2\nP48551\n\n\n\nIL-7Rα\nP16871\n\n\n\n\n\n\nAntibody-like Targets\n\n\n\nTarget\nUniProt\nNotes\n\n\n\n\nBet v 1\nP15494\n\n\n\n\n\n\nEnzyme / Small Molecule Binders\n\n\n\nTarget\nPDB\nNotes\n\n\n\n\nTrkA receptor\nP04629\n\n\n\nTEM-1 Beta-Lactamase\n1FQG\n\n\n\nHuman GM3 Activator\n1G13\n\n\n\nBeta-Glucosidase\n2JIE",
     "crumbs": [
-      "Capstone"
+      "Capstone",
+      "Capstone Project"
+    ]
+  },
+  {
+    "objectID": "capstone/index.html#project-structure",
+    "href": "capstone/index.html#project-structure",
+    "title": "Capstone Project",
+    "section": "Project Structure",
+    "text": "Project Structure\nStudents will select a target from the list above (4 students per target). Each student will work on the project individually and as a group throughout the week. As we learn about each tool, you’ll have time to explore how that tool works for your particular protein. Be sure to make note of any quirks or nuances related to your protein, e.g. any particular settings used or any issues encountered.\nAt the end of the week, all students who were assigned the same target will reconvene and create a presentation that summarizes results, findings, and observations related to the target.\n\n\n\n\n\n\nTipCollaboration Tip\n\n\n\nWe recommend creating a shared Google Drive folder and a shared documentation file (lab notebook style) to contain predictions, results, settings tried, and commands used so that you can easily refer to them when making the final presentation.",
+    "crumbs": [
+      "Capstone",
+      "Capstone Project"
+    ]
+  },
+  {
+    "objectID": "capstone/index.html#goals",
+    "href": "capstone/index.html#goals",
+    "title": "Capstone Project",
+    "section": "Goals",
+    "text": "Goals\n\nGain hands-on experience running DL-based tools on specific proteins\nTroubleshoot and address any issues related to your target protein\nLearn about tips and tricks used to get more favorable outputs\nGain experience talking about the computational tools and settings used\nGain experience interpreting results and exploring various settings",
+    "crumbs": [
+      "Capstone",
+      "Capstone Project"
+    ]
+  },
+  {
+    "objectID": "capstone/index.html#presentation-expectations",
+    "href": "capstone/index.html#presentation-expectations",
+    "title": "Capstone Project",
+    "section": "Presentation Expectations",
+    "text": "Presentation Expectations\nThe final presentation should be organized as follows:\n\nBackground and introduction to target protein\nStructure prediction results\nBackbone generation results\nSequence design results\nDesign rationale - explain the specific choices, settings, and approaches used and why\n\n\n\n\n\n\n\nNote\n\n\n\nI find the design rationale section to be the most helpful to my learning and understanding.\n\n\n\nResults from miscellaneous tools\nSummary and takeaways\n\nThe final presentation should last at most 20 minutes with 5 minutes afterwards for Q&A. Each student is expected to share during the final presentation.\n\n\n← Thursday\nBack to Home",
+    "crumbs": [
+      "Capstone",
+      "Capstone Project"
     ]
   },
   {
