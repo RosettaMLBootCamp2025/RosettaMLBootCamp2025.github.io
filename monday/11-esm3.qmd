@@ -80,12 +80,18 @@ export HF_TOKEN="your_token_here"
 Create a test script `test_esm3.py`:
 
 ```python
+import os
 from huggingface_hub import login
 from esm.models.esm3 import ESM3
 from esm.sdk.api import ESMProtein, GenerationConfig
 
-# Authenticate (first time only)
-login()
+# Authenticate
+# Method 1: Environment variable (Recommended for HPC jobs)
+if "HF_TOKEN" in os.environ:
+    login(token=os.environ["HF_TOKEN"])
+# Method 2: Interactive login (Run once on login node)
+else:
+    login()
 
 # Load the model (downloads weights on first run)
 model = ESM3.from_pretrained("esm3-small-2024-08").to("cuda")  # or "cpu"
@@ -141,7 +147,7 @@ python test_esm3.py
 
 module load cuda/12.1
 
-source ~/.bashrc
+# source ~/.bashrc
 mamba activate esm3
 
 # Set HuggingFace token
