@@ -1,20 +1,81 @@
 ---
-title: "Capstone"
+title: "Capstone Project"
+subtitle: "Computational Binder Design"
 ---
 
 ## Overview
 
-*Capstone project details coming soon.*
+Binder design is often formulated as "given a target protein (and optionally a specific epitope on that protein), design a (often smaller) protein capable of binding the target". It is one of the most ubiquitous protein design problems and has many potential applications, largely functioning by blocking or competing with natural interactions involving the target protein.
 
-The capstone project brings together everything you've learned throughout the bootcamp.
+In this bootcamp, you'll have the opportunity to explore the computational binder design problem across three different categories of targets. Students will choose from a curated list of targets that have been validated with BindCraft and other computational binder design tools.
 
-## Project Description
+## Target Categories and Options
 
-*Coming soon.*
+### Immune Checkpoint / Receptor Targets
+
+| Target | UniProt | Notes |
+|--------|---------|-------|
+| PD-L1 | [Q9NZQ7](https://www.uniprot.org/uniprotkb/Q9NZQ7/entry) | BindCraft uses this protein as their example |
+| IFNAR2 | [P48551](https://www.uniprot.org/uniprotkb/P48551/entry) | |
+| IL-7Rα | [P16871](https://www.uniprot.org/uniprotkb/P16871/entry) | |
+
+### Antibody-like Targets
+
+| Target | UniProt | Notes |
+|--------|---------|-------|
+| Bet v 1 | [P15494](https://www.uniprot.org/uniprotkb/P15494/entry) | |
+
+### Enzyme / Small Molecule Binders
+
+| Target | PDB | Notes |
+|--------|-----|-------|
+| TrkA receptor | [P04629](https://www.uniprot.org/uniprotkb/P04629/entry) | |
+| TEM-1 Beta-Lactamase | [1FQG](https://www.rcsb.org/structure/1FQG) | |
+| Human GM3 Activator | [1G13](https://www.rcsb.org/structure/1G13) | |
+| Beta-Glucosidase | [2JIE](https://www.rcsb.org/structure/2JIE) | |
+
+## Project Structure
+
+Students will select a target from the list above (4 students per target). Each student will work on the project individually and as a group throughout the week. As we learn about each tool, you'll have time to explore how that tool works for your particular protein. Be sure to make note of any quirks or nuances related to your protein, e.g. any particular settings used or any issues encountered.
+
+At the end of the week, all students who were assigned the same target will reconvene and create a presentation that summarizes results, findings, and observations related to the target.
+
+::: {.callout-tip}
+## Collaboration Tip
+We recommend creating a shared Google Drive folder and a shared documentation file (lab notebook style) to contain predictions, results, settings tried, and commands used so that you can easily refer to them when making the final presentation.
+:::
+
+## Goals
+
+- Gain hands-on experience running DL-based tools on specific proteins
+- Troubleshoot and address any issues related to your target protein
+- Learn about tips and tricks used to get more favorable outputs
+- Gain experience talking about the computational tools and settings used
+- Gain experience interpreting results and exploring various settings
+
+## Presentation Expectations
+
+The final presentation should be organized as follows:
+
+1. **Background and introduction** to target protein
+2. **Structure prediction results**
+3. **Backbone generation results**
+4. **Sequence design results**
+5. **Design rationale** - explain the specific choices, settings, and approaches used and why
+
+::: {.callout-note}
+I find the design rationale section to be the most helpful to my learning and understanding.
+:::
+
+6. **Results from miscellaneous tools**
+7. **Summary and takeaways**
+
+The final presentation should last **at most 20 minutes** with 5 minutes afterwards for Q&A. Each student is expected to share during the final presentation.
 
 ---
 
-<div style="display: flex; justify-content: space-between; align-items: center;">
-<div>[← Thursday](../thursday/index.qmd)</div>
-<div>[Back to Home](../index.qmd)</div>
-</div>
+::: {.d-flex .justify-content-between}
+[← Thursday](../thursday/index.qmd)
+
+[Back to Home](../index.qmd)
+:::
