@@ -44,6 +44,182 @@
     ]
   },
   {
+    "objectID": "capstone/targets/trka.html",
+    "href": "capstone/targets/trka.html",
+    "title": "TrkA Receptor Deep Dive",
+    "section": "",
+    "text": "Tropomyosin receptor kinase A (TrkA) is the high-affinity catalytic receptor for Nerve Growth Factor (NGF).\nWhy it matters: The TrkA pathway is essential for the development and survival of neurons. However, it is also implicated in chronic pain and some cancers.\nThe Goal: Design a binder that interacts with the extracellular domain of TrkA. This could be an antagonist to treat pain (blocking NGF) or a tool to study receptor activation.",
+    "crumbs": [
+      "Capstone",
+      "TrkA Receptor Deep Dive"
+    ]
+  },
+  {
+    "objectID": "capstone/targets/trka.html#biological-context",
+    "href": "capstone/targets/trka.html#biological-context",
+    "title": "TrkA Receptor Deep Dive",
+    "section": "",
+    "text": "Tropomyosin receptor kinase A (TrkA) is the high-affinity catalytic receptor for Nerve Growth Factor (NGF).\nWhy it matters: The TrkA pathway is essential for the development and survival of neurons. However, it is also implicated in chronic pain and some cancers.\nThe Goal: Design a binder that interacts with the extracellular domain of TrkA. This could be an antagonist to treat pain (blocking NGF) or a tool to study receptor activation.",
+    "crumbs": [
+      "Capstone",
+      "TrkA Receptor Deep Dive"
+    ]
+  },
+  {
+    "objectID": "capstone/targets/trka.html#interactive-structure",
+    "href": "capstone/targets/trka.html#interactive-structure",
+    "title": "TrkA Receptor Deep Dive",
+    "section": "Interactive Structure",
+    "text": "Interactive Structure\nThe viewer below shows the extracellular domain of TrkA (Chain A) in complex with NGF (Chain B).\n\n\n\n\n&lt;!-- \n  PDB 1WWC: Crystal structure of the NGF-TrkA complex\n--&gt;\n&lt;pdbe-molstar \n  id=\"trka-viewer\" \n  molecule-id=\"1wwc\" \n  hide-controls=\"true\"\n  bg-color-r=\"255\" \n  bg-color-g=\"255\" \n  bg-color-b=\"255\"&gt;\n&lt;/pdbe-molstar&gt;\n\n\n\n\n\n\n\nTipViewer Controls\n\n\n\n\nRotate: Left-click and drag\nZoom: Scroll wheel\nPan: Right-click (or Ctrl+Left-click) and drag",
+    "crumbs": [
+      "Capstone",
+      "TrkA Receptor Deep Dive"
+    ]
+  },
+  {
+    "objectID": "capstone/targets/trka.html#design-mission",
+    "href": "capstone/targets/trka.html#design-mission",
+    "title": "TrkA Receptor Deep Dive",
+    "section": "Design Mission",
+    "text": "Design Mission\nDesign a protein that binds to the NGF-binding face of TrkA.\n\nTarget Specifications\n\n\n\n\n\n\n\nFeature\nDetail\n\n\n\n\nTarget Name\nTrkA Receptor\n\n\nPDB ID\n1WWC\n\n\nTarget Chain\nChain A (TrkA)\n\n\nBinder to Mimic\nChain B (NGF)\n\n\nInterface / Hotspot\nThe residues on Chain A that contact Chain B.\n\n\n\n\n\nStrategy Tips\n\nDownload PDB 1WWC.\nClean the structure: Isolate Chain A.\nInterface Definition: Use PyMOL to find residues on Chain A within 5Å of Chain B.\n\n\n← Back to Capstone Overview",
+    "crumbs": [
+      "Capstone",
+      "TrkA Receptor Deep Dive"
+    ]
+  },
+  {
+    "objectID": "capstone/targets/gm3.html",
+    "href": "capstone/targets/gm3.html",
+    "title": "Human GM3 Activator Deep Dive",
+    "section": "",
+    "text": "GM2 Activator Protein (GM2AP) (often associated with GM3 pathway interactions) is a small glycoprotein required for the degradation of gangliosides (types of lipids) in the lysosome.\nWhy it matters: Defects in this protein cause GM2 gangliosidosis (AB variant), a severe neurodegenerative storage disease.\nThe Goal: Design a binder that can stabilize this protein or mimic its interaction partners.",
+    "crumbs": [
+      "Capstone",
+      "Human GM3 Activator Deep Dive"
+    ]
+  },
+  {
+    "objectID": "capstone/targets/gm3.html#biological-context",
+    "href": "capstone/targets/gm3.html#biological-context",
+    "title": "Human GM3 Activator Deep Dive",
+    "section": "",
+    "text": "GM2 Activator Protein (GM2AP) (often associated with GM3 pathway interactions) is a small glycoprotein required for the degradation of gangliosides (types of lipids) in the lysosome.\nWhy it matters: Defects in this protein cause GM2 gangliosidosis (AB variant), a severe neurodegenerative storage disease.\nThe Goal: Design a binder that can stabilize this protein or mimic its interaction partners.",
+    "crumbs": [
+      "Capstone",
+      "Human GM3 Activator Deep Dive"
+    ]
+  },
+  {
+    "objectID": "capstone/targets/gm3.html#interactive-structure",
+    "href": "capstone/targets/gm3.html#interactive-structure",
+    "title": "Human GM3 Activator Deep Dive",
+    "section": "Interactive Structure",
+    "text": "Interactive Structure\nThe viewer below shows the GM2 Activator Protein.\n\n\n\n\n&lt;!-- \n  PDB 1G13: Crystal structure of human GM2 activator protein\n--&gt;\n&lt;pdbe-molstar \n  id=\"gm3-viewer\" \n  molecule-id=\"1g13\" \n  hide-controls=\"true\"\n  bg-color-r=\"255\" \n  bg-color-g=\"255\" \n  bg-color-b=\"255\"&gt;\n&lt;/pdbe-molstar&gt;\n\n\n\n\n\n\n\nTipViewer Controls\n\n\n\n\nRotate: Left-click and drag\nZoom: Scroll wheel\nPan: Right-click (or Ctrl+Left-click) and drag",
+    "crumbs": [
+      "Capstone",
+      "Human GM3 Activator Deep Dive"
+    ]
+  },
+  {
+    "objectID": "capstone/targets/gm3.html#design-mission",
+    "href": "capstone/targets/gm3.html#design-mission",
+    "title": "Human GM3 Activator Deep Dive",
+    "section": "Design Mission",
+    "text": "Design Mission\nCreate a binder that interacts with the lipid-binding cavity or surface loops of GM2AP.\n\nTarget Specifications\n\n\n\nFeature\nDetail\n\n\n\n\nTarget Name\nGM2 Activator Protein\n\n\nPDB ID\n1G13\n\n\nTarget Chain\nChain A\n\n\nInterface / Hotspot\nThe hydrophobic cavity or surface loops.\n\n\n\n\n\nStrategy Tips\n\nDownload PDB 1G13.\nSurface Analysis: Identify the opening of the lipid-binding cavity. This is a challenging but interesting target for “pocket” binding.\n\n\n← Back to Capstone Overview",
+    "crumbs": [
+      "Capstone",
+      "Human GM3 Activator Deep Dive"
+    ]
+  },
+  {
+    "objectID": "capstone/targets/tem-1.html",
+    "href": "capstone/targets/tem-1.html",
+    "title": "TEM-1 Beta-Lactamase Deep Dive",
+    "section": "",
+    "text": "TEM-1 Beta-Lactamase is an enzyme produced by bacteria that confers resistance to penicillin and other beta-lactam antibiotics. It works by breaking the antibiotic molecule apart.\nWhy it matters: This is a classic target for “Binder Design” as a means of inhibition. If you can design a protein that binds tightly to the active site or an allosteric site, you might stop the enzyme from working, making the bacteria susceptible to antibiotics again.\nThe Goal: Design a binder that inhibits TEM-1 function. This is often done by targeting the active site groove.",
+    "crumbs": [
+      "Capstone",
+      "TEM-1 Beta-Lactamase Deep Dive"
+    ]
+  },
+  {
+    "objectID": "capstone/targets/tem-1.html#biological-context",
+    "href": "capstone/targets/tem-1.html#biological-context",
+    "title": "TEM-1 Beta-Lactamase Deep Dive",
+    "section": "",
+    "text": "TEM-1 Beta-Lactamase is an enzyme produced by bacteria that confers resistance to penicillin and other beta-lactam antibiotics. It works by breaking the antibiotic molecule apart.\nWhy it matters: This is a classic target for “Binder Design” as a means of inhibition. If you can design a protein that binds tightly to the active site or an allosteric site, you might stop the enzyme from working, making the bacteria susceptible to antibiotics again.\nThe Goal: Design a binder that inhibits TEM-1 function. This is often done by targeting the active site groove.",
+    "crumbs": [
+      "Capstone",
+      "TEM-1 Beta-Lactamase Deep Dive"
+    ]
+  },
+  {
+    "objectID": "capstone/targets/tem-1.html#interactive-structure",
+    "href": "capstone/targets/tem-1.html#interactive-structure",
+    "title": "TEM-1 Beta-Lactamase Deep Dive",
+    "section": "Interactive Structure",
+    "text": "Interactive Structure\nThe viewer below shows TEM-1 Beta-Lactamase.\n\n\n\n\n&lt;!-- \n  PDB 1FQG: TEM-1 Beta-Lactamase structure\n--&gt;\n&lt;pdbe-molstar \n  id=\"tem1-viewer\" \n  molecule-id=\"1fqg\" \n  hide-controls=\"true\"\n  bg-color-r=\"255\" \n  bg-color-g=\"255\" \n  bg-color-b=\"255\"&gt;\n&lt;/pdbe-molstar&gt;\n\n\n\n\n\n\n\nTipViewer Controls\n\n\n\n\nRotate: Left-click and drag\nZoom: Scroll wheel\nPan: Right-click (or Ctrl+Left-click) and drag",
+    "crumbs": [
+      "Capstone",
+      "TEM-1 Beta-Lactamase Deep Dive"
+    ]
+  },
+  {
+    "objectID": "capstone/targets/tem-1.html#design-mission",
+    "href": "capstone/targets/tem-1.html#design-mission",
+    "title": "TEM-1 Beta-Lactamase Deep Dive",
+    "section": "Design Mission",
+    "text": "Design Mission\nCreate a binder that targets the active site cleft of TEM-1.\n\nTarget Specifications\n\n\n\n\n\n\n\nFeature\nDetail\n\n\n\n\nTarget Name\nTEM-1 Beta-Lactamase\n\n\nPDB ID\n1FQG\n\n\nTarget Chain\nChain A\n\n\nInterface / Hotspot\nThe active site pocket (look for where inhibitors typically bind).\n\n\n\n\n\nStrategy Tips\n\nDownload PDB 1FQG.\nIdentify the Pocket: Use tools like PyMOL to locate the concave active site.\nTargeting: When using RFdiffusion, you may want to specify “binder”contigs that fill this specific pocket.\n\n\n← Back to Capstone Overview",
+    "crumbs": [
+      "Capstone",
+      "TEM-1 Beta-Lactamase Deep Dive"
+    ]
+  },
+  {
+    "objectID": "capstone/targets/pd-l1.html",
+    "href": "capstone/targets/pd-l1.html",
+    "title": "PD-L1 Target Deep Dive",
+    "section": "",
+    "text": "Programmed Death-Ligand 1 (PD-L1) is a critical protein expressed on the surface of many cells, including cancer cells. Under normal conditions, it acts as a “brake” on the immune system. When PD-L1 binds to the PD-1 receptor on T-cells, it signals the T-cell to become inactive.\nWhy it matters: Cancer cells often hijack this mechanism by over-expressing PD-L1. This allows them to “trick” the immune system into ignoring the tumor.\nThe Goal: By designing a protein binder that sticks tightly to PD-L1, we can block it from interacting with PD-1. This releases the “brake,” allowing T-cells to recognize and attack the cancer.",
+    "crumbs": [
+      "Capstone",
+      "PD-L1 Target Deep Dive"
+    ]
+  },
+  {
+    "objectID": "capstone/targets/pd-l1.html#biological-context",
+    "href": "capstone/targets/pd-l1.html#biological-context",
+    "title": "PD-L1 Target Deep Dive",
+    "section": "",
+    "text": "Programmed Death-Ligand 1 (PD-L1) is a critical protein expressed on the surface of many cells, including cancer cells. Under normal conditions, it acts as a “brake” on the immune system. When PD-L1 binds to the PD-1 receptor on T-cells, it signals the T-cell to become inactive.\nWhy it matters: Cancer cells often hijack this mechanism by over-expressing PD-L1. This allows them to “trick” the immune system into ignoring the tumor.\nThe Goal: By designing a protein binder that sticks tightly to PD-L1, we can block it from interacting with PD-1. This releases the “brake,” allowing T-cells to recognize and attack the cancer.",
+    "crumbs": [
+      "Capstone",
+      "PD-L1 Target Deep Dive"
+    ]
+  },
+  {
+    "objectID": "capstone/targets/pd-l1.html#interactive-structure",
+    "href": "capstone/targets/pd-l1.html#interactive-structure",
+    "title": "PD-L1 Target Deep Dive",
+    "section": "Interactive Structure",
+    "text": "Interactive Structure\nExplore the native interaction between PD-L1 (the target) and PD-1 (the natural binder) below. * Target (PD-L1): The surface we want to bind to. * Binder (PD-1): The natural partner we want to compete with.\n\n\n\n\n&lt;!-- \n  PDB 4ZQK: Crystal structure of human PD-1 (Chain A) complexed with PD-L1 (Chain B)\n  hide-controls=\"true\" keeps the UI simple for this overview \n--&gt;\n&lt;pdbe-molstar \n  id=\"pd-l1-viewer\" \n  molecule-id=\"4zqk\" \n  hide-controls=\"true\"\n  bg-color-r=\"255\" \n  bg-color-g=\"255\" \n  bg-color-b=\"255\"&gt;\n&lt;/pdbe-molstar&gt;\n\n\n\n\n\n\n\nTipViewer Controls\n\n\n\n\nRotate: Left-click and drag\nZoom: Scroll wheel\nPan: Right-click (or Ctrl+Left-click) and drag",
+    "crumbs": [
+      "Capstone",
+      "PD-L1 Target Deep Dive"
+    ]
+  },
+  {
+    "objectID": "capstone/targets/pd-l1.html#design-mission",
+    "href": "capstone/targets/pd-l1.html#design-mission",
+    "title": "PD-L1 Target Deep Dive",
+    "section": "Design Mission",
+    "text": "Design Mission\nYour objective is to create a de novo protein binder that binds to the same interface on PD-L1 that PD-1 currently occupies.\n\nTarget Specifications\n\n\n\n\n\n\n\nFeature\nDetail\n\n\n\n\nTarget Name\nPD-L1 (Programmed Death-Ligand 1)\n\n\nPDB ID\n4ZQK\n\n\nTarget Chain\nChain A\n\n\nInterface / Hotspot\nResidues 54-66 and 113-123 (approximate binding loop area)\n\n\n\n\n\nStrategy Tips\n\nDownload PDB 4ZQK.\nClean the structure: You only need Chain A (PD-L1). You can remove Chain B (PD-1) and any water molecules.\nDefine the Interface: When running tools like RFdiffusion or BindCraft, specify the hotspot residues listed above to guide the diffusion process to the correct face of the protein.\n\n\n← Back to Capstone Overview",
+    "crumbs": [
+      "Capstone",
+      "PD-L1 Target Deep Dive"
+    ]
+  },
+  {
     "objectID": "capstone/index.html",
     "href": "capstone/index.html",
     "title": "Capstone Project",
@@ -70,7 +246,7 @@
     "href": "capstone/index.html#target-categories-and-options",
     "title": "Capstone Project",
     "section": "Target Categories and Options",
-    "text": "Target Categories and Options\n\nImmune Checkpoint / Receptor Targets\n\n\n\nTarget\nUniProt\nNotes\n\n\n\n\nPD-L1\nQ9NZQ7\nBindCraft uses this protein as their example\n\n\nIFNAR2\nP48551\n\n\n\nIL-7Rα\nP16871\n\n\n\n\n\n\nAntibody-like Targets\n\n\n\nTarget\nUniProt\nNotes\n\n\n\n\nBet v 1\nP15494\n\n\n\n\n\n\nEnzyme / Small Molecule Binders\n\n\n\nTarget\nPDB\nNotes\n\n\n\n\nTrkA receptor\nP04629\n\n\n\nTEM-1 Beta-Lactamase\n1FQG\n\n\n\nHuman GM3 Activator\n1G13\n\n\n\nBeta-Glucosidase\n2JIE",
+    "text": "Target Categories and Options\n\nImmune Checkpoint / Receptor Targets\n\n\n\nTarget\nUniProt\nDescription\n\n\n\n\nPD-L1\nQ9NZQ7\nImmune Checkpoint\n\n\nIFNAR2\nP48551\nInterferon receptor\n\n\nIL-7Rα\nP16871\nInterleukin receptor\n\n\n\n\n\nAntibody-like Targets\n\n\n\nTarget\nUniProt\nDescription\n\n\n\n\nBet v 1\nP15494\nBirch pollen allergen\n\n\n\n\n\nEnzyme / Small Molecule Binders\n\n\n\nTarget\nPDB\nDescription\n\n\n\n\nTrkA receptor\nP04629\nNerve Growth Factor Receptor\n\n\nTEM-1 Beta-Lactamase\n1FQG\nAntibiotic Resistance Enzyme\n\n\nHuman GM3 Activator\n1G13\nLipid Transport Protein\n\n\nBeta-Glucosidase\n2JIE\nEnzymatic Catalyst",
     "crumbs": [
       "Capstone",
       "Capstone Project"
@@ -2458,6 +2634,182 @@
     "title": "About",
     "section": "",
     "text": "This bootcamp covers machine learning tools for protein structure prediction and design.\nMore information coming soon."
+  },
+  {
+    "objectID": "capstone/targets/beta-glucosidase.html",
+    "href": "capstone/targets/beta-glucosidase.html",
+    "title": "Beta-Glucosidase Deep Dive",
+    "section": "",
+    "text": "Beta-Glucosidase is an enzyme that breaks down complex sugars (glucosides) into glucose. It is relevant in both human metabolism (Gaucher’s disease) and industrial biofuel production.\nWhy it matters: In industrial applications, thermostable or stabilized versions of this enzyme are highly valuable. In health, chaperones (binders) that help fold unstable mutants can be therapeutic.\nThe Goal: Design a binder that stabilizes the enzyme without blocking its active site, or conversely, an inhibitor that blocks it.",
+    "crumbs": [
+      "Capstone",
+      "Beta-Glucosidase Deep Dive"
+    ]
+  },
+  {
+    "objectID": "capstone/targets/beta-glucosidase.html#biological-context",
+    "href": "capstone/targets/beta-glucosidase.html#biological-context",
+    "title": "Beta-Glucosidase Deep Dive",
+    "section": "",
+    "text": "Beta-Glucosidase is an enzyme that breaks down complex sugars (glucosides) into glucose. It is relevant in both human metabolism (Gaucher’s disease) and industrial biofuel production.\nWhy it matters: In industrial applications, thermostable or stabilized versions of this enzyme are highly valuable. In health, chaperones (binders) that help fold unstable mutants can be therapeutic.\nThe Goal: Design a binder that stabilizes the enzyme without blocking its active site, or conversely, an inhibitor that blocks it.",
+    "crumbs": [
+      "Capstone",
+      "Beta-Glucosidase Deep Dive"
+    ]
+  },
+  {
+    "objectID": "capstone/targets/beta-glucosidase.html#interactive-structure",
+    "href": "capstone/targets/beta-glucosidase.html#interactive-structure",
+    "title": "Beta-Glucosidase Deep Dive",
+    "section": "Interactive Structure",
+    "text": "Interactive Structure\nThe viewer below shows Beta-Glucosidase A.\n\n\n\n\n&lt;!-- \n  PDB 2JIE: Structure of Beta-Glucosidase\n--&gt;\n&lt;pdbe-molstar \n  id=\"bgl-viewer\" \n  molecule-id=\"2jie\" \n  hide-controls=\"true\"\n  bg-color-r=\"255\" \n  bg-color-g=\"255\" \n  bg-color-b=\"255\"&gt;\n&lt;/pdbe-molstar&gt;\n\n\n\n\n\n\n\nTipViewer Controls\n\n\n\n\nRotate: Left-click and drag\nZoom: Scroll wheel\nPan: Right-click (or Ctrl+Left-click) and drag",
+    "crumbs": [
+      "Capstone",
+      "Beta-Glucosidase Deep Dive"
+    ]
+  },
+  {
+    "objectID": "capstone/targets/beta-glucosidase.html#design-mission",
+    "href": "capstone/targets/beta-glucosidase.html#design-mission",
+    "title": "Beta-Glucosidase Deep Dive",
+    "section": "Design Mission",
+    "text": "Design Mission\nTarget a surface patch on Beta-Glucosidase.\n\nTarget Specifications\n\n\n\n\n\n\n\nFeature\nDetail\n\n\n\n\nTarget Name\nBeta-Glucosidase\n\n\nPDB ID\n2JIE\n\n\nTarget Chain\nChain A\n\n\nInterface / Hotspot\nSurface patches away from the active site (for stabilization) or the active site (for inhibition).\n\n\n\n\n\nStrategy Tips\n\nDownload PDB 2JIE.\nDefine your Goal: Decide if you want to inhibit or stabilize.\nSelect Hotspot: Choose residues accordingly.\n\n\n← Back to Capstone Overview",
+    "crumbs": [
+      "Capstone",
+      "Beta-Glucosidase Deep Dive"
+    ]
+  },
+  {
+    "objectID": "capstone/targets/ifnar2.html",
+    "href": "capstone/targets/ifnar2.html",
+    "title": "IFNAR2 Target Deep Dive",
+    "section": "",
+    "text": "Interferon Alpha/Beta Receptor 2 (IFNAR2) is one of the two receptor subunits that recognize Type I interferons (like IFN-α and IFN-β). These cytokines are powerful antivirals and immune regulators.\nWhy it matters: Modulating this pathway is crucial for treating viral infections (activating it) or autoimmune diseases like Lupus (blocking it).\nThe Goal: Design a protein that binds to the extracellular domain of IFNAR2. Depending on the design goal, this could either compete with natural Interferon (blocking the signal) or potentially act as a synthetic agonist.",
+    "crumbs": [
+      "Capstone",
+      "IFNAR2 Target Deep Dive"
+    ]
+  },
+  {
+    "objectID": "capstone/targets/ifnar2.html#biological-context",
+    "href": "capstone/targets/ifnar2.html#biological-context",
+    "title": "IFNAR2 Target Deep Dive",
+    "section": "",
+    "text": "Interferon Alpha/Beta Receptor 2 (IFNAR2) is one of the two receptor subunits that recognize Type I interferons (like IFN-α and IFN-β). These cytokines are powerful antivirals and immune regulators.\nWhy it matters: Modulating this pathway is crucial for treating viral infections (activating it) or autoimmune diseases like Lupus (blocking it).\nThe Goal: Design a protein that binds to the extracellular domain of IFNAR2. Depending on the design goal, this could either compete with natural Interferon (blocking the signal) or potentially act as a synthetic agonist.",
+    "crumbs": [
+      "Capstone",
+      "IFNAR2 Target Deep Dive"
+    ]
+  },
+  {
+    "objectID": "capstone/targets/ifnar2.html#interactive-structure",
+    "href": "capstone/targets/ifnar2.html#interactive-structure",
+    "title": "IFNAR2 Target Deep Dive",
+    "section": "Interactive Structure",
+    "text": "Interactive Structure\nThe viewer below shows IFNAR2 (Chain B) in complex with Interferon alpha-2 (Chain A) and IFNAR1 (Chain C).\n\n\n\n\n&lt;!-- \n  PDB 3SE3: Ternary complex of IFNAR1, IFNAR2, and IFN-alpha2\n--&gt;\n&lt;pdbe-molstar \n  id=\"ifnar2-viewer\" \n  molecule-id=\"3se3\" \n  hide-controls=\"true\"\n  bg-color-r=\"255\" \n  bg-color-g=\"255\" \n  bg-color-b=\"255\"&gt;\n&lt;/pdbe-molstar&gt;\n\n\n\n\n\n\n\nTipViewer Controls\n\n\n\n\nRotate: Left-click and drag\nZoom: Scroll wheel\nPan: Right-click (or Ctrl+Left-click) and drag",
+    "crumbs": [
+      "Capstone",
+      "IFNAR2 Target Deep Dive"
+    ]
+  },
+  {
+    "objectID": "capstone/targets/ifnar2.html#design-mission",
+    "href": "capstone/targets/ifnar2.html#design-mission",
+    "title": "IFNAR2 Target Deep Dive",
+    "section": "Design Mission",
+    "text": "Design Mission\nCreate a binder that targets the Interferon-binding interface of IFNAR2.\n\nTarget Specifications\n\n\n\n\n\n\n\nFeature\nDetail\n\n\n\n\nTarget Name\nIFNAR2 (Interferon alpha/beta receptor 2)\n\n\nPDB ID\n3SE3\n\n\nTarget Chain\nChain B (IFNAR2)\n\n\nBinder to Mimic\nChain A (IFN-alpha2)\n\n\nInterface / Hotspot\nResidues interacting with Chain A (approx 40-50, 70-80 regions)\n\n\n\n\n\nStrategy Tips\n\nDownload PDB 3SE3.\nClean the structure: Isolate Chain B (IFNAR2) as your target.\nAnalyze the Interface: Load the full complex in PyMOL. Select Chain B residues that are within 5Å of Chain A to define your hotspot for BindCraft or RFdiffusion.\n\n\n← Back to Capstone Overview",
+    "crumbs": [
+      "Capstone",
+      "IFNAR2 Target Deep Dive"
+    ]
+  },
+  {
+    "objectID": "capstone/targets/bet-v-1.html",
+    "href": "capstone/targets/bet-v-1.html",
+    "title": "Bet v 1 Target Deep Dive",
+    "section": "",
+    "text": "Bet v 1 is the major allergen found in birch pollen. It is responsible for seasonal allergies in millions of people worldwide.\nWhy it matters: The allergic reaction is caused when the patient’s antibodies (IgE) recognize and bind to epitopes on the surface of Bet v 1.\nThe Goal: Design a “masking” protein (similar to a neutralizing antibody) that binds tightly to the surface of Bet v 1. If your designed binder covers the IgE binding sites, it could theoretically prevent the allergic reaction.",
+    "crumbs": [
+      "Capstone",
+      "Bet v 1 Target Deep Dive"
+    ]
+  },
+  {
+    "objectID": "capstone/targets/bet-v-1.html#biological-context",
+    "href": "capstone/targets/bet-v-1.html#biological-context",
+    "title": "Bet v 1 Target Deep Dive",
+    "section": "",
+    "text": "Bet v 1 is the major allergen found in birch pollen. It is responsible for seasonal allergies in millions of people worldwide.\nWhy it matters: The allergic reaction is caused when the patient’s antibodies (IgE) recognize and bind to epitopes on the surface of Bet v 1.\nThe Goal: Design a “masking” protein (similar to a neutralizing antibody) that binds tightly to the surface of Bet v 1. If your designed binder covers the IgE binding sites, it could theoretically prevent the allergic reaction.",
+    "crumbs": [
+      "Capstone",
+      "Bet v 1 Target Deep Dive"
+    ]
+  },
+  {
+    "objectID": "capstone/targets/bet-v-1.html#interactive-structure",
+    "href": "capstone/targets/bet-v-1.html#interactive-structure",
+    "title": "Bet v 1 Target Deep Dive",
+    "section": "Interactive Structure",
+    "text": "Interactive Structure\nThe viewer below shows the structure of Bet v 1.\n\n\n\n\n&lt;!-- \n  PDB 4A88: Bet v 1 structure\n--&gt;\n&lt;pdbe-molstar \n  id=\"betv1-viewer\" \n  molecule-id=\"4a88\" \n  hide-controls=\"true\"\n  bg-color-r=\"255\" \n  bg-color-g=\"255\" \n  bg-color-b=\"255\"&gt;\n&lt;/pdbe-molstar&gt;\n\n\n\n\n\n\n\nTipViewer Controls\n\n\n\n\nRotate: Left-click and drag\nZoom: Scroll wheel\nPan: Right-click (or Ctrl+Left-click) and drag",
+    "crumbs": [
+      "Capstone",
+      "Bet v 1 Target Deep Dive"
+    ]
+  },
+  {
+    "objectID": "capstone/targets/bet-v-1.html#design-mission",
+    "href": "capstone/targets/bet-v-1.html#design-mission",
+    "title": "Bet v 1 Target Deep Dive",
+    "section": "Design Mission",
+    "text": "Design Mission\nCreate a protein that binds to a solvent-exposed patch on Bet v 1. Unlike the other targets, you aren’t necessarily mimicking a natural partner—you are creating a blocker.\n\nTarget Specifications\n\n\n\nFeature\nDetail\n\n\n\n\nTarget Name\nBet v 1\n\n\nPDB ID\n4A88\n\n\nTarget Chain\nChain A\n\n\nInterface / Hotspot\nChoose a large exposed surface patch.\n\n\n\n\n\nStrategy Tips\n\nDownload PDB 4A88.\nSurface Mapping: Since there is no single “natural ligand” to mimic, you have more freedom. Pick a surface patch that looks accessible (convex or flat surfaces are easier than deep pockets for protein-protein interactions).\nPyligner/BindCraft: These tools are excellent for identifying bindable patches on an antigen.\n\n\n← Back to Capstone Overview",
+    "crumbs": [
+      "Capstone",
+      "Bet v 1 Target Deep Dive"
+    ]
+  },
+  {
+    "objectID": "capstone/targets/il-7r.html",
+    "href": "capstone/targets/il-7r.html",
+    "title": "IL-7R Target Deep Dive",
+    "section": "",
+    "text": "Interleukin-7 Receptor alpha (IL-7R) is crucial for the development and survival of T-cells.\nWhy it matters: Dysregulation of IL-7 signaling is implicated in T-cell acute lymphoblastic leukemia (T-ALL) and various autoimmune conditions like Multiple Sclerosis.\nThe Goal: Design a binder that blocks the interaction between IL-7 and IL-7R. A high-affinity binder could serve as a therapeutic antagonist to dampen the immune response in autoimmune settings.",
+    "crumbs": [
+      "Capstone",
+      "IL-7R Target Deep Dive"
+    ]
+  },
+  {
+    "objectID": "capstone/targets/il-7r.html#biological-context",
+    "href": "capstone/targets/il-7r.html#biological-context",
+    "title": "IL-7R Target Deep Dive",
+    "section": "",
+    "text": "Interleukin-7 Receptor alpha (IL-7R) is crucial for the development and survival of T-cells.\nWhy it matters: Dysregulation of IL-7 signaling is implicated in T-cell acute lymphoblastic leukemia (T-ALL) and various autoimmune conditions like Multiple Sclerosis.\nThe Goal: Design a binder that blocks the interaction between IL-7 and IL-7R. A high-affinity binder could serve as a therapeutic antagonist to dampen the immune response in autoimmune settings.",
+    "crumbs": [
+      "Capstone",
+      "IL-7R Target Deep Dive"
+    ]
+  },
+  {
+    "objectID": "capstone/targets/il-7r.html#interactive-structure",
+    "href": "capstone/targets/il-7r.html#interactive-structure",
+    "title": "IL-7R Target Deep Dive",
+    "section": "Interactive Structure",
+    "text": "Interactive Structure\nThe viewer below shows IL-7R alpha (Chain B) bound to its cytokine IL-7 (Chain A).\n\n\n\n\n&lt;!-- \n  PDB 3DI2: IL-7 in complex with IL-7R alpha\n--&gt;\n&lt;pdbe-molstar \n  id=\"il7r-viewer\" \n  molecule-id=\"3di2\" \n  hide-controls=\"true\"\n  bg-color-r=\"255\" \n  bg-color-g=\"255\" \n  bg-color-b=\"255\"&gt;\n&lt;/pdbe-molstar&gt;\n\n\n\n\n\n\n\nTipViewer Controls\n\n\n\n\nRotate: Left-click and drag\nZoom: Scroll wheel\nPan: Right-click (or Ctrl+Left-click) and drag",
+    "crumbs": [
+      "Capstone",
+      "IL-7R Target Deep Dive"
+    ]
+  },
+  {
+    "objectID": "capstone/targets/il-7r.html#design-mission",
+    "href": "capstone/targets/il-7r.html#design-mission",
+    "title": "IL-7R Target Deep Dive",
+    "section": "Design Mission",
+    "text": "Design Mission\nCreate a binder that occupies the ligand-binding groove of IL-7R, preventing native IL-7 from binding.\n\nTarget Specifications\n\n\n\nFeature\nDetail\n\n\n\n\nTarget Name\nIL-7R alpha\n\n\nPDB ID\n3DI2\n\n\nTarget Chain\nChain B\n\n\nBinder to Mimic\nChain A (IL-7)\n\n\nInterface / Hotspot\nThe groove where Chain A sits.\n\n\n\n\n\nStrategy Tips\n\nDownload PDB 3DI2.\nClean the structure: Keep Chain B.\nHotspot Definition: Use the residues on Chain B that contact Chain A to define the binding site.\n\n\n← Back to Capstone Overview",
+    "crumbs": [
+      "Capstone",
+      "IL-7R Target Deep Dive"
+    ]
   },
   {
     "objectID": "thursday/index.html",
