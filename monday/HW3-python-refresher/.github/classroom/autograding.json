@@ -1,0 +1,44 @@
+{
+  "tests": [
+    {
+      "name": "Test basics.py functions",
+      "setup": "sudo -H pip3 install pytest",
+      "run": "pytest tests/test_basics.py -v",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 10,
+      "points": 25
+    },
+    {
+      "name": "Test sequence_utils.py functions",
+      "setup": "sudo -H pip3 install pytest",
+      "run": "pytest tests/test_sequence_utils.py -v",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 10,
+      "points": 25
+    },
+    {
+      "name": "Test read_fasta.py",
+      "setup": "sudo -H pip3 install pytest",
+      "run": "pytest tests/test_read_fasta.py -v",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 10,
+      "points": 25
+    },
+    {
+      "name": "Check analysis_results.txt created",
+      "setup": "",
+      "run": "python3 analyze_sequence.py sample.fasta && test -f analysis_results.txt",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 10,
+      "points": 25
+    }
+  ]
+}

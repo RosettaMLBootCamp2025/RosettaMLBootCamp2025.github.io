@@ -1,0 +1,59 @@
+name: Autograding Tests
+on:
+  - push
+permissions:
+  checks: write
+  actions: read
+  contents: read
+jobs:
+  run-autograding-tests:
+    runs-on: ubuntu-latest
+    if: github.actor != 'github-classroom[bot]' && github.repository != 'RosettaMLBootCamp2025/HW3-python-refresher'
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Test basics.py functions
+        id: test-basics-py-functions
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: Test basics.py functions
+          setup-command: sudo -H pip3 install pytest
+          command: pytest tests/test_basics.py -v
+          timeout: 10
+          max-score: 25
+      - name: Test sequence_utils.py functions
+        id: test-sequence-utils-py-functions
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: Test sequence_utils.py functions
+          setup-command: sudo -H pip3 install pytest
+          command: pytest tests/test_sequence_utils.py -v
+          timeout: 10
+          max-score: 25
+      - name: Test read_fasta.py
+        id: test-read-fasta-py
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: Test read_fasta.py
+          setup-command: sudo -H pip3 install pytest
+          command: pytest tests/test_read_fasta.py -v
+          timeout: 10
+          max-score: 25
+      - name: Check analysis_results.txt created
+        id: check-analysis-results-txt-created
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: Check analysis_results.txt created
+          setup-command: ''
+          command: python3 analyze_sequence.py sample.fasta && test -f analysis_results.txt
+          timeout: 10
+          max-score: 25
+      - name: Autograding Reporter
+        uses: classroom-resources/autograding-grading-reporter@v1
+        env:
+          TEST-BASICS-PY-FUNCTIONS_RESULTS: "${{steps.test-basics-py-functions.outputs.result}}"
+          TEST-SEQUENCE-UTILS-PY-FUNCTIONS_RESULTS: "${{steps.test-sequence-utils-py-functions.outputs.result}}"
+          TEST-READ-FASTA-PY_RESULTS: "${{steps.test-read-fasta-py.outputs.result}}"
+          CHECK-ANALYSIS-RESULTS-TXT-CREATED_RESULTS: "${{steps.check-analysis-results-txt-created.outputs.result}}"
+        with:
+          runners: test-basics-py-functions,test-sequence-utils-py-functions,test-read-fasta-py,check-analysis-results-txt-created
