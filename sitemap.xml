@@ -1,107 +1,107 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://RosettaMLBootCamp2025.github.io/wednesday/index.html</loc>
-    <lastmod>2025-11-27T01:51:53.777Z</lastmod>
-  </url>
-  <url>
-    <loc>https://RosettaMLBootCamp2025.github.io/thursday/index.html</loc>
-    <lastmod>2025-11-27T01:51:53.777Z</lastmod>
-  </url>
-  <url>
-    <loc>https://RosettaMLBootCamp2025.github.io/tuesday/index.html</loc>
-    <lastmod>2025-11-27T01:51:53.777Z</lastmod>
+    <loc>https://RosettaMLBootCamp2025.github.io/thursday/4.1-placeholder.html</loc>
+    <lastmod>2025-12-01T18:13:43.085Z</lastmod>
   </url>
   <url>
     <loc>https://RosettaMLBootCamp2025.github.io/capstone/index.html</loc>
-    <lastmod>2025-11-27T01:51:53.777Z</lastmod>
-  </url>
-  <url>
-    <loc>https://RosettaMLBootCamp2025.github.io/index.html</loc>
-    <lastmod>2025-11-27T01:51:53.774Z</lastmod>
-  </url>
-  <url>
-    <loc>https://RosettaMLBootCamp2025.github.io/monday/10-bindcraft.html</loc>
-    <lastmod>2025-12-01T17:19:32.207Z</lastmod>
-  </url>
-  <url>
-    <loc>https://RosettaMLBootCamp2025.github.io/monday/6-chai1.html</loc>
-    <lastmod>2025-12-01T17:19:47.730Z</lastmod>
+    <lastmod>2025-12-01T18:13:43.084Z</lastmod>
   </url>
   <url>
     <loc>https://RosettaMLBootCamp2025.github.io/monday/2-ligandmpnn.html</loc>
-    <lastmod>2025-12-01T17:19:17.342Z</lastmod>
+    <lastmod>2025-12-01T18:13:43.084Z</lastmod>
   </url>
   <url>
-    <loc>https://RosettaMLBootCamp2025.github.io/monday/7-boltz2.html</loc>
-    <lastmod>2025-12-01T17:19:47.757Z</lastmod>
-  </url>
-  <url>
-    <loc>https://RosettaMLBootCamp2025.github.io/monday/9-placer.html</loc>
-    <lastmod>2025-12-01T17:19:47.816Z</lastmod>
-  </url>
-  <url>
-    <loc>https://RosettaMLBootCamp2025.github.io/monday/prework-3-python.html</loc>
-    <lastmod>2025-12-01T17:58:45.159Z</lastmod>
-  </url>
-  <url>
-    <loc>https://RosettaMLBootCamp2025.github.io/monday/prework-1-env-git.html</loc>
-    <lastmod>2025-12-01T17:43:37.882Z</lastmod>
-  </url>
-  <url>
-    <loc>https://RosettaMLBootCamp2025.github.io/monday/5-openfold.html</loc>
-    <lastmod>2025-12-01T17:19:23.537Z</lastmod>
+    <loc>https://RosettaMLBootCamp2025.github.io/monday/10-bindcraft.html</loc>
+    <lastmod>2025-12-01T18:13:43.084Z</lastmod>
   </url>
   <url>
     <loc>https://RosettaMLBootCamp2025.github.io/monday/8-diffdock-pp.html</loc>
-    <lastmod>2025-12-01T17:19:47.788Z</lastmod>
+    <lastmod>2025-12-01T18:13:43.084Z</lastmod>
   </url>
   <url>
-    <loc>https://RosettaMLBootCamp2025.github.io/monday/3-rfdiffusion2.html</loc>
-    <lastmod>2025-11-27T01:51:53.775Z</lastmod>
+    <loc>https://RosettaMLBootCamp2025.github.io/monday/prework-1-env-git.html</loc>
+    <lastmod>2025-12-01T18:13:43.085Z</lastmod>
   </url>
   <url>
-    <loc>https://RosettaMLBootCamp2025.github.io/monday/prework-2-pymol-vscode.html</loc>
-    <lastmod>2025-12-01T17:43:38.048Z</lastmod>
-  </url>
-  <url>
-    <loc>https://RosettaMLBootCamp2025.github.io/monday/0-hpc-setup.html</loc>
-    <lastmod>2025-12-01T17:18:57.018Z</lastmod>
-  </url>
-  <url>
-    <loc>https://RosettaMLBootCamp2025.github.io/monday/index.html</loc>
-    <lastmod>2025-12-01T17:43:52.004Z</lastmod>
-  </url>
-  <url>
-    <loc>https://RosettaMLBootCamp2025.github.io/monday/4-esmfold.html</loc>
-    <lastmod>2025-12-01T17:19:47.705Z</lastmod>
-  </url>
-  <url>
-    <loc>https://RosettaMLBootCamp2025.github.io/monday/12-rfdiffusion-aa.html</loc>
-    <lastmod>2025-11-27T01:51:53.776Z</lastmod>
+    <loc>https://RosettaMLBootCamp2025.github.io/monday/6-chai1.html</loc>
+    <lastmod>2025-12-01T18:13:43.084Z</lastmod>
   </url>
   <url>
     <loc>https://RosettaMLBootCamp2025.github.io/monday/11-esm3.html</loc>
-    <lastmod>2025-12-01T17:19:38.502Z</lastmod>
+    <lastmod>2025-12-01T18:13:43.084Z</lastmod>
   </url>
   <url>
-    <loc>https://RosettaMLBootCamp2025.github.io/monday/1-localcolabfold.html</loc>
-    <lastmod>2025-12-01T17:19:11.093Z</lastmod>
+    <loc>https://RosettaMLBootCamp2025.github.io/monday/12-rfdiffusion-aa.html</loc>
+    <lastmod>2025-12-01T18:13:43.084Z</lastmod>
   </url>
   <url>
-    <loc>https://RosettaMLBootCamp2025.github.io/about.html</loc>
-    <lastmod>2025-11-27T01:51:53.775Z</lastmod>
+    <loc>https://RosettaMLBootCamp2025.github.io/monday/index.html</loc>
+    <lastmod>2025-12-01T18:13:43.085Z</lastmod>
   </url>
   <url>
-    <loc>https://RosettaMLBootCamp2025.github.io/tuesday/2.1-placeholder.html</loc>
-    <lastmod>2025-11-27T01:51:53.777Z</lastmod>
+    <loc>https://RosettaMLBootCamp2025.github.io/monday/prework-2-pymol-vscode.html</loc>
+    <lastmod>2025-12-01T18:13:43.085Z</lastmod>
   </url>
   <url>
-    <loc>https://RosettaMLBootCamp2025.github.io/thursday/4.1-placeholder.html</loc>
-    <lastmod>2025-11-27T01:51:53.777Z</lastmod>
+    <loc>https://RosettaMLBootCamp2025.github.io/tuesday/index.html</loc>
+    <lastmod>2025-12-01T18:13:43.086Z</lastmod>
   </url>
   <url>
     <loc>https://RosettaMLBootCamp2025.github.io/wednesday/3.1-placeholder.html</loc>
-    <lastmod>2025-11-27T01:51:53.777Z</lastmod>
+    <lastmod>2025-12-01T18:13:43.086Z</lastmod>
+  </url>
+  <url>
+    <loc>https://RosettaMLBootCamp2025.github.io/wednesday/index.html</loc>
+    <lastmod>2025-12-01T18:13:43.086Z</lastmod>
+  </url>
+  <url>
+    <loc>https://RosettaMLBootCamp2025.github.io/index.html</loc>
+    <lastmod>2025-12-01T18:13:43.084Z</lastmod>
+  </url>
+  <url>
+    <loc>https://RosettaMLBootCamp2025.github.io/tuesday/2.1-placeholder.html</loc>
+    <lastmod>2025-12-01T18:13:43.086Z</lastmod>
+  </url>
+  <url>
+    <loc>https://RosettaMLBootCamp2025.github.io/monday/9-placer.html</loc>
+    <lastmod>2025-12-01T18:13:43.084Z</lastmod>
+  </url>
+  <url>
+    <loc>https://RosettaMLBootCamp2025.github.io/monday/4-esmfold.html</loc>
+    <lastmod>2025-12-01T18:13:43.084Z</lastmod>
+  </url>
+  <url>
+    <loc>https://RosettaMLBootCamp2025.github.io/monday/1-localcolabfold.html</loc>
+    <lastmod>2025-12-01T18:13:43.084Z</lastmod>
+  </url>
+  <url>
+    <loc>https://RosettaMLBootCamp2025.github.io/monday/prework-3-python.html</loc>
+    <lastmod>2025-12-01T18:13:43.085Z</lastmod>
+  </url>
+  <url>
+    <loc>https://RosettaMLBootCamp2025.github.io/monday/7-boltz2.html</loc>
+    <lastmod>2025-12-01T18:13:43.084Z</lastmod>
+  </url>
+  <url>
+    <loc>https://RosettaMLBootCamp2025.github.io/monday/5-openfold.html</loc>
+    <lastmod>2025-12-01T18:13:43.084Z</lastmod>
+  </url>
+  <url>
+    <loc>https://RosettaMLBootCamp2025.github.io/monday/0-hpc-setup.html</loc>
+    <lastmod>2025-12-01T18:13:43.084Z</lastmod>
+  </url>
+  <url>
+    <loc>https://RosettaMLBootCamp2025.github.io/monday/3-rfdiffusion2.html</loc>
+    <lastmod>2025-12-01T18:13:43.084Z</lastmod>
+  </url>
+  <url>
+    <loc>https://RosettaMLBootCamp2025.github.io/about.html</loc>
+    <lastmod>2025-12-01T18:13:43.083Z</lastmod>
+  </url>
+  <url>
+    <loc>https://RosettaMLBootCamp2025.github.io/thursday/index.html</loc>
+    <lastmod>2025-12-01T18:13:43.085Z</lastmod>
   </url>
 </urlset>
