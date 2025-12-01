@@ -100,7 +100,7 @@ If you encounter issues:
 
 1. Check the tool's official documentation (linked in each module)
 2. Search for existing GitHub issues on the tool's repository
-3. [Report an issue](https://github.com/RosettaMLBootCamp2025/RosettaMLBootCamp2025.github.io/issues/new) on the bootcamp site
+3. [Report an issue](https://github.com/RosettaMLBootCamp2025/RosettaMLBootCamp2025.github.io/issues/new) on the bootcamp site (GitHub account required)
 
 ---
 

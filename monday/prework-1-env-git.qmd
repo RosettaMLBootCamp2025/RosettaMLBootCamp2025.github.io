@@ -268,4 +268,4 @@ In the Slack channel, you can:
 
 The TAs and I will be active in the Slack channel to help guide discussions and answer questions. Don't hesitate to jump in - chances are if you're stuck on something, others are too!
 
-If you have questions, please open an issue on the [GitHub repository](https://github.com/RosettaMLBootCamp2025/RosettaMLBootCamp2025.github.io/issues) instead of emailing directly.
+If you have questions, please open an issue on the [GitHub repository](https://github.com/RosettaMLBootCamp2025/RosettaMLBootCamp2025.github.io/issues) (GitHub account required) instead of emailing directly.

@@ -181,7 +181,7 @@
     "href": "index.html#getting-started",
     "title": "ML Protein Design Bootcamp 2025",
     "section": "Getting Started",
-    "text": "Getting Started\n\nChoose a day from the navigation above or the cards below\nWork through modules in order - each builds on the previous\nCheck off sections as you complete them - your progress is saved automatically\nReturn anytime - use the “Resume” button to pick up where you left off\n\n\nReport an Issue / Ask a Question"
+    "text": "Getting Started\n\nChoose a day from the navigation above or the cards below\nWork through modules in order - each builds on the previous\nCheck off sections as you complete them - your progress is saved automatically\nReturn anytime - use the “Resume” button to pick up where you left off\n\n\nReport an Issue / Ask a Question (GitHub account required)"
   },
   {
     "objectID": "monday/10-bindcraft.html",
@@ -1002,7 +1002,7 @@
     "href": "monday/prework-3-python.html#questions-and-getting-help",
     "title": "Pre-work 3: Python Refresher",
     "section": "Questions and Getting Help",
-    "text": "Questions and Getting Help\nWe strongly encourage you to use our Slack workspace for questions and collaboration! One of the best ways to learn is by discussing problems with your peers and seeing how others approach challenges.\nJoin the Bootcamp Slack channel: The Slack workspace is currently reserved for in-person bootcamp participants. We apologize for the inconvenience.\nIn the Slack channel, you can: - Ask questions and get help from fellow students - Share tips and solutions you’ve discovered - Learn from others’ questions and answers - Collaborate on troubleshooting issues\nThe TAs and I will be active in the Slack channel to help guide discussions and answer questions. Don’t hesitate to jump in - chances are if you’re stuck on something, others are too!\nIf you have questions, please open an issue on the GitHub repository instead of emailing directly.",
+    "text": "Questions and Getting Help\nWe strongly encourage you to use our Slack workspace for questions and collaboration! One of the best ways to learn is by discussing problems with your peers and seeing how others approach challenges.\nJoin the Bootcamp Slack channel: The Slack workspace is currently reserved for in-person bootcamp participants. We apologize for the inconvenience.\nIn the Slack channel, you can: - Ask questions and get help from fellow students - Share tips and solutions you’ve discovered - Learn from others’ questions and answers - Collaborate on troubleshooting issues\nThe TAs and I will be active in the Slack channel to help guide discussions and answer questions. Don’t hesitate to jump in - chances are if you’re stuck on something, others are too!\nIf you have questions, please open an issue on the GitHub repository (GitHub account required) instead of emailing directly.",
     "crumbs": [
       "Monday",
       "Pre-work 3: Python Refresher"
@@ -1090,7 +1090,7 @@
     "href": "monday/prework-1-env-git.html#questions-and-getting-help",
     "title": "Pre-work 1: Environment Setup & GitHub Basics",
     "section": "Questions and Getting Help",
-    "text": "Questions and Getting Help\nWe strongly encourage you to use our Slack workspace for questions and collaboration! One of the best ways to learn is by discussing problems with your peers and seeing how others approach challenges.\nJoin the Bootcamp Slack channel: The Slack workspace is currently reserved for in-person bootcamp participants. We apologize for the inconvenience.\nIn the Slack channel, you can: - Ask questions and get help from fellow students - Share tips and solutions you’ve discovered - Learn from others’ questions and answers - Collaborate on troubleshooting issues\nThe TAs and I will be active in the Slack channel to help guide discussions and answer questions. Don’t hesitate to jump in - chances are if you’re stuck on something, others are too!\nIf you have questions, please open an issue on the GitHub repository instead of emailing directly.",
+    "text": "Questions and Getting Help\nWe strongly encourage you to use our Slack workspace for questions and collaboration! One of the best ways to learn is by discussing problems with your peers and seeing how others approach challenges.\nJoin the Bootcamp Slack channel: The Slack workspace is currently reserved for in-person bootcamp participants. We apologize for the inconvenience.\nIn the Slack channel, you can: - Ask questions and get help from fellow students - Share tips and solutions you’ve discovered - Learn from others’ questions and answers - Collaborate on troubleshooting issues\nThe TAs and I will be active in the Slack channel to help guide discussions and answer questions. Don’t hesitate to jump in - chances are if you’re stuck on something, others are too!\nIf you have questions, please open an issue on the GitHub repository (GitHub account required) instead of emailing directly.",
     "crumbs": [
       "Monday",
       "Pre-work 1: Environment Setup & GitHub Basics"
@@ -1607,7 +1607,7 @@
     "href": "monday/prework-2-pymol-vscode.html#questions-and-getting-help",
     "title": "Pre-work 2: PyMOL and VS Code Setup",
     "section": "Questions and Getting Help",
-    "text": "Questions and Getting Help\nWe strongly encourage you to use our Slack workspace for questions and collaboration! One of the best ways to learn is by discussing problems with your peers and seeing how others approach challenges.\nJoin the Bootcamp Slack channel: The Slack workspace is currently reserved for in-person bootcamp participants. We apologize for the inconvenience.\nIn the Slack channel, you can: - Ask questions and get help from fellow students - Share tips and solutions you’ve discovered - Learn from others’ questions and answers - Collaborate on troubleshooting issues\nThe TAs and I will be active in the Slack channel to help guide discussions and answer questions. Don’t hesitate to jump in - chances are if you’re stuck on something, others are too!\nIf you have questions, please open an issue on the GitHub repository instead of emailing directly.",
+    "text": "Questions and Getting Help\nWe strongly encourage you to use our Slack workspace for questions and collaboration! One of the best ways to learn is by discussing problems with your peers and seeing how others approach challenges.\nJoin the Bootcamp Slack channel: The Slack workspace is currently reserved for in-person bootcamp participants. We apologize for the inconvenience.\nIn the Slack channel, you can: - Ask questions and get help from fellow students - Share tips and solutions you’ve discovered - Learn from others’ questions and answers - Collaborate on troubleshooting issues\nThe TAs and I will be active in the Slack channel to help guide discussions and answer questions. Don’t hesitate to jump in - chances are if you’re stuck on something, others are too!\nIf you have questions, please open an issue on the GitHub repository (GitHub account required) instead of emailing directly.",
     "crumbs": [
       "Monday",
       "Pre-work 2: PyMOL and VS Code Setup"
@@ -1816,7 +1816,7 @@
     "href": "monday/index.html#getting-help",
     "title": "Monday: Tool Installation",
     "section": "Getting Help",
-    "text": "Getting Help\nIf you encounter issues:\n\nCheck the tool’s official documentation (linked in each module)\nSearch for existing GitHub issues on the tool’s repository\nReport an issue on the bootcamp site\n\n\n\n\n← Back to Home\n\n\nTuesday →",
+    "text": "Getting Help\nIf you encounter issues:\n\nCheck the tool’s official documentation (linked in each module)\nSearch for existing GitHub issues on the tool’s repository\nReport an issue on the bootcamp site (GitHub account required)\n\n\n\n\n← Back to Home\n\n\nTuesday →",
     "crumbs": [
       "Monday",
       "Monday: Tool Installation"

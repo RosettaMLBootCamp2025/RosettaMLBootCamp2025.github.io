@@ -71,4 +71,4 @@ Capstone project bringing together everything you've learned.
 
 ---
 
-<a href="https://github.com/RosettaMLBootCamp2025/RosettaMLBootCamp2025.github.io/issues/new" class="btn btn-primary">Report an Issue / Ask a Question</a>
+<a href="https://github.com/RosettaMLBootCamp2025/RosettaMLBootCamp2025.github.io/issues/new" class="btn btn-primary">Report an Issue / Ask a Question (GitHub account required)</a>
