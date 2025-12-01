@@ -81,7 +81,7 @@
     "href": "capstone/index.html#project-structure",
     "title": "Capstone Project",
     "section": "Project Structure",
-    "text": "Project Structure\nStudents will select a target from the list above (4 students per target). Each student will work on the project individually and as a group throughout the week. As we learn about each tool, you’ll have time to explore how that tool works for your particular protein. Be sure to make note of any quirks or nuances related to your protein, e.g. any particular settings used or any issues encountered.\nAt the end of the week, all students who were assigned the same target will reconvene and create a presentation that summarizes results, findings, and observations related to the target.\n\n\n\n\n\n\nTipCollaboration Tip\n\n\n\nWe recommend creating a shared Google Drive folder and a shared documentation file (lab notebook style) to contain predictions, results, settings tried, and commands used so that you can easily refer to them when making the final presentation.",
+    "text": "Project Structure\nSelect a target from the list above and work through the binder design process. As you learn about each tool in the preceding lessons, explore how that tool works for your particular protein. Be sure to make note of any quirks or nuances related to your protein, e.g. any particular settings used or any issues encountered.\n\n\n\n\n\n\nTipDocumentation Tip\n\n\n\nKeep a lab notebook (digital or physical) to document your predictions, results, settings tried, and commands used. This will be invaluable when synthesizing your findings at the end of the project.",
     "crumbs": [
       "Capstone",
       "Capstone Project"
@@ -92,18 +92,18 @@
     "href": "capstone/index.html#goals",
     "title": "Capstone Project",
     "section": "Goals",
-    "text": "Goals\n\nGain hands-on experience running DL-based tools on specific proteins\nTroubleshoot and address any issues related to your target protein\nLearn about tips and tricks used to get more favorable outputs\nGain experience talking about the computational tools and settings used\nGain experience interpreting results and exploring various settings",
+    "text": "Goals\n\nGain hands-on experience running DL-based tools on specific proteins\nTroubleshoot and address any issues related to your target protein\nLearn about tips and tricks used to get more favorable outputs\nGain experience communicating about computational tools and settings\nGain experience interpreting results and exploring various settings",
     "crumbs": [
       "Capstone",
       "Capstone Project"
     ]
   },
   {
-    "objectID": "capstone/index.html#presentation-expectations",
-    "href": "capstone/index.html#presentation-expectations",
+    "objectID": "capstone/index.html#synthesizing-your-work",
+    "href": "capstone/index.html#synthesizing-your-work",
     "title": "Capstone Project",
-    "section": "Presentation Expectations",
-    "text": "Presentation Expectations\nThe final presentation should be organized as follows:\n\nBackground and introduction to target protein\nStructure prediction results\nBackbone generation results\nSequence design results\nDesign rationale - explain the specific choices, settings, and approaches used and why\n\n\n\n\n\n\n\nNote\n\n\n\nI find the design rationale section to be the most helpful to my learning and understanding.\n\n\n\nResults from miscellaneous tools\nSummary and takeaways\n\nThe final presentation should last at most 20 minutes with 5 minutes afterwards for Q&A. Each student is expected to share during the final presentation.\n\n\n← Thursday\nBack to Home",
+    "section": "Synthesizing Your Work",
+    "text": "Synthesizing Your Work\nA key part of learning is synthesizing and communicating what you’ve done. In the live workshop, students gave 20-minute group presentations. For self-paced learners, consider one of these formats to consolidate your learning:\n\nWritten report summarizing your process and findings\nVideo walkthrough explaining your approach and results\nJupyter notebook with narrative text alongside code and figures\nGitHub repository with a comprehensive README documenting your project\n\n\n\n\n\n\n\nTip\n\n\n\nEven if you’re not presenting to anyone, creating slides is a great way to learn! The process of organizing your work into a clear narrative helps solidify your understanding.\n\n\nHowever you choose to document your work, aim to cover the following:\n\nBackground and introduction to target protein\nStructure prediction results\nBackbone generation results\nSequence design results\nDesign rationale - explain the specific choices, settings, and approaches used and why\n\n\n\n\n\n\n\nNote\n\n\n\nI find the design rationale section to be the most helpful to my learning and understanding.\n\n\n\nResults from miscellaneous tools\nSummary and takeaways\n\n\n\n← Thursday\nBack to Home",
     "crumbs": [
       "Capstone",
       "Capstone Project"
