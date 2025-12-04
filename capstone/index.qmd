@@ -29,9 +29,9 @@ In this bootcamp, you'll have the opportunity to explore the computational binde
 
 | Target | PDB | Description |
 |--------|-----|-------|
-| [TrkA receptor](targets/trka.qmd) | [P04629](https://www.uniprot.org/uniprotkb/P04629/entry) | Nerve Growth Factor Receptor |
+| [TrkA receptor](targets/trka.qmd) | [1WWC](https://www.rcsb.org/structure/1WWC) | Nerve Growth Factor Receptor |
 | [TEM-1 Beta-Lactamase](targets/tem-1.qmd) | [1FQG](https://www.rcsb.org/structure/1FQG) | Antibiotic Resistance Enzyme |
-| [Human GM3 Activator](targets/gm3.qmd) | [1G13](https://www.rcsb.org/structure/1G13) | Lipid Transport Protein |
+| [GM2 Activator Protein](targets/gm3.qmd) | [1G13](https://www.rcsb.org/structure/1G13) | Lipid Transport Protein |
 | [Beta-Glucosidase](targets/beta-glucosidase.qmd) | [2JIE](https://www.rcsb.org/structure/2JIE) | Enzymatic Catalyst |
 
 ## Project Structure

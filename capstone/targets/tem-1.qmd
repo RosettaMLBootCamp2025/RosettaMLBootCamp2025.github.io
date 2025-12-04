@@ -15,20 +15,6 @@ subtitle: "Antibiotic Resistance Enzyme"
 
 The viewer below shows **TEM-1 Beta-Lactamase**.
 
-<!-- Mol* Viewer -->
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/pdbe-molstar@latest/build/pdbe-molstar-component.js"></script>
-<style>
-  .molstar-container {
-    width: 100%;
-    height: 500px;
-    position: relative;
-    margin-bottom: 20px;
-    border: 1px solid #eee;
-    border-radius: 8px;
-    overflow: hidden;
-  }
-</style>
-
 <div class="molstar-container">
     <!-- 
       PDB 1FQG: TEM-1 Beta-Lactamase structure

@@ -81,4 +81,5 @@ format:
     toc: true
     code-copy: true
     code-overflow: wrap
+    include-in-header: _includes/molstar.html
     include-after-body: _includes/progress-tracker.html
