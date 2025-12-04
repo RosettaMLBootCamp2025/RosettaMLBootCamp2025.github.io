@@ -68,6 +68,19 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+<!-- Shared Mol* component include for target pages -->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/pdbe-molstar@latest/build/pdbe-molstar-component.js"></script>
+<style>
+  .molstar-container {
+    width: 100%;
+    height: 500px;
+    position: relative;
+    margin-bottom: 20px;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+</style>
 
 
 <link rel="stylesheet" href="../../styles.css">
@@ -196,7 +209,7 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../capstone/targets/gm3.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Human GM3 Activator Deep Dive</span></a>
+ <span class="menu-text">GM2 Activator Protein Deep Dive</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -257,19 +270,6 @@ ul.task-list li input[type="checkbox"] {
 <section id="interactive-structure" class="level2">
 <h2 class="anchored" data-anchor-id="interactive-structure">Interactive Structure</h2>
 <p>Explore the native interaction between PD-L1 (the target) and PD-1 (the natural binder) below. * <strong>Target (PD-L1):</strong> The surface we want to bind to. * <strong>Binder (PD-1):</strong> The natural partner we want to compete with.</p>
-<!-- Mol* Viewer -->
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/pdbe-molstar@latest/build/pdbe-molstar-component.js"></script>
-<style>
-  .molstar-container {
-    width: 100%;
-    height: 500px;
-    position: relative;
-    margin-bottom: 20px;
-    border: 1px solid #eee;
-    border-radius: 8px;
-    overflow: hidden;
-  }
-</style>
 <div class="molstar-container">
 <pre><code>&lt;!-- 
   PDB 4ZQK: Crystal structure of human PD-1 (Chain A) complexed with PD-L1 (Chain B)
@@ -329,7 +329,7 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 <tr class="odd">
 <td style="text-align: left;"><strong>Target Chain</strong></td>
-<td style="text-align: left;">Chain A</td>
+<td style="text-align: left;">Chain B</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"><strong>Interface / Hotspot</strong></td>
@@ -342,7 +342,7 @@ ul.task-list li input[type="checkbox"] {
 <h3 class="anchored" data-anchor-id="strategy-tips">Strategy Tips</h3>
 <ol type="1">
 <li><strong>Download PDB <code>4ZQK</code></strong>.</li>
-<li><strong>Clean the structure:</strong> You only need Chain A (PD-L1). You can remove Chain B (PD-1) and any water molecules.</li>
+<li><strong>Clean the structure:</strong> Keep Chain B (PD-L1) as the target. Remove Chain A (PD-1) and any water molecules.</li>
 <li><strong>Define the Interface:</strong> When running tools like <strong>RFdiffusion</strong> or <strong>BindCraft</strong>, specify the hotspot residues listed above to guide the diffusion process to the correct face of the protein.</li>
 </ol>
 <hr>

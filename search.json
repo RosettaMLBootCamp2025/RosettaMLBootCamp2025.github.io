@@ -70,7 +70,7 @@
     "href": "capstone/targets/trka.html#interactive-structure",
     "title": "TrkA Receptor Deep Dive",
     "section": "Interactive Structure",
-    "text": "Interactive Structure\nThe viewer below shows the extracellular domain of TrkA (Chain A) in complex with NGF (Chain B).\n\n\n\n\n&lt;!-- \n  PDB 1WWC: Crystal structure of the NGF-TrkA complex\n--&gt;\n&lt;pdbe-molstar \n  id=\"trka-viewer\" \n  molecule-id=\"1wwc\" \n  hide-controls=\"true\"\n  bg-color-r=\"255\" \n  bg-color-g=\"255\" \n  bg-color-b=\"255\"&gt;\n&lt;/pdbe-molstar&gt;\n\n\n\n\n\n\n\nTipViewer Controls\n\n\n\n\nRotate: Left-click and drag\nZoom: Scroll wheel\nPan: Right-click (or Ctrl+Left-click) and drag",
+    "text": "Interactive Structure\nThe viewer below shows the extracellular domain of TrkA (Chain A) in complex with NGF (Chain B).\n\n&lt;!-- \n  PDB 1WWC: Crystal structure of the NGF-TrkA complex\n--&gt;\n&lt;pdbe-molstar \n  id=\"trka-viewer\" \n  molecule-id=\"1wwc\" \n  hide-controls=\"true\"\n  bg-color-r=\"255\" \n  bg-color-g=\"255\" \n  bg-color-b=\"255\"&gt;\n&lt;/pdbe-molstar&gt;\n\n\n\n\n\n\n\nTipViewer Controls\n\n\n\n\nRotate: Left-click and drag\nZoom: Scroll wheel\nPan: Right-click (or Ctrl+Left-click) and drag",
     "crumbs": [
       "Capstone",
       "TrkA Receptor Deep Dive"
@@ -90,45 +90,45 @@
   {
     "objectID": "capstone/targets/gm3.html",
     "href": "capstone/targets/gm3.html",
-    "title": "Human GM3 Activator Deep Dive",
+    "title": "GM2 Activator Protein Deep Dive",
     "section": "",
-    "text": "GM2 Activator Protein (GM2AP) (often associated with GM3 pathway interactions) is a small glycoprotein required for the degradation of gangliosides (types of lipids) in the lysosome.\nWhy it matters: Defects in this protein cause GM2 gangliosidosis (AB variant), a severe neurodegenerative storage disease.\nThe Goal: Design a binder that can stabilize this protein or mimic its interaction partners.",
+    "text": "GM2 Activator Protein (GM2AP) is a small glycoprotein required for the degradation of gangliosides (types of lipids) in the lysosome. You may also see it referenced in the context of GM3 pathway interactions.\nWhy it matters: Defects in this protein cause GM2 gangliosidosis (AB variant), a severe neurodegenerative storage disease.\nThe Goal: Design a binder that can stabilize this protein or mimic its interaction partners.",
     "crumbs": [
       "Capstone",
-      "Human GM3 Activator Deep Dive"
+      "GM2 Activator Protein Deep Dive"
     ]
   },
   {
     "objectID": "capstone/targets/gm3.html#biological-context",
     "href": "capstone/targets/gm3.html#biological-context",
-    "title": "Human GM3 Activator Deep Dive",
+    "title": "GM2 Activator Protein Deep Dive",
     "section": "",
-    "text": "GM2 Activator Protein (GM2AP) (often associated with GM3 pathway interactions) is a small glycoprotein required for the degradation of gangliosides (types of lipids) in the lysosome.\nWhy it matters: Defects in this protein cause GM2 gangliosidosis (AB variant), a severe neurodegenerative storage disease.\nThe Goal: Design a binder that can stabilize this protein or mimic its interaction partners.",
+    "text": "GM2 Activator Protein (GM2AP) is a small glycoprotein required for the degradation of gangliosides (types of lipids) in the lysosome. You may also see it referenced in the context of GM3 pathway interactions.\nWhy it matters: Defects in this protein cause GM2 gangliosidosis (AB variant), a severe neurodegenerative storage disease.\nThe Goal: Design a binder that can stabilize this protein or mimic its interaction partners.",
     "crumbs": [
       "Capstone",
-      "Human GM3 Activator Deep Dive"
+      "GM2 Activator Protein Deep Dive"
     ]
   },
   {
     "objectID": "capstone/targets/gm3.html#interactive-structure",
     "href": "capstone/targets/gm3.html#interactive-structure",
-    "title": "Human GM3 Activator Deep Dive",
+    "title": "GM2 Activator Protein Deep Dive",
     "section": "Interactive Structure",
-    "text": "Interactive Structure\nThe viewer below shows the GM2 Activator Protein.\n\n\n\n\n&lt;!-- \n  PDB 1G13: Crystal structure of human GM2 activator protein\n--&gt;\n&lt;pdbe-molstar \n  id=\"gm3-viewer\" \n  molecule-id=\"1g13\" \n  hide-controls=\"true\"\n  bg-color-r=\"255\" \n  bg-color-g=\"255\" \n  bg-color-b=\"255\"&gt;\n&lt;/pdbe-molstar&gt;\n\n\n\n\n\n\n\nTipViewer Controls\n\n\n\n\nRotate: Left-click and drag\nZoom: Scroll wheel\nPan: Right-click (or Ctrl+Left-click) and drag",
+    "text": "Interactive Structure\nThe viewer below shows the GM2 Activator Protein.\n\n&lt;!-- \n  PDB 1G13: Crystal structure of human GM2 activator protein\n--&gt;\n&lt;pdbe-molstar \n  id=\"gm3-viewer\" \n  molecule-id=\"1g13\" \n  hide-controls=\"true\"\n  bg-color-r=\"255\" \n  bg-color-g=\"255\" \n  bg-color-b=\"255\"&gt;\n&lt;/pdbe-molstar&gt;\n\n\n\n\n\n\n\nTipViewer Controls\n\n\n\n\nRotate: Left-click and drag\nZoom: Scroll wheel\nPan: Right-click (or Ctrl+Left-click) and drag",
     "crumbs": [
       "Capstone",
-      "Human GM3 Activator Deep Dive"
+      "GM2 Activator Protein Deep Dive"
     ]
   },
   {
     "objectID": "capstone/targets/gm3.html#design-mission",
     "href": "capstone/targets/gm3.html#design-mission",
-    "title": "Human GM3 Activator Deep Dive",
+    "title": "GM2 Activator Protein Deep Dive",
     "section": "Design Mission",
     "text": "Design Mission\nCreate a binder that interacts with the lipid-binding cavity or surface loops of GM2AP.\n\nTarget Specifications\n\n\n\nFeature\nDetail\n\n\n\n\nTarget Name\nGM2 Activator Protein\n\n\nPDB ID\n1G13\n\n\nTarget Chain\nChain A\n\n\nInterface / Hotspot\nThe hydrophobic cavity or surface loops.\n\n\n\n\n\nStrategy Tips\n\nDownload PDB 1G13.\nSurface Analysis: Identify the opening of the lipid-binding cavity. This is a challenging but interesting target for “pocket” binding.\n\n\n← Back to Capstone Overview",
     "crumbs": [
       "Capstone",
-      "Human GM3 Activator Deep Dive"
+      "GM2 Activator Protein Deep Dive"
     ]
   },
   {
@@ -158,7 +158,7 @@
     "href": "capstone/targets/tem-1.html#interactive-structure",
     "title": "TEM-1 Beta-Lactamase Deep Dive",
     "section": "Interactive Structure",
-    "text": "Interactive Structure\nThe viewer below shows TEM-1 Beta-Lactamase.\n\n\n\n\n&lt;!-- \n  PDB 1FQG: TEM-1 Beta-Lactamase structure\n--&gt;\n&lt;pdbe-molstar \n  id=\"tem1-viewer\" \n  molecule-id=\"1fqg\" \n  hide-controls=\"true\"\n  bg-color-r=\"255\" \n  bg-color-g=\"255\" \n  bg-color-b=\"255\"&gt;\n&lt;/pdbe-molstar&gt;\n\n\n\n\n\n\n\nTipViewer Controls\n\n\n\n\nRotate: Left-click and drag\nZoom: Scroll wheel\nPan: Right-click (or Ctrl+Left-click) and drag",
+    "text": "Interactive Structure\nThe viewer below shows TEM-1 Beta-Lactamase.\n\n&lt;!-- \n  PDB 1FQG: TEM-1 Beta-Lactamase structure\n--&gt;\n&lt;pdbe-molstar \n  id=\"tem1-viewer\" \n  molecule-id=\"1fqg\" \n  hide-controls=\"true\"\n  bg-color-r=\"255\" \n  bg-color-g=\"255\" \n  bg-color-b=\"255\"&gt;\n&lt;/pdbe-molstar&gt;\n\n\n\n\n\n\n\nTipViewer Controls\n\n\n\n\nRotate: Left-click and drag\nZoom: Scroll wheel\nPan: Right-click (or Ctrl+Left-click) and drag",
     "crumbs": [
       "Capstone",
       "TEM-1 Beta-Lactamase Deep Dive"
@@ -202,7 +202,7 @@
     "href": "capstone/targets/pd-l1.html#interactive-structure",
     "title": "PD-L1 Target Deep Dive",
     "section": "Interactive Structure",
-    "text": "Interactive Structure\nExplore the native interaction between PD-L1 (the target) and PD-1 (the natural binder) below. * Target (PD-L1): The surface we want to bind to. * Binder (PD-1): The natural partner we want to compete with.\n\n\n\n\n&lt;!-- \n  PDB 4ZQK: Crystal structure of human PD-1 (Chain A) complexed with PD-L1 (Chain B)\n  hide-controls=\"true\" keeps the UI simple for this overview \n--&gt;\n&lt;pdbe-molstar \n  id=\"pd-l1-viewer\" \n  molecule-id=\"4zqk\" \n  hide-controls=\"true\"\n  bg-color-r=\"255\" \n  bg-color-g=\"255\" \n  bg-color-b=\"255\"&gt;\n&lt;/pdbe-molstar&gt;\n\n\n\n\n\n\n\nTipViewer Controls\n\n\n\n\nRotate: Left-click and drag\nZoom: Scroll wheel\nPan: Right-click (or Ctrl+Left-click) and drag",
+    "text": "Interactive Structure\nExplore the native interaction between PD-L1 (the target) and PD-1 (the natural binder) below. * Target (PD-L1): The surface we want to bind to. * Binder (PD-1): The natural partner we want to compete with.\n\n&lt;!-- \n  PDB 4ZQK: Crystal structure of human PD-1 (Chain A) complexed with PD-L1 (Chain B)\n  hide-controls=\"true\" keeps the UI simple for this overview \n--&gt;\n&lt;pdbe-molstar \n  id=\"pd-l1-viewer\" \n  molecule-id=\"4zqk\" \n  hide-controls=\"true\"\n  bg-color-r=\"255\" \n  bg-color-g=\"255\" \n  bg-color-b=\"255\"&gt;\n&lt;/pdbe-molstar&gt;\n\n\n\n\n\n\n\nTipViewer Controls\n\n\n\n\nRotate: Left-click and drag\nZoom: Scroll wheel\nPan: Right-click (or Ctrl+Left-click) and drag",
     "crumbs": [
       "Capstone",
       "PD-L1 Target Deep Dive"
@@ -213,7 +213,7 @@
     "href": "capstone/targets/pd-l1.html#design-mission",
     "title": "PD-L1 Target Deep Dive",
     "section": "Design Mission",
-    "text": "Design Mission\nYour objective is to create a de novo protein binder that binds to the same interface on PD-L1 that PD-1 currently occupies.\n\nTarget Specifications\n\n\n\n\n\n\n\nFeature\nDetail\n\n\n\n\nTarget Name\nPD-L1 (Programmed Death-Ligand 1)\n\n\nPDB ID\n4ZQK\n\n\nTarget Chain\nChain A\n\n\nInterface / Hotspot\nResidues 54-66 and 113-123 (approximate binding loop area)\n\n\n\n\n\nStrategy Tips\n\nDownload PDB 4ZQK.\nClean the structure: You only need Chain A (PD-L1). You can remove Chain B (PD-1) and any water molecules.\nDefine the Interface: When running tools like RFdiffusion or BindCraft, specify the hotspot residues listed above to guide the diffusion process to the correct face of the protein.\n\n\n← Back to Capstone Overview",
+    "text": "Design Mission\nYour objective is to create a de novo protein binder that binds to the same interface on PD-L1 that PD-1 currently occupies.\n\nTarget Specifications\n\n\n\n\n\n\n\nFeature\nDetail\n\n\n\n\nTarget Name\nPD-L1 (Programmed Death-Ligand 1)\n\n\nPDB ID\n4ZQK\n\n\nTarget Chain\nChain B\n\n\nInterface / Hotspot\nResidues 54-66 and 113-123 (approximate binding loop area)\n\n\n\n\n\nStrategy Tips\n\nDownload PDB 4ZQK.\nClean the structure: Keep Chain B (PD-L1) as the target. Remove Chain A (PD-1) and any water molecules.\nDefine the Interface: When running tools like RFdiffusion or BindCraft, specify the hotspot residues listed above to guide the diffusion process to the correct face of the protein.\n\n\n← Back to Capstone Overview",
     "crumbs": [
       "Capstone",
       "PD-L1 Target Deep Dive"
@@ -246,7 +246,7 @@
     "href": "capstone/index.html#target-categories-and-options",
     "title": "Capstone Project",
     "section": "Target Categories and Options",
-    "text": "Target Categories and Options\n\nImmune Checkpoint / Receptor Targets\n\n\n\nTarget\nUniProt\nDescription\n\n\n\n\nPD-L1\nQ9NZQ7\nImmune Checkpoint\n\n\nIFNAR2\nP48551\nInterferon receptor\n\n\nIL-7Rα\nP16871\nInterleukin receptor\n\n\n\n\n\nAntibody-like Targets\n\n\n\nTarget\nUniProt\nDescription\n\n\n\n\nBet v 1\nP15494\nBirch pollen allergen\n\n\n\n\n\nEnzyme / Small Molecule Binders\n\n\n\nTarget\nPDB\nDescription\n\n\n\n\nTrkA receptor\nP04629\nNerve Growth Factor Receptor\n\n\nTEM-1 Beta-Lactamase\n1FQG\nAntibiotic Resistance Enzyme\n\n\nHuman GM3 Activator\n1G13\nLipid Transport Protein\n\n\nBeta-Glucosidase\n2JIE\nEnzymatic Catalyst",
+    "text": "Target Categories and Options\n\nImmune Checkpoint / Receptor Targets\n\n\n\nTarget\nUniProt\nDescription\n\n\n\n\nPD-L1\nQ9NZQ7\nImmune Checkpoint\n\n\nIFNAR2\nP48551\nInterferon receptor\n\n\nIL-7Rα\nP16871\nInterleukin receptor\n\n\n\n\n\nAntibody-like Targets\n\n\n\nTarget\nUniProt\nDescription\n\n\n\n\nBet v 1\nP15494\nBirch pollen allergen\n\n\n\n\n\nEnzyme / Small Molecule Binders\n\n\n\nTarget\nPDB\nDescription\n\n\n\n\nTrkA receptor\n1WWC\nNerve Growth Factor Receptor\n\n\nTEM-1 Beta-Lactamase\n1FQG\nAntibiotic Resistance Enzyme\n\n\nGM2 Activator Protein\n1G13\nLipid Transport Protein\n\n\nBeta-Glucosidase\n2JIE\nEnzymatic Catalyst",
     "crumbs": [
       "Capstone",
       "Capstone Project"
@@ -2662,7 +2662,7 @@
     "href": "capstone/targets/beta-glucosidase.html#interactive-structure",
     "title": "Beta-Glucosidase Deep Dive",
     "section": "Interactive Structure",
-    "text": "Interactive Structure\nThe viewer below shows Beta-Glucosidase A.\n\n\n\n\n&lt;!-- \n  PDB 2JIE: Structure of Beta-Glucosidase\n--&gt;\n&lt;pdbe-molstar \n  id=\"bgl-viewer\" \n  molecule-id=\"2jie\" \n  hide-controls=\"true\"\n  bg-color-r=\"255\" \n  bg-color-g=\"255\" \n  bg-color-b=\"255\"&gt;\n&lt;/pdbe-molstar&gt;\n\n\n\n\n\n\n\nTipViewer Controls\n\n\n\n\nRotate: Left-click and drag\nZoom: Scroll wheel\nPan: Right-click (or Ctrl+Left-click) and drag",
+    "text": "Interactive Structure\nThe viewer below shows Beta-Glucosidase A.\n\n&lt;!-- \n  PDB 2JIE: Structure of Beta-Glucosidase\n--&gt;\n&lt;pdbe-molstar \n  id=\"bgl-viewer\" \n  molecule-id=\"2jie\" \n  hide-controls=\"true\"\n  bg-color-r=\"255\" \n  bg-color-g=\"255\" \n  bg-color-b=\"255\"&gt;\n&lt;/pdbe-molstar&gt;\n\n\n\n\n\n\n\nTipViewer Controls\n\n\n\n\nRotate: Left-click and drag\nZoom: Scroll wheel\nPan: Right-click (or Ctrl+Left-click) and drag",
     "crumbs": [
       "Capstone",
       "Beta-Glucosidase Deep Dive"
@@ -2706,7 +2706,7 @@
     "href": "capstone/targets/ifnar2.html#interactive-structure",
     "title": "IFNAR2 Target Deep Dive",
     "section": "Interactive Structure",
-    "text": "Interactive Structure\nThe viewer below shows IFNAR2 (Chain B) in complex with Interferon alpha-2 (Chain A) and IFNAR1 (Chain C).\n\n\n\n\n&lt;!-- \n  PDB 3SE3: Ternary complex of IFNAR1, IFNAR2, and IFN-alpha2\n--&gt;\n&lt;pdbe-molstar \n  id=\"ifnar2-viewer\" \n  molecule-id=\"3se3\" \n  hide-controls=\"true\"\n  bg-color-r=\"255\" \n  bg-color-g=\"255\" \n  bg-color-b=\"255\"&gt;\n&lt;/pdbe-molstar&gt;\n\n\n\n\n\n\n\nTipViewer Controls\n\n\n\n\nRotate: Left-click and drag\nZoom: Scroll wheel\nPan: Right-click (or Ctrl+Left-click) and drag",
+    "text": "Interactive Structure\nThe viewer below shows IFNAR2 (Chain B) in complex with Interferon alpha-2 (Chain A) and IFNAR1 (Chain C).\n\n&lt;!-- \n  PDB 3SE3: Ternary complex of IFNAR1, IFNAR2, and IFN-alpha2\n--&gt;\n&lt;pdbe-molstar \n  id=\"ifnar2-viewer\" \n  molecule-id=\"3se3\" \n  hide-controls=\"true\"\n  bg-color-r=\"255\" \n  bg-color-g=\"255\" \n  bg-color-b=\"255\"&gt;\n&lt;/pdbe-molstar&gt;\n\n\n\n\n\n\n\nTipViewer Controls\n\n\n\n\nRotate: Left-click and drag\nZoom: Scroll wheel\nPan: Right-click (or Ctrl+Left-click) and drag",
     "crumbs": [
       "Capstone",
       "IFNAR2 Target Deep Dive"
@@ -2750,7 +2750,7 @@
     "href": "capstone/targets/bet-v-1.html#interactive-structure",
     "title": "Bet v 1 Target Deep Dive",
     "section": "Interactive Structure",
-    "text": "Interactive Structure\nThe viewer below shows the structure of Bet v 1.\n\n\n\n\n&lt;!-- \n  PDB 4A88: Bet v 1 structure\n--&gt;\n&lt;pdbe-molstar \n  id=\"betv1-viewer\" \n  molecule-id=\"4a88\" \n  hide-controls=\"true\"\n  bg-color-r=\"255\" \n  bg-color-g=\"255\" \n  bg-color-b=\"255\"&gt;\n&lt;/pdbe-molstar&gt;\n\n\n\n\n\n\n\nTipViewer Controls\n\n\n\n\nRotate: Left-click and drag\nZoom: Scroll wheel\nPan: Right-click (or Ctrl+Left-click) and drag",
+    "text": "Interactive Structure\nThe viewer below shows the structure of Bet v 1.\n\n&lt;!-- \n  PDB 4A88: Bet v 1 structure\n--&gt;\n&lt;pdbe-molstar \n  id=\"betv1-viewer\" \n  molecule-id=\"4a88\" \n  hide-controls=\"true\"\n  bg-color-r=\"255\" \n  bg-color-g=\"255\" \n  bg-color-b=\"255\"&gt;\n&lt;/pdbe-molstar&gt;\n\n\n\n\n\n\n\nTipViewer Controls\n\n\n\n\nRotate: Left-click and drag\nZoom: Scroll wheel\nPan: Right-click (or Ctrl+Left-click) and drag",
     "crumbs": [
       "Capstone",
       "Bet v 1 Target Deep Dive"
@@ -2794,7 +2794,7 @@
     "href": "capstone/targets/il-7r.html#interactive-structure",
     "title": "IL-7R Target Deep Dive",
     "section": "Interactive Structure",
-    "text": "Interactive Structure\nThe viewer below shows IL-7R alpha (Chain B) bound to its cytokine IL-7 (Chain A).\n\n\n\n\n&lt;!-- \n  PDB 3DI2: IL-7 in complex with IL-7R alpha\n--&gt;\n&lt;pdbe-molstar \n  id=\"il7r-viewer\" \n  molecule-id=\"3di2\" \n  hide-controls=\"true\"\n  bg-color-r=\"255\" \n  bg-color-g=\"255\" \n  bg-color-b=\"255\"&gt;\n&lt;/pdbe-molstar&gt;\n\n\n\n\n\n\n\nTipViewer Controls\n\n\n\n\nRotate: Left-click and drag\nZoom: Scroll wheel\nPan: Right-click (or Ctrl+Left-click) and drag",
+    "text": "Interactive Structure\nThe viewer below shows IL-7R alpha (Chain B) bound to its cytokine IL-7 (Chain A).\n\n&lt;!-- \n  PDB 3DI2: IL-7 in complex with IL-7R alpha\n--&gt;\n&lt;pdbe-molstar \n  id=\"il7r-viewer\" \n  molecule-id=\"3di2\" \n  hide-controls=\"true\"\n  bg-color-r=\"255\" \n  bg-color-g=\"255\" \n  bg-color-b=\"255\"&gt;\n&lt;/pdbe-molstar&gt;\n\n\n\n\n\n\n\nTipViewer Controls\n\n\n\n\nRotate: Left-click and drag\nZoom: Scroll wheel\nPan: Right-click (or Ctrl+Left-click) and drag",
     "crumbs": [
       "Capstone",
       "IL-7R Target Deep Dive"
