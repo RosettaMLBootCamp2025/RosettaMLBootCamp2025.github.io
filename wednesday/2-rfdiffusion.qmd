@@ -1,5 +1,5 @@
 ---
-title: "1. RFdiffusion: Advanced Design"
+title: "2. RFdiffusion: Advanced Design"
 ---
 
 ## In-Class Activity

@@ -1,5 +1,5 @@
 ---
-title: "3. ESMFold vs. AlphaFold2"
+title: "2. ESMFold vs. AlphaFold2"
 ---
 
 ## Overview
