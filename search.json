@@ -1638,7 +1638,7 @@
     "href": "index.html#course-overview",
     "title": "ML Protein Design Bootcamp 2025",
     "section": "Course Overview",
-    "text": "Course Overview\nThis bootcamp is organized into 4 days of content plus a capstone project. Each day contains sequential modules that build on each other.\n\n\nMonday\nIntroduction and setup modules.\n\n\nTuesday\nComing soon\nModules for Tuesday.\n\n\nWednesday\nComing soon\nModules for Wednesday.\n\n\nThursday\nComing soon\nModules for Thursday.\n\n\nCapstone\nCapstone project bringing together everything you’ve learned."
+    "text": "Course Overview\nThis bootcamp is organized into 4 days of content plus a capstone project. Each day contains sequential modules that build on each other.\n\n\nMonday\nTool Installation: Install essential ML protein design tools on your HPC cluster including LocalColabFold, ESMFold, LigandMPNN, RFdiffusion2, Chai-1, Boltz-2, and BindCraft.\n\n\nTuesday\nStructure Prediction: Learn protein visualization with PyMOL, predict structures with AlphaFold2, and compare prediction methods (ESMFold vs AF2) to understand their trade-offs.\n\n\nWednesday\nAdvanced Prediction & Design: Compare AlphaFold3 and Chai-1 on complex predictions, then design proteins with RFdiffusion including binders and symmetric oligomers.\n\n\nThursday\nComing soon\nModules for Thursday.\n\n\nCapstone\nCapstone project bringing together everything you’ve learned."
   },
   {
     "objectID": "index.html#your-progress",
