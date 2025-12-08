@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>2.1 Placeholder Module – ML Protein Design Bootcamp 2025</title>
+<title>0. PyMOL Visualization – ML Protein Design Bootcamp 2025</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -40,7 +40,7 @@ ul.task-list li input[type="checkbox"] {
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-b3b235ae6ba71d6e5c2a90c00144237d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-635a35c16803d16fd9db22f392043487.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -68,6 +68,19 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+<!-- Shared Mol* component include for target pages -->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/pdbe-molstar@latest/build/pdbe-molstar-component.js"></script>
+<style>
+  .molstar-container {
+    width: 100%;
+    height: 500px;
+    position: relative;
+    margin-bottom: 20px;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+</style>
 
 
 <link rel="stylesheet" href="../styles.css">
@@ -136,7 +149,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../tuesday/2.1-placeholder.html">2.1 Placeholder Module</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../tuesday/0-pymol.html">0. PyMOL Visualization</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -156,8 +169,26 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../tuesday/2.1-placeholder.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">2.1 Placeholder Module</span></a>
+  <a href="../tuesday/0-pymol.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">0. PyMOL Visualization</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../tuesday/1-alphafold2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-alphafold2.html</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../tuesday/2-alphafold3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2. AlphaFold3 vs.&nbsp;Chai-1</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../tuesday/3-esmfold.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3. ESMFold vs.&nbsp;AlphaFold2</span></a>
   </div>
 </li>
     </ul>
@@ -170,9 +201,11 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#learning-objectives" id="toc-learning-objectives" class="nav-link active" data-scroll-target="#learning-objectives">Learning Objectives</a></li>
-  <li><a href="#section-1" id="toc-section-1" class="nav-link" data-scroll-target="#section-1">Section 1</a></li>
-  <li><a href="#section-2" id="toc-section-2" class="nav-link" data-scroll-target="#section-2">Section 2</a></li>
+  <li><a href="#resources" id="toc-resources" class="nav-link active" data-scroll-target="#resources">Resources</a></li>
+  <li><a href="#instructions" id="toc-instructions" class="nav-link" data-scroll-target="#instructions">Instructions</a>
+  <ul class="collapse">
+  <li><a href="#using-the-aesthetic-script" id="toc-using-the-aesthetic-script" class="nav-link" data-scroll-target="#using-the-aesthetic-script">Using the Aesthetic Script</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -181,7 +214,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">2.1 Placeholder Module</h1>
+<h1 class="title">0. PyMOL Visualization</h1>
 </div>
 
 
@@ -198,21 +231,33 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="learning-objectives" class="level2">
-<h2 class="anchored" data-anchor-id="learning-objectives">Learning Objectives</h2>
-<p><em>Content coming soon.</em></p>
+<p>This activity covers the basics of protein structure visualization using PyMOL.</p>
+<section id="resources" class="level2">
+<h2 class="anchored" data-anchor-id="resources">Resources</h2>
+<ul>
+<li><a href="files/PyMOL.pdf"><strong>PyMOL Tutorial Slides (PDF)</strong></a></li>
+<li><a href="files/aesthetic.py"><strong>Aesthetic Script (Python)</strong></a> - Script to recreate RFdiffusion figure aesthetics.</li>
+</ul>
 </section>
-<section id="section-1" class="level2">
-<h2 class="anchored" data-anchor-id="section-1">Section 1</h2>
-<p><input type="checkbox" class="module-checkbox" data-module-id="2.1-section1"> Mark Section 1 as complete</p>
-<p><em>Placeholder content for Section 1.</em></p>
-</section>
-<section id="section-2" class="level2">
-<h2 class="anchored" data-anchor-id="section-2">Section 2</h2>
-<p><input type="checkbox" class="module-checkbox" data-module-id="2.1-section2"> Mark Section 2 as complete</p>
-<p><em>Placeholder content for Section 2.</em></p>
+<section id="instructions" class="level2">
+<h2 class="anchored" data-anchor-id="instructions">Instructions</h2>
+<ol type="1">
+<li>Download and install PyMOL (or use the version on your cluster/classroom computers).</li>
+<li>Follow the tutorial slides to learn about navigation, representation, and coloring.</li>
+<li>Use the <code>aesthetic.py</code> script to apply custom styling to your structures.</li>
+</ol>
+<section id="using-the-aesthetic-script" class="level3">
+<h3 class="anchored" data-anchor-id="using-the-aesthetic-script">Using the Aesthetic Script</h3>
+<p>To use the provided script in PyMOL:</p>
+<ol type="1">
+<li>Download <code>aesthetic.py</code>.</li>
+<li>In PyMOL, go to <strong>File -&gt; Run Script…</strong> and select the file.</li>
+<li>Or run it from the PyMOL command line: <code>bash     run /path/to/aesthetic.py</code></li>
+<li>This will load new commands <code>get_colors</code> and <code>get_lighting</code> which you can use to beautify your protein renders.</li>
+</ol>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
@@ -453,7 +498,7 @@ ul.task-list li input[type="checkbox"] {
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp('/' + window.location.host + '/');
+        var filterRegex = new RegExp("https:\/\/RosettaMLBootCamp2025\.github\.io\/");
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }

@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>2.1 Placeholder Module – ML Protein Design Bootcamp 2025</title>
+<title>2. AlphaFold3 vs.&nbsp;Chai-1 – ML Protein Design Bootcamp 2025</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -40,7 +40,7 @@ ul.task-list li input[type="checkbox"] {
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-b3b235ae6ba71d6e5c2a90c00144237d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-635a35c16803d16fd9db22f392043487.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -68,6 +68,19 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+<!-- Shared Mol* component include for target pages -->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/pdbe-molstar@latest/build/pdbe-molstar-component.js"></script>
+<style>
+  .molstar-container {
+    width: 100%;
+    height: 500px;
+    position: relative;
+    margin-bottom: 20px;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+</style>
 
 
 <link rel="stylesheet" href="../styles.css">
@@ -136,7 +149,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../tuesday/2.1-placeholder.html">2.1 Placeholder Module</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../tuesday/2-alphafold3.html">2. AlphaFold3 vs.&nbsp;Chai-1</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -156,8 +169,26 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../tuesday/2.1-placeholder.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">2.1 Placeholder Module</span></a>
+  <a href="../tuesday/0-pymol.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">0. PyMOL Visualization</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../tuesday/1-alphafold2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-alphafold2.html</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../tuesday/2-alphafold3.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">2. AlphaFold3 vs.&nbsp;Chai-1</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../tuesday/3-esmfold.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3. ESMFold vs.&nbsp;AlphaFold2</span></a>
   </div>
 </li>
     </ul>
@@ -170,9 +201,7 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#learning-objectives" id="toc-learning-objectives" class="nav-link active" data-scroll-target="#learning-objectives">Learning Objectives</a></li>
-  <li><a href="#section-1" id="toc-section-1" class="nav-link" data-scroll-target="#section-1">Section 1</a></li>
-  <li><a href="#section-2" id="toc-section-2" class="nav-link" data-scroll-target="#section-2">Section 2</a></li>
+  <li><a href="#in-class-activity" id="toc-in-class-activity" class="nav-link active" data-scroll-target="#in-class-activity">In-Class Activity</a></li>
   </ul>
 </nav>
     </div>
@@ -181,7 +210,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">2.1 Placeholder Module</h1>
+<h1 class="title">2. AlphaFold3 vs.&nbsp;Chai-1</h1>
 </div>
 
 
@@ -198,19 +227,77 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="learning-objectives" class="level2">
-<h2 class="anchored" data-anchor-id="learning-objectives">Learning Objectives</h2>
-<p><em>Content coming soon.</em></p>
-</section>
-<section id="section-1" class="level2">
-<h2 class="anchored" data-anchor-id="section-1">Section 1</h2>
-<p><input type="checkbox" class="module-checkbox" data-module-id="2.1-section1"> Mark Section 1 as complete</p>
-<p><em>Placeholder content for Section 1.</em></p>
-</section>
-<section id="section-2" class="level2">
-<h2 class="anchored" data-anchor-id="section-2">Section 2</h2>
-<p><input type="checkbox" class="module-checkbox" data-module-id="2.1-section2"> Mark Section 2 as complete</p>
-<p><em>Placeholder content for Section 2.</em></p>
+<section id="in-class-activity" class="level2">
+<h2 class="anchored" data-anchor-id="in-class-activity">In-Class Activity</h2>
+<ol type="1">
+<li><strong>Setup for the activity</strong>
+<ol type="1">
+<li>In order to make a prediction with the <a href="https://alphafoldserver.com/">AlphaFold server</a>, you’ll need a Google account to sign in.</li>
+<li>In order to make a prediction with <a href="https://lab.chaidiscovery.com/">Chai-Lab</a>, you’ll need to create a free account.</li>
+</ol></li>
+<li><strong>Make a monomer prediction for 1QYS with both AF3 and Chai-Lab.</strong>
+<ol type="1">
+<li><strong>AlphaFold 3:</strong>
+<ol type="1">
+<li>Paste in the sequence for 1QYS: <code>MGDIQVQVNIDDNGKNFDYTYTVTTESELQKVLNELMDYIKKQGAKRVRISITARTKKEAEKFAAILIKVFAELGYNDINVTFDGDTVTVEGQLEGGSLEHHHHHH</code></li>
+<li>Press the “continue and preview job” button.</li>
+<li>Press “confirm and submit job”.</li>
+</ol></li>
+<li><strong>Chai-Lab:</strong>
+<ol type="1">
+<li>Paste in the same sequence for 1QYS.</li>
+<li>Click “Run Job” to submit the prediction.</li>
+</ol></li>
+<li><strong>Analysis:</strong>
+<ul>
+<li>How do the predicted structures compare to the native?</li>
+<li>How does the AF3 prediction compare to Chai-Lab?</li>
+<li>How confident is each model about its prediction?</li>
+</ul></li>
+</ol></li>
+<li><strong>Make a multimer prediction for 8AJY with both AF3 and Chai-Lab.</strong>
+<ol type="1">
+<li><strong>AlphaFold 3:</strong>
+<ol type="1">
+<li>Paste in the sequence for 8AJY_1 (chain A): <code>MLTDRGMTYDLDPKDGSSAATKPVLEVTKKVFDTAADAAGQTVTVEFKVSGAEGKYATTGYHIYWDERLEVVATKTGAYAKKGAALEDSSLAKAENNGNGVFVASGADDDFGADGVMWTVELKVPADAKAGDVYPIDVAYQWDPSKGDLFTDNKDSAQGKLMQAYFFTQGIKSSSNPSTDEYLVKANATYADGYIAIKAGEPE</code></li>
+<li>Click “add entity”, make sure the molecule type to “protein”, and paste in the sequence of 8AJY_2 (chain B): <code>MGSSHHHHHHSSGLVPRGSHMASKPQYRLGDVDFNGIIDGRDATAVLTEYARISTGKPAEFVGNTALAADVNKDNMIDAADATHILTYYAISSTRDDITSDDYFALHQPLRG</code></li>
+<li>The native structure was originally solved in the presence of 3 Ca2+ ions. Click “add entity”, change the molecule type to “ion”, and select Ca2+ to add each.</li>
+<li>Press the “continue and preview job” button.</li>
+<li>Press “confirm and submit job”.</li>
+</ol></li>
+<li><strong>Chai-Lab:</strong>
+<ol type="1">
+<li>Paste in the sequence for 8AJY_1 (chain A).</li>
+<li>Click “Add Chain” and paste in the sequence for 8AJY_2 (chain B).</li>
+<li>Click “Add Ligand” and select “Ca2+” from the ion options. Repeat to add all 3 Ca2+ ions.</li>
+<li>Click “Run Job” to submit the prediction.</li>
+</ol></li>
+<li><strong>Analysis:</strong>
+<ul>
+<li>How do the predicted structures compare to the native?</li>
+<li>How does the AF3 prediction compare to Chai-Lab?</li>
+<li>How confident is each model about its prediction?</li>
+<li>What about the placement of the ions and the coordinating side chains?</li>
+</ul></li>
+</ol></li>
+<li><strong>Make a protein-ligand prediction with Chai-Lab for 2JIE (beta-glucosidase with 2-fluoro-glucose).</strong>
+<ol type="1">
+<li><strong>Chai-Lab:</strong>
+<ol type="1">
+<li>Paste in the sequence for 2JIE (beta-glucosidase B): <code>MHHHHHHSENTFIFPATFMWGTSTSSYQIEGGTDEGGRTPSIWDTFCQIPGKVIGGDCGDVACDHFHHFKEDVQLMKQLGFLHYRFSVAWPRIMPAAGIINEEGLLFYEHLLDEIELAGLIPMLTLYHWDLPQWIEDEGGWTQRETIQHFKTYASVIMDRFGERINWWNTINEPYCASILGYGTGEHAPGHENWREAFTAAHHILMCHGIASNLHKEKGLTGKIGITLNMEHVDAASERPEDVAAAIRRDGFINRWFAEPLFNGKYPEDMVEWYGTYLNGLDFVQPGDMELIQQPGDFLGINYYTRSIIRSTNDASLLQVEQVHMEEPVTDMGWEIHPESFYKLLTRIEKDFSKGLPILITENGAAMRDELVNGQIEDTGRHGYIEEHLKACHRFIEEGGQLKGYFVWSFLDNFEWAWGYSKRFGIVHINYETQERTPKQSALWFKQMMAKNGF</code></li>
+<li>Click “Add Ligand” and select “Custom SMILES”.</li>
+<li>Enter the SMILES string for 2-fluoro-glucose (G2F): <code>OCC1OC(O)C(F)C(O)C1O</code></li>
+<li>Click “Run Job” to submit the prediction.</li>
+</ol></li>
+<li><strong>Analysis:</strong>
+<ul>
+<li>How does the predicted structure compare to the crystal structure (2JIE)?</li>
+<li>Is the ligand positioned correctly in the active site?</li>
+<li>How well does Chai-Lab predict the protein-ligand interactions?</li>
+<li>What is the confidence score for the ligand placement?</li>
+</ul></li>
+</ol></li>
+</ol>
 
 
 </section>
@@ -453,7 +540,7 @@ ul.task-list li input[type="checkbox"] {
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp('/' + window.location.host + '/');
+        var filterRegex = new RegExp("https:\/\/RosettaMLBootCamp2025\.github\.io\/");
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }
