@@ -70,7 +70,7 @@
     "href": "capstone/targets/trka.html#interactive-structure",
     "title": "TrkA Receptor Deep Dive",
     "section": "Interactive Structure",
-    "text": "Interactive Structure\nThe viewer below shows the extracellular domain of TrkA (Chain A) in complex with NGF (Chain B).\n\n&lt;!-- \n  PDB 1WWC: Crystal structure of the NGF-TrkA complex\n--&gt;\n&lt;pdbe-molstar \n  id=\"trka-viewer\" \n  molecule-id=\"1wwc\" \n  hide-controls=\"true\"\n  bg-color-r=\"255\" \n  bg-color-g=\"255\" \n  bg-color-b=\"255\"&gt;\n&lt;/pdbe-molstar&gt;\n\n\n\n\n\n\n\nTipViewer Controls\n\n\n\n\nRotate: Left-click and drag\nZoom: Scroll wheel\nPan: Right-click (or Ctrl+Left-click) and drag",
+    "text": "Interactive Structure\nThe viewer below shows the extracellular domain of TrkA (Chain A) in complex with NGF (Chain B).\n\n\n\n\n\n\n\n\n\nTipViewer Controls\n\n\n\n\nRotate: Left-click and drag\nZoom: Scroll wheel\nPan: Right-click (or Ctrl+Left-click) and drag",
     "crumbs": [
       "Capstone",
       "TrkA Receptor Deep Dive"
@@ -114,7 +114,7 @@
     "href": "capstone/targets/gm3.html#interactive-structure",
     "title": "GM2 Activator Protein Deep Dive",
     "section": "Interactive Structure",
-    "text": "Interactive Structure\nThe viewer below shows the GM2 Activator Protein.\n\n&lt;!-- \n  PDB 1G13: Crystal structure of human GM2 activator protein\n--&gt;\n&lt;pdbe-molstar \n  id=\"gm3-viewer\" \n  molecule-id=\"1g13\" \n  hide-controls=\"true\"\n  bg-color-r=\"255\" \n  bg-color-g=\"255\" \n  bg-color-b=\"255\"&gt;\n&lt;/pdbe-molstar&gt;\n\n\n\n\n\n\n\nTipViewer Controls\n\n\n\n\nRotate: Left-click and drag\nZoom: Scroll wheel\nPan: Right-click (or Ctrl+Left-click) and drag",
+    "text": "Interactive Structure\nThe viewer below shows the GM2 Activator Protein.\n\n\n\n\n\n\n\n\n\nTipViewer Controls\n\n\n\n\nRotate: Left-click and drag\nZoom: Scroll wheel\nPan: Right-click (or Ctrl+Left-click) and drag",
     "crumbs": [
       "Capstone",
       "GM2 Activator Protein Deep Dive"
@@ -158,7 +158,7 @@
     "href": "capstone/targets/tem-1.html#interactive-structure",
     "title": "TEM-1 Beta-Lactamase Deep Dive",
     "section": "Interactive Structure",
-    "text": "Interactive Structure\nThe viewer below shows TEM-1 Beta-Lactamase.\n\n&lt;!-- \n  PDB 1FQG: TEM-1 Beta-Lactamase structure\n--&gt;\n&lt;pdbe-molstar \n  id=\"tem1-viewer\" \n  molecule-id=\"1fqg\" \n  hide-controls=\"true\"\n  bg-color-r=\"255\" \n  bg-color-g=\"255\" \n  bg-color-b=\"255\"&gt;\n&lt;/pdbe-molstar&gt;\n\n\n\n\n\n\n\nTipViewer Controls\n\n\n\n\nRotate: Left-click and drag\nZoom: Scroll wheel\nPan: Right-click (or Ctrl+Left-click) and drag",
+    "text": "Interactive Structure\nThe viewer below shows TEM-1 Beta-Lactamase.\n\n\n\n\n\n\n\n\n\nTipViewer Controls\n\n\n\n\nRotate: Left-click and drag\nZoom: Scroll wheel\nPan: Right-click (or Ctrl+Left-click) and drag",
     "crumbs": [
       "Capstone",
       "TEM-1 Beta-Lactamase Deep Dive"
@@ -202,7 +202,7 @@
     "href": "capstone/targets/pd-l1.html#interactive-structure",
     "title": "PD-L1 Target Deep Dive",
     "section": "Interactive Structure",
-    "text": "Interactive Structure\nExplore the native interaction between PD-L1 (the target) and PD-1 (the natural binder) below. * Target (PD-L1): The surface we want to bind to. * Binder (PD-1): The natural partner we want to compete with.\n\n&lt;!-- \n  PDB 4ZQK: Crystal structure of human PD-1 (Chain A) complexed with PD-L1 (Chain B)\n  hide-controls=\"true\" keeps the UI simple for this overview \n--&gt;\n&lt;pdbe-molstar \n  id=\"pd-l1-viewer\" \n  molecule-id=\"4zqk\" \n  hide-controls=\"true\"\n  bg-color-r=\"255\" \n  bg-color-g=\"255\" \n  bg-color-b=\"255\"&gt;\n&lt;/pdbe-molstar&gt;\n\n\n\n\n\n\n\nTipViewer Controls\n\n\n\n\nRotate: Left-click and drag\nZoom: Scroll wheel\nPan: Right-click (or Ctrl+Left-click) and drag",
+    "text": "Interactive Structure\nExplore the native interaction between PD-L1 (the target) and PD-1 (the natural binder) below. * Target (PD-L1): The surface we want to bind to. * Binder (PD-1): The natural partner we want to compete with.\n\n\n\n\n\n\n\n\n\nTipViewer Controls\n\n\n\n\nRotate: Left-click and drag\nZoom: Scroll wheel\nPan: Right-click (or Ctrl+Left-click) and drag",
     "crumbs": [
       "Capstone",
       "PD-L1 Target Deep Dive"
@@ -2744,7 +2744,7 @@
     "href": "capstone/targets/beta-glucosidase.html#interactive-structure",
     "title": "Beta-Glucosidase Deep Dive",
     "section": "Interactive Structure",
-    "text": "Interactive Structure\nThe viewer below shows Beta-Glucosidase A.\n\n&lt;!-- \n  PDB 2JIE: Structure of Beta-Glucosidase\n--&gt;\n&lt;pdbe-molstar \n  id=\"bgl-viewer\" \n  molecule-id=\"2jie\" \n  hide-controls=\"true\"\n  bg-color-r=\"255\" \n  bg-color-g=\"255\" \n  bg-color-b=\"255\"&gt;\n&lt;/pdbe-molstar&gt;\n\n\n\n\n\n\n\nTipViewer Controls\n\n\n\n\nRotate: Left-click and drag\nZoom: Scroll wheel\nPan: Right-click (or Ctrl+Left-click) and drag",
+    "text": "Interactive Structure\nThe viewer below shows Beta-Glucosidase A.\n\n\n\n\n\n\n\n\n\nTipViewer Controls\n\n\n\n\nRotate: Left-click and drag\nZoom: Scroll wheel\nPan: Right-click (or Ctrl+Left-click) and drag",
     "crumbs": [
       "Capstone",
       "Beta-Glucosidase Deep Dive"
@@ -2788,7 +2788,7 @@
     "href": "capstone/targets/ifnar2.html#interactive-structure",
     "title": "IFNAR2 Target Deep Dive",
     "section": "Interactive Structure",
-    "text": "Interactive Structure\nThe viewer below shows IFNAR2 (Chain B) in complex with Interferon alpha-2 (Chain A) and IFNAR1 (Chain C).\n\n&lt;!-- \n  PDB 3SE3: Ternary complex of IFNAR1, IFNAR2, and IFN-alpha2\n--&gt;\n&lt;pdbe-molstar \n  id=\"ifnar2-viewer\" \n  molecule-id=\"3se3\" \n  hide-controls=\"true\"\n  bg-color-r=\"255\" \n  bg-color-g=\"255\" \n  bg-color-b=\"255\"&gt;\n&lt;/pdbe-molstar&gt;\n\n\n\n\n\n\n\nTipViewer Controls\n\n\n\n\nRotate: Left-click and drag\nZoom: Scroll wheel\nPan: Right-click (or Ctrl+Left-click) and drag",
+    "text": "Interactive Structure\nThe viewer below shows IFNAR2 (Chain B) in complex with Interferon alpha-2 (Chain A) and IFNAR1 (Chain C).\n\n\n\n\n\n\n\n\n\nTipViewer Controls\n\n\n\n\nRotate: Left-click and drag\nZoom: Scroll wheel\nPan: Right-click (or Ctrl+Left-click) and drag",
     "crumbs": [
       "Capstone",
       "IFNAR2 Target Deep Dive"
@@ -2832,7 +2832,7 @@
     "href": "capstone/targets/bet-v-1.html#interactive-structure",
     "title": "Bet v 1 Target Deep Dive",
     "section": "Interactive Structure",
-    "text": "Interactive Structure\nThe viewer below shows the structure of Bet v 1.\n\n&lt;!-- \n  PDB 4A88: Bet v 1 structure\n--&gt;\n&lt;pdbe-molstar \n  id=\"betv1-viewer\" \n  molecule-id=\"4a88\" \n  hide-controls=\"true\"\n  bg-color-r=\"255\" \n  bg-color-g=\"255\" \n  bg-color-b=\"255\"&gt;\n&lt;/pdbe-molstar&gt;\n\n\n\n\n\n\n\nTipViewer Controls\n\n\n\n\nRotate: Left-click and drag\nZoom: Scroll wheel\nPan: Right-click (or Ctrl+Left-click) and drag",
+    "text": "Interactive Structure\nThe viewer below shows the structure of Bet v 1.\n\n\n\n\n\n\n\n\n\nTipViewer Controls\n\n\n\n\nRotate: Left-click and drag\nZoom: Scroll wheel\nPan: Right-click (or Ctrl+Left-click) and drag",
     "crumbs": [
       "Capstone",
       "Bet v 1 Target Deep Dive"
@@ -2876,7 +2876,7 @@
     "href": "capstone/targets/il-7r.html#interactive-structure",
     "title": "IL-7R Target Deep Dive",
     "section": "Interactive Structure",
-    "text": "Interactive Structure\nThe viewer below shows IL-7R alpha (Chain B) bound to its cytokine IL-7 (Chain A).\n\n&lt;!-- \n  PDB 3DI2: IL-7 in complex with IL-7R alpha\n--&gt;\n&lt;pdbe-molstar \n  id=\"il7r-viewer\" \n  molecule-id=\"3di2\" \n  hide-controls=\"true\"\n  bg-color-r=\"255\" \n  bg-color-g=\"255\" \n  bg-color-b=\"255\"&gt;\n&lt;/pdbe-molstar&gt;\n\n\n\n\n\n\n\nTipViewer Controls\n\n\n\n\nRotate: Left-click and drag\nZoom: Scroll wheel\nPan: Right-click (or Ctrl+Left-click) and drag",
+    "text": "Interactive Structure\nThe viewer below shows IL-7R alpha (Chain B) bound to its cytokine IL-7 (Chain A).\n\n\n\n\n\n\n\n\n\nTipViewer Controls\n\n\n\n\nRotate: Left-click and drag\nZoom: Scroll wheel\nPan: Right-click (or Ctrl+Left-click) and drag",
     "crumbs": [
       "Capstone",
       "IL-7R Target Deep Dive"
