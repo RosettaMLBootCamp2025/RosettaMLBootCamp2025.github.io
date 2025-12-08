@@ -16,17 +16,7 @@ subtitle: "Enzymatic Catalyst"
 The viewer below shows **Beta-Glucosidase A**.
 
 <div class="molstar-container">
-    <!-- 
-      PDB 2JIE: Structure of Beta-Glucosidase
-    -->
-    <pdbe-molstar 
-      id="bgl-viewer" 
-      molecule-id="2jie" 
-      hide-controls="true"
-      bg-color-r="255" 
-      bg-color-g="255" 
-      bg-color-b="255">
-    </pdbe-molstar>
+<pdbe-molstar id="bgl-viewer" molecule-id="2jie" hide-controls="true" bg-color-r="255" bg-color-g="255" bg-color-b="255"></pdbe-molstar>
 </div>
 
 ::: {.callout-tip}

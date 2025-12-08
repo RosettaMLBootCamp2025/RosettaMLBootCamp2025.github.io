@@ -68,6 +68,19 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+<!-- Shared Mol* component include for target pages -->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/pdbe-molstar@latest/build/pdbe-molstar-component.js"></script>
+<style>
+  .molstar-container {
+    width: 100%;
+    height: 500px;
+    position: relative;
+    margin-bottom: 20px;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+</style>
 
 
 <link rel="stylesheet" href="../styles.css">
@@ -156,10 +169,22 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../tuesday/2.1-placeholder.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">2.1 Placeholder Module</span></a>
+  <a href="../tuesday/0-pymol.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">0. PyMOL Visualization</span></a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../tuesday/1-alphafold2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1-alphafold2.html</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+ <span class="menu-text">tuesday/2-alphafold3.qmd</span>
+  </li>
+        <li class="sidebar-item">
+ <span class="menu-text">tuesday/3-esmfold.qmd</span>
+  </li>
     </ul>
     </div>
 </nav>
@@ -199,7 +224,7 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="overview" class="level2">
 <h2 class="anchored" data-anchor-id="overview">Overview</h2>
-<p><em>Tuesday content coming soon.</em></p>
+<p>Tuesday focuses on <strong>protein structure prediction</strong> using state-of-the-art tools. You’ll learn to visualize protein structures with PyMOL, predict structures using AlphaFold2, and compare different prediction methods (ESMFold vs AlphaFold2) to understand their strengths and trade-offs.</p>
 </section>
 <section id="modules" class="level2">
 <h2 class="anchored" data-anchor-id="modules">Modules</h2>
@@ -208,18 +233,27 @@ ul.task-list li input[type="checkbox"] {
 <tr class="header">
 <th>Module</th>
 <th>Topic</th>
-<th>Status</th>
+<th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td><a href="../tuesday/2.1-placeholder.html">2.1</a></td>
-<td>Placeholder Module</td>
-<td>Coming soon</td>
+<td><a href="../tuesday/0-pymol.html">0. PyMOL</a></td>
+<td>PyMOL Visualization</td>
+<td>Learn protein structure visualization, navigation, representation, and coloring using PyMOL</td>
+</tr>
+<tr class="even">
+<td><a href="../tuesday/1-alphafold2.html">1. AlphaFold2</a></td>
+<td>AlphaFold2 Structure Prediction</td>
+<td>Run ColabFold/AlphaFold2 predictions and explore how parameters affect prediction quality</td>
+</tr>
+<tr class="odd">
+<td><a href="../tuesday/2-esmfold.html">2. ESMFold vs.&nbsp;AlphaFold2</a></td>
+<td>Comparing Prediction Methods</td>
+<td>Compare ESMFold’s language model approach vs AF2’s MSA-based approach. Learn when to use each tool</td>
 </tr>
 </tbody>
 </table>
-<p><em>More modules will be added here.</em></p>
 <hr>
 <div style="display: flex; justify-content: space-between; align-items: center;">
 <div>

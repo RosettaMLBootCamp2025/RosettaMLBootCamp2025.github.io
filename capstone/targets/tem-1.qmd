@@ -16,17 +16,7 @@ subtitle: "Antibiotic Resistance Enzyme"
 The viewer below shows **TEM-1 Beta-Lactamase**.
 
 <div class="molstar-container">
-    <!-- 
-      PDB 1FQG: TEM-1 Beta-Lactamase structure
-    -->
-    <pdbe-molstar 
-      id="tem1-viewer" 
-      molecule-id="1fqg" 
-      hide-controls="true"
-      bg-color-r="255" 
-      bg-color-g="255" 
-      bg-color-b="255">
-    </pdbe-molstar>
+<pdbe-molstar id="tem1-viewer" molecule-id="1fqg" hide-controls="true" bg-color-r="255" bg-color-g="255" bg-color-b="255"></pdbe-molstar>
 </div>
 
 ::: {.callout-tip}

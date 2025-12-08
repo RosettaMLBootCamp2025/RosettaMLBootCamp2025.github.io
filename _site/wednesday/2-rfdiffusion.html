@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Pre-work 3: Python Refresher – ML Protein Design Bootcamp 2025</title>
+<title>2. RFdiffusion: Advanced Design – ML Protein Design Bootcamp 2025</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -19,41 +19,6 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
-}
-/* CSS for syntax highlighting */
-html { -webkit-text-size-adjust: 100%; }
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -121,7 +86,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link rel="stylesheet" href="../styles.css">
 </head>
 
-<body class="nav-sidebar floating nav-fixed quarto-light">
+<body class="nav-fixed quarto-light">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -143,7 +108,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="../monday/index.html" aria-current="page"> 
+    <a class="nav-link" href="../monday/index.html"> 
 <span class="menu-text">Monday</span></a>
   </li>  
   <li class="nav-item">
@@ -179,150 +144,30 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
       </div> <!-- /container-fluid -->
     </nav>
-  <nav class="quarto-secondary-nav">
-    <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
-        <i class="bi bi-layout-text-sidebar-reverse"></i>
-      </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../monday/prework-3-python.html">Pre-work 3: Python Refresher</a></li></ol></nav>
-        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-        </a>
-    </div>
-  </nav>
 </header>
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
-    <div class="sidebar-menu-container"> 
-    <ul class="list-unstyled mt-1">
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../monday/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Monday: Tool Installation</span></a>
-  </div>
-</li>
-        <li class="px-0"><hr class="sidebar-divider hi "></li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../monday/prework-1-env-git.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Pre-work 1: Environment Setup &amp; GitHub Basics</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../monday/prework-2-pymol-vscode.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Pre-work 2: PyMOL and VS Code Setup</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../monday/prework-3-python.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Pre-work 3: Python Refresher</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../monday/0-hpc-setup.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">0. Common HPC Setup</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../monday/1-localcolabfold.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">1. LocalColabFold</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../monday/2-ligandmpnn.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">2. LigandMPNN</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../monday/3-rfdiffusion2.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">3. RFdiffusion2</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../monday/4-esmfold.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">4. ESMFold</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../monday/5-openfold.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">5. OpenFold (Optional)</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../monday/6-chai1.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">6. Chai-1</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../monday/7-boltz2.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">7. Boltz-2</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../monday/8-diffdock-pp.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">8. DiffDock-PP</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../monday/9-placer.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">9. PLACER</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../monday/10-bindcraft.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">10. BindCraft</span></a>
-  </div>
-</li>
-        <li class="px-0"><hr class="sidebar-divider hi "></li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../monday/11-esm3.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">11. ESM3 (Optional)</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../monday/12-rfdiffusion-aa.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">12. RFdiffusion All Atom (Optional)</span></a>
-  </div>
-</li>
-    </ul>
-    </div>
-</nav>
-<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">Overview</a></li>
-  <li><a href="#prerequisites" id="toc-prerequisites" class="nav-link" data-scroll-target="#prerequisites">Prerequisites</a></li>
-  <li><a href="#download-assignment-files" id="toc-download-assignment-files" class="nav-link" data-scroll-target="#download-assignment-files">Download Assignment Files</a></li>
-  <li><a href="#how-to-complete-this-assignment" id="toc-how-to-complete-this-assignment" class="nav-link" data-scroll-target="#how-to-complete-this-assignment">How to Complete This Assignment</a>
+  <li><a href="#in-class-activity" id="toc-in-class-activity" class="nav-link active" data-scroll-target="#in-class-activity">In-Class Activity</a></li>
+  <li><a href="#project-time" id="toc-project-time" class="nav-link" data-scroll-target="#project-time">Project Time</a>
   <ul class="collapse">
-  <li><a href="#part-1-python-basics-warmup-basics.py" id="toc-part-1-python-basics-warmup-basics.py" class="nav-link" data-scroll-target="#part-1-python-basics-warmup-basics.py">Part 1: Python Basics Warmup (basics.py)</a></li>
-  <li><a href="#part-2-sequence-utilities-sequence_utils.py" id="toc-part-2-sequence-utilities-sequence_utils.py" class="nav-link" data-scroll-target="#part-2-sequence-utilities-sequence_utils.py">Part 2: Sequence Utilities (sequence_utils.py)</a></li>
-  <li><a href="#part-3-fasta-file-parsing-read_fasta.py" id="toc-part-3-fasta-file-parsing-read_fasta.py" class="nav-link" data-scroll-target="#part-3-fasta-file-parsing-read_fasta.py">Part 3: FASTA File Parsing (read_fasta.py)</a></li>
-  <li><a href="#part-4-sequence-analysis-tool-analyze_sequence.py" id="toc-part-4-sequence-analysis-tool-analyze_sequence.py" class="nav-link" data-scroll-target="#part-4-sequence-analysis-tool-analyze_sequence.py">Part 4: Sequence Analysis Tool (analyze_sequence.py)</a></li>
+  <li><a href="#milestone-1-target-preparation-initial-exploration" id="toc-milestone-1-target-preparation-initial-exploration" class="nav-link" data-scroll-target="#milestone-1-target-preparation-initial-exploration">Milestone 1: Target Preparation &amp; Initial Exploration</a></li>
+  <li><a href="#milestone-2-unconditional-binder-generation" id="toc-milestone-2-unconditional-binder-generation" class="nav-link" data-scroll-target="#milestone-2-unconditional-binder-generation">Milestone 2: Unconditional Binder Generation</a></li>
+  <li><a href="#milestone-3-hotspot-guided-binder-design" id="toc-milestone-3-hotspot-guided-binder-design" class="nav-link" data-scroll-target="#milestone-3-hotspot-guided-binder-design">Milestone 3: Hotspot-Guided Binder Design</a></li>
+  <li><a href="#milestone-4-potential-optimization" id="toc-milestone-4-potential-optimization" class="nav-link" data-scroll-target="#milestone-4-potential-optimization">Milestone 4: Potential Optimization</a></li>
+  <li><a href="#milestone-5-analysis-selection" id="toc-milestone-5-analysis-selection" class="nav-link" data-scroll-target="#milestone-5-analysis-selection">Milestone 5: Analysis &amp; Selection</a></li>
   </ul></li>
-  <li><a href="#tips" id="toc-tips" class="nav-link" data-scroll-target="#tips">Tips</a></li>
-  <li><a href="#expected-output" id="toc-expected-output" class="nav-link" data-scroll-target="#expected-output">Expected Output</a></li>
-  <li><a href="#questions-and-getting-help" id="toc-questions-and-getting-help" class="nav-link" data-scroll-target="#questions-and-getting-help">Questions and Getting Help</a></li>
+  <li><a href="#troubleshooting-guide" id="toc-troubleshooting-guide" class="nav-link" data-scroll-target="#troubleshooting-guide">Troubleshooting Guide</a>
+  <ul class="collapse">
+  <li><a href="#common-issues-solutions" id="toc-common-issues-solutions" class="nav-link" data-scroll-target="#common-issues-solutions">Common Issues &amp; Solutions</a></li>
+  <li><a href="#tips-for-success" id="toc-tips-for-success" class="nav-link" data-scroll-target="#tips-for-success">Tips for Success</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -331,7 +176,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Pre-work 3: Python Refresher</h1>
+<h1 class="title">2. RFdiffusion: Advanced Design</h1>
 </div>
 
 
@@ -348,95 +193,313 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="overview" class="level2">
-<h2 class="anchored" data-anchor-id="overview">Overview</h2>
-<p>This assignment is designed as a Python refresher for biologists and bioinformaticians who may be a bit rusty. You’ll complete a series of small exercises that build up to creating a simple sequence analysis tool. This assignment should take approximately 30-45 minutes to complete.</p>
-<p><strong>IMPORTANT:</strong> Each Python file contains function templates with <code>TODO</code> comments. Your job is to fill in the missing code where you see <code># TODO:</code> comments. The scripts won’t work until you complete the TODO sections!</p>
-</section>
-<section id="prerequisites" class="level2">
-<h2 class="anchored" data-anchor-id="prerequisites">Prerequisites</h2>
-<ul>
-<li>HW1 completed (Python environment set up)</li>
-</ul>
-</section>
-<section id="download-assignment-files" class="level2">
-<h2 class="anchored" data-anchor-id="download-assignment-files">Download Assignment Files</h2>
-<p><a href="files/python-refresher.zip" class="btn btn-primary" download=""> <i class="bi bi-download"></i> Download Assignment Files (ZIP) </a></p>
+<section id="in-class-activity" class="level2">
+<h2 class="anchored" data-anchor-id="in-class-activity">In-Class Activity</h2>
 <ol type="1">
-<li>Download the ZIP file above.</li>
-<li>Unzip the folder on your computer.</li>
-<li>Open the folder in VS Code.</li>
+<li><strong>Setup for the activity.</strong>
+<ol type="1">
+<li>Go to the RFdiffusion installation and make a new directory for the activity: <code>mkdir activity</code>.</li>
+</ol></li>
+<li><strong>Generate unconditional monomers.</strong>
+<ol type="1">
+<li>Make new folder for this example: <code>cd activity; mkdir 1_uncond; cd 1_uncond</code></li>
+<li>Copy <code>design_unconditional.sh</code> here: <code>cp ../../examples/design_unconditional.sh .</code></li>
+<li>Edit the design script by using 1) <code>'contigmap.contigs=[75-150]'</code>, 2) <code>inference.num_designs=5</code> , 3) <code>../../scripts/run_inference.py</code>.</li>
+<li>Run the script: <code>bash design_unconditional.sh</code>
+<ul>
+<li>What did the script create?</li>
+<li>Look at the structures. What are kinds of topologies did you get?</li>
+</ul></li>
+</ol></li>
+<li><strong>Generate monomers that scaffold a motif.</strong>
+<ol type="1">
+<li>Make new folder for this example: <code>cd activity; mkdir 2_motifs; cd 2_motifs</code></li>
+<li>Copy <code>design_motifscaffolding.sh</code> here: <code>cp ../../examples/design_motifscaffolding.sh .</code></li>
+<li>For this example, we’ll be scaffolding a site from RSV-F protein. Let’s copy that .pdb here: <code>cp ../../examples/input_pdbs/5TPN.pdb .</code></li>
+<li>Edit the design script by using 1) <code>inference.input_pdb=5TPN.pdb</code>, 2) <code>'contigmap.contigs=[10-40/A163-181/10-40]'</code>, 3) <code>inference.num_designs=5</code> , 4) <code>../../scripts/run_inference.py</code>.
+<ul>
+<li>The backbone we’re generating will have 10-40 residues (randomly sampled), the the motif residues 163-181 (inclusive) on chain A of the input, then 10-40 residues (randomly sampled).</li>
+</ul></li>
+<li>Run the script: <code>bash design_motifscaffolding.sh</code>
+<ul>
+<li>Look at the structures. How well is the motif scaffolded?</li>
+</ul></li>
+</ol></li>
+<li><strong>Generate partially diffused structures.</strong>
+<ol type="1">
+<li>Make new folder for this example: <code>cd activity; mkdir 3_partial; cd 3_partial</code></li>
+<li>Copy <code>design_partialdiffusion.sh</code> here: <code>cp ../../examples/design_partialdiffusion.sh .</code></li>
+<li>For this example, we’ll be partially noising and denoising a 79 residue protein 2KL8. Let’s copy that .pdb here: <code>cp ../../examples/input_pdbs/2KL8.pdb .</code></li>
+<li>Edit the design script by using 1) <code>inference.input_pdb=2KL8.pdb</code>, 2) <code>'contigmap.contigs=[79-79]’</code>, and 3) <code>inference.num_designs=5</code>.
+<ul>
+<li>Here we’re generating diversity around a particular fold by noising and denoising 10 steps (20% of the full trajectory). We’re adding noise to the entire structure (all 79 residues), but part of the structure can also be held fixed.</li>
+</ul></li>
+<li>Run the script: <code>bash design_partialdiffusion.sh</code>
+<ul>
+<li>Look at the structures. How similar are the outputs to the original structure?</li>
+</ul></li>
+</ol></li>
+<li><strong>Generate binders with hotspots.</strong>
+<ol type="1">
+<li>Make new folder for this example: <code>cd activity; mkdir 4_hotspot; cd 4_hotspot</code></li>
+<li>Copy <code>design_ppi.sh</code> here: <code>cp ../../examples/design_ppi.sh .</code></li>
+<li>For this example, we’ll be designing binders to insulin receptor. Let’s copy that .pdb here: <code>cp ../../examples/input_pdbs/insulin_target.pdb .</code></li>
+<li>Edit the design script by using 1) <code>inference.input_pdb=insulin_target.pdb</code>, 2) <code>'contigmap.contigs=[A1-150/0 70-100]’</code>, 3) ’<code>ppi.hotspot_res=[A59,A83,A91]’</code>, 4) <code>inference.num_designs=5</code>, 5) <code>denoiser.noise_scale_ca=0</code>, and 6) <code>denoiser.noise_scale_frame=0</code>.
+<ul>
+<li>Here, we’re designing binders to insulin receptor. The contig describes the protein we want: residues 1-150 of the A chain of the receptor, a chainbreak (we don’t want to fuse the binder and target!), a 70-100 residue binder to be diffused. We also tell diffusion to target three specific residues, specifically residues 59, 83 and 91 of chain A. Finally, we reduce the noise added during inference to 0 to improve the quality of the designs.</li>
+</ul></li>
+<li>Run the script: <code>bash design_ppi.sh</code>
+<ul>
+<li>Look at the structures. What are the topologies of your binders?</li>
+</ul></li>
+</ol></li>
+<li><strong>Generate fold-conditioned structures.</strong>
+<ol type="1">
+<li>Make new folder for this example: <code>cd activity; mkdir 5_fold_cond; cd 5_fold_cond</code></li>
+<li>Copy <code>design_timbarrel.sh</code> here: <code>cp ../../examples/design_timbarrel.sh .</code></li>
+<li>For this example, we’ll be diffusing a TIM barrel by providing course-grained specification of the fold. Let’s copy that fold information here: <code>cp -r ../../examples/tim_barrel_scaffold/ .</code>
+<ul>
+<li>What do the files in this folder represent?</li>
+</ul></li>
+<li>Edit the design script by using <code>inference.num_designs=5</code>.
+<ul>
+<li>Here, we’re making a TIM barrel by providing course-grained specification of the fold. We specify the output path. We tell RFdiffusion that we want to do scaffoldguided design, and that we are not making a binder to a target (just a monomer). We provide a path to a directory of TIM barrel scaffolds, generated with the helper script <code>helper_scripts/make_secstruc_adj.py</code>. We generate 5 designs, with a reduced noise scale during inference of 0.5. We also sample additional length to increase diversity of the outputs by masking the loops and inserting 0-5 residues into each loop. We also add 0-5 residues to the N and the C-terminus. These allow use to sample additional diversity in our designs.</li>
+<li>You may need to edit <code>rfdiffusion/inference/model_runners.py</code> like 751 to <code>self.blockadjacency = iu.BlockAdjacency(conf, conf.inference.num_designs)</code></li>
+</ul></li>
+<li>Run the script: <code>bash design_timbarrel.sh</code>
+<ul>
+<li>Look at the structures. How do these generations compare to the TIM barrel structure used for conditioning (<a href="https://www.rcsb.org/structure/6WVS">6WVS</a>)?</li>
+</ul></li>
+</ol></li>
+<li><strong>Generate oligomers of various symmetries.</strong>
+<ol type="1">
+<li>Make new folder for this example: <code>cd activity; mkdir 6_symmetry; cd 6_symmetry</code></li>
+<li>Copy <code>design_cyclic_oligos.sh</code>, <code>design_dihedral_oligos.sh</code>, and <code>design_tetrahedral_oligos.sh</code> here: <code>cp ../../examples/design_cyclic_oligos.sh .</code>, <code>cp ../../examples/design_dihedral_oligos.sh .</code>, and <code>cp ../../examples/design_tetrahedral_oligos.sh .</code></li>
+<li><strong>Generate cyclic oligomers:</strong>
+<ol type="1">
+<li>Edit the <code>design_cyclic_oligos.sh</code> script by changing 1) <code>inference.symmetry="C4”</code>, 2) <code>inference.num_designs=5</code>, 3) <code>inference.output_prefix="example_outputs/C4_oligo”</code>, and 4) <code>'contigmap.contigs=[200-200]’</code>.
+<ul>
+<li>In this example, we generate 5 designs of C4 symmetric oligomers. For symmetrical diffusion, we need the symmetry config. We also apply an external potential to promote contacts both within (with a relative weight of 1) and between chains (relative weight 0.1). We specify that we want to apply these potentials to all chains, with a guide scale of 2.0 (a sensible starting point). We decay this potential with quadratic form, so that it is applied more strongly initially. We specify a total length of 200 aa, so each chain is 50 residues long.</li>
+</ul></li>
+<li>Run the script: <code>bash design_cyclic_oligos.sh</code>
+<ul>
+<li>Do the structures have the desired symmetry?</li>
+<li>What topologies are found in the individual subunits?</li>
+</ul></li>
+</ol></li>
+<li><strong>Generate dihedral oligomers:</strong>
+<ol type="1">
+<li>Edit the <code>design_dihedral_oligos.sh</code> script by changing <code>inference.num_designs=2</code>.
+<ul>
+<li>In this example, we generate 2 D2 symmetric oligomers using the symmetry config. We also apply an external potential to promote contacts both within (with a relative weight of 1) and between chains (relative weight 0.1). We specify that we want to apply these potentials to all chains, with a guide scale of 2.0 (a sensible starting point). We decay this potential with quadratic form, so that it is applied more strongly initially. We specify a total length of 320 aa, so each chain is 80 residues long.</li>
+</ul></li>
+<li>Run the script: <code>bash design_dihedral_oligos.sh</code>
+<ul>
+<li>Do the structures have the desired symmetry?</li>
+<li>What topologies are found in the individual subunits?</li>
+</ul></li>
+</ol></li>
+<li><strong>Generate tetrahedral oligomers:</strong>
+<ol type="1">
+<li>Edit the <code>design_tetrahedral_oligos.sh</code> script by changing 1) <code>inference.num_designs=2</code>, 2) <code>'contigmap.contigs=[720-720]’</code>.
+<ul>
+<li>In this example, we generate tetrahedral symmetric oligomers. We use the symmetry config, and specify we want a tetrahedral oligomer, with 2 designs generated. We specify the output prefix, and also the potential we want to apply. This external potential promotes contacts both within (with a relative weight of 1) and between chains (relative weight 0.1). We specify that we want to apply these potentials to all chains, with a guide scale of 2.0 (a sensible starting point). We decay this potential with quadratic form, so that it is applied more strongly initially. We specify a total length of 720 aa, so each chain is 60 residues long</li>
+</ul></li>
+<li>Run the script: <code>bash design_tetrahedral_oligos.sh</code>
+<ul>
+<li>Do the structures have the desired symmetry?</li>
+<li>What topologies are found in the individual subunits?</li>
+</ul></li>
+</ol></li>
+</ol></li>
 </ol>
 </section>
-<section id="how-to-complete-this-assignment" class="level2">
-<h2 class="anchored" data-anchor-id="how-to-complete-this-assignment">How to Complete This Assignment</h2>
-<p>Each Python file is a template with incomplete functions. Look for <code># TODO:</code> comments - these mark where you need to write code. Read the docstrings and hints carefully, then implement the missing functionality.</p>
-<p><strong>The scripts will not work until you complete the TODO sections!</strong></p>
-<section id="part-1-python-basics-warmup-basics.py" class="level3">
-<h3 class="anchored" data-anchor-id="part-1-python-basics-warmup-basics.py">Part 1: Python Basics Warmup (basics.py)</h3>
-<p>Open <code>basics.py</code> and <strong>fill in the TODO sections</strong> for these exercises: - <code>reverse_string()</code> - Write a function to reverse a string - <code>count_characters()</code> - Use a for loop to count characters in a string - <code>amino_acid_composition()</code> - Create a dictionary to calculate amino acid percentages - <code>filter_sequences_by_length()</code> - Use a list comprehension to filter sequences</p>
-<p><strong>To test your work:</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Navigate to the unzipped directory first!</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> path/to/python-refresher</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> activate bootcamp2025_HW1</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> basics.py</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>If you see <code>None</code> or errors, you haven’t completed all the TODOs yet!</p>
-</section>
-<section id="part-2-sequence-utilities-sequence_utils.py" class="level3">
-<h3 class="anchored" data-anchor-id="part-2-sequence-utilities-sequence_utils.py">Part 2: Sequence Utilities (sequence_utils.py)</h3>
-<p>Open <code>sequence_utils.py</code> and <strong>implement the TODO sections</strong> for these bioinformatics functions: - <code>molecular_weight()</code> - Calculate the molecular weight of a protein - <code>count_hydrophobic()</code> - Count hydrophobic amino acids - <code>find_motif()</code> - Find all positions of a motif in a sequence - <code>count_charged_residues()</code> - Count positive and negative charges</p>
-<p><strong>To test your work:</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> sequence_utils.py</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>The test cases at the bottom will only work once you’ve filled in all the TODOs!</p>
-</section>
-<section id="part-3-fasta-file-parsing-read_fasta.py" class="level3">
-<h3 class="anchored" data-anchor-id="part-3-fasta-file-parsing-read_fasta.py">Part 3: FASTA File Parsing (read_fasta.py)</h3>
-<p>Open <code>read_fasta.py</code> and <strong>complete the TODO sections</strong> to: - <code>read_fasta()</code> - Read and parse a FASTA file, storing sequences in a dictionary (header → sequence) - <code>print_fasta_stats()</code> - Print basic statistics about the sequences</p>
-<p><strong>To test your work:</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> read_fasta.py sample.fasta</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>You should see information about each protein sequence. If not, check your TODOs!</p>
-</section>
-<section id="part-4-sequence-analysis-tool-analyze_sequence.py" class="level3">
-<h3 class="anchored" data-anchor-id="part-4-sequence-analysis-tool-analyze_sequence.py">Part 4: Sequence Analysis Tool (analyze_sequence.py)</h3>
-<p>Open <code>analyze_sequence.py</code> and <strong>fill in the TODO sections</strong> to create a complete analysis script: - <code>analyze_sequences()</code> - Use your sequence_utils functions to analyze each protein - <code>write_results()</code> - Write the analysis results to a file</p>
-<p>This part brings together everything from Parts 1-3!</p>
-<p><strong>To run your completed analysis:</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> analyze_sequence.py sample.fasta</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>This should create an <code>analysis_results.txt</code> file with your results. If it doesn’t work, you’re missing some TODOs!</p>
-</section>
-</section>
-<section id="tips" class="level2">
-<h2 class="anchored" data-anchor-id="tips">Tips</h2>
+<section id="project-time" class="level2">
+<h2 class="anchored" data-anchor-id="project-time">Project Time</h2>
+<p><strong>(Use your target protein)</strong></p>
+<section id="milestone-1-target-preparation-initial-exploration" class="level3">
+<h3 class="anchored" data-anchor-id="milestone-1-target-preparation-initial-exploration">Milestone 1: Target Preparation &amp; Initial Exploration</h3>
 <ul>
-<li><strong>Test frequently</strong>: Run your code after each function to catch errors early</li>
-<li><strong>Use print statements</strong>: Debug by printing intermediate values</li>
-<li><strong>Read the TODO comments carefully</strong>: They contain hints and requirements</li>
-<li><strong>Don’t worry about edge cases</strong>: Focus on getting the basic functionality working</li>
-<li><strong>Ask for help</strong>: If you’re stuck, reach out!</li>
+<li>Set up your project directory structure</li>
+<li>Download and inspect your assigned target PDB</li>
+<li>Identify the binding surface and hotspot residues from the table below</li>
+<li>Run 2-3 test designs to verify your setup is working correctly</li>
 </ul>
 </section>
-<section id="expected-output" class="level2">
-<h2 class="anchored" data-anchor-id="expected-output">Expected Output</h2>
-<p>When you run <code>analyze_sequence.py</code>, you should see output similar to:</p>
-<pre><code>Analyzing sequences from sample.fasta...
-
-Sequence: gene_example_1
-  Length: 120 bp
-  GC Content: 45.83%
-  Reverse Complement: CGATCG...
-
-Results written to analysis_results.txt</code></pre>
+<section id="milestone-2-unconditional-binder-generation" class="level3">
+<h3 class="anchored" data-anchor-id="milestone-2-unconditional-binder-generation">Milestone 2: Unconditional Binder Generation</h3>
+<ul>
+<li>Generate at least 10 unconditional binders of length 70-100 towards your target protein.
+<ul>
+<li>Is there a particular epitope on the target that RFdiffusion prefers?</li>
+<li>Is there a particular binder topology that RFdiffusion prefers?</li>
+</ul></li>
+</ul>
 </section>
-<section id="questions-and-getting-help" class="level2">
-<h2 class="anchored" data-anchor-id="questions-and-getting-help">Questions and Getting Help</h2>
-<p>We strongly encourage you to use our Slack workspace for questions and collaboration! One of the best ways to learn is by discussing problems with your peers and seeing how others approach challenges.</p>
-<p><strong>Join the Bootcamp Slack channel</strong>: <em>The Slack workspace is currently reserved for in-person bootcamp participants. We apologize for the inconvenience.</em></p>
-<p>In the Slack channel, you can: - Ask questions and get help from fellow students - Share tips and solutions you’ve discovered - Learn from others’ questions and answers - Collaborate on troubleshooting issues</p>
-<p>The TAs and I will be active in the Slack channel to help guide discussions and answer questions. Don’t hesitate to jump in - chances are if you’re stuck on something, others are too!</p>
-<p>If you have questions, please open an issue on the <a href="https://github.com/RosettaMLBootCamp2025/RosettaMLBootCamp2025.github.io/issues">GitHub repository</a> (GitHub account required) instead of emailing directly.</p>
+<section id="milestone-3-hotspot-guided-binder-design" class="level3">
+<h3 class="anchored" data-anchor-id="milestone-3-hotspot-guided-binder-design">Milestone 3: Hotspot-Guided Binder Design</h3>
+<ul>
+<li>Each of the targets that were assigned were previously used in binder design experiments (<a href="https://www.nature.com/articles/s41586-023-06415-8">1</a>, <a href="https://www.biorxiv.org/content/10.1101/2024.09.30.615802">2</a>). These experiments made use of hotspots located on the target proteins. Generate at least 10 binders towards your target protein using the hotspots below.
+<ul>
+<li>Is there a particular binder topology that RFdiffusion prefers to generate?</li>
+</ul></li>
+</ul>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Target</th>
+<th>UniProt ID</th>
+<th>PDB ID</th>
+<th>Hotspot Residues (chain and residue index from PDB)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>PD-L1</td>
+<td><a href="https://www.uniprot.org/uniprotkb/Q9NZQ7/entry">Q9NZQ7</a></td>
+<td><a href="https://www.rcsb.org/structure/5O45">5O45</a></td>
+<td>A56, A115, A123</td>
+</tr>
+<tr class="even">
+<td>IL-7Rɑ</td>
+<td><a href="https://www.uniprot.org/uniprotkb/P16871/entry">P16871</a></td>
+<td><a href="https://www.rcsb.org/structure/3DI3">3DI3</a></td>
+<td>B58, B80, B139</td>
+</tr>
+<tr class="odd">
+<td>TrkA receptor</td>
+<td><a href="https://www.uniprot.org/uniprotkb/P04629/entry">P04629</a></td>
+<td><a href="https://www.rcsb.org/structure/1WWW">1WWW</a></td>
+<td>X294, X296, X333</td>
+</tr>
+<tr class="even">
+<td>IFNAR2</td>
+<td><a href="https://www.uniprot.org/uniprotkb/P48551/entry">P48551</a></td>
+<td><a href="https://www.rcsb.org/structure/2LAG">2LAG</a></td>
+<td>B52, B82, B98</td>
+</tr>
+<tr class="odd">
+<td>Bet v 1-A</td>
+<td><a href="https://www.uniprot.org/uniprotkb/P15494/entry">P15494</a></td>
+<td><a href="https://www.rcsb.org/structure/1bv1">1BV1</a></td>
+<td>A24, A28, A43</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="milestone-4-potential-optimization" class="level3">
+<h3 class="anchored" data-anchor-id="milestone-4-potential-optimization">Milestone 4: Potential Optimization</h3>
+<ul>
+<li>Potentials can be powerful ways to bias the generation process. Try at least 3 different combinations of potentials, generating 5 backbones with each. Be sure to use hotspots for these generations too!
+<ul>
+<li>How did the potentials change your outputs?</li>
+<li>Did you find a particularly useful configuration of potentials?</li>
+</ul></li>
+</ul>
+</section>
+<section id="milestone-5-analysis-selection" class="level3">
+<h3 class="anchored" data-anchor-id="milestone-5-analysis-selection">Milestone 5: Analysis &amp; Selection</h3>
+<ul>
+<li>Compare your unconditional vs.&nbsp;hotspot-guided vs.&nbsp;potential-optimized designs</li>
+<li>Identify your top 3-5 most promising binder designs</li>
+<li>Document what makes these designs stand out (binding pose, topology, contact with hotspots, etc.)</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="troubleshooting-guide" class="level2">
+<h2 class="anchored" data-anchor-id="troubleshooting-guide">Troubleshooting Guide</h2>
+<section id="common-issues-solutions" class="level3">
+<h3 class="anchored" data-anchor-id="common-issues-solutions">Common Issues &amp; Solutions</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 28%">
+<col style="width: 40%">
+<col style="width: 31%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Problem</th>
+<th>Likely Cause</th>
+<th>Solution</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>“CUDA out of memory”</strong></td>
+<td>GPU memory exhausted</td>
+<td>Reduce <code>inference.num_designs</code> to 1-2, or design smaller proteins</td>
+</tr>
+<tr class="even">
+<td><strong>Script hangs at “Initializing model”</strong></td>
+<td>Missing model weights or incorrect paths</td>
+<td>Verify RFdiffusion installation and model checkpoint paths</td>
+</tr>
+<tr class="odd">
+<td><strong>“FileNotFoundError” for input PDB</strong></td>
+<td>Incorrect file path or missing file</td>
+<td>Check that PDB file exists in current directory with <code>ls *.pdb</code></td>
+</tr>
+<tr class="even">
+<td><strong>Designs look extended/unfolded</strong></td>
+<td>Insufficient denoising or inappropriate settings</td>
+<td>Check <code>inference.num_steps</code> (should be ~50), verify contig syntax</td>
+</tr>
+<tr class="odd">
+<td><strong>Binders don’t contact target</strong></td>
+<td>Incorrect contig specification or chainbreak</td>
+<td>Verify <code>/0</code> chainbreak in contigs, check residue numbering in target PDB</td>
+</tr>
+<tr class="even">
+<td><strong>Binders don’t contact hotspots</strong></td>
+<td>Hotspot residues too far apart or incorrect chain ID</td>
+<td>Verify chain IDs and residue numbers match your PDB file exactly</td>
+</tr>
+<tr class="odd">
+<td><strong>“ImportError” or module not found</strong></td>
+<td>Conda environment not activated</td>
+<td>Activate RFdiffusion environment: <code>conda activate RFdiffusion</code> (or appropriate env name)</td>
+</tr>
+<tr class="even">
+<td><strong>Script runs but produces no outputs</strong></td>
+<td>Output directory doesn’t exist or permissions issue</td>
+<td>Check that output directory exists, verify write permissions</td>
+</tr>
+<tr class="odd">
+<td><strong>Symmetric oligomers don’t look symmetric</strong></td>
+<td>Incorrect symmetry specification or potentials</td>
+<td>Verify symmetry string (e.g., “C4”, “D2”, “T”), check potential settings</td>
+</tr>
+<tr class="even">
+<td><strong>“BlockAdjacency” error in fold-conditioned</strong></td>
+<td>Known bug in model_runners.py</td>
+<td>Edit <code>rfdiffusion/inference/model_runners.py</code> line ~751 as noted in activity</td>
+</tr>
+<tr class="odd">
+<td><strong>Very slow generation times</strong></td>
+<td>Normal for large/complex designs</td>
+<td>Tetrahedral oligomers can take 30-60 min. Consider using <code>screen</code> or <code>tmux</code></td>
+</tr>
+<tr class="even">
+<td><strong>All designs look very similar</strong></td>
+<td>Insufficient diversity sampling</td>
+<td>Increase contig length ranges (e.g., <code>[60-100]</code> instead of <code>[80-80]</code>), adjust noise scales</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="tips-for-success" class="level3">
+<h3 class="anchored" data-anchor-id="tips-for-success">Tips for Success</h3>
+<ul>
+<li><strong>Always check your PDB file first</strong>: Use PyMOL or ChimeraX to verify chain IDs and residue numbering before running</li>
+<li><strong>Start small</strong>: Test with <code>num_designs=1</code> first to verify your setup works</li>
+<li><strong>Save your commands</strong>: Keep a log of successful parameter combinations</li>
+<li><strong>Use descriptive output names</strong>: Include key parameters in output_prefix (e.g., <code>hotspot_A59_A83_A91</code>)</li>
+<li><strong>Check the logs</strong>: RFdiffusion creates log files - read them if something goes wrong</li>
+</ul>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->

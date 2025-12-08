@@ -16,17 +16,7 @@ subtitle: "Nerve Growth Factor Receptor"
 The viewer below shows the extracellular domain of **TrkA (Chain A)** in complex with **NGF (Chain B)**.
 
 <div class="molstar-container">
-    <!-- 
-      PDB 1WWC: Crystal structure of the NGF-TrkA complex
-    -->
-    <pdbe-molstar 
-      id="trka-viewer" 
-      molecule-id="1wwc" 
-      hide-controls="true"
-      bg-color-r="255" 
-      bg-color-g="255" 
-      bg-color-b="255">
-    </pdbe-molstar>
+<pdbe-molstar id="trka-viewer" molecule-id="1wwc" hide-controls="true" bg-color-r="255" bg-color-g="255" bg-color-b="255"></pdbe-molstar>
 </div>
 
 ::: {.callout-tip}

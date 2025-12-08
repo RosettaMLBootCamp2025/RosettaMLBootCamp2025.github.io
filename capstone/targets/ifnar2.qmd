@@ -16,17 +16,7 @@ subtitle: "Cytokine Receptor Modulation"
 The viewer below shows **IFNAR2 (Chain B)** in complex with **Interferon alpha-2 (Chain A)** and **IFNAR1 (Chain C)**.
 
 <div class="molstar-container">
-    <!-- 
-      PDB 3SE3: Ternary complex of IFNAR1, IFNAR2, and IFN-alpha2
-    -->
-    <pdbe-molstar 
-      id="ifnar2-viewer" 
-      molecule-id="3se3" 
-      hide-controls="true"
-      bg-color-r="255" 
-      bg-color-g="255" 
-      bg-color-b="255">
-    </pdbe-molstar>
+<pdbe-molstar id="ifnar2-viewer" molecule-id="3se3" hide-controls="true" bg-color-r="255" bg-color-g="255" bg-color-b="255"></pdbe-molstar>
 </div>
 
 ::: {.callout-tip}

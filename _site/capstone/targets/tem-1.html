@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Pre-work 3: Python Refresher – ML Protein Design Bootcamp 2025</title>
+<title>TEM-1 Beta-Lactamase Deep Dive – ML Protein Design Bootcamp 2025</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,62 +20,27 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-html { -webkit-text-size-adjust: 100%; }
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 </style>
 
 
-<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="../site_libs/quarto-nav/headroom.min.js"></script>
-<script src="../site_libs/clipboard/clipboard.min.js"></script>
-<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="../site_libs/quarto-search/fuse.min.js"></script>
-<script src="../site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="../">
-<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
-<script src="../site_libs/quarto-html/popper.min.js"></script>
-<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="../site_libs/quarto-html/anchor.min.js"></script>
-<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-b3b235ae6ba71d6e5c2a90c00144237d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-b3b235ae6ba71d6e5c2a90c00144237d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -118,7 +83,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 
 
-<link rel="stylesheet" href="../styles.css">
+<link rel="stylesheet" href="../../styles.css">
 </head>
 
 <body class="nav-sidebar floating nav-fixed quarto-light">
@@ -128,7 +93,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="../index.html">
+    <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">ML Protein Design Bootcamp 2025</span>
     </a>
   </div>
@@ -139,33 +104,33 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../index.html"> 
+    <a class="nav-link" href="../../index.html"> 
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="../monday/index.html" aria-current="page"> 
+    <a class="nav-link" href="../../monday/index.html"> 
 <span class="menu-text">Monday</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../tuesday/index.html"> 
+    <a class="nav-link" href="../../tuesday/index.html"> 
 <span class="menu-text">Tuesday</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../wednesday/index.html"> 
+    <a class="nav-link" href="../../wednesday/index.html"> 
 <span class="menu-text">Wednesday</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../thursday/index.html"> 
+    <a class="nav-link" href="../../thursday/index.html"> 
 <span class="menu-text">Thursday</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../capstone/index.html"> 
+    <a class="nav-link active" href="../../capstone/index.html" aria-current="page"> 
 <span class="menu-text">Capstone</span></a>
   </li>  
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../about.html"> 
+    <a class="nav-link" href="../../about.html"> 
 <span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item">
@@ -184,7 +149,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../monday/prework-3-python.html">Pre-work 3: Python Refresher</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../capstone/targets/tem-1.html">TEM-1 Beta-Lactamase Deep Dive</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -198,106 +163,59 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../monday/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Monday: Tool Installation</span></a>
-  </div>
-</li>
-        <li class="px-0"><hr class="sidebar-divider hi "></li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../monday/prework-1-env-git.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Pre-work 1: Environment Setup &amp; GitHub Basics</span></a>
+  <a href="../../capstone/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Capstone Project</span></a>
   </div>
 </li>
         <li class="sidebar-item">
+ <span class="menu-text">Targets</span>
+  </li>
+        <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../monday/prework-2-pymol-vscode.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Pre-work 2: PyMOL and VS Code Setup</span></a>
+  <a href="../../capstone/targets/pd-l1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">PD-L1 Target Deep Dive</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../monday/prework-3-python.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Pre-work 3: Python Refresher</span></a>
+  <a href="../../capstone/targets/ifnar2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">IFNAR2 Target Deep Dive</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../monday/0-hpc-setup.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">0. Common HPC Setup</span></a>
+  <a href="../../capstone/targets/il-7r.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">IL-7R Target Deep Dive</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../monday/1-localcolabfold.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">1. LocalColabFold</span></a>
+  <a href="../../capstone/targets/bet-v-1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Bet v 1 Target Deep Dive</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../monday/2-ligandmpnn.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">2. LigandMPNN</span></a>
+  <a href="../../capstone/targets/trka.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">TrkA Receptor Deep Dive</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../monday/3-rfdiffusion2.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">3. RFdiffusion2</span></a>
+  <a href="../../capstone/targets/tem-1.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">TEM-1 Beta-Lactamase Deep Dive</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../monday/4-esmfold.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">4. ESMFold</span></a>
+  <a href="../../capstone/targets/gm3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">GM2 Activator Protein Deep Dive</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../monday/5-openfold.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">5. OpenFold (Optional)</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../monday/6-chai1.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">6. Chai-1</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../monday/7-boltz2.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">7. Boltz-2</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../monday/8-diffdock-pp.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">8. DiffDock-PP</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../monday/9-placer.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">9. PLACER</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../monday/10-bindcraft.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">10. BindCraft</span></a>
-  </div>
-</li>
-        <li class="px-0"><hr class="sidebar-divider hi "></li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../monday/11-esm3.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">11. ESM3 (Optional)</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../monday/12-rfdiffusion-aa.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">12. RFdiffusion All Atom (Optional)</span></a>
+  <a href="../../capstone/targets/beta-glucosidase.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Beta-Glucosidase Deep Dive</span></a>
   </div>
 </li>
     </ul>
@@ -310,19 +228,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">Overview</a></li>
-  <li><a href="#prerequisites" id="toc-prerequisites" class="nav-link" data-scroll-target="#prerequisites">Prerequisites</a></li>
-  <li><a href="#download-assignment-files" id="toc-download-assignment-files" class="nav-link" data-scroll-target="#download-assignment-files">Download Assignment Files</a></li>
-  <li><a href="#how-to-complete-this-assignment" id="toc-how-to-complete-this-assignment" class="nav-link" data-scroll-target="#how-to-complete-this-assignment">How to Complete This Assignment</a>
+  <li><a href="#biological-context" id="toc-biological-context" class="nav-link active" data-scroll-target="#biological-context">Biological Context</a></li>
+  <li><a href="#interactive-structure" id="toc-interactive-structure" class="nav-link" data-scroll-target="#interactive-structure">Interactive Structure</a></li>
+  <li><a href="#design-mission" id="toc-design-mission" class="nav-link" data-scroll-target="#design-mission">Design Mission</a>
   <ul class="collapse">
-  <li><a href="#part-1-python-basics-warmup-basics.py" id="toc-part-1-python-basics-warmup-basics.py" class="nav-link" data-scroll-target="#part-1-python-basics-warmup-basics.py">Part 1: Python Basics Warmup (basics.py)</a></li>
-  <li><a href="#part-2-sequence-utilities-sequence_utils.py" id="toc-part-2-sequence-utilities-sequence_utils.py" class="nav-link" data-scroll-target="#part-2-sequence-utilities-sequence_utils.py">Part 2: Sequence Utilities (sequence_utils.py)</a></li>
-  <li><a href="#part-3-fasta-file-parsing-read_fasta.py" id="toc-part-3-fasta-file-parsing-read_fasta.py" class="nav-link" data-scroll-target="#part-3-fasta-file-parsing-read_fasta.py">Part 3: FASTA File Parsing (read_fasta.py)</a></li>
-  <li><a href="#part-4-sequence-analysis-tool-analyze_sequence.py" id="toc-part-4-sequence-analysis-tool-analyze_sequence.py" class="nav-link" data-scroll-target="#part-4-sequence-analysis-tool-analyze_sequence.py">Part 4: Sequence Analysis Tool (analyze_sequence.py)</a></li>
+  <li><a href="#target-specifications" id="toc-target-specifications" class="nav-link" data-scroll-target="#target-specifications">Target Specifications</a></li>
+  <li><a href="#strategy-tips" id="toc-strategy-tips" class="nav-link" data-scroll-target="#strategy-tips">Strategy Tips</a></li>
   </ul></li>
-  <li><a href="#tips" id="toc-tips" class="nav-link" data-scroll-target="#tips">Tips</a></li>
-  <li><a href="#expected-output" id="toc-expected-output" class="nav-link" data-scroll-target="#expected-output">Expected Output</a></li>
-  <li><a href="#questions-and-getting-help" id="toc-questions-and-getting-help" class="nav-link" data-scroll-target="#questions-and-getting-help">Questions and Getting Help</a></li>
   </ul>
 </nav>
     </div>
@@ -331,7 +243,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Pre-work 3: Python Refresher</h1>
+<h1 class="title">TEM-1 Beta-Lactamase Deep Dive</h1>
+<p class="subtitle lead">Antibiotic Resistance Enzyme</p>
 </div>
 
 
@@ -348,95 +261,84 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="overview" class="level2">
-<h2 class="anchored" data-anchor-id="overview">Overview</h2>
-<p>This assignment is designed as a Python refresher for biologists and bioinformaticians who may be a bit rusty. You’ll complete a series of small exercises that build up to creating a simple sequence analysis tool. This assignment should take approximately 30-45 minutes to complete.</p>
-<p><strong>IMPORTANT:</strong> Each Python file contains function templates with <code>TODO</code> comments. Your job is to fill in the missing code where you see <code># TODO:</code> comments. The scripts won’t work until you complete the TODO sections!</p>
+<section id="biological-context" class="level2">
+<h2 class="anchored" data-anchor-id="biological-context">Biological Context</h2>
+<p><strong>TEM-1 Beta-Lactamase</strong> is an enzyme produced by bacteria that confers resistance to penicillin and other beta-lactam antibiotics. It works by breaking the antibiotic molecule apart.</p>
+<p><strong>Why it matters:</strong> This is a classic target for “Binder Design” as a means of inhibition. If you can design a protein that binds tightly to the active site or an allosteric site, you might stop the enzyme from working, making the bacteria susceptible to antibiotics again.</p>
+<p><strong>The Goal:</strong> Design a binder that inhibits TEM-1 function. This is often done by targeting the active site groove.</p>
 </section>
-<section id="prerequisites" class="level2">
-<h2 class="anchored" data-anchor-id="prerequisites">Prerequisites</h2>
+<section id="interactive-structure" class="level2">
+<h2 class="anchored" data-anchor-id="interactive-structure">Interactive Structure</h2>
+<p>The viewer below shows <strong>TEM-1 Beta-Lactamase</strong>.</p>
+<div class="molstar-container">
+<p><pdbe-molstar id="tem1-viewer" molecule-id="1fqg" hide-controls="true" bg-color-r="255" bg-color-g="255" bg-color-b="255"></pdbe-molstar></p>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Viewer Controls
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <ul>
-<li>HW1 completed (Python environment set up)</li>
+<li><strong>Rotate:</strong> Left-click and drag</li>
+<li><strong>Zoom:</strong> Scroll wheel</li>
+<li><strong>Pan:</strong> Right-click (or Ctrl+Left-click) and drag</li>
 </ul>
+</div>
+</div>
 </section>
-<section id="download-assignment-files" class="level2">
-<h2 class="anchored" data-anchor-id="download-assignment-files">Download Assignment Files</h2>
-<p><a href="files/python-refresher.zip" class="btn btn-primary" download=""> <i class="bi bi-download"></i> Download Assignment Files (ZIP) </a></p>
+<section id="design-mission" class="level2">
+<h2 class="anchored" data-anchor-id="design-mission">Design Mission</h2>
+<p>Create a binder that targets the active site cleft of TEM-1.</p>
+<section id="target-specifications" class="level3">
+<h3 class="anchored" data-anchor-id="target-specifications">Target Specifications</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Feature</th>
+<th style="text-align: left;">Detail</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>Target Name</strong></td>
+<td style="text-align: left;">TEM-1 Beta-Lactamase</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>PDB ID</strong></td>
+<td style="text-align: left;"><code>1FQG</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Target Chain</strong></td>
+<td style="text-align: left;">Chain A</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Interface / Hotspot</strong></td>
+<td style="text-align: left;">The active site pocket (look for where inhibitors typically bind).</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="strategy-tips" class="level3">
+<h3 class="anchored" data-anchor-id="strategy-tips">Strategy Tips</h3>
 <ol type="1">
-<li>Download the ZIP file above.</li>
-<li>Unzip the folder on your computer.</li>
-<li>Open the folder in VS Code.</li>
+<li><strong>Download PDB <code>1FQG</code></strong>.</li>
+<li><strong>Identify the Pocket:</strong> Use tools like PyMOL to locate the concave active site.</li>
+<li><strong>Targeting:</strong> When using RFdiffusion, you may want to specify “binder”contigs that fill this specific pocket.</li>
 </ol>
-</section>
-<section id="how-to-complete-this-assignment" class="level2">
-<h2 class="anchored" data-anchor-id="how-to-complete-this-assignment">How to Complete This Assignment</h2>
-<p>Each Python file is a template with incomplete functions. Look for <code># TODO:</code> comments - these mark where you need to write code. Read the docstrings and hints carefully, then implement the missing functionality.</p>
-<p><strong>The scripts will not work until you complete the TODO sections!</strong></p>
-<section id="part-1-python-basics-warmup-basics.py" class="level3">
-<h3 class="anchored" data-anchor-id="part-1-python-basics-warmup-basics.py">Part 1: Python Basics Warmup (basics.py)</h3>
-<p>Open <code>basics.py</code> and <strong>fill in the TODO sections</strong> for these exercises: - <code>reverse_string()</code> - Write a function to reverse a string - <code>count_characters()</code> - Use a for loop to count characters in a string - <code>amino_acid_composition()</code> - Create a dictionary to calculate amino acid percentages - <code>filter_sequences_by_length()</code> - Use a list comprehension to filter sequences</p>
-<p><strong>To test your work:</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Navigate to the unzipped directory first!</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> path/to/python-refresher</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> activate bootcamp2025_HW1</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> basics.py</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>If you see <code>None</code> or errors, you haven’t completed all the TODOs yet!</p>
-</section>
-<section id="part-2-sequence-utilities-sequence_utils.py" class="level3">
-<h3 class="anchored" data-anchor-id="part-2-sequence-utilities-sequence_utils.py">Part 2: Sequence Utilities (sequence_utils.py)</h3>
-<p>Open <code>sequence_utils.py</code> and <strong>implement the TODO sections</strong> for these bioinformatics functions: - <code>molecular_weight()</code> - Calculate the molecular weight of a protein - <code>count_hydrophobic()</code> - Count hydrophobic amino acids - <code>find_motif()</code> - Find all positions of a motif in a sequence - <code>count_charged_residues()</code> - Count positive and negative charges</p>
-<p><strong>To test your work:</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> sequence_utils.py</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>The test cases at the bottom will only work once you’ve filled in all the TODOs!</p>
-</section>
-<section id="part-3-fasta-file-parsing-read_fasta.py" class="level3">
-<h3 class="anchored" data-anchor-id="part-3-fasta-file-parsing-read_fasta.py">Part 3: FASTA File Parsing (read_fasta.py)</h3>
-<p>Open <code>read_fasta.py</code> and <strong>complete the TODO sections</strong> to: - <code>read_fasta()</code> - Read and parse a FASTA file, storing sequences in a dictionary (header → sequence) - <code>print_fasta_stats()</code> - Print basic statistics about the sequences</p>
-<p><strong>To test your work:</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> read_fasta.py sample.fasta</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>You should see information about each protein sequence. If not, check your TODOs!</p>
-</section>
-<section id="part-4-sequence-analysis-tool-analyze_sequence.py" class="level3">
-<h3 class="anchored" data-anchor-id="part-4-sequence-analysis-tool-analyze_sequence.py">Part 4: Sequence Analysis Tool (analyze_sequence.py)</h3>
-<p>Open <code>analyze_sequence.py</code> and <strong>fill in the TODO sections</strong> to create a complete analysis script: - <code>analyze_sequences()</code> - Use your sequence_utils functions to analyze each protein - <code>write_results()</code> - Write the analysis results to a file</p>
-<p>This part brings together everything from Parts 1-3!</p>
-<p><strong>To run your completed analysis:</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> analyze_sequence.py sample.fasta</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>This should create an <code>analysis_results.txt</code> file with your results. If it doesn’t work, you’re missing some TODOs!</p>
-</section>
-</section>
-<section id="tips" class="level2">
-<h2 class="anchored" data-anchor-id="tips">Tips</h2>
-<ul>
-<li><strong>Test frequently</strong>: Run your code after each function to catch errors early</li>
-<li><strong>Use print statements</strong>: Debug by printing intermediate values</li>
-<li><strong>Read the TODO comments carefully</strong>: They contain hints and requirements</li>
-<li><strong>Don’t worry about edge cases</strong>: Focus on getting the basic functionality working</li>
-<li><strong>Ask for help</strong>: If you’re stuck, reach out!</li>
-</ul>
-</section>
-<section id="expected-output" class="level2">
-<h2 class="anchored" data-anchor-id="expected-output">Expected Output</h2>
-<p>When you run <code>analyze_sequence.py</code>, you should see output similar to:</p>
-<pre><code>Analyzing sequences from sample.fasta...
-
-Sequence: gene_example_1
-  Length: 120 bp
-  GC Content: 45.83%
-  Reverse Complement: CGATCG...
-
-Results written to analysis_results.txt</code></pre>
-</section>
-<section id="questions-and-getting-help" class="level2">
-<h2 class="anchored" data-anchor-id="questions-and-getting-help">Questions and Getting Help</h2>
-<p>We strongly encourage you to use our Slack workspace for questions and collaboration! One of the best ways to learn is by discussing problems with your peers and seeing how others approach challenges.</p>
-<p><strong>Join the Bootcamp Slack channel</strong>: <em>The Slack workspace is currently reserved for in-person bootcamp participants. We apologize for the inconvenience.</em></p>
-<p>In the Slack channel, you can: - Ask questions and get help from fellow students - Share tips and solutions you’ve discovered - Learn from others’ questions and answers - Collaborate on troubleshooting issues</p>
-<p>The TAs and I will be active in the Slack channel to help guide discussions and answer questions. Don’t hesitate to jump in - chances are if you’re stuck on something, others are too!</p>
-<p>If you have questions, please open an issue on the <a href="https://github.com/RosettaMLBootCamp2025/RosettaMLBootCamp2025.github.io/issues">GitHub repository</a> (GitHub account required) instead of emailing directly.</p>
+<hr>
+<p><a href="../../capstone/index.html">← Back to Capstone Overview</a></p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->

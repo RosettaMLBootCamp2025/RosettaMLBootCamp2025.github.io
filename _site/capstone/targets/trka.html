@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>3.1 Placeholder Module – ML Protein Design Bootcamp 2025</title>
+<title>TrkA Receptor Deep Dive – ML Protein Design Bootcamp 2025</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -23,24 +23,24 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="../site_libs/quarto-nav/headroom.min.js"></script>
-<script src="../site_libs/clipboard/clipboard.min.js"></script>
-<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="../site_libs/quarto-search/fuse.min.js"></script>
-<script src="../site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="../">
-<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
-<script src="../site_libs/quarto-html/popper.min.js"></script>
-<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="../site_libs/quarto-html/anchor.min.js"></script>
-<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-b3b235ae6ba71d6e5c2a90c00144237d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-b3b235ae6ba71d6e5c2a90c00144237d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -68,9 +68,22 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+<!-- Shared Mol* component include for target pages -->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/pdbe-molstar@latest/build/pdbe-molstar-component.js"></script>
+<style>
+  .molstar-container {
+    width: 100%;
+    height: 500px;
+    position: relative;
+    margin-bottom: 20px;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+</style>
 
 
-<link rel="stylesheet" href="../styles.css">
+<link rel="stylesheet" href="../../styles.css">
 </head>
 
 <body class="nav-sidebar floating nav-fixed quarto-light">
@@ -80,7 +93,7 @@ ul.task-list li input[type="checkbox"] {
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="../index.html">
+    <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">ML Protein Design Bootcamp 2025</span>
     </a>
   </div>
@@ -91,33 +104,33 @@ ul.task-list li input[type="checkbox"] {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../index.html"> 
+    <a class="nav-link" href="../../index.html"> 
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../monday/index.html"> 
+    <a class="nav-link" href="../../monday/index.html"> 
 <span class="menu-text">Monday</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../tuesday/index.html"> 
+    <a class="nav-link" href="../../tuesday/index.html"> 
 <span class="menu-text">Tuesday</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="../wednesday/index.html" aria-current="page"> 
+    <a class="nav-link" href="../../wednesday/index.html"> 
 <span class="menu-text">Wednesday</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../thursday/index.html"> 
+    <a class="nav-link" href="../../thursday/index.html"> 
 <span class="menu-text">Thursday</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../capstone/index.html"> 
+    <a class="nav-link active" href="../../capstone/index.html" aria-current="page"> 
 <span class="menu-text">Capstone</span></a>
   </li>  
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../about.html"> 
+    <a class="nav-link" href="../../about.html"> 
 <span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item">
@@ -136,7 +149,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../wednesday/3.1-placeholder.html">3.1 Placeholder Module</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../capstone/targets/trka.html">TrkA Receptor Deep Dive</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -150,14 +163,59 @@ ul.task-list li input[type="checkbox"] {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../wednesday/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Wednesday</span></a>
+  <a href="../../capstone/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Capstone Project</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+ <span class="menu-text">Targets</span>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../capstone/targets/pd-l1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">PD-L1 Target Deep Dive</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../wednesday/3.1-placeholder.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">3.1 Placeholder Module</span></a>
+  <a href="../../capstone/targets/ifnar2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">IFNAR2 Target Deep Dive</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../capstone/targets/il-7r.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">IL-7R Target Deep Dive</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../capstone/targets/bet-v-1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Bet v 1 Target Deep Dive</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../capstone/targets/trka.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">TrkA Receptor Deep Dive</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../capstone/targets/tem-1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">TEM-1 Beta-Lactamase Deep Dive</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../capstone/targets/gm3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">GM2 Activator Protein Deep Dive</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../capstone/targets/beta-glucosidase.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Beta-Glucosidase Deep Dive</span></a>
   </div>
 </li>
     </ul>
@@ -170,9 +228,13 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#learning-objectives" id="toc-learning-objectives" class="nav-link active" data-scroll-target="#learning-objectives">Learning Objectives</a></li>
-  <li><a href="#section-1" id="toc-section-1" class="nav-link" data-scroll-target="#section-1">Section 1</a></li>
-  <li><a href="#section-2" id="toc-section-2" class="nav-link" data-scroll-target="#section-2">Section 2</a></li>
+  <li><a href="#biological-context" id="toc-biological-context" class="nav-link active" data-scroll-target="#biological-context">Biological Context</a></li>
+  <li><a href="#interactive-structure" id="toc-interactive-structure" class="nav-link" data-scroll-target="#interactive-structure">Interactive Structure</a></li>
+  <li><a href="#design-mission" id="toc-design-mission" class="nav-link" data-scroll-target="#design-mission">Design Mission</a>
+  <ul class="collapse">
+  <li><a href="#target-specifications" id="toc-target-specifications" class="nav-link" data-scroll-target="#target-specifications">Target Specifications</a></li>
+  <li><a href="#strategy-tips" id="toc-strategy-tips" class="nav-link" data-scroll-target="#strategy-tips">Strategy Tips</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -181,7 +243,8 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">3.1 Placeholder Module</h1>
+<h1 class="title">TrkA Receptor Deep Dive</h1>
+<p class="subtitle lead">Nerve Growth Factor Receptor</p>
 </div>
 
 
@@ -198,21 +261,88 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="learning-objectives" class="level2">
-<h2 class="anchored" data-anchor-id="learning-objectives">Learning Objectives</h2>
-<p><em>Content coming soon.</em></p>
+<section id="biological-context" class="level2">
+<h2 class="anchored" data-anchor-id="biological-context">Biological Context</h2>
+<p><strong>Tropomyosin receptor kinase A (TrkA)</strong> is the high-affinity catalytic receptor for <strong>Nerve Growth Factor (NGF)</strong>.</p>
+<p><strong>Why it matters:</strong> The TrkA pathway is essential for the development and survival of neurons. However, it is also implicated in chronic pain and some cancers.</p>
+<p><strong>The Goal:</strong> Design a binder that interacts with the extracellular domain of TrkA. This could be an antagonist to treat pain (blocking NGF) or a tool to study receptor activation.</p>
 </section>
-<section id="section-1" class="level2">
-<h2 class="anchored" data-anchor-id="section-1">Section 1</h2>
-<p><input type="checkbox" class="module-checkbox" data-module-id="3.1-section1"> Mark Section 1 as complete</p>
-<p><em>Placeholder content for Section 1.</em></p>
+<section id="interactive-structure" class="level2">
+<h2 class="anchored" data-anchor-id="interactive-structure">Interactive Structure</h2>
+<p>The viewer below shows the extracellular domain of <strong>TrkA (Chain A)</strong> in complex with <strong>NGF (Chain B)</strong>.</p>
+<div class="molstar-container">
+<p><pdbe-molstar id="trka-viewer" molecule-id="1wwc" hide-controls="true" bg-color-r="255" bg-color-g="255" bg-color-b="255"></pdbe-molstar></p>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Viewer Controls
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><strong>Rotate:</strong> Left-click and drag</li>
+<li><strong>Zoom:</strong> Scroll wheel</li>
+<li><strong>Pan:</strong> Right-click (or Ctrl+Left-click) and drag</li>
+</ul>
+</div>
+</div>
 </section>
-<section id="section-2" class="level2">
-<h2 class="anchored" data-anchor-id="section-2">Section 2</h2>
-<p><input type="checkbox" class="module-checkbox" data-module-id="3.1-section2"> Mark Section 2 as complete</p>
-<p><em>Placeholder content for Section 2.</em></p>
+<section id="design-mission" class="level2">
+<h2 class="anchored" data-anchor-id="design-mission">Design Mission</h2>
+<p>Design a protein that binds to the <strong>NGF-binding face</strong> of TrkA.</p>
+<section id="target-specifications" class="level3">
+<h3 class="anchored" data-anchor-id="target-specifications">Target Specifications</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Feature</th>
+<th style="text-align: left;">Detail</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>Target Name</strong></td>
+<td style="text-align: left;">TrkA Receptor</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>PDB ID</strong></td>
+<td style="text-align: left;"><code>1WWC</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Target Chain</strong></td>
+<td style="text-align: left;">Chain A (TrkA)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Binder to Mimic</strong></td>
+<td style="text-align: left;">Chain B (NGF)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Interface / Hotspot</strong></td>
+<td style="text-align: left;">The residues on Chain A that contact Chain B.</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="strategy-tips" class="level3">
+<h3 class="anchored" data-anchor-id="strategy-tips">Strategy Tips</h3>
+<ol type="1">
+<li><strong>Download PDB <code>1WWC</code></strong>.</li>
+<li><strong>Clean the structure:</strong> Isolate Chain A.</li>
+<li><strong>Interface Definition:</strong> Use PyMOL to find residues on Chain A within 5Å of Chain B.</li>
+</ol>
+<hr>
+<p><a href="../../capstone/index.html">← Back to Capstone Overview</a></p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
