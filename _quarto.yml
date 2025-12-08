@@ -52,11 +52,14 @@ website:
     - title: "Tuesday"
       contents:
         - tuesday/index.qmd
-        - tuesday/2.1-placeholder.qmd
+        - tuesday/0-pymol.qmd
+        - tuesday/1-alphafold2.qmd
+        - tuesday/2-alphafold3.qmd
+        - tuesday/3-esmfold.qmd
     - title: "Wednesday"
       contents:
         - wednesday/index.qmd
-        - wednesday/3.1-placeholder.qmd
+        - wednesday/1-rfdiffusion.qmd
     - title: "Thursday"
       contents:
         - thursday/index.qmd

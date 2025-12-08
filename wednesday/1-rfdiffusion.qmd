@@ -1,0 +1,141 @@
+---
+title: "1. RFdiffusion: Advanced Design"
+---
+
+## In-Class Activity
+
+1. **Setup for the activity.**
+    1. Go to the RFdiffusion installation and make a new directory for the activity: `mkdir activity`.
+
+2. **Generate unconditional monomers.**
+    1. Make new folder for this example: `cd activity; mkdir 1_uncond; cd 1_uncond`
+    2. Copy `design_unconditional.sh` here: `cp ../../examples/design_unconditional.sh .`
+    3. Edit the design script by using 1) `'contigmap.contigs=[75-150]'`, 2) `inference.num_designs=5` , 3) `../../scripts/run_inference.py`.
+    4. Run the script: `bash design_unconditional.sh` 
+        - What did the script create?
+        - Look at the structures. What are kinds of topologies did you get?
+
+3. **Generate monomers that scaffold a motif.**
+    1. Make new folder for this example: `cd activity; mkdir 2_motifs; cd 2_motifs`
+    2. Copy `design_motifscaffolding.sh` here: `cp ../../examples/design_motifscaffolding.sh .`
+    3. For this example, we’ll be scaffolding a site from RSV-F protein. Let’s copy that .pdb here: `cp ../../examples/input_pdbs/5TPN.pdb .`
+    4. Edit the design script by using 1) `inference.input_pdb=5TPN.pdb`, 2) `'contigmap.contigs=[10-40/A163-181/10-40]'`, 3) `inference.num_designs=5` , 4) `../../scripts/run_inference.py`.
+        - The backbone we’re generating will have 10-40 residues (randomly sampled), the the motif residues 163-181 (inclusive) on chain A of the input, then 10-40 residues (randomly sampled).
+    5. Run the script: `bash design_motifscaffolding.sh` 
+        - Look at the structures. How well is the motif scaffolded?
+
+4. **Generate partially diffused structures.**
+    1. Make new folder for this example: `cd activity; mkdir 3_partial; cd 3_partial`
+    2. Copy `design_partialdiffusion.sh` here: `cp ../../examples/design_partialdiffusion.sh .`
+    3. For this example, we’ll be partially noising and denoising a 79 residue protein 2KL8. Let’s copy that .pdb here: `cp ../../examples/input_pdbs/2KL8.pdb .`
+    4. Edit the design script by using 1) `inference.input_pdb=2KL8.pdb`, 2) `'contigmap.contigs=[79-79]’`, and 3) `inference.num_designs=5`.
+        - Here we’re generating diversity around a particular fold by noising and denoising 10 steps (20% of the full trajectory). We’re adding noise to the entire structure (all 79 residues), but part of the structure can also be held fixed.
+    5. Run the script: `bash design_partialdiffusion.sh` 
+        - Look at the structures. How similar are the outputs to the original structure?
+
+5. **Generate binders with hotspots.**
+    1. Make new folder for this example: `cd activity; mkdir 4_hotspot; cd 4_hotspot`
+    2. Copy `design_ppi.sh` here: `cp ../../examples/design_ppi.sh .`
+    3. For this example, we’ll be designing binders to insulin receptor. Let’s copy that .pdb here: `cp ../../examples/input_pdbs/insulin_target.pdb .`
+    4. Edit the design script by using 1) `inference.input_pdb=insulin_target.pdb`, 2) `'contigmap.contigs=[A1-150/0 70-100]’`, 3) '`ppi.hotspot_res=[A59,A83,A91]’`, 4) `inference.num_designs=5`, 5) `denoiser.noise_scale_ca=0`, and 6) `denoiser.noise_scale_frame=0`.
+        - Here, we’re designing binders to insulin receptor. The contig describes the protein we want: residues 1-150 of the A chain of the receptor, a chainbreak (we don't want to fuse the binder and target!), a 70-100 residue binder to be diffused. We also tell diffusion to target three specific residues, specifically residues 59, 83 and 91 of chain A. Finally, we reduce the noise added during inference to 0 to improve the quality of the designs.
+    5. Run the script: `bash design_ppi.sh` 
+        - Look at the structures. What are the topologies of your binders?
+
+6. **Generate fold-conditioned structures.**
+    1. Make new folder for this example: `cd activity; mkdir 5_fold_cond; cd 5_fold_cond`
+    2. Copy `design_timbarrel.sh` here: `cp ../../examples/design_timbarrel.sh .`
+    3. For this example, we’ll be diffusing a TIM barrel by providing course-grained specification of the fold. Let’s copy that fold information here: `cp -r ../../examples/tim_barrel_scaffold/ .`
+        - What do the files in this folder represent?
+    4. Edit the design script by using `inference.num_designs=5`.
+        - Here, we're making a TIM barrel by providing course-grained specification of the fold. We specify the output path. We tell RFdiffusion that we want to do scaffoldguided design, and that we are not making a binder to a target (just a monomer). We provide a path to a directory of TIM barrel scaffolds, generated with the helper script `helper_scripts/make_secstruc_adj.py`. We generate 5 designs, with a reduced noise scale during inference of 0.5. We also sample additional length to increase diversity of the outputs by masking the loops and inserting 0-5 residues into each loop. We also add 0-5 residues to the N and the C-terminus. These allow use to sample additional diversity in our designs.
+        - You may need to edit `rfdiffusion/inference/model_runners.py` like 751 to `self.blockadjacency = iu.BlockAdjacency(conf, conf.inference.num_designs)`
+    5. Run the script: `bash design_timbarrel.sh` 
+        - Look at the structures. How do these generations compare to the TIM barrel structure used for conditioning ([6WVS](https://www.rcsb.org/structure/6WVS))?
+
+7. **Generate oligomers of various symmetries.**
+    1. Make new folder for this example: `cd activity; mkdir 6_symmetry; cd 6_symmetry`
+    2. Copy `design_cyclic_oligos.sh`, `design_dihedral_oligos.sh`, and `design_tetrahedral_oligos.sh` here: `cp ../../examples/design_cyclic_oligos.sh .`, `cp ../../examples/design_dihedral_oligos.sh .`, and `cp ../../examples/design_tetrahedral_oligos.sh .`
+    3. **Generate cyclic oligomers:**
+        1. Edit the `design_cyclic_oligos.sh` script by changing 1) `inference.symmetry="C4”`, 2) `inference.num_designs=5`, 3) `inference.output_prefix="example_outputs/C4_oligo”`, and 4) `'contigmap.contigs=[200-200]’`.
+            - In this example, we generate 5 designs of C4 symmetric oligomers. For symmetrical diffusion, we need the symmetry config. We also apply an external potential to promote contacts both within (with a relative weight of 1) and between chains (relative weight 0.1). We specify that we want to apply these potentials to all chains, with a guide scale of 2.0 (a sensible starting point). We decay this potential with quadratic form, so that it is applied more strongly initially. We specify a total length of 200 aa, so each chain is 50 residues long.
+        2. Run the script: `bash design_cyclic_oligos.sh` 
+            - Do the structures have the desired symmetry?
+            - What topologies are found in the individual subunits?
+    4. **Generate dihedral oligomers:**
+        1. Edit the `design_dihedral_oligos.sh` script by changing `inference.num_designs=2`.
+            - In this example, we generate 2 D2 symmetric oligomers using the symmetry config. We also apply an external potential to promote contacts both within (with a relative weight of 1) and between chains (relative weight 0.1). We specify that we want to apply these potentials to all chains, with a guide scale of 2.0 (a sensible starting point). We decay this potential with quadratic form, so that it is applied more strongly initially. We specify a total length of 320 aa, so each chain is 80 residues long.
+        2. Run the script: `bash design_dihedral_oligos.sh` 
+            - Do the structures have the desired symmetry?
+            - What topologies are found in the individual subunits?
+    5. **Generate tetrahedral oligomers:**
+        1. Edit the `design_tetrahedral_oligos.sh` script by changing 1) `inference.num_designs=2`, 2) `'contigmap.contigs=[720-720]’`.
+            - In this example, we generate tetrahedral symmetric oligomers. We use the symmetry config, and specify we want a tetrahedral oligomer, with 2 designs generated. We specify the output prefix, and also the potential we want to apply. This external potential promotes contacts both within (with a relative weight of 1) and between chains (relative weight 0.1). We specify that we want to apply these potentials to all chains, with a guide scale of 2.0 (a sensible starting point). We decay this potential with quadratic form, so that it is applied more strongly initially. We specify a total length of 720 aa, so each chain is 60 residues long
+        2. Run the script: `bash design_tetrahedral_oligos.sh` 
+            - Do the structures have the desired symmetry?
+            - What topologies are found in the individual subunits?
+
+## Project Time
+
+**(Use your target protein)**
+
+### Milestone 1: Target Preparation & Initial Exploration
+- Set up your project directory structure
+- Download and inspect your assigned target PDB
+- Identify the binding surface and hotspot residues from the table below
+- Run 2-3 test designs to verify your setup is working correctly
+
+### Milestone 2: Unconditional Binder Generation
+- Generate at least 10 unconditional binders of length 70-100 towards your target protein.
+    - Is there a particular epitope on the target that RFdiffusion prefers?
+    - Is there a particular binder topology that RFdiffusion prefers?
+
+### Milestone 3: Hotspot-Guided Binder Design
+- Each of the targets that were assigned were previously used in binder design experiments ([1](https://www.nature.com/articles/s41586-023-06415-8), [2](https://www.biorxiv.org/content/10.1101/2024.09.30.615802)). These experiments made use of hotspots located on the target proteins. Generate at least 10 binders towards your target protein using the hotspots below.
+    - Is there a particular binder topology that RFdiffusion prefers to generate?
+
+| Target | UniProt ID | PDB ID | Hotspot Residues (chain and residue index from PDB) |
+| --- | --- | --- | --- |
+| PD-L1 | [Q9NZQ7](https://www.uniprot.org/uniprotkb/Q9NZQ7/entry) | [5O45](https://www.rcsb.org/structure/5O45) | A56, A115, A123 |
+| IL-7Rɑ | [P16871](https://www.uniprot.org/uniprotkb/P16871/entry) | [3DI3](https://www.rcsb.org/structure/3DI3) | B58, B80, B139 |
+| TrkA receptor  | [P04629](https://www.uniprot.org/uniprotkb/P04629/entry) | [1WWW](https://www.rcsb.org/structure/1WWW) | X294, X296, X333 |
+| IFNAR2 | [P48551](https://www.uniprot.org/uniprotkb/P48551/entry) | [2LAG](https://www.rcsb.org/structure/2LAG) | B52, B82, B98 |
+| Bet v 1-A | [P15494](https://www.uniprot.org/uniprotkb/P15494/entry) | [1BV1](https://www.rcsb.org/structure/1bv1) | A24, A28, A43 |
+
+### Milestone 4: Potential Optimization
+- Potentials can be powerful ways to bias the generation process. Try at least 3 different combinations of potentials, generating 5 backbones with each. Be sure to use hotspots for these generations too!
+    - How did the potentials change your outputs?
+    - Did you find a particularly useful configuration of potentials?
+
+### Milestone 5: Analysis & Selection
+- Compare your unconditional vs. hotspot-guided vs. potential-optimized designs
+- Identify your top 3-5 most promising binder designs
+- Document what makes these designs stand out (binding pose, topology, contact with hotspots, etc.)
+
+---
+
+## Troubleshooting Guide
+
+### Common Issues & Solutions
+
+| Problem | Likely Cause | Solution |
+|---------|-------------|----------|
+| **"CUDA out of memory"** | GPU memory exhausted | Reduce `inference.num_designs` to 1-2, or design smaller proteins |
+| **Script hangs at "Initializing model"** | Missing model weights or incorrect paths | Verify RFdiffusion installation and model checkpoint paths |
+| **"FileNotFoundError" for input PDB** | Incorrect file path or missing file | Check that PDB file exists in current directory with `ls *.pdb` |
+| **Designs look extended/unfolded** | Insufficient denoising or inappropriate settings | Check `inference.num_steps` (should be ~50), verify contig syntax |
+| **Binders don't contact target** | Incorrect contig specification or chainbreak | Verify `/0` chainbreak in contigs, check residue numbering in target PDB |
+| **Binders don't contact hotspots** | Hotspot residues too far apart or incorrect chain ID | Verify chain IDs and residue numbers match your PDB file exactly |
+| **"ImportError" or module not found** | Conda environment not activated | Activate RFdiffusion environment: `conda activate RFdiffusion` (or appropriate env name) |
+| **Script runs but produces no outputs** | Output directory doesn't exist or permissions issue | Check that output directory exists, verify write permissions |
+| **Symmetric oligomers don't look symmetric** | Incorrect symmetry specification or potentials | Verify symmetry string (e.g., "C4", "D2", "T"), check potential settings |
+| **"BlockAdjacency" error in fold-conditioned** | Known bug in model_runners.py | Edit `rfdiffusion/inference/model_runners.py` line ~751 as noted in activity |
+| **Very slow generation times** | Normal for large/complex designs | Tetrahedral oligomers can take 30-60 min. Consider using `screen` or `tmux` |
+| **All designs look very similar** | Insufficient diversity sampling | Increase contig length ranges (e.g., `[60-100]` instead of `[80-80]`), adjust noise scales |
+
+### Tips for Success
+- **Always check your PDB file first**: Use PyMOL or ChimeraX to verify chain IDs and residue numbering before running
+- **Start small**: Test with `num_designs=1` first to verify your setup works
+- **Save your commands**: Keep a log of successful parameter combinations
+- **Use descriptive output names**: Include key parameters in output_prefix (e.g., `hotspot_A59_A83_A91`)
+- **Check the logs**: RFdiffusion creates log files - read them if something goes wrong

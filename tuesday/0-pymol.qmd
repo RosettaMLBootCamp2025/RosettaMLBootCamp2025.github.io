@@ -1,0 +1,28 @@
+---
+title: "0. PyMOL Visualization"
+---
+
+This activity covers the basics of protein structure visualization using PyMOL.
+
+## Resources
+
+- [**PyMOL Tutorial Slides (PDF)**](files/PyMOL.pdf)
+- [**Aesthetic Script (Python)**](files/aesthetic.py) - Script to recreate RFdiffusion figure aesthetics.
+
+## Instructions
+
+1.  Download and install PyMOL (or use the version on your cluster/classroom computers).
+2.  Follow the tutorial slides to learn about navigation, representation, and coloring.
+3.  Use the `aesthetic.py` script to apply custom styling to your structures.
+
+### Using the Aesthetic Script
+
+To use the provided script in PyMOL:
+
+1.  Download `aesthetic.py`.
+2.  In PyMOL, go to **File -> Run Script...** and select the file.
+3.  Or run it from the PyMOL command line:
+    ```bash
+    run /path/to/aesthetic.py
+    ```
+4.  This will load new commands `get_colors` and `get_lighting` which you can use to beautify your protein renders.
