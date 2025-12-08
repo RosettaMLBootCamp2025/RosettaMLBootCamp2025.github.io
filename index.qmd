@@ -20,21 +20,19 @@ This bootcamp is organized into 4 days of content plus a capstone project. Each 
 ::: {.g-col-6}
 ### [Monday](monday/index.qmd) {.day-card}
 
-Introduction and setup modules.
+**Tool Installation**: Install essential ML protein design tools on your HPC cluster including LocalColabFold, ESMFold, LigandMPNN, RFdiffusion2, Chai-1, Boltz-2, and BindCraft.
 :::
 
 ::: {.g-col-6}
 ### [Tuesday](tuesday/index.qmd) {.day-card}
-*Coming soon*
 
-Modules for Tuesday.
+**Structure Prediction**: Learn protein visualization with PyMOL, predict structures with AlphaFold2, and compare prediction methods (ESMFold vs AF2) to understand their trade-offs.
 :::
 
 ::: {.g-col-6}
 ### [Wednesday](wednesday/index.qmd) {.day-card}
-*Coming soon*
 
-Modules for Wednesday.
+**Advanced Prediction & Design**: Compare AlphaFold3 and Chai-1 on complex predictions, then design proteins with RFdiffusion including binders and symmetric oligomers.
 :::
 
 ::: {.g-col-6}
