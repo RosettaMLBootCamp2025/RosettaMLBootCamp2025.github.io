@@ -1,28 +1,481 @@
 ---
-title: "0. PyMOL Visualization"
+title: "0. PyMOL and Visual Studio Code"
 ---
 
-This activity covers the basics of protein structure visualization using PyMOL.
+This module introduces two essential tools for computational structural biology: **PyMOL** for molecular visualization and **Visual Studio Code (VSCode)** for code development and remote computing.
 
-## Resources
+## Slides
+
+```{=html}
+<iframe src="https://docs.google.com/presentation/d/18z-44xvzmgudaZLI-MRByvY3qHvsPVK5/embed?start=false&loop=false&delayms=3000" frameborder="0" width="100%" height="500" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+```
+
+---
+
+## Part 1: PyMOL - Molecular Visualization
+
+### What is PyMOL?
+
+PyMOL is the industry-standard molecular visualization software used by structural biologists, computational chemists, and protein engineers worldwide. It's built on Python under the hood, which means:
+
+- **Commands are Python-based**: You can script complex visualization workflows
+- **Extensible**: The PyMOL library allows you to add custom functionality
+- **Reproducible**: Scripts ensure your figures can be regenerated exactly
+
+::: {.callout-tip}
+## Installation Options
+- **Download from**: [pymol.org](https://pymol.org)
+- **Conda installation**: `conda install -c schrodinger -c conda-forge pymol`
+
+The Conda installation is recommended for integration with Python workflows.
+:::
+
+### Why PyMOL Matters for AI/ML Protein Work
+
+In the context of this bootcamp, PyMOL serves several critical functions:
+
+1. **Diagnosing AI predictions**: When AlphaFold2, ESMFold, or other tools generate structures, you need to visually assess whether the predictions are reasonable
+2. **Evaluating designs**: Tools like RFdiffusion and LigandMPNN produce protein designs—PyMOL lets you inspect binding pockets, interfaces, and overall fold quality
+3. **Experimental planning**: Before doing mutagenesis or other experiments, you can examine hydrogen bond networks, identify key residues, and plan mutations *in silico*
+4. **Publication figures**: High-quality structure figures are essential for papers and presentations
+
+### Navigation and Views
+
+PyMOL's interface has several key components you'll use constantly:
+
+**Mouse Controls:**
+
+- **Left-click + drag**: Rotate the molecule
+- **Middle-click + drag**: Translate (move) the molecule
+- **Right-click + drag**: Zoom in/out
+- **Scroll wheel**: Also zooms
+
+**The Object Panel (right side):**
+Every loaded structure appears here with five buttons:
+- **A** (Action): Hide, show, delete, rename objects
+- **S** (Show): Display as cartoon, sticks, surface, etc.
+- **H** (Hide): Hide specific representations
+- **L** (Label): Add text labels to atoms/residues
+- **C** (Color): Change colors
+
+### Interactive Selections
+
+One of PyMOL's most powerful features is its selection system. You can select atoms, residues, chains, or entire objects using:
+
+**Click selections:**
+- Click on any atom to select it
+- Shift+click to add to selection
+- Ctrl+click to remove from selection
+
+**Selection algebra** (in the command line):
+```python
+# Select chain A
+select chainA, chain A
+
+# Select residues 50-100
+select loop, resi 50-100
+
+# Select all alpha carbons
+select cas, name CA
+
+# Select residues within 5 Angstroms of a ligand
+select binding_site, byres all within 5 of organic
+```
+
+### Representations ("Show As")
+
+Different representations reveal different aspects of structure:
+
+| Representation | Best For |
+|---------------|----------|
+| **Cartoon** | Overall fold, secondary structure |
+| **Sticks** | Active sites, ligand interactions |
+| **Surface** | Binding pockets, electrostatics |
+| **Spheres** | Space-filling, VDW radii |
+| **Lines** | Quick overview, large structures |
+| **Ribbon** | Simplified backbone trace |
+
+**Example workflow:**
+```python
+# Load a structure
+fetch 1GFL
+
+# Show cartoon for overall structure
+show cartoon
+
+# Show sticks for the chromophore
+select chromophore, resn CRO
+show sticks, chromophore
+
+# Hide everything else as sticks
+hide sticks, not chromophore
+```
+
+### Sequence and Structure Connection
+
+PyMOL shows the sequence along the bottom of the window. This is incredibly useful because:
+
+- **Click on sequence**: Highlights that residue in the 3D view
+- **Drag across sequence**: Selects a range of residues
+- **Colored by secondary structure**: Helices, sheets, and loops are color-coded
+
+This sequence-structure connection is essential when you're comparing a predicted structure to what you know about the protein's function.
+
+### The Wizard Menu
+
+PyMOL's "Wizard" feature provides interactive tools for measurements:
+
+**Measurement Wizard:**
+- **Distances**: Click two atoms to measure bond lengths or non-bonded distances
+- **Angles**: Click three atoms to measure bond angles
+- **Dihedrals**: Click four atoms to measure torsion angles (critical for Ramachandran analysis)
+
+To access: `Wizard → Measurement` from the menu bar.
+
+**Mutagenesis Wizard:**
+- Interactively mutate residues
+- See rotamer options for the new residue
+- Useful for quick "what if" experiments
+
+To access: `Wizard → Mutagenesis`
+
+### Creating Publication-Quality Figures
+
+PyMOL excels at creating beautiful figures. Key settings to know:
+
+**Coloring options:**
+```python
+# Color by chain
+util.cbc  # Color by chain (automatic)
+
+# Color by secondary structure
+color red, ss h    # Helices red
+color yellow, ss s # Sheets yellow
+color green, ss l+ # Loops green
+
+# Rainbow coloring (N-terminus to C-terminus)
+spectrum count, rainbow
+
+# Color by B-factor (temperature or pLDDT)
+spectrum b, blue_white_red, minimum=50, maximum=100
+```
+
+**Transparency for depth:**
+```python
+# Make cartoon semi-transparent
+set cartoon_transparency, 0.5, object_name
+
+# Pro tip: Set most of structure to 0.85 transparency,
+# then set region of interest to 0 for highlighting
+set cartoon_transparency, 0.85, all
+set cartoon_transparency, 0, active_site
+```
+
+**Saving figures:**
+```python
+# Set background to white (for publications)
+bg_color white
+
+# Ray-trace for high quality
+ray 2400, 2400
+
+# Save as PNG
+png my_figure.png, dpi=300
+```
+
+### Useful Commands Reference
+
+| Command | Description |
+|---------|-------------|
+| `fetch XXXX` | Download structure from PDB |
+| `load file.pdb` | Load local file |
+| `align obj1, obj2` | Superimpose structures |
+| `rms_cur obj1, obj2` | Calculate RMSD |
+| `center selection` | Center view on selection |
+| `zoom selection` | Zoom to fit selection |
+| `orient` | Reset to default orientation |
+| `set grid_mode, 1` | View multiple objects side-by-side |
+
+::: {.callout-note}
+## More PyMOL Resources
+- **PyMOL Wiki**: [pymolwiki.org](https://pymolwiki.org) - Comprehensive command reference
+- **Tutorial PDF**: [PyRosetta Workshop PyMOL Tutorial](https://graylab.jhu.edu/pyrosetta/downloads/documentation/pyrosetta4_online_format/PyRosetta4_Workshop1_PyMOL.pdf)
+:::
+
+### Resources
 
 - [**PyMOL Tutorial Slides (PDF)**](files/PyMOL.pdf)
-- [**Aesthetic Script (Python)**](files/aesthetic.py) - Script to recreate RFdiffusion figure aesthetics.
+- [**Aesthetic Script (Python)**](files/aesthetic.py) - Script to recreate RFdiffusion-style figure aesthetics
 
-## Instructions
+**Using the Aesthetic Script:**
 
-1.  Download and install PyMOL (or use the version on your cluster/classroom computers).
-2.  Follow the tutorial slides to learn about navigation, representation, and coloring.
-3.  Use the `aesthetic.py` script to apply custom styling to your structures.
+1. Download `aesthetic.py`
+2. In PyMOL: **File → Run Script...** and select the file
+3. Or from command line: `run /path/to/aesthetic.py`
+4. New commands available: `get_colors` and `get_lighting`
 
-### Using the Aesthetic Script
+---
 
-To use the provided script in PyMOL:
+## Part 2: Visual Studio Code
 
-1.  Download `aesthetic.py`.
-2.  In PyMOL, go to **File -> Run Script...** and select the file.
-3.  Or run it from the PyMOL command line:
-    ```bash
-    run /path/to/aesthetic.py
-    ```
-4.  This will load new commands `get_colors` and `get_lighting` which you can use to beautify your protein renders.
+### Why VSCode?
+
+Visual Studio Code is one of the most popular IDEs (Integrated Development Environments) for coding, and it's particularly powerful for computational biology work because:
+
+- **Remote development**: SSH directly into HPC clusters and edit code as if it were local
+- **Extensions**: Thousands of extensions for Python, Jupyter, Git, and more
+- **Customizable**: Tailor the interface to your workflow
+- **Free**: Open source and cross-platform
+
+### Getting Started
+
+**Download**: [code.visualstudio.com](https://code.visualstudio.com)
+
+After installation, the interface has several key areas:
+
+1. **Explorer** (left sidebar): File browser
+2. **Editor** (center): Where you write code
+3. **Terminal** (bottom): Integrated command line
+4. **Extensions** (left sidebar icon): Install add-ons
+5. **Source Control** (left sidebar): Git integration
+
+Learn more: [VSCode Introductory Videos](https://code.visualstudio.com/docs/introvideos/basics)
+
+### SSH into HPC Clusters
+
+This is perhaps the most valuable feature for our bootcamp. Instead of editing files on the cluster with vim/nano, you can:
+
+1. Connect VSCode to your HPC account
+2. Browse files graphically
+3. Edit with full IDE features (syntax highlighting, autocomplete, etc.)
+4. Run terminals on the cluster
+
+**Setup Steps:**
+
+1. Install the **Remote - SSH** extension in VSCode
+2. Click the green `><` icon in the bottom-left corner
+3. Select "Connect to Host..." → "Add New SSH Host..."
+4. Enter your SSH command: `username@cluster.university.edu`
+5. Follow prompts to authenticate
+
+::: {.callout-tip}
+## SSH Configuration
+For easier connections, add your cluster to `~/.ssh/config`:
+```
+Host mycluster
+    HostName cluster.university.edu
+    User yourusername
+    IdentityFile ~/.ssh/id_rsa
+```
+Then you can just connect to "mycluster" in VSCode.
+:::
+
+**Guides:**
+
+- [VSCode SSH Tutorial](https://code.visualstudio.com/docs/remote/ssh-tutorial)
+- [VSCode Remote SSH Documentation](https://code.visualstudio.com/docs/remote/ssh)
+
+### Viewing Proteins Remotely with Mol*
+
+When working on an HPC cluster, you often want to view protein structures without downloading them to your local machine. VSCode has a **Mol\*** extension that provides an interactive 3D protein viewer.
+
+**Setup:**
+
+1. Install the Mol* extension in VSCode
+2. Right-click any `.pdb` file → "Open with Mol*"
+
+**Features:**
+
+- Color by chain, secondary structure, hydrophobicity, B-factor
+- Calculate RMSD between structures
+- Measure distances and angles
+- Toggle between chains/models
+- Create snapshots and animations
+
+**Documentation**: [Mol* Viewer Docs](https://molstar.org/viewer-docs/)
+
+### Jupyter Notebooks in VSCode
+
+Jupyter notebooks (`.ipynb` files) are excellent for:
+
+- **Exploratory analysis**: Test code in small chunks
+- **Data visualization**: Plot results inline
+- **Documentation**: Mix code with markdown explanations
+- **Sharing**: Notebooks show both code and output
+
+**VSCode + Jupyter:**
+
+1. Install the Jupyter extension
+2. Create a new notebook: `code -r filename.ipynb`
+3. Select a Python kernel (your conda environment)
+4. Run cells with Shift+Enter
+
+This works even when SSH'd into a cluster—you can run Jupyter notebooks on HPC GPUs through VSCode!
+
+**Documentation**: [Jupyter.org Docs](https://docs.jupyter.org/en/latest/)
+
+### Useful Extensions
+
+| Extension | Purpose |
+|-----------|---------|
+| **Remote - SSH** | Connect to HPC clusters |
+| **Python** | Python language support |
+| **Jupyter** | Notebook support |
+| **Mol*** | Protein structure viewer |
+| **autoDocstring** | Generate docstrings automatically |
+| **GitLens** | Enhanced Git integration |
+
+### Tips for Remote Work
+
+**Tmux** - Terminal Multiplexer:
+
+When running long jobs on a cluster, `tmux` lets you:
+- Detach from a session and reconnect later
+- Keep processes running even if your connection drops
+- Split your terminal into multiple panes
+
+Learn more: [Introduction to Tmux](https://www.redhat.com/en/blog/introduction-tmux-linux)
+
+**Basic tmux workflow:**
+```bash
+# Start a new session
+tmux new -s mysession
+
+# Detach (Ctrl+b, then d)
+
+# List sessions
+tmux ls
+
+# Reattach
+tmux attach -t mysession
+```
+
+---
+
+## Hands-On Exercise
+
+### Part 1: PyMOL Basics
+
+**Goal:** Get comfortable with PyMOL navigation and basic commands.
+
+1. **Download and install PyMOL** (or use the version on your cluster/classroom computers)
+
+2. **Load your first structure:**
+   ```python
+   fetch 1GFL
+   ```
+   This downloads Green Fluorescent Protein (GFP) directly from the PDB.
+
+3. **Practice navigation:**
+   - Rotate the structure (left-click drag)
+   - Zoom in and out (scroll wheel or right-click drag)
+   - Translate/pan (middle-click drag)
+   - Try `orient` to reset the view
+
+4. **Explore representations:**
+   ```python
+   # Try each of these:
+   show cartoon
+   show sticks
+   show surface
+   show spheres
+
+   # Reset to just cartoon
+   hide everything
+   show cartoon
+   ```
+
+5. **Work with selections:**
+   ```python
+   # Select the chromophore (the part that glows!)
+   select chromophore, resn CRO
+
+   # Show it as sticks
+   show sticks, chromophore
+
+   # Color it differently
+   color yellow, chromophore
+   ```
+
+6. **Color by B-factor (confidence in predicted structures):**
+   ```python
+   spectrum b, blue_white_red, minimum=0, maximum=100
+   ```
+
+### Part 2: Measurements and Analysis
+
+1. **Use the Measurement Wizard:**
+   - Go to `Wizard → Measurement`
+   - Click on two atoms to measure their distance
+   - Try measuring a hydrogen bond (should be ~2.8-3.2 Å)
+
+2. **Calculate RMSD between objects:**
+   ```python
+   # Fetch another GFP structure
+   fetch 1EMA
+
+   # Align them
+   align 1EMA, 1GFL
+
+   # The RMSD will be printed in the console
+   ```
+
+### Part 3: Create a Publication Figure
+
+1. **Set up for a nice figure:**
+   ```python
+   # White background
+   bg_color white
+
+   # Show cartoon representation
+   hide everything
+   show cartoon
+
+   # Color by chain
+   util.cbc
+
+   # Or try rainbow coloring
+   spectrum count, rainbow
+   ```
+
+2. **Highlight the chromophore:**
+   ```python
+   show sticks, chromophore
+   color yellow, chromophore
+   ```
+
+3. **Ray-trace and save:**
+   ```python
+   ray 1200, 1200
+   png my_first_pymol_figure.png, dpi=300
+   ```
+
+### Part 4: Try the Aesthetic Script (Optional)
+
+If you have time, use the provided `aesthetic.py` script:
+
+1. Download [aesthetic.py](files/aesthetic.py)
+2. In PyMOL: `run /path/to/aesthetic.py`
+3. Try the new commands: `get_colors` and `get_lighting`
+4. Create a publication-quality render in the RFdiffusion style!
+
+### Questions to Consider
+
+1. What does the GFP chromophore look like? How is it positioned within the protein?
+2. When you colored by B-factor, which regions had high vs. low values? What might this mean?
+3. How similar were the two GFP structures (1GFL and 1EMA)? What was the RMSD?
+4. Why is it useful to show both cartoon (overall structure) and sticks (specific residues) simultaneously?
+
+---
+
+### VSCode Setup Exercise
+
+If you have access to an HPC cluster:
+
+1. **Install the Remote-SSH extension** in VSCode
+2. **Connect to your cluster** using the steps described above
+3. **Navigate to your home directory** and create a test file
+4. **Open a terminal** within VSCode (Terminal → New Terminal)
+5. **Verify you can run commands** on the cluster through VSCode
+
+This setup will be essential for running AlphaFold2 and other prediction tools in the upcoming exercises!

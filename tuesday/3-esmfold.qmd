@@ -1,13 +1,18 @@
 ---
-title: "2. ESMFold vs. AlphaFold2"
+title: "3. ESMFold vs. AlphaFold2"
 ---
+
+In this module, you will use **ESMFold** to predict protein structures and systematically compare results with the **AlphaFold2** predictions you generated in the previous module. ESMFold uses a fundamentally different approach—a protein language model trained on sequences alone, without requiring Multiple Sequence Alignments (MSAs) or templates. By comparing ESMFold to AF2, you will understand the trade-offs between different prediction methods and learn when to use each approach.
 
 ## Overview
-In this activity, you will use **ESMFold** to predict protein structures and systematically compare results with the **AlphaFold2** predictions you generated in Activity 1. ESMFold uses a fundamentally different approach—a protein language model trained on sequences alone, without requiring Multiple Sequence Alignments (MSAs) or templates. By comparing ESMFold to AF2, you will understand the trade-offs between different prediction methods and learn when to use each approach.
 
-**Building on Activity 1:** You explored how AF2 parameters (model weights, MSA depth, templates, recycles) affect prediction quality. Now you'll investigate how a completely different architecture performs on the same protein and develop intuition for choosing the right tool for your research needs.
+ESMFold represents a different philosophy from AlphaFold2. While AF2 leverages evolutionary information through MSAs, ESMFold is built on a **protein language model** (ESM-2) that learns patterns directly from millions of protein sequences. This makes it:
 
----
+- **Much faster**: No MSA generation step
+- **Better for orphan proteins**: Works without homologs
+- **Simpler pipeline**: Sequence in, structure out
+
+But there are trade-offs—ESMFold may miss evolutionary insights that help AF2 achieve higher accuracy on well-studied proteins.
 
 ## Learning Objectives
 1. **Understand ESMFold's language model approach** vs AF2's MSA-based approach
@@ -18,13 +23,18 @@ In this activity, you will use **ESMFold** to predict protein structures and sys
 
 ---
 
-## Setup
+## Hands-On Exercise
 
-### Prerequisites
+This module is structured as a hands-on comparison between ESMFold and AlphaFold2. You'll run predictions, extract confidence scores, and develop intuition for when to use each tool.
 
-**1. Create an ESMFold activity directory:**
+### Setup
 
-### Activity Directory Structure
+**Prerequisites:**
+- Completed the AlphaFold2 module and have GFP predictions available
+- Access to a GPU (ESMFold requires ~8-16GB GPU RAM)
+- Python environment with PyTorch and the ESM library
+
+**Create your working directory:**
 ```bash
 mkdir esmfold_activity
 cd esmfold_activity
@@ -32,7 +42,7 @@ cd esmfold_activity
 
 ---
 
-## Part 1: Running ESMFold Structure Prediction
+### Part 1: Running ESMFold Structure Prediction
 
 **Goal:** Generate an ESMFold prediction and understand the workflow.
 
@@ -102,7 +112,7 @@ python predict_esmfold.py
 
 **Expected output:**
 - A PDB file named `esmfold_gfp.pdb` should be created
-- Note the prediction time - **this is much faster than ColabFold from yesterday!**
+- Note the prediction time - **this is much faster than ColabFold!**
 
 ---
 
@@ -134,7 +144,7 @@ python predict_esmfold.py
 python extract_plddt.py esmfold_gfp.pdb
 ```
 
-**Run it on your AlphaFold2 prediction from yesterday:**
+**Run it on your AlphaFold2 prediction from the previous module:**
 ```bash
 python extract_plddt.py path/to/your/af2_prediction.pdb
 ```
@@ -175,7 +185,7 @@ color yellow, low_conf
 
 **You need:**
 1. Your ESMFold prediction: `esmfold_gfp.pdb` (from Part 1)
-2. Your AlphaFold2 prediction from yesterday (ColabFold output)
+2. Your AlphaFold2 prediction from the previous module (ColabFold output)
 3. The experimental crystal structure of GFP from PDB
 
 **Download the crystal structure:**
@@ -215,7 +225,7 @@ color magenta, esmfold
 
 **In PyMOL, calculate RMSD for each comparison:**
 
-Use the same approach you used in Activity 1. If you're feeling confident, try writing a PyMOL script to automate this!
+Use the same approach you used in the AlphaFold2 module. If you're feeling confident, try writing a PyMOL script to automate this!
 
 ```python
 # In PyMOL:
@@ -310,9 +320,9 @@ mv output.pdb output2.pdb
 
 ### 5.1 Compare Prediction Times
 
-**You already timed your ESMFold prediction in Part 1. Now compare it to yesterday's ColabFold run.**
+**You already timed your ESMFold prediction in Part 1. Now compare it to your ColabFold run.**
 
-**Think back to Activity 1 (ColabFold):**
+**Think back to your AlphaFold2 predictions:**
 - How long did the MSA search take?
 - How long did the actual structure prediction take (for 5 models)?
 - What was the total time?
@@ -322,8 +332,8 @@ mv output.pdb output2.pdb
 | Model | Approximate Time | Notes |
 |-------|-----------------|-------|
 | ESMFold | _____ seconds/minutes | From Part 1 output |
-| ColabFold MSA search | _____ minutes | From yesterday |
-| ColabFold prediction (5 models) | _____ minutes | From yesterday |
+| ColabFold MSA search | _____ minutes | From AlphaFold2 module |
+| ColabFold prediction (5 models) | _____ minutes | From AlphaFold2 module |
 | **Total ColabFold** | _____ minutes | |
 
 **Key observations:**

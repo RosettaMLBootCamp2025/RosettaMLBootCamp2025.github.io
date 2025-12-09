@@ -1,0 +1,417 @@
+---
+title: "1. Introduction to Structure Prediction"
+---
+
+This module provides the foundational concepts behind protein structure prediction—the theoretical framework that underlies tools like AlphaFold2, ESMFold, and other modern prediction methods.
+
+## Slides
+
+```{=html}
+<iframe src="https://docs.google.com/presentation/d/1apTG2V__OjZyX2wLwHDN2o-EsMHgcBRG/embed?start=false&loop=false&delayms=3000" frameborder="0" width="100%" height="500" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+```
+
+---
+
+## What is Structure Prediction?
+
+At its core, protein structure prediction attempts to answer a deceptively simple question:
+
+> **Given the linear amino acid sequence of a polypeptide, what is its 3D structure?**
+
+This is known as the **protein folding problem**, and it has been one of the grand challenges of molecular biology for over 50 years.
+
+**Why is this hard?**
+
+A protein sequence like:
+```
+MGDIQVQVNIDDNGKNFDYTYTVTTESELQKVLNELMDYIKKQGAKRVRISITARTKKEAEKFAAILIKVFAELGYNDINVTFDGDTVTVEGQLE
+```
+
+Must fold into a precise three-dimensional arrangement where:
+- Every atom has specific coordinates
+- The structure is thermodynamically stable
+- The fold enables biological function
+
+---
+
+## The Theoretical Foundation
+
+### Anfinsen's Thermodynamic Hypothesis (1960s)
+
+Christian Anfinsen's Nobel Prize-winning work established a fundamental principle:
+
+> **The native (functional) structure of a protein is at a free energy minimum.**
+
+This means:
+- The sequence contains all the information needed to specify the structure
+- Given the right conditions, a protein will spontaneously fold to its native state
+- Structure is determined by physics, not by cellular machinery
+
+::: {.callout-note}
+## Anfinsen's Experiment
+Anfinsen showed that ribonuclease A, when completely unfolded (denatured), would spontaneously refold to its active form when denaturing conditions were removed. This proved that the amino acid sequence alone determines the final structure.
+:::
+
+### Levinthal's Paradox
+
+Shortly after Anfinsen's work, Cyrus Levinthal raised a puzzling question:
+
+> **How can proteins fold so quickly if they have so many possible conformations?**
+
+Consider a modest 101-residue protein:
+- Each residue has ~3 possible backbone conformations (φ/ψ angles)
+- Total possible conformations: **3^200 ≈ 10^95 states**
+- If the protein sampled one conformation per picosecond, it would take longer than the age of the universe to find the right one
+
+Yet proteins fold in milliseconds to seconds. How?
+
+### The Folding Funnel
+
+The resolution to Levinthal's paradox came from understanding that the energy landscape is not flat—it's shaped like a **funnel**:
+
+```
+     ╱ ╲ ╱ ╲      ← High energy, many conformations (unfolded)
+    ╱   ╲   ╲
+   ╱     ╲   ╲
+  ╱       ╲   ╲
+ ╱    ↓    ╲   ╲   ← Energy decreases as structure forms
+╱___________╲___╲
+      ●          ← Native state (energy minimum)
+```
+
+**Key insights:**
+
+1. **Not a random search**: The protein doesn't sample all conformations—it follows an energetic gradient
+2. **Local interactions guide folding**: Secondary structure (helices, sheets) forms first, providing scaffolding
+3. **Funnel shape**: Many paths lead to the same native state
+4. **Rugged landscape**: In reality, there are local minima (kinetic traps) that can slow folding
+
+::: {.callout-important}
+## Reality is More Complex
+In practice, the folding landscape isn't one clean funnel—it's many interconnected funnels. This creates:
+- **Folding intermediates**: Partially folded states
+- **Kinetic traps**: Local minima that delay folding
+- **Multiple conformations**: Some proteins sample several states
+- **Intrinsically disordered regions**: Parts that never fully fold
+
+This complexity is what makes structure prediction so challenging!
+:::
+
+---
+
+## A Brief History: CASP and the Road to AlphaFold
+
+### Critical Assessment of protein Structure Prediction (CASP)
+
+CASP is a biennial competition that has tracked progress in structure prediction since 1994. Organizers release sequences of proteins whose structures have been solved but not yet published, and teams submit blind predictions.
+
+**Key milestones:**
+
+| Year | CASP | Major Development |
+|------|------|-------------------|
+| 1998 | CASP3 | Fragment-based assembly (Rosetta) |
+| 2014 | CASP11 | Co-evolutionary analysis + deep learning |
+| 2018 | CASP13 | AlphaFold1: Deep learning-guided minimization |
+| 2020 | CASP14 | **AlphaFold2**: Near-experimental accuracy |
+| 2022 | CASP15 | AlphaFold-Multimer, ESMFold emerge |
+
+### The Pre-AlphaFold Era
+
+**Fragment-based methods (Rosetta, ~1998):**
+- Break known structures into fragments
+- Assemble fragments guided by energy functions
+- Sample many conformations, select lowest energy
+
+**Co-evolutionary methods (~2014):**
+- Key insight: Residues that contact each other in 3D co-evolve in sequence
+- Multiple sequence alignments (MSAs) reveal which residues co-vary
+- These "contact maps" constrain structure prediction
+
+**Early deep learning (~2018):**
+- Neural networks predict contact maps from MSAs
+- Use contacts to guide physics-based minimization
+- AlphaFold1 used this approach
+
+### The AlphaFold2 Revolution (2020)
+
+AlphaFold2 achieved what many thought was decades away:
+
+- **GDT scores of ~90** on difficult targets (previously ~60 was state-of-the-art)
+- **Approaching experimental accuracy** for many proteins
+- **End-to-end learning**: Directly predicts coordinates, not intermediate features
+
+We'll explore AlphaFold2's architecture in detail in the next module.
+
+---
+
+## Structure Prediction Metrics
+
+When evaluating predictions, several metrics are used:
+
+### Root Mean Squared Deviation (RMSD)
+
+**What it measures:** Average distance between corresponding atoms after optimal superposition.
+
+$$RMSD = \sqrt{\frac{1}{N}\sum_{i=1}^{N}d_i^2}$$
+
+where $d_i$ is the distance between atom $i$ in the prediction and reference.
+
+**Interpretation:**
+- < 2 Å: Excellent (atomic-level accuracy)
+- 2-4 Å: Good (correct fold, minor deviations)
+- 4-8 Å: Moderate (correct topology, some errors)
+- \> 8 Å: Poor (likely wrong fold)
+
+::: {.callout-warning}
+## RMSD Limitations
+- **Length-dependent**: Longer proteins tend to have higher RMSD
+- **Sensitive to outliers**: One badly placed domain can dominate
+- **Requires superposition**: Choice of alignment region matters
+:::
+
+### Local Distance Difference Test (lDDT)
+
+**What it measures:** Local structural similarity without superposition.
+
+For each residue, lDDT asks: "Are the distances to neighboring residues preserved?"
+
+**Key properties:**
+- **Range**: 0 to 1 (or 0-100 as percentage)
+- **Length-independent**: Can compare proteins of different sizes
+- **Per-residue**: Identifies which regions are well-predicted
+
+**This is the metric used for pLDDT (predicted lDDT) in AlphaFold2!**
+
+### Global Distance Test (GDT)
+
+**What it measures:** Fraction of residues within various distance thresholds.
+
+$$GDT_{TS} = \frac{1}{4}(P_1 + P_2 + P_4 + P_8)$$
+
+where $P_x$ is the percentage of residues within $x$ Å of the reference.
+
+**Interpretation:**
+- \> 90: Excellent
+- 70-90: Good
+- 50-70: Moderate
+- < 50: Poor
+
+**GDT-TS was the primary metric in CASP until AlphaFold2 essentially "solved" it.**
+
+### Template Modeling Score (TM-score)
+
+**What it measures:** Global structural similarity, normalized by protein length.
+
+**Key properties:**
+- **Range**: 0 to 1
+- **Length-independent**: Enables comparison across protein sizes
+- **Threshold**: TM-score > 0.5 generally indicates same fold
+
+| TM-score | Interpretation |
+|----------|---------------|
+| > 0.5 | Same fold |
+| 0.3-0.5 | Possibly related |
+| < 0.3 | Likely different folds |
+
+---
+
+## Applications of Structure Prediction
+
+### 1. Molecular Replacement in Crystallography
+
+**Problem:** X-ray crystallography requires initial "phases" to solve structures.
+
+**Solution:** Predicted structures can provide starting models for:
+- Phase determination
+- Completing partial experimental structures
+- Filling in loops or disordered regions
+
+### 2. Interpreting Experimental Results
+
+**Example scenarios:**
+- A mutation causes loss of function—why? The structure shows it's in the active site.
+- A protein doesn't express well—the structure reveals aggregation-prone regions.
+- Two proteins interact—structures suggest the binding interface.
+
+### 3. Functional Prediction and Hypothesis Testing
+
+**From structure, you can infer:**
+- Active site location and chemistry
+- Binding pocket characteristics
+- Likely interaction partners (from shape complementarity)
+- Potential allosteric sites
+
+### 4. Starting Point for Protein Engineering
+
+**Critical for:**
+- **Rational design**: Knowing where to put mutations
+- **Directed evolution**: Understanding which regions to diversify
+- **De novo design**: Validating whether designed sequences will fold
+
+::: {.callout-tip}
+## Structure Prediction in Your Research
+In this bootcamp, you'll use structure prediction to:
+
+1. **Predict structures** of proteins of interest
+2. **Validate designs** from tools like RFdiffusion
+3. **Assess confidence** to know which regions to trust
+4. **Compare predictions** from different methods
+:::
+
+---
+
+## The Modern Prediction Landscape
+
+Today's structure prediction tools fall into two main categories:
+
+### MSA-Based Methods (e.g., AlphaFold2, OpenFold)
+
+**Strengths:**
+- Highest accuracy for proteins with many homologs
+- Leverage evolutionary information
+- Multiple model ensemble provides uncertainty estimates
+
+**Limitations:**
+- Slower (MSA generation takes time)
+- Less accurate for orphan proteins (few homologs)
+- Computationally expensive
+
+### Language Model-Based Methods (e.g., ESMFold)
+
+**Strengths:**
+- Very fast (no MSA needed)
+- Work on designed/synthetic proteins
+- Simpler pipeline
+
+**Limitations:**
+- Generally lower accuracy than MSA-based methods
+- No ensemble diversity from single prediction
+- May miss evolutionary insights
+
+### Next-Generation Methods (e.g., AlphaFold3, Chai-1, Boltz-2)
+
+The field is rapidly advancing with:
+- **Multi-modal predictions**: Proteins + ligands + nucleic acids
+- **Diffusion-based approaches**: New generative paradigms
+- **Improved confidence estimation**: Better uncertainty quantification
+
+---
+
+## Key Takeaways
+
+1. **Anfinsen's hypothesis** established that sequence determines structure
+2. **Levinthal's paradox** highlighted the computational challenge
+3. **The folding funnel** explains how proteins fold efficiently
+4. **CASP** has tracked 25+ years of progress
+5. **AlphaFold2** achieved a major breakthrough in 2020
+6. **Multiple metrics** (RMSD, lDDT, GDT, TM-score) capture different aspects of accuracy
+7. **Structure enables function**: Predictions have many practical applications
+
+---
+
+## Looking Ahead
+
+In the next modules, you'll:
+
+1. **Learn AlphaFold2's architecture** and how it achieves high accuracy
+2. **Run your own predictions** using ColabFold/LocalColabFold
+3. **Compare methods** (AlphaFold2 vs ESMFold) to understand trade-offs
+4. **Visualize confidence** and interpret prediction quality
+
+Understanding these foundational concepts will help you use structure prediction tools effectively and interpret their outputs critically.
+
+---
+
+## Hands-On Exercise
+
+This module is primarily conceptual, but let's reinforce these ideas with some exploration.
+
+### Part 1: Explore CASP Results
+
+**Goal:** Understand how the field has progressed by looking at real CASP data.
+
+1. **Visit the CASP website:** [predictioncenter.org](https://predictioncenter.org)
+
+2. **Compare CASP rounds:**
+   - Look at results from CASP11 (2014) vs CASP14 (2020)
+   - Find the GDT-TS scores for the top predictors
+   - Notice how dramatically scores improved with AlphaFold2
+
+3. **Questions to consider:**
+   - What was the typical GDT-TS for "hard" targets before AlphaFold2?
+   - How did AlphaFold2's scores compare to the rest of the field in CASP14?
+   - Why do you think some targets are labeled "hard" vs "easy"?
+
+### Part 2: Metric Comparison Exercise
+
+**Goal:** Develop intuition for different structure comparison metrics.
+
+Using PyMOL, let's compare two related structures:
+
+```python
+# Fetch two related kinase structures
+fetch 1ATP   # PKA with ATP bound
+fetch 1J3H   # PKA in different conformation
+
+# Align them
+align 1J3H, 1ATP
+
+# Note the RMSD printed in the console
+```
+
+**Now think about:**
+
+1. **RMSD question:** The RMSD might be 2-4 Å. Does this mean the structures are different, or is this expected variation?
+
+2. **Per-residue analysis:**
+   ```python
+   # Color by RMSD per residue (after alignment)
+   # Red = high deviation, blue = low
+   ```
+   Which regions show the most difference? (Usually loops and termini)
+
+3. **Why lDDT matters:** If one domain moves relative to another (like in a kinase), RMSD after superposition will be high, but lDDT for each domain individually would still be good. This is why AlphaFold2 uses pLDDT as its confidence metric.
+
+### Part 3: Discussion Questions
+
+Work through these questions with a partner or write brief notes:
+
+1. **Anfinsen's hypothesis:**
+   - What evidence supports the idea that sequence determines structure?
+   - Can you think of exceptions? (Hint: chaperones, prions, intrinsically disordered proteins)
+
+2. **Levinthal's paradox:**
+   - If a protein has 100 residues and samples conformations at 10^12 per second, how long would it take to sample all 3^200 conformations?
+   - Why doesn't this happen in reality?
+
+3. **Practical implications:**
+   - You predict a structure with AlphaFold2 and get average pLDDT of 75. What does this mean?
+   - One region has pLDDT < 50. Should you trust it? What might it indicate biologically?
+
+4. **Choosing metrics:**
+   - You're comparing two predictions of the same protein. When would you use RMSD vs TM-score?
+   - Why is GDT-TS preferred over raw RMSD in CASP?
+
+### Part 4: Prepare for AlphaFold2
+
+To get ready for the next module:
+
+1. **Review your HPC access:** Make sure you can log into your cluster
+2. **Check for GPU availability:** Run `nvidia-smi` on a GPU node
+3. **Prepare a test sequence:** Find the FASTA sequence for a protein you're interested in
+
+::: {.callout-tip}
+## Sequence Resources
+- **UniProt:** [uniprot.org](https://uniprot.org) - Search for proteins and download sequences
+- **RCSB PDB:** [rcsb.org](https://rcsb.org) - Get sequences for proteins with known structures
+:::
+
+### Reflection
+
+After this module, you should be able to:
+
+- [ ] Explain Anfinsen's thermodynamic hypothesis in your own words
+- [ ] Describe Levinthal's paradox and how the folding funnel resolves it
+- [ ] List the major milestones in CASP history
+- [ ] Compare and contrast RMSD, lDDT, GDT, and TM-score
+- [ ] Explain when you would use structure prediction in your research

@@ -1,0 +1,494 @@
+---
+title: "2. AlphaFold2 and OpenFold"
+---
+
+This module dives deep into AlphaFold2—the breakthrough model that essentially "solved" the protein structure prediction problem—and OpenFold, its open-source, trainable implementation.
+
+## Slides
+
+```{=html}
+<iframe src="https://docs.google.com/presentation/d/1vzVMNFhw-46M93pYFMwOBICL1i7jEbjv/embed?start=false&loop=false&delayms=3000" frameborder="0" width="100%" height="500" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+```
+
+---
+
+## The AlphaFold2 Breakthrough
+
+### CASP14: A Watershed Moment
+
+At the 14th Critical Assessment of protein Structure Prediction (CASP14) in 2020, AlphaFold2 achieved what many thought was impossible:
+
+- **GDT-TS scores of ~90** on targets where the previous state-of-the-art was ~60
+- **Near-experimental accuracy** for many proteins
+- **Consistent performance** across diverse protein families
+
+This wasn't incremental improvement—it was a paradigm shift.
+
+::: {.callout-note}
+## The Scale of the Achievement
+To put this in perspective: before AlphaFold2, structure prediction was considered one of biology's grand challenges. Some estimated it would take decades more to solve. AlphaFold2 essentially closed this chapter.
+:::
+
+### AlphaFold2 vs OpenFold
+
+**AlphaFold2** (DeepMind):
+- Original implementation in JAX
+- Released weights and inference code
+- Not easily trainable by the community
+
+**OpenFold** (Columbia/Harvard):
+- Faithful PyTorch reproduction
+- Fully trainable on new data
+- Community-friendly and extensible
+- **3-5x faster** for most proteins
+- **Lower memory usage**: Can predict longer proteins on single GPUs
+
+For this bootcamp, we'll use **ColabFold**, which combines AlphaFold2's models with fast MSA generation from MMseqs2.
+
+**Reference:** Ahdritz et al. (2024) - OpenFold paper
+
+---
+
+## How AlphaFold2 Works
+
+### High-Level Overview
+
+AlphaFold2's architecture can be broken down into key stages:
+
+```
+Sequence → MSA Generation → Evoformer → Structure Module → 3D Coordinates
+                ↓              ↓              ↓
+            Evolutionary   Iterative      SE(3)-aware
+            Information    Reasoning      Geometry
+```
+
+### Inputs and Outputs
+
+**Inputs:**
+1. **Query sequence**: The protein you want to predict
+2. **Multiple Sequence Alignment (MSA)**: Related sequences found by database search
+3. **Templates** (optional): Known structures of homologous proteins
+
+**Outputs:**
+1. **3D coordinates**: Atomic positions for all residues
+2. **pLDDT scores**: Per-residue confidence (0-100)
+3. **pTM score**: Overall structure confidence
+4. **PAE matrix**: Predicted Aligned Error between residue pairs
+
+### The MSA: Why Evolutionary Information Matters
+
+The Multiple Sequence Alignment is arguably the most important input to AlphaFold2.
+
+**What is an MSA?**
+An MSA aligns your query sequence with evolutionarily related sequences:
+
+```
+Query:     MKVLWAALLVTFLAGCQAKVEQAVETEPEPELRQQTEWQSGQRWELAL
+Homolog1:  MKVLWAALLVTFLAGCQAKVEQAVETEPEPELRQQTEWQSGQRWELAL
+Homolog2:  MKVLWGALLVTFLAGCQAKIEQAVETEPEPELRQQTEWQSGQRWDLAL
+Homolog3:  MKILWAALLVSFLAGCQAKVEQAVEAEPEPELRQQTEWQSGQRWELAL
+           ** **.****:******* :*****.**************.*:***
+```
+
+**Why it matters:**
+- **Co-evolution**: Residues that contact each other in 3D co-evolve in sequence
+- **Constraints**: The MSA reveals which positions can vary together
+- **Evolutionary pressure**: Conserved positions are often functionally important
+
+::: {.callout-important}
+## The MSA is Critical
+AlphaFold2's accuracy depends heavily on MSA quality. Proteins with few homologs (orphan proteins, designed proteins) are harder to predict because there's less evolutionary information to leverage.
+:::
+
+### The Evoformer: Learning from Evolution
+
+The Evoformer is AlphaFold2's core innovation—a neural network architecture that reasons about:
+
+1. **MSA representation**: Information from evolutionary sequences
+2. **Pair representation**: Relationships between residue pairs
+
+**Key operations:**
+
+- **Attention mechanisms**: Allow the model to focus on relevant parts of the MSA
+- **Triangle updates**: Enforce geometric consistency (if A is close to B, and B is close to C, what does that imply about A and C?)
+- **Iterative refinement**: Multiple passes through the Evoformer improve predictions
+
+::: {.callout-tip}
+## Understanding Attention
+If you want to understand attention mechanisms better, check out this excellent 3Blue1Brown video:
+
+[But what is a GPT? Visual intro to transformers](https://www.youtube.com/watch?v=P_fHJIYENdI)
+
+While it's about language models, the attention concepts apply directly to AlphaFold2.
+:::
+
+### The Structure Module: From Constraints to Coordinates
+
+The Structure Module converts the Evoformer's learned representations into actual 3D coordinates.
+
+**Key concept: SE(3) Equivariance**
+
+Proteins don't have a preferred orientation in space. If you rotate or translate a protein:
+- **It's still the same protein** (invariance of identity)
+- **The coordinates change in a predictable way** (equivariance of position)
+
+AlphaFold2's Structure Module is designed to respect these symmetries:
+
+```
+SE(3) = Special Euclidean group in 3D
+      = Rotations + Translations
+```
+
+**What this means practically:**
+- The model predicts the same structure regardless of input orientation
+- Coordinates transform correctly under rotations
+- No need to align inputs to a reference frame
+
+### Recycling: Self-Correction
+
+AlphaFold2 doesn't just predict once—it **recycles** predictions through the network multiple times:
+
+1. Make initial prediction
+2. Feed prediction back as input
+3. Refine based on learned constraints
+4. Repeat 3+ times
+
+This allows the model to self-correct and converge to better structures.
+
+---
+
+## Key Parameters and Settings
+
+### Recycling Parameters
+
+| Parameter | What it does | Typical values |
+|-----------|--------------|----------------|
+| `num_recycles` | How many refinement passes | 3-20 (more = better but slower) |
+| `max_recycles` | Hard cap for recycling | 20 |
+| `recycle_early_stop_tolerance` | Stop if structure converges | 0.5 Å |
+
+**When to increase recycles:**
+- Large proteins (>500 residues)
+- Multi-domain proteins
+- When initial predictions look uncertain
+
+### MSA Settings
+
+| Parameter | What it does | Options |
+|-----------|--------------|---------|
+| `msa_mode` | How to generate MSA | `mmseqs2` (fast), `jackhmmer` (thorough) |
+| `pair_mode` | For multimers: how to pair sequences | `paired`, `unpaired`, `paired+unpaired` |
+| `use_msa` | Whether to use MSA at all | true/false |
+| `use_templates` | Whether to search for structural templates | true/false |
+
+::: {.callout-warning}
+## Single-Sequence Mode
+You can run AlphaFold2 without an MSA (`use_msa=false`), but accuracy drops significantly. Use this only for:
+- Designed proteins with no natural homologs
+- Quick preliminary scans
+- When comparing to ESMFold
+:::
+
+### Model Selection
+
+| Parameter | What it does | Options |
+|-----------|--------------|---------|
+| `model_type` | Monomer vs multimer | `monomer`, `monomer_ptm`, `multimer` |
+| `num_models` | Number of model versions to run | 1-5 |
+| `rank_by` | How to select best prediction | `plddt`, `ptm`, `iptm+ptm` |
+
+**The 5 models:**
+AlphaFold2 was trained with 5 different random initializations. Running all 5 provides:
+- Ensemble diversity (different predictions)
+- Uncertainty estimation (do they agree?)
+- Better chance of finding the best structure
+
+### Relaxation
+
+| Parameter | What it does |
+|-----------|--------------|
+| `use_amber` | Run Amber energy minimization |
+| `use_gpu_relax` | Use GPU for relaxation (faster) |
+
+**Why relax?**
+- Fixes minor clashes and bad geometry
+- Makes structures more physically realistic
+- Important for downstream applications (docking, MD)
+
+---
+
+## AlphaFold2 Extensions
+
+### AlphaFold-Multimer
+
+Predicting protein complexes (multiple chains interacting):
+
+**Key modifications:**
+- Cross-chain MSA pairing for evolutionary signal
+- Losses account for chain permutation symmetry
+- Interface-aware training
+
+```python
+# In your FASTA file, separate chains with ":"
+>complex
+SEQUENCEOFCHAINA:SEQUENCEOFCHAINB
+```
+
+### AlphaFold Database
+
+DeepMind released predictions for **200+ million proteins**—essentially all of UniProt.
+
+- **Access:** [alphafold.ebi.ac.uk](https://alphafold.ebi.ac.uk)
+- **Coverage:** Human proteome + 47 other key organisms
+- **Use case:** Check if your protein has already been predicted!
+
+### AF-Cluster
+
+**Idea:** Proteins can have multiple conformations. Can we bias AlphaFold2 toward different states?
+
+**Approach:**
+- Cluster the MSA into subgroups
+- Run predictions with different MSA subsets
+- Different clusters may yield different conformational states
+
+**Reference:** Wayment-Steele et al. (2022)
+
+### AFsample
+
+**Idea:** Generate diverse predictions through sampling.
+
+**Approach:**
+- Enable dropout during inference
+- Increase recycling
+- Generate multiple diverse predictions
+
+This is useful for understanding conformational flexibility and uncertainty.
+
+### Automated Workflows
+
+Tools like **EvoPro** and **BindCraft** use AlphaFold2 as part of larger design pipelines:
+
+- Generate candidate designs
+- Predict structures with AF2
+- Score and filter based on confidence
+- Iterate to improve designs
+
+---
+
+## Understanding the Output
+
+### pLDDT: Per-Residue Confidence
+
+pLDDT (predicted Local Distance Difference Test) ranges from 0-100:
+
+| pLDDT | Interpretation | What to do |
+|-------|---------------|------------|
+| >90 | Very high confidence | Trust the local structure |
+| 70-90 | Confident | Generally reliable |
+| 50-70 | Low confidence | Treat with caution |
+| <50 | Very low confidence | Likely disordered or wrong |
+
+::: {.callout-tip}
+## Low pLDDT ≠ Wrong
+Low pLDDT regions often correspond to:
+- **Intrinsically disordered regions** (genuinely unstructured)
+- **Flexible loops** (multiple conformations possible)
+- **Crystal contacts** (structure depends on environment)
+
+Low confidence is information, not failure!
+:::
+
+### pTM and ipTM: Global Confidence
+
+- **pTM** (predicted TM-score): Overall structure confidence (0-1)
+- **ipTM** (interface pTM): Confidence in interface prediction (for multimers)
+
+| Score | Interpretation |
+|-------|---------------|
+| >0.8 | High confidence |
+| 0.5-0.8 | Moderate confidence |
+| <0.5 | Low confidence |
+
+### PAE: Predicted Aligned Error
+
+The PAE matrix shows confidence in **relative positions** between residue pairs.
+
+**Reading PAE plots:**
+- **Blue/low values**: Confident in relative position
+- **Red/high values**: Uncertain about relative position
+- **Diagonal blocks**: Domains (confident within, uncertain between)
+
+**PAE is crucial for:**
+- Identifying domain boundaries
+- Assessing multimer interface confidence
+- Understanding which parts of the structure are well-determined relative to each other
+
+---
+
+## Practical Considerations
+
+### When to Use AlphaFold2
+
+**Best for:**
+- Proteins with many homologs in databases
+- Monomers and stable complexes
+- When accuracy is paramount
+
+**Less suitable for:**
+- Designed/synthetic proteins (few homologs)
+- Highly dynamic proteins
+- When speed is critical (use ESMFold instead)
+
+### Resource Requirements
+
+| Resource | Minimum | Recommended |
+|----------|---------|-------------|
+| GPU RAM | 16 GB | 40+ GB (A100) |
+| CPU RAM | 32 GB | 64 GB |
+| Disk | 15 GB | 100+ GB (with databases) |
+
+### Tips for Better Predictions
+
+1. **Check the AlphaFold Database first**—your protein may already be predicted
+2. **Use all 5 models** for important predictions
+3. **Examine pLDDT and PAE**—don't just look at the structure
+4. **Consider multiple conformations** for flexible proteins
+5. **Validate experimentally** for high-stakes applications
+
+---
+
+## Hands-On Exercise
+
+### Part 1: Run ColabFold Prediction
+
+**Goal:** Generate your first AlphaFold2 prediction.
+
+We'll predict the structure of Green Fluorescent Protein (GFP) using ColabFold.
+
+**1. Prepare your sequence:**
+
+Create a file called `gfp.fasta`:
+```
+>GFP
+MSKGEELFTGVVPILVELDGDVNGHKFSVSGEGEGDATYGKLTLKFICTTGKLPVPWPTLVTTFSYGVQCFSRYPDHMKQHDFFKSAMPEGYVQERTIFFKDDGNYKTRAEVKFEGDTLVNRIELKGIDFKEDGNILGHKLEYNYNSHNVYIMADKQKNGIKVNFKIRHNIEDGSVQLADHYQQNTPIGDGPVLLPDNHYLSTQSALSKDPNEKRDHMVLLEFVTAAGITHGMDELYK
+```
+
+You can also download this file: [1GFL.fasta](files/1GFL.fasta)
+
+**2. Run prediction:**
+
+If using LocalColabFold on your HPC:
+```bash
+colabfold_batch gfp.fasta gfp_output/
+```
+
+If using the ColabFold notebook:
+- Go to [ColabFold](https://colab.research.google.com/github/sokrypton/ColabFold/blob/main/AlphaFold2.ipynb)
+- Paste your sequence
+- Run all cells
+
+**3. Expected output:**
+- `gfp_relaxed_rank_001_*.pdb` - Best predicted structure
+- `gfp_scores_rank_001_*.json` - Confidence scores
+- `gfp_coverage.png` - MSA coverage
+- `gfp_pae.png` - PAE heatmap
+
+**Expected runtime:** 5-15 minutes depending on your hardware.
+
+### Part 2: Analyze Your Prediction
+
+**1. Load the structure in PyMOL:**
+```python
+load gfp_output/gfp_relaxed_rank_001_alphafold2_ptm_model_1_seed_000.pdb, af2_gfp
+```
+
+**2. Color by confidence (pLDDT):**
+```python
+spectrum b, blue_white_red, minimum=50, maximum=100
+```
+
+**3. Questions to answer:**
+- What is the overall pLDDT? (Check the JSON file or PyMOL's B-factor range)
+- Which regions have high confidence? Low confidence?
+- Does GFP have any disordered regions?
+
+**4. Compare to experimental structure:**
+```python
+fetch 1GFL
+align af2_gfp, 1GFL
+```
+
+- What is the RMSD between prediction and experiment?
+- Do the structures overlay well?
+
+### Part 3: Explore the PAE
+
+**1. Open `gfp_pae.png`**
+
+**2. Interpret the plot:**
+- Is there one block (single domain) or multiple blocks?
+- Are there any high-PAE (red) regions?
+- What does this tell you about the structure?
+
+### Part 4: Experiment with Parameters
+
+Try running predictions with different settings:
+
+**Experiment 1: Fewer recycles**
+```bash
+colabfold_batch --num-recycle 1 gfp.fasta gfp_1recycle/
+```
+Compare to the default (3 recycles). Is there a difference in quality?
+
+**Experiment 2: Single sequence (no MSA)**
+```bash
+colabfold_batch --msa-mode single_sequence gfp.fasta gfp_single_seq/
+```
+This mimics what ESMFold does. How does quality compare?
+
+**Experiment 3: All 5 models**
+```bash
+colabfold_batch --num-models 5 gfp.fasta gfp_all_models/
+```
+Do the different models agree? What's the variance in pLDDT?
+
+### Part 5: Multimer Prediction (Optional)
+
+If you have time, try predicting a protein complex:
+
+**1. Create a multimer FASTA:**
+```
+>homodimer
+MSKGEELFTGVVPILVELDGDVNGHKFSVSGEGEGDATYGKLTLKFICTTGKLPVPWPTLVTTFSYGVQCFSRYPDHMKQHDFFKSAMPEGYVQERTIFFKDDGNYKTRAEVKFEGDTLVNRIELKGIDFKEDGNILGHKLEYNYNSHNVYIMADKQKNGIKVNFKIRHNIEDGSVQLADHYQQNTPIGDGPVLLPDNHYLSTQSALSKDPNEKRDHMVLLEFVTAAGITHGMDELYK:MSKGEELFTGVVPILVELDGDVNGHKFSVSGEGEGDATYGKLTLKFICTTGKLPVPWPTLVTTFSYGVQCFSRYPDHMKQHDFFKSAMPEGYVQERTIFFKDDGNYKTRAEVKFEGDTLVNRIELKGIDFKEDGNILGHKLEYNYNSHNVYIMADKQKNGIKVNFKIRHNIEDGSVQLADHYQQNTPIGDGPVLLPDNHYLSTQSALSKDPNEKRDHMVLLEFVTAAGITHGMDELYK
+```
+(Note: The `:` separates chains)
+
+**2. Run prediction:**
+```bash
+colabfold_batch homodimer.fasta homodimer_output/
+```
+
+**3. Analyze:**
+- What is the ipTM score?
+- Does the interface look reasonable?
+- Check PAE for interface confidence (off-diagonal blocks)
+
+### Questions to Consider
+
+1. How does prediction time scale with sequence length?
+2. Why might some regions have low pLDDT even in a well-folded protein?
+3. When would you trust a prediction enough to use it for experimental planning?
+4. What would you do if AlphaFold2 and ESMFold give different predictions?
+
+### Record Your Results
+
+Fill in this table with your observations:
+
+| Metric | Your GFP Prediction |
+|--------|---------------------|
+| Average pLDDT | |
+| pTM score | |
+| RMSD to 1GFL | |
+| Prediction time | |
+| MSA depth | |
+| Regions with pLDDT < 70 | |
