@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>0. PyMOL Visualization – ML Protein Design Bootcamp 2025</title>
+<title>0. PyMOL and Visual Studio Code – ML Protein Design Bootcamp 2025</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -19,6 +19,41 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -149,7 +184,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../tuesday/0-pymol.html">0. PyMOL Visualization</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../tuesday/0-pymol.html">0. PyMOL and Visual Studio Code</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -170,21 +205,21 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../tuesday/0-pymol.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">0. PyMOL Visualization</span></a>
+ <span class="menu-text">0. PyMOL and Visual Studio Code</span></a>
   </div>
 </li>
         <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../tuesday/1-alphafold2.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">1-alphafold2.html</span></a>
-  </div>
-</li>
+ <span class="menu-text">tuesday/1-alphafold2.qmd</span>
+  </li>
         <li class="sidebar-item">
  <span class="menu-text">tuesday/2-alphafold3.qmd</span>
   </li>
         <li class="sidebar-item">
- <span class="menu-text">tuesday/3-esmfold.qmd</span>
-  </li>
+  <div class="sidebar-item-container"> 
+  <a href="../tuesday/3-esmfold.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3. ESMFold vs.&nbsp;AlphaFold2</span></a>
+  </div>
+</li>
     </ul>
     </div>
 </nav>
@@ -195,10 +230,38 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#resources" id="toc-resources" class="nav-link active" data-scroll-target="#resources">Resources</a></li>
-  <li><a href="#instructions" id="toc-instructions" class="nav-link" data-scroll-target="#instructions">Instructions</a>
+  <li><a href="#slides" id="toc-slides" class="nav-link active" data-scroll-target="#slides">Slides</a></li>
+  <li><a href="#part-1-pymol---molecular-visualization" id="toc-part-1-pymol---molecular-visualization" class="nav-link" data-scroll-target="#part-1-pymol---molecular-visualization">Part 1: PyMOL - Molecular Visualization</a>
   <ul class="collapse">
-  <li><a href="#using-the-aesthetic-script" id="toc-using-the-aesthetic-script" class="nav-link" data-scroll-target="#using-the-aesthetic-script">Using the Aesthetic Script</a></li>
+  <li><a href="#what-is-pymol" id="toc-what-is-pymol" class="nav-link" data-scroll-target="#what-is-pymol">What is PyMOL?</a></li>
+  <li><a href="#why-pymol-matters-for-aiml-protein-work" id="toc-why-pymol-matters-for-aiml-protein-work" class="nav-link" data-scroll-target="#why-pymol-matters-for-aiml-protein-work">Why PyMOL Matters for AI/ML Protein Work</a></li>
+  <li><a href="#navigation-and-views" id="toc-navigation-and-views" class="nav-link" data-scroll-target="#navigation-and-views">Navigation and Views</a></li>
+  <li><a href="#interactive-selections" id="toc-interactive-selections" class="nav-link" data-scroll-target="#interactive-selections">Interactive Selections</a></li>
+  <li><a href="#representations-show-as" id="toc-representations-show-as" class="nav-link" data-scroll-target="#representations-show-as">Representations (“Show As”)</a></li>
+  <li><a href="#sequence-and-structure-connection" id="toc-sequence-and-structure-connection" class="nav-link" data-scroll-target="#sequence-and-structure-connection">Sequence and Structure Connection</a></li>
+  <li><a href="#the-wizard-menu" id="toc-the-wizard-menu" class="nav-link" data-scroll-target="#the-wizard-menu">The Wizard Menu</a></li>
+  <li><a href="#creating-publication-quality-figures" id="toc-creating-publication-quality-figures" class="nav-link" data-scroll-target="#creating-publication-quality-figures">Creating Publication-Quality Figures</a></li>
+  <li><a href="#useful-commands-reference" id="toc-useful-commands-reference" class="nav-link" data-scroll-target="#useful-commands-reference">Useful Commands Reference</a></li>
+  <li><a href="#resources" id="toc-resources" class="nav-link" data-scroll-target="#resources">Resources</a></li>
+  </ul></li>
+  <li><a href="#part-2-visual-studio-code" id="toc-part-2-visual-studio-code" class="nav-link" data-scroll-target="#part-2-visual-studio-code">Part 2: Visual Studio Code</a>
+  <ul class="collapse">
+  <li><a href="#why-vscode" id="toc-why-vscode" class="nav-link" data-scroll-target="#why-vscode">Why VSCode?</a></li>
+  <li><a href="#getting-started" id="toc-getting-started" class="nav-link" data-scroll-target="#getting-started">Getting Started</a></li>
+  <li><a href="#ssh-into-hpc-clusters" id="toc-ssh-into-hpc-clusters" class="nav-link" data-scroll-target="#ssh-into-hpc-clusters">SSH into HPC Clusters</a></li>
+  <li><a href="#viewing-proteins-remotely-with-mol" id="toc-viewing-proteins-remotely-with-mol" class="nav-link" data-scroll-target="#viewing-proteins-remotely-with-mol">Viewing Proteins Remotely with Mol*</a></li>
+  <li><a href="#jupyter-notebooks-in-vscode" id="toc-jupyter-notebooks-in-vscode" class="nav-link" data-scroll-target="#jupyter-notebooks-in-vscode">Jupyter Notebooks in VSCode</a></li>
+  <li><a href="#useful-extensions" id="toc-useful-extensions" class="nav-link" data-scroll-target="#useful-extensions">Useful Extensions</a></li>
+  <li><a href="#tips-for-remote-work" id="toc-tips-for-remote-work" class="nav-link" data-scroll-target="#tips-for-remote-work">Tips for Remote Work</a></li>
+  </ul></li>
+  <li><a href="#hands-on-exercise" id="toc-hands-on-exercise" class="nav-link" data-scroll-target="#hands-on-exercise">Hands-On Exercise</a>
+  <ul class="collapse">
+  <li><a href="#part-1-pymol-basics" id="toc-part-1-pymol-basics" class="nav-link" data-scroll-target="#part-1-pymol-basics">Part 1: PyMOL Basics</a></li>
+  <li><a href="#part-2-measurements-and-analysis" id="toc-part-2-measurements-and-analysis" class="nav-link" data-scroll-target="#part-2-measurements-and-analysis">Part 2: Measurements and Analysis</a></li>
+  <li><a href="#part-3-create-a-publication-figure" id="toc-part-3-create-a-publication-figure" class="nav-link" data-scroll-target="#part-3-create-a-publication-figure">Part 3: Create a Publication Figure</a></li>
+  <li><a href="#part-4-try-the-aesthetic-script-optional" id="toc-part-4-try-the-aesthetic-script-optional" class="nav-link" data-scroll-target="#part-4-try-the-aesthetic-script-optional">Part 4: Try the Aesthetic Script (Optional)</a></li>
+  <li><a href="#questions-to-consider" id="toc-questions-to-consider" class="nav-link" data-scroll-target="#questions-to-consider">Questions to Consider</a></li>
+  <li><a href="#vscode-setup-exercise" id="toc-vscode-setup-exercise" class="nav-link" data-scroll-target="#vscode-setup-exercise">VSCode Setup Exercise</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -208,7 +271,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">0. PyMOL Visualization</h1>
+<h1 class="title">0. PyMOL and Visual Studio Code</h1>
 </div>
 
 
@@ -225,30 +288,533 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>This activity covers the basics of protein structure visualization using PyMOL.</p>
-<section id="resources" class="level2">
-<h2 class="anchored" data-anchor-id="resources">Resources</h2>
+<p>This module introduces two essential tools for computational structural biology: <strong>PyMOL</strong> for molecular visualization and <strong>Visual Studio Code (VSCode)</strong> for code development and remote computing.</p>
+<section id="slides" class="level2">
+<h2 class="anchored" data-anchor-id="slides">Slides</h2>
+<iframe src="https://docs.google.com/presentation/d/18z-44xvzmgudaZLI-MRByvY3qHvsPVK5/embed?start=false&amp;loop=false&amp;delayms=3000" frameborder="0" width="100%" height="500" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+<hr>
+</section>
+<section id="part-1-pymol---molecular-visualization" class="level2">
+<h2 class="anchored" data-anchor-id="part-1-pymol---molecular-visualization">Part 1: PyMOL - Molecular Visualization</h2>
+<section id="what-is-pymol" class="level3">
+<h3 class="anchored" data-anchor-id="what-is-pymol">What is PyMOL?</h3>
+<p>PyMOL is the industry-standard molecular visualization software used by structural biologists, computational chemists, and protein engineers worldwide. It’s built on Python under the hood, which means:</p>
+<ul>
+<li><strong>Commands are Python-based</strong>: You can script complex visualization workflows</li>
+<li><strong>Extensible</strong>: The PyMOL library allows you to add custom functionality</li>
+<li><strong>Reproducible</strong>: Scripts ensure your figures can be regenerated exactly</li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Installation Options
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><strong>Download from</strong>: <a href="https://pymol.org">pymol.org</a></li>
+<li><strong>Conda installation</strong>: <code>conda install -c schrodinger -c conda-forge pymol</code></li>
+</ul>
+<p>The Conda installation is recommended for integration with Python workflows.</p>
+</div>
+</div>
+</section>
+<section id="why-pymol-matters-for-aiml-protein-work" class="level3">
+<h3 class="anchored" data-anchor-id="why-pymol-matters-for-aiml-protein-work">Why PyMOL Matters for AI/ML Protein Work</h3>
+<p>In the context of this bootcamp, PyMOL serves several critical functions:</p>
+<ol type="1">
+<li><strong>Diagnosing AI predictions</strong>: When AlphaFold2, ESMFold, or other tools generate structures, you need to visually assess whether the predictions are reasonable</li>
+<li><strong>Evaluating designs</strong>: Tools like RFdiffusion and LigandMPNN produce protein designs—PyMOL lets you inspect binding pockets, interfaces, and overall fold quality</li>
+<li><strong>Experimental planning</strong>: Before doing mutagenesis or other experiments, you can examine hydrogen bond networks, identify key residues, and plan mutations <em>in silico</em></li>
+<li><strong>Publication figures</strong>: High-quality structure figures are essential for papers and presentations</li>
+</ol>
+</section>
+<section id="navigation-and-views" class="level3">
+<h3 class="anchored" data-anchor-id="navigation-and-views">Navigation and Views</h3>
+<p>PyMOL’s interface has several key components you’ll use constantly:</p>
+<p><strong>Mouse Controls:</strong></p>
+<ul>
+<li><strong>Left-click + drag</strong>: Rotate the molecule</li>
+<li><strong>Middle-click + drag</strong>: Translate (move) the molecule</li>
+<li><strong>Right-click + drag</strong>: Zoom in/out</li>
+<li><strong>Scroll wheel</strong>: Also zooms</li>
+</ul>
+<p><strong>The Object Panel (right side):</strong> Every loaded structure appears here with five buttons: - <strong>A</strong> (Action): Hide, show, delete, rename objects - <strong>S</strong> (Show): Display as cartoon, sticks, surface, etc. - <strong>H</strong> (Hide): Hide specific representations - <strong>L</strong> (Label): Add text labels to atoms/residues - <strong>C</strong> (Color): Change colors</p>
+</section>
+<section id="interactive-selections" class="level3">
+<h3 class="anchored" data-anchor-id="interactive-selections">Interactive Selections</h3>
+<p>One of PyMOL’s most powerful features is its selection system. You can select atoms, residues, chains, or entire objects using:</p>
+<p><strong>Click selections:</strong> - Click on any atom to select it - Shift+click to add to selection - Ctrl+click to remove from selection</p>
+<p><strong>Selection algebra</strong> (in the command line):</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Select chain A</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>select chainA, chain A</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Select residues 50-100</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>select loop, resi <span class="dv">50</span><span class="op">-</span><span class="dv">100</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Select all alpha carbons</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>select cas, name CA</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Select residues within 5 Angstroms of a ligand</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>select binding_site, byres <span class="bu">all</span> within <span class="dv">5</span> of organic</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="representations-show-as" class="level3">
+<h3 class="anchored" data-anchor-id="representations-show-as">Representations (“Show As”)</h3>
+<p>Different representations reveal different aspects of structure:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Representation</th>
+<th>Best For</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Cartoon</strong></td>
+<td>Overall fold, secondary structure</td>
+</tr>
+<tr class="even">
+<td><strong>Sticks</strong></td>
+<td>Active sites, ligand interactions</td>
+</tr>
+<tr class="odd">
+<td><strong>Surface</strong></td>
+<td>Binding pockets, electrostatics</td>
+</tr>
+<tr class="even">
+<td><strong>Spheres</strong></td>
+<td>Space-filling, VDW radii</td>
+</tr>
+<tr class="odd">
+<td><strong>Lines</strong></td>
+<td>Quick overview, large structures</td>
+</tr>
+<tr class="even">
+<td><strong>Ribbon</strong></td>
+<td>Simplified backbone trace</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example workflow:</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load a structure</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>fetch <span class="dv">1</span><span class="er">GFL</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Show cartoon for overall structure</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>show cartoon</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Show sticks for the chromophore</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>select chromophore, resn CRO</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>show sticks, chromophore</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Hide everything else as sticks</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>hide sticks, <span class="kw">not</span> chromophore</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="sequence-and-structure-connection" class="level3">
+<h3 class="anchored" data-anchor-id="sequence-and-structure-connection">Sequence and Structure Connection</h3>
+<p>PyMOL shows the sequence along the bottom of the window. This is incredibly useful because:</p>
+<ul>
+<li><strong>Click on sequence</strong>: Highlights that residue in the 3D view</li>
+<li><strong>Drag across sequence</strong>: Selects a range of residues</li>
+<li><strong>Colored by secondary structure</strong>: Helices, sheets, and loops are color-coded</li>
+</ul>
+<p>This sequence-structure connection is essential when you’re comparing a predicted structure to what you know about the protein’s function.</p>
+</section>
+<section id="the-wizard-menu" class="level3">
+<h3 class="anchored" data-anchor-id="the-wizard-menu">The Wizard Menu</h3>
+<p>PyMOL’s “Wizard” feature provides interactive tools for measurements:</p>
+<p><strong>Measurement Wizard:</strong> - <strong>Distances</strong>: Click two atoms to measure bond lengths or non-bonded distances - <strong>Angles</strong>: Click three atoms to measure bond angles - <strong>Dihedrals</strong>: Click four atoms to measure torsion angles (critical for Ramachandran analysis)</p>
+<p>To access: <code>Wizard → Measurement</code> from the menu bar.</p>
+<p><strong>Mutagenesis Wizard:</strong> - Interactively mutate residues - See rotamer options for the new residue - Useful for quick “what if” experiments</p>
+<p>To access: <code>Wizard → Mutagenesis</code></p>
+</section>
+<section id="creating-publication-quality-figures" class="level3">
+<h3 class="anchored" data-anchor-id="creating-publication-quality-figures">Creating Publication-Quality Figures</h3>
+<p>PyMOL excels at creating beautiful figures. Key settings to know:</p>
+<p><strong>Coloring options:</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Color by chain</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>util.cbc  <span class="co"># Color by chain (automatic)</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Color by secondary structure</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>color red, ss h    <span class="co"># Helices red</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>color yellow, ss s <span class="co"># Sheets yellow</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>color green, ss l<span class="op">+</span> <span class="co"># Loops green</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Rainbow coloring (N-terminus to C-terminus)</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>spectrum count, rainbow</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Color by B-factor (temperature or pLDDT)</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>spectrum b, blue_white_red, minimum<span class="op">=</span><span class="dv">50</span>, maximum<span class="op">=</span><span class="dv">100</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Transparency for depth:</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Make cartoon semi-transparent</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="bu">set</span> cartoon_transparency, <span class="fl">0.5</span>, object_name</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Pro tip: Set most of structure to 0.85 transparency,</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co"># then set region of interest to 0 for highlighting</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="bu">set</span> cartoon_transparency, <span class="fl">0.85</span>, <span class="bu">all</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="bu">set</span> cartoon_transparency, <span class="dv">0</span>, active_site</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Saving figures:</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set background to white (for publications)</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>bg_color white</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Ray-trace for high quality</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>ray <span class="dv">2400</span>, <span class="dv">2400</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Save as PNG</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>png my_figure.png, dpi<span class="op">=</span><span class="dv">300</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="useful-commands-reference" class="level3">
+<h3 class="anchored" data-anchor-id="useful-commands-reference">Useful Commands Reference</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Command</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>fetch XXXX</code></td>
+<td>Download structure from PDB</td>
+</tr>
+<tr class="even">
+<td><code>load file.pdb</code></td>
+<td>Load local file</td>
+</tr>
+<tr class="odd">
+<td><code>align obj1, obj2</code></td>
+<td>Superimpose structures</td>
+</tr>
+<tr class="even">
+<td><code>rms_cur obj1, obj2</code></td>
+<td>Calculate RMSD</td>
+</tr>
+<tr class="odd">
+<td><code>center selection</code></td>
+<td>Center view on selection</td>
+</tr>
+<tr class="even">
+<td><code>zoom selection</code></td>
+<td>Zoom to fit selection</td>
+</tr>
+<tr class="odd">
+<td><code>orient</code></td>
+<td>Reset to default orientation</td>
+</tr>
+<tr class="even">
+<td><code>set grid_mode, 1</code></td>
+<td>View multiple objects side-by-side</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>More PyMOL Resources
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><strong>PyMOL Wiki</strong>: <a href="https://pymolwiki.org">pymolwiki.org</a> - Comprehensive command reference</li>
+<li><strong>Tutorial PDF</strong>: <a href="https://graylab.jhu.edu/pyrosetta/downloads/documentation/pyrosetta4_online_format/PyRosetta4_Workshop1_PyMOL.pdf">PyRosetta Workshop PyMOL Tutorial</a></li>
+</ul>
+</div>
+</div>
+</section>
+<section id="resources" class="level3">
+<h3 class="anchored" data-anchor-id="resources">Resources</h3>
 <ul>
 <li><a href="files/PyMOL.pdf"><strong>PyMOL Tutorial Slides (PDF)</strong></a></li>
-<li><a href="files/aesthetic.py"><strong>Aesthetic Script (Python)</strong></a> - Script to recreate RFdiffusion figure aesthetics.</li>
+<li><a href="files/aesthetic.py"><strong>Aesthetic Script (Python)</strong></a> - Script to recreate RFdiffusion-style figure aesthetics</li>
+</ul>
+<p><strong>Using the Aesthetic Script:</strong></p>
+<ol type="1">
+<li>Download <code>aesthetic.py</code></li>
+<li>In PyMOL: <strong>File → Run Script…</strong> and select the file</li>
+<li>Or from command line: <code>run /path/to/aesthetic.py</code></li>
+<li>New commands available: <code>get_colors</code> and <code>get_lighting</code></li>
+</ol>
+<hr>
+</section>
+</section>
+<section id="part-2-visual-studio-code" class="level2">
+<h2 class="anchored" data-anchor-id="part-2-visual-studio-code">Part 2: Visual Studio Code</h2>
+<section id="why-vscode" class="level3">
+<h3 class="anchored" data-anchor-id="why-vscode">Why VSCode?</h3>
+<p>Visual Studio Code is one of the most popular IDEs (Integrated Development Environments) for coding, and it’s particularly powerful for computational biology work because:</p>
+<ul>
+<li><strong>Remote development</strong>: SSH directly into HPC clusters and edit code as if it were local</li>
+<li><strong>Extensions</strong>: Thousands of extensions for Python, Jupyter, Git, and more</li>
+<li><strong>Customizable</strong>: Tailor the interface to your workflow</li>
+<li><strong>Free</strong>: Open source and cross-platform</li>
 </ul>
 </section>
-<section id="instructions" class="level2">
-<h2 class="anchored" data-anchor-id="instructions">Instructions</h2>
+<section id="getting-started" class="level3">
+<h3 class="anchored" data-anchor-id="getting-started">Getting Started</h3>
+<p><strong>Download</strong>: <a href="https://code.visualstudio.com">code.visualstudio.com</a></p>
+<p>After installation, the interface has several key areas:</p>
 <ol type="1">
-<li>Download and install PyMOL (or use the version on your cluster/classroom computers).</li>
-<li>Follow the tutorial slides to learn about navigation, representation, and coloring.</li>
-<li>Use the <code>aesthetic.py</code> script to apply custom styling to your structures.</li>
+<li><strong>Explorer</strong> (left sidebar): File browser</li>
+<li><strong>Editor</strong> (center): Where you write code</li>
+<li><strong>Terminal</strong> (bottom): Integrated command line</li>
+<li><strong>Extensions</strong> (left sidebar icon): Install add-ons</li>
+<li><strong>Source Control</strong> (left sidebar): Git integration</li>
 </ol>
-<section id="using-the-aesthetic-script" class="level3">
-<h3 class="anchored" data-anchor-id="using-the-aesthetic-script">Using the Aesthetic Script</h3>
-<p>To use the provided script in PyMOL:</p>
+<p>Learn more: <a href="https://code.visualstudio.com/docs/introvideos/basics">VSCode Introductory Videos</a></p>
+</section>
+<section id="ssh-into-hpc-clusters" class="level3">
+<h3 class="anchored" data-anchor-id="ssh-into-hpc-clusters">SSH into HPC Clusters</h3>
+<p>This is perhaps the most valuable feature for our bootcamp. Instead of editing files on the cluster with vim/nano, you can:</p>
 <ol type="1">
-<li>Download <code>aesthetic.py</code>.</li>
-<li>In PyMOL, go to <strong>File -&gt; Run Script…</strong> and select the file.</li>
-<li>Or run it from the PyMOL command line: <code>bash     run /path/to/aesthetic.py</code></li>
-<li>This will load new commands <code>get_colors</code> and <code>get_lighting</code> which you can use to beautify your protein renders.</li>
+<li>Connect VSCode to your HPC account</li>
+<li>Browse files graphically</li>
+<li>Edit with full IDE features (syntax highlighting, autocomplete, etc.)</li>
+<li>Run terminals on the cluster</li>
 </ol>
+<p><strong>Setup Steps:</strong></p>
+<ol type="1">
+<li>Install the <strong>Remote - SSH</strong> extension in VSCode</li>
+<li>Click the green <code>&gt;&lt;</code> icon in the bottom-left corner</li>
+<li>Select “Connect to Host…” → “Add New SSH Host…”</li>
+<li>Enter your SSH command: <code>username@cluster.university.edu</code></li>
+<li>Follow prompts to authenticate</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>SSH Configuration
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>For easier connections, add your cluster to <code>~/.ssh/config</code>:</p>
+<pre><code>Host mycluster
+    HostName cluster.university.edu
+    User yourusername
+    IdentityFile ~/.ssh/id_rsa</code></pre>
+<p>Then you can just connect to “mycluster” in VSCode.</p>
+</div>
+</div>
+<p><strong>Guides:</strong></p>
+<ul>
+<li><a href="https://code.visualstudio.com/docs/remote/ssh-tutorial">VSCode SSH Tutorial</a></li>
+<li><a href="https://code.visualstudio.com/docs/remote/ssh">VSCode Remote SSH Documentation</a></li>
+</ul>
+</section>
+<section id="viewing-proteins-remotely-with-mol" class="level3">
+<h3 class="anchored" data-anchor-id="viewing-proteins-remotely-with-mol">Viewing Proteins Remotely with Mol*</h3>
+<p>When working on an HPC cluster, you often want to view protein structures without downloading them to your local machine. VSCode has a <strong>Mol*</strong> extension that provides an interactive 3D protein viewer.</p>
+<p><strong>Setup:</strong></p>
+<ol type="1">
+<li>Install the Mol* extension in VSCode</li>
+<li>Right-click any <code>.pdb</code> file → “Open with Mol*”</li>
+</ol>
+<p><strong>Features:</strong></p>
+<ul>
+<li>Color by chain, secondary structure, hydrophobicity, B-factor</li>
+<li>Calculate RMSD between structures</li>
+<li>Measure distances and angles</li>
+<li>Toggle between chains/models</li>
+<li>Create snapshots and animations</li>
+</ul>
+<p><strong>Documentation</strong>: <a href="https://molstar.org/viewer-docs/">Mol* Viewer Docs</a></p>
+</section>
+<section id="jupyter-notebooks-in-vscode" class="level3">
+<h3 class="anchored" data-anchor-id="jupyter-notebooks-in-vscode">Jupyter Notebooks in VSCode</h3>
+<p>Jupyter notebooks (<code>.ipynb</code> files) are excellent for:</p>
+<ul>
+<li><strong>Exploratory analysis</strong>: Test code in small chunks</li>
+<li><strong>Data visualization</strong>: Plot results inline</li>
+<li><strong>Documentation</strong>: Mix code with markdown explanations</li>
+<li><strong>Sharing</strong>: Notebooks show both code and output</li>
+</ul>
+<p><strong>VSCode + Jupyter:</strong></p>
+<ol type="1">
+<li>Install the Jupyter extension</li>
+<li>Create a new notebook: <code>code -r filename.ipynb</code></li>
+<li>Select a Python kernel (your conda environment)</li>
+<li>Run cells with Shift+Enter</li>
+</ol>
+<p>This works even when SSH’d into a cluster—you can run Jupyter notebooks on HPC GPUs through VSCode!</p>
+<p><strong>Documentation</strong>: <a href="https://docs.jupyter.org/en/latest/">Jupyter.org Docs</a></p>
+</section>
+<section id="useful-extensions" class="level3">
+<h3 class="anchored" data-anchor-id="useful-extensions">Useful Extensions</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Extension</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Remote - SSH</strong></td>
+<td>Connect to HPC clusters</td>
+</tr>
+<tr class="even">
+<td><strong>Python</strong></td>
+<td>Python language support</td>
+</tr>
+<tr class="odd">
+<td><strong>Jupyter</strong></td>
+<td>Notebook support</td>
+</tr>
+<tr class="even">
+<td><strong>Mol</strong>*</td>
+<td>Protein structure viewer</td>
+</tr>
+<tr class="odd">
+<td><strong>autoDocstring</strong></td>
+<td>Generate docstrings automatically</td>
+</tr>
+<tr class="even">
+<td><strong>GitLens</strong></td>
+<td>Enhanced Git integration</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="tips-for-remote-work" class="level3">
+<h3 class="anchored" data-anchor-id="tips-for-remote-work">Tips for Remote Work</h3>
+<p><strong>Tmux</strong> - Terminal Multiplexer:</p>
+<p>When running long jobs on a cluster, <code>tmux</code> lets you: - Detach from a session and reconnect later - Keep processes running even if your connection drops - Split your terminal into multiple panes</p>
+<p>Learn more: <a href="https://www.redhat.com/en/blog/introduction-tmux-linux">Introduction to Tmux</a></p>
+<p><strong>Basic tmux workflow:</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Start a new session</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="ex">tmux</span> new <span class="at">-s</span> mysession</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Detach (Ctrl+b, then d)</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co"># List sessions</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="ex">tmux</span> ls</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Reattach</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="ex">tmux</span> attach <span class="at">-t</span> mysession</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<hr>
+</section>
+</section>
+<section id="hands-on-exercise" class="level2">
+<h2 class="anchored" data-anchor-id="hands-on-exercise">Hands-On Exercise</h2>
+<section id="part-1-pymol-basics" class="level3">
+<h3 class="anchored" data-anchor-id="part-1-pymol-basics">Part 1: PyMOL Basics</h3>
+<p><strong>Goal:</strong> Get comfortable with PyMOL navigation and basic commands.</p>
+<ol type="1">
+<li><p><strong>Download and install PyMOL</strong> (or use the version on your cluster/classroom computers)</p></li>
+<li><p><strong>Load your first structure:</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>fetch <span class="dv">1</span><span class="er">GFL</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This downloads Green Fluorescent Protein (GFP) directly from the PDB.</p></li>
+<li><p><strong>Practice navigation:</strong></p>
+<ul>
+<li>Rotate the structure (left-click drag)</li>
+<li>Zoom in and out (scroll wheel or right-click drag)</li>
+<li>Translate/pan (middle-click drag)</li>
+<li>Try <code>orient</code> to reset the view</li>
+</ul></li>
+<li><p><strong>Explore representations:</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Try each of these:</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>show cartoon</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>show sticks</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>show surface</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>show spheres</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Reset to just cartoon</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>hide everything</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>show cartoon</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
+<li><p><strong>Work with selections:</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Select the chromophore (the part that glows!)</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>select chromophore, resn CRO</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Show it as sticks</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>show sticks, chromophore</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Color it differently</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>color yellow, chromophore</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
+<li><p><strong>Color by B-factor (confidence in predicted structures):</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>spectrum b, blue_white_red, minimum<span class="op">=</span><span class="dv">0</span>, maximum<span class="op">=</span><span class="dv">100</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
+</ol>
+</section>
+<section id="part-2-measurements-and-analysis" class="level3">
+<h3 class="anchored" data-anchor-id="part-2-measurements-and-analysis">Part 2: Measurements and Analysis</h3>
+<ol type="1">
+<li><p><strong>Use the Measurement Wizard:</strong></p>
+<ul>
+<li>Go to <code>Wizard → Measurement</code></li>
+<li>Click on two atoms to measure their distance</li>
+<li>Try measuring a hydrogen bond (should be ~2.8-3.2 Å)</li>
+</ul></li>
+<li><p><strong>Calculate RMSD between objects:</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fetch another GFP structure</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>fetch <span class="dv">1</span><span class="er">EMA</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Align them</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>align <span class="dv">1</span><span class="er">EMA</span>, <span class="dv">1</span><span class="er">GFL</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="co"># The RMSD will be printed in the console</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
+</ol>
+</section>
+<section id="part-3-create-a-publication-figure" class="level3">
+<h3 class="anchored" data-anchor-id="part-3-create-a-publication-figure">Part 3: Create a Publication Figure</h3>
+<ol type="1">
+<li><p><strong>Set up for a nice figure:</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># White background</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>bg_color white</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Show cartoon representation</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>hide everything</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>show cartoon</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Color by chain</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>util.cbc</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Or try rainbow coloring</span></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>spectrum count, rainbow</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
+<li><p><strong>Highlight the chromophore:</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>show sticks, chromophore</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>color yellow, chromophore</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
+<li><p><strong>Ray-trace and save:</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>ray <span class="dv">1200</span>, <span class="dv">1200</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>png my_first_pymol_figure.png, dpi<span class="op">=</span><span class="dv">300</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
+</ol>
+</section>
+<section id="part-4-try-the-aesthetic-script-optional" class="level3">
+<h3 class="anchored" data-anchor-id="part-4-try-the-aesthetic-script-optional">Part 4: Try the Aesthetic Script (Optional)</h3>
+<p>If you have time, use the provided <code>aesthetic.py</code> script:</p>
+<ol type="1">
+<li>Download <a href="files/aesthetic.py">aesthetic.py</a></li>
+<li>In PyMOL: <code>run /path/to/aesthetic.py</code></li>
+<li>Try the new commands: <code>get_colors</code> and <code>get_lighting</code></li>
+<li>Create a publication-quality render in the RFdiffusion style!</li>
+</ol>
+</section>
+<section id="questions-to-consider" class="level3">
+<h3 class="anchored" data-anchor-id="questions-to-consider">Questions to Consider</h3>
+<ol type="1">
+<li>What does the GFP chromophore look like? How is it positioned within the protein?</li>
+<li>When you colored by B-factor, which regions had high vs.&nbsp;low values? What might this mean?</li>
+<li>How similar were the two GFP structures (1GFL and 1EMA)? What was the RMSD?</li>
+<li>Why is it useful to show both cartoon (overall structure) and sticks (specific residues) simultaneously?</li>
+</ol>
+<hr>
+</section>
+<section id="vscode-setup-exercise" class="level3">
+<h3 class="anchored" data-anchor-id="vscode-setup-exercise">VSCode Setup Exercise</h3>
+<p>If you have access to an HPC cluster:</p>
+<ol type="1">
+<li><strong>Install the Remote-SSH extension</strong> in VSCode</li>
+<li><strong>Connect to your cluster</strong> using the steps described above</li>
+<li><strong>Navigate to your home directory</strong> and create a test file</li>
+<li><strong>Open a terminal</strong> within VSCode (Terminal → New Terminal)</li>
+<li><strong>Verify you can run commands</strong> on the cluster through VSCode</li>
+</ol>
+<p>This setup will be essential for running AlphaFold2 and other prediction tools in the upcoming exercises!</p>
 
 
 </section>
