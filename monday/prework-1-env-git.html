@@ -311,27 +311,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul>
   <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">Overview</a></li>
-  <li><a href="#about-autograding" id="toc-about-autograding" class="nav-link" data-scroll-target="#about-autograding">About Autograding</a></li>
-  <li><a href="#prerequisites" id="toc-prerequisites" class="nav-link" data-scroll-target="#prerequisites">Prerequisites</a>
-  <ul class="collapse">
-  <li><a href="#windows-users-install-wsl-windows-subsystem-for-linux" id="toc-windows-users-install-wsl-windows-subsystem-for-linux" class="nav-link" data-scroll-target="#windows-users-install-wsl-windows-subsystem-for-linux">Windows Users: Install WSL (Windows Subsystem for Linux)</a></li>
-  <li><a href="#github-account" id="toc-github-account" class="nav-link" data-scroll-target="#github-account">GitHub Account</a></li>
-  <li><a href="#git-installation" id="toc-git-installation" class="nav-link" data-scroll-target="#git-installation">Git Installation</a></li>
-  <li><a href="#github-cli-recommended" id="toc-github-cli-recommended" class="nav-link" data-scroll-target="#github-cli-recommended">GitHub CLI (Recommended)</a></li>
-  <li><a href="#basic-command-line-familiarity" id="toc-basic-command-line-familiarity" class="nav-link" data-scroll-target="#basic-command-line-familiarity">Basic Command Line Familiarity</a></li>
-  </ul></li>
   <li><a href="#instructions" id="toc-instructions" class="nav-link" data-scroll-target="#instructions">Instructions</a>
   <ul class="collapse">
   <li><a href="#step-1-install-anaconda-or-alternative" id="toc-step-1-install-anaconda-or-alternative" class="nav-link" data-scroll-target="#step-1-install-anaconda-or-alternative">Step 1: Install Anaconda (or Alternative)</a></li>
-  <li><a href="#step-2-clone-your-github-classroom-repository" id="toc-step-2-clone-your-github-classroom-repository" class="nav-link" data-scroll-target="#step-2-clone-your-github-classroom-repository">Step 2: Clone Your GitHub Classroom Repository</a></li>
+  <li><a href="#step-2-create-your-working-directory" id="toc-step-2-create-your-working-directory" class="nav-link" data-scroll-target="#step-2-create-your-working-directory">Step 2: Create Your Working Directory</a></li>
   <li><a href="#step-3-create-the-conda-environment" id="toc-step-3-create-the-conda-environment" class="nav-link" data-scroll-target="#step-3-create-the-conda-environment">Step 3: Create the Conda Environment</a></li>
   <li><a href="#step-4-activate-the-environment" id="toc-step-4-activate-the-environment" class="nav-link" data-scroll-target="#step-4-activate-the-environment">Step 4: Activate the Environment</a></li>
   <li><a href="#step-5-run-the-verification-script" id="toc-step-5-run-the-verification-script" class="nav-link" data-scroll-target="#step-5-run-the-verification-script">Step 5: Run the Verification Script</a></li>
-  <li><a href="#step-6-update-the-verification-file" id="toc-step-6-update-the-verification-file" class="nav-link" data-scroll-target="#step-6-update-the-verification-file">Step 6: Update the Verification File</a></li>
-  <li><a href="#step-7-commit-and-push-your-verification" id="toc-step-7-commit-and-push-your-verification" class="nav-link" data-scroll-target="#step-7-commit-and-push-your-verification">Step 7: Commit and Push Your Verification</a></li>
-  <li><a href="#step-8-verify-your-submission" id="toc-step-8-verify-your-submission" class="nav-link" data-scroll-target="#step-8-verify-your-submission">Step 8: Verify Your Submission</a></li>
+  <li><a href="#step-6-verify-your-setup" id="toc-step-6-verify-your-setup" class="nav-link" data-scroll-target="#step-6-verify-your-setup">Step 6: Verify Your Setup</a></li>
   </ul></li>
-  <li><a href="#submission" id="toc-submission" class="nav-link" data-scroll-target="#submission">Submission</a></li>
   <li><a href="#troubleshooting" id="toc-troubleshooting" class="nav-link" data-scroll-target="#troubleshooting">Troubleshooting</a>
   <ul class="collapse">
   <li><a href="#pyrosetta-installation-issues" id="toc-pyrosetta-installation-issues" class="nav-link" data-scroll-target="#pyrosetta-installation-issues">PyRosetta Installation Issues</a></li>
@@ -375,135 +363,64 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Commit and push your verification results to GitHub</li>
 </ol>
 </section>
-<section id="about-autograding" class="level2">
-<h2 class="anchored" data-anchor-id="about-autograding">About Autograding</h2>
-<p><strong>Note:</strong> This assignment has automated tests that run when you push your code. You’ll see a score out of 100 points. <strong>These points are just for feedback</strong> - they help you know if you’ve completed everything correctly. This is a bootcamp focused on learning, not grades!</p>
-</section>
-<section id="prerequisites" class="level2">
-<h2 class="anchored" data-anchor-id="prerequisites">Prerequisites</h2>
-<section id="windows-users-install-wsl-windows-subsystem-for-linux" class="level3">
-<h3 class="anchored" data-anchor-id="windows-users-install-wsl-windows-subsystem-for-linux">Windows Users: Install WSL (Windows Subsystem for Linux)</h3>
-<p><strong>IMPORTANT for Windows Users:</strong> This bootcamp requires PyRosetta, which only runs on Unix-based systems (Linux/Mac). Windows users <strong>must</strong> use Windows Subsystem for Linux (WSL) to complete this assignment.</p>
-<p><strong>Install WSL:</strong></p>
-<ol type="1">
-<li><p>Open PowerShell or Windows Command Prompt as Administrator (right-click and “Run as administrator”)</p></li>
-<li><p>Install WSL with Ubuntu:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>wsl <span class="op">--</span>install</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
-<li><p>Restart your computer when prompted</p></li>
-<li><p>After restart, Ubuntu will automatically open and ask you to create a username and password. Remember these credentials!</p></li>
-<li><p>Update your WSL installation:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt update <span class="kw">&amp;&amp;</span> <span class="fu">sudo</span> apt upgrade <span class="at">-y</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
-</ol>
-<p><strong>Using WSL:</strong> - Launch Ubuntu from your Start menu, or type <code>wsl</code> in PowerShell/Command Prompt - All commands in this assignment should be run in the WSL Ubuntu terminal - Your Windows files are accessible at <code>/mnt/c/</code> (C: drive), <code>/mnt/d/</code> (D: drive), etc. - We recommend working in your Linux home directory: <code>cd ~</code></p>
-<p>For more detailed WSL documentation, see: https://learn.microsoft.com/en-us/windows/wsl/install</p>
-</section>
-<section id="github-account" class="level3">
-<h3 class="anchored" data-anchor-id="github-account">GitHub Account</h3>
-<p>If you don’t have a GitHub account yet, create one at: https://github.com/signup</p>
-</section>
-<section id="git-installation" class="level3">
-<h3 class="anchored" data-anchor-id="git-installation">Git Installation</h3>
-<p><strong>Mac Users:</strong> Install Xcode Command Line Tools, which includes git:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">xcode-select</span> <span class="at">--install</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>This will open a dialog to install the command line developer tools. Once installed, you’ll have git available.</p>
-<p><strong>Windows Users (in WSL):</strong> Git should be pre-installed in WSL Ubuntu. If not, install it with:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install git</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><strong>Linux Users:</strong> Download and install git from: https://git-scm.com/downloads Or use your distribution’s package manager (e.g., <code>sudo apt install git</code> for Ubuntu/Debian)</p>
-<p>Verify git is installed by running:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> <span class="at">--version</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-<section id="github-cli-recommended" class="level3">
-<h3 class="anchored" data-anchor-id="github-cli-recommended">GitHub CLI (Recommended)</h3>
-<p>We recommend installing the GitHub CLI for easier GitHub integration: - Installation instructions: https://cli.github.com/ - After installing, authenticate with: <code>gh auth login</code></p>
-</section>
-<section id="basic-command-line-familiarity" class="level3">
-<h3 class="anchored" data-anchor-id="basic-command-line-familiarity">Basic Command Line Familiarity</h3>
-<p>You should be comfortable navigating directories and running commands in a terminal.</p>
-<p>Here is a popular GitHub and command line tutorial video: https://www.youtube.com/watch?v=HVsySz-h9r4</p>
-</section>
-</section>
 <section id="instructions" class="level2">
 <h2 class="anchored" data-anchor-id="instructions">Instructions</h2>
 <section id="step-1-install-anaconda-or-alternative" class="level3">
 <h3 class="anchored" data-anchor-id="step-1-install-anaconda-or-alternative">Step 1: Install Anaconda (or Alternative)</h3>
 <p><strong>Note:</strong> If you already have Miniconda, Miniforge, Mambaforge, or Mamba installed, you can use those instead - they all work with this assignment!</p>
 <p><strong>Option 1: Download Anaconda (Mac/Windows/Linux)</strong></p>
-<p>For Mac/Windows, download and install from: https://www.anaconda.com/download</p>
+<p>For Mac/Windows, download and install from: <a href="https://www.anaconda.com/download">https://www.anaconda.com/download</a></p>
 <p>For Windows users in WSL, use the Linux installer:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Download the Linux installer in WSL</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">wget</span> https://repo.anaconda.com/archive/Anaconda3-2024.10-1-Linux-x86_64.sh</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Run the installer</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> Anaconda3-2024.10-1-Linux-x86_64.sh</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Follow the prompts and accept the license</span></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="co"># When asked to initialize conda, type 'yes'</span></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Restart your terminal or run:</span></span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> ~/.bashrc</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Download the Linux installer in WSL</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">wget</span> https://repo.anaconda.com/archive/Anaconda3-2024.10-1-Linux-x86_64.sh</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Run the installer</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> Anaconda3-2024.10-1-Linux-x86_64.sh</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Follow the prompts and accept the license</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># When asked to initialize conda, type 'yes'</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Restart your terminal or run:</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> ~/.bashrc</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>Option 2: Install via Homebrew (Mac users only)</strong> If you have Homebrew installed:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">brew</span> install <span class="at">--cask</span> anaconda</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">brew</span> install <span class="at">--cask</span> anaconda</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Then add conda to your PATH (follow the instructions shown after installation).</p>
 <p>Verify installation by running:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> <span class="at">--version</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> <span class="at">--version</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="step-2-clone-your-github-classroom-repository" class="level3">
-<h3 class="anchored" data-anchor-id="step-2-clone-your-github-classroom-repository">Step 2: Clone Your GitHub Classroom Repository</h3>
-<p>When you accepted the GitHub Classroom assignment, a repository was created specifically for you. You need to clone this repository to your computer.</p>
-<p><strong>Finding your repository URL:</strong> 1. After accepting the assignment, you should see a link to your repository 2. Go to your repository on GitHub 3. Click the green “Code” button 4. Copy the repository URL (HTTPS or SSH)</p>
-<p><strong>Clone the repository:</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Replace YOUR_REPO_URL with your actual repository URL</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone YOUR_REPO_URL</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Navigate into the cloned directory</span></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co"># (The directory name will match your repository name)</span></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> HW1-setup-verification-YOUR_USERNAME</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><strong>Note:</strong> Your repository URL will be unique to you and will look something like: - HTTPS: <code>https://github.com/YOUR_ORGANIZATION/HW1-setup-verification-YOUR_USERNAME.git</code> - SSH: <code>git@github.com:YOUR_ORGANIZATION/HW1-setup-verification-YOUR_USERNAME.git</code></p>
+<section id="step-2-create-your-working-directory" class="level3">
+<h3 class="anchored" data-anchor-id="step-2-create-your-working-directory">Step 2: Create Your Working Directory</h3>
+<p>Since this is a self-guided bootcamp, you’ll need a place to organize your files.</p>
+<ol type="1">
+<li>Create a new folder for the bootcamp (e.g., <code>RosettaBootcamp2025</code>).</li>
+<li>Inside that folder, create a subfolder for this module (e.g., <code>HW1-setup</code>).</li>
+<li>Download the <code>environment.yml</code> and <code>verify_setup.py</code> files provided in the course materials (or create them manually if needed).</li>
+</ol>
 </section>
 <section id="step-3-create-the-conda-environment" class="level3">
 <h3 class="anchored" data-anchor-id="step-3-create-the-conda-environment">Step 3: Create the Conda Environment</h3>
-<p>Now that you’re in the repository directory (which contains this README and the environment.yml file), run:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> env create <span class="at">-f</span> environment.yml</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Navigate to your working directory in your terminal and run:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> env create <span class="at">-f</span> environment.yml</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>This will create an environment named <code>bootcamp2025_HW1</code> with all required packages: - Python 3.11 - PyRosetta (for protein structure manipulation - channels configured in environment.yml) - NumPy (numerical computing) - Pandas (data analysis) - Matplotlib &amp; Seaborn (visualization) - Jupyter (interactive notebooks) - SciPy (scientific computing) - scikit-learn (machine learning) - Biopython (bioinformatics tools)</p>
-<p><strong>Note:</strong> The environment.yml file includes the RosettaCommons conda channel, so you don’t need to configure it manually.</p>
+<p><strong>Note:</strong> The <code>environment.yml</code> file includes the RosettaCommons conda channel, so you don’t need to configure it manually.</p>
 </section>
 <section id="step-4-activate-the-environment" class="level3">
 <h3 class="anchored" data-anchor-id="step-4-activate-the-environment">Step 4: Activate the Environment</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> activate bootcamp2025_HW1</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> activate bootcamp2025_HW1</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>You should see <code>(bootcamp2025_HW1)</code> in your terminal prompt.</p>
 </section>
 <section id="step-5-run-the-verification-script" class="level3">
 <h3 class="anchored" data-anchor-id="step-5-run-the-verification-script">Step 5: Run the Verification Script</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> verify_setup.py</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> verify_setup.py</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>This script will: - Check that all required packages are installed - Display version information for each package - Generate a <code>verification_result.json</code> file</p>
 <p>If all checks pass, you should see:</p>
 <pre><code>🎉 SUCCESS! All packages are installed correctly!</code></pre>
 <p>If some checks fail, the script will provide guidance on what went wrong.</p>
 </section>
-<section id="step-6-update-the-verification-file" class="level3">
-<h3 class="anchored" data-anchor-id="step-6-update-the-verification-file">Step 6: Update the Verification File</h3>
-<p>Open <code>verification_result.json</code> in a text editor and replace <code>"REPLACE_WITH_YOUR_NAME"</code> with your actual name.</p>
+<section id="step-6-verify-your-setup" class="level3">
+<h3 class="anchored" data-anchor-id="step-6-verify-your-setup">Step 6: Verify Your Setup</h3>
+<p>Open the generated <code>verification_result.json</code> file to confirm that <code>verification_passed</code> is set to <code>true</code>. This confirms your environment is ready for the rest of the bootcamp!</p>
 </section>
-<section id="step-7-commit-and-push-your-verification" class="level3">
-<h3 class="anchored" data-anchor-id="step-7-commit-and-push-your-verification">Step 7: Commit and Push Your Verification</h3>
-<p>Now that you have your verification file, commit and push it to your GitHub Classroom repository:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Add the verification file</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add verification_result.json</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Create your commit</span></span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"Add environment verification"</span></span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Push to GitHub</span></span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-<section id="step-8-verify-your-submission" class="level3">
-<h3 class="anchored" data-anchor-id="step-8-verify-your-submission">Step 8: Verify Your Submission</h3>
-<p>Go to your GitHub repository (the one created when you accepted the assignment) and verify that: - The <code>verification_result.json</code> file is present - It contains your name (not “REPLACE_WITH_YOUR_NAME”) - The <code>verification_passed</code> field is <code>true</code></p>
-</section>
-</section>
-<section id="submission" class="level2">
-<h2 class="anchored" data-anchor-id="submission">Submission</h2>
-<p>Your work is automatically submitted when you push to your GitHub Classroom repository. The instructor will be able to see your verification file and check that all requirements are met.</p>
 </section>
 <section id="troubleshooting" class="level2">
 <h2 class="anchored" data-anchor-id="troubleshooting">Troubleshooting</h2>
