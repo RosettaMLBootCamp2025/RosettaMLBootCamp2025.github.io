@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Pre-work 3: Python Refresher – ML Protein Design Bootcamp 2025</title>
+<title>6. OpenFold (Optional) – ML Protein Design Bootcamp 2025</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -184,7 +184,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../monday/prework-3-python.html">Pre-work 3: Python Refresher</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../monday/6-openfold.html">6. OpenFold (Optional)</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -217,7 +217,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../monday/prework-3-python.html" class="sidebar-item-text sidebar-link active">
+  <a href="../monday/prework-3-python.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Pre-work 3: Python Refresher</span></a>
   </div>
 </li>
@@ -253,7 +253,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../monday/6-openfold.html" class="sidebar-item-text sidebar-link">
+  <a href="../monday/6-openfold.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">6. OpenFold (Optional)</span></a>
   </div>
 </li>
@@ -310,19 +310,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">Overview</a></li>
-  <li><a href="#prerequisites" id="toc-prerequisites" class="nav-link" data-scroll-target="#prerequisites">Prerequisites</a></li>
-  <li><a href="#download-assignment-files" id="toc-download-assignment-files" class="nav-link" data-scroll-target="#download-assignment-files">Download Assignment Files</a></li>
-  <li><a href="#how-to-complete-this-assignment" id="toc-how-to-complete-this-assignment" class="nav-link" data-scroll-target="#how-to-complete-this-assignment">How to Complete This Assignment</a>
-  <ul class="collapse">
-  <li><a href="#part-1-python-basics-warmup-basics.py" id="toc-part-1-python-basics-warmup-basics.py" class="nav-link" data-scroll-target="#part-1-python-basics-warmup-basics.py">Part 1: Python Basics Warmup (basics.py)</a></li>
-  <li><a href="#part-2-sequence-utilities-sequence_utils.py" id="toc-part-2-sequence-utilities-sequence_utils.py" class="nav-link" data-scroll-target="#part-2-sequence-utilities-sequence_utils.py">Part 2: Sequence Utilities (sequence_utils.py)</a></li>
-  <li><a href="#part-3-fasta-file-parsing-read_fasta.py" id="toc-part-3-fasta-file-parsing-read_fasta.py" class="nav-link" data-scroll-target="#part-3-fasta-file-parsing-read_fasta.py">Part 3: FASTA File Parsing (read_fasta.py)</a></li>
-  <li><a href="#part-4-sequence-analysis-tool-analyze_sequence.py" id="toc-part-4-sequence-analysis-tool-analyze_sequence.py" class="nav-link" data-scroll-target="#part-4-sequence-analysis-tool-analyze_sequence.py">Part 4: Sequence Analysis Tool (analyze_sequence.py)</a></li>
-  </ul></li>
-  <li><a href="#tips" id="toc-tips" class="nav-link" data-scroll-target="#tips">Tips</a></li>
-  <li><a href="#expected-output" id="toc-expected-output" class="nav-link" data-scroll-target="#expected-output">Expected Output</a></li>
-  <li><a href="#questions-and-getting-help" id="toc-questions-and-getting-help" class="nav-link" data-scroll-target="#questions-and-getting-help">Questions and Getting Help</a></li>
+  <li><a href="#why-use-openfold" id="toc-why-use-openfold" class="nav-link active" data-scroll-target="#why-use-openfold">Why Use OpenFold?</a></li>
+  <li><a href="#resource-requirements" id="toc-resource-requirements" class="nav-link" data-scroll-target="#resource-requirements">Resource Requirements</a></li>
+  <li><a href="#preparation" id="toc-preparation" class="nav-link" data-scroll-target="#preparation">Preparation</a></li>
+  <li><a href="#installation" id="toc-installation" class="nav-link" data-scroll-target="#installation">Installation</a></li>
+  <li><a href="#testing-the-installation" id="toc-testing-the-installation" class="nav-link" data-scroll-target="#testing-the-installation">Testing the Installation</a></li>
+  <li><a href="#hpc-job-script" id="toc-hpc-job-script" class="nav-link" data-scroll-target="#hpc-job-script">HPC Job Script</a></li>
+  <li><a href="#usage-examples" id="toc-usage-examples" class="nav-link" data-scroll-target="#usage-examples">Usage Examples</a></li>
+  <li><a href="#model-presets" id="toc-model-presets" class="nav-link" data-scroll-target="#model-presets">Model Presets</a></li>
+  <li><a href="#understanding-the-output" id="toc-understanding-the-output" class="nav-link" data-scroll-target="#understanding-the-output">Understanding the Output</a></li>
+  <li><a href="#database-requirements" id="toc-database-requirements" class="nav-link" data-scroll-target="#database-requirements">Database Requirements</a></li>
+  <li><a href="#troubleshooting" id="toc-troubleshooting" class="nav-link" data-scroll-target="#troubleshooting">Troubleshooting</a></li>
+  <li><a href="#for-researchers-training" id="toc-for-researchers-training" class="nav-link" data-scroll-target="#for-researchers-training">For Researchers: Training</a></li>
   </ul>
 </nav>
     </div>
@@ -331,7 +330,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Pre-work 3: Python Refresher</h1>
+<h1 class="title">6. OpenFold (Optional)</h1>
 </div>
 
 
@@ -348,93 +347,305 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="overview" class="level2">
-<h2 class="anchored" data-anchor-id="overview">Overview</h2>
-<p>This assignment is designed as a Python refresher for biologists and bioinformaticians who may be a bit rusty. You’ll complete a series of small exercises that build up to creating a simple sequence analysis tool. This assignment should take approximately 30-45 minutes to complete.</p>
-<p><strong>IMPORTANT:</strong> Each Python file contains function templates with <code>TODO</code> comments. Your job is to fill in the missing code where you see <code># TODO:</code> comments. The scripts won’t work until you complete the TODO sections!</p>
-</section>
-<section id="prerequisites" class="level2">
-<h2 class="anchored" data-anchor-id="prerequisites">Prerequisites</h2>
+<p>OpenFold (<a href="https://www.biorxiv.org/content/10.1101/2022.11.20.517210v1">paper</a>, <a href="https://github.com/aqlaboratory/openfold">code</a>) is a faithful, trainable PyTorch reproduction of DeepMind’s AlphaFold2. It achieves performance comparable to AlphaFold2 and provides a fully open-source implementation for protein structure prediction.</p>
+<section id="why-use-openfold" class="level2">
+<h2 class="anchored" data-anchor-id="why-use-openfold">Why Use OpenFold?</h2>
 <ul>
-<li>HW1 completed (Python environment set up)</li>
+<li><strong>Full transparency</strong>: Open-source model architecture and training code</li>
+<li><strong>Trainable</strong>: Can be fine-tuned or retrained on custom data</li>
+<li><strong>Research-friendly</strong>: Ideal for understanding how structure prediction works</li>
+<li><strong>MSA-based accuracy</strong>: Uses evolutionary information for high-accuracy predictions</li>
 </ul>
+<p><strong>Related Tools</strong>: For faster predictions without MSAs, see <a href="../monday/5-esmfold.html">ESMFold</a>. For a more user-friendly MSA-based option, see <a href="../monday/2-localcolabfold.html">LocalColabFold</a>.</p>
 </section>
-<section id="download-assignment-files" class="level2">
-<h2 class="anchored" data-anchor-id="download-assignment-files">Download Assignment Files</h2>
-<p><a href="files/python-refresher.zip" class="btn btn-primary" download=""> <i class="bi bi-download"></i> Download Assignment Files (ZIP) </a></p>
+<section id="resource-requirements" class="level2">
+<h2 class="anchored" data-anchor-id="resource-requirements">Resource Requirements</h2>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Resource</th>
+<th>Minimum</th>
+<th>Recommended</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>GPU RAM</td>
+<td>16 GB</td>
+<td>40+ GB</td>
+<td>A100 for large proteins</td>
+</tr>
+<tr class="even">
+<td>CPU RAM</td>
+<td>32 GB</td>
+<td>64+ GB</td>
+<td>MSA generation is memory-intensive</td>
+</tr>
+<tr class="odd">
+<td>Disk Space</td>
+<td>500 GB</td>
+<td>2+ TB</td>
+<td>Sequence databases are large</td>
+</tr>
+<tr class="even">
+<td>CUDA</td>
+<td>11.3+</td>
+<td>12.1+</td>
+<td>Required for compilation</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Note</strong>: OpenFold requires significant disk space for sequence databases if generating MSAs locally. Check if your HPC already has AlphaFold/OpenFold databases installed.</p>
+</section>
+<section id="preparation" class="level2">
+<h2 class="anchored" data-anchor-id="preparation">Preparation</h2>
+<p><input type="checkbox" class="module-checkbox" data-module-id="openfold-prep"> Mark as complete</p>
+<p><strong>Prerequisites</strong>:</p>
+<ul>
+<li>Completed <a href="../monday/1-hpc-setup.html">HPC Setup</a> guide</li>
+<li>Conda/Mamba installed</li>
+<li><code>nvcc</code> available for CUDA compilation</li>
+<li>Significant disk space (or access to shared databases)</li>
+</ul>
+<p><strong>Check for existing databases</strong>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ask your HPC admins or check common locations</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> /shared/databases/alphafold/</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> /shared/databases/openfold/</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Many HPCs have pre-installed AlphaFold databases that OpenFold can use.</p>
+</section>
+<section id="installation" class="level2">
+<h2 class="anchored" data-anchor-id="installation">Installation</h2>
+<p><input type="checkbox" class="module-checkbox" data-module-id="openfold-install"> Mark as complete</p>
+<p><strong>Important</strong>: OpenFold installation can be complex. The official documentation at <a href="https://openfold.readthedocs.io/en/latest/">openfold.readthedocs.io</a> has the most current instructions.</p>
 <ol type="1">
-<li>Download the ZIP file above.</li>
-<li>Unzip the folder on your computer.</li>
-<li>Open the folder in VS Code.</li>
+<li>Clone the repository:</li>
 </ol>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/aqlaboratory/openfold.git</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> openfold</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<ol start="2" type="1">
+<li>Create the conda environment:</li>
+</ol>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">mamba</span> env create <span class="at">-f</span> environment.yml</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">mamba</span> activate openfold_venv</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Expected time</strong>: 10-20 minutes for environment creation.</p>
+<ol start="3" type="1">
+<li>Install OpenFold:</li>
+</ol>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install <span class="at">-e</span> .</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<ol start="4" type="1">
+<li>Download model weights:</li>
+</ol>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> scripts/download_openfold_params.sh openfold/resources</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Expected download</strong>: ~1-2 GB of model weights.</p>
+<ol start="5" type="1">
+<li>(Optional) Download sequence databases for MSA generation:</li>
+</ol>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># This downloads ~2TB of data - skip if using HPC shared databases</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> scripts/download_alphafold_dbs.sh /path/to/database/directory</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="how-to-complete-this-assignment" class="level2">
-<h2 class="anchored" data-anchor-id="how-to-complete-this-assignment">How to Complete This Assignment</h2>
-<p>Each Python file is a template with incomplete functions. Look for <code># TODO:</code> comments - these mark where you need to write code. Read the docstrings and hints carefully, then implement the missing functionality.</p>
-<p><strong>The scripts will not work until you complete the TODO sections!</strong></p>
-<section id="part-1-python-basics-warmup-basics.py" class="level3">
-<h3 class="anchored" data-anchor-id="part-1-python-basics-warmup-basics.py">Part 1: Python Basics Warmup (basics.py)</h3>
-<p>Open <code>basics.py</code> and <strong>fill in the TODO sections</strong> for these exercises: - <code>reverse_string()</code> - Write a function to reverse a string - <code>count_characters()</code> - Use a for loop to count characters in a string - <code>amino_acid_composition()</code> - Create a dictionary to calculate amino acid percentages - <code>filter_sequences_by_length()</code> - Use a list comprehension to filter sequences</p>
-<p><strong>To test your work:</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Navigate to the unzipped directory first!</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> path/to/python-refresher</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> activate bootcamp2025_HW1</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> basics.py</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>If you see <code>None</code> or errors, you haven’t completed all the TODOs yet!</p>
-</section>
-<section id="part-2-sequence-utilities-sequence_utils.py" class="level3">
-<h3 class="anchored" data-anchor-id="part-2-sequence-utilities-sequence_utils.py">Part 2: Sequence Utilities (sequence_utils.py)</h3>
-<p>Open <code>sequence_utils.py</code> and <strong>implement the TODO sections</strong> for these bioinformatics functions: - <code>molecular_weight()</code> - Calculate the molecular weight of a protein - <code>count_hydrophobic()</code> - Count hydrophobic amino acids - <code>find_motif()</code> - Find all positions of a motif in a sequence - <code>count_charged_residues()</code> - Count positive and negative charges</p>
-<p><strong>To test your work:</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> sequence_utils.py</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>The test cases at the bottom will only work once you’ve filled in all the TODOs!</p>
-</section>
-<section id="part-3-fasta-file-parsing-read_fasta.py" class="level3">
-<h3 class="anchored" data-anchor-id="part-3-fasta-file-parsing-read_fasta.py">Part 3: FASTA File Parsing (read_fasta.py)</h3>
-<p>Open <code>read_fasta.py</code> and <strong>complete the TODO sections</strong> to: - <code>read_fasta()</code> - Read and parse a FASTA file, storing sequences in a dictionary (header → sequence) - <code>print_fasta_stats()</code> - Print basic statistics about the sequences</p>
-<p><strong>To test your work:</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> read_fasta.py sample.fasta</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>You should see information about each protein sequence. If not, check your TODOs!</p>
-</section>
-<section id="part-4-sequence-analysis-tool-analyze_sequence.py" class="level3">
-<h3 class="anchored" data-anchor-id="part-4-sequence-analysis-tool-analyze_sequence.py">Part 4: Sequence Analysis Tool (analyze_sequence.py)</h3>
-<p>Open <code>analyze_sequence.py</code> and <strong>fill in the TODO sections</strong> to create a complete analysis script: - <code>analyze_sequences()</code> - Use your sequence_utils functions to analyze each protein - <code>write_results()</code> - Write the analysis results to a file</p>
-<p>This part brings together everything from Parts 1-3!</p>
-<p><strong>To run your completed analysis:</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> analyze_sequence.py sample.fasta</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>This should create an <code>analysis_results.txt</code> file with your results. If it doesn’t work, you’re missing some TODOs!</p>
-</section>
-</section>
-<section id="tips" class="level2">
-<h2 class="anchored" data-anchor-id="tips">Tips</h2>
+<section id="testing-the-installation" class="level2">
+<h2 class="anchored" data-anchor-id="testing-the-installation">Testing the Installation</h2>
+<p><input type="checkbox" class="module-checkbox" data-module-id="openfold-test"> Mark as complete</p>
+<p>Create a test FASTA file <code>test.fasta</code>:</p>
+<pre><code>&gt;test_protein
+MKTVRQERLKSIVRILERSKEPVSGAQLAEELSVSRQVIVQDIAYLRSLGYNIVATPRGYVLAGG</code></pre>
+<p>Run a prediction (using pre-computed MSAs or without MSAs for testing):</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> run_pretrained_openfold.py <span class="dt">\</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    test.fasta <span class="dt">\</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    /path/to/database/directory <span class="dt">\</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">--output_dir</span> predictions/ <span class="dt">\</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">--config_preset</span> model_1_ptm <span class="dt">\</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">--model_device</span> cuda:0</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Note</strong>: For testing without databases, you can use <code>--use_precomputed_alignments</code> with a directory containing pre-computed MSA files.</p>
+<p><strong>Success indicators</strong>:</p>
 <ul>
-<li><strong>Test frequently</strong>: Run your code after each function to catch errors early</li>
-<li><strong>Use print statements</strong>: Debug by printing intermediate values</li>
-<li><strong>Read the TODO comments carefully</strong>: They contain hints and requirements</li>
-<li><strong>Don’t worry about edge cases</strong>: Focus on getting the basic functionality working</li>
-<li><strong>Ask for help</strong>: If you’re stuck, reach out!</li>
+<li>Command completes without errors</li>
+<li><code>predictions/</code> directory contains PDB files</li>
+<li>Output includes confidence metrics (pLDDT, pTM)</li>
+</ul>
+<p><strong>Expected runtime</strong>: 5-30 minutes depending on MSA availability and protein size.</p>
+</section>
+<section id="hpc-job-script" class="level2">
+<h2 class="anchored" data-anchor-id="hpc-job-script">HPC Job Script</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/bin/bash</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --job-name=openfold</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --partition=gpu</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --gpus=1</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --cpus-per-task=8</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --mem=64G</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --time=08:00:00</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --output=%x_%j.out</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load cuda/12.1</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="co"># source ~/.bashrc # Source shell profile if needed</span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="ex">mamba</span> activate openfold_venv</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> /path/to/openfold</span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Using HPC shared databases</span></span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a><span class="va">DATABASE_DIR</span><span class="op">=</span>/shared/databases/alphafold</span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> run_pretrained_openfold.py <span class="dt">\</span></span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>    my_protein.fasta <span class="dt">\</span></span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>    <span class="va">$DATABASE_DIR</span> <span class="dt">\</span></span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">--output_dir</span> predictions/ <span class="dt">\</span></span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">--config_preset</span> model_1_ptm <span class="dt">\</span></span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a>    <span class="at">--model_device</span> cuda:0</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="usage-examples" class="level2">
+<h2 class="anchored" data-anchor-id="usage-examples">Usage Examples</h2>
+<p><strong>Basic prediction with local databases</strong>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> run_pretrained_openfold.py <span class="dt">\</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    input.fasta <span class="dt">\</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    /path/to/databases <span class="dt">\</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">--output_dir</span> output/ <span class="dt">\</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">--config_preset</span> model_1_ptm</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Using pre-computed MSAs</strong>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> run_pretrained_openfold.py <span class="dt">\</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    input.fasta <span class="dt">\</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    /path/to/databases <span class="dt">\</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">--use_precomputed_alignments</span> /path/to/msas/ <span class="dt">\</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">--output_dir</span> output/</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Multiple model presets</strong> (ensemble):</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> preset <span class="kw">in</span> model_1_ptm model_2_ptm model_3_ptm<span class="kw">;</span> <span class="cf">do</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    <span class="ex">python</span> run_pretrained_openfold.py <span class="dt">\</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>        input.fasta <span class="dt">\</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>        /path/to/databases <span class="dt">\</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">--config_preset</span> <span class="va">$preset</span> <span class="dt">\</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">--output_dir</span> output_<span class="va">${preset}</span>/</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="cf">done</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="model-presets" class="level2">
+<h2 class="anchored" data-anchor-id="model-presets">Model Presets</h2>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Preset</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>model_1_ptm</code></td>
+<td>Standard model with pTM head</td>
+</tr>
+<tr class="even">
+<td><code>model_2_ptm</code></td>
+<td>Alternative model with pTM</td>
+</tr>
+<tr class="odd">
+<td><code>model_3_ptm</code></td>
+<td>Third model variant</td>
+</tr>
+<tr class="even">
+<td><code>model_1_multimer_v3</code></td>
+<td>For protein complexes</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="understanding-the-output" class="level2">
+<h2 class="anchored" data-anchor-id="understanding-the-output">Understanding the Output</h2>
+<p>Output directory structure:</p>
+<pre><code>predictions/
+├── test_protein_model_1_ptm_unrelaxed.pdb    # Predicted structure
+├── test_protein_model_1_ptm_confidences.json # Confidence scores
+└── test_protein_model_1_ptm_timings.json     # Runtime statistics</code></pre>
+<p><strong>Confidence metrics</strong>:</p>
+<ul>
+<li><strong>pLDDT</strong>: Per-residue confidence (0-100, higher is better)</li>
+<li><strong>pTM</strong>: Predicted TM-score (0-1, &gt;0.8 is confident)</li>
+<li><strong>PAE</strong>: Predicted Aligned Error matrix</li>
 </ul>
 </section>
-<section id="expected-output" class="level2">
-<h2 class="anchored" data-anchor-id="expected-output">Expected Output</h2>
-<p>When you run <code>analyze_sequence.py</code>, you should see output similar to:</p>
-<pre><code>Analyzing sequences from sample.fasta...
-
-Sequence: gene_example_1
-  Length: 120 bp
-  GC Content: 45.83%
-  Reverse Complement: CGATCG...
-
-Results written to analysis_results.txt</code></pre>
+<section id="database-requirements" class="level2">
+<h2 class="anchored" data-anchor-id="database-requirements">Database Requirements</h2>
+<p>If generating MSAs locally, OpenFold needs these databases:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Database</th>
+<th>Size</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>BFD</td>
+<td>~1.7 TB</td>
+<td>Sequence alignments</td>
+</tr>
+<tr class="even">
+<td>MGnify</td>
+<td>~120 GB</td>
+<td>Metagenomic sequences</td>
+</tr>
+<tr class="odd">
+<td>UniRef90</td>
+<td>~100 GB</td>
+<td>Sequence clustering</td>
+</tr>
+<tr class="even">
+<td>UniRef30</td>
+<td>~200 GB</td>
+<td>HHblits templates</td>
+</tr>
+<tr class="odd">
+<td>PDB70</td>
+<td>~60 GB</td>
+<td>Structure templates</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Total</strong>: ~2+ TB</p>
+<p><strong>Check HPC shared databases first</strong> - most research HPCs have these pre-installed.</p>
 </section>
-<section id="questions-and-getting-help" class="level2">
-<h2 class="anchored" data-anchor-id="questions-and-getting-help">Questions and Getting Help</h2>
-<p>We strongly encourage you to use our Slack workspace for questions and collaboration! One of the best ways to learn is by discussing problems with your peers and seeing how others approach challenges.</p>
-<p><strong>Join the Bootcamp Slack channel</strong>: <em>The Slack workspace is currently reserved for in-person bootcamp participants. We apologize for the inconvenience.</em></p>
-<p>In the Slack channel, you can: - Ask questions and get help from fellow students - Share tips and solutions you’ve discovered - Learn from others’ questions and answers - Collaborate on troubleshooting issues</p>
-<p>The TAs and I will be active in the Slack channel to help guide discussions and answer questions. Don’t hesitate to jump in - chances are if you’re stuck on something, others are too!</p>
-<p>If you have questions, please open an issue on the <a href="https://github.com/RosettaMLBootCamp2025/RosettaMLBootCamp2025.github.io/issues">GitHub repository</a> (GitHub account required) instead of emailing directly.</p>
+<section id="troubleshooting" class="level2">
+<h2 class="anchored" data-anchor-id="troubleshooting">Troubleshooting</h2>
+<p><strong>Compilation errors during install</strong>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ensure CUDA toolkit is loaded</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load cuda/12.1</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="ex">nvcc</span> <span class="at">--version</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Clean and retry</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> uninstall openfold</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install <span class="at">-e</span> .</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>“Database not found” errors</strong>:</p>
+<ul>
+<li>Verify database paths exist</li>
+<li>Check HPC documentation for shared database locations</li>
+<li>Contact HPC admins about AlphaFold database availability</li>
+</ul>
+<p><strong>Out of memory</strong>:</p>
+<ul>
+<li>Request more GPU memory</li>
+<li>Reduce <code>--max_recycling_iters</code></li>
+<li>Use gradient checkpointing for training</li>
+</ul>
+<p><strong>Slow MSA generation</strong>:</p>
+<ul>
+<li>MSA generation is CPU-bound and can take hours</li>
+<li>Use pre-computed MSAs when possible</li>
+<li>Consider using ColabFold’s MMseqs2 server instead</li>
+</ul>
+<p><strong>Model weights not found</strong>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Re-download weights</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> scripts/download_openfold_params.sh openfold/resources</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Verify files exist</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> openfold/resources/<span class="pp">*</span>.pt</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="for-researchers-training" class="level2">
+<h2 class="anchored" data-anchor-id="for-researchers-training">For Researchers: Training</h2>
+<p>OpenFold can be retrained or fine-tuned:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> train_openfold.py <span class="dt">\</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>    /path/to/training/data <span class="dt">\</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    /path/to/template_mmcif <span class="dt">\</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    /path/to/output <span class="dt">\</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">--config_preset</span> initial_training</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>See the <a href="https://openfold.readthedocs.io/en/latest/Training.html">training documentation</a> for details.</p>
 
 
 </section>

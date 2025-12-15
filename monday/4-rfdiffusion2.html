@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Pre-work 3: Python Refresher – ML Protein Design Bootcamp 2025</title>
+<title>4. RFdiffusion2 – ML Protein Design Bootcamp 2025</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -184,7 +184,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../monday/prework-3-python.html">Pre-work 3: Python Refresher</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../monday/4-rfdiffusion2.html">4. RFdiffusion2</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -217,7 +217,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../monday/prework-3-python.html" class="sidebar-item-text sidebar-link active">
+  <a href="../monday/prework-3-python.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Pre-work 3: Python Refresher</span></a>
   </div>
 </li>
@@ -241,7 +241,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../monday/4-rfdiffusion2.html" class="sidebar-item-text sidebar-link">
+  <a href="../monday/4-rfdiffusion2.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">4. RFdiffusion2</span></a>
   </div>
 </li>
@@ -310,19 +310,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">Overview</a></li>
-  <li><a href="#prerequisites" id="toc-prerequisites" class="nav-link" data-scroll-target="#prerequisites">Prerequisites</a></li>
-  <li><a href="#download-assignment-files" id="toc-download-assignment-files" class="nav-link" data-scroll-target="#download-assignment-files">Download Assignment Files</a></li>
-  <li><a href="#how-to-complete-this-assignment" id="toc-how-to-complete-this-assignment" class="nav-link" data-scroll-target="#how-to-complete-this-assignment">How to Complete This Assignment</a>
-  <ul class="collapse">
-  <li><a href="#part-1-python-basics-warmup-basics.py" id="toc-part-1-python-basics-warmup-basics.py" class="nav-link" data-scroll-target="#part-1-python-basics-warmup-basics.py">Part 1: Python Basics Warmup (basics.py)</a></li>
-  <li><a href="#part-2-sequence-utilities-sequence_utils.py" id="toc-part-2-sequence-utilities-sequence_utils.py" class="nav-link" data-scroll-target="#part-2-sequence-utilities-sequence_utils.py">Part 2: Sequence Utilities (sequence_utils.py)</a></li>
-  <li><a href="#part-3-fasta-file-parsing-read_fasta.py" id="toc-part-3-fasta-file-parsing-read_fasta.py" class="nav-link" data-scroll-target="#part-3-fasta-file-parsing-read_fasta.py">Part 3: FASTA File Parsing (read_fasta.py)</a></li>
-  <li><a href="#part-4-sequence-analysis-tool-analyze_sequence.py" id="toc-part-4-sequence-analysis-tool-analyze_sequence.py" class="nav-link" data-scroll-target="#part-4-sequence-analysis-tool-analyze_sequence.py">Part 4: Sequence Analysis Tool (analyze_sequence.py)</a></li>
-  </ul></li>
-  <li><a href="#tips" id="toc-tips" class="nav-link" data-scroll-target="#tips">Tips</a></li>
-  <li><a href="#expected-output" id="toc-expected-output" class="nav-link" data-scroll-target="#expected-output">Expected Output</a></li>
-  <li><a href="#questions-and-getting-help" id="toc-questions-and-getting-help" class="nav-link" data-scroll-target="#questions-and-getting-help">Questions and Getting Help</a></li>
+  <li><a href="#why-use-rfdiffusion2" id="toc-why-use-rfdiffusion2" class="nav-link active" data-scroll-target="#why-use-rfdiffusion2">Why Use RFdiffusion2?</a></li>
+  <li><a href="#resource-requirements" id="toc-resource-requirements" class="nav-link" data-scroll-target="#resource-requirements">Resource Requirements</a></li>
+  <li><a href="#preparation" id="toc-preparation" class="nav-link" data-scroll-target="#preparation">Preparation</a></li>
+  <li><a href="#installation" id="toc-installation" class="nav-link" data-scroll-target="#installation">Installation</a></li>
+  <li><a href="#testing-the-installation" id="toc-testing-the-installation" class="nav-link" data-scroll-target="#testing-the-installation">Testing the Installation</a></li>
+  <li><a href="#hpc-job-script" id="toc-hpc-job-script" class="nav-link" data-scroll-target="#hpc-job-script">HPC Job Script</a></li>
+  <li><a href="#usage-examples" id="toc-usage-examples" class="nav-link" data-scroll-target="#usage-examples">Usage Examples</a></li>
+  <li><a href="#docker-to-apptainer-translation" id="toc-docker-to-apptainer-translation" class="nav-link" data-scroll-target="#docker-to-apptainer-translation">Docker to Apptainer Translation</a></li>
+  <li><a href="#understanding-the-output" id="toc-understanding-the-output" class="nav-link" data-scroll-target="#understanding-the-output">Understanding the Output</a></li>
+  <li><a href="#configuration-system" id="toc-configuration-system" class="nav-link" data-scroll-target="#configuration-system">Configuration System</a></li>
+  <li><a href="#troubleshooting" id="toc-troubleshooting" class="nav-link" data-scroll-target="#troubleshooting">Troubleshooting</a></li>
   </ul>
 </nav>
     </div>
@@ -331,7 +329,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Pre-work 3: Python Refresher</h1>
+<h1 class="title">4. RFdiffusion2</h1>
 </div>
 
 
@@ -348,93 +346,263 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="overview" class="level2">
-<h2 class="anchored" data-anchor-id="overview">Overview</h2>
-<p>This assignment is designed as a Python refresher for biologists and bioinformaticians who may be a bit rusty. You’ll complete a series of small exercises that build up to creating a simple sequence analysis tool. This assignment should take approximately 30-45 minutes to complete.</p>
-<p><strong>IMPORTANT:</strong> Each Python file contains function templates with <code>TODO</code> comments. Your job is to fill in the missing code where you see <code># TODO:</code> comments. The scripts won’t work until you complete the TODO sections!</p>
-</section>
-<section id="prerequisites" class="level2">
-<h2 class="anchored" data-anchor-id="prerequisites">Prerequisites</h2>
+<p>RFdiffusion2 (<a href="https://www.biorxiv.org/content/10.1101/2025.04.10.488300v1">paper</a>, <a href="https://github.com/RosettaCommons/RFdiffusion2">code</a>) is a protein design model capable of atom-level active site scaffolding. It extends the original RFdiffusion to enable precise control over protein-ligand interactions at the atomic level.</p>
+<section id="why-use-rfdiffusion2" class="level2">
+<h2 class="anchored" data-anchor-id="why-use-rfdiffusion2">Why Use RFdiffusion2?</h2>
 <ul>
-<li>HW1 completed (Python environment set up)</li>
+<li><strong>Atomic-level control</strong>: Design proteins with precise active site geometries</li>
+<li><strong>Ligand scaffolding</strong>: Build proteins around small molecules with atomic accuracy</li>
+<li><strong>Motif grafting</strong>: Incorporate functional motifs into new scaffolds</li>
+<li><strong>Flexible backbone design</strong>: Generate novel folds with specific functional constraints</li>
 </ul>
+<p><strong>Related Tools</strong>: Use with <a href="../monday/3-ligandmpnn.html">LigandMPNN</a> for sequence design after backbone generation. For the earlier version without atomic control, see <a href="../monday/13-rfdiffusion-aa.html">RFdiffusion All Atom</a> (Optional).</p>
 </section>
-<section id="download-assignment-files" class="level2">
-<h2 class="anchored" data-anchor-id="download-assignment-files">Download Assignment Files</h2>
-<p><a href="files/python-refresher.zip" class="btn btn-primary" download=""> <i class="bi bi-download"></i> Download Assignment Files (ZIP) </a></p>
+<section id="resource-requirements" class="level2">
+<h2 class="anchored" data-anchor-id="resource-requirements">Resource Requirements</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 23%">
+<col style="width: 33%">
+<col style="width: 17%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Resource</th>
+<th>Minimum</th>
+<th>Recommended</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>GPU RAM</td>
+<td>16 GB</td>
+<td>32+ GB</td>
+<td>A100 for larger designs</td>
+</tr>
+<tr class="even">
+<td>CPU RAM</td>
+<td>16 GB</td>
+<td>32 GB</td>
+<td>Container-based execution</td>
+</tr>
+<tr class="odd">
+<td>Disk Space</td>
+<td>10 GB</td>
+<td>20 GB</td>
+<td>Container + weights</td>
+</tr>
+<tr class="even">
+<td>Container</td>
+<td>Apptainer/Singularity</td>
+<td>Required</td>
+<td>No native Docker on HPC</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="preparation" class="level2">
+<h2 class="anchored" data-anchor-id="preparation">Preparation</h2>
+<p><input type="checkbox" class="module-checkbox" data-module-id="rfdiffusion2-prep"> Mark as complete</p>
+<p><strong>Prerequisites</strong>:</p>
+<ul>
+<li>Completed <a href="../monday/1-hpc-setup.html">HPC Setup</a> guide</li>
+<li>Apptainer/Singularity available on your cluster</li>
+<li>CUDA-capable GPU</li>
+</ul>
+<p><strong>Verify your environment</strong>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load apptainer    <span class="co"># or: module load singularity</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">apptainer</span> <span class="at">--version</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">nvidia-smi</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Important</strong>: RFdiffusion2 uses containers. Most academic HPCs do NOT support Docker for security reasons - use Apptainer/Singularity instead.</p>
+</section>
+<section id="installation" class="level2">
+<h2 class="anchored" data-anchor-id="installation">Installation</h2>
+<p><input type="checkbox" class="module-checkbox" data-module-id="rfdiffusion2-install"> Mark as complete</p>
 <ol type="1">
-<li>Download the ZIP file above.</li>
-<li>Unzip the folder on your computer.</li>
-<li>Open the folder in VS Code.</li>
+<li>Clone the repository:</li>
 </ol>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/RosettaCommons/RFdiffusion2.git</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> RFdiffusion2</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<ol start="2" type="1">
+<li>Add the repo to your PYTHONPATH (add to <code>~/.bashrc</code>):</li>
+</ol>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">PYTHONPATH</span><span class="op">=</span><span class="st">"/path/to/your/RFdiffusion2:</span><span class="va">$PYTHONPATH</span><span class="st">"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<ol start="3" type="1">
+<li>Download the model weights and container:</li>
+</ol>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> setup.py</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Expected download</strong>: ~5-10 GB (container + weights). This can take 30+ minutes.</p>
+<p><strong>If download is interrupted</strong>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> setup.py overwrite</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<ol start="4" type="1">
+<li>Verify Apptainer/Singularity is available:</li>
+</ol>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load apptainer</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co"># or: module load singularity</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The downloaded <code>.sif</code> file in <code>rf_diffusion/exec/</code> is the Singularity container.</p>
 </section>
-<section id="how-to-complete-this-assignment" class="level2">
-<h2 class="anchored" data-anchor-id="how-to-complete-this-assignment">How to Complete This Assignment</h2>
-<p>Each Python file is a template with incomplete functions. Look for <code># TODO:</code> comments - these mark where you need to write code. Read the docstrings and hints carefully, then implement the missing functionality.</p>
-<p><strong>The scripts will not work until you complete the TODO sections!</strong></p>
-<section id="part-1-python-basics-warmup-basics.py" class="level3">
-<h3 class="anchored" data-anchor-id="part-1-python-basics-warmup-basics.py">Part 1: Python Basics Warmup (basics.py)</h3>
-<p>Open <code>basics.py</code> and <strong>fill in the TODO sections</strong> for these exercises: - <code>reverse_string()</code> - Write a function to reverse a string - <code>count_characters()</code> - Use a for loop to count characters in a string - <code>amino_acid_composition()</code> - Create a dictionary to calculate amino acid percentages - <code>filter_sequences_by_length()</code> - Use a list comprehension to filter sequences</p>
-<p><strong>To test your work:</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Navigate to the unzipped directory first!</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> path/to/python-refresher</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> activate bootcamp2025_HW1</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> basics.py</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>If you see <code>None</code> or errors, you haven’t completed all the TODOs yet!</p>
-</section>
-<section id="part-2-sequence-utilities-sequence_utils.py" class="level3">
-<h3 class="anchored" data-anchor-id="part-2-sequence-utilities-sequence_utils.py">Part 2: Sequence Utilities (sequence_utils.py)</h3>
-<p>Open <code>sequence_utils.py</code> and <strong>implement the TODO sections</strong> for these bioinformatics functions: - <code>molecular_weight()</code> - Calculate the molecular weight of a protein - <code>count_hydrophobic()</code> - Count hydrophobic amino acids - <code>find_motif()</code> - Find all positions of a motif in a sequence - <code>count_charged_residues()</code> - Count positive and negative charges</p>
-<p><strong>To test your work:</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> sequence_utils.py</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>The test cases at the bottom will only work once you’ve filled in all the TODOs!</p>
-</section>
-<section id="part-3-fasta-file-parsing-read_fasta.py" class="level3">
-<h3 class="anchored" data-anchor-id="part-3-fasta-file-parsing-read_fasta.py">Part 3: FASTA File Parsing (read_fasta.py)</h3>
-<p>Open <code>read_fasta.py</code> and <strong>complete the TODO sections</strong> to: - <code>read_fasta()</code> - Read and parse a FASTA file, storing sequences in a dictionary (header → sequence) - <code>print_fasta_stats()</code> - Print basic statistics about the sequences</p>
-<p><strong>To test your work:</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> read_fasta.py sample.fasta</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>You should see information about each protein sequence. If not, check your TODOs!</p>
-</section>
-<section id="part-4-sequence-analysis-tool-analyze_sequence.py" class="level3">
-<h3 class="anchored" data-anchor-id="part-4-sequence-analysis-tool-analyze_sequence.py">Part 4: Sequence Analysis Tool (analyze_sequence.py)</h3>
-<p>Open <code>analyze_sequence.py</code> and <strong>fill in the TODO sections</strong> to create a complete analysis script: - <code>analyze_sequences()</code> - Use your sequence_utils functions to analyze each protein - <code>write_results()</code> - Write the analysis results to a file</p>
-<p>This part brings together everything from Parts 1-3!</p>
-<p><strong>To run your completed analysis:</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> analyze_sequence.py sample.fasta</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>This should create an <code>analysis_results.txt</code> file with your results. If it doesn’t work, you’re missing some TODOs!</p>
-</section>
-</section>
-<section id="tips" class="level2">
-<h2 class="anchored" data-anchor-id="tips">Tips</h2>
+<section id="testing-the-installation" class="level2">
+<h2 class="anchored" data-anchor-id="testing-the-installation">Testing the Installation</h2>
+<p><input type="checkbox" class="module-checkbox" data-module-id="rfdiffusion2-test"> Mark as complete</p>
+<p>Run a demo case:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">apptainer</span> exec <span class="at">--nv</span> rf_diffusion/exec/bakerlab_rf_diffusion_aa.sif <span class="dt">\</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    rf_diffusion/benchmark/pipeline.py <span class="dt">\</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">--config-name</span><span class="op">=</span>open_source_demo <span class="dt">\</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    sweep.benchmarks=active_site_unindexed_atomic_partial_ligand</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Note</strong>: Omit <code>--nv</code> flag if running without GPU (will be very slow).</p>
+<p><strong>Success indicators</strong>:</p>
 <ul>
-<li><strong>Test frequently</strong>: Run your code after each function to catch errors early</li>
-<li><strong>Use print statements</strong>: Debug by printing intermediate values</li>
-<li><strong>Read the TODO comments carefully</strong>: They contain hints and requirements</li>
-<li><strong>Don’t worry about edge cases</strong>: Focus on getting the basic functionality working</li>
-<li><strong>Ask for help</strong>: If you’re stuck, reach out!</li>
+<li>Command completes without errors</li>
+<li>Output directory created at <code>pipeline_outputs/&lt;timestamp&gt;_open_source_demo/</code></li>
+<li>Contains PDB files with designed structures</li>
 </ul>
+<p><strong>Expected runtime</strong>: 5-15 minutes on GPU, 30+ minutes on CPU.</p>
 </section>
-<section id="expected-output" class="level2">
-<h2 class="anchored" data-anchor-id="expected-output">Expected Output</h2>
-<p>When you run <code>analyze_sequence.py</code>, you should see output similar to:</p>
-<pre><code>Analyzing sequences from sample.fasta...
-
-Sequence: gene_example_1
-  Length: 120 bp
-  GC Content: 45.83%
-  Reverse Complement: CGATCG...
-
-Results written to analysis_results.txt</code></pre>
+<section id="hpc-job-script" class="level2">
+<h2 class="anchored" data-anchor-id="hpc-job-script">HPC Job Script</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/bin/bash</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --job-name=rfdiff2</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --partition=gpu</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --gpus=1</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --cpus-per-task=4</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --mem=32G</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --time=04:00:00</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --output=%x_%j.out</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load apptainer</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load cuda/12.1</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> /path/to/RFdiffusion2</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a><span class="ex">apptainer</span> exec <span class="at">--nv</span> rf_diffusion/exec/bakerlab_rf_diffusion_aa.sif <span class="dt">\</span></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>    rf_diffusion/benchmark/pipeline.py <span class="dt">\</span></span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">--config-name</span><span class="op">=</span>open_source_demo</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="questions-and-getting-help" class="level2">
-<h2 class="anchored" data-anchor-id="questions-and-getting-help">Questions and Getting Help</h2>
-<p>We strongly encourage you to use our Slack workspace for questions and collaboration! One of the best ways to learn is by discussing problems with your peers and seeing how others approach challenges.</p>
-<p><strong>Join the Bootcamp Slack channel</strong>: <em>The Slack workspace is currently reserved for in-person bootcamp participants. We apologize for the inconvenience.</em></p>
-<p>In the Slack channel, you can: - Ask questions and get help from fellow students - Share tips and solutions you’ve discovered - Learn from others’ questions and answers - Collaborate on troubleshooting issues</p>
-<p>The TAs and I will be active in the Slack channel to help guide discussions and answer questions. Don’t hesitate to jump in - chances are if you’re stuck on something, others are too!</p>
-<p>If you have questions, please open an issue on the <a href="https://github.com/RosettaMLBootCamp2025/RosettaMLBootCamp2025.github.io/issues">GitHub repository</a> (GitHub account required) instead of emailing directly.</p>
+<section id="usage-examples" class="level2">
+<h2 class="anchored" data-anchor-id="usage-examples">Usage Examples</h2>
+<p><strong>Basic backbone design</strong>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">apptainer</span> exec <span class="at">--nv</span> rf_diffusion/exec/bakerlab_rf_diffusion_aa.sif <span class="dt">\</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    rf_diffusion/benchmark/pipeline.py <span class="dt">\</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">--config-name</span><span class="op">=</span>my_config</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>With custom output directory</strong>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">apptainer</span> exec <span class="at">--nv</span> rf_diffusion/exec/bakerlab_rf_diffusion_aa.sif <span class="dt">\</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    rf_diffusion/benchmark/pipeline.py <span class="dt">\</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">--config-name</span><span class="op">=</span>open_source_demo <span class="dt">\</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    sweep.output_dir=/path/to/output</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Multiple design benchmarks</strong>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">apptainer</span> exec <span class="at">--nv</span> rf_diffusion/exec/bakerlab_rf_diffusion_aa.sif <span class="dt">\</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    rf_diffusion/benchmark/pipeline.py <span class="dt">\</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">--config-name</span><span class="op">=</span>open_source_demo <span class="dt">\</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    sweep.benchmarks=<span class="st">"[benchmark1,benchmark2]"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="docker-to-apptainer-translation" class="level2">
+<h2 class="anchored" data-anchor-id="docker-to-apptainer-translation">Docker to Apptainer Translation</h2>
+<p>The official documentation may show Docker commands. Here’s how to translate:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Docker Command</th>
+<th>Apptainer Equivalent</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>docker run --gpus all image</code></td>
+<td><code>apptainer exec --nv image.sif</code></td>
+</tr>
+<tr class="even">
+<td><code>docker run -v /path:/path</code></td>
+<td><code>apptainer exec --bind /path:/path</code></td>
+</tr>
+<tr class="odd">
+<td><code>-it</code> (interactive)</td>
+<td><code>apptainer shell --nv</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example conversion</strong>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Docker (won't work on HPC):</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> run <span class="at">--gpus</span> all <span class="at">-v</span> <span class="va">$(</span><span class="bu">pwd</span><span class="va">)</span>:/workspace rfdiffusion:latest python script.py</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Apptainer (works on HPC):</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="ex">apptainer</span> exec <span class="at">--nv</span> <span class="at">--bind</span> <span class="va">$(</span><span class="bu">pwd</span><span class="va">)</span>:/workspace rfdiffusion.sif python script.py</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="understanding-the-output" class="level2">
+<h2 class="anchored" data-anchor-id="understanding-the-output">Understanding the Output</h2>
+<p>Output structure:</p>
+<pre><code>pipeline_outputs/
+└── &lt;timestamp&gt;_&lt;config_name&gt;/
+    ├── designs/
+    │   ├── design_0.pdb    # Designed backbone
+    │   ├── design_1.pdb
+    │   └── ...
+    ├── logs/
+    │   └── run.log         # Execution log
+    └── config.yaml         # Configuration used</code></pre>
+</section>
+<section id="configuration-system" class="level2">
+<h2 class="anchored" data-anchor-id="configuration-system">Configuration System</h2>
+<p>RFdiffusion2 uses Hydra for configuration. Key config options:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>sweep.benchmarks</code></td>
+<td>Which design task(s) to run</td>
+</tr>
+<tr class="even">
+<td><code>sweep.output_dir</code></td>
+<td>Output directory</td>
+</tr>
+<tr class="odd">
+<td><code>diffuser.T</code></td>
+<td>Number of diffusion timesteps</td>
+</tr>
+<tr class="even">
+<td><code>inference.num_designs</code></td>
+<td>Number of designs to generate</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="troubleshooting" class="level2">
+<h2 class="anchored" data-anchor-id="troubleshooting">Troubleshooting</h2>
+<p><strong>“No GPU available” / extremely slow</strong>:</p>
+<ul>
+<li>Ensure <code>--nv</code> flag is included</li>
+<li>Verify GPU allocation: <code>nvidia-smi</code></li>
+<li>Load CUDA module: <code>module load cuda/12.1</code></li>
+</ul>
+<p><strong>Container permission errors</strong>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">chmod</span> +x rf_diffusion/exec/bakerlab_rf_diffusion_aa.sif</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>“FileNotFoundError” for weights</strong>:</p>
+<ul>
+<li>Re-run <code>python setup.py</code> to ensure all files downloaded</li>
+<li>Check <code>rf_diffusion/weights/</code> directory exists</li>
+</ul>
+<p><strong>Container not found</strong>:</p>
+<ul>
+<li>Provide full path to <code>.sif</code> file</li>
+<li>Or run from the RFdiffusion2 directory</li>
+</ul>
+<p><strong>Setup script hangs during download</strong>:</p>
+<ul>
+<li>Large files may take 30+ minutes</li>
+<li>Check network connectivity</li>
+<li>If interrupted, run <code>python setup.py overwrite</code></li>
+</ul>
+<p><strong>Module not found errors inside container</strong>:</p>
+<ul>
+<li>Ensure PYTHONPATH is set correctly</li>
+<li>Container may need <code>--bind</code> for additional paths</li>
+</ul>
 
 
 </section>

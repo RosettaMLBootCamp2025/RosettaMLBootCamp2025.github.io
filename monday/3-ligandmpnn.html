@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Pre-work 3: Python Refresher – ML Protein Design Bootcamp 2025</title>
+<title>3. LigandMPNN – ML Protein Design Bootcamp 2025</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -184,7 +184,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../monday/prework-3-python.html">Pre-work 3: Python Refresher</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../monday/3-ligandmpnn.html">3. LigandMPNN</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -217,7 +217,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../monday/prework-3-python.html" class="sidebar-item-text sidebar-link active">
+  <a href="../monday/prework-3-python.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Pre-work 3: Python Refresher</span></a>
   </div>
 </li>
@@ -235,7 +235,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../monday/3-ligandmpnn.html" class="sidebar-item-text sidebar-link">
+  <a href="../monday/3-ligandmpnn.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">3. LigandMPNN</span></a>
   </div>
 </li>
@@ -310,19 +310,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">Overview</a></li>
-  <li><a href="#prerequisites" id="toc-prerequisites" class="nav-link" data-scroll-target="#prerequisites">Prerequisites</a></li>
-  <li><a href="#download-assignment-files" id="toc-download-assignment-files" class="nav-link" data-scroll-target="#download-assignment-files">Download Assignment Files</a></li>
-  <li><a href="#how-to-complete-this-assignment" id="toc-how-to-complete-this-assignment" class="nav-link" data-scroll-target="#how-to-complete-this-assignment">How to Complete This Assignment</a>
-  <ul class="collapse">
-  <li><a href="#part-1-python-basics-warmup-basics.py" id="toc-part-1-python-basics-warmup-basics.py" class="nav-link" data-scroll-target="#part-1-python-basics-warmup-basics.py">Part 1: Python Basics Warmup (basics.py)</a></li>
-  <li><a href="#part-2-sequence-utilities-sequence_utils.py" id="toc-part-2-sequence-utilities-sequence_utils.py" class="nav-link" data-scroll-target="#part-2-sequence-utilities-sequence_utils.py">Part 2: Sequence Utilities (sequence_utils.py)</a></li>
-  <li><a href="#part-3-fasta-file-parsing-read_fasta.py" id="toc-part-3-fasta-file-parsing-read_fasta.py" class="nav-link" data-scroll-target="#part-3-fasta-file-parsing-read_fasta.py">Part 3: FASTA File Parsing (read_fasta.py)</a></li>
-  <li><a href="#part-4-sequence-analysis-tool-analyze_sequence.py" id="toc-part-4-sequence-analysis-tool-analyze_sequence.py" class="nav-link" data-scroll-target="#part-4-sequence-analysis-tool-analyze_sequence.py">Part 4: Sequence Analysis Tool (analyze_sequence.py)</a></li>
-  </ul></li>
-  <li><a href="#tips" id="toc-tips" class="nav-link" data-scroll-target="#tips">Tips</a></li>
-  <li><a href="#expected-output" id="toc-expected-output" class="nav-link" data-scroll-target="#expected-output">Expected Output</a></li>
-  <li><a href="#questions-and-getting-help" id="toc-questions-and-getting-help" class="nav-link" data-scroll-target="#questions-and-getting-help">Questions and Getting Help</a></li>
+  <li><a href="#why-use-ligandmpnn" id="toc-why-use-ligandmpnn" class="nav-link active" data-scroll-target="#why-use-ligandmpnn">Why Use LigandMPNN?</a></li>
+  <li><a href="#resource-requirements" id="toc-resource-requirements" class="nav-link" data-scroll-target="#resource-requirements">Resource Requirements</a></li>
+  <li><a href="#preparation" id="toc-preparation" class="nav-link" data-scroll-target="#preparation">Preparation</a></li>
+  <li><a href="#installation" id="toc-installation" class="nav-link" data-scroll-target="#installation">Installation</a></li>
+  <li><a href="#testing-the-installation" id="toc-testing-the-installation" class="nav-link" data-scroll-target="#testing-the-installation">Testing the Installation</a></li>
+  <li><a href="#hpc-job-script" id="toc-hpc-job-script" class="nav-link" data-scroll-target="#hpc-job-script">HPC Job Script</a></li>
+  <li><a href="#usage-examples" id="toc-usage-examples" class="nav-link" data-scroll-target="#usage-examples">Usage Examples</a></li>
+  <li><a href="#key-parameters" id="toc-key-parameters" class="nav-link" data-scroll-target="#key-parameters">Key Parameters</a></li>
+  <li><a href="#model-types" id="toc-model-types" class="nav-link" data-scroll-target="#model-types">Model Types</a></li>
+  <li><a href="#understanding-the-output" id="toc-understanding-the-output" class="nav-link" data-scroll-target="#understanding-the-output">Understanding the Output</a></li>
+  <li><a href="#troubleshooting" id="toc-troubleshooting" class="nav-link" data-scroll-target="#troubleshooting">Troubleshooting</a></li>
   </ul>
 </nav>
     </div>
@@ -331,7 +329,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Pre-work 3: Python Refresher</h1>
+<h1 class="title">3. LigandMPNN</h1>
 </div>
 
 
@@ -348,93 +346,310 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="overview" class="level2">
-<h2 class="anchored" data-anchor-id="overview">Overview</h2>
-<p>This assignment is designed as a Python refresher for biologists and bioinformaticians who may be a bit rusty. You’ll complete a series of small exercises that build up to creating a simple sequence analysis tool. This assignment should take approximately 30-45 minutes to complete.</p>
-<p><strong>IMPORTANT:</strong> Each Python file contains function templates with <code>TODO</code> comments. Your job is to fill in the missing code where you see <code># TODO:</code> comments. The scripts won’t work until you complete the TODO sections!</p>
-</section>
-<section id="prerequisites" class="level2">
-<h2 class="anchored" data-anchor-id="prerequisites">Prerequisites</h2>
+<p>LigandMPNN (<a href="https://www.biorxiv.org/content/10.1101/2023.12.22.573103v1">paper</a>, <a href="https://github.com/dauparas/LigandMPNN">code</a>) is a deep learning model for context-aware protein sequence design. It extends ProteinMPNN to handle small molecules, metal ions, and other non-protein components in protein design tasks.</p>
+<section id="why-use-ligandmpnn" class="level2">
+<h2 class="anchored" data-anchor-id="why-use-ligandmpnn">Why Use LigandMPNN?</h2>
 <ul>
-<li>HW1 completed (Python environment set up)</li>
+<li><strong>Ligand-aware design</strong>: Design sequences that account for bound cofactors, substrates, or drug molecules</li>
+<li><strong>Context preservation</strong>: Maintain interactions with metals, DNA, RNA, or other molecules</li>
+<li><strong>Side chain packing</strong>: Evaluate and optimize side chain conformations</li>
+<li><strong>Flexible residue control</strong>: Fix, bias, or vary specific positions</li>
 </ul>
+<p><strong>Related Tools</strong>: Use with <a href="../monday/4-rfdiffusion2.html">RFdiffusion2</a> for backbone design, or <a href="../monday/11-bindcraft.html">BindCraft</a> for complete binder design pipelines.</p>
 </section>
-<section id="download-assignment-files" class="level2">
-<h2 class="anchored" data-anchor-id="download-assignment-files">Download Assignment Files</h2>
-<p><a href="files/python-refresher.zip" class="btn btn-primary" download=""> <i class="bi bi-download"></i> Download Assignment Files (ZIP) </a></p>
+<section id="resource-requirements" class="level2">
+<h2 class="anchored" data-anchor-id="resource-requirements">Resource Requirements</h2>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Resource</th>
+<th>Minimum</th>
+<th>Recommended</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>GPU RAM</td>
+<td>4 GB</td>
+<td>16 GB</td>
+<td>Scales with protein size</td>
+</tr>
+<tr class="even">
+<td>CPU RAM</td>
+<td>8 GB</td>
+<td>16 GB</td>
+<td>CPU-only is viable but slower</td>
+</tr>
+<tr class="odd">
+<td>Disk Space</td>
+<td>2 GB</td>
+<td>5 GB</td>
+<td>Model weights</td>
+</tr>
+<tr class="even">
+<td>Python</td>
+<td>3.9+</td>
+<td>3.11</td>
+<td>Required</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="preparation" class="level2">
+<h2 class="anchored" data-anchor-id="preparation">Preparation</h2>
+<p><input type="checkbox" class="module-checkbox" data-module-id="ligandmpnn-prep"> Mark as complete</p>
+<p><strong>Prerequisites</strong>:</p>
+<ul>
+<li>Completed <a href="../monday/1-hpc-setup.html">HPC Setup</a> guide</li>
+<li>Conda/Mamba installed</li>
+<li>Git installed</li>
+</ul>
+<p><strong>Verify your environment</strong>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">--version</span>    <span class="co"># Should be 3.9+</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">nvcc</span> <span class="at">--version</span>      <span class="co"># For GPU support (optional)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="installation" class="level2">
+<h2 class="anchored" data-anchor-id="installation">Installation</h2>
+<p><input type="checkbox" class="module-checkbox" data-module-id="ligandmpnn-install"> Mark as complete</p>
 <ol type="1">
-<li>Download the ZIP file above.</li>
-<li>Unzip the folder on your computer.</li>
-<li>Open the folder in VS Code.</li>
+<li>Clone the LigandMPNN repository:</li>
 </ol>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/dauparas/LigandMPNN.git</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> LigandMPNN</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<ol start="2" type="1">
+<li>Download the model parameters: <em>Note: This step requires internet access. If your compute node doesn’t have internet, run this on a login node.</em></li>
+</ol>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> get_model_params.sh <span class="st">"./model_params"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Expected download</strong>: ~500 MB of model weights.</p>
+<ol start="3" type="1">
+<li>Create a new conda environment:</li>
+</ol>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">mamba</span> create <span class="at">-n</span> ligandmpnn_env python=3.11</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="ex">mamba</span> activate ligandmpnn_env</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<ol start="4" type="1">
+<li>Install dependencies:</li>
+</ol>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install <span class="at">-r</span> requirements.txt</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This installs PyTorch, NumPy, and ProDy for PDB file handling.</p>
 </section>
-<section id="how-to-complete-this-assignment" class="level2">
-<h2 class="anchored" data-anchor-id="how-to-complete-this-assignment">How to Complete This Assignment</h2>
-<p>Each Python file is a template with incomplete functions. Look for <code># TODO:</code> comments - these mark where you need to write code. Read the docstrings and hints carefully, then implement the missing functionality.</p>
-<p><strong>The scripts will not work until you complete the TODO sections!</strong></p>
-<section id="part-1-python-basics-warmup-basics.py" class="level3">
-<h3 class="anchored" data-anchor-id="part-1-python-basics-warmup-basics.py">Part 1: Python Basics Warmup (basics.py)</h3>
-<p>Open <code>basics.py</code> and <strong>fill in the TODO sections</strong> for these exercises: - <code>reverse_string()</code> - Write a function to reverse a string - <code>count_characters()</code> - Use a for loop to count characters in a string - <code>amino_acid_composition()</code> - Create a dictionary to calculate amino acid percentages - <code>filter_sequences_by_length()</code> - Use a list comprehension to filter sequences</p>
-<p><strong>To test your work:</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Navigate to the unzipped directory first!</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> path/to/python-refresher</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> activate bootcamp2025_HW1</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> basics.py</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>If you see <code>None</code> or errors, you haven’t completed all the TODOs yet!</p>
-</section>
-<section id="part-2-sequence-utilities-sequence_utils.py" class="level3">
-<h3 class="anchored" data-anchor-id="part-2-sequence-utilities-sequence_utils.py">Part 2: Sequence Utilities (sequence_utils.py)</h3>
-<p>Open <code>sequence_utils.py</code> and <strong>implement the TODO sections</strong> for these bioinformatics functions: - <code>molecular_weight()</code> - Calculate the molecular weight of a protein - <code>count_hydrophobic()</code> - Count hydrophobic amino acids - <code>find_motif()</code> - Find all positions of a motif in a sequence - <code>count_charged_residues()</code> - Count positive and negative charges</p>
-<p><strong>To test your work:</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> sequence_utils.py</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>The test cases at the bottom will only work once you’ve filled in all the TODOs!</p>
-</section>
-<section id="part-3-fasta-file-parsing-read_fasta.py" class="level3">
-<h3 class="anchored" data-anchor-id="part-3-fasta-file-parsing-read_fasta.py">Part 3: FASTA File Parsing (read_fasta.py)</h3>
-<p>Open <code>read_fasta.py</code> and <strong>complete the TODO sections</strong> to: - <code>read_fasta()</code> - Read and parse a FASTA file, storing sequences in a dictionary (header → sequence) - <code>print_fasta_stats()</code> - Print basic statistics about the sequences</p>
-<p><strong>To test your work:</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> read_fasta.py sample.fasta</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>You should see information about each protein sequence. If not, check your TODOs!</p>
-</section>
-<section id="part-4-sequence-analysis-tool-analyze_sequence.py" class="level3">
-<h3 class="anchored" data-anchor-id="part-4-sequence-analysis-tool-analyze_sequence.py">Part 4: Sequence Analysis Tool (analyze_sequence.py)</h3>
-<p>Open <code>analyze_sequence.py</code> and <strong>fill in the TODO sections</strong> to create a complete analysis script: - <code>analyze_sequences()</code> - Use your sequence_utils functions to analyze each protein - <code>write_results()</code> - Write the analysis results to a file</p>
-<p>This part brings together everything from Parts 1-3!</p>
-<p><strong>To run your completed analysis:</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> analyze_sequence.py sample.fasta</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>This should create an <code>analysis_results.txt</code> file with your results. If it doesn’t work, you’re missing some TODOs!</p>
-</section>
-</section>
-<section id="tips" class="level2">
-<h2 class="anchored" data-anchor-id="tips">Tips</h2>
+<section id="testing-the-installation" class="level2">
+<h2 class="anchored" data-anchor-id="testing-the-installation">Testing the Installation</h2>
+<p><input type="checkbox" class="module-checkbox" data-module-id="ligandmpnn-test"> Mark as complete</p>
+<p>Run a test design on the provided example structure:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> run.py <span class="dt">\</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">--seed</span> 111 <span class="dt">\</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">--pdb_path</span> <span class="st">"./inputs/1BC8.pdb"</span> <span class="dt">\</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">--out_folder</span> <span class="st">"./outputs/test_output"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Success indicators</strong>:</p>
 <ul>
-<li><strong>Test frequently</strong>: Run your code after each function to catch errors early</li>
-<li><strong>Use print statements</strong>: Debug by printing intermediate values</li>
-<li><strong>Read the TODO comments carefully</strong>: They contain hints and requirements</li>
-<li><strong>Don’t worry about edge cases</strong>: Focus on getting the basic functionality working</li>
-<li><strong>Ask for help</strong>: If you’re stuck, reach out!</li>
+<li>Command completes without errors</li>
+<li>Output folder contains:
+<ul>
+<li><code>seqs/1BC8.fa</code> - Designed sequences in FASTA format</li>
+<li><code>backbones/1BC8.pdb</code> - Input backbone (for reference)</li>
+<li><code>packed/1BC8_1.pdb</code> - Structure with designed side chains</li>
+</ul></li>
+</ul>
+<p><strong>Expected runtime</strong>: &lt;1 minute on GPU, ~5 minutes on CPU.</p>
+</section>
+<section id="hpc-job-script" class="level2">
+<h2 class="anchored" data-anchor-id="hpc-job-script">HPC Job Script</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/bin/bash</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --job-name=ligandmpnn</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --partition=gpu</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --gpus=1</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --cpus-per-task=4</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --mem=16G</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --time=02:00:00</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --output=%x_%j.out</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load cuda/12.1</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="co"># source ~/.bashrc  # Optional: Source shell profile if needed</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="ex">mamba</span> activate ligandmpnn_env</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> /path/to/LigandMPNN</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> run.py <span class="dt">\</span></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">--model_type</span> <span class="st">"ligand_mpnn"</span> <span class="dt">\</span></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">--seed</span> 111 <span class="dt">\</span></span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">--pdb_path</span> <span class="st">"./inputs/my_protein.pdb"</span> <span class="dt">\</span></span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">--out_folder</span> <span class="st">"./outputs/my_design"</span> <span class="dt">\</span></span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">--number_of_batches</span> 10</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="usage-examples" class="level2">
+<h2 class="anchored" data-anchor-id="usage-examples">Usage Examples</h2>
+<p><strong>Basic protein design</strong> (no ligand):</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> run.py <span class="dt">\</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">--pdb_path</span> <span class="st">"protein.pdb"</span> <span class="dt">\</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">--out_folder</span> <span class="st">"output/"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Design with ligand context</strong>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> run.py <span class="dt">\</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">--model_type</span> <span class="st">"ligand_mpnn"</span> <span class="dt">\</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">--pdb_path</span> <span class="st">"protein_ligand.pdb"</span> <span class="dt">\</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">--out_folder</span> <span class="st">"output/"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Fix specific residues</strong> (keep them unchanged):</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> run.py <span class="dt">\</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">--pdb_path</span> <span class="st">"protein.pdb"</span> <span class="dt">\</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">--fixed_residues</span> <span class="st">"A10 A20 A30"</span> <span class="dt">\</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">--out_folder</span> <span class="st">"output/"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Design only specific positions</strong>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> run.py <span class="dt">\</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">--pdb_path</span> <span class="st">"protein.pdb"</span> <span class="dt">\</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">--redesigned_residues</span> <span class="st">"A50 A51 A52 A53"</span> <span class="dt">\</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">--out_folder</span> <span class="st">"output/"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Batch processing multiple structures</strong>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a JSON file listing inputs</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">'{"1": "input1.pdb", "2": "input2.pdb"}'</span> <span class="op">&gt;</span> input_list.json</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> run.py <span class="dt">\</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">--pdb_path_multi</span> <span class="st">"input_list.json"</span> <span class="dt">\</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">--out_folder</span> <span class="st">"batch_output/"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>With temperature control</strong> (higher = more diverse):</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> run.py <span class="dt">\</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">--pdb_path</span> <span class="st">"protein.pdb"</span> <span class="dt">\</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">--temperature</span> 0.2 <span class="dt">\</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">--out_folder</span> <span class="st">"output/"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="key-parameters" class="level2">
+<h2 class="anchored" data-anchor-id="key-parameters">Key Parameters</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 39%">
+<col style="width: 27%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Parameter</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>--model_type</code></td>
+<td>Model variant: <code>protein_mpnn</code>, <code>ligand_mpnn</code>, <code>soluble_mpnn</code>, etc.</td>
+<td><code>protein_mpnn</code></td>
+</tr>
+<tr class="even">
+<td><code>--temperature</code></td>
+<td>Sampling temperature (0.1-1.0). Lower = more conservative</td>
+<td>0.1</td>
+</tr>
+<tr class="odd">
+<td><code>--number_of_batches</code></td>
+<td>Number of sequences to generate</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td><code>--batch_size</code></td>
+<td>Sequences per batch</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td><code>--fixed_residues</code></td>
+<td>Space-separated residues to keep unchanged</td>
+<td>None</td>
+</tr>
+<tr class="even">
+<td><code>--redesigned_residues</code></td>
+<td>Only design these residues</td>
+<td>All</td>
+</tr>
+<tr class="odd">
+<td><code>--bias_AA</code></td>
+<td>Bias toward specific amino acids</td>
+<td>None</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="model-types" class="level2">
+<h2 class="anchored" data-anchor-id="model-types">Model Types</h2>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Model</th>
+<th>Use Case</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>protein_mpnn</code></td>
+<td>Standard protein sequence design</td>
+</tr>
+<tr class="even">
+<td><code>ligand_mpnn</code></td>
+<td>Design with small molecule context</td>
+</tr>
+<tr class="odd">
+<td><code>soluble_mpnn</code></td>
+<td>Bias toward soluble sequences</td>
+</tr>
+<tr class="even">
+<td><code>global_label_membrane_mpnn</code></td>
+<td>Membrane protein design</td>
+</tr>
+<tr class="odd">
+<td><code>per_residue_label_membrane_mpnn</code></td>
+<td>Fine-grained membrane design</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="understanding-the-output" class="level2">
+<h2 class="anchored" data-anchor-id="understanding-the-output">Understanding the Output</h2>
+<p><strong>Output directory structure</strong>:</p>
+<pre><code>output/
+├── seqs/
+│   └── protein.fa          # Designed sequences
+├── backbones/
+│   └── protein.pdb         # Input structure
+└── packed/
+    ├── protein_1.pdb       # Design 1 with side chains
+    └── protein_2.pdb       # Design 2 with side chains</code></pre>
+<p><strong>FASTA output format</strong>:</p>
+<pre><code>&gt;protein, score=1.234, seq_recovery=0.456
+MVKLTAEGSE...</code></pre>
+<ul>
+<li><code>score</code>: Negative log-likelihood (lower = better fit to backbone)</li>
+<li><code>seq_recovery</code>: Fraction matching native sequence (if provided)</li>
 </ul>
 </section>
-<section id="expected-output" class="level2">
-<h2 class="anchored" data-anchor-id="expected-output">Expected Output</h2>
-<p>When you run <code>analyze_sequence.py</code>, you should see output similar to:</p>
-<pre><code>Analyzing sequences from sample.fasta...
-
-Sequence: gene_example_1
-  Length: 120 bp
-  GC Content: 45.83%
-  Reverse Complement: CGATCG...
-
-Results written to analysis_results.txt</code></pre>
-</section>
-<section id="questions-and-getting-help" class="level2">
-<h2 class="anchored" data-anchor-id="questions-and-getting-help">Questions and Getting Help</h2>
-<p>We strongly encourage you to use our Slack workspace for questions and collaboration! One of the best ways to learn is by discussing problems with your peers and seeing how others approach challenges.</p>
-<p><strong>Join the Bootcamp Slack channel</strong>: <em>The Slack workspace is currently reserved for in-person bootcamp participants. We apologize for the inconvenience.</em></p>
-<p>In the Slack channel, you can: - Ask questions and get help from fellow students - Share tips and solutions you’ve discovered - Learn from others’ questions and answers - Collaborate on troubleshooting issues</p>
-<p>The TAs and I will be active in the Slack channel to help guide discussions and answer questions. Don’t hesitate to jump in - chances are if you’re stuck on something, others are too!</p>
-<p>If you have questions, please open an issue on the <a href="https://github.com/RosettaMLBootCamp2025/RosettaMLBootCamp2025.github.io/issues">GitHub repository</a> (GitHub account required) instead of emailing directly.</p>
+<section id="troubleshooting" class="level2">
+<h2 class="anchored" data-anchor-id="troubleshooting">Troubleshooting</h2>
+<p><strong>“RuntimeError: CUDA out of memory”</strong>:</p>
+<ul>
+<li>Use CPU instead: remove CUDA module and run without GPU</li>
+<li>Reduce <code>--batch_size</code></li>
+<li>LigandMPNN is efficient; usually not memory-limited</li>
+</ul>
+<p><strong>PDB parsing errors</strong>:</p>
+<ul>
+<li>Ensure PDB has proper formatting</li>
+<li>Remove alternate conformations: keep only “A” conformers</li>
+<li>Check that ligand has proper atom naming</li>
+</ul>
+<p><strong>Ligand not recognized</strong>:</p>
+<ul>
+<li>Ensure ligand is in the PDB file with HETATM records</li>
+<li>Use <code>--ligand</code> flag to specify ligand residue name</li>
+<li>Check that ligand coordinates are reasonable</li>
+</ul>
+<p><strong>Low sequence diversity</strong>:</p>
+<ul>
+<li>Increase <code>--temperature</code> (e.g., 0.2 or 0.3)</li>
+<li>Increase <code>--number_of_batches</code></li>
+<li>Use different random seeds</li>
+</ul>
+<p><strong>Side chain clashes in output</strong>:</p>
+<ul>
+<li>This is expected - downstream relaxation is recommended</li>
+<li>Use PyRosetta or Rosetta FastRelax</li>
+<li>Or validate with your structure prediction tool of choice</li>
+</ul>
 
 
 </section>

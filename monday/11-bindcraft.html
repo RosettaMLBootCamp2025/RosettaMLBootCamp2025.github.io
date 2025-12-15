@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Pre-work 3: Python Refresher – ML Protein Design Bootcamp 2025</title>
+<title>11. BindCraft – ML Protein Design Bootcamp 2025</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -184,7 +184,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../monday/prework-3-python.html">Pre-work 3: Python Refresher</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../monday/11-bindcraft.html">11. BindCraft</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -217,7 +217,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../monday/prework-3-python.html" class="sidebar-item-text sidebar-link active">
+  <a href="../monday/prework-3-python.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Pre-work 3: Python Refresher</span></a>
   </div>
 </li>
@@ -283,7 +283,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../monday/11-bindcraft.html" class="sidebar-item-text sidebar-link">
+  <a href="../monday/11-bindcraft.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">11. BindCraft</span></a>
   </div>
 </li>
@@ -310,19 +310,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">Overview</a></li>
-  <li><a href="#prerequisites" id="toc-prerequisites" class="nav-link" data-scroll-target="#prerequisites">Prerequisites</a></li>
-  <li><a href="#download-assignment-files" id="toc-download-assignment-files" class="nav-link" data-scroll-target="#download-assignment-files">Download Assignment Files</a></li>
-  <li><a href="#how-to-complete-this-assignment" id="toc-how-to-complete-this-assignment" class="nav-link" data-scroll-target="#how-to-complete-this-assignment">How to Complete This Assignment</a>
+  <li><a href="#why-use-bindcraft" id="toc-why-use-bindcraft" class="nav-link active" data-scroll-target="#why-use-bindcraft">Why Use BindCraft?</a></li>
+  <li><a href="#resource-requirements" id="toc-resource-requirements" class="nav-link" data-scroll-target="#resource-requirements">Resource Requirements</a></li>
+  <li><a href="#preparation" id="toc-preparation" class="nav-link" data-scroll-target="#preparation">Preparation</a></li>
+  <li><a href="#installation" id="toc-installation" class="nav-link" data-scroll-target="#installation">Installation</a></li>
+  <li><a href="#testing-the-installation" id="toc-testing-the-installation" class="nav-link" data-scroll-target="#testing-the-installation">Testing the Installation</a></li>
+  <li><a href="#hpc-job-script" id="toc-hpc-job-script" class="nav-link" data-scroll-target="#hpc-job-script">HPC Job Script</a></li>
+  <li><a href="#setting-up-your-own-target" id="toc-setting-up-your-own-target" class="nav-link" data-scroll-target="#setting-up-your-own-target">Setting Up Your Own Target</a></li>
+  <li><a href="#key-settings-explained" id="toc-key-settings-explained" class="nav-link" data-scroll-target="#key-settings-explained">Key Settings Explained</a>
   <ul class="collapse">
-  <li><a href="#part-1-python-basics-warmup-basics.py" id="toc-part-1-python-basics-warmup-basics.py" class="nav-link" data-scroll-target="#part-1-python-basics-warmup-basics.py">Part 1: Python Basics Warmup (basics.py)</a></li>
-  <li><a href="#part-2-sequence-utilities-sequence_utils.py" id="toc-part-2-sequence-utilities-sequence_utils.py" class="nav-link" data-scroll-target="#part-2-sequence-utilities-sequence_utils.py">Part 2: Sequence Utilities (sequence_utils.py)</a></li>
-  <li><a href="#part-3-fasta-file-parsing-read_fasta.py" id="toc-part-3-fasta-file-parsing-read_fasta.py" class="nav-link" data-scroll-target="#part-3-fasta-file-parsing-read_fasta.py">Part 3: FASTA File Parsing (read_fasta.py)</a></li>
-  <li><a href="#part-4-sequence-analysis-tool-analyze_sequence.py" id="toc-part-4-sequence-analysis-tool-analyze_sequence.py" class="nav-link" data-scroll-target="#part-4-sequence-analysis-tool-analyze_sequence.py">Part 4: Sequence Analysis Tool (analyze_sequence.py)</a></li>
+  <li><a href="#target-settings-settings_target.json" id="toc-target-settings-settings_target.json" class="nav-link" data-scroll-target="#target-settings-settings_target.json">Target Settings (<code>settings_target/*.json</code>)</a></li>
+  <li><a href="#filter-settings-settings_filters.json" id="toc-filter-settings-settings_filters.json" class="nav-link" data-scroll-target="#filter-settings-settings_filters.json">Filter Settings (<code>settings_filters/*.json</code>)</a></li>
+  <li><a href="#advanced-settings-settings_advanced.json" id="toc-advanced-settings-settings_advanced.json" class="nav-link" data-scroll-target="#advanced-settings-settings_advanced.json">Advanced Settings (<code>settings_advanced/*.json</code>)</a></li>
   </ul></li>
-  <li><a href="#tips" id="toc-tips" class="nav-link" data-scroll-target="#tips">Tips</a></li>
-  <li><a href="#expected-output" id="toc-expected-output" class="nav-link" data-scroll-target="#expected-output">Expected Output</a></li>
-  <li><a href="#questions-and-getting-help" id="toc-questions-and-getting-help" class="nav-link" data-scroll-target="#questions-and-getting-help">Questions and Getting Help</a></li>
+  <li><a href="#understanding-the-pipeline" id="toc-understanding-the-pipeline" class="nav-link" data-scroll-target="#understanding-the-pipeline">Understanding the Pipeline</a></li>
+  <li><a href="#tips-for-success" id="toc-tips-for-success" class="nav-link" data-scroll-target="#tips-for-success">Tips for Success</a></li>
+  <li><a href="#understanding-the-output" id="toc-understanding-the-output" class="nav-link" data-scroll-target="#understanding-the-output">Understanding the Output</a></li>
+  <li><a href="#troubleshooting" id="toc-troubleshooting" class="nav-link" data-scroll-target="#troubleshooting">Troubleshooting</a></li>
   </ul>
 </nav>
     </div>
@@ -331,7 +335,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Pre-work 3: Python Refresher</h1>
+<h1 class="title">11. BindCraft</h1>
 </div>
 
 
@@ -348,93 +352,298 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="overview" class="level2">
-<h2 class="anchored" data-anchor-id="overview">Overview</h2>
-<p>This assignment is designed as a Python refresher for biologists and bioinformaticians who may be a bit rusty. You’ll complete a series of small exercises that build up to creating a simple sequence analysis tool. This assignment should take approximately 30-45 minutes to complete.</p>
-<p><strong>IMPORTANT:</strong> Each Python file contains function templates with <code>TODO</code> comments. Your job is to fill in the missing code where you see <code># TODO:</code> comments. The scripts won’t work until you complete the TODO sections!</p>
-</section>
-<section id="prerequisites" class="level2">
-<h2 class="anchored" data-anchor-id="prerequisites">Prerequisites</h2>
+<p>BindCraft (<a href="https://www.nature.com/articles/s41586-025-09429-6">paper</a>, <a href="https://github.com/martinpacesa/BindCraft">code</a>) is an end-to-end binder design pipeline that combines AlphaFold2 backpropagation, ProteinMPNN, and PyRosetta to design protein binders against target proteins.</p>
+<section id="why-use-bindcraft" class="level2">
+<h2 class="anchored" data-anchor-id="why-use-bindcraft">Why Use BindCraft?</h2>
 <ul>
-<li>HW1 completed (Python environment set up)</li>
+<li><strong>Complete pipeline</strong>: Integrates structure prediction, sequence design, and scoring</li>
+<li><strong>Automated optimization</strong>: Multi-stage design with confidence-based filtering</li>
+<li><strong>Production ready</strong>: Validated binders in published work</li>
+<li><strong>Learning resource</strong>: See how professional protein design pipelines work</li>
+</ul>
+<p><strong>Related Tools</strong>: For backbone design, see <a href="../monday/4-rfdiffusion2.html">RFdiffusion2</a>. For sequence design, see <a href="../monday/3-ligandmpnn.html">LigandMPNN</a>. For structure prediction, see <a href="../monday/2-localcolabfold.html">LocalColabFold</a>.</p>
+</section>
+<section id="resource-requirements" class="level2">
+<h2 class="anchored" data-anchor-id="resource-requirements">Resource Requirements</h2>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Resource</th>
+<th>Minimum</th>
+<th>Recommended</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>GPU RAM</td>
+<td>24 GB</td>
+<td>32+ GB</td>
+<td>Large targets need more</td>
+</tr>
+<tr class="even">
+<td>CPU RAM</td>
+<td>32 GB</td>
+<td>64 GB</td>
+<td>For PyRosetta scoring</td>
+</tr>
+<tr class="odd">
+<td>Disk Space</td>
+<td>2 MB + 5.3 GB</td>
+<td>10 GB</td>
+<td>Code + AlphaFold2 weights</td>
+</tr>
+<tr class="even">
+<td>Time</td>
+<td>Hours</td>
+<td>Days</td>
+<td>Per design campaign</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Important</strong>: BindCraft requires PyRosetta. Ensure you have a valid installation or license if required by your institution.</p>
+</section>
+<section id="preparation" class="level2">
+<h2 class="anchored" data-anchor-id="preparation">Preparation</h2>
+<p><input type="checkbox" class="module-checkbox" data-module-id="bindcraft-prep"> Mark as complete</p>
+<p><strong>Prerequisites</strong>:</p>
+<ul>
+<li>Completed <a href="../monday/1-hpc-setup.html">HPC Setup</a> guide</li>
+<li>Conda/Mamba installed</li>
+<li>PyRosetta installed (or accessible via license)</li>
+<li>CUDA-compatible GPU</li>
+</ul>
+<p><strong>Check your CUDA version</strong>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nvcc</span> <span class="at">--version</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Note the version number (e.g., 12.4)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="installation" class="level2">
+<h2 class="anchored" data-anchor-id="installation">Installation</h2>
+<p><input type="checkbox" class="module-checkbox" data-module-id="bindcraft-install"> Mark as complete</p>
+<ol type="1">
+<li>Clone the BindCraft repository:</li>
+</ol>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/martinpacesa/BindCraft /path/to/bindcraft</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> /path/to/bindcraft</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<ol start="2" type="1">
+<li>Run the installation script:</li>
+</ol>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> install_bindcraft.sh <span class="at">--cuda</span> <span class="st">'12.4'</span> <span class="at">--pkg_manager</span> <span class="st">'conda'</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Important options</strong>:</p>
+<ul>
+<li>Replace <code>12.4</code> with your actual CUDA version</li>
+<li>Use <code>--pkg_manager 'mamba'</code> for faster installation</li>
+<li>If <code>--cuda</code> is left blank, auto-detection may fail</li>
+</ul>
+<p><strong>Expected time</strong>: 20-40 minutes.</p>
+<p>The script creates a conda environment called <code>BindCraft</code> with all dependencies.</p>
+</section>
+<section id="testing-the-installation" class="level2">
+<h2 class="anchored" data-anchor-id="testing-the-installation">Testing the Installation</h2>
+<p><input type="checkbox" class="module-checkbox" data-module-id="bindcraft-test"> Mark as complete</p>
+<ol type="1">
+<li>Activate the environment:</li>
+</ol>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> activate BindCraft</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<ol start="2" type="1">
+<li>Run a test design against the example target (PDL1):</li>
+</ol>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> /path/to/bindcraft</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-u</span> ./bindcraft.py <span class="dt">\</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">--settings</span> <span class="st">'./settings_target/PDL1.json'</span> <span class="dt">\</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">--filters</span> <span class="st">'./settings_filters/default_filters.json'</span> <span class="dt">\</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">--advanced</span> <span class="st">'./settings_advanced/default_4stage_multimer.json'</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Success indicators</strong>:</p>
+<ul>
+<li>Starts generating trajectories without errors</li>
+<li>Log shows design iterations progressing</li>
+<li>Creates output directory with design files</li>
+</ul>
+<p><strong>Note</strong>: A complete run takes hours to days. For testing, stop after a few trajectories complete (Ctrl+C).</p>
+</section>
+<section id="hpc-job-script" class="level2">
+<h2 class="anchored" data-anchor-id="hpc-job-script">HPC Job Script</h2>
+<p>Using the provided template:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">sbatch</span> ./bindcraft.slurm <span class="dt">\</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">--settings</span> <span class="st">'./settings_target/PDL1.json'</span> <span class="dt">\</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">--filters</span> <span class="st">'./settings_filters/default_filters.json'</span> <span class="dt">\</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">--advanced</span> <span class="st">'./settings_advanced/default_4stage_multimer.json'</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Or create your own:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/bin/bash</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --job-name=bindcraft</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --partition=gpu</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --gpus=1</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --cpus-per-task=8</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --mem=64G</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --time=48:00:00</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --output=%x_%j.out</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="co"># source ~/.bashrc</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> activate BindCraft</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> /path/to/bindcraft</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-u</span> ./bindcraft.py <span class="dt">\</span></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">--settings</span> <span class="st">'./settings_target/my_target.json'</span> <span class="dt">\</span></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">--filters</span> <span class="st">'./settings_filters/default_filters.json'</span> <span class="dt">\</span></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">--advanced</span> <span class="st">'./settings_advanced/default_4stage_multimer.json'</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="setting-up-your-own-target" class="level2">
+<h2 class="anchored" data-anchor-id="setting-up-your-own-target">Setting Up Your Own Target</h2>
+<p><strong>Step 1: Prepare your target PDB</strong></p>
+<ul>
+<li>Place your target protein PDB in the BindCraft folder</li>
+<li>Trim unnecessary chains/residues to reduce memory and speed up design</li>
+</ul>
+<p><strong>Step 2: Create target settings</strong> (<code>settings_target/my_target.json</code>):</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"design_path"</span><span class="fu">:</span> <span class="st">"./my_binder_designs"</span><span class="fu">,</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"binder_name"</span><span class="fu">:</span> <span class="st">"my_binder"</span><span class="fu">,</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"starting_pdb"</span><span class="fu">:</span> <span class="st">"./my_target.pdb"</span><span class="fu">,</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"chains"</span><span class="fu">:</span> <span class="st">"A"</span><span class="fu">,</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"target_hotspot_residues"</span><span class="fu">:</span> <span class="st">"A10-20"</span><span class="fu">,</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"lengths"</span><span class="fu">:</span> <span class="st">"50-100"</span><span class="fu">,</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"number_of_final_designs"</span><span class="fu">:</span> <span class="dv">100</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Step 3: Run the pipeline</strong>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-u</span> ./bindcraft.py <span class="dt">\</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">--settings</span> <span class="st">'./settings_target/my_target.json'</span> <span class="dt">\</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">--filters</span> <span class="st">'./settings_filters/default_filters.json'</span> <span class="dt">\</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">--advanced</span> <span class="st">'./settings_advanced/default_4stage_multimer.json'</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="key-settings-explained" class="level2">
+<h2 class="anchored" data-anchor-id="key-settings-explained">Key Settings Explained</h2>
+<section id="target-settings-settings_target.json" class="level3">
+<h3 class="anchored" data-anchor-id="target-settings-settings_target.json">Target Settings (<code>settings_target/*.json</code>)</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 29%">
+<col style="width: 41%">
+<col style="width: 29%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Setting</th>
+<th>Description</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>starting_pdb</code></td>
+<td>Path to target structure</td>
+<td><code>"./my_target.pdb"</code></td>
+</tr>
+<tr class="even">
+<td><code>chains</code></td>
+<td>Which chain(s) to target</td>
+<td><code>"A"</code> or <code>"A,B"</code></td>
+</tr>
+<tr class="odd">
+<td><code>target_hotspot_residues</code></td>
+<td>Residues to target</td>
+<td><code>"A10-20"</code> or <code>null</code> (auto)</td>
+</tr>
+<tr class="even">
+<td><code>lengths</code></td>
+<td>Binder length range</td>
+<td><code>"50-100"</code></td>
+</tr>
+<tr class="odd">
+<td><code>number_of_final_designs</code></td>
+<td>Designs to generate</td>
+<td><code>100</code></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="filter-settings-settings_filters.json" class="level3">
+<h3 class="anchored" data-anchor-id="filter-settings-settings_filters.json">Filter Settings (<code>settings_filters/*.json</code>)</h3>
+<p>Controls which designs pass quality thresholds:</p>
+<ul>
+<li>Confidence scores (pLDDT, pTM, i_pTM)</li>
+<li>Interface quality (shape complementarity, energy)</li>
+<li>Default filters are good starting points</li>
 </ul>
 </section>
-<section id="download-assignment-files" class="level2">
-<h2 class="anchored" data-anchor-id="download-assignment-files">Download Assignment Files</h2>
-<p><a href="files/python-refresher.zip" class="btn btn-primary" download=""> <i class="bi bi-download"></i> Download Assignment Files (ZIP) </a></p>
+<section id="advanced-settings-settings_advanced.json" class="level3">
+<h3 class="anchored" data-anchor-id="advanced-settings-settings_advanced.json">Advanced Settings (<code>settings_advanced/*.json</code>)</h3>
+<ul>
+<li>Design algorithm (default: 4-stage)</li>
+<li>Number of iterations per stage</li>
+<li>AlphaFold2 and ProteinMPNN parameters</li>
+</ul>
+</section>
+</section>
+<section id="understanding-the-pipeline" class="level2">
+<h2 class="anchored" data-anchor-id="understanding-the-pipeline">Understanding the Pipeline</h2>
+<p>BindCraft demonstrates a complete protein design workflow:</p>
+<pre><code>1. DESIGN        → AlphaFold2 backpropagation generates binder backbones
+       ↓
+2. OPTIMIZE      → ProteinMPNN designs sequences for backbones
+       ↓
+3. VALIDATE      → AlphaFold2 predicts designed complex structure
+       ↓
+4. SCORE         → PyRosetta evaluates interface quality
+       ↓
+5. FILTER        → Keep designs passing confidence thresholds</code></pre>
+</section>
+<section id="tips-for-success" class="level2">
+<h2 class="anchored" data-anchor-id="tips-for-success">Tips for Success</h2>
 <ol type="1">
-<li>Download the ZIP file above.</li>
-<li>Unzip the folder on your computer.</li>
-<li>Open the folder in VS Code.</li>
+<li><p><strong>Trim your target</strong>: Remove unnecessary chains/residues to reduce memory</p></li>
+<li><p><strong>Start with defaults</strong>: Use default filter and advanced settings initially</p></li>
+<li><p><strong>Generate enough designs</strong>: Aim for 100+ final designs (top 5-20 for experiments)</p></li>
+<li><p><strong>Be patient</strong>: Expect hundreds to thousands of trajectories for enough accepted binders</p></li>
+<li><p><strong>Monitor acceptance rate</strong>: Low acceptance → adjust design weights or filters</p></li>
+<li><p><strong>Check the wiki</strong>: <a href="https://github.com/martinpacesa/BindCraft/wiki/De-novo-binder-design-with-BindCraft">BindCraft Wiki</a></p></li>
 </ol>
 </section>
-<section id="how-to-complete-this-assignment" class="level2">
-<h2 class="anchored" data-anchor-id="how-to-complete-this-assignment">How to Complete This Assignment</h2>
-<p>Each Python file is a template with incomplete functions. Look for <code># TODO:</code> comments - these mark where you need to write code. Read the docstrings and hints carefully, then implement the missing functionality.</p>
-<p><strong>The scripts will not work until you complete the TODO sections!</strong></p>
-<section id="part-1-python-basics-warmup-basics.py" class="level3">
-<h3 class="anchored" data-anchor-id="part-1-python-basics-warmup-basics.py">Part 1: Python Basics Warmup (basics.py)</h3>
-<p>Open <code>basics.py</code> and <strong>fill in the TODO sections</strong> for these exercises: - <code>reverse_string()</code> - Write a function to reverse a string - <code>count_characters()</code> - Use a for loop to count characters in a string - <code>amino_acid_composition()</code> - Create a dictionary to calculate amino acid percentages - <code>filter_sequences_by_length()</code> - Use a list comprehension to filter sequences</p>
-<p><strong>To test your work:</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Navigate to the unzipped directory first!</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> path/to/python-refresher</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> activate bootcamp2025_HW1</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> basics.py</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>If you see <code>None</code> or errors, you haven’t completed all the TODOs yet!</p>
+<section id="understanding-the-output" class="level2">
+<h2 class="anchored" data-anchor-id="understanding-the-output">Understanding the Output</h2>
+<p>Output directory structure:</p>
+<pre><code>my_binder_designs/
+├── accepted/
+│   ├── design_001.pdb        # Passing designs
+│   ├── design_002.pdb
+│   └── ...
+├── rejected/                  # Filtered out designs
+├── trajectories/              # All generated trajectories
+├── scores.csv                 # All metrics for each design
+└── summary.txt                # Run statistics</code></pre>
 </section>
-<section id="part-2-sequence-utilities-sequence_utils.py" class="level3">
-<h3 class="anchored" data-anchor-id="part-2-sequence-utilities-sequence_utils.py">Part 2: Sequence Utilities (sequence_utils.py)</h3>
-<p>Open <code>sequence_utils.py</code> and <strong>implement the TODO sections</strong> for these bioinformatics functions: - <code>molecular_weight()</code> - Calculate the molecular weight of a protein - <code>count_hydrophobic()</code> - Count hydrophobic amino acids - <code>find_motif()</code> - Find all positions of a motif in a sequence - <code>count_charged_residues()</code> - Count positive and negative charges</p>
-<p><strong>To test your work:</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> sequence_utils.py</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>The test cases at the bottom will only work once you’ve filled in all the TODOs!</p>
-</section>
-<section id="part-3-fasta-file-parsing-read_fasta.py" class="level3">
-<h3 class="anchored" data-anchor-id="part-3-fasta-file-parsing-read_fasta.py">Part 3: FASTA File Parsing (read_fasta.py)</h3>
-<p>Open <code>read_fasta.py</code> and <strong>complete the TODO sections</strong> to: - <code>read_fasta()</code> - Read and parse a FASTA file, storing sequences in a dictionary (header → sequence) - <code>print_fasta_stats()</code> - Print basic statistics about the sequences</p>
-<p><strong>To test your work:</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> read_fasta.py sample.fasta</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>You should see information about each protein sequence. If not, check your TODOs!</p>
-</section>
-<section id="part-4-sequence-analysis-tool-analyze_sequence.py" class="level3">
-<h3 class="anchored" data-anchor-id="part-4-sequence-analysis-tool-analyze_sequence.py">Part 4: Sequence Analysis Tool (analyze_sequence.py)</h3>
-<p>Open <code>analyze_sequence.py</code> and <strong>fill in the TODO sections</strong> to create a complete analysis script: - <code>analyze_sequences()</code> - Use your sequence_utils functions to analyze each protein - <code>write_results()</code> - Write the analysis results to a file</p>
-<p>This part brings together everything from Parts 1-3!</p>
-<p><strong>To run your completed analysis:</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> analyze_sequence.py sample.fasta</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>This should create an <code>analysis_results.txt</code> file with your results. If it doesn’t work, you’re missing some TODOs!</p>
-</section>
-</section>
-<section id="tips" class="level2">
-<h2 class="anchored" data-anchor-id="tips">Tips</h2>
+<section id="troubleshooting" class="level2">
+<h2 class="anchored" data-anchor-id="troubleshooting">Troubleshooting</h2>
+<p><strong>GPU memory errors</strong>:</p>
 <ul>
-<li><strong>Test frequently</strong>: Run your code after each function to catch errors early</li>
-<li><strong>Use print statements</strong>: Debug by printing intermediate values</li>
-<li><strong>Read the TODO comments carefully</strong>: They contain hints and requirements</li>
-<li><strong>Don’t worry about edge cases</strong>: Focus on getting the basic functionality working</li>
-<li><strong>Ask for help</strong>: If you’re stuck, reach out!</li>
+<li>Reduce target PDB size (trim chains)</li>
+<li>Request more GPU memory (32+ GB recommended)</li>
+<li>Check with: <code>nvidia-smi</code></li>
 </ul>
-</section>
-<section id="expected-output" class="level2">
-<h2 class="anchored" data-anchor-id="expected-output">Expected Output</h2>
-<p>When you run <code>analyze_sequence.py</code>, you should see output similar to:</p>
-<pre><code>Analyzing sequences from sample.fasta...
-
-Sequence: gene_example_1
-  Length: 120 bp
-  GC Content: 45.83%
-  Reverse Complement: CGATCG...
-
-Results written to analysis_results.txt</code></pre>
-</section>
-<section id="questions-and-getting-help" class="level2">
-<h2 class="anchored" data-anchor-id="questions-and-getting-help">Questions and Getting Help</h2>
-<p>We strongly encourage you to use our Slack workspace for questions and collaboration! One of the best ways to learn is by discussing problems with your peers and seeing how others approach challenges.</p>
-<p><strong>Join the Bootcamp Slack channel</strong>: <em>The Slack workspace is currently reserved for in-person bootcamp participants. We apologize for the inconvenience.</em></p>
-<p>In the Slack channel, you can: - Ask questions and get help from fellow students - Share tips and solutions you’ve discovered - Learn from others’ questions and answers - Collaborate on troubleshooting issues</p>
-<p>The TAs and I will be active in the Slack channel to help guide discussions and answer questions. Don’t hesitate to jump in - chances are if you’re stuck on something, others are too!</p>
-<p>If you have questions, please open an issue on the <a href="https://github.com/RosettaMLBootCamp2025/RosettaMLBootCamp2025.github.io/issues">GitHub repository</a> (GitHub account required) instead of emailing directly.</p>
+<p><strong>CUDA version mismatch</strong>:</p>
+<ul>
+<li>Re-run install with correct CUDA version</li>
+<li>Check: <code>nvcc --version</code></li>
+</ul>
+<p><strong>Low acceptance rate</strong> (few designs pass filters):</p>
+<ul>
+<li>Adjust design weights in advanced settings</li>
+<li>Relax filter thresholds</li>
+<li>Change target hotspot selection</li>
+<li>Increase target site area</li>
+</ul>
+<p><strong>PyRosetta license errors</strong>:</p>
+<ul>
+<li>Verify PyRosetta license is valid</li>
+<li>Check license file location</li>
+<li>Contact PyRosetta for academic license</li>
+</ul>
+<p><strong>Slow progress</strong>:</p>
+<ul>
+<li>This is normal - protein design takes time</li>
+<li>Monitor trajectory count, not clock time</li>
+<li>Large targets are slower</li>
+</ul>
 
 
 </section>
