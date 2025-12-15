@@ -2,7 +2,7 @@
 title: "2. RFdiffusion: Advanced Design"
 ---
 
-## In-Class Activity
+## Hands-On Exercise
 
 1. **Setup for the activity.**
     1. Go to the RFdiffusion installation and make a new directory for the activity: `mkdir activity`.
@@ -75,7 +75,7 @@ title: "2. RFdiffusion: Advanced Design"
             - Do the structures have the desired symmetry?
             - What topologies are found in the individual subunits?
 
-## Project Time
+## Independent Project
 
 **(Use your target protein)**
 

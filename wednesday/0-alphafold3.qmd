@@ -2,7 +2,7 @@
 title: "1. AlphaFold3 vs. Chai-1"
 ---
 
-## In-Class Activity
+## Hands-On Exercise
 
 1. **Setup for the activity**
     1. In order to make a prediction with the [AlphaFold server](https://alphafoldserver.com/), you'll need a Google account to sign in.

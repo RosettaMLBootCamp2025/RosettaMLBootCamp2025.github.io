@@ -53,16 +53,4 @@ Results written to analysis_results.txt
 
 ## Questions and Getting Help
 
-We strongly encourage you to use our Slack workspace for questions and collaboration! One of the best ways to learn is by discussing problems with your peers and seeing how others approach challenges.
-
-**Join the Bootcamp Slack channel**: https://rosettacommons.slack.com/archives/C09MXL9NBFB
-
-In the Slack channel, you can:
-- Ask questions and get help from fellow students
-- Share tips and solutions you've discovered
-- Learn from others' questions and answers
-- Collaborate on troubleshooting issues
-
-The TAs and I will be active in the Slack channel to help guide discussions and answer questions. Don't hesitate to jump in - chances are if you're stuck on something, others are too!
-
-Of course, you're also welcome to email me directly at **icanderson@ucdavis.edu** if needed.
+If you have questions or encounter issues while working through this module, please open an issue on the [GitHub repository](https://github.com/RosettaMLBootCamp2025/RosettaMLBootCamp2025.github.io/issues) (GitHub account required).
