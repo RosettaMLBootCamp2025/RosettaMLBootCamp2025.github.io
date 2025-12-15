@@ -53,12 +53,13 @@ website:
       contents:
         - tuesday/index.qmd
         - tuesday/0-pymol.qmd
-        - tuesday/1-alphafold2.qmd
-        - tuesday/2-alphafold3.qmd
+        - tuesday/1-structure-prediction.qmd
+        - tuesday/2-alphafold2.qmd
         - tuesday/3-esmfold.qmd
     - title: "Wednesday"
       contents:
         - wednesday/index.qmd
+        - wednesday/0-alphafold3.qmd
         - wednesday/1-rfdiffusion.qmd
     - title: "Thursday"
       contents:

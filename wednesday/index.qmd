@@ -10,8 +10,8 @@ Wednesday focuses on **advanced structure prediction and protein design**. You'l
 
 | Module | Topic | Description |
 |--------|-------|-------------|
-| [1. AlphaFold3 vs. Chai-1](1-alphafold3.qmd) | Comparing Next-Gen Predictors | Compare AF3 and Chai-1 on monomers, multimers, and protein-ligand complexes |
-| [2. RFdiffusion](2-rfdiffusion.qmd) | Advanced Protein Design | Design unconditional monomers, motif scaffolds, binders, and symmetric oligomers using RFdiffusion |
+| [1. AlphaFold3 vs. Chai-1](0-alphafold3.qmd) | Comparing Next-Gen Predictors | Compare AF3 and Chai-1 on monomers, multimers, and protein-ligand complexes |
+| [2. RFdiffusion](1-rfdiffusion.qmd) | Advanced Protein Design | Design unconditional monomers, motif scaffolds, binders, and symmetric oligomers using RFdiffusion |
 
 ---
 

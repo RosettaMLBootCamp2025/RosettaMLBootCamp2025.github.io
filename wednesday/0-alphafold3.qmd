@@ -1,0 +1,55 @@
+---
+title: "1. AlphaFold3 vs. Chai-1"
+---
+
+## In-Class Activity
+
+1. **Setup for the activity**
+    1. In order to make a prediction with the [AlphaFold server](https://alphafoldserver.com/), you'll need a Google account to sign in.
+    2. In order to make a prediction with [Chai-Lab](https://lab.chaidiscovery.com/), you'll need to create a free account.
+
+2. **Make a monomer prediction for 1QYS with both AF3 and Chai-Lab.**
+    1. **AlphaFold 3:**
+        1. Paste in the sequence for 1QYS: `MGDIQVQVNIDDNGKNFDYTYTVTTESELQKVLNELMDYIKKQGAKRVRISITARTKKEAEKFAAILIKVFAELGYNDINVTFDGDTVTVEGQLEGGSLEHHHHHH`
+        2. Press the "continue and preview job" button.
+        3. Press "confirm and submit job".
+    2. **Chai-Lab:**
+        1. Paste in the same sequence for 1QYS.
+        2. Click "Run Job" to submit the prediction.
+    3. **Analysis:**
+        - How do the predicted structures compare to the native?
+        - How does the AF3 prediction compare to Chai-Lab?
+        - How confident is each model about its prediction?
+
+3. **Make a multimer prediction for 8AJY with both AF3 and Chai-Lab.**
+    1. **AlphaFold 3:**
+        1. Paste in the sequence for 8AJY_1 (chain A):
+        `MLTDRGMTYDLDPKDGSSAATKPVLEVTKKVFDTAADAAGQTVTVEFKVSGAEGKYATTGYHIYWDERLEVVATKTGAYAKKGAALEDSSLAKAENNGNGVFVASGADDDFGADGVMWTVELKVPADAKAGDVYPIDVAYQWDPSKGDLFTDNKDSAQGKLMQAYFFTQGIKSSSNPSTDEYLVKANATYADGYIAIKAGEPE`
+        2. Click "add entity", make sure the molecule type to "protein", and paste in the sequence of 8AJY_2 (chain B):
+        `MGSSHHHHHHSSGLVPRGSHMASKPQYRLGDVDFNGIIDGRDATAVLTEYARISTGKPAEFVGNTALAADVNKDNMIDAADATHILTYYAISSTRDDITSDDYFALHQPLRG`
+        3. The native structure was originally solved in the presence of 3 Ca2+ ions. Click "add entity", change the molecule type to "ion", and select Ca2+ to add each.
+        4. Press the "continue and preview job" button.
+        5. Press "confirm and submit job".
+    2. **Chai-Lab:**
+        1. Paste in the sequence for 8AJY_1 (chain A).
+        2. Click "Add Chain" and paste in the sequence for 8AJY_2 (chain B).
+        3. Click "Add Ligand" and select "Ca2+" from the ion options. Repeat to add all 3 Ca2+ ions.
+        4. Click "Run Job" to submit the prediction.
+    3. **Analysis:**
+        - How do the predicted structures compare to the native?
+        - How does the AF3 prediction compare to Chai-Lab?
+        - How confident is each model about its prediction?
+        - What about the placement of the ions and the coordinating side chains?
+
+4. **Make a protein-ligand prediction with Chai-Lab for 2JIE (beta-glucosidase with 2-fluoro-glucose).**
+    1. **Chai-Lab:**
+        1. Paste in the sequence for 2JIE (beta-glucosidase B):
+        `MHHHHHHSENTFIFPATFMWGTSTSSYQIEGGTDEGGRTPSIWDTFCQIPGKVIGGDCGDVACDHFHHFKEDVQLMKQLGFLHYRFSVAWPRIMPAAGIINEEGLLFYEHLLDEIELAGLIPMLTLYHWDLPQWIEDEGGWTQRETIQHFKTYASVIMDRFGERINWWNTINEPYCASILGYGTGEHAPGHENWREAFTAAHHILMCHGIASNLHKEKGLTGKIGITLNMEHVDAASERPEDVAAAIRRDGFINRWFAEPLFNGKYPEDMVEWYGTYLNGLDFVQPGDMELIQQPGDFLGINYYTRSIIRSTNDASLLQVEQVHMEEPVTDMGWEIHPESFYKLLTRIEKDFSKGLPILITENGAAMRDELVNGQIEDTGRHGYIEEHLKACHRFIEEGGQLKGYFVWSFLDNFEWAWGYSKRFGIVHINYETQERTPKQSALWFKQMMAKNGF`
+        2. Click "Add Ligand" and select "Custom SMILES".
+        3. Enter the SMILES string for 2-fluoro-glucose (G2F): `OCC1OC(O)C(F)C(O)C1O`
+        4. Click "Run Job" to submit the prediction.
+    2. **Analysis:**
+        - How does the predicted structure compare to the crystal structure (2JIE)?
+        - Is the ligand positioned correctly in the active site?
+        - How well does Chai-Lab predict the protein-ligand interactions?
+        - What is the confidence score for the ligand placement?

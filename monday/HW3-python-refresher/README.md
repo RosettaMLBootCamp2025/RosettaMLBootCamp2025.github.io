@@ -16,89 +16,17 @@ You will:
 
 - HW1 completed (Python environment set up)
 
-## About Autograding
+## Verify Your Code
 
-**Note:** This assignment has automated tests that run when you push your code. You'll see a score out of 100 points. **These points are just for feedback** - they help you know if your functions are working correctly. This is a bootcamp focused on learning, not grades!
+Since this is a self-guided activity, you can check your own work by running the provided tests.
 
-## How to Complete This Assignment
-
-Each Python file is a template with incomplete functions. Look for `# TODO:` comments - these mark where you need to write code. Read the docstrings and hints carefully, then implement the missing functionality.
-
-**The scripts will not work until you complete the TODO sections!**
-
-### Part 1: Python Basics Warmup (basics.py)
-
-Open `basics.py` and **fill in the TODO sections** for these exercises:
-- `reverse_string()` - Write a function to reverse a string
-- `count_characters()` - Use a for loop to count characters in a string
-- `amino_acid_composition()` - Create a dictionary to calculate amino acid percentages
-- `filter_sequences_by_length()` - Use a list comprehension to filter sequences
-
-**To test your work:**
-```bash
-conda activate bootcamp2025_HW1
-python basics.py
-```
-
-If you see `None` or errors, you haven't completed all the TODOs yet!
-
-### Part 2: Sequence Utilities (sequence_utils.py)
-
-Open `sequence_utils.py` and **implement the TODO sections** for these bioinformatics functions:
-- `molecular_weight()` - Calculate the molecular weight of a protein
-- `count_hydrophobic()` - Count hydrophobic amino acids
-- `find_motif()` - Find all positions of a motif in a sequence
-- `count_charged_residues()` - Count positive and negative charges
-
-**To test your work:**
-```bash
-python sequence_utils.py
-```
-
-The test cases at the bottom will only work once you've filled in all the TODOs!
-
-### Part 3: FASTA File Parsing (read_fasta.py)
-
-Open `read_fasta.py` and **complete the TODO sections** to:
-- `read_fasta()` - Read and parse a FASTA file, storing sequences in a dictionary (header → sequence)
-- `print_fasta_stats()` - Print basic statistics about the sequences
-
-**To test your work:**
-```bash
-python read_fasta.py sample.fasta
-```
-
-You should see information about each protein sequence. If not, check your TODOs!
-
-### Part 4: Sequence Analysis Tool (analyze_sequence.py)
-
-Open `analyze_sequence.py` and **fill in the TODO sections** to create a complete analysis script:
-- `analyze_sequences()` - Use your sequence_utils functions to analyze each protein
-- `write_results()` - Write the analysis results to a file
-
-This part brings together everything from Parts 1-3!
-
-**To run your completed analysis:**
-```bash
-python analyze_sequence.py sample.fasta
-```
-
-This should create an `analysis_results.txt` file with your results. If it doesn't work, you're missing some TODOs!
-
-## Submission
-
-Once you've completed all exercises and generated the output file, commit your work:
+To run the tests, execute the following command in your terminal:
 
 ```bash
-# Add all your completed Python files and the output
-git add basics.py sequence_utils.py read_fasta.py analyze_sequence.py analysis_results.txt
-
-# Commit your work
-git commit -m "Complete Python refresher exercises"
-
-# Push to GitHub
-git push
+pytest
 ```
+
+If all tests pass (green), your code is correct! If any fail (red), read the error message to debug your solution.
 
 ## Tips
 

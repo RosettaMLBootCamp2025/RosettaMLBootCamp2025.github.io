@@ -9,11 +9,6 @@ This assignment ensures you have PyMOL and VS Code installed and configured for 
 1. Install PyMOL (a molecular visualization tool)
 2. Install VS Code (a powerful code editor/IDE)
 3. Verify your installations by completing hands-on tasks
-4. Commit your work to GitHub
-
-## About Autograding
-
-**Note:** This assignment has automated tests that run when you push your code. You'll see a score out of 100 points. **These points are just for feedback** - they help you know if you've completed everything correctly. This is a bootcamp focused on learning, not grades!
 
 ## Prerequisites
 
@@ -124,27 +119,20 @@ Now let's verify that everything is working correctly!
    - Run: `python verify_setup.py`
    - The script will check your installations and create a `verification_result.txt` file
 
-## Part 4: Submission
+## Part 4: Verify Your Work
 
-Once you've completed both tasks, commit your work to your GitHub Classroom repository:
+Since this is a self-guided activity, verify that you have the following files in your working directory:
 
-```bash
-# Add all the files you created
-git add 1ubq_session.pse 1ubq_visualization.png verification_result.txt
+1.  `1ubq_session.pse` - Your saved PyMOL session. Open it to make sure it loads your view.
+2.  `1ubq_visualization.png` - Your rendered image of Ubiquitin.
+3.  `verification_result.txt` - Output from the verification script showing success.
 
-# Commit your work
-git commit -m "Complete PyMOL and VS Code setup verification"
+**Self-Check:**
+- Can you navigate comfortably in PyMOL (rotate, zoom, clip)?
+- Can you run a Python script directly inside VS Code?
+- Did you successfully install the Python and Jupyter extensions?
 
-# Push to GitHub
-git push
-```
-
-### Required Files for Submission
-
-Make sure your repository contains:
-- [ ] `1ubq_session.pse` - Your PyMOL session file
-- [ ] `1ubq_visualization.png` - Your exported PyMOL visualization
-- [ ] `verification_result.txt` - Output from the VS Code verification script
+If yes, you are ready for the next module!
 
 ## Troubleshooting
 
