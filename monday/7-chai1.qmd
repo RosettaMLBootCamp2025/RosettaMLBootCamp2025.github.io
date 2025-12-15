@@ -1,5 +1,5 @@
 ---
-title: "6. Chai-1"
+title: "7. Chai-1"
 ---
 
 Chai-1 ([paper](https://www.biorxiv.org/content/10.1101/2024.10.10.615955), [code](https://github.com/chaidiscovery/chai-lab)) is a multi-modal foundation model for molecular structure prediction that achieves state-of-the-art performance across diverse benchmarks. Chai-1 enables unified prediction of proteins, small molecules, DNA, RNA, glycosylations, and more.
@@ -11,7 +11,7 @@ Chai-1 ([paper](https://www.biorxiv.org/content/10.1101/2024.10.10.615955), [cod
 - **Flexible inputs**: Handles complex multi-component assemblies
 - **Experimental restraints**: Can incorporate known distance constraints
 
-**Related Tools**: For protein-only predictions, see [ESMFold](4-esmfold.qmd) (faster) or [LocalColabFold](1-localcolabfold.qmd) (MSA-based). For binding affinity predictions, see [Boltz-2](7-boltz2.qmd).
+**Related Tools**: For protein-only predictions, see [ESMFold](5-esmfold.qmd) (faster) or [LocalColabFold](2-localcolabfold.qmd) (MSA-based). For binding affinity predictions, see [Boltz-2](8-boltz2.qmd).
 
 ## Resource Requirements
 
@@ -34,7 +34,7 @@ Chai-1 ([paper](https://www.biorxiv.org/content/10.1101/2024.10.10.615955), [cod
 
 **Prerequisites**:
 
-- Completed [HPC Setup](0-hpc-setup.qmd) guide
+- Completed [HPC Setup](1-hpc-setup.qmd) guide
 - GPU with bfloat16 support
 - Python 3.10+
 

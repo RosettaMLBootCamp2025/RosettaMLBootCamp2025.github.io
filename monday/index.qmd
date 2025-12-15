@@ -24,24 +24,24 @@ Before installing individual tools, complete the **HPC Setup** module to ensure 
 
 | # | Module | Description | Status |
 |---|--------|-------------|--------|
-| 0 | [Common HPC Setup](0-hpc-setup.qmd) | CUDA, Conda, containers, and environment setup | **Start Here** |
+| 1 | [Common HPC Setup](1-hpc-setup.qmd) | CUDA, Conda, containers, and environment setup | **Start Here** |
 
 ## Tool Installation Modules
 
 | # | Tool | Description | Status |
 |---|------|-------------|--------|
-| 1 | [LocalColabFold](1-localcolabfold.qmd) | Fast AlphaFold2 structure prediction | Required |
-| 2 | [LigandMPNN](2-ligandmpnn.qmd) | Context-aware protein sequence design | Required |
-| 3 | [RFdiffusion2](3-rfdiffusion2.qmd) | Atom-level active site scaffolding | Required |
-| 4 | [ESMFold](4-esmfold.qmd) | Single-sequence structure prediction | Required |
-| 5 | [OpenFold](5-openfold.qmd) | Open-source AlphaFold2 reproduction | Optional |
-| 6 | [Chai-1](6-chai1.qmd) | Multi-modal biomolecular structure prediction | Required |
-| 7 | [Boltz-2](7-boltz2.qmd) | Structure + binding affinity prediction | Required |
-| 8 | [DiffDock-PP](8-diffdock-pp.qmd) | Protein-protein docking | Required |
-| 9 | [PLACER](9-placer.qmd) | Protein-ligand conformational ensemble prediction | Required |
-| 10 | [BindCraft](10-bindcraft.qmd) | End-to-end binder design pipeline | Required |
-| 11 | [ESM3](11-esm3.qmd) | Multimodal protein generation | Optional |
-| 12 | [RFdiffusion All Atom](12-rfdiffusion-aa.qmd) | All-atom protein design (predecessor to RFd2) | Optional |
+| 2 | [LocalColabFold](2-localcolabfold.qmd) | Fast AlphaFold2 structure prediction | Required |
+| 3 | [LigandMPNN](3-ligandmpnn.qmd) | Context-aware protein sequence design | Required |
+| 4 | [RFdiffusion2](4-rfdiffusion2.qmd) | Atom-level active site scaffolding | Required |
+| 5 | [ESMFold](5-esmfold.qmd) | Single-sequence structure prediction | Required |
+| 6 | [OpenFold](6-openfold.qmd) | Open-source AlphaFold2 reproduction | Optional |
+| 7 | [Chai-1](7-chai1.qmd) | Multi-modal biomolecular structure prediction | Required |
+| 8 | [Boltz-2](8-boltz2.qmd) | Structure + binding affinity prediction | Required |
+| 9 | [DiffDock-PP](9-diffdock-pp.qmd) | Protein-protein docking | Required |
+| 10 | [PLACER](10-placer.qmd) | Protein-ligand conformational ensemble prediction | Required |
+| 11 | [BindCraft](11-bindcraft.qmd) | End-to-end binder design pipeline | Required |
+| 12 | [ESM3](12-esm3.qmd) | Multimodal protein generation | Optional |
+| 13 | [RFdiffusion All Atom](13-rfdiffusion-aa.qmd) | All-atom protein design (predecessor to RFd2) | Optional |
 
 ## Tool Categories
 
@@ -72,7 +72,7 @@ Before installing individual tools, complete the **HPC Setup** module to ensure 
 
 ## Tips for Success
 
-1. **Start with HPC Setup** - Complete Module 0 before installing any tools
+1. **Start with HPC Setup** - Complete Module 1 before installing any tools
 
 2. **Use separate conda environments** - Each tool should have its own environment to avoid dependency conflicts
 

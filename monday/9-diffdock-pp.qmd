@@ -1,5 +1,5 @@
 ---
-title: "8. DiffDock-PP"
+title: "9. DiffDock-PP"
 ---
 
 DiffDock-PP ([paper](https://arxiv.org/abs/2304.03889), [code](https://github.com/ketatam/DiffDock-PP)) is a graph neural network trained for de-noising of rigid transformations (rotation and translation) to predict protein-protein docking orientations between two rigid protein subunits.
@@ -11,7 +11,7 @@ DiffDock-PP ([paper](https://arxiv.org/abs/2304.03889), [code](https://github.co
 - **Ensemble predictions**: Generate multiple docking poses for uncertainty estimation
 - **Rigid-body docking**: Efficient for cases where backbone flexibility is minimal
 
-**Related Tools**: For protein-ligand docking, see [PLACER](9-placer.qmd). For flexible ligand binding with ensemble generation, see [PLACER](9-placer.qmd). For structure prediction of complexes, see [Chai-1](6-chai1.qmd) or [Boltz-2](7-boltz2.qmd).
+**Related Tools**: For protein-ligand docking, see [PLACER](10-placer.qmd). For flexible ligand binding with ensemble generation, see [PLACER](10-placer.qmd). For structure prediction of complexes, see [Chai-1](7-chai1.qmd) or [Boltz-2](8-boltz2.qmd).
 
 ## Resource Requirements
 
@@ -28,7 +28,7 @@ DiffDock-PP ([paper](https://arxiv.org/abs/2304.03889), [code](https://github.co
 
 **Prerequisites**:
 
-- Completed [HPC Setup](0-hpc-setup.qmd) guide
+- Completed [HPC Setup](1-hpc-setup.qmd) guide
 - Conda/Mamba installed
 - CUDA 11.6 or 11.7 available
 

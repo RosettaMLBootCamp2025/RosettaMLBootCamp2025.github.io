@@ -1,5 +1,5 @@
 ---
-title: "1. Introduction to Structure Prediction"
+title: "2. Introduction to Structure Prediction"
 ---
 
 This module provides the foundational concepts behind protein structure prediction—the theoretical framework that underlies tools like AlphaFold2, ESMFold, and other modern prediction methods.

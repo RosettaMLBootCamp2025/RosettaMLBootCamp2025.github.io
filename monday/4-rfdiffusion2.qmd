@@ -1,5 +1,5 @@
 ---
-title: "3. RFdiffusion2"
+title: "4. RFdiffusion2"
 ---
 
 RFdiffusion2 ([paper](https://www.biorxiv.org/content/10.1101/2025.04.10.488300v1), [code](https://github.com/RosettaCommons/RFdiffusion2)) is a protein design model capable of atom-level active site scaffolding. It extends the original RFdiffusion to enable precise control over protein-ligand interactions at the atomic level.
@@ -11,7 +11,7 @@ RFdiffusion2 ([paper](https://www.biorxiv.org/content/10.1101/2025.04.10.488300v
 - **Motif grafting**: Incorporate functional motifs into new scaffolds
 - **Flexible backbone design**: Generate novel folds with specific functional constraints
 
-**Related Tools**: Use with [LigandMPNN](2-ligandmpnn.qmd) for sequence design after backbone generation. For the earlier version without atomic control, see [RFdiffusion All Atom](12-rfdiffusion-aa.qmd) (Optional).
+**Related Tools**: Use with [LigandMPNN](3-ligandmpnn.qmd) for sequence design after backbone generation. For the earlier version without atomic control, see [RFdiffusion All Atom](13-rfdiffusion-aa.qmd) (Optional).
 
 ## Resource Requirements
 
@@ -28,7 +28,7 @@ RFdiffusion2 ([paper](https://www.biorxiv.org/content/10.1101/2025.04.10.488300v
 
 **Prerequisites**:
 
-- Completed [HPC Setup](0-hpc-setup.qmd) guide
+- Completed [HPC Setup](1-hpc-setup.qmd) guide
 - Apptainer/Singularity available on your cluster
 - CUDA-capable GPU
 

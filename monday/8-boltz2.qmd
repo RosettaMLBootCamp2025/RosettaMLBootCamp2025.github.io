@@ -1,5 +1,5 @@
 ---
-title: "7. Boltz-2"
+title: "8. Boltz-2"
 ---
 
 Boltz-2 ([paper](https://doi.org/10.1101/2025.06.14.659707), [code](https://github.com/jwohlwend/boltz)) is a biomolecular foundation model that jointly models complex structures and binding affinities. It's the first deep learning model to approach the accuracy of physics-based free-energy perturbation (FEP) methods while running 1000x faster.
@@ -11,7 +11,7 @@ Boltz-2 ([paper](https://doi.org/10.1101/2025.06.14.659707), [code](https://gith
 - **Multi-modal**: Handles proteins, nucleic acids, small molecules, covalent modifications
 - **Speed**: 1000x faster than FEP methods for affinity prediction
 
-**Related Tools**: For structure prediction only, see [Chai-1](6-chai1.qmd). For protein-ligand docking, see [PLACER](9-placer.qmd) or [DiffDock-PP](8-diffdock-pp.qmd).
+**Related Tools**: For structure prediction only, see [Chai-1](7-chai1.qmd). For protein-ligand docking, see [PLACER](10-placer.qmd) or [DiffDock-PP](9-diffdock-pp.qmd).
 
 ## Resource Requirements
 
@@ -28,7 +28,7 @@ Boltz-2 ([paper](https://doi.org/10.1101/2025.06.14.659707), [code](https://gith
 
 **Prerequisites**:
 
-- Completed [HPC Setup](0-hpc-setup.qmd) guide
+- Completed [HPC Setup](1-hpc-setup.qmd) guide
 - Conda/Mamba installed
 - CUDA-capable GPU (recommended) or CPU
 

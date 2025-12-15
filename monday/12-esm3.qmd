@@ -1,5 +1,5 @@
 ---
-title: "11. ESM3 (Optional)"
+title: "12. ESM3 (Optional)"
 ---
 
 ESM3 ([paper](https://www.science.org/doi/10.1126/science.ads0018), [code](https://github.com/evolutionaryscale/esm)) is a frontier generative model for biology that jointly reasons across three fundamental biological properties of proteins: sequence, structure, and function. It represents a multimodal generative masked language model.
@@ -13,7 +13,7 @@ ESM3 ([paper](https://www.science.org/doi/10.1126/science.ads0018), [code](https
 - **Sequence completion**: Fill in masked or missing regions
 - **Embeddings**: Extract rich protein representations (ESM C)
 
-**Related Tools**: For structure prediction only, see [ESMFold](4-esmfold.qmd). For sequence design given structure, see [LigandMPNN](2-ligandmpnn.qmd).
+**Related Tools**: For structure prediction only, see [ESMFold](5-esmfold.qmd). For sequence design given structure, see [LigandMPNN](3-ligandmpnn.qmd).
 
 ## Resource Requirements
 
@@ -36,7 +36,7 @@ ESM3 ([paper](https://www.science.org/doi/10.1126/science.ads0018), [code](https
 
 **Prerequisites**:
 
-- Completed [HPC Setup](0-hpc-setup.qmd) guide
+- Completed [HPC Setup](1-hpc-setup.qmd) guide
 - Conda/Mamba installed
 - HuggingFace account (for model access)
 

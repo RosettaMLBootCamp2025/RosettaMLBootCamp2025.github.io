@@ -1,5 +1,5 @@
 ---
-title: "2. LigandMPNN"
+title: "3. LigandMPNN"
 ---
 
 LigandMPNN ([paper](https://www.biorxiv.org/content/10.1101/2023.12.22.573103v1), [code](https://github.com/dauparas/LigandMPNN)) is a deep learning model for context-aware protein sequence design. It extends ProteinMPNN to handle small molecules, metal ions, and other non-protein components in protein design tasks.
@@ -11,7 +11,7 @@ LigandMPNN ([paper](https://www.biorxiv.org/content/10.1101/2023.12.22.573103v1)
 - **Side chain packing**: Evaluate and optimize side chain conformations
 - **Flexible residue control**: Fix, bias, or vary specific positions
 
-**Related Tools**: Use with [RFdiffusion2](3-rfdiffusion2.qmd) for backbone design, or [BindCraft](10-bindcraft.qmd) for complete binder design pipelines.
+**Related Tools**: Use with [RFdiffusion2](4-rfdiffusion2.qmd) for backbone design, or [BindCraft](11-bindcraft.qmd) for complete binder design pipelines.
 
 ## Resource Requirements
 
@@ -28,7 +28,7 @@ LigandMPNN ([paper](https://www.biorxiv.org/content/10.1101/2023.12.22.573103v1)
 
 **Prerequisites**:
 
-- Completed [HPC Setup](0-hpc-setup.qmd) guide
+- Completed [HPC Setup](1-hpc-setup.qmd) guide
 - Conda/Mamba installed
 - Git installed
 

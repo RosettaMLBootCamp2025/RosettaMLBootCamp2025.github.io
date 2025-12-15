@@ -1,5 +1,5 @@
 ---
-title: "3. ESMFold vs. AlphaFold2"
+title: "4. ESMFold vs. AlphaFold2"
 ---
 
 In this module, you will use **ESMFold** to predict protein structures and systematically compare results with the **AlphaFold2** predictions you generated in the previous module. ESMFold uses a fundamentally different approach—a protein language model trained on sequences alone, without requiring Multiple Sequence Alignments (MSAs) or templates. By comparing ESMFold to AF2, you will understand the trade-offs between different prediction methods and learn when to use each approach.

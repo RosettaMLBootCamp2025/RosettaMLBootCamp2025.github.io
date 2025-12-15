@@ -35,27 +35,27 @@ website:
         - monday/prework-1-env-git.qmd
         - monday/prework-2-pymol-vscode.qmd
         - monday/prework-3-python.qmd
-        - monday/0-hpc-setup.qmd
-        - monday/1-localcolabfold.qmd
-        - monday/2-ligandmpnn.qmd
-        - monday/3-rfdiffusion2.qmd
-        - monday/4-esmfold.qmd
-        - monday/5-openfold.qmd
-        - monday/6-chai1.qmd
-        - monday/7-boltz2.qmd
-        - monday/8-diffdock-pp.qmd
-        - monday/9-placer.qmd
-        - monday/10-bindcraft.qmd
+        - monday/1-hpc-setup.qmd
+        - monday/2-localcolabfold.qmd
+        - monday/3-ligandmpnn.qmd
+        - monday/4-rfdiffusion2.qmd
+        - monday/5-esmfold.qmd
+        - monday/6-openfold.qmd
+        - monday/7-chai1.qmd
+        - monday/8-boltz2.qmd
+        - monday/9-diffdock-pp.qmd
+        - monday/10-placer.qmd
+        - monday/11-bindcraft.qmd
         - text: "---"
-        - monday/11-esm3.qmd
-        - monday/12-rfdiffusion-aa.qmd
+        - monday/12-esm3.qmd
+        - monday/13-rfdiffusion-aa.qmd
     - title: "Tuesday"
       contents:
         - tuesday/index.qmd
-        - tuesday/0-pymol.qmd
-        - tuesday/1-structure-prediction.qmd
-        - tuesday/2-alphafold2.qmd
-        - tuesday/3-esmfold.qmd
+        - tuesday/1-pymol.qmd
+        - tuesday/2-structure-prediction.qmd
+        - tuesday/3-alphafold2.qmd
+        - tuesday/4-esmfold.qmd
     - title: "Wednesday"
       contents:
         - wednesday/index.qmd

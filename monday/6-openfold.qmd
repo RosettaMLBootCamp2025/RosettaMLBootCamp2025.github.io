@@ -1,5 +1,5 @@
 ---
-title: "5. OpenFold (Optional)"
+title: "6. OpenFold (Optional)"
 ---
 
 OpenFold ([paper](https://www.biorxiv.org/content/10.1101/2022.11.20.517210v1), [code](https://github.com/aqlaboratory/openfold)) is a faithful, trainable PyTorch reproduction of DeepMind's AlphaFold2. It achieves performance comparable to AlphaFold2 and provides a fully open-source implementation for protein structure prediction.
@@ -11,7 +11,7 @@ OpenFold ([paper](https://www.biorxiv.org/content/10.1101/2022.11.20.517210v1), 
 - **Research-friendly**: Ideal for understanding how structure prediction works
 - **MSA-based accuracy**: Uses evolutionary information for high-accuracy predictions
 
-**Related Tools**: For faster predictions without MSAs, see [ESMFold](4-esmfold.qmd). For a more user-friendly MSA-based option, see [LocalColabFold](1-localcolabfold.qmd).
+**Related Tools**: For faster predictions without MSAs, see [ESMFold](5-esmfold.qmd). For a more user-friendly MSA-based option, see [LocalColabFold](2-localcolabfold.qmd).
 
 ## Resource Requirements
 
@@ -30,7 +30,7 @@ OpenFold ([paper](https://www.biorxiv.org/content/10.1101/2022.11.20.517210v1), 
 
 **Prerequisites**:
 
-- Completed [HPC Setup](0-hpc-setup.qmd) guide
+- Completed [HPC Setup](1-hpc-setup.qmd) guide
 - Conda/Mamba installed
 - `nvcc` available for CUDA compilation
 - Significant disk space (or access to shared databases)

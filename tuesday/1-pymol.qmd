@@ -1,5 +1,5 @@
 ---
-title: "0. PyMOL and Visual Studio Code"
+title: "1. PyMOL and Visual Studio Code"
 ---
 
 This module introduces two essential tools for computational structural biology: **PyMOL** for molecular visualization and **Visual Studio Code (VSCode)** for code development and remote computing.

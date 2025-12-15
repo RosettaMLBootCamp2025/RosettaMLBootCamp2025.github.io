@@ -10,10 +10,10 @@ Tuesday focuses on **protein structure prediction** using state-of-the-art tools
 
 | Module | Topic | Description |
 |--------|-------|-------------|
-| [0. PyMOL and VSCode](0-pymol.qmd) | Visualization & Development Tools | Learn protein structure visualization with PyMOL and remote development with VSCode |
-| [1. Structure Prediction](1-structure-prediction.qmd) | Foundational Concepts | Understand the protein folding problem, Anfinsen's hypothesis, Levinthal's paradox, and structure prediction metrics |
-| [2. AlphaFold2](2-alphafold2.qmd) | AlphaFold2 & OpenFold | Deep dive into AlphaFold2's architecture, run ColabFold predictions, and interpret confidence scores |
-| [3. ESMFold vs. AlphaFold2](3-esmfold.qmd) | Comparing Prediction Methods | Compare ESMFold's language model approach vs AF2's MSA-based approach. Learn when to use each tool |
+| [1. PyMOL and VSCode](1-pymol.qmd) | Visualization & Development Tools | Learn protein structure visualization with PyMOL and remote development with VSCode |
+| [2. Structure Prediction](2-structure-prediction.qmd) | Foundational Concepts | Understand the protein folding problem, Anfinsen's hypothesis, Levinthal's paradox, and structure prediction metrics |
+| [3. AlphaFold2](3-alphafold2.qmd) | AlphaFold2 & OpenFold | Deep dive into AlphaFold2's architecture, run ColabFold predictions, and interpret confidence scores |
+| [4. ESMFold vs. AlphaFold2](4-esmfold.qmd) | Comparing Prediction Methods | Compare ESMFold's language model approach vs AF2's MSA-based approach. Learn when to use each tool |
 
 ---
 

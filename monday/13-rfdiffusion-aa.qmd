@@ -1,10 +1,10 @@
 ---
-title: "12. RFdiffusion All Atom (Optional)"
+title: "13. RFdiffusion All Atom (Optional)"
 ---
 
 RFdiffusion All Atom ([code](https://github.com/baker-laboratory/rf_diffusion_all_atom)) is the predecessor to RFdiffusion2, enabling all-atom protein design with small molecule binding. It can design protein binders to ligands with all-atom precision.
 
-**Note**: This tool is marked as **OPTIONAL** because [RFdiffusion2](3-rfdiffusion2.qmd) is the newer, more capable version. Install this only if you need the earlier methodology or specific features.
+**Note**: This tool is marked as **OPTIONAL** because [RFdiffusion2](4-rfdiffusion2.qmd) is the newer, more capable version. Install this only if you need the earlier methodology or specific features.
 
 ## Why Use RFdiffusion All Atom?
 
@@ -13,7 +13,7 @@ RFdiffusion All Atom ([code](https://github.com/baker-laboratory/rf_diffusion_al
 - **Historical reference**: Understand the evolution of diffusion-based design
 - **Specific workflows**: Some published protocols may reference this version
 
-**Related Tools**: For the newer version, see [RFdiffusion2](3-rfdiffusion2.qmd). For sequence design, see [LigandMPNN](2-ligandmpnn.qmd).
+**Related Tools**: For the newer version, see [RFdiffusion2](4-rfdiffusion2.qmd). For sequence design, see [LigandMPNN](3-ligandmpnn.qmd).
 
 ## Resource Requirements
 
@@ -30,7 +30,7 @@ RFdiffusion All Atom ([code](https://github.com/baker-laboratory/rf_diffusion_al
 
 **Prerequisites**:
 
-- Completed [HPC Setup](0-hpc-setup.qmd) guide
+- Completed [HPC Setup](1-hpc-setup.qmd) guide
 - Apptainer/Singularity available
 - GPU access recommended
 
@@ -193,7 +193,7 @@ The trajectory files can be loaded into PyMOL to visualize the diffusion process
 | Model architecture | Earlier | Updated |
 | Recommended | Legacy workflows | New projects |
 
-**Recommendation**: Use [RFdiffusion2](3-rfdiffusion2.qmd) for new projects unless you have specific reasons to use this version.
+**Recommendation**: Use [RFdiffusion2](4-rfdiffusion2.qmd) for new projects unless you have specific reasons to use this version.
 
 ## Troubleshooting
 

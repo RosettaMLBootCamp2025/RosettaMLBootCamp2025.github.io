@@ -1,5 +1,5 @@
 ---
-title: "2. AlphaFold2 and OpenFold"
+title: "3. AlphaFold2 and OpenFold"
 ---
 
 This module dives deep into AlphaFold2—the breakthrough model that essentially "solved" the protein structure prediction problem—and OpenFold, its open-source, trainable implementation.

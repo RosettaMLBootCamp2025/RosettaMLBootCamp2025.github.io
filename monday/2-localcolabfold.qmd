@@ -1,5 +1,5 @@
 ---
-title: "1. LocalColabFold"
+title: "2. LocalColabFold"
 ---
 
 LocalColabFold ([code](https://github.com/YoshitakaMo/localcolabfold)) is a local installation of ColabFold, which provides an efficient implementation of AlphaFold2 protein structure prediction. ColabFold combines fast MSA generation from MMseqs2 with AlphaFold2's structure prediction capabilities, making it significantly faster than the original AlphaFold2 implementation.
@@ -11,7 +11,7 @@ LocalColabFold ([code](https://github.com/YoshitakaMo/localcolabfold)) is a loca
 - **HPC integration**: Leverage your cluster's GPUs for faster predictions
 - **MSA flexibility**: Use pre-computed MSAs or generate them on-the-fly
 
-**Related Tools**: For structure prediction without MSAs, see [ESMFold](4-esmfold.qmd). For multi-modal complexes, see [Chai-1](6-chai1.qmd) or [Boltz-2](7-boltz2.qmd).
+**Related Tools**: For structure prediction without MSAs, see [ESMFold](5-esmfold.qmd). For multi-modal complexes, see [Chai-1](7-chai1.qmd) or [Boltz-2](8-boltz2.qmd).
 
 ## Resource Requirements
 
@@ -28,7 +28,7 @@ LocalColabFold ([code](https://github.com/YoshitakaMo/localcolabfold)) is a loca
 
 ::: {.callout-important}
 ## Prerequisites
-- Completed [HPC Setup](0-hpc-setup.qmd) guide
+- Completed [HPC Setup](1-hpc-setup.qmd) guide
 - Access to a GPU node for testing
 - ~15 GB disk space for installation
 :::

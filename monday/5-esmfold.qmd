@@ -1,5 +1,5 @@
 ---
-title: "4. ESMFold"
+title: "5. ESMFold"
 ---
 
 ESMFold ([paper](https://www.science.org/doi/abs/10.1126/science.ade2574), [code](https://github.com/facebookresearch/esm)) is an end-to-end single-sequence structure predictor that uses the ESM-2 language model to generate accurate 3D protein structures directly from sequence, without requiring multiple sequence alignments (MSAs).
@@ -11,7 +11,7 @@ ESMFold ([paper](https://www.science.org/doi/abs/10.1126/science.ade2574), [code
 - **Competitive accuracy**: Often comparable to AlphaFold2 for well-folded domains
 - **Lower resource usage**: Can run on smaller GPUs
 
-**Related Tools**: For MSA-based prediction with potentially higher accuracy, see [LocalColabFold](1-localcolabfold.qmd) or [OpenFold](5-openfold.qmd). For protein language model embeddings only, see [ESM3](11-esm3.qmd).
+**Related Tools**: For MSA-based prediction with potentially higher accuracy, see [LocalColabFold](2-localcolabfold.qmd) or [OpenFold](6-openfold.qmd). For protein language model embeddings only, see [ESM3](12-esm3.qmd).
 
 ## Resource Requirements
 
@@ -30,7 +30,7 @@ ESMFold ([paper](https://www.science.org/doi/abs/10.1126/science.ade2574), [code
 
 **Prerequisites**:
 
-- Completed [HPC Setup](0-hpc-setup.qmd) guide
+- Completed [HPC Setup](1-hpc-setup.qmd) guide
 - Conda/Mamba installed
 - `nvcc` available (for compiling OpenFold dependencies)
 

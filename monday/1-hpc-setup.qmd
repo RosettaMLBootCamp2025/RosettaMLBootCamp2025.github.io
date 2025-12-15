@@ -1,5 +1,5 @@
 ---
-title: "0. Common HPC Setup"
+title: "1. Common HPC Setup"
 ---
 
 Before installing individual ML tools, ensure your HPC environment is properly configured. This guide covers the foundational setup that all subsequent modules depend on.
