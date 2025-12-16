@@ -116,6 +116,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     overflow: hidden;
   }
 </style>
+<script src="../site_libs/quarto-diagram/mermaid.min.js"></script>
+<script src="../site_libs/quarto-diagram/mermaid-init.js"></script>
+<link href="../site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
 
 
 <link rel="stylesheet" href="../styles.css">
@@ -244,12 +247,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </ul></li>
   <li><a href="#how-alphafold2-works" id="toc-how-alphafold2-works" class="nav-link" data-scroll-target="#how-alphafold2-works">How AlphaFold2 Works</a>
   <ul class="collapse">
-  <li><a href="#high-level-overview" id="toc-high-level-overview" class="nav-link" data-scroll-target="#high-level-overview">High-Level Overview</a></li>
+  <li><a href="#high-level-architecture" id="toc-high-level-architecture" class="nav-link" data-scroll-target="#high-level-architecture">High-Level Architecture</a></li>
   <li><a href="#inputs-and-outputs" id="toc-inputs-and-outputs" class="nav-link" data-scroll-target="#inputs-and-outputs">Inputs and Outputs</a></li>
   <li><a href="#the-msa-why-evolutionary-information-matters" id="toc-the-msa-why-evolutionary-information-matters" class="nav-link" data-scroll-target="#the-msa-why-evolutionary-information-matters">The MSA: Why Evolutionary Information Matters</a></li>
   <li><a href="#the-evoformer-learning-from-evolution" id="toc-the-evoformer-learning-from-evolution" class="nav-link" data-scroll-target="#the-evoformer-learning-from-evolution">The Evoformer: Learning from Evolution</a></li>
-  <li><a href="#the-structure-module-from-constraints-to-coordinates" id="toc-the-structure-module-from-constraints-to-coordinates" class="nav-link" data-scroll-target="#the-structure-module-from-constraints-to-coordinates">The Structure Module: From Constraints to Coordinates</a></li>
-  <li><a href="#recycling-self-correction" id="toc-recycling-self-correction" class="nav-link" data-scroll-target="#recycling-self-correction">Recycling: Self-Correction</a></li>
+  <li><a href="#the-structure-module-recycling" id="toc-the-structure-module-recycling" class="nav-link" data-scroll-target="#the-structure-module-recycling">The Structure Module &amp; Recycling</a></li>
   </ul></li>
   <li><a href="#key-parameters-and-settings" id="toc-key-parameters-and-settings" class="nav-link" data-scroll-target="#key-parameters-and-settings">Key Parameters and Settings</a>
   <ul class="collapse">
@@ -355,13 +357,37 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="how-alphafold2-works" class="level2">
 <h2 class="anchored" data-anchor-id="how-alphafold2-works">How AlphaFold2 Works</h2>
-<section id="high-level-overview" class="level3">
-<h3 class="anchored" data-anchor-id="high-level-overview">High-Level Overview</h3>
-<p>AlphaFold2’s architecture can be broken down into key stages:</p>
-<pre><code>Sequence → MSA Generation → Evoformer → Structure Module → 3D Coordinates
-                ↓              ↓              ↓
-            Evolutionary   Iterative      SE(3)-aware
-            Information    Reasoning      Geometry</code></pre>
+<section id="high-level-architecture" class="level3">
+<h3 class="anchored" data-anchor-id="high-level-architecture">High-Level Architecture</h3>
+<p>AlphaFold2’s architecture flows from the sequence to the final 3D structure through several specialized modules.</p>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart LR
+    Seq[Input Sequence] --&gt; MSA[MSA Generation]
+    Seq --&gt; Templ[Template Search]
+    
+    MSA --&gt; Evo[Evoformer]
+    Templ --&gt; Evo
+    
+    Evo --&gt; Struct[Structure Module]
+    Struct --&gt; Coord[3D Coordinates]
+    
+    subgraph "Iterative Refinement (Recycling)"
+    Evo
+    Struct
+    end
+    
+    style Evo fill:#f9f,stroke:#333,stroke-width:2px
+    style Struct fill:#bbf,stroke:#333,stroke-width:2px
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
 </section>
 <section id="inputs-and-outputs" class="level3">
 <h3 class="anchored" data-anchor-id="inputs-and-outputs">Inputs and Outputs</h3>
@@ -370,14 +396,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="the-msa-why-evolutionary-information-matters" class="level3">
 <h3 class="anchored" data-anchor-id="the-msa-why-evolutionary-information-matters">The MSA: Why Evolutionary Information Matters</h3>
-<p>The Multiple Sequence Alignment is arguably the most important input to AlphaFold2.</p>
-<p><strong>What is an MSA?</strong> An MSA aligns your query sequence with evolutionarily related sequences:</p>
+<p>The Multiple Sequence Alignment is arguably the most important input to AlphaFold2. It aligns your query sequence with evolutionarily related sequences to find co-evolution patterns.</p>
 <pre><code>Query:     MKVLWAALLVTFLAGCQAKVEQAVETEPEPELRQQTEWQSGQRWELAL
 Homolog1:  MKVLWAALLVTFLAGCQAKVEQAVETEPEPELRQQTEWQSGQRWELAL
 Homolog2:  MKVLWGALLVTFLAGCQAKIEQAVETEPEPELRQQTEWQSGQRWDLAL
 Homolog3:  MKILWAALLVSFLAGCQAKVEQAVEAEPEPELRQQTEWQSGQRWELAL
            ** **.****:******* :*****.**************.*:***</code></pre>
-<p><strong>Why it matters:</strong> - <strong>Co-evolution</strong>: Residues that contact each other in 3D co-evolve in sequence - <strong>Constraints</strong>: The MSA reveals which positions can vary together - <strong>Evolutionary pressure</strong>: Conserved positions are often functionally important</p>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -391,56 +415,26 @@ Homolog3:  MKILWAALLVSFLAGCQAKVEQAVEAEPEPELRQQTEWQSGQRWELAL
 <p>AlphaFold2’s accuracy depends heavily on MSA quality. Proteins with few homologs (orphan proteins, designed proteins) are harder to predict because there’s less evolutionary information to leverage.</p>
 </div>
 </div>
+<div class="quiz-container" data-correct-index="1" data-correct-feedback="Exactly! Co-evolutionary signals (residues mutating together) act as distance constraints for the model." data-incorrect-feedback="Not quite. While more data helps, the specific reason is co-evolution.">
+  <div class="quiz-header"><i class="bi bi-question-circle-fill"></i> Check Your Understanding</div>
+  <div class="quiz-question">Why is the MSA so critical for AlphaFold2's accuracy?</div>
+  <div class="quiz-options">
+    <div class="quiz-option">It provides template structures for the model to copy.</div>
+    <div class="quiz-option">It reveals co-evolutionary patterns that imply 3D contacts.</div>
+    <div class="quiz-option">It just increases the size of the training data.</div>
+  </div>
+  <button class="check-btn">Check Answer</button>
+  <div class="quiz-feedback"></div>
+</div>
 </section>
 <section id="the-evoformer-learning-from-evolution" class="level3">
 <h3 class="anchored" data-anchor-id="the-evoformer-learning-from-evolution">The Evoformer: Learning from Evolution</h3>
-<p>The Evoformer is AlphaFold2’s core innovation—a neural network architecture that reasons about:</p>
-<ol type="1">
-<li><strong>MSA representation</strong>: Information from evolutionary sequences</li>
-<li><strong>Pair representation</strong>: Relationships between residue pairs</li>
-</ol>
-<p><strong>Key operations:</strong></p>
-<ul>
-<li><strong>Attention mechanisms</strong>: Allow the model to focus on relevant parts of the MSA</li>
-<li><strong>Triangle updates</strong>: Enforce geometric consistency (if A is close to B, and B is close to C, what does that imply about A and C?)</li>
-<li><strong>Iterative refinement</strong>: Multiple passes through the Evoformer improve predictions</li>
-</ul>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Understanding Attention
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>If you want to understand attention mechanisms better, check out this excellent 3Blue1Brown video:</p>
-<p><a href="https://www.youtube.com/watch?v=P_fHJIYENdI">But what is a GPT? Visual intro to transformers</a></p>
-<p>While it’s about language models, the attention concepts apply directly to AlphaFold2.</p>
-</div>
-</div>
+<p>The Evoformer is AlphaFold2’s core innovation. It uses <strong>Attention mechanisms</strong> to reason about the MSA and residue pairs, and <strong>Triangle updates</strong> to enforce geometric consistency.</p>
 </section>
-<section id="the-structure-module-from-constraints-to-coordinates" class="level3">
-<h3 class="anchored" data-anchor-id="the-structure-module-from-constraints-to-coordinates">The Structure Module: From Constraints to Coordinates</h3>
-<p>The Structure Module converts the Evoformer’s learned representations into actual 3D coordinates.</p>
-<p><strong>Key concept: SE(3) Equivariance</strong></p>
-<p>Proteins don’t have a preferred orientation in space. If you rotate or translate a protein: - <strong>It’s still the same protein</strong> (invariance of identity) - <strong>The coordinates change in a predictable way</strong> (equivariance of position)</p>
-<p>AlphaFold2’s Structure Module is designed to respect these symmetries:</p>
-<pre><code>SE(3) = Special Euclidean group in 3D
-      = Rotations + Translations</code></pre>
-<p><strong>What this means practically:</strong> - The model predicts the same structure regardless of input orientation - Coordinates transform correctly under rotations - No need to align inputs to a reference frame</p>
-</section>
-<section id="recycling-self-correction" class="level3">
-<h3 class="anchored" data-anchor-id="recycling-self-correction">Recycling: Self-Correction</h3>
-<p>AlphaFold2 doesn’t just predict once—it <strong>recycles</strong> predictions through the network multiple times:</p>
-<ol type="1">
-<li>Make initial prediction</li>
-<li>Feed prediction back as input</li>
-<li>Refine based on learned constraints</li>
-<li>Repeat 3+ times</li>
-</ol>
-<p>This allows the model to self-correct and converge to better structures.</p>
+<section id="the-structure-module-recycling" class="level3">
+<h3 class="anchored" data-anchor-id="the-structure-module-recycling">The Structure Module &amp; Recycling</h3>
+<p>The Structure Module converts the learned representations into 3D coordinates, respecting <strong>SE(3) Equivariance</strong> (meaning the physics of rotation and translation are built-in).</p>
+<p>The model also performs <strong>Recycling</strong>: it feeds its own output back as input 3-4 times to refine the structure iteratively.</p>
 <hr>
 </section>
 </section>
@@ -598,9 +592,9 @@ Homolog3:  MKILWAALLVSFLAGCQAKVEQAVEAEPEPELRQQTEWQSGQRWELAL
 <h3 class="anchored" data-anchor-id="alphafold-multimer">AlphaFold-Multimer</h3>
 <p>Predicting protein complexes (multiple chains interacting):</p>
 <p><strong>Key modifications:</strong> - Cross-chain MSA pairing for evolutionary signal - Losses account for chain permutation symmetry - Interface-aware training</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># In your FASTA file, separate chains with ":"</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span><span class="bu">complex</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>SEQUENCEOFCHAINA:SEQUENCEOFCHAINB</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># In your FASTA file, separate chains with ":"</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span><span class="bu">complex</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>SEQUENCEOFCHAINA:SEQUENCEOFCHAINB</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="alphafold-database" class="level3">
 <h3 class="anchored" data-anchor-id="alphafold-database">AlphaFold Database</h3>
@@ -784,7 +778,7 @@ MSKGEELFTGVVPILVELDGDVNGHKFSVSGEGEGDATYGKLTLKFICTTGKLPVPWPTLVTTFSYGVQCFSRYPDHMKQ
 <p>You can also download this file: <a href="files/1GFL.fasta">1GFL.fasta</a></p>
 <p><strong>2. Run prediction:</strong></p>
 <p>If using LocalColabFold on your HPC:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">colabfold_batch</span> gfp.fasta gfp_output/</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">colabfold_batch</span> gfp.fasta gfp_output/</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>If using the ColabFold notebook: - Go to <a href="https://colab.research.google.com/github/sokrypton/ColabFold/blob/main/AlphaFold2.ipynb">ColabFold</a> - Paste your sequence - Run all cells</p>
 <p><strong>3. Expected output:</strong> - <code>gfp_relaxed_rank_001_*.pdb</code> - Best predicted structure - <code>gfp_scores_rank_001_*.json</code> - Confidence scores - <code>gfp_coverage.png</code> - MSA coverage - <code>gfp_pae.png</code> - PAE heatmap</p>
 <p><strong>Expected runtime:</strong> 5-15 minutes depending on your hardware.</p>
@@ -792,13 +786,13 @@ MSKGEELFTGVVPILVELDGDVNGHKFSVSGEGEGDATYGKLTLKFICTTGKLPVPWPTLVTTFSYGVQCFSRYPDHMKQ
 <section id="part-2-analyze-your-prediction" class="level3">
 <h3 class="anchored" data-anchor-id="part-2-analyze-your-prediction">Part 2: Analyze Your Prediction</h3>
 <p><strong>1. Load the structure in PyMOL:</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>load gfp_output<span class="op">/</span>gfp_relaxed_rank_001_alphafold2_ptm_model_1_seed_000.pdb, af2_gfp</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>load gfp_output<span class="op">/</span>gfp_relaxed_rank_001_alphafold2_ptm_model_1_seed_000.pdb, af2_gfp</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>2. Color by confidence (pLDDT):</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>spectrum b, blue_white_red, minimum<span class="op">=</span><span class="dv">50</span>, maximum<span class="op">=</span><span class="dv">100</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>spectrum b, blue_white_red, minimum<span class="op">=</span><span class="dv">50</span>, maximum<span class="op">=</span><span class="dv">100</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>3. Questions to answer:</strong> - What is the overall pLDDT? (Check the JSON file or PyMOL’s B-factor range) - Which regions have high confidence? Low confidence? - Does GFP have any disordered regions?</p>
 <p><strong>4. Compare to experimental structure:</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>fetch <span class="dv">1</span><span class="er">GFL</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>align af2_gfp, <span class="dv">1</span><span class="er">GFL</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>fetch <span class="dv">1</span><span class="er">GFL</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>align af2_gfp, <span class="dv">1</span><span class="er">GFL</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ul>
 <li>What is the RMSD between prediction and experiment?</li>
 <li>Do the structures overlay well?</li>
@@ -813,13 +807,13 @@ MSKGEELFTGVVPILVELDGDVNGHKFSVSGEGEGDATYGKLTLKFICTTGKLPVPWPTLVTTFSYGVQCFSRYPDHMKQ
 <h3 class="anchored" data-anchor-id="part-4-experiment-with-parameters">Part 4: Experiment with Parameters</h3>
 <p>Try running predictions with different settings:</p>
 <p><strong>Experiment 1: Fewer recycles</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">colabfold_batch</span> <span class="at">--num-recycle</span> 1 gfp.fasta gfp_1recycle/</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">colabfold_batch</span> <span class="at">--num-recycle</span> 1 gfp.fasta gfp_1recycle/</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Compare to the default (3 recycles). Is there a difference in quality?</p>
 <p><strong>Experiment 2: Single sequence (no MSA)</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">colabfold_batch</span> <span class="at">--msa-mode</span> single_sequence gfp.fasta gfp_single_seq/</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">colabfold_batch</span> <span class="at">--msa-mode</span> single_sequence gfp.fasta gfp_single_seq/</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>This mimics what ESMFold does. How does quality compare?</p>
 <p><strong>Experiment 3: All 5 models</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="ex">colabfold_batch</span> <span class="at">--num-models</span> 5 gfp.fasta gfp_all_models/</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">colabfold_batch</span> <span class="at">--num-models</span> 5 gfp.fasta gfp_all_models/</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Do the different models agree? What’s the variance in pLDDT?</p>
 </section>
 <section id="part-5-multimer-prediction-optional" class="level3">
@@ -830,7 +824,7 @@ MSKGEELFTGVVPILVELDGDVNGHKFSVSGEGEGDATYGKLTLKFICTTGKLPVPWPTLVTTFSYGVQCFSRYPDHMKQ
 MSKGEELFTGVVPILVELDGDVNGHKFSVSGEGEGDATYGKLTLKFICTTGKLPVPWPTLVTTFSYGVQCFSRYPDHMKQHDFFKSAMPEGYVQERTIFFKDDGNYKTRAEVKFEGDTLVNRIELKGIDFKEDGNILGHKLEYNYNSHNVYIMADKQKNGIKVNFKIRHNIEDGSVQLADHYQQNTPIGDGPVLLPDNHYLSTQSALSKDPNEKRDHMVLLEFVTAAGITHGMDELYK:MSKGEELFTGVVPILVELDGDVNGHKFSVSGEGEGDATYGKLTLKFICTTGKLPVPWPTLVTTFSYGVQCFSRYPDHMKQHDFFKSAMPEGYVQERTIFFKDDGNYKTRAEVKFEGDTLVNRIELKGIDFKEDGNILGHKLEYNYNSHNVYIMADKQKNGIKVNFKIRHNIEDGSVQLADHYQQNTPIGDGPVLLPDNHYLSTQSALSKDPNEKRDHMVLLEFVTAAGITHGMDELYK</code></pre>
 <p>(Note: The <code>:</code> separates chains)</p>
 <p><strong>2. Run prediction:</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="ex">colabfold_batch</span> homodimer.fasta homodimer_output/</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="ex">colabfold_batch</span> homodimer.fasta homodimer_output/</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>3. Analyze:</strong> - What is the ipTM score? - Does the interface look reasonable? - Check PAE for interface confidence (off-diagonal blocks)</p>
 </section>
 <section id="questions-to-consider" class="level3">
@@ -1048,6 +1042,161 @@ MSKGEELFTGVVPILVELDGDVNGHKFSVSGEGEGDATYGKLTLKFICTTGKLPVPWPTLVTTFSYGVQCFSRYPDHMKQ
     addMarkAllButton();
   });
 })();
+</script>
+<style>
+.quiz-container {
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin: 2rem 0;
+  background-color: #f8f9fa;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.quiz-header {
+  font-weight: 600;
+  color: #495057;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.quiz-header i {
+  color: #0d6efd;
+}
+
+.quiz-question {
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+  font-weight: 500;
+}
+
+.quiz-options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.quiz-option {
+  padding: 0.75rem 1rem;
+  border: 1px solid #dee2e6;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background-color: white;
+}
+
+.quiz-option:hover {
+  background-color: #e9ecef;
+  border-color: #adb5bd;
+}
+
+.quiz-option.selected {
+  background-color: #e7f1ff;
+  border-color: #0d6efd;
+  color: #0d6efd;
+}
+
+.quiz-option.correct {
+  background-color: #d1e7dd;
+  border-color: #198754;
+  color: #0f5132;
+}
+
+.quiz-option.incorrect {
+  background-color: #f8d7da;
+  border-color: #dc3545;
+  color: #842029;
+}
+
+.quiz-feedback {
+  margin-top: 1rem;
+  padding: 0.75rem;
+  border-radius: 6px;
+  display: none;
+  font-size: 0.95rem;
+}
+
+.quiz-feedback.correct {
+  background-color: #d1e7dd;
+  color: #0f5132;
+  display: block;
+}
+
+.quiz-feedback.incorrect {
+  background-color: #f8d7da;
+  color: #842029;
+  display: block;
+}
+
+.check-btn {
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  background-color: #0d6efd;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.check-btn:hover {
+  background-color: #0b5ed7;
+}
+
+.check-btn:disabled {
+  background-color: #6c757d;
+  cursor: not-allowed;
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const quizzes = document.querySelectorAll('.quiz-container');
+
+  quizzes.forEach(quiz => {
+    const options = quiz.querySelectorAll('.quiz-option');
+    const checkBtn = quiz.querySelector('.check-btn');
+    const feedback = quiz.querySelector('.quiz-feedback');
+    const correctIndex = parseInt(quiz.dataset.correctIndex);
+    let selectedIndex = -1;
+
+    options.forEach((option, index) => {
+      option.addEventListener('click', () => {
+        if (checkBtn.disabled) return; // Already answered
+        
+        options.forEach(opt => opt.classList.remove('selected'));
+        option.classList.add('selected');
+        selectedIndex = index;
+      });
+    });
+
+    checkBtn.addEventListener('click', () => {
+      if (selectedIndex === -1) return;
+
+      // Disable interaction
+      checkBtn.disabled = true;
+      checkBtn.textContent = 'Submitted';
+      
+      const selectedOption = options[selectedIndex];
+      const correctOption = options[correctIndex];
+
+      if (selectedIndex === correctIndex) {
+        selectedOption.classList.add('correct');
+        selectedOption.classList.remove('selected');
+        feedback.textContent = quiz.dataset.correctFeedback || "Correct! Great job.";
+        feedback.className = 'quiz-feedback correct';
+      } else {
+        selectedOption.classList.add('incorrect');
+        selectedOption.classList.remove('selected');
+        correctOption.classList.add('correct'); // Show the right answer
+        feedback.textContent = quiz.dataset.incorrectFeedback || "Not quite. The correct answer is highlighted.";
+        feedback.className = 'quiz-feedback incorrect';
+      }
+    });
+  });
+});
 </script>
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
