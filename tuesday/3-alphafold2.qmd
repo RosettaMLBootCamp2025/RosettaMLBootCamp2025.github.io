@@ -51,15 +51,28 @@ For this bootcamp, we'll use **ColabFold**, which combines AlphaFold2's models w
 
 ## How AlphaFold2 Works
 
-### High-Level Overview
+### High-Level Architecture
 
-AlphaFold2's architecture can be broken down into key stages:
+AlphaFold2's architecture flows from the sequence to the final 3D structure through several specialized modules.
 
-```
-Sequence → MSA Generation → Evoformer → Structure Module → 3D Coordinates
-                ↓              ↓              ↓
-            Evolutionary   Iterative      SE(3)-aware
-            Information    Reasoning      Geometry
+```{mermaid}
+flowchart LR
+    Seq[Input Sequence] --> MSA[MSA Generation]
+    Seq --> Templ[Template Search]
+    
+    MSA --> Evo[Evoformer]
+    Templ --> Evo
+    
+    Evo --> Struct[Structure Module]
+    Struct --> Coord[3D Coordinates]
+    
+    subgraph "Iterative Refinement (Recycling)"
+    Evo
+    Struct
+    end
+    
+    style Evo fill:#f9f,stroke:#333,stroke-width:2px
+    style Struct fill:#bbf,stroke:#333,stroke-width:2px
 ```
 
 ### Inputs and Outputs
@@ -77,10 +90,7 @@ Sequence → MSA Generation → Evoformer → Structure Module → 3D Coordinate
 
 ### The MSA: Why Evolutionary Information Matters
 
-The Multiple Sequence Alignment is arguably the most important input to AlphaFold2.
-
-**What is an MSA?**
-An MSA aligns your query sequence with evolutionarily related sequences:
+The Multiple Sequence Alignment is arguably the most important input to AlphaFold2. It aligns your query sequence with evolutionarily related sequences to find co-evolution patterns.
 
 ```
 Query:     MKVLWAALLVTFLAGCQAKVEQAVETEPEPELRQQTEWQSGQRWELAL
@@ -90,70 +100,34 @@ Homolog3:  MKILWAALLVSFLAGCQAKVEQAVEAEPEPELRQQTEWQSGQRWELAL
            ** **.****:******* :*****.**************.*:***
 ```
 
-**Why it matters:**
-- **Co-evolution**: Residues that contact each other in 3D co-evolve in sequence
-- **Constraints**: The MSA reveals which positions can vary together
-- **Evolutionary pressure**: Conserved positions are often functionally important
-
 ::: {.callout-important}
 ## The MSA is Critical
 AlphaFold2's accuracy depends heavily on MSA quality. Proteins with few homologs (orphan proteins, designed proteins) are harder to predict because there's less evolutionary information to leverage.
 :::
 
+```{=html}
+<div class="quiz-container" data-correct-index="1" data-correct-feedback="Exactly! Co-evolutionary signals (residues mutating together) act as distance constraints for the model." data-incorrect-feedback="Not quite. While more data helps, the specific reason is co-evolution.">
+  <div class="quiz-header"><i class="bi bi-question-circle-fill"></i> Check Your Understanding</div>
+  <div class="quiz-question">Why is the MSA so critical for AlphaFold2's accuracy?</div>
+  <div class="quiz-options">
+    <div class="quiz-option">It provides template structures for the model to copy.</div>
+    <div class="quiz-option">It reveals co-evolutionary patterns that imply 3D contacts.</div>
+    <div class="quiz-option">It just increases the size of the training data.</div>
+  </div>
+  <button class="check-btn">Check Answer</button>
+  <div class="quiz-feedback"></div>
+</div>
+```
+
 ### The Evoformer: Learning from Evolution
 
-The Evoformer is AlphaFold2's core innovation—a neural network architecture that reasons about:
+The Evoformer is AlphaFold2's core innovation. It uses **Attention mechanisms** to reason about the MSA and residue pairs, and **Triangle updates** to enforce geometric consistency.
 
-1. **MSA representation**: Information from evolutionary sequences
-2. **Pair representation**: Relationships between residue pairs
+### The Structure Module & Recycling
 
-**Key operations:**
+The Structure Module converts the learned representations into 3D coordinates, respecting **SE(3) Equivariance** (meaning the physics of rotation and translation are built-in).
 
-- **Attention mechanisms**: Allow the model to focus on relevant parts of the MSA
-- **Triangle updates**: Enforce geometric consistency (if A is close to B, and B is close to C, what does that imply about A and C?)
-- **Iterative refinement**: Multiple passes through the Evoformer improve predictions
-
-::: {.callout-tip}
-## Understanding Attention
-If you want to understand attention mechanisms better, check out this excellent 3Blue1Brown video:
-
-[But what is a GPT? Visual intro to transformers](https://www.youtube.com/watch?v=P_fHJIYENdI)
-
-While it's about language models, the attention concepts apply directly to AlphaFold2.
-:::
-
-### The Structure Module: From Constraints to Coordinates
-
-The Structure Module converts the Evoformer's learned representations into actual 3D coordinates.
-
-**Key concept: SE(3) Equivariance**
-
-Proteins don't have a preferred orientation in space. If you rotate or translate a protein:
-- **It's still the same protein** (invariance of identity)
-- **The coordinates change in a predictable way** (equivariance of position)
-
-AlphaFold2's Structure Module is designed to respect these symmetries:
-
-```
-SE(3) = Special Euclidean group in 3D
-      = Rotations + Translations
-```
-
-**What this means practically:**
-- The model predicts the same structure regardless of input orientation
-- Coordinates transform correctly under rotations
-- No need to align inputs to a reference frame
-
-### Recycling: Self-Correction
-
-AlphaFold2 doesn't just predict once—it **recycles** predictions through the network multiple times:
-
-1. Make initial prediction
-2. Feed prediction back as input
-3. Refine based on learned constraints
-4. Repeat 3+ times
-
-This allows the model to self-correct and converge to better structures.
+The model also performs **Recycling**: it feeds its own output back as input 3-4 times to refine the structure iteratively.
 
 ---
 
