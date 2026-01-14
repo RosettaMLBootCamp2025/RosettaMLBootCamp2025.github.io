@@ -64,7 +64,9 @@ website:
     - title: "Thursday"
       contents:
         - thursday/index.qmd
-        - thursday/4.1-placeholder.qmd
+        - thursday/1-cpu-vs-gpu.qmd
+        - thursday/2-docking.qmd
+        - thursday/3-roundtable.qmd
     - title: "Capstone"
       contents:
         - capstone/index.qmd

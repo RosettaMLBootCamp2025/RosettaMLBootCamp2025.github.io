@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>2. AlphaFold2 and OpenFold – ML Protein Design Bootcamp 2025</title>
+<title>3. AlphaFold2 and OpenFold – ML Protein Design Bootcamp 2025</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -116,12 +116,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     overflow: hidden;
   }
 </style>
+<script src="../site_libs/quarto-diagram/mermaid.min.js"></script>
+<script src="../site_libs/quarto-diagram/mermaid-init.js"></script>
+<link href="../site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
 
 
 <link rel="stylesheet" href="../styles.css">
 </head>
 
-<body class="nav-fixed quarto-light">
+<body class="nav-sidebar floating nav-fixed quarto-light">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -147,7 +150,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span class="menu-text">Monday</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../tuesday/index.html"> 
+    <a class="nav-link active" href="../tuesday/index.html" aria-current="page"> 
 <span class="menu-text">Tuesday</span></a>
   </li>  
   <li class="nav-item">
@@ -179,10 +182,57 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
       </div> <!-- /container-fluid -->
     </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../tuesday/3-alphafold2.html">3. AlphaFold2 and OpenFold</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
 </header>
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../tuesday/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Tuesday</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../tuesday/1-pymol.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1. PyMOL and Visual Studio Code</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../tuesday/2-structure-prediction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2. Introduction to Structure Prediction</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../tuesday/3-alphafold2.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">3. AlphaFold2 and OpenFold</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../tuesday/4-esmfold.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">4. ESMFold vs.&nbsp;AlphaFold2</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
@@ -197,12 +247,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </ul></li>
   <li><a href="#how-alphafold2-works" id="toc-how-alphafold2-works" class="nav-link" data-scroll-target="#how-alphafold2-works">How AlphaFold2 Works</a>
   <ul class="collapse">
-  <li><a href="#high-level-overview" id="toc-high-level-overview" class="nav-link" data-scroll-target="#high-level-overview">High-Level Overview</a></li>
+  <li><a href="#high-level-architecture" id="toc-high-level-architecture" class="nav-link" data-scroll-target="#high-level-architecture">High-Level Architecture</a></li>
   <li><a href="#inputs-and-outputs" id="toc-inputs-and-outputs" class="nav-link" data-scroll-target="#inputs-and-outputs">Inputs and Outputs</a></li>
   <li><a href="#the-msa-why-evolutionary-information-matters" id="toc-the-msa-why-evolutionary-information-matters" class="nav-link" data-scroll-target="#the-msa-why-evolutionary-information-matters">The MSA: Why Evolutionary Information Matters</a></li>
   <li><a href="#the-evoformer-learning-from-evolution" id="toc-the-evoformer-learning-from-evolution" class="nav-link" data-scroll-target="#the-evoformer-learning-from-evolution">The Evoformer: Learning from Evolution</a></li>
-  <li><a href="#the-structure-module-from-constraints-to-coordinates" id="toc-the-structure-module-from-constraints-to-coordinates" class="nav-link" data-scroll-target="#the-structure-module-from-constraints-to-coordinates">The Structure Module: From Constraints to Coordinates</a></li>
-  <li><a href="#recycling-self-correction" id="toc-recycling-self-correction" class="nav-link" data-scroll-target="#recycling-self-correction">Recycling: Self-Correction</a></li>
+  <li><a href="#the-structure-module-from-representations-to-3d-coordinates" id="toc-the-structure-module-from-representations-to-3d-coordinates" class="nav-link" data-scroll-target="#the-structure-module-from-representations-to-3d-coordinates">The Structure Module: From Representations to 3D Coordinates</a></li>
+  <li><a href="#recycling-iterative-refinement" id="toc-recycling-iterative-refinement" class="nav-link" data-scroll-target="#recycling-iterative-refinement">Recycling: Iterative Refinement</a></li>
   </ul></li>
   <li><a href="#key-parameters-and-settings" id="toc-key-parameters-and-settings" class="nav-link" data-scroll-target="#key-parameters-and-settings">Key Parameters and Settings</a>
   <ul class="collapse">
@@ -249,7 +299,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">2. AlphaFold2 and OpenFold</h1>
+<h1 class="title">3. AlphaFold2 and OpenFold</h1>
 </div>
 
 
@@ -308,13 +358,37 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="how-alphafold2-works" class="level2">
 <h2 class="anchored" data-anchor-id="how-alphafold2-works">How AlphaFold2 Works</h2>
-<section id="high-level-overview" class="level3">
-<h3 class="anchored" data-anchor-id="high-level-overview">High-Level Overview</h3>
-<p>AlphaFold2’s architecture can be broken down into key stages:</p>
-<pre><code>Sequence → MSA Generation → Evoformer → Structure Module → 3D Coordinates
-                ↓              ↓              ↓
-            Evolutionary   Iterative      SE(3)-aware
-            Information    Reasoning      Geometry</code></pre>
+<section id="high-level-architecture" class="level3">
+<h3 class="anchored" data-anchor-id="high-level-architecture">High-Level Architecture</h3>
+<p>AlphaFold2’s architecture flows from the sequence to the final 3D structure through several specialized modules.</p>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart LR
+    Seq[Input Sequence] --&gt; MSA[MSA Generation]
+    Seq --&gt; Templ[Template Search]
+    
+    MSA --&gt; Evo[Evoformer]
+    Templ --&gt; Evo
+    
+    Evo --&gt; Struct[Structure Module]
+    Struct --&gt; Coord[3D Coordinates]
+    
+    subgraph "Iterative Refinement (Recycling)"
+    Evo
+    Struct
+    end
+    
+    style Evo fill:#f9f,stroke:#333,stroke-width:2px
+    style Struct fill:#bbf,stroke:#333,stroke-width:2px
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
 </section>
 <section id="inputs-and-outputs" class="level3">
 <h3 class="anchored" data-anchor-id="inputs-and-outputs">Inputs and Outputs</h3>
@@ -323,14 +397,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="the-msa-why-evolutionary-information-matters" class="level3">
 <h3 class="anchored" data-anchor-id="the-msa-why-evolutionary-information-matters">The MSA: Why Evolutionary Information Matters</h3>
-<p>The Multiple Sequence Alignment is arguably the most important input to AlphaFold2.</p>
-<p><strong>What is an MSA?</strong> An MSA aligns your query sequence with evolutionarily related sequences:</p>
+<p>The Multiple Sequence Alignment is arguably the most important input to AlphaFold2. It aligns your query sequence with evolutionarily related sequences to find co-evolution patterns.</p>
 <pre><code>Query:     MKVLWAALLVTFLAGCQAKVEQAVETEPEPELRQQTEWQSGQRWELAL
 Homolog1:  MKVLWAALLVTFLAGCQAKVEQAVETEPEPELRQQTEWQSGQRWELAL
 Homolog2:  MKVLWGALLVTFLAGCQAKIEQAVETEPEPELRQQTEWQSGQRWDLAL
 Homolog3:  MKILWAALLVSFLAGCQAKVEQAVEAEPEPELRQQTEWQSGQRWELAL
            ** **.****:******* :*****.**************.*:***</code></pre>
-<p><strong>Why it matters:</strong> - <strong>Co-evolution</strong>: Residues that contact each other in 3D co-evolve in sequence - <strong>Constraints</strong>: The MSA reveals which positions can vary together - <strong>Evolutionary pressure</strong>: Conserved positions are often functionally important</p>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -344,19 +416,339 @@ Homolog3:  MKILWAALLVSFLAGCQAKVEQAVEAEPEPELRQQTEWQSGQRWELAL
 <p>AlphaFold2’s accuracy depends heavily on MSA quality. Proteins with few homologs (orphan proteins, designed proteins) are harder to predict because there’s less evolutionary information to leverage.</p>
 </div>
 </div>
+<section id="how-msas-are-generated" class="level4">
+<h4 class="anchored" data-anchor-id="how-msas-are-generated">How MSAs are Generated</h4>
+<p>AlphaFold2 uses multiple database search tools to build comprehensive MSAs:</p>
+<p><strong>JackHMMER</strong> (iterative profile HMM search):</p>
+<ul>
+<li>Searches UniRef90, MGnify, and other databases</li>
+<li>Iteratively builds a profile from hits and re-searches</li>
+<li>Highly sensitive but computationally expensive</li>
+<li>Used for the “genetic” MSA in AlphaFold2</li>
+</ul>
+<p><strong>HHBlits</strong> (HMM-HMM search):</p>
+<ul>
+<li>Searches clustered databases like BFD (Big Fantastic Database)</li>
+<li>Faster than JackHMMER with comparable sensitivity</li>
+<li>Used for additional MSA depth</li>
+</ul>
+<p><strong>MMseqs2</strong> (ColabFold’s approach):</p>
+<ul>
+<li>100-1000x faster than JackHMMER</li>
+<li>Searches pre-computed ColabFold databases</li>
+<li>Slight accuracy trade-off for massive speed gains</li>
+<li>Makes AlphaFold2 practical for large-scale predictions</li>
+</ul>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>MSA Depth Matters
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The number of effective sequences (Neff) in an MSA correlates strongly with prediction accuracy:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Neff</th>
+<th>Expected Accuracy</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>&gt;1000</td>
+<td>High confidence predictions likely</td>
+</tr>
+<tr class="even">
+<td>100-1000</td>
+<td>Good predictions for most proteins</td>
+</tr>
+<tr class="odd">
+<td>30-100</td>
+<td>Predictions may be unreliable in some regions</td>
+</tr>
+<tr class="even">
+<td>&lt;30</td>
+<td>Significant uncertainty; consider single-sequence methods</td>
+</tr>
+</tbody>
+</table>
+<p>Neff accounts for sequence redundancy—100 nearly identical sequences contribute less information than 100 diverse sequences.</p>
+</div>
+</div>
+</section>
+<section id="co-evolution-the-key-to-structure-prediction" class="level4">
+<h4 class="anchored" data-anchor-id="co-evolution-the-key-to-structure-prediction">Co-evolution: The Key to Structure Prediction</h4>
+<p>The fundamental insight behind using MSAs for structure prediction is <strong>co-evolution</strong>: residues that are in physical contact in the 3D structure tend to mutate together during evolution to maintain their interaction.</p>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart LR
+    subgraph "In 3D Structure"
+        A[Residue i&lt;br/&gt;Asp⁻] &lt;--&gt; B[Residue j&lt;br/&gt;Lys⁺]
+    end
+
+    subgraph "During Evolution"
+        C[Asp⁻ → Lys⁺] --&gt; D[Lys⁺ → Asp⁻]
+    end
+
+    A --&gt; C
+    B --&gt; D
+
+    style A fill:#ffcccc
+    style B fill:#ccccff
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<p><strong>Why does this happen?</strong></p>
+<p>Consider two residues forming a salt bridge (Asp⁻ interacting with Lys⁺):</p>
+<ol type="1">
+<li>If position i mutates from Asp to Lys (negative to positive charge)</li>
+<li>The interaction is disrupted—the protein may misfold</li>
+<li><strong>Unless</strong> position j compensates by mutating from Lys to Asp</li>
+<li>The complementary mutation restores the interaction</li>
+</ol>
+<p>This creates <strong>correlated mutations</strong> that we can detect statistically across thousands of homologous sequences.</p>
+</section>
+<section id="from-co-evolution-to-contacts-direct-coupling-analysis" class="level4">
+<h4 class="anchored" data-anchor-id="from-co-evolution-to-contacts-direct-coupling-analysis">From Co-evolution to Contacts: Direct Coupling Analysis</h4>
+<p>Before deep learning, methods like <strong>Direct Coupling Analysis (DCA)</strong> extracted contact predictions from MSAs:</p>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart TD
+    MSA[Multiple Sequence Alignment] --&gt; MI[Mutual Information&lt;br/&gt;Raw correlations]
+    MI --&gt; Problem[Problem: Transitive correlations&lt;br/&gt;A↔B and B↔C implies spurious A↔C]
+    Problem --&gt; DCA[Direct Coupling Analysis&lt;br/&gt;Separates direct from indirect]
+    DCA --&gt; Contacts[Contact Predictions]
+
+    style Problem fill:#ffcccc
+    style DCA fill:#ccffcc
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<p><strong>The challenge</strong>: If residue A co-evolves with B, and B co-evolves with C, simple correlation analysis will show spurious A↔︎C co-evolution even if they never contact.</p>
+<p><strong>DCA’s solution</strong>: Use inverse covariance (precision) matrices or pseudolikelihood methods to separate <strong>direct</strong> couplings from <strong>indirect</strong> (transitive) correlations.</p>
+<p>AlphaFold2 doesn’t explicitly compute DCA—instead, its attention mechanisms learn to extract these signals directly from the MSA representation.</p>
+</section>
+<section id="how-alphafold2-processes-the-msa" class="level4">
+<h4 class="anchored" data-anchor-id="how-alphafold2-processes-the-msa">How AlphaFold2 Processes the MSA</h4>
+<p>The MSA enters AlphaFold2 as a tensor with dimensions:</p>
+<ul>
+<li><strong>Sequences</strong>: Number of aligned sequences (typically ~500-5000, subsampled from full MSA)</li>
+<li><strong>Residues</strong>: Length of the query sequence</li>
+<li><strong>Features</strong>: One-hot encoding + positional features (22 dimensions per residue)</li>
+</ul>
+<p>The model processes this through two parallel representations:</p>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart TB
+    MSA[MSA Input&lt;br/&gt;N_seq × L × 22] --&gt; MSArep[MSA Representation&lt;br/&gt;N_seq × L × 256]
+    MSA --&gt; Pair[Pair Representation&lt;br/&gt;L × L × 128]
+
+    MSArep &lt;--&gt; Evo[Evoformer&lt;br/&gt;48 blocks]
+    Pair &lt;--&gt; Evo
+
+    Evo --&gt; Final[To Structure Module]
+
+    style Evo fill:#f9f,stroke:#333,stroke-width:2px
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<ul>
+<li><strong>MSA Representation</strong>: Tracks information about each residue in each sequence</li>
+<li><strong>Pair Representation</strong>: Tracks relationships between all pairs of residues in the query</li>
+</ul>
+<div class="quiz-container" data-correct-index="1" data-correct-feedback="Exactly! Co-evolutionary signals (residues mutating together) act as distance constraints for the model." data-incorrect-feedback="Not quite. While more data helps, the specific reason is co-evolution.">
+  <div class="quiz-header"><i class="bi bi-question-circle-fill"></i> Check Your Understanding</div>
+  <div class="quiz-question">Why is the MSA so critical for AlphaFold2's accuracy?</div>
+  <div class="quiz-options">
+    <div class="quiz-option">It provides template structures for the model to copy.</div>
+    <div class="quiz-option">It reveals co-evolutionary patterns that imply 3D contacts.</div>
+    <div class="quiz-option">It just increases the size of the training data.</div>
+  </div>
+  <button class="check-btn">Check Answer</button>
+  <div class="quiz-feedback"></div>
+</div>
+</section>
 </section>
 <section id="the-evoformer-learning-from-evolution" class="level3">
 <h3 class="anchored" data-anchor-id="the-evoformer-learning-from-evolution">The Evoformer: Learning from Evolution</h3>
-<p>The Evoformer is AlphaFold2’s core innovation—a neural network architecture that reasons about:</p>
-<ol type="1">
-<li><strong>MSA representation</strong>: Information from evolutionary sequences</li>
-<li><strong>Pair representation</strong>: Relationships between residue pairs</li>
-</ol>
-<p><strong>Key operations:</strong></p>
+<p>The Evoformer is AlphaFold2’s core innovation—a specialized neural network architecture that processes evolutionary information to understand protein structure. It consists of <strong>48 blocks</strong>, each updating two interconnected representations.</p>
+<section id="the-two-representations" class="level4">
+<h4 class="anchored" data-anchor-id="the-two-representations">The Two Representations</h4>
+<p>The Evoformer maintains and iteratively refines two tensors:</p>
+<p><strong>1. MSA Representation</strong> (N_seq × L × 256):</p>
 <ul>
-<li><strong>Attention mechanisms</strong>: Allow the model to focus on relevant parts of the MSA</li>
-<li><strong>Triangle updates</strong>: Enforce geometric consistency (if A is close to B, and B is close to C, what does that imply about A and C?)</li>
-<li><strong>Iterative refinement</strong>: Multiple passes through the Evoformer improve predictions</li>
+<li>Each entry represents one residue in one sequence</li>
+<li>Captures per-position information across evolutionary history</li>
+<li>Updated by row and column attention</li>
+</ul>
+<p><strong>2. Pair Representation</strong> (L × L × 128):</p>
+<ul>
+<li>Each entry represents the relationship between two residues</li>
+<li>Encodes distance, orientation, and contact information</li>
+<li>Updated by triangle attention and outer product mean</li>
+</ul>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart TB
+    subgraph "Evoformer Block (×48)"
+        subgraph "MSA Stack"
+            Row[Row-wise Attention&lt;br/&gt;with pair bias]
+            Col[Column-wise Attention]
+        end
+
+        subgraph "Communication"
+            OPM[Outer Product Mean&lt;br/&gt;MSA → Pair]
+        end
+
+        subgraph "Pair Stack"
+            TriStart[Triangle Attention&lt;br/&gt;Starting Node]
+            TriEnd[Triangle Attention&lt;br/&gt;Ending Node]
+            TriOut[Triangle Multiplicative&lt;br/&gt;Outgoing]
+            TriIn[Triangle Multiplicative&lt;br/&gt;Incoming]
+            Trans[Transition Layer]
+        end
+    end
+
+    Row --&gt; Col
+    Col --&gt; OPM
+    OPM --&gt; TriStart
+    TriStart --&gt; TriEnd
+    TriEnd --&gt; TriOut
+    TriOut --&gt; TriIn
+    TriIn --&gt; Trans
+
+    style OPM fill:#ffd700
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+</section>
+<section id="row-wise-attention-within-sequence-reasoning" class="level4">
+<h4 class="anchored" data-anchor-id="row-wise-attention-within-sequence-reasoning">Row-wise Attention: Within-Sequence Reasoning</h4>
+<p>Row attention operates along the residue dimension for each sequence in the MSA:</p>
+<pre><code>For each sequence s in the MSA:
+    Query, Key, Value = Linear projections of MSA representation
+    Attention weights = softmax(Q·K^T / √d + pair_bias)
+    Output = Attention weights · V</code></pre>
+<p><strong>Key insight</strong>: The attention weights are <strong>biased by the pair representation</strong>. This means the model’s understanding of residue relationships directly influences how it processes each sequence.</p>
+<p><strong>What this achieves</strong>:</p>
+<ul>
+<li>Residues that are structurally related attend to each other</li>
+<li>Long-range dependencies are captured regardless of sequence distance</li>
+<li>The pair bias acts like a “structural prior” during MSA processing</li>
+</ul>
+</section>
+<section id="column-wise-attention-cross-sequence-reasoning" class="level4">
+<h4 class="anchored" data-anchor-id="column-wise-attention-cross-sequence-reasoning">Column-wise Attention: Cross-Sequence Reasoning</h4>
+<p>Column attention operates across sequences at each position:</p>
+<pre><code>For each position i in the sequence:
+    Compare how position i appears across all sequences
+    Learn patterns of conservation and variation</code></pre>
+<p><strong>What this achieves</strong>:</p>
+<ul>
+<li>Identifies conserved residues (important for function/structure)</li>
+<li>Detects co-varying positions (co-evolution signal)</li>
+<li>Aggregates information from thousands of evolutionary samples</li>
+</ul>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Row vs Column Attention Intuition
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><strong>Row attention</strong>: “What other positions in this sequence are relevant to position i?”</li>
+<li><strong>Column attention</strong>: “What can I learn about position i by looking at how it varies across evolution?”</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="the-outer-product-mean-bridging-msa-and-pairs" class="level4">
+<h4 class="anchored" data-anchor-id="the-outer-product-mean-bridging-msa-and-pairs">The Outer Product Mean: Bridging MSA and Pairs</h4>
+<p>The <strong>Outer Product Mean</strong> is the critical operation that transfers co-evolution information from the MSA representation into the pair representation:</p>
+<pre><code>For positions i and j:
+    pair_update[i,j] = Mean over sequences s of (MSA[s,i] ⊗ MSA[s,j])</code></pre>
+<p>Where ⊗ denotes the outer product.</p>
+<p><strong>Intuition</strong>: If positions i and j consistently appear together in certain amino acid combinations across many sequences, this outer product will capture that correlation and inject it into the pair representation.</p>
+<p><strong>This is how AlphaFold2 “learns” co-evolution</strong>: The outer product implicitly computes correlation statistics between positions, similar to what DCA does explicitly—but in a learnable, differentiable way.</p>
+</section>
+<section id="triangle-updates-enforcing-geometric-consistency" class="level4">
+<h4 class="anchored" data-anchor-id="triangle-updates-enforcing-geometric-consistency">Triangle Updates: Enforcing Geometric Consistency</h4>
+<p>The triangle updates are what make the pair representation geometrically consistent. They’re based on a simple principle: <strong>distances must satisfy the triangle inequality</strong>.</p>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart LR
+    subgraph "Triangle Inequality"
+        A((i)) --- B((j))
+        B --- C((k))
+        A --- C
+    end
+
+    subgraph "Constraint"
+        D[d_ij + d_jk ≥ d_ik]
+    end
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<p>If we know the relationships i↔︎k and k↔︎j, we can infer something about i↔︎j.</p>
+<p><strong>Triangle Attention</strong> (Starting and Ending Node):</p>
+<ul>
+<li>“Starting node”: For edge i→j, attend over all edges i→k that share the starting node</li>
+<li>“Ending node”: For edge i→j, attend over all edges k→j that share the ending node</li>
+</ul>
+<pre><code>Triangle attention (starting):
+    For edge (i,j): aggregate information from all (i,k) edges
+
+Triangle attention (ending):
+    For edge (i,j): aggregate information from all (k,j) edges</code></pre>
+<p><strong>Triangle Multiplicative Updates</strong> (Outgoing and Incoming):</p>
+<p>These use multiplicative gating to combine information:</p>
+<pre><code>Triangle multiplicative (outgoing):
+    pair[i,j] += Σ_k gate(pair[i,k]) × pair[k,j]
+
+Triangle multiplicative (incoming):
+    pair[i,j] += Σ_k pair[i,k] × gate(pair[k,j])</code></pre>
+<p><strong>Why both attention AND multiplicative?</strong> They capture different types of relationships:</p>
+<ul>
+<li>Attention: Soft selection of which intermediate nodes k matter</li>
+<li>Multiplicative: Direct combination of path information</li>
 </ul>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -364,36 +756,270 @@ Homolog3:  MKILWAALLVSFLAGCQAKVEQAVEAEPEPELRQQTEWQSGQRWELAL
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Understanding Attention
+<span class="screen-reader-only">Tip</span>Triangle Updates Are Like Message Passing on a Graph
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>If you want to understand attention mechanisms better, check out this excellent 3Blue1Brown video:</p>
-<p><a href="https://www.youtube.com/watch?v=P_fHJIYENdI">But what is a GPT? Visual intro to transformers</a></p>
-<p>While it’s about language models, the attention concepts apply directly to AlphaFold2.</p>
+<p>Think of the pair representation as a fully-connected graph where each edge (i,j) stores information. Triangle updates pass messages along triangles, enforcing that if A is close to B and B is close to C, this constrains the A-C relationship.</p>
 </div>
 </div>
 </section>
-<section id="the-structure-module-from-constraints-to-coordinates" class="level3">
-<h3 class="anchored" data-anchor-id="the-structure-module-from-constraints-to-coordinates">The Structure Module: From Constraints to Coordinates</h3>
-<p>The Structure Module converts the Evoformer’s learned representations into actual 3D coordinates.</p>
-<p><strong>Key concept: SE(3) Equivariance</strong></p>
-<p>Proteins don’t have a preferred orientation in space. If you rotate or translate a protein: - <strong>It’s still the same protein</strong> (invariance of identity) - <strong>The coordinates change in a predictable way</strong> (equivariance of position)</p>
-<p>AlphaFold2’s Structure Module is designed to respect these symmetries:</p>
-<pre><code>SE(3) = Special Euclidean group in 3D
-      = Rotations + Translations</code></pre>
-<p><strong>What this means practically:</strong> - The model predicts the same structure regardless of input orientation - Coordinates transform correctly under rotations - No need to align inputs to a reference frame</p>
-</section>
-<section id="recycling-self-correction" class="level3">
-<h3 class="anchored" data-anchor-id="recycling-self-correction">Recycling: Self-Correction</h3>
-<p>AlphaFold2 doesn’t just predict once—it <strong>recycles</strong> predictions through the network multiple times:</p>
+<section id="evoformer-summary" class="level4">
+<h4 class="anchored" data-anchor-id="evoformer-summary">Evoformer Summary</h4>
+<p>After 48 blocks, the Evoformer has:</p>
 <ol type="1">
-<li>Make initial prediction</li>
-<li>Feed prediction back as input</li>
-<li>Refine based on learned constraints</li>
-<li>Repeat 3+ times</li>
+<li><strong>Extracted co-evolutionary signals</strong> from the MSA via column attention and outer product mean</li>
+<li><strong>Propagated structural information</strong> through row attention with pair bias</li>
+<li><strong>Enforced geometric consistency</strong> through triangle updates</li>
+<li>Built a <strong>rich pair representation</strong> encoding likely 3D relationships</li>
 </ol>
-<p>This allows the model to self-correct and converge to better structures.</p>
+<div class="quiz-container" data-correct-index="2" data-correct-feedback="Correct! The outer product mean computes correlation statistics between MSA positions and injects them into the pair representation." data-incorrect-feedback="Not quite. The outer product mean is the key operation for co-evolution.">
+  <div class="quiz-header"><i class="bi bi-question-circle-fill"></i> Check Your Understanding</div>
+  <div class="quiz-question">Which Evoformer operation transfers co-evolution signals from the MSA to the pair representation?</div>
+  <div class="quiz-options">
+    <div class="quiz-option">Row-wise attention</div>
+    <div class="quiz-option">Triangle multiplicative update</div>
+    <div class="quiz-option">Outer product mean</div>
+    <div class="quiz-option">Column-wise attention</div>
+  </div>
+  <button class="check-btn">Check Answer</button>
+  <div class="quiz-feedback"></div>
+</div>
+<hr>
+</section>
+</section>
+<section id="the-structure-module-from-representations-to-3d-coordinates" class="level3">
+<h3 class="anchored" data-anchor-id="the-structure-module-from-representations-to-3d-coordinates">The Structure Module: From Representations to 3D Coordinates</h3>
+<p>The Structure Module takes the refined representations from the Evoformer and converts them into actual 3D atomic coordinates. This is where AlphaFold2 transitions from “reasoning about structure” to “predicting structure.”</p>
+<section id="the-key-challenge-se3-equivariance" class="level4">
+<h4 class="anchored" data-anchor-id="the-key-challenge-se3-equivariance">The Key Challenge: SE(3) Equivariance</h4>
+<p>Protein structure prediction has a fundamental requirement: <strong>the prediction should be independent of how we orient the input</strong>.</p>
+<ul>
+<li>If we rotate the coordinate frame, the predicted structure should rotate identically</li>
+<li>If we translate the origin, distances should be preserved</li>
+<li>The prediction should depend only on intrinsic properties, not arbitrary reference frames</li>
+</ul>
+<p>This is called <strong>SE(3) equivariance</strong> (Special Euclidean group in 3D = rotations + translations).</p>
+<p><strong>The problem</strong>: Standard neural networks don’t naturally respect this symmetry. A naive network would give different predictions for the same protein oriented differently.</p>
+</section>
+<section id="frames-the-backbone-representation" class="level4">
+<h4 class="anchored" data-anchor-id="frames-the-backbone-representation">Frames: The Backbone Representation</h4>
+<p>AlphaFold2 represents each residue using a <strong>local coordinate frame</strong> (also called a “rigid body” or “frame”):</p>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart LR
+    subgraph "Residue Frame"
+        O[Origin at Cα] --&gt; X[x-axis: N→Cα direction]
+        O --&gt; Y[y-axis: perpendicular in plane]
+        O --&gt; Z[z-axis: completes right-hand system]
+    end
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<p>Each frame consists of:</p>
+<ul>
+<li><strong>Translation</strong> (t): The 3D position of the Cα atom</li>
+<li><strong>Rotation</strong> (R): A 3×3 rotation matrix defining the local orientation</li>
+</ul>
+<p>The backbone is thus represented as a sequence of frames: T₁, T₂, …, T_L</p>
+<p><strong>Why frames?</strong> They naturally encode:</p>
+<ul>
+<li>Position (where is this residue?)</li>
+<li>Orientation (how is the peptide bond oriented?)</li>
+<li>Relative geometry (how do two residues relate in space?)</li>
+</ul>
+</section>
+<section id="invariant-point-attention-ipa-the-core-innovation" class="level4">
+<h4 class="anchored" data-anchor-id="invariant-point-attention-ipa-the-core-innovation">Invariant Point Attention (IPA): The Core Innovation</h4>
+<p><strong>Invariant Point Attention</strong> is the structure module’s key mechanism. It’s a modified attention operation that:</p>
+<ol type="1">
+<li>Is <strong>invariant</strong> to global rotations and translations</li>
+<li>Can reason about <strong>3D geometric relationships</strong></li>
+<li>Uses both the <strong>pair representation</strong> and <strong>current 3D coordinates</strong></li>
+</ol>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart TB
+    subgraph "IPA Inputs"
+        Single[Single Representation&lt;br/&gt;per-residue features]
+        Pair[Pair Representation&lt;br/&gt;from Evoformer]
+        Frames[Current Frames&lt;br/&gt;T_i for each residue]
+    end
+
+    subgraph "IPA Computation"
+        QKV[Generate Q, K, V&lt;br/&gt;in local frames]
+        Points[Generate query/key points&lt;br/&gt;in local coordinates]
+        Transform[Transform points to&lt;br/&gt;global frame]
+        Dist[Compute point-to-point&lt;br/&gt;distances]
+        Attn[Attention with&lt;br/&gt;pair bias + distance bias]
+    end
+
+    Single --&gt; QKV
+    Frames --&gt; Points
+    Points --&gt; Transform
+    Transform --&gt; Dist
+    Pair --&gt; Attn
+    Dist --&gt; Attn
+    QKV --&gt; Attn
+
+    Attn --&gt; Output[Updated Single&lt;br/&gt;Representation]
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<p><strong>The “invariant points” trick</strong>:</p>
+<ol type="1">
+<li>Each residue generates “query points” and “key points” in its local coordinate frame</li>
+<li>These points are transformed to the global frame using the current frame estimate</li>
+<li>Distances between points are computed (distances are invariant to rotation/translation!)</li>
+<li>These distances bias the attention weights</li>
+</ol>
+<p><strong>Why this works</strong>: By working with distances between transformed points, IPA can reason about 3D geometry while remaining invariant to the choice of global reference frame.</p>
+</section>
+<section id="the-frame-update-predicting-backbone-geometry" class="level4">
+<h4 class="anchored" data-anchor-id="the-frame-update-predicting-backbone-geometry">The Frame Update: Predicting Backbone Geometry</h4>
+<p>After each IPA layer, the structure module updates the residue frames:</p>
+<pre><code>For each residue i:
+    quaternion, translation = MLP(single_representation[i])
+    T_i = T_i ∘ (quaternion_to_rotation(quaternion), translation)</code></pre>
+<p><strong>Key insight</strong>: Updates are applied as <strong>compositions</strong> with the current frame, not absolute predictions. This makes learning easier—the network only needs to predict small refinements.</p>
+<p>The frames start from an initial guess (often just the identity—all residues at the origin with no rotation) and are iteratively refined.</p>
+</section>
+<section id="side-chain-prediction-torsion-angles" class="level4">
+<h4 class="anchored" data-anchor-id="side-chain-prediction-torsion-angles">Side Chain Prediction: Torsion Angles</h4>
+<p>The structure module also predicts <strong>side chain conformations</strong> using torsion (dihedral) angles:</p>
+<pre><code>backbone torsion angles: φ, ψ, ω
+side chain torsion angles: χ₁, χ₂, χ₃, χ₄ (depending on amino acid)</code></pre>
+<p>Each angle is predicted as:</p>
+<pre><code>(sin(angle), cos(angle)) = MLP(single_representation)
+angle = atan2(sin, cos)</code></pre>
+<p><strong>Why sin/cos instead of the angle directly?</strong> Angles wrap around (0° = 360°), which creates discontinuities. Predicting (sin, cos) avoids this problem.</p>
+</section>
+<section id="from-frames-to-atoms" class="level4">
+<h4 class="anchored" data-anchor-id="from-frames-to-atoms">From Frames to Atoms</h4>
+<p>Once we have frames and torsion angles, computing atom positions is deterministic:</p>
+<pre><code>For each residue:
+    1. Place backbone atoms (N, Cα, C, O) using the frame
+    2. Place Cβ using ideal bond geometry
+    3. Rotate each side chain bond by predicted χ angles
+    4. All atom positions fall out of the geometry</code></pre>
+<p>This uses <strong>idealized bond lengths and angles</strong> from chemistry—the network only predicts the “free” degrees of freedom (frame rotations/translations and torsion angles).</p>
+</section>
+<section id="structure-module-architecture-summary" class="level4">
+<h4 class="anchored" data-anchor-id="structure-module-architecture-summary">Structure Module Architecture Summary</h4>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart TB
+    EvoOut[Evoformer Output&lt;br/&gt;Single + Pair repr.] --&gt; Init[Initialize Frames&lt;br/&gt;Identity transforms]
+
+    subgraph "Structure Module (8 layers)"
+        Init --&gt; IPA1[IPA Layer 1]
+        IPA1 --&gt; Update1[Frame Update]
+        Update1 --&gt; IPA2[IPA Layer 2]
+        IPA2 --&gt; Update2[Frame Update]
+        Update2 --&gt; Dots[...]
+        Dots --&gt; IPA8[IPA Layer 8]
+        IPA8 --&gt; Update8[Frame Update]
+    end
+
+    Update8 --&gt; Torsion[Predict Torsion Angles]
+    Update8 --&gt; Final[Final Frames]
+
+    Final --&gt; Atoms[Compute Atom&lt;br/&gt;Positions]
+    Torsion --&gt; Atoms
+
+    style IPA1 fill:#bbf
+    style IPA8 fill:#bbf
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="recycling-iterative-refinement" class="level3">
+<h3 class="anchored" data-anchor-id="recycling-iterative-refinement">Recycling: Iterative Refinement</h3>
+<p>AlphaFold2 doesn’t just run once—it <strong>recycles</strong> its predictions back as input for multiple rounds of refinement.</p>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart LR
+    subgraph "Recycle 1"
+        E1[Evoformer] --&gt; S1[Structure Module]
+    end
+
+    subgraph "Recycle 2"
+        E2[Evoformer] --&gt; S2[Structure Module]
+    end
+
+    subgraph "Recycle 3"
+        E3[Evoformer] --&gt; S3[Structure Module]
+    end
+
+    S1 --&gt;|"Pair repr + structure"| E2
+    S2 --&gt;|"Pair repr + structure"| E3
+    S3 --&gt; Final[Final Prediction]
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<p><strong>What gets recycled?</strong></p>
+<ol type="1">
+<li><strong>Pair representation</strong> from previous iteration</li>
+<li><strong>Predicted structure</strong> (frames) from structure module</li>
+<li><strong>First row of MSA representation</strong> (query sequence features)</li>
+</ol>
+<p><strong>Why recycle?</strong></p>
+<ul>
+<li>The Evoformer can use structural information to better interpret the MSA</li>
+<li>Iterative refinement allows progressive improvement</li>
+<li>Similar to how Rosetta uses “iterative assembly” in fragment-based prediction</li>
+</ul>
+<p><strong>Typical recycling</strong>: 3 rounds (default), up to 20 for difficult targets</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Recycling Creates an Implicit “Dynamics”
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Each recycle can be thought of as a step of optimization. The structure progressively “folds” from a random initial state toward the predicted final structure. This is somewhat analogous to molecular dynamics or energy minimization.</p>
+</div>
+</div>
+<div class="quiz-container" data-correct-index="1" data-correct-feedback="Correct! IPA uses distances between points in 3D, which are naturally invariant to rotations and translations of the coordinate system." data-incorrect-feedback="Not quite. The key is that distances are invariant to SE(3) transformations.">
+  <div class="quiz-header"><i class="bi bi-question-circle-fill"></i> Check Your Understanding</div>
+  <div class="quiz-question">Why does Invariant Point Attention (IPA) use distances between transformed points?</div>
+  <div class="quiz-options">
+    <div class="quiz-option">To make computation faster</div>
+    <div class="quiz-option">Distances are invariant to rotation and translation</div>
+    <div class="quiz-option">Points are easier to visualize than frames</div>
+    <div class="quiz-option">To reduce memory usage</div>
+  </div>
+  <button class="check-btn">Check Answer</button>
+  <div class="quiz-feedback"></div>
+</div>
 <hr>
 </section>
 </section>
@@ -551,9 +1177,9 @@ Homolog3:  MKILWAALLVSFLAGCQAKVEQAVEAEPEPELRQQTEWQSGQRWELAL
 <h3 class="anchored" data-anchor-id="alphafold-multimer">AlphaFold-Multimer</h3>
 <p>Predicting protein complexes (multiple chains interacting):</p>
 <p><strong>Key modifications:</strong> - Cross-chain MSA pairing for evolutionary signal - Losses account for chain permutation symmetry - Interface-aware training</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># In your FASTA file, separate chains with ":"</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span><span class="bu">complex</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>SEQUENCEOFCHAINA:SEQUENCEOFCHAINB</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># In your FASTA file, separate chains with ":"</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span><span class="bu">complex</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>SEQUENCEOFCHAINA:SEQUENCEOFCHAINB</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="alphafold-database" class="level3">
 <h3 class="anchored" data-anchor-id="alphafold-database">AlphaFold Database</h3>
@@ -737,7 +1363,7 @@ MSKGEELFTGVVPILVELDGDVNGHKFSVSGEGEGDATYGKLTLKFICTTGKLPVPWPTLVTTFSYGVQCFSRYPDHMKQ
 <p>You can also download this file: <a href="files/1GFL.fasta">1GFL.fasta</a></p>
 <p><strong>2. Run prediction:</strong></p>
 <p>If using LocalColabFold on your HPC:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">colabfold_batch</span> gfp.fasta gfp_output/</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">colabfold_batch</span> gfp.fasta gfp_output/</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>If using the ColabFold notebook: - Go to <a href="https://colab.research.google.com/github/sokrypton/ColabFold/blob/main/AlphaFold2.ipynb">ColabFold</a> - Paste your sequence - Run all cells</p>
 <p><strong>3. Expected output:</strong> - <code>gfp_relaxed_rank_001_*.pdb</code> - Best predicted structure - <code>gfp_scores_rank_001_*.json</code> - Confidence scores - <code>gfp_coverage.png</code> - MSA coverage - <code>gfp_pae.png</code> - PAE heatmap</p>
 <p><strong>Expected runtime:</strong> 5-15 minutes depending on your hardware.</p>
@@ -745,13 +1371,13 @@ MSKGEELFTGVVPILVELDGDVNGHKFSVSGEGEGDATYGKLTLKFICTTGKLPVPWPTLVTTFSYGVQCFSRYPDHMKQ
 <section id="part-2-analyze-your-prediction" class="level3">
 <h3 class="anchored" data-anchor-id="part-2-analyze-your-prediction">Part 2: Analyze Your Prediction</h3>
 <p><strong>1. Load the structure in PyMOL:</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>load gfp_output<span class="op">/</span>gfp_relaxed_rank_001_alphafold2_ptm_model_1_seed_000.pdb, af2_gfp</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>load gfp_output<span class="op">/</span>gfp_relaxed_rank_001_alphafold2_ptm_model_1_seed_000.pdb, af2_gfp</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>2. Color by confidence (pLDDT):</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>spectrum b, blue_white_red, minimum<span class="op">=</span><span class="dv">50</span>, maximum<span class="op">=</span><span class="dv">100</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>spectrum b, blue_white_red, minimum<span class="op">=</span><span class="dv">50</span>, maximum<span class="op">=</span><span class="dv">100</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>3. Questions to answer:</strong> - What is the overall pLDDT? (Check the JSON file or PyMOL’s B-factor range) - Which regions have high confidence? Low confidence? - Does GFP have any disordered regions?</p>
 <p><strong>4. Compare to experimental structure:</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>fetch <span class="dv">1</span><span class="er">GFL</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>align af2_gfp, <span class="dv">1</span><span class="er">GFL</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>fetch <span class="dv">1</span><span class="er">GFL</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>align af2_gfp, <span class="dv">1</span><span class="er">GFL</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ul>
 <li>What is the RMSD between prediction and experiment?</li>
 <li>Do the structures overlay well?</li>
@@ -766,13 +1392,13 @@ MSKGEELFTGVVPILVELDGDVNGHKFSVSGEGEGDATYGKLTLKFICTTGKLPVPWPTLVTTFSYGVQCFSRYPDHMKQ
 <h3 class="anchored" data-anchor-id="part-4-experiment-with-parameters">Part 4: Experiment with Parameters</h3>
 <p>Try running predictions with different settings:</p>
 <p><strong>Experiment 1: Fewer recycles</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">colabfold_batch</span> <span class="at">--num-recycle</span> 1 gfp.fasta gfp_1recycle/</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="ex">colabfold_batch</span> <span class="at">--num-recycle</span> 1 gfp.fasta gfp_1recycle/</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Compare to the default (3 recycles). Is there a difference in quality?</p>
 <p><strong>Experiment 2: Single sequence (no MSA)</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">colabfold_batch</span> <span class="at">--msa-mode</span> single_sequence gfp.fasta gfp_single_seq/</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="ex">colabfold_batch</span> <span class="at">--msa-mode</span> single_sequence gfp.fasta gfp_single_seq/</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>This mimics what ESMFold does. How does quality compare?</p>
 <p><strong>Experiment 3: All 5 models</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="ex">colabfold_batch</span> <span class="at">--num-models</span> 5 gfp.fasta gfp_all_models/</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="ex">colabfold_batch</span> <span class="at">--num-models</span> 5 gfp.fasta gfp_all_models/</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Do the different models agree? What’s the variance in pLDDT?</p>
 </section>
 <section id="part-5-multimer-prediction-optional" class="level3">
@@ -783,7 +1409,7 @@ MSKGEELFTGVVPILVELDGDVNGHKFSVSGEGEGDATYGKLTLKFICTTGKLPVPWPTLVTTFSYGVQCFSRYPDHMKQ
 MSKGEELFTGVVPILVELDGDVNGHKFSVSGEGEGDATYGKLTLKFICTTGKLPVPWPTLVTTFSYGVQCFSRYPDHMKQHDFFKSAMPEGYVQERTIFFKDDGNYKTRAEVKFEGDTLVNRIELKGIDFKEDGNILGHKLEYNYNSHNVYIMADKQKNGIKVNFKIRHNIEDGSVQLADHYQQNTPIGDGPVLLPDNHYLSTQSALSKDPNEKRDHMVLLEFVTAAGITHGMDELYK:MSKGEELFTGVVPILVELDGDVNGHKFSVSGEGEGDATYGKLTLKFICTTGKLPVPWPTLVTTFSYGVQCFSRYPDHMKQHDFFKSAMPEGYVQERTIFFKDDGNYKTRAEVKFEGDTLVNRIELKGIDFKEDGNILGHKLEYNYNSHNVYIMADKQKNGIKVNFKIRHNIEDGSVQLADHYQQNTPIGDGPVLLPDNHYLSTQSALSKDPNEKRDHMVLLEFVTAAGITHGMDELYK</code></pre>
 <p>(Note: The <code>:</code> separates chains)</p>
 <p><strong>2. Run prediction:</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="ex">colabfold_batch</span> homodimer.fasta homodimer_output/</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="ex">colabfold_batch</span> homodimer.fasta homodimer_output/</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>3. Analyze:</strong> - What is the ipTM score? - Does the interface look reasonable? - Check PAE for interface confidence (off-diagonal blocks)</p>
 </section>
 <section id="questions-to-consider" class="level3">
@@ -1001,6 +1627,161 @@ MSKGEELFTGVVPILVELDGDVNGHKFSVSGEGEGDATYGKLTLKFICTTGKLPVPWPTLVTTFSYGVQCFSRYPDHMKQ
     addMarkAllButton();
   });
 })();
+</script>
+<style>
+.quiz-container {
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin: 2rem 0;
+  background-color: #f8f9fa;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.quiz-header {
+  font-weight: 600;
+  color: #495057;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.quiz-header i {
+  color: #0d6efd;
+}
+
+.quiz-question {
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+  font-weight: 500;
+}
+
+.quiz-options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.quiz-option {
+  padding: 0.75rem 1rem;
+  border: 1px solid #dee2e6;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background-color: white;
+}
+
+.quiz-option:hover {
+  background-color: #e9ecef;
+  border-color: #adb5bd;
+}
+
+.quiz-option.selected {
+  background-color: #e7f1ff;
+  border-color: #0d6efd;
+  color: #0d6efd;
+}
+
+.quiz-option.correct {
+  background-color: #d1e7dd;
+  border-color: #198754;
+  color: #0f5132;
+}
+
+.quiz-option.incorrect {
+  background-color: #f8d7da;
+  border-color: #dc3545;
+  color: #842029;
+}
+
+.quiz-feedback {
+  margin-top: 1rem;
+  padding: 0.75rem;
+  border-radius: 6px;
+  display: none;
+  font-size: 0.95rem;
+}
+
+.quiz-feedback.correct {
+  background-color: #d1e7dd;
+  color: #0f5132;
+  display: block;
+}
+
+.quiz-feedback.incorrect {
+  background-color: #f8d7da;
+  color: #842029;
+  display: block;
+}
+
+.check-btn {
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  background-color: #0d6efd;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.check-btn:hover {
+  background-color: #0b5ed7;
+}
+
+.check-btn:disabled {
+  background-color: #6c757d;
+  cursor: not-allowed;
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const quizzes = document.querySelectorAll('.quiz-container');
+
+  quizzes.forEach(quiz => {
+    const options = quiz.querySelectorAll('.quiz-option');
+    const checkBtn = quiz.querySelector('.check-btn');
+    const feedback = quiz.querySelector('.quiz-feedback');
+    const correctIndex = parseInt(quiz.dataset.correctIndex);
+    let selectedIndex = -1;
+
+    options.forEach((option, index) => {
+      option.addEventListener('click', () => {
+        if (checkBtn.disabled) return; // Already answered
+        
+        options.forEach(opt => opt.classList.remove('selected'));
+        option.classList.add('selected');
+        selectedIndex = index;
+      });
+    });
+
+    checkBtn.addEventListener('click', () => {
+      if (selectedIndex === -1) return;
+
+      // Disable interaction
+      checkBtn.disabled = true;
+      checkBtn.textContent = 'Submitted';
+      
+      const selectedOption = options[selectedIndex];
+      const correctOption = options[correctIndex];
+
+      if (selectedIndex === correctIndex) {
+        selectedOption.classList.add('correct');
+        selectedOption.classList.remove('selected');
+        feedback.textContent = quiz.dataset.correctFeedback || "Correct! Great job.";
+        feedback.className = 'quiz-feedback correct';
+      } else {
+        selectedOption.classList.add('incorrect');
+        selectedOption.classList.remove('selected');
+        correctOption.classList.add('correct'); // Show the right answer
+        feedback.textContent = quiz.dataset.incorrectFeedback || "Not quite. The correct answer is highlighted.";
+        feedback.className = 'quiz-feedback incorrect';
+      }
+    });
+  });
+});
 </script>
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {

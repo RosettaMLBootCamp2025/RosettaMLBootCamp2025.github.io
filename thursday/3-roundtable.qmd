@@ -1,0 +1,73 @@
+---
+title: "3. Roundtable Discussion"
+---
+
+The roundtable discussion is an interactive session where you'll engage with peers and instructors to discuss your learning journey, share insights, and explore the future of ML-driven protein design.
+
+## Slides
+
+```{=html}
+<iframe src="https://docs.google.com/presentation/d/1q7JIBgvSpYX4gPsRdyW8XZlx0jBR_G7Y/embed?start=false&loop=false&delayms=3000" frameborder="0" width="100%" height="500" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+```
+
+---
+
+## Purpose
+
+This roundtable provides an opportunity to:
+
+- **Reflect on the week**: What have you learned? What surprised you?
+- **Share experiences**: Discuss challenges and breakthroughs with peers
+- **Ask questions**: Get instructor insights on topics that interest you
+- **Look ahead**: Discuss how these tools might evolve and impact your research
+
+## Discussion Format
+
+The roundtable is structured to encourage open dialogue and knowledge sharing among all participants. Come prepared with questions and observations from your work throughout the bootcamp.
+
+::: {.callout-tip}
+## Preparation
+Think about which tools you found most useful, what challenges you encountered, and how you might apply these methods to your own research.
+:::
+
+---
+
+## Topics to Consider
+
+As you prepare for the discussion, consider these themes:
+
+### Technical Reflections
+
+- Which prediction tool (AlphaFold2, ESMFold, etc.) gave the best results for your proteins?
+- How did you decide which design tool to use for different applications?
+- What surprised you about CPU vs GPU performance?
+
+### Practical Applications
+
+- How might these tools fit into your current research workflow?
+- What validation experiments would you need to trust the predictions?
+- How do you handle cases where different tools give conflicting predictions?
+
+### Future Directions
+
+- What capabilities are still missing from current tools?
+- How might these tools evolve in the next few years?
+- What ethical considerations arise from democratized protein design?
+
+---
+
+## Preparing for the Capstone
+
+The roundtable also serves as a transition to the capstone project. Use this time to:
+
+1. **Discuss your target choice**: Share which capstone target interests you and why
+2. **Plan your approach**: Get feedback on your design strategy
+3. **Form collaborations**: Find peers with complementary skills or interests
+
+---
+
+<div style="display: flex; justify-content: space-between; align-items: center;">
+<div>[← Docking](2-docking.qmd)</div>
+<div>[Back to Home](../index.qmd)</div>
+<div>[Capstone →](../capstone/index.qmd)</div>
+</div>

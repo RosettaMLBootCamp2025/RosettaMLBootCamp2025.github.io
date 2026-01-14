@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>1. AlphaFold3 vs.&nbsp;Chai-1 – ML Protein Design Bootcamp 2025</title>
+<title>1. CPU vs GPU Computing – ML Protein Design Bootcamp 2025</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -19,6 +19,41 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -86,7 +121,7 @@ ul.task-list li input[type="checkbox"] {
 <link rel="stylesheet" href="../styles.css">
 </head>
 
-<body class="nav-fixed quarto-light">
+<body class="nav-sidebar floating nav-fixed quarto-light">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -120,7 +155,7 @@ ul.task-list li input[type="checkbox"] {
 <span class="menu-text">Wednesday</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../thursday/index.html"> 
+    <a class="nav-link active" href="../thursday/index.html" aria-current="page"> 
 <span class="menu-text">Thursday</span></a>
   </li>  
   <li class="nav-item">
@@ -144,17 +179,73 @@ ul.task-list li input[type="checkbox"] {
 </div>
       </div> <!-- /container-fluid -->
     </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../thursday/1-cpu-vs-gpu.html">1. CPU vs GPU Computing</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
 </header>
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../thursday/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Thursday: Docking &amp; Discussion</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../thursday/1-cpu-vs-gpu.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">1. CPU vs GPU Computing</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../thursday/2-docking.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2. Molecular Docking</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../thursday/3-roundtable.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3. Roundtable Discussion</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#in-class-activity" id="toc-in-class-activity" class="nav-link active" data-scroll-target="#in-class-activity">In-Class Activity</a></li>
+  <li><a href="#slides" id="toc-slides" class="nav-link active" data-scroll-target="#slides">Slides</a></li>
+  <li><a href="#overview" id="toc-overview" class="nav-link" data-scroll-target="#overview">Overview</a></li>
+  <li><a href="#the-activity" id="toc-the-activity" class="nav-link" data-scroll-target="#the-activity">The Activity</a></li>
+  <li><a href="#access-the-notebook" id="toc-access-the-notebook" class="nav-link" data-scroll-target="#access-the-notebook">Access the Notebook</a></li>
+  <li><a href="#key-concepts" id="toc-key-concepts" class="nav-link" data-scroll-target="#key-concepts">Key Concepts</a>
+  <ul class="collapse">
+  <li><a href="#why-for-loops-are-slow" id="toc-why-for-loops-are-slow" class="nav-link" data-scroll-target="#why-for-loops-are-slow">Why For Loops Are Slow</a></li>
+  <li><a href="#what-is-vectorization" id="toc-what-is-vectorization" class="nav-link" data-scroll-target="#what-is-vectorization">What is Vectorization?</a></li>
+  <li><a href="#cpu-vs-gpu-architecture" id="toc-cpu-vs-gpu-architecture" class="nav-link" data-scroll-target="#cpu-vs-gpu-architecture">CPU vs GPU Architecture</a></li>
+  </ul></li>
+  <li><a href="#expected-results" id="toc-expected-results" class="nav-link" data-scroll-target="#expected-results">Expected Results</a>
+  <ul class="collapse">
+  <li><a href="#sample-timing-comparison" id="toc-sample-timing-comparison" class="nav-link" data-scroll-target="#sample-timing-comparison">Sample Timing Comparison</a></li>
+  </ul></li>
+  <li><a href="#key-takeaways" id="toc-key-takeaways" class="nav-link" data-scroll-target="#key-takeaways">Key Takeaways</a></li>
+  <li><a href="#questions-to-consider" id="toc-questions-to-consider" class="nav-link" data-scroll-target="#questions-to-consider">Questions to Consider</a></li>
   </ul>
 </nav>
     </div>
@@ -163,7 +254,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">1. AlphaFold3 vs.&nbsp;Chai-1</h1>
+<h1 class="title">1. CPU vs GPU Computing</h1>
 </div>
 
 
@@ -180,77 +271,239 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="in-class-activity" class="level2">
-<h2 class="anchored" data-anchor-id="in-class-activity">In-Class Activity</h2>
-<ol type="1">
-<li><strong>Setup for the activity</strong>
-<ol type="1">
-<li>In order to make a prediction with the <a href="https://alphafoldserver.com/">AlphaFold server</a>, you’ll need a Google account to sign in.</li>
-<li>In order to make a prediction with <a href="https://lab.chaidiscovery.com/">Chai-Lab</a>, you’ll need to create a free account.</li>
-</ol></li>
-<li><strong>Make a monomer prediction for 1QYS with both AF3 and Chai-Lab.</strong>
-<ol type="1">
-<li><strong>AlphaFold 3:</strong>
-<ol type="1">
-<li>Paste in the sequence for 1QYS: <code>MGDIQVQVNIDDNGKNFDYTYTVTTESELQKVLNELMDYIKKQGAKRVRISITARTKKEAEKFAAILIKVFAELGYNDINVTFDGDTVTVEGQLEGGSLEHHHHHH</code></li>
-<li>Press the “continue and preview job” button.</li>
-<li>Press “confirm and submit job”.</li>
-</ol></li>
-<li><strong>Chai-Lab:</strong>
-<ol type="1">
-<li>Paste in the same sequence for 1QYS.</li>
-<li>Click “Run Job” to submit the prediction.</li>
-</ol></li>
-<li><strong>Analysis:</strong>
+<p>This activity demonstrates the practical differences between CPU and GPU operations using Python and PyTorch. You’ll explore how vectorization and hardware acceleration dramatically impact computational performance.</p>
+<section id="slides" class="level2">
+<h2 class="anchored" data-anchor-id="slides">Slides</h2>
+<iframe src="https://docs.google.com/presentation/d/1j2KpBB0Vrgn8KGBHdYHkD_ETgFpLYxIa/embed?start=false&amp;loop=false&amp;delayms=3000" frameborder="0" width="100%" height="500" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+<hr>
+</section>
+<section id="overview" class="level2">
+<h2 class="anchored" data-anchor-id="overview">Overview</h2>
+<p>Modern machine learning and structural biology tools rely heavily on GPU acceleration. Understanding when and why GPUs outperform CPUs is essential for:</p>
 <ul>
-<li>How do the predicted structures compare to the native?</li>
-<li>How does the AF3 prediction compare to Chai-Lab?</li>
-<li>How confident is each model about its prediction?</li>
-</ul></li>
-</ol></li>
-<li><strong>Make a multimer prediction for 8AJY with both AF3 and Chai-Lab.</strong>
-<ol type="1">
-<li><strong>AlphaFold 3:</strong>
-<ol type="1">
-<li>Paste in the sequence for 8AJY_1 (chain A): <code>MLTDRGMTYDLDPKDGSSAATKPVLEVTKKVFDTAADAAGQTVTVEFKVSGAEGKYATTGYHIYWDERLEVVATKTGAYAKKGAALEDSSLAKAENNGNGVFVASGADDDFGADGVMWTVELKVPADAKAGDVYPIDVAYQWDPSKGDLFTDNKDSAQGKLMQAYFFTQGIKSSSNPSTDEYLVKANATYADGYIAIKAGEPE</code></li>
-<li>Click “add entity”, make sure the molecule type to “protein”, and paste in the sequence of 8AJY_2 (chain B): <code>MGSSHHHHHHSSGLVPRGSHMASKPQYRLGDVDFNGIIDGRDATAVLTEYARISTGKPAEFVGNTALAADVNKDNMIDAADATHILTYYAISSTRDDITSDDYFALHQPLRG</code></li>
-<li>The native structure was originally solved in the presence of 3 Ca2+ ions. Click “add entity”, change the molecule type to “ion”, and select Ca2+ to add each.</li>
-<li>Press the “continue and preview job” button.</li>
-<li>Press “confirm and submit job”.</li>
-</ol></li>
-<li><strong>Chai-Lab:</strong>
-<ol type="1">
-<li>Paste in the sequence for 8AJY_1 (chain A).</li>
-<li>Click “Add Chain” and paste in the sequence for 8AJY_2 (chain B).</li>
-<li>Click “Add Ligand” and select “Ca2+” from the ion options. Repeat to add all 3 Ca2+ ions.</li>
-<li>Click “Run Job” to submit the prediction.</li>
-</ol></li>
-<li><strong>Analysis:</strong>
+<li><strong>Running predictions efficiently</strong>: Tools like AlphaFold2, ESMFold, and RFdiffusion all benefit from GPU acceleration</li>
+<li><strong>Writing efficient code</strong>: Knowing how to vectorize operations can speed up your analysis scripts by orders of magnitude</li>
+<li><strong>Resource planning</strong>: Understanding computational requirements helps you estimate job times and request appropriate resources</li>
+</ul>
+</section>
+<section id="the-activity" class="level2">
+<h2 class="anchored" data-anchor-id="the-activity">The Activity</h2>
+<p>In this hands-on notebook, you’ll compute dot products using three different approaches:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Method</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>For Loop</strong></td>
+<td>Naive Python iteration through each element</td>
+</tr>
+<tr class="even">
+<td><strong>Vectorized</strong></td>
+<td>Using PyTorch’s element-wise operations</td>
+</tr>
+<tr class="odd">
+<td><strong>torch.dot</strong></td>
+<td>Built-in optimized function</td>
+</tr>
+</tbody>
+</table>
+<p>You’ll time each method on both CPU and GPU across varying data sizes to see the performance differences firsthand.</p>
+</section>
+<section id="access-the-notebook" class="level2">
+<h2 class="anchored" data-anchor-id="access-the-notebook">Access the Notebook</h2>
+<div style="display: flex; gap: 10px; flex-wrap: wrap; margin: 20px 0;">
+  <a href="https://colab.research.google.com/github/RosettaMLBootCamp2025/RosettaMLBootCamp2025.github.io/blob/main/thursday/files/activity-CPUvsGPU.ipynb" class="btn btn-primary" target="_blank">
+    <i class="bi bi-play-circle"></i> Open in Google Colab
+  </a>
+  <a href="../thursday/files/activity-CPUvsGPU.html" class="btn btn-outline-primary" download="">
+    <i class="bi bi-download"></i> Download Notebook (.ipynb)
+  </a>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Recommended: Use Google Colab
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Google Colab provides free access to GPUs, which is essential for this activity. Click “Runtime” → “Change runtime type” → Select “T4 GPU” to enable GPU acceleration.</p>
+</div>
+</div>
+<hr>
+</section>
+<section id="key-concepts" class="level2">
+<h2 class="anchored" data-anchor-id="key-concepts">Key Concepts</h2>
+<section id="why-for-loops-are-slow" class="level3">
+<h3 class="anchored" data-anchor-id="why-for-loops-are-slow">Why For Loops Are Slow</h3>
+<p>Python for loops execute operations sequentially, one at a time. Each iteration involves:</p>
 <ul>
-<li>How do the predicted structures compare to the native?</li>
-<li>How does the AF3 prediction compare to Chai-Lab?</li>
-<li>How confident is each model about its prediction?</li>
-<li>What about the placement of the ions and the coordinating side chains?</li>
-</ul></li>
-</ol></li>
-<li><strong>Make a protein-ligand prediction with Chai-Lab for 2JIE (beta-glucosidase with 2-fluoro-glucose).</strong>
-<ol type="1">
-<li><strong>Chai-Lab:</strong>
-<ol type="1">
-<li>Paste in the sequence for 2JIE (beta-glucosidase B): <code>MHHHHHHSENTFIFPATFMWGTSTSSYQIEGGTDEGGRTPSIWDTFCQIPGKVIGGDCGDVACDHFHHFKEDVQLMKQLGFLHYRFSVAWPRIMPAAGIINEEGLLFYEHLLDEIELAGLIPMLTLYHWDLPQWIEDEGGWTQRETIQHFKTYASVIMDRFGERINWWNTINEPYCASILGYGTGEHAPGHENWREAFTAAHHILMCHGIASNLHKEKGLTGKIGITLNMEHVDAASERPEDVAAAIRRDGFINRWFAEPLFNGKYPEDMVEWYGTYLNGLDFVQPGDMELIQQPGDFLGINYYTRSIIRSTNDASLLQVEQVHMEEPVTDMGWEIHPESFYKLLTRIEKDFSKGLPILITENGAAMRDELVNGQIEDTGRHGYIEEHLKACHRFIEEGGQLKGYFVWSFLDNFEWAWGYSKRFGIVHINYETQERTPKQSALWFKQMMAKNGF</code></li>
-<li>Click “Add Ligand” and select “Custom SMILES”.</li>
-<li>Enter the SMILES string for 2-fluoro-glucose (G2F): <code>OCC1OC(O)C(F)C(O)C1O</code></li>
-<li>Click “Run Job” to submit the prediction.</li>
-</ol></li>
-<li><strong>Analysis:</strong>
+<li>Python interpreter overhead</li>
+<li>Individual memory accesses</li>
+<li>No parallelization</li>
+</ul>
+<p>For a dot product of vectors with N elements, this means N separate operations executed one after another.</p>
+</section>
+<section id="what-is-vectorization" class="level3">
+<h3 class="anchored" data-anchor-id="what-is-vectorization">What is Vectorization?</h3>
+<p>Vectorization means expressing operations on entire arrays rather than individual elements. Instead of:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Slow: element-by-element</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(a)):</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    result <span class="op">+=</span> a[i] <span class="op">*</span> b[i]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>You write:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fast: vectorized</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> (a <span class="op">*</span> b).<span class="bu">sum</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The vectorized version:</p>
 <ul>
-<li>How does the predicted structure compare to the crystal structure (2JIE)?</li>
-<li>Is the ligand positioned correctly in the active site?</li>
-<li>How well does Chai-Lab predict the protein-ligand interactions?</li>
-<li>What is the confidence score for the ligand placement?</li>
-</ul></li>
-</ol></li>
+<li>Executes in optimized C/C++ code under the hood</li>
+<li>Can use SIMD (Single Instruction, Multiple Data) instructions</li>
+<li>Processes multiple elements simultaneously</li>
+</ul>
+</section>
+<section id="cpu-vs-gpu-architecture" class="level3">
+<h3 class="anchored" data-anchor-id="cpu-vs-gpu-architecture">CPU vs GPU Architecture</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 47%">
+<col style="width: 26%">
+<col style="width: 26%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Feature</th>
+<th>CPU</th>
+<th>GPU</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Cores</strong></td>
+<td>Few powerful cores (4-64)</td>
+<td>Many simple cores (thousands)</td>
+</tr>
+<tr class="even">
+<td><strong>Best for</strong></td>
+<td>Sequential, complex tasks</td>
+<td>Parallel, simple tasks</td>
+</tr>
+<tr class="odd">
+<td><strong>Memory</strong></td>
+<td>Fast access to RAM</td>
+<td>High bandwidth to VRAM</td>
+</tr>
+<tr class="even">
+<td><strong>Overhead</strong></td>
+<td>Low</td>
+<td>Data transfer cost</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>The Data Transfer Overhead
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Moving data between CPU memory and GPU memory takes time. For small operations, this overhead can exceed the computation time, making GPU slower than CPU. The GPU advantage only appears when the computation is large enough to amortize this cost.</p>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="expected-results" class="level2">
+<h2 class="anchored" data-anchor-id="expected-results">Expected Results</h2>
+<p>When you run the notebook, you should observe:</p>
+<ol type="1">
+<li><strong>For loops are always slowest</strong> - regardless of hardware</li>
+<li><strong>Vectorization provides massive speedup</strong> - often 10-100x faster than loops</li>
+<li><strong>GPU beats CPU for large data</strong> - but may be slower for small data due to transfer overhead</li>
+<li><strong>torch.dot is fastest overall</strong> - it’s optimized specifically for this operation</li>
 </ol>
+<section id="sample-timing-comparison" class="level3">
+<h3 class="anchored" data-anchor-id="sample-timing-comparison">Sample Timing Comparison</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Method</th>
+<th>100 elements</th>
+<th>5000 elements</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>For Loop (CPU)</td>
+<td>~0.5 ms</td>
+<td>~10 ms</td>
+</tr>
+<tr class="even">
+<td>Vectorized (CPU)</td>
+<td>~0.02 ms</td>
+<td>~0.1 ms</td>
+</tr>
+<tr class="odd">
+<td>torch.dot (GPU)</td>
+<td>~0.1 ms*</td>
+<td>~0.05 ms</td>
+</tr>
+</tbody>
+</table>
+<p>*GPU times include data transfer overhead</p>
+<hr>
+</section>
+</section>
+<section id="key-takeaways" class="level2">
+<h2 class="anchored" data-anchor-id="key-takeaways">Key Takeaways</h2>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Remember These Principles
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li><strong>Always vectorize when possible</strong> - Avoid Python for loops for numerical computations</li>
+<li><strong>GPU overhead matters</strong> - Small tasks may run faster on CPU</li>
+<li><strong>Use built-in functions</strong> - Libraries like PyTorch have highly optimized implementations</li>
+<li><strong>Profile your code</strong> - Measure before assuming what’s slow</li>
+</ol>
+</div>
+</div>
+</section>
+<section id="questions-to-consider" class="level2">
+<h2 class="anchored" data-anchor-id="questions-to-consider">Questions to Consider</h2>
+<p>After completing the activity, think about:</p>
+<ol type="1">
+<li>At what data size did GPU start outperforming CPU for vectorized operations?</li>
+<li>Why does the for loop show “N/A” for GPU times in the notebook?</li>
+<li>How might these principles apply to running AlphaFold2 or other ML tools?</li>
+<li>What would happen if you ran the same experiment with matrix multiplication instead of dot products?</li>
+</ol>
+<hr>
+<div style="display: flex; justify-content: space-between; align-items: center;">
+<div>
+<a href="../thursday/index.html">← Thursday Overview</a>
+</div>
+<div>
+<a href="../index.html">Back to Home</a>
+</div>
+<div>
+<a href="../thursday/2-docking.html">Docking →</a>
+</div>
+</div>
 
 
 </section>
@@ -419,6 +672,161 @@ ul.task-list li input[type="checkbox"] {
     addMarkAllButton();
   });
 })();
+</script>
+<style>
+.quiz-container {
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin: 2rem 0;
+  background-color: #f8f9fa;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.quiz-header {
+  font-weight: 600;
+  color: #495057;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.quiz-header i {
+  color: #0d6efd;
+}
+
+.quiz-question {
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+  font-weight: 500;
+}
+
+.quiz-options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.quiz-option {
+  padding: 0.75rem 1rem;
+  border: 1px solid #dee2e6;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background-color: white;
+}
+
+.quiz-option:hover {
+  background-color: #e9ecef;
+  border-color: #adb5bd;
+}
+
+.quiz-option.selected {
+  background-color: #e7f1ff;
+  border-color: #0d6efd;
+  color: #0d6efd;
+}
+
+.quiz-option.correct {
+  background-color: #d1e7dd;
+  border-color: #198754;
+  color: #0f5132;
+}
+
+.quiz-option.incorrect {
+  background-color: #f8d7da;
+  border-color: #dc3545;
+  color: #842029;
+}
+
+.quiz-feedback {
+  margin-top: 1rem;
+  padding: 0.75rem;
+  border-radius: 6px;
+  display: none;
+  font-size: 0.95rem;
+}
+
+.quiz-feedback.correct {
+  background-color: #d1e7dd;
+  color: #0f5132;
+  display: block;
+}
+
+.quiz-feedback.incorrect {
+  background-color: #f8d7da;
+  color: #842029;
+  display: block;
+}
+
+.check-btn {
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  background-color: #0d6efd;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.check-btn:hover {
+  background-color: #0b5ed7;
+}
+
+.check-btn:disabled {
+  background-color: #6c757d;
+  cursor: not-allowed;
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const quizzes = document.querySelectorAll('.quiz-container');
+
+  quizzes.forEach(quiz => {
+    const options = quiz.querySelectorAll('.quiz-option');
+    const checkBtn = quiz.querySelector('.check-btn');
+    const feedback = quiz.querySelector('.quiz-feedback');
+    const correctIndex = parseInt(quiz.dataset.correctIndex);
+    let selectedIndex = -1;
+
+    options.forEach((option, index) => {
+      option.addEventListener('click', () => {
+        if (checkBtn.disabled) return; // Already answered
+        
+        options.forEach(opt => opt.classList.remove('selected'));
+        option.classList.add('selected');
+        selectedIndex = index;
+      });
+    });
+
+    checkBtn.addEventListener('click', () => {
+      if (selectedIndex === -1) return;
+
+      // Disable interaction
+      checkBtn.disabled = true;
+      checkBtn.textContent = 'Submitted';
+      
+      const selectedOption = options[selectedIndex];
+      const correctOption = options[correctIndex];
+
+      if (selectedIndex === correctIndex) {
+        selectedOption.classList.add('correct');
+        selectedOption.classList.remove('selected');
+        feedback.textContent = quiz.dataset.correctFeedback || "Correct! Great job.";
+        feedback.className = 'quiz-feedback correct';
+      } else {
+        selectedOption.classList.add('incorrect');
+        selectedOption.classList.remove('selected');
+        correctOption.classList.add('correct'); // Show the right answer
+        feedback.textContent = quiz.dataset.incorrectFeedback || "Not quite. The correct answer is highlighted.";
+        feedback.className = 'quiz-feedback incorrect';
+      }
+    });
+  });
+});
 </script>
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {

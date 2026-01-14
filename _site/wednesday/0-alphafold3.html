@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>2. RFdiffusion: Advanced Design – ML Protein Design Bootcamp 2025</title>
+<title>1. AlphaFold3 vs.&nbsp;Chai-1 – ML Protein Design Bootcamp 2025</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -86,7 +86,7 @@ ul.task-list li input[type="checkbox"] {
 <link rel="stylesheet" href="../styles.css">
 </head>
 
-<body class="nav-fixed quarto-light">
+<body class="nav-sidebar floating nav-fixed quarto-light">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -116,7 +116,7 @@ ul.task-list li input[type="checkbox"] {
 <span class="menu-text">Tuesday</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../wednesday/index.html"> 
+    <a class="nav-link active" href="../wednesday/index.html" aria-current="page"> 
 <span class="menu-text">Wednesday</span></a>
   </li>  
   <li class="nav-item">
@@ -144,30 +144,52 @@ ul.task-list li input[type="checkbox"] {
 </div>
       </div> <!-- /container-fluid -->
     </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../wednesday/0-alphafold3.html">1. AlphaFold3 vs.&nbsp;Chai-1</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
 </header>
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../wednesday/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wednesday</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../wednesday/0-alphafold3.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">1. AlphaFold3 vs.&nbsp;Chai-1</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../wednesday/1-rfdiffusion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2. RFdiffusion: Advanced Design</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#in-class-activity" id="toc-in-class-activity" class="nav-link active" data-scroll-target="#in-class-activity">In-Class Activity</a></li>
-  <li><a href="#project-time" id="toc-project-time" class="nav-link" data-scroll-target="#project-time">Project Time</a>
-  <ul class="collapse">
-  <li><a href="#milestone-1-target-preparation-initial-exploration" id="toc-milestone-1-target-preparation-initial-exploration" class="nav-link" data-scroll-target="#milestone-1-target-preparation-initial-exploration">Milestone 1: Target Preparation &amp; Initial Exploration</a></li>
-  <li><a href="#milestone-2-unconditional-binder-generation" id="toc-milestone-2-unconditional-binder-generation" class="nav-link" data-scroll-target="#milestone-2-unconditional-binder-generation">Milestone 2: Unconditional Binder Generation</a></li>
-  <li><a href="#milestone-3-hotspot-guided-binder-design" id="toc-milestone-3-hotspot-guided-binder-design" class="nav-link" data-scroll-target="#milestone-3-hotspot-guided-binder-design">Milestone 3: Hotspot-Guided Binder Design</a></li>
-  <li><a href="#milestone-4-potential-optimization" id="toc-milestone-4-potential-optimization" class="nav-link" data-scroll-target="#milestone-4-potential-optimization">Milestone 4: Potential Optimization</a></li>
-  <li><a href="#milestone-5-analysis-selection" id="toc-milestone-5-analysis-selection" class="nav-link" data-scroll-target="#milestone-5-analysis-selection">Milestone 5: Analysis &amp; Selection</a></li>
-  </ul></li>
-  <li><a href="#troubleshooting-guide" id="toc-troubleshooting-guide" class="nav-link" data-scroll-target="#troubleshooting-guide">Troubleshooting Guide</a>
-  <ul class="collapse">
-  <li><a href="#common-issues-solutions" id="toc-common-issues-solutions" class="nav-link" data-scroll-target="#common-issues-solutions">Common Issues &amp; Solutions</a></li>
-  <li><a href="#tips-for-success" id="toc-tips-for-success" class="nav-link" data-scroll-target="#tips-for-success">Tips for Success</a></li>
-  </ul></li>
+  <li><a href="#hands-on-exercise" id="toc-hands-on-exercise" class="nav-link active" data-scroll-target="#hands-on-exercise">Hands-On Exercise</a></li>
   </ul>
 </nav>
     </div>
@@ -176,7 +198,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">2. RFdiffusion: Advanced Design</h1>
+<h1 class="title">1. AlphaFold3 vs.&nbsp;Chai-1</h1>
 </div>
 
 
@@ -193,313 +215,79 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="in-class-activity" class="level2">
-<h2 class="anchored" data-anchor-id="in-class-activity">In-Class Activity</h2>
+<section id="hands-on-exercise" class="level2">
+<h2 class="anchored" data-anchor-id="hands-on-exercise">Hands-On Exercise</h2>
 <ol type="1">
-<li><strong>Setup for the activity.</strong>
+<li><strong>Setup for the activity</strong>
 <ol type="1">
-<li>Go to the RFdiffusion installation and make a new directory for the activity: <code>mkdir activity</code>.</li>
+<li>In order to make a prediction with the <a href="https://alphafoldserver.com/">AlphaFold server</a>, you’ll need a Google account to sign in.</li>
+<li>In order to make a prediction with <a href="https://lab.chaidiscovery.com/">Chai-Lab</a>, you’ll need to create a free account.</li>
 </ol></li>
-<li><strong>Generate unconditional monomers.</strong>
+<li><strong>Make a monomer prediction for 1QYS with both AF3 and Chai-Lab.</strong>
 <ol type="1">
-<li>Make new folder for this example: <code>cd activity; mkdir 1_uncond; cd 1_uncond</code></li>
-<li>Copy <code>design_unconditional.sh</code> here: <code>cp ../../examples/design_unconditional.sh .</code></li>
-<li>Edit the design script by using 1) <code>'contigmap.contigs=[75-150]'</code>, 2) <code>inference.num_designs=5</code> , 3) <code>../../scripts/run_inference.py</code>.</li>
-<li>Run the script: <code>bash design_unconditional.sh</code>
-<ul>
-<li>What did the script create?</li>
-<li>Look at the structures. What are kinds of topologies did you get?</li>
-</ul></li>
+<li><strong>AlphaFold 3:</strong>
+<ol type="1">
+<li>Paste in the sequence for 1QYS: <code>MGDIQVQVNIDDNGKNFDYTYTVTTESELQKVLNELMDYIKKQGAKRVRISITARTKKEAEKFAAILIKVFAELGYNDINVTFDGDTVTVEGQLEGGSLEHHHHHH</code></li>
+<li>Press the “continue and preview job” button.</li>
+<li>Press “confirm and submit job”.</li>
 </ol></li>
-<li><strong>Generate monomers that scaffold a motif.</strong>
+<li><strong>Chai-Lab:</strong>
 <ol type="1">
-<li>Make new folder for this example: <code>cd activity; mkdir 2_motifs; cd 2_motifs</code></li>
-<li>Copy <code>design_motifscaffolding.sh</code> here: <code>cp ../../examples/design_motifscaffolding.sh .</code></li>
-<li>For this example, we’ll be scaffolding a site from RSV-F protein. Let’s copy that .pdb here: <code>cp ../../examples/input_pdbs/5TPN.pdb .</code></li>
-<li>Edit the design script by using 1) <code>inference.input_pdb=5TPN.pdb</code>, 2) <code>'contigmap.contigs=[10-40/A163-181/10-40]'</code>, 3) <code>inference.num_designs=5</code> , 4) <code>../../scripts/run_inference.py</code>.
+<li>Paste in the same sequence for 1QYS.</li>
+<li>Click “Run Job” to submit the prediction.</li>
+</ol></li>
+<li><strong>Analysis:</strong>
 <ul>
-<li>The backbone we’re generating will have 10-40 residues (randomly sampled), the the motif residues 163-181 (inclusive) on chain A of the input, then 10-40 residues (randomly sampled).</li>
-</ul></li>
-<li>Run the script: <code>bash design_motifscaffolding.sh</code>
-<ul>
-<li>Look at the structures. How well is the motif scaffolded?</li>
+<li>How do the predicted structures compare to the native?</li>
+<li>How does the AF3 prediction compare to Chai-Lab?</li>
+<li>How confident is each model about its prediction?</li>
 </ul></li>
 </ol></li>
-<li><strong>Generate partially diffused structures.</strong>
+<li><strong>Make a multimer prediction for 8AJY with both AF3 and Chai-Lab.</strong>
 <ol type="1">
-<li>Make new folder for this example: <code>cd activity; mkdir 3_partial; cd 3_partial</code></li>
-<li>Copy <code>design_partialdiffusion.sh</code> here: <code>cp ../../examples/design_partialdiffusion.sh .</code></li>
-<li>For this example, we’ll be partially noising and denoising a 79 residue protein 2KL8. Let’s copy that .pdb here: <code>cp ../../examples/input_pdbs/2KL8.pdb .</code></li>
-<li>Edit the design script by using 1) <code>inference.input_pdb=2KL8.pdb</code>, 2) <code>'contigmap.contigs=[79-79]’</code>, and 3) <code>inference.num_designs=5</code>.
+<li><strong>AlphaFold 3:</strong>
+<ol type="1">
+<li>Paste in the sequence for 8AJY_1 (chain A): <code>MLTDRGMTYDLDPKDGSSAATKPVLEVTKKVFDTAADAAGQTVTVEFKVSGAEGKYATTGYHIYWDERLEVVATKTGAYAKKGAALEDSSLAKAENNGNGVFVASGADDDFGADGVMWTVELKVPADAKAGDVYPIDVAYQWDPSKGDLFTDNKDSAQGKLMQAYFFTQGIKSSSNPSTDEYLVKANATYADGYIAIKAGEPE</code></li>
+<li>Click “add entity”, make sure the molecule type to “protein”, and paste in the sequence of 8AJY_2 (chain B): <code>MGSSHHHHHHSSGLVPRGSHMASKPQYRLGDVDFNGIIDGRDATAVLTEYARISTGKPAEFVGNTALAADVNKDNMIDAADATHILTYYAISSTRDDITSDDYFALHQPLRG</code></li>
+<li>The native structure was originally solved in the presence of 3 Ca2+ ions. Click “add entity”, change the molecule type to “ion”, and select Ca2+ to add each.</li>
+<li>Press the “continue and preview job” button.</li>
+<li>Press “confirm and submit job”.</li>
+</ol></li>
+<li><strong>Chai-Lab:</strong>
+<ol type="1">
+<li>Paste in the sequence for 8AJY_1 (chain A).</li>
+<li>Click “Add Chain” and paste in the sequence for 8AJY_2 (chain B).</li>
+<li>Click “Add Ligand” and select “Ca2+” from the ion options. Repeat to add all 3 Ca2+ ions.</li>
+<li>Click “Run Job” to submit the prediction.</li>
+</ol></li>
+<li><strong>Analysis:</strong>
 <ul>
-<li>Here we’re generating diversity around a particular fold by noising and denoising 10 steps (20% of the full trajectory). We’re adding noise to the entire structure (all 79 residues), but part of the structure can also be held fixed.</li>
-</ul></li>
-<li>Run the script: <code>bash design_partialdiffusion.sh</code>
-<ul>
-<li>Look at the structures. How similar are the outputs to the original structure?</li>
+<li>How do the predicted structures compare to the native?</li>
+<li>How does the AF3 prediction compare to Chai-Lab?</li>
+<li>How confident is each model about its prediction?</li>
+<li>What about the placement of the ions and the coordinating side chains?</li>
 </ul></li>
 </ol></li>
-<li><strong>Generate binders with hotspots.</strong>
+<li><strong>Make a protein-ligand prediction with Chai-Lab for 2JIE (beta-glucosidase with 2-fluoro-glucose).</strong>
 <ol type="1">
-<li>Make new folder for this example: <code>cd activity; mkdir 4_hotspot; cd 4_hotspot</code></li>
-<li>Copy <code>design_ppi.sh</code> here: <code>cp ../../examples/design_ppi.sh .</code></li>
-<li>For this example, we’ll be designing binders to insulin receptor. Let’s copy that .pdb here: <code>cp ../../examples/input_pdbs/insulin_target.pdb .</code></li>
-<li>Edit the design script by using 1) <code>inference.input_pdb=insulin_target.pdb</code>, 2) <code>'contigmap.contigs=[A1-150/0 70-100]’</code>, 3) ’<code>ppi.hotspot_res=[A59,A83,A91]’</code>, 4) <code>inference.num_designs=5</code>, 5) <code>denoiser.noise_scale_ca=0</code>, and 6) <code>denoiser.noise_scale_frame=0</code>.
-<ul>
-<li>Here, we’re designing binders to insulin receptor. The contig describes the protein we want: residues 1-150 of the A chain of the receptor, a chainbreak (we don’t want to fuse the binder and target!), a 70-100 residue binder to be diffused. We also tell diffusion to target three specific residues, specifically residues 59, 83 and 91 of chain A. Finally, we reduce the noise added during inference to 0 to improve the quality of the designs.</li>
-</ul></li>
-<li>Run the script: <code>bash design_ppi.sh</code>
-<ul>
-<li>Look at the structures. What are the topologies of your binders?</li>
-</ul></li>
+<li><strong>Chai-Lab:</strong>
+<ol type="1">
+<li>Paste in the sequence for 2JIE (beta-glucosidase B): <code>MHHHHHHSENTFIFPATFMWGTSTSSYQIEGGTDEGGRTPSIWDTFCQIPGKVIGGDCGDVACDHFHHFKEDVQLMKQLGFLHYRFSVAWPRIMPAAGIINEEGLLFYEHLLDEIELAGLIPMLTLYHWDLPQWIEDEGGWTQRETIQHFKTYASVIMDRFGERINWWNTINEPYCASILGYGTGEHAPGHENWREAFTAAHHILMCHGIASNLHKEKGLTGKIGITLNMEHVDAASERPEDVAAAIRRDGFINRWFAEPLFNGKYPEDMVEWYGTYLNGLDFVQPGDMELIQQPGDFLGINYYTRSIIRSTNDASLLQVEQVHMEEPVTDMGWEIHPESFYKLLTRIEKDFSKGLPILITENGAAMRDELVNGQIEDTGRHGYIEEHLKACHRFIEEGGQLKGYFVWSFLDNFEWAWGYSKRFGIVHINYETQERTPKQSALWFKQMMAKNGF</code></li>
+<li>Click “Add Ligand” and select “Custom SMILES”.</li>
+<li>Enter the SMILES string for 2-fluoro-glucose (G2F): <code>OCC1OC(O)C(F)C(O)C1O</code></li>
+<li>Click “Run Job” to submit the prediction.</li>
 </ol></li>
-<li><strong>Generate fold-conditioned structures.</strong>
-<ol type="1">
-<li>Make new folder for this example: <code>cd activity; mkdir 5_fold_cond; cd 5_fold_cond</code></li>
-<li>Copy <code>design_timbarrel.sh</code> here: <code>cp ../../examples/design_timbarrel.sh .</code></li>
-<li>For this example, we’ll be diffusing a TIM barrel by providing course-grained specification of the fold. Let’s copy that fold information here: <code>cp -r ../../examples/tim_barrel_scaffold/ .</code>
+<li><strong>Analysis:</strong>
 <ul>
-<li>What do the files in this folder represent?</li>
+<li>How does the predicted structure compare to the crystal structure (2JIE)?</li>
+<li>Is the ligand positioned correctly in the active site?</li>
+<li>How well does Chai-Lab predict the protein-ligand interactions?</li>
+<li>What is the confidence score for the ligand placement?</li>
 </ul></li>
-<li>Edit the design script by using <code>inference.num_designs=5</code>.
-<ul>
-<li>Here, we’re making a TIM barrel by providing course-grained specification of the fold. We specify the output path. We tell RFdiffusion that we want to do scaffoldguided design, and that we are not making a binder to a target (just a monomer). We provide a path to a directory of TIM barrel scaffolds, generated with the helper script <code>helper_scripts/make_secstruc_adj.py</code>. We generate 5 designs, with a reduced noise scale during inference of 0.5. We also sample additional length to increase diversity of the outputs by masking the loops and inserting 0-5 residues into each loop. We also add 0-5 residues to the N and the C-terminus. These allow use to sample additional diversity in our designs.</li>
-<li>You may need to edit <code>rfdiffusion/inference/model_runners.py</code> like 751 to <code>self.blockadjacency = iu.BlockAdjacency(conf, conf.inference.num_designs)</code></li>
-</ul></li>
-<li>Run the script: <code>bash design_timbarrel.sh</code>
-<ul>
-<li>Look at the structures. How do these generations compare to the TIM barrel structure used for conditioning (<a href="https://www.rcsb.org/structure/6WVS">6WVS</a>)?</li>
-</ul></li>
-</ol></li>
-<li><strong>Generate oligomers of various symmetries.</strong>
-<ol type="1">
-<li>Make new folder for this example: <code>cd activity; mkdir 6_symmetry; cd 6_symmetry</code></li>
-<li>Copy <code>design_cyclic_oligos.sh</code>, <code>design_dihedral_oligos.sh</code>, and <code>design_tetrahedral_oligos.sh</code> here: <code>cp ../../examples/design_cyclic_oligos.sh .</code>, <code>cp ../../examples/design_dihedral_oligos.sh .</code>, and <code>cp ../../examples/design_tetrahedral_oligos.sh .</code></li>
-<li><strong>Generate cyclic oligomers:</strong>
-<ol type="1">
-<li>Edit the <code>design_cyclic_oligos.sh</code> script by changing 1) <code>inference.symmetry="C4”</code>, 2) <code>inference.num_designs=5</code>, 3) <code>inference.output_prefix="example_outputs/C4_oligo”</code>, and 4) <code>'contigmap.contigs=[200-200]’</code>.
-<ul>
-<li>In this example, we generate 5 designs of C4 symmetric oligomers. For symmetrical diffusion, we need the symmetry config. We also apply an external potential to promote contacts both within (with a relative weight of 1) and between chains (relative weight 0.1). We specify that we want to apply these potentials to all chains, with a guide scale of 2.0 (a sensible starting point). We decay this potential with quadratic form, so that it is applied more strongly initially. We specify a total length of 200 aa, so each chain is 50 residues long.</li>
-</ul></li>
-<li>Run the script: <code>bash design_cyclic_oligos.sh</code>
-<ul>
-<li>Do the structures have the desired symmetry?</li>
-<li>What topologies are found in the individual subunits?</li>
-</ul></li>
-</ol></li>
-<li><strong>Generate dihedral oligomers:</strong>
-<ol type="1">
-<li>Edit the <code>design_dihedral_oligos.sh</code> script by changing <code>inference.num_designs=2</code>.
-<ul>
-<li>In this example, we generate 2 D2 symmetric oligomers using the symmetry config. We also apply an external potential to promote contacts both within (with a relative weight of 1) and between chains (relative weight 0.1). We specify that we want to apply these potentials to all chains, with a guide scale of 2.0 (a sensible starting point). We decay this potential with quadratic form, so that it is applied more strongly initially. We specify a total length of 320 aa, so each chain is 80 residues long.</li>
-</ul></li>
-<li>Run the script: <code>bash design_dihedral_oligos.sh</code>
-<ul>
-<li>Do the structures have the desired symmetry?</li>
-<li>What topologies are found in the individual subunits?</li>
-</ul></li>
-</ol></li>
-<li><strong>Generate tetrahedral oligomers:</strong>
-<ol type="1">
-<li>Edit the <code>design_tetrahedral_oligos.sh</code> script by changing 1) <code>inference.num_designs=2</code>, 2) <code>'contigmap.contigs=[720-720]’</code>.
-<ul>
-<li>In this example, we generate tetrahedral symmetric oligomers. We use the symmetry config, and specify we want a tetrahedral oligomer, with 2 designs generated. We specify the output prefix, and also the potential we want to apply. This external potential promotes contacts both within (with a relative weight of 1) and between chains (relative weight 0.1). We specify that we want to apply these potentials to all chains, with a guide scale of 2.0 (a sensible starting point). We decay this potential with quadratic form, so that it is applied more strongly initially. We specify a total length of 720 aa, so each chain is 60 residues long</li>
-</ul></li>
-<li>Run the script: <code>bash design_tetrahedral_oligos.sh</code>
-<ul>
-<li>Do the structures have the desired symmetry?</li>
-<li>What topologies are found in the individual subunits?</li>
-</ul></li>
-</ol></li>
 </ol></li>
 </ol>
-</section>
-<section id="project-time" class="level2">
-<h2 class="anchored" data-anchor-id="project-time">Project Time</h2>
-<p><strong>(Use your target protein)</strong></p>
-<section id="milestone-1-target-preparation-initial-exploration" class="level3">
-<h3 class="anchored" data-anchor-id="milestone-1-target-preparation-initial-exploration">Milestone 1: Target Preparation &amp; Initial Exploration</h3>
-<ul>
-<li>Set up your project directory structure</li>
-<li>Download and inspect your assigned target PDB</li>
-<li>Identify the binding surface and hotspot residues from the table below</li>
-<li>Run 2-3 test designs to verify your setup is working correctly</li>
-</ul>
-</section>
-<section id="milestone-2-unconditional-binder-generation" class="level3">
-<h3 class="anchored" data-anchor-id="milestone-2-unconditional-binder-generation">Milestone 2: Unconditional Binder Generation</h3>
-<ul>
-<li>Generate at least 10 unconditional binders of length 70-100 towards your target protein.
-<ul>
-<li>Is there a particular epitope on the target that RFdiffusion prefers?</li>
-<li>Is there a particular binder topology that RFdiffusion prefers?</li>
-</ul></li>
-</ul>
-</section>
-<section id="milestone-3-hotspot-guided-binder-design" class="level3">
-<h3 class="anchored" data-anchor-id="milestone-3-hotspot-guided-binder-design">Milestone 3: Hotspot-Guided Binder Design</h3>
-<ul>
-<li>Each of the targets that were assigned were previously used in binder design experiments (<a href="https://www.nature.com/articles/s41586-023-06415-8">1</a>, <a href="https://www.biorxiv.org/content/10.1101/2024.09.30.615802">2</a>). These experiments made use of hotspots located on the target proteins. Generate at least 10 binders towards your target protein using the hotspots below.
-<ul>
-<li>Is there a particular binder topology that RFdiffusion prefers to generate?</li>
-</ul></li>
-</ul>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Target</th>
-<th>UniProt ID</th>
-<th>PDB ID</th>
-<th>Hotspot Residues (chain and residue index from PDB)</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>PD-L1</td>
-<td><a href="https://www.uniprot.org/uniprotkb/Q9NZQ7/entry">Q9NZQ7</a></td>
-<td><a href="https://www.rcsb.org/structure/5O45">5O45</a></td>
-<td>A56, A115, A123</td>
-</tr>
-<tr class="even">
-<td>IL-7Rɑ</td>
-<td><a href="https://www.uniprot.org/uniprotkb/P16871/entry">P16871</a></td>
-<td><a href="https://www.rcsb.org/structure/3DI3">3DI3</a></td>
-<td>B58, B80, B139</td>
-</tr>
-<tr class="odd">
-<td>TrkA receptor</td>
-<td><a href="https://www.uniprot.org/uniprotkb/P04629/entry">P04629</a></td>
-<td><a href="https://www.rcsb.org/structure/1WWW">1WWW</a></td>
-<td>X294, X296, X333</td>
-</tr>
-<tr class="even">
-<td>IFNAR2</td>
-<td><a href="https://www.uniprot.org/uniprotkb/P48551/entry">P48551</a></td>
-<td><a href="https://www.rcsb.org/structure/2LAG">2LAG</a></td>
-<td>B52, B82, B98</td>
-</tr>
-<tr class="odd">
-<td>Bet v 1-A</td>
-<td><a href="https://www.uniprot.org/uniprotkb/P15494/entry">P15494</a></td>
-<td><a href="https://www.rcsb.org/structure/1bv1">1BV1</a></td>
-<td>A24, A28, A43</td>
-</tr>
-</tbody>
-</table>
-</section>
-<section id="milestone-4-potential-optimization" class="level3">
-<h3 class="anchored" data-anchor-id="milestone-4-potential-optimization">Milestone 4: Potential Optimization</h3>
-<ul>
-<li>Potentials can be powerful ways to bias the generation process. Try at least 3 different combinations of potentials, generating 5 backbones with each. Be sure to use hotspots for these generations too!
-<ul>
-<li>How did the potentials change your outputs?</li>
-<li>Did you find a particularly useful configuration of potentials?</li>
-</ul></li>
-</ul>
-</section>
-<section id="milestone-5-analysis-selection" class="level3">
-<h3 class="anchored" data-anchor-id="milestone-5-analysis-selection">Milestone 5: Analysis &amp; Selection</h3>
-<ul>
-<li>Compare your unconditional vs.&nbsp;hotspot-guided vs.&nbsp;potential-optimized designs</li>
-<li>Identify your top 3-5 most promising binder designs</li>
-<li>Document what makes these designs stand out (binding pose, topology, contact with hotspots, etc.)</li>
-</ul>
-<hr>
-</section>
-</section>
-<section id="troubleshooting-guide" class="level2">
-<h2 class="anchored" data-anchor-id="troubleshooting-guide">Troubleshooting Guide</h2>
-<section id="common-issues-solutions" class="level3">
-<h3 class="anchored" data-anchor-id="common-issues-solutions">Common Issues &amp; Solutions</h3>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 28%">
-<col style="width: 40%">
-<col style="width: 31%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Problem</th>
-<th>Likely Cause</th>
-<th>Solution</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><strong>“CUDA out of memory”</strong></td>
-<td>GPU memory exhausted</td>
-<td>Reduce <code>inference.num_designs</code> to 1-2, or design smaller proteins</td>
-</tr>
-<tr class="even">
-<td><strong>Script hangs at “Initializing model”</strong></td>
-<td>Missing model weights or incorrect paths</td>
-<td>Verify RFdiffusion installation and model checkpoint paths</td>
-</tr>
-<tr class="odd">
-<td><strong>“FileNotFoundError” for input PDB</strong></td>
-<td>Incorrect file path or missing file</td>
-<td>Check that PDB file exists in current directory with <code>ls *.pdb</code></td>
-</tr>
-<tr class="even">
-<td><strong>Designs look extended/unfolded</strong></td>
-<td>Insufficient denoising or inappropriate settings</td>
-<td>Check <code>inference.num_steps</code> (should be ~50), verify contig syntax</td>
-</tr>
-<tr class="odd">
-<td><strong>Binders don’t contact target</strong></td>
-<td>Incorrect contig specification or chainbreak</td>
-<td>Verify <code>/0</code> chainbreak in contigs, check residue numbering in target PDB</td>
-</tr>
-<tr class="even">
-<td><strong>Binders don’t contact hotspots</strong></td>
-<td>Hotspot residues too far apart or incorrect chain ID</td>
-<td>Verify chain IDs and residue numbers match your PDB file exactly</td>
-</tr>
-<tr class="odd">
-<td><strong>“ImportError” or module not found</strong></td>
-<td>Conda environment not activated</td>
-<td>Activate RFdiffusion environment: <code>conda activate RFdiffusion</code> (or appropriate env name)</td>
-</tr>
-<tr class="even">
-<td><strong>Script runs but produces no outputs</strong></td>
-<td>Output directory doesn’t exist or permissions issue</td>
-<td>Check that output directory exists, verify write permissions</td>
-</tr>
-<tr class="odd">
-<td><strong>Symmetric oligomers don’t look symmetric</strong></td>
-<td>Incorrect symmetry specification or potentials</td>
-<td>Verify symmetry string (e.g., “C4”, “D2”, “T”), check potential settings</td>
-</tr>
-<tr class="even">
-<td><strong>“BlockAdjacency” error in fold-conditioned</strong></td>
-<td>Known bug in model_runners.py</td>
-<td>Edit <code>rfdiffusion/inference/model_runners.py</code> line ~751 as noted in activity</td>
-</tr>
-<tr class="odd">
-<td><strong>Very slow generation times</strong></td>
-<td>Normal for large/complex designs</td>
-<td>Tetrahedral oligomers can take 30-60 min. Consider using <code>screen</code> or <code>tmux</code></td>
-</tr>
-<tr class="even">
-<td><strong>All designs look very similar</strong></td>
-<td>Insufficient diversity sampling</td>
-<td>Increase contig length ranges (e.g., <code>[60-100]</code> instead of <code>[80-80]</code>), adjust noise scales</td>
-</tr>
-</tbody>
-</table>
-</section>
-<section id="tips-for-success" class="level3">
-<h3 class="anchored" data-anchor-id="tips-for-success">Tips for Success</h3>
-<ul>
-<li><strong>Always check your PDB file first</strong>: Use PyMOL or ChimeraX to verify chain IDs and residue numbering before running</li>
-<li><strong>Start small</strong>: Test with <code>num_designs=1</code> first to verify your setup works</li>
-<li><strong>Save your commands</strong>: Keep a log of successful parameter combinations</li>
-<li><strong>Use descriptive output names</strong>: Include key parameters in output_prefix (e.g., <code>hotspot_A59_A83_A91</code>)</li>
-<li><strong>Check the logs</strong>: RFdiffusion creates log files - read them if something goes wrong</li>
-</ul>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->
@@ -666,6 +454,161 @@ ul.task-list li input[type="checkbox"] {
     addMarkAllButton();
   });
 })();
+</script>
+<style>
+.quiz-container {
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin: 2rem 0;
+  background-color: #f8f9fa;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.quiz-header {
+  font-weight: 600;
+  color: #495057;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.quiz-header i {
+  color: #0d6efd;
+}
+
+.quiz-question {
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+  font-weight: 500;
+}
+
+.quiz-options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.quiz-option {
+  padding: 0.75rem 1rem;
+  border: 1px solid #dee2e6;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background-color: white;
+}
+
+.quiz-option:hover {
+  background-color: #e9ecef;
+  border-color: #adb5bd;
+}
+
+.quiz-option.selected {
+  background-color: #e7f1ff;
+  border-color: #0d6efd;
+  color: #0d6efd;
+}
+
+.quiz-option.correct {
+  background-color: #d1e7dd;
+  border-color: #198754;
+  color: #0f5132;
+}
+
+.quiz-option.incorrect {
+  background-color: #f8d7da;
+  border-color: #dc3545;
+  color: #842029;
+}
+
+.quiz-feedback {
+  margin-top: 1rem;
+  padding: 0.75rem;
+  border-radius: 6px;
+  display: none;
+  font-size: 0.95rem;
+}
+
+.quiz-feedback.correct {
+  background-color: #d1e7dd;
+  color: #0f5132;
+  display: block;
+}
+
+.quiz-feedback.incorrect {
+  background-color: #f8d7da;
+  color: #842029;
+  display: block;
+}
+
+.check-btn {
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  background-color: #0d6efd;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.check-btn:hover {
+  background-color: #0b5ed7;
+}
+
+.check-btn:disabled {
+  background-color: #6c757d;
+  cursor: not-allowed;
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const quizzes = document.querySelectorAll('.quiz-container');
+
+  quizzes.forEach(quiz => {
+    const options = quiz.querySelectorAll('.quiz-option');
+    const checkBtn = quiz.querySelector('.check-btn');
+    const feedback = quiz.querySelector('.quiz-feedback');
+    const correctIndex = parseInt(quiz.dataset.correctIndex);
+    let selectedIndex = -1;
+
+    options.forEach((option, index) => {
+      option.addEventListener('click', () => {
+        if (checkBtn.disabled) return; // Already answered
+        
+        options.forEach(opt => opt.classList.remove('selected'));
+        option.classList.add('selected');
+        selectedIndex = index;
+      });
+    });
+
+    checkBtn.addEventListener('click', () => {
+      if (selectedIndex === -1) return;
+
+      // Disable interaction
+      checkBtn.disabled = true;
+      checkBtn.textContent = 'Submitted';
+      
+      const selectedOption = options[selectedIndex];
+      const correctOption = options[correctIndex];
+
+      if (selectedIndex === correctIndex) {
+        selectedOption.classList.add('correct');
+        selectedOption.classList.remove('selected');
+        feedback.textContent = quiz.dataset.correctFeedback || "Correct! Great job.";
+        feedback.className = 'quiz-feedback correct';
+      } else {
+        selectedOption.classList.add('incorrect');
+        selectedOption.classList.remove('selected');
+        correctOption.classList.add('correct'); // Show the right answer
+        feedback.textContent = quiz.dataset.incorrectFeedback || "Not quite. The correct answer is highlighted.";
+        feedback.className = 'quiz-feedback incorrect';
+      }
+    });
+  });
+});
 </script>
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {

@@ -1,18 +1,42 @@
 ---
-title: "Thursday"
+title: "Thursday: Docking & Discussion"
 ---
 
 ## Overview
 
-*Thursday content coming soon.*
+Thursday brings together computational concepts with practical applications and collaborative discussion. You'll explore the differences between CPU and GPU computing through hands-on experiments, learn about molecular docking for understanding protein-ligand interactions, and participate in a roundtable discussion to reflect on the bootcamp experience.
+
+## Learning Objectives
+
+By the end of Thursday, you will be able to:
+
+- Explain why GPUs outperform CPUs for certain computational tasks
+- Understand the importance of vectorization in numerical computing
+- Describe the principles of molecular docking
+- Apply docking concepts to protein design workflows
+- Articulate connections between different tools learned throughout the bootcamp
 
 ## Modules
 
-| Module | Topic | Status |
-|--------|-------|--------|
-| [4.1](4.1-placeholder.qmd) | Placeholder Module | Coming soon |
+| # | Module | Description |
+|---|--------|-------------|
+| [1](1-cpu-vs-gpu.qmd) | CPU vs GPU Computing | Hands-on activity comparing computational performance |
+| [2](2-docking.qmd) | Molecular Docking | Introduction to predicting molecular interactions |
+| [3](3-roundtable.qmd) | Roundtable Discussion | Reflect, discuss, and prepare for the capstone |
 
-*More modules will be added here.*
+## Schedule
+
+| Time | Activity |
+|------|----------|
+| Morning | CPU vs GPU Activity |
+| Mid-day | Docking Lesson |
+| Afternoon | Roundtable Discussion |
+
+## Preparation
+
+- Ensure you have access to Google Colab for the CPU vs GPU activity
+- Review any tools or concepts from earlier in the week that you'd like to discuss
+- Think about which capstone target interests you most
 
 ---
 

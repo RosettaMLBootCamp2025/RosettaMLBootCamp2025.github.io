@@ -1,0 +1,154 @@
+---
+title: "1. CPU vs GPU Computing"
+---
+
+This activity demonstrates the practical differences between CPU and GPU operations using Python and PyTorch. You'll explore how vectorization and hardware acceleration dramatically impact computational performance.
+
+## Slides
+
+```{=html}
+<iframe src="https://docs.google.com/presentation/d/1j2KpBB0Vrgn8KGBHdYHkD_ETgFpLYxIa/embed?start=false&loop=false&delayms=3000" frameborder="0" width="100%" height="500" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+```
+
+---
+
+## Overview
+
+Modern machine learning and structural biology tools rely heavily on GPU acceleration. Understanding when and why GPUs outperform CPUs is essential for:
+
+- **Running predictions efficiently**: Tools like AlphaFold2, ESMFold, and RFdiffusion all benefit from GPU acceleration
+- **Writing efficient code**: Knowing how to vectorize operations can speed up your analysis scripts by orders of magnitude
+- **Resource planning**: Understanding computational requirements helps you estimate job times and request appropriate resources
+
+## The Activity
+
+In this hands-on notebook, you'll compute dot products using three different approaches:
+
+| Method | Description |
+|--------|-------------|
+| **For Loop** | Naive Python iteration through each element |
+| **Vectorized** | Using PyTorch's element-wise operations |
+| **torch.dot** | Built-in optimized function |
+
+You'll time each method on both CPU and GPU across varying data sizes to see the performance differences firsthand.
+
+## Access the Notebook
+
+```{=html}
+<div style="display: flex; gap: 10px; flex-wrap: wrap; margin: 20px 0;">
+  <a href="https://colab.research.google.com/github/RosettaMLBootCamp2025/RosettaMLBootCamp2025.github.io/blob/main/thursday/files/activity-CPUvsGPU.ipynb" class="btn btn-primary" target="_blank">
+    <i class="bi bi-play-circle"></i> Open in Google Colab
+  </a>
+  <a href="files/activity-CPUvsGPU.ipynb" class="btn btn-outline-primary" download>
+    <i class="bi bi-download"></i> Download Notebook (.ipynb)
+  </a>
+</div>
+```
+
+::: {.callout-tip}
+## Recommended: Use Google Colab
+Google Colab provides free access to GPUs, which is essential for this activity. Click "Runtime" → "Change runtime type" → Select "T4 GPU" to enable GPU acceleration.
+:::
+
+---
+
+## Key Concepts
+
+### Why For Loops Are Slow
+
+Python for loops execute operations sequentially, one at a time. Each iteration involves:
+
+- Python interpreter overhead
+- Individual memory accesses
+- No parallelization
+
+For a dot product of vectors with N elements, this means N separate operations executed one after another.
+
+### What is Vectorization?
+
+Vectorization means expressing operations on entire arrays rather than individual elements. Instead of:
+
+```python
+# Slow: element-by-element
+result = 0
+for i in range(len(a)):
+    result += a[i] * b[i]
+```
+
+You write:
+
+```python
+# Fast: vectorized
+result = (a * b).sum()
+```
+
+The vectorized version:
+
+- Executes in optimized C/C++ code under the hood
+- Can use SIMD (Single Instruction, Multiple Data) instructions
+- Processes multiple elements simultaneously
+
+### CPU vs GPU Architecture
+
+| Feature | CPU | GPU |
+|---------|-----|-----|
+| **Cores** | Few powerful cores (4-64) | Many simple cores (thousands) |
+| **Best for** | Sequential, complex tasks | Parallel, simple tasks |
+| **Memory** | Fast access to RAM | High bandwidth to VRAM |
+| **Overhead** | Low | Data transfer cost |
+
+::: {.callout-note}
+## The Data Transfer Overhead
+Moving data between CPU memory and GPU memory takes time. For small operations, this overhead can exceed the computation time, making GPU slower than CPU. The GPU advantage only appears when the computation is large enough to amortize this cost.
+:::
+
+---
+
+## Expected Results
+
+When you run the notebook, you should observe:
+
+1. **For loops are always slowest** - regardless of hardware
+2. **Vectorization provides massive speedup** - often 10-100x faster than loops
+3. **GPU beats CPU for large data** - but may be slower for small data due to transfer overhead
+4. **torch.dot is fastest overall** - it's optimized specifically for this operation
+
+### Sample Timing Comparison
+
+| Method | 100 elements | 5000 elements |
+|--------|--------------|---------------|
+| For Loop (CPU) | ~0.5 ms | ~10 ms |
+| Vectorized (CPU) | ~0.02 ms | ~0.1 ms |
+| torch.dot (GPU) | ~0.1 ms* | ~0.05 ms |
+
+*GPU times include data transfer overhead
+
+---
+
+## Key Takeaways
+
+::: {.callout-important}
+## Remember These Principles
+
+1. **Always vectorize when possible** - Avoid Python for loops for numerical computations
+2. **GPU overhead matters** - Small tasks may run faster on CPU
+3. **Use built-in functions** - Libraries like PyTorch have highly optimized implementations
+4. **Profile your code** - Measure before assuming what's slow
+:::
+
+## Questions to Consider
+
+After completing the activity, think about:
+
+1. At what data size did GPU start outperforming CPU for vectorized operations?
+2. Why does the for loop show "N/A" for GPU times in the notebook?
+3. How might these principles apply to running AlphaFold2 or other ML tools?
+4. What would happen if you ran the same experiment with matrix multiplication instead of dot products?
+
+---
+
+<div style="display: flex; justify-content: space-between; align-items: center;">
+<div>[← Thursday Overview](index.qmd)</div>
+<div>[Back to Home](../index.qmd)</div>
+<div>[Docking →](2-docking.qmd)</div>
+</div>

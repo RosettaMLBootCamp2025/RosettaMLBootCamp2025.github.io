@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>2. ESMFold vs.&nbsp;AlphaFold2 – ML Protein Design Bootcamp 2025</title>
+<title>4. ESMFold vs.&nbsp;AlphaFold2 – ML Protein Design Bootcamp 2025</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -121,7 +121,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link rel="stylesheet" href="../styles.css">
 </head>
 
-<body class="nav-fixed quarto-light">
+<body class="nav-sidebar floating nav-fixed quarto-light">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -147,7 +147,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span class="menu-text">Monday</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../tuesday/index.html"> 
+    <a class="nav-link active" href="../tuesday/index.html" aria-current="page"> 
 <span class="menu-text">Tuesday</span></a>
   </li>  
   <li class="nav-item">
@@ -179,10 +179,57 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
       </div> <!-- /container-fluid -->
     </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../tuesday/4-esmfold.html">4. ESMFold vs.&nbsp;AlphaFold2</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
 </header>
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../tuesday/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Tuesday</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../tuesday/1-pymol.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1. PyMOL and Visual Studio Code</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../tuesday/2-structure-prediction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2. Introduction to Structure Prediction</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../tuesday/3-alphafold2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3. AlphaFold2 and OpenFold</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../tuesday/4-esmfold.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">4. ESMFold vs.&nbsp;AlphaFold2</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
@@ -191,13 +238,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul>
   <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">Overview</a></li>
   <li><a href="#learning-objectives" id="toc-learning-objectives" class="nav-link" data-scroll-target="#learning-objectives">Learning Objectives</a></li>
-  <li><a href="#setup" id="toc-setup" class="nav-link" data-scroll-target="#setup">Setup</a>
+  <li><a href="#hands-on-exercise" id="toc-hands-on-exercise" class="nav-link" data-scroll-target="#hands-on-exercise">Hands-On Exercise</a>
   <ul class="collapse">
-  <li><a href="#prerequisites" id="toc-prerequisites" class="nav-link" data-scroll-target="#prerequisites">Prerequisites</a></li>
-  <li><a href="#activity-directory-structure" id="toc-activity-directory-structure" class="nav-link" data-scroll-target="#activity-directory-structure">Activity Directory Structure</a></li>
-  </ul></li>
-  <li><a href="#part-1-running-esmfold-structure-prediction" id="toc-part-1-running-esmfold-structure-prediction" class="nav-link" data-scroll-target="#part-1-running-esmfold-structure-prediction">Part 1: Running ESMFold Structure Prediction</a>
-  <ul class="collapse">
+  <li><a href="#setup" id="toc-setup" class="nav-link" data-scroll-target="#setup">Setup</a></li>
+  <li><a href="#part-1-running-esmfold-structure-prediction" id="toc-part-1-running-esmfold-structure-prediction" class="nav-link" data-scroll-target="#part-1-running-esmfold-structure-prediction">Part 1: Running ESMFold Structure Prediction</a></li>
   <li><a href="#quick-introduction-to-esmfold" id="toc-quick-introduction-to-esmfold" class="nav-link" data-scroll-target="#quick-introduction-to-esmfold">1.1 Quick Introduction to ESMFold</a></li>
   <li><a href="#write-your-esmfold-prediction-script" id="toc-write-your-esmfold-prediction-script" class="nav-link" data-scroll-target="#write-your-esmfold-prediction-script">1.2 Write Your ESMFold Prediction Script</a></li>
   <li><a href="#run-your-first-prediction" id="toc-run-your-first-prediction" class="nav-link" data-scroll-target="#run-your-first-prediction">1.3 Run Your First Prediction</a></li>
@@ -250,7 +294,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">2. ESMFold vs.&nbsp;AlphaFold2</h1>
+<h1 class="title">4. ESMFold vs.&nbsp;AlphaFold2</h1>
 </div>
 
 
@@ -267,11 +311,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
+<p>In this module, you will use <strong>ESMFold</strong> to predict protein structures and systematically compare results with the <strong>AlphaFold2</strong> predictions you generated in the previous module. ESMFold uses a fundamentally different approach—a protein language model trained on sequences alone, without requiring Multiple Sequence Alignments (MSAs) or templates. By comparing ESMFold to AF2, you will understand the trade-offs between different prediction methods and learn when to use each approach.</p>
 <section id="overview" class="level2">
 <h2 class="anchored" data-anchor-id="overview">Overview</h2>
-<p>In this activity, you will use <strong>ESMFold</strong> to predict protein structures and systematically compare results with the <strong>AlphaFold2</strong> predictions you generated in Activity 1. ESMFold uses a fundamentally different approach—a protein language model trained on sequences alone, without requiring Multiple Sequence Alignments (MSAs) or templates. By comparing ESMFold to AF2, you will understand the trade-offs between different prediction methods and learn when to use each approach.</p>
-<p><strong>Building on Activity 1:</strong> You explored how AF2 parameters (model weights, MSA depth, templates, recycles) affect prediction quality. Now you’ll investigate how a completely different architecture performs on the same protein and develop intuition for choosing the right tool for your research needs.</p>
-<hr>
+<p>ESMFold represents a different philosophy from AlphaFold2. While AF2 leverages evolutionary information through MSAs, ESMFold is built on a <strong>protein language model</strong> (ESM-2) that learns patterns directly from millions of protein sequences. This makes it:</p>
+<ul>
+<li><strong>Much faster</strong>: No MSA generation step</li>
+<li><strong>Better for orphan proteins</strong>: Works without homologs</li>
+<li><strong>Simpler pipeline</strong>: Sequence in, structure out</li>
+</ul>
+<p>But there are trade-offs—ESMFold may miss evolutionary insights that help AF2 achieve higher accuracy on well-studied proteins.</p>
 </section>
 <section id="learning-objectives" class="level2">
 <h2 class="anchored" data-anchor-id="learning-objectives">Learning Objectives</h2>
@@ -284,22 +333,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ol>
 <hr>
 </section>
-<section id="setup" class="level2">
-<h2 class="anchored" data-anchor-id="setup">Setup</h2>
-<section id="prerequisites" class="level3">
-<h3 class="anchored" data-anchor-id="prerequisites">Prerequisites</h3>
-<p><strong>1. Create an ESMFold activity directory:</strong></p>
-</section>
-<section id="activity-directory-structure" class="level3">
-<h3 class="anchored" data-anchor-id="activity-directory-structure">Activity Directory Structure</h3>
+<section id="hands-on-exercise" class="level2">
+<h2 class="anchored" data-anchor-id="hands-on-exercise">Hands-On Exercise</h2>
+<p>This module is structured as a hands-on comparison between ESMFold and AlphaFold2. You’ll run predictions, extract confidence scores, and develop intuition for when to use each tool.</p>
+<section id="setup" class="level3">
+<h3 class="anchored" data-anchor-id="setup">Setup</h3>
+<p><strong>Prerequisites:</strong> - Completed the AlphaFold2 module and have GFP predictions available - Access to a GPU (ESMFold requires ~8-16GB GPU RAM) - Python environment with PyTorch and the ESM library</p>
+<p><strong>Create your working directory:</strong></p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> esmfold_activity</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> esmfold_activity</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <hr>
 </section>
-</section>
-<section id="part-1-running-esmfold-structure-prediction" class="level2">
-<h2 class="anchored" data-anchor-id="part-1-running-esmfold-structure-prediction">Part 1: Running ESMFold Structure Prediction</h2>
+<section id="part-1-running-esmfold-structure-prediction" class="level3">
+<h3 class="anchored" data-anchor-id="part-1-running-esmfold-structure-prediction">Part 1: Running ESMFold Structure Prediction</h3>
 <p><strong>Goal:</strong> Generate an ESMFold prediction and understand the workflow.</p>
+</section>
 <section id="quick-introduction-to-esmfold" class="level3">
 <h3 class="anchored" data-anchor-id="quick-introduction-to-esmfold">1.1 Quick Introduction to ESMFold</h3>
 <p><strong>Visit the ESM GitHub repository:</strong> - <a href="https://github.com/facebookresearch/esm">https://github.com/facebookresearch/esm</a></p>
@@ -347,7 +395,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="run-your-first-prediction" class="level3">
 <h3 class="anchored" data-anchor-id="run-your-first-prediction">1.3 Run Your First Prediction</h3>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> predict_esmfold.py</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><strong>Expected output:</strong> - A PDB file named <code>esmfold_gfp.pdb</code> should be created - Note the prediction time - <strong>this is much faster than ColabFold from yesterday!</strong></p>
+<p><strong>Expected output:</strong> - A PDB file named <code>esmfold_gfp.pdb</code> should be created - Note the prediction time - <strong>this is much faster than ColabFold!</strong></p>
 <hr>
 </section>
 </section>
@@ -365,7 +413,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><a href="files/extract_plddt.py" class="btn btn-outline-primary"><strong>Download extract_plddt.py</strong></a></p>
 <p><strong>Run it on your ESMFold prediction:</strong></p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> extract_plddt.py esmfold_gfp.pdb</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><strong>Run it on your AlphaFold2 prediction from yesterday:</strong></p>
+<p><strong>Run it on your AlphaFold2 prediction from the previous module:</strong></p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> extract_plddt.py path/to/your/af2_prediction.pdb</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>Questions:</strong> 1. What is the average pLDDT for ESMFold vs AlphaFold2? 2. Which model has more high-confidence residues (&gt;90)? 3. Do both models identify the same low-confidence regions?</p>
 </section>
@@ -389,7 +437,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><strong>Goal:</strong> Compare the two predictions structurally and assess accuracy.</p>
 <section id="prepare-for-comparison" class="level3">
 <h3 class="anchored" data-anchor-id="prepare-for-comparison">3.1 Prepare for Comparison</h3>
-<p><strong>You need:</strong> 1. Your ESMFold prediction: <code>esmfold_gfp.pdb</code> (from Part 1) 2. Your AlphaFold2 prediction from yesterday (ColabFold output) 3. The experimental crystal structure of GFP from PDB</p>
+<p><strong>You need:</strong> 1. Your ESMFold prediction: <code>esmfold_gfp.pdb</code> (from Part 1) 2. Your AlphaFold2 prediction from the previous module (ColabFold output) 3. The experimental crystal structure of GFP from PDB</p>
 <p><strong>Download the crystal structure:</strong></p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wget</span> https://files.rcsb.org/download/1GFL.pdb <span class="at">-O</span> 1gfl_native.pdb</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
@@ -416,7 +464,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="calculate-rmsd" class="level3">
 <h3 class="anchored" data-anchor-id="calculate-rmsd">3.3 Calculate RMSD</h3>
 <p><strong>In PyMOL, calculate RMSD for each comparison:</strong></p>
-<p>Use the same approach you used in Activity 1. If you’re feeling confident, try writing a PyMOL script to automate this!</p>
+<p>Use the same approach you used in the AlphaFold2 module. If you’re feeling confident, try writing a PyMOL script to automate this!</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># In PyMOL:</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>rms_print af2, native</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>rms_print esmfold, native</span>
@@ -488,10 +536,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><strong>Goal:</strong> Understand the practical speed differences between the two approaches.</p>
 <section id="compare-prediction-times" class="level3">
 <h3 class="anchored" data-anchor-id="compare-prediction-times">5.1 Compare Prediction Times</h3>
-<p><strong>You already timed your ESMFold prediction in Part 1. Now compare it to yesterday’s ColabFold run.</strong></p>
-<p><strong>Think back to Activity 1 (ColabFold):</strong> - How long did the MSA search take? - How long did the actual structure prediction take (for 5 models)? - What was the total time?</p>
+<p><strong>You already timed your ESMFold prediction in Part 1. Now compare it to your ColabFold run.</strong></p>
+<p><strong>Think back to your AlphaFold2 predictions:</strong> - How long did the MSA search take? - How long did the actual structure prediction take (for 5 models)? - What was the total time?</p>
 <p><strong>Fill in your observations:</strong></p>
 <table class="caption-top table">
+<colgroup>
+<col style="width: 22%">
+<col style="width: 54%">
+<col style="width: 22%">
+</colgroup>
 <thead>
 <tr class="header">
 <th>Model</th>
@@ -508,12 +561,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="even">
 <td>ColabFold MSA search</td>
 <td>_____ minutes</td>
-<td>From yesterday</td>
+<td>From AlphaFold2 module</td>
 </tr>
 <tr class="odd">
 <td>ColabFold prediction (5 models)</td>
 <td>_____ minutes</td>
-<td>From yesterday</td>
+<td>From AlphaFold2 module</td>
 </tr>
 <tr class="even">
 <td><strong>Total ColabFold</strong></td>
@@ -849,6 +902,161 @@ Use ESMFold prediction
     addMarkAllButton();
   });
 })();
+</script>
+<style>
+.quiz-container {
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin: 2rem 0;
+  background-color: #f8f9fa;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.quiz-header {
+  font-weight: 600;
+  color: #495057;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.quiz-header i {
+  color: #0d6efd;
+}
+
+.quiz-question {
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+  font-weight: 500;
+}
+
+.quiz-options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.quiz-option {
+  padding: 0.75rem 1rem;
+  border: 1px solid #dee2e6;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background-color: white;
+}
+
+.quiz-option:hover {
+  background-color: #e9ecef;
+  border-color: #adb5bd;
+}
+
+.quiz-option.selected {
+  background-color: #e7f1ff;
+  border-color: #0d6efd;
+  color: #0d6efd;
+}
+
+.quiz-option.correct {
+  background-color: #d1e7dd;
+  border-color: #198754;
+  color: #0f5132;
+}
+
+.quiz-option.incorrect {
+  background-color: #f8d7da;
+  border-color: #dc3545;
+  color: #842029;
+}
+
+.quiz-feedback {
+  margin-top: 1rem;
+  padding: 0.75rem;
+  border-radius: 6px;
+  display: none;
+  font-size: 0.95rem;
+}
+
+.quiz-feedback.correct {
+  background-color: #d1e7dd;
+  color: #0f5132;
+  display: block;
+}
+
+.quiz-feedback.incorrect {
+  background-color: #f8d7da;
+  color: #842029;
+  display: block;
+}
+
+.check-btn {
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  background-color: #0d6efd;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.check-btn:hover {
+  background-color: #0b5ed7;
+}
+
+.check-btn:disabled {
+  background-color: #6c757d;
+  cursor: not-allowed;
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const quizzes = document.querySelectorAll('.quiz-container');
+
+  quizzes.forEach(quiz => {
+    const options = quiz.querySelectorAll('.quiz-option');
+    const checkBtn = quiz.querySelector('.check-btn');
+    const feedback = quiz.querySelector('.quiz-feedback');
+    const correctIndex = parseInt(quiz.dataset.correctIndex);
+    let selectedIndex = -1;
+
+    options.forEach((option, index) => {
+      option.addEventListener('click', () => {
+        if (checkBtn.disabled) return; // Already answered
+        
+        options.forEach(opt => opt.classList.remove('selected'));
+        option.classList.add('selected');
+        selectedIndex = index;
+      });
+    });
+
+    checkBtn.addEventListener('click', () => {
+      if (selectedIndex === -1) return;
+
+      // Disable interaction
+      checkBtn.disabled = true;
+      checkBtn.textContent = 'Submitted';
+      
+      const selectedOption = options[selectedIndex];
+      const correctOption = options[correctIndex];
+
+      if (selectedIndex === correctIndex) {
+        selectedOption.classList.add('correct');
+        selectedOption.classList.remove('selected');
+        feedback.textContent = quiz.dataset.correctFeedback || "Correct! Great job.";
+        feedback.className = 'quiz-feedback correct';
+      } else {
+        selectedOption.classList.add('incorrect');
+        selectedOption.classList.remove('selected');
+        correctOption.classList.add('correct'); // Show the right answer
+        feedback.textContent = quiz.dataset.incorrectFeedback || "Not quite. The correct answer is highlighted.";
+        feedback.className = 'quiz-feedback incorrect';
+      }
+    });
+  });
+});
 </script>
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
