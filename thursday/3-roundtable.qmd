@@ -1,8 +1,8 @@
 ---
-title: "3. Roundtable Discussion"
+title: "3. Reflection & Capstone Introduction"
 ---
 
-The roundtable discussion is an interactive session where you'll engage with peers and instructors to discuss your learning journey, share insights, and explore the future of ML-driven protein design.
+Before diving into the capstone project, take time to reflect on what you've learned and prepare your approach. This self-guided activity helps you consolidate your knowledge and plan your binder design project.
 
 ## Slides
 
@@ -12,57 +12,167 @@ The roundtable discussion is an interactive session where you'll engage with pee
 
 ---
 
-## Purpose
+## Part 1: Reflecting on Your Learning
 
-This roundtable provides an opportunity to:
+Take 10-15 minutes to think through these questions. Consider writing your answers in a notebook or document—this reflection will help solidify your understanding and identify areas to revisit.
 
-- **Reflect on the week**: What have you learned? What surprised you?
-- **Share experiences**: Discuss challenges and breakthroughs with peers
-- **Ask questions**: Get instructor insights on topics that interest you
-- **Look ahead**: Discuss how these tools might evolve and impact your research
+### Structure Prediction
 
-## Discussion Format
+::: {.callout-note}
+## Reflection Questions
+1. **What surprised you most** about how AlphaFold2 or ESMFold work?
+2. **When would you choose ESMFold over AlphaFold2?** What are the trade-offs?
+3. **How do you interpret pLDDT scores?** What score range makes you confident in a prediction?
+4. **What does the PAE matrix tell you** that pLDDT alone doesn't?
+:::
 
-The roundtable is structured to encourage open dialogue and knowledge sharing among all participants. Come prepared with questions and observations from your work throughout the bootcamp.
+### Protein Design
 
-::: {.callout-tip}
-## Preparation
-Think about which tools you found most useful, what challenges you encountered, and how you might apply these methods to your own research.
+::: {.callout-note}
+## Reflection Questions
+1. **How does RFdiffusion "know" what shape to generate?** What's the role of the noise schedule?
+2. **Why do we need sequence design (LigandMPNN) after backbone generation?** Why can't RFdiffusion output sequences directly?
+3. **What's the difference between unconditional and conditional generation** in RFdiffusion?
+4. **How do hotspot residues guide the design process?**
+:::
+
+### Computational Concepts
+
+::: {.callout-note}
+## Reflection Questions
+1. **Why are GPUs faster than CPUs** for these ML tools?
+2. **When might CPU actually be faster** than GPU?
+3. **What's the benefit of vectorization** in numerical computing?
+:::
+
+### Connecting the Tools
+
+::: {.callout-note}
+## Reflection Questions
+1. **Sketch out the typical workflow** for designing a protein binder. What tools do you use at each step?
+2. **Where in the pipeline would you use structure prediction?** Where would you use it for validation?
+3. **What would you do if your designed binder had low pLDDT** when you predicted its structure?
 :::
 
 ---
 
-## Topics to Consider
+## Part 2: Introduction to the Capstone Project
 
-As you prepare for the discussion, consider these themes:
+The capstone project brings together everything you've learned. You'll design a **de novo protein binder** for a target of your choice.
 
-### Technical Reflections
+### What is Binder Design?
 
-- Which prediction tool (AlphaFold2, ESMFold, etc.) gave the best results for your proteins?
-- How did you decide which design tool to use for different applications?
-- What surprised you about CPU vs GPU performance?
+Binder design is formulated as: *"Given a target protein (and optionally a specific epitope), design a smaller protein capable of binding the target."*
 
-### Practical Applications
+This is one of the most important problems in computational protein design, with applications in:
 
-- How might these tools fit into your current research workflow?
-- What validation experiments would you need to trust the predictions?
-- How do you handle cases where different tools give conflicting predictions?
+- **Therapeutics**: Blocking disease-related protein interactions
+- **Diagnostics**: Creating detection reagents
+- **Research tools**: Probing protein function
+- **Synthetic biology**: Building new biological circuits
 
-### Future Directions
+### The Design Pipeline
 
-- What capabilities are still missing from current tools?
-- How might these tools evolve in the next few years?
-- What ethical considerations arise from democratized protein design?
+```{mermaid}
+flowchart LR
+    Target[Target Selection] --> Structure[Structure Analysis]
+    Structure --> Backbone[Backbone Generation<br/>RFdiffusion]
+    Backbone --> Sequence[Sequence Design<br/>LigandMPNN]
+    Sequence --> Validation[Structure Prediction<br/>AlphaFold2/ESMFold]
+    Validation --> Refinement[Iterate & Refine]
+
+    style Backbone fill:#f9f,stroke:#333,stroke-width:2px
+    style Sequence fill:#bbf,stroke:#333,stroke-width:2px
+    style Validation fill:#bfb,stroke:#333,stroke-width:2px
+```
+
+### Available Targets
+
+You'll choose from one of these curated targets, each representing a different challenge:
+
+| Category | Targets | Challenge Level |
+|----------|---------|-----------------|
+| **Immune Checkpoint** | PD-L1, IFNAR2, IL-7Rα | Well-studied interfaces, therapeutic relevance |
+| **Allergen** | Bet v 1 | Smaller target, antibody-like design |
+| **Enzymes** | TrkA, TEM-1, GM2 Activator, Beta-Glucosidase | Diverse binding sites, varied complexity |
+
+::: {.callout-tip}
+## Choosing Your Target
+Consider what interests you most:
+- **Therapeutic relevance?** → PD-L1, IFNAR2, IL-7Rα
+- **Smaller, focused project?** → Bet v 1
+- **Enzyme inhibition?** → TEM-1, Beta-Glucosidase
+- **Receptor binding?** → TrkA
+:::
 
 ---
 
-## Preparing for the Capstone
+## Part 3: Planning Your Approach
 
-The roundtable also serves as a transition to the capstone project. Use this time to:
+Before starting the capstone, develop a plan. Answer these questions to guide your work.
 
-1. **Discuss your target choice**: Share which capstone target interests you and why
-2. **Plan your approach**: Get feedback on your design strategy
-3. **Form collaborations**: Find peers with complementary skills or interests
+### Target Selection
+
+::: {.callout-important}
+## Planning Questions
+1. **Which target interests you most?** Why?
+2. **What PDB structure will you use?** Have you looked at it in PyMOL?
+3. **What residues define the binding interface?** (Check the target's detail page)
+4. **Are there any potential challenges** with your target (flexible regions, glycosylation sites, etc.)?
+:::
+
+### Design Strategy
+
+::: {.callout-important}
+## Planning Questions
+1. **What size binder will you aim for?** (Typical range: 50-100 residues)
+2. **Will you use hotspot conditioning** in RFdiffusion? Which residues?
+3. **How many designs will you generate** at each step?
+4. **What metrics will you use to filter designs?** (pLDDT, PAE, interface contacts, etc.)
+:::
+
+### Documentation Plan
+
+::: {.callout-important}
+## Planning Questions
+1. **How will you keep track of your experiments?** (Lab notebook, Jupyter notebook, README, etc.)
+2. **What format will you use to present your work?** (Report, slides, video, GitHub repo)
+3. **What commands and settings will you record?** (Think about reproducibility)
+:::
+
+---
+
+## Part 4: Getting Started Checklist
+
+Before moving to the capstone, make sure you can answer "yes" to these:
+
+- [ ] I've reviewed the tools from Monday and know how to run them
+- [ ] I understand the structure prediction outputs (pLDDT, PAE)
+- [ ] I know how RFdiffusion and LigandMPNN work together
+- [ ] I've chosen a target (or narrowed it down to 2-3 options)
+- [ ] I've looked at my target structure in PyMOL
+- [ ] I have a plan for documenting my work
+
+::: {.callout-tip}
+## Ready to Start?
+Head to the [Capstone Project](../capstone/index.qmd) page to begin! Each target has a dedicated page with specific guidance, PDB information, and strategy tips.
+:::
+
+---
+
+## Additional Resources
+
+If you want to deepen your understanding before starting the capstone:
+
+### Papers
+- [RFdiffusion paper](https://www.nature.com/articles/s41586-023-06415-8) - Watson et al., Nature 2023
+- [AlphaFold2 paper](https://www.nature.com/articles/s41586-021-03819-2) - Jumper et al., Nature 2021
+- [BindCraft preprint](https://www.biorxiv.org/content/10.1101/2024.09.30.615802v1) - Pacesa et al., bioRxiv 2024
+
+### Communities
+- [RosettaCommons Forums](https://www.rosettacommons.org/forum)
+- [OpenFold Discussions](https://github.com/aqlaboratory/openfold/discussions)
+- Protein design Twitter/X community (#proteindesign)
 
 ---
 

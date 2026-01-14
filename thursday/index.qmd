@@ -22,7 +22,7 @@ By the end of Thursday, you will be able to:
 |---|--------|-------------|
 | [1](1-cpu-vs-gpu.qmd) | CPU vs GPU Computing | Hands-on activity comparing computational performance |
 | [2](2-docking.qmd) | Molecular Docking | Introduction to predicting molecular interactions |
-| [3](3-roundtable.qmd) | Roundtable Discussion | Reflect, discuss, and prepare for the capstone |
+| [3](3-roundtable.qmd) | Reflection & Capstone Introduction | Self-reflect on your learning and plan your capstone project |
 
 ## Schedule
 
@@ -30,7 +30,7 @@ By the end of Thursday, you will be able to:
 |------|----------|
 | Morning | CPU vs GPU Activity |
 | Mid-day | Docking Lesson |
-| Afternoon | Roundtable Discussion |
+| Afternoon | Reflection & Capstone Introduction |
 
 ## Preparation
 

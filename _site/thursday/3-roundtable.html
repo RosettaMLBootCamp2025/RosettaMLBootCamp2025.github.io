@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>3. Roundtable Discussion – ML Protein Design Bootcamp 2025</title>
+<title>3. Reflection &amp; Capstone Introduction – ML Protein Design Bootcamp 2025</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -81,6 +81,9 @@ ul.task-list li input[type="checkbox"] {
     overflow: hidden;
   }
 </style>
+<script src="../site_libs/quarto-diagram/mermaid.min.js"></script>
+<script src="../site_libs/quarto-diagram/mermaid-init.js"></script>
+<link href="../site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
 
 
 <link rel="stylesheet" href="../styles.css">
@@ -149,7 +152,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../thursday/3-roundtable.html">3. Roundtable Discussion</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../thursday/3-roundtable.html">3. Reflection &amp; Capstone Introduction</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -182,7 +185,7 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../thursday/3-roundtable.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">3. Roundtable Discussion</span></a>
+ <span class="menu-text">3. Reflection &amp; Capstone Introduction</span></a>
   </div>
 </li>
     </ul>
@@ -196,15 +199,31 @@ ul.task-list li input[type="checkbox"] {
    
   <ul>
   <li><a href="#slides" id="toc-slides" class="nav-link active" data-scroll-target="#slides">Slides</a></li>
-  <li><a href="#purpose" id="toc-purpose" class="nav-link" data-scroll-target="#purpose">Purpose</a></li>
-  <li><a href="#discussion-format" id="toc-discussion-format" class="nav-link" data-scroll-target="#discussion-format">Discussion Format</a></li>
-  <li><a href="#topics-to-consider" id="toc-topics-to-consider" class="nav-link" data-scroll-target="#topics-to-consider">Topics to Consider</a>
+  <li><a href="#part-1-reflecting-on-your-learning" id="toc-part-1-reflecting-on-your-learning" class="nav-link" data-scroll-target="#part-1-reflecting-on-your-learning">Part 1: Reflecting on Your Learning</a>
   <ul class="collapse">
-  <li><a href="#technical-reflections" id="toc-technical-reflections" class="nav-link" data-scroll-target="#technical-reflections">Technical Reflections</a></li>
-  <li><a href="#practical-applications" id="toc-practical-applications" class="nav-link" data-scroll-target="#practical-applications">Practical Applications</a></li>
-  <li><a href="#future-directions" id="toc-future-directions" class="nav-link" data-scroll-target="#future-directions">Future Directions</a></li>
+  <li><a href="#structure-prediction" id="toc-structure-prediction" class="nav-link" data-scroll-target="#structure-prediction">Structure Prediction</a></li>
+  <li><a href="#protein-design" id="toc-protein-design" class="nav-link" data-scroll-target="#protein-design">Protein Design</a></li>
+  <li><a href="#computational-concepts" id="toc-computational-concepts" class="nav-link" data-scroll-target="#computational-concepts">Computational Concepts</a></li>
+  <li><a href="#connecting-the-tools" id="toc-connecting-the-tools" class="nav-link" data-scroll-target="#connecting-the-tools">Connecting the Tools</a></li>
   </ul></li>
-  <li><a href="#preparing-for-the-capstone" id="toc-preparing-for-the-capstone" class="nav-link" data-scroll-target="#preparing-for-the-capstone">Preparing for the Capstone</a></li>
+  <li><a href="#part-2-introduction-to-the-capstone-project" id="toc-part-2-introduction-to-the-capstone-project" class="nav-link" data-scroll-target="#part-2-introduction-to-the-capstone-project">Part 2: Introduction to the Capstone Project</a>
+  <ul class="collapse">
+  <li><a href="#what-is-binder-design" id="toc-what-is-binder-design" class="nav-link" data-scroll-target="#what-is-binder-design">What is Binder Design?</a></li>
+  <li><a href="#the-design-pipeline" id="toc-the-design-pipeline" class="nav-link" data-scroll-target="#the-design-pipeline">The Design Pipeline</a></li>
+  <li><a href="#available-targets" id="toc-available-targets" class="nav-link" data-scroll-target="#available-targets">Available Targets</a></li>
+  </ul></li>
+  <li><a href="#part-3-planning-your-approach" id="toc-part-3-planning-your-approach" class="nav-link" data-scroll-target="#part-3-planning-your-approach">Part 3: Planning Your Approach</a>
+  <ul class="collapse">
+  <li><a href="#target-selection" id="toc-target-selection" class="nav-link" data-scroll-target="#target-selection">Target Selection</a></li>
+  <li><a href="#design-strategy" id="toc-design-strategy" class="nav-link" data-scroll-target="#design-strategy">Design Strategy</a></li>
+  <li><a href="#documentation-plan" id="toc-documentation-plan" class="nav-link" data-scroll-target="#documentation-plan">Documentation Plan</a></li>
+  </ul></li>
+  <li><a href="#part-4-getting-started-checklist" id="toc-part-4-getting-started-checklist" class="nav-link" data-scroll-target="#part-4-getting-started-checklist">Part 4: Getting Started Checklist</a></li>
+  <li><a href="#additional-resources" id="toc-additional-resources" class="nav-link" data-scroll-target="#additional-resources">Additional Resources</a>
+  <ul class="collapse">
+  <li><a href="#papers" id="toc-papers" class="nav-link" data-scroll-target="#papers">Papers</a></li>
+  <li><a href="#communities" id="toc-communities" class="nav-link" data-scroll-target="#communities">Communities</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -213,7 +232,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">3. Roundtable Discussion</h1>
+<h1 class="title">3. Reflection &amp; Capstone Introduction</h1>
 </div>
 
 
@@ -230,77 +249,298 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>The roundtable discussion is an interactive session where you’ll engage with peers and instructors to discuss your learning journey, share insights, and explore the future of ML-driven protein design.</p>
+<p>Before diving into the capstone project, take time to reflect on what you’ve learned and prepare your approach. This self-guided activity helps you consolidate your knowledge and plan your binder design project.</p>
 <section id="slides" class="level2">
 <h2 class="anchored" data-anchor-id="slides">Slides</h2>
 <iframe src="https://docs.google.com/presentation/d/1q7JIBgvSpYX4gPsRdyW8XZlx0jBR_G7Y/embed?start=false&amp;loop=false&amp;delayms=3000" frameborder="0" width="100%" height="500" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
 <hr>
 </section>
-<section id="purpose" class="level2">
-<h2 class="anchored" data-anchor-id="purpose">Purpose</h2>
-<p>This roundtable provides an opportunity to:</p>
+<section id="part-1-reflecting-on-your-learning" class="level2">
+<h2 class="anchored" data-anchor-id="part-1-reflecting-on-your-learning">Part 1: Reflecting on Your Learning</h2>
+<p>Take 10-15 minutes to think through these questions. Consider writing your answers in a notebook or document—this reflection will help solidify your understanding and identify areas to revisit.</p>
+<section id="structure-prediction" class="level3">
+<h3 class="anchored" data-anchor-id="structure-prediction">Structure Prediction</h3>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Reflection Questions
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li><strong>What surprised you most</strong> about how AlphaFold2 or ESMFold work?</li>
+<li><strong>When would you choose ESMFold over AlphaFold2?</strong> What are the trade-offs?</li>
+<li><strong>How do you interpret pLDDT scores?</strong> What score range makes you confident in a prediction?</li>
+<li><strong>What does the PAE matrix tell you</strong> that pLDDT alone doesn’t?</li>
+</ol>
+</div>
+</div>
+</section>
+<section id="protein-design" class="level3">
+<h3 class="anchored" data-anchor-id="protein-design">Protein Design</h3>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Reflection Questions
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li><strong>How does RFdiffusion “know” what shape to generate?</strong> What’s the role of the noise schedule?</li>
+<li><strong>Why do we need sequence design (LigandMPNN) after backbone generation?</strong> Why can’t RFdiffusion output sequences directly?</li>
+<li><strong>What’s the difference between unconditional and conditional generation</strong> in RFdiffusion?</li>
+<li><strong>How do hotspot residues guide the design process?</strong></li>
+</ol>
+</div>
+</div>
+</section>
+<section id="computational-concepts" class="level3">
+<h3 class="anchored" data-anchor-id="computational-concepts">Computational Concepts</h3>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Reflection Questions
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li><strong>Why are GPUs faster than CPUs</strong> for these ML tools?</li>
+<li><strong>When might CPU actually be faster</strong> than GPU?</li>
+<li><strong>What’s the benefit of vectorization</strong> in numerical computing?</li>
+</ol>
+</div>
+</div>
+</section>
+<section id="connecting-the-tools" class="level3">
+<h3 class="anchored" data-anchor-id="connecting-the-tools">Connecting the Tools</h3>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Reflection Questions
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li><strong>Sketch out the typical workflow</strong> for designing a protein binder. What tools do you use at each step?</li>
+<li><strong>Where in the pipeline would you use structure prediction?</strong> Where would you use it for validation?</li>
+<li><strong>What would you do if your designed binder had low pLDDT</strong> when you predicted its structure?</li>
+</ol>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="part-2-introduction-to-the-capstone-project" class="level2">
+<h2 class="anchored" data-anchor-id="part-2-introduction-to-the-capstone-project">Part 2: Introduction to the Capstone Project</h2>
+<p>The capstone project brings together everything you’ve learned. You’ll design a <strong>de novo protein binder</strong> for a target of your choice.</p>
+<section id="what-is-binder-design" class="level3">
+<h3 class="anchored" data-anchor-id="what-is-binder-design">What is Binder Design?</h3>
+<p>Binder design is formulated as: <em>“Given a target protein (and optionally a specific epitope), design a smaller protein capable of binding the target.”</em></p>
+<p>This is one of the most important problems in computational protein design, with applications in:</p>
 <ul>
-<li><strong>Reflect on the week</strong>: What have you learned? What surprised you?</li>
-<li><strong>Share experiences</strong>: Discuss challenges and breakthroughs with peers</li>
-<li><strong>Ask questions</strong>: Get instructor insights on topics that interest you</li>
-<li><strong>Look ahead</strong>: Discuss how these tools might evolve and impact your research</li>
+<li><strong>Therapeutics</strong>: Blocking disease-related protein interactions</li>
+<li><strong>Diagnostics</strong>: Creating detection reagents</li>
+<li><strong>Research tools</strong>: Probing protein function</li>
+<li><strong>Synthetic biology</strong>: Building new biological circuits</li>
 </ul>
 </section>
-<section id="discussion-format" class="level2">
-<h2 class="anchored" data-anchor-id="discussion-format">Discussion Format</h2>
-<p>The roundtable is structured to encourage open dialogue and knowledge sharing among all participants. Come prepared with questions and observations from your work throughout the bootcamp.</p>
+<section id="the-design-pipeline" class="level3">
+<h3 class="anchored" data-anchor-id="the-design-pipeline">The Design Pipeline</h3>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart LR
+    Target[Target Selection] --&gt; Structure[Structure Analysis]
+    Structure --&gt; Backbone[Backbone Generation&lt;br/&gt;RFdiffusion]
+    Backbone --&gt; Sequence[Sequence Design&lt;br/&gt;LigandMPNN]
+    Sequence --&gt; Validation[Structure Prediction&lt;br/&gt;AlphaFold2/ESMFold]
+    Validation --&gt; Refinement[Iterate &amp; Refine]
+
+    style Backbone fill:#f9f,stroke:#333,stroke-width:2px
+    style Sequence fill:#bbf,stroke:#333,stroke-width:2px
+    style Validation fill:#bfb,stroke:#333,stroke-width:2px
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+</section>
+<section id="available-targets" class="level3">
+<h3 class="anchored" data-anchor-id="available-targets">Available Targets</h3>
+<p>You’ll choose from one of these curated targets, each representing a different challenge:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 27%">
+<col style="width: 25%">
+<col style="width: 47%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Category</th>
+<th>Targets</th>
+<th>Challenge Level</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Immune Checkpoint</strong></td>
+<td>PD-L1, IFNAR2, IL-7Rα</td>
+<td>Well-studied interfaces, therapeutic relevance</td>
+</tr>
+<tr class="even">
+<td><strong>Allergen</strong></td>
+<td>Bet v 1</td>
+<td>Smaller target, antibody-like design</td>
+</tr>
+<tr class="odd">
+<td><strong>Enzymes</strong></td>
+<td>TrkA, TEM-1, GM2 Activator, Beta-Glucosidase</td>
+<td>Diverse binding sites, varied complexity</td>
+</tr>
+</tbody>
+</table>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Preparation
+<span class="screen-reader-only">Tip</span>Choosing Your Target
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Think about which tools you found most useful, what challenges you encountered, and how you might apply these methods to your own research.</p>
+<p>Consider what interests you most: - <strong>Therapeutic relevance?</strong> → PD-L1, IFNAR2, IL-7Rα - <strong>Smaller, focused project?</strong> → Bet v 1 - <strong>Enzyme inhibition?</strong> → TEM-1, Beta-Glucosidase - <strong>Receptor binding?</strong> → TrkA</p>
 </div>
 </div>
 <hr>
 </section>
-<section id="topics-to-consider" class="level2">
-<h2 class="anchored" data-anchor-id="topics-to-consider">Topics to Consider</h2>
-<p>As you prepare for the discussion, consider these themes:</p>
-<section id="technical-reflections" class="level3">
-<h3 class="anchored" data-anchor-id="technical-reflections">Technical Reflections</h3>
-<ul>
-<li>Which prediction tool (AlphaFold2, ESMFold, etc.) gave the best results for your proteins?</li>
-<li>How did you decide which design tool to use for different applications?</li>
-<li>What surprised you about CPU vs GPU performance?</li>
-</ul>
 </section>
-<section id="practical-applications" class="level3">
-<h3 class="anchored" data-anchor-id="practical-applications">Practical Applications</h3>
-<ul>
-<li>How might these tools fit into your current research workflow?</li>
-<li>What validation experiments would you need to trust the predictions?</li>
-<li>How do you handle cases where different tools give conflicting predictions?</li>
-</ul>
-</section>
-<section id="future-directions" class="level3">
-<h3 class="anchored" data-anchor-id="future-directions">Future Directions</h3>
-<ul>
-<li>What capabilities are still missing from current tools?</li>
-<li>How might these tools evolve in the next few years?</li>
-<li>What ethical considerations arise from democratized protein design?</li>
-</ul>
-<hr>
-</section>
-</section>
-<section id="preparing-for-the-capstone" class="level2">
-<h2 class="anchored" data-anchor-id="preparing-for-the-capstone">Preparing for the Capstone</h2>
-<p>The roundtable also serves as a transition to the capstone project. Use this time to:</p>
+<section id="part-3-planning-your-approach" class="level2">
+<h2 class="anchored" data-anchor-id="part-3-planning-your-approach">Part 3: Planning Your Approach</h2>
+<p>Before starting the capstone, develop a plan. Answer these questions to guide your work.</p>
+<section id="target-selection" class="level3">
+<h3 class="anchored" data-anchor-id="target-selection">Target Selection</h3>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Planning Questions
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <ol type="1">
-<li><strong>Discuss your target choice</strong>: Share which capstone target interests you and why</li>
-<li><strong>Plan your approach</strong>: Get feedback on your design strategy</li>
-<li><strong>Form collaborations</strong>: Find peers with complementary skills or interests</li>
+<li><strong>Which target interests you most?</strong> Why?</li>
+<li><strong>What PDB structure will you use?</strong> Have you looked at it in PyMOL?</li>
+<li><strong>What residues define the binding interface?</strong> (Check the target’s detail page)</li>
+<li><strong>Are there any potential challenges</strong> with your target (flexible regions, glycosylation sites, etc.)?</li>
 </ol>
+</div>
+</div>
+</section>
+<section id="design-strategy" class="level3">
+<h3 class="anchored" data-anchor-id="design-strategy">Design Strategy</h3>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Planning Questions
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li><strong>What size binder will you aim for?</strong> (Typical range: 50-100 residues)</li>
+<li><strong>Will you use hotspot conditioning</strong> in RFdiffusion? Which residues?</li>
+<li><strong>How many designs will you generate</strong> at each step?</li>
+<li><strong>What metrics will you use to filter designs?</strong> (pLDDT, PAE, interface contacts, etc.)</li>
+</ol>
+</div>
+</div>
+</section>
+<section id="documentation-plan" class="level3">
+<h3 class="anchored" data-anchor-id="documentation-plan">Documentation Plan</h3>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Planning Questions
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li><strong>How will you keep track of your experiments?</strong> (Lab notebook, Jupyter notebook, README, etc.)</li>
+<li><strong>What format will you use to present your work?</strong> (Report, slides, video, GitHub repo)</li>
+<li><strong>What commands and settings will you record?</strong> (Think about reproducibility)</li>
+</ol>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="part-4-getting-started-checklist" class="level2">
+<h2 class="anchored" data-anchor-id="part-4-getting-started-checklist">Part 4: Getting Started Checklist</h2>
+<p>Before moving to the capstone, make sure you can answer “yes” to these:</p>
+<ul class="task-list">
+<li><label><input type="checkbox">I’ve reviewed the tools from Monday and know how to run them</label></li>
+<li><label><input type="checkbox">I understand the structure prediction outputs (pLDDT, PAE)</label></li>
+<li><label><input type="checkbox">I know how RFdiffusion and LigandMPNN work together</label></li>
+<li><label><input type="checkbox">I’ve chosen a target (or narrowed it down to 2-3 options)</label></li>
+<li><label><input type="checkbox">I’ve looked at my target structure in PyMOL</label></li>
+<li><label><input type="checkbox">I have a plan for documenting my work</label></li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Ready to Start?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Head to the <a href="../capstone/index.html">Capstone Project</a> page to begin! Each target has a dedicated page with specific guidance, PDB information, and strategy tips.</p>
+</div>
+</div>
+<hr>
+</section>
+<section id="additional-resources" class="level2">
+<h2 class="anchored" data-anchor-id="additional-resources">Additional Resources</h2>
+<p>If you want to deepen your understanding before starting the capstone:</p>
+<section id="papers" class="level3">
+<h3 class="anchored" data-anchor-id="papers">Papers</h3>
+<ul>
+<li><a href="https://www.nature.com/articles/s41586-023-06415-8">RFdiffusion paper</a> - Watson et al., Nature 2023</li>
+<li><a href="https://www.nature.com/articles/s41586-021-03819-2">AlphaFold2 paper</a> - Jumper et al., Nature 2021</li>
+<li><a href="https://www.biorxiv.org/content/10.1101/2024.09.30.615802v1">BindCraft preprint</a> - Pacesa et al., bioRxiv 2024</li>
+</ul>
+</section>
+<section id="communities" class="level3">
+<h3 class="anchored" data-anchor-id="communities">Communities</h3>
+<ul>
+<li><a href="https://www.rosettacommons.org/forum">RosettaCommons Forums</a></li>
+<li><a href="https://github.com/aqlaboratory/openfold/discussions">OpenFold Discussions</a></li>
+<li>Protein design Twitter/X community (#proteindesign)</li>
+</ul>
 <hr>
 <div style="display: flex; justify-content: space-between; align-items: center;">
 <div>
@@ -315,6 +555,7 @@ ul.task-list li input[type="checkbox"] {
 </div>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
