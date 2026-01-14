@@ -143,7 +143,7 @@
     "href": "thursday/index.html#modules",
     "title": "Thursday: Docking & Discussion",
     "section": "Modules",
-    "text": "Modules\n\n\n\n#\nModule\nDescription\n\n\n\n\n1\nCPU vs GPU Computing\nHands-on activity comparing computational performance\n\n\n2\nMolecular Docking\nIntroduction to predicting molecular interactions\n\n\n3\nRoundtable Discussion\nReflect, discuss, and prepare for the capstone",
+    "text": "Modules\n\n\n\n#\nModule\nDescription\n\n\n\n\n1\nCPU vs GPU Computing\nHands-on activity comparing computational performance\n\n\n2\nMolecular Docking\nIntroduction to predicting molecular interactions\n\n\n3\nReflection & Capstone Introduction\nSelf-reflect on your learning and plan your capstone project",
     "crumbs": [
       "Thursday",
       "Thursday: Docking & Discussion"
@@ -154,7 +154,7 @@
     "href": "thursday/index.html#schedule",
     "title": "Thursday: Docking & Discussion",
     "section": "Schedule",
-    "text": "Schedule\n\n\n\nTime\nActivity\n\n\n\n\nMorning\nCPU vs GPU Activity\n\n\nMid-day\nDocking Lesson\n\n\nAfternoon\nRoundtable Discussion",
+    "text": "Schedule\n\n\n\nTime\nActivity\n\n\n\n\nMorning\nCPU vs GPU Activity\n\n\nMid-day\nDocking Lesson\n\n\nAfternoon\nReflection & Capstone Introduction",
     "crumbs": [
       "Thursday",
       "Thursday: Docking & Discussion"
@@ -3349,67 +3349,78 @@
   {
     "objectID": "thursday/3-roundtable.html",
     "href": "thursday/3-roundtable.html",
-    "title": "3. Roundtable Discussion",
+    "title": "3. Reflection & Capstone Introduction",
     "section": "",
-    "text": "The roundtable discussion is an interactive session where you’ll engage with peers and instructors to discuss your learning journey, share insights, and explore the future of ML-driven protein design.",
+    "text": "Before diving into the capstone project, take time to reflect on what you’ve learned and prepare your approach. This self-guided activity helps you consolidate your knowledge and plan your binder design project.",
     "crumbs": [
       "Thursday",
-      "3. Roundtable Discussion"
+      "3. Reflection & Capstone Introduction"
     ]
   },
   {
     "objectID": "thursday/3-roundtable.html#slides",
     "href": "thursday/3-roundtable.html#slides",
-    "title": "3. Roundtable Discussion",
+    "title": "3. Reflection & Capstone Introduction",
     "section": "Slides",
     "text": "Slides",
     "crumbs": [
       "Thursday",
-      "3. Roundtable Discussion"
+      "3. Reflection & Capstone Introduction"
     ]
   },
   {
-    "objectID": "thursday/3-roundtable.html#purpose",
-    "href": "thursday/3-roundtable.html#purpose",
-    "title": "3. Roundtable Discussion",
-    "section": "Purpose",
-    "text": "Purpose\nThis roundtable provides an opportunity to:\n\nReflect on the week: What have you learned? What surprised you?\nShare experiences: Discuss challenges and breakthroughs with peers\nAsk questions: Get instructor insights on topics that interest you\nLook ahead: Discuss how these tools might evolve and impact your research",
+    "objectID": "thursday/3-roundtable.html#part-1-reflecting-on-your-learning",
+    "href": "thursday/3-roundtable.html#part-1-reflecting-on-your-learning",
+    "title": "3. Reflection & Capstone Introduction",
+    "section": "Part 1: Reflecting on Your Learning",
+    "text": "Part 1: Reflecting on Your Learning\nTake 10-15 minutes to think through these questions. Consider writing your answers in a notebook or document—this reflection will help solidify your understanding and identify areas to revisit.\n\nStructure Prediction\n\n\n\n\n\n\nNoteReflection Questions\n\n\n\n\nWhat surprised you most about how AlphaFold2 or ESMFold work?\nWhen would you choose ESMFold over AlphaFold2? What are the trade-offs?\nHow do you interpret pLDDT scores? What score range makes you confident in a prediction?\nWhat does the PAE matrix tell you that pLDDT alone doesn’t?\n\n\n\n\n\nProtein Design\n\n\n\n\n\n\nNoteReflection Questions\n\n\n\n\nHow does RFdiffusion “know” what shape to generate? What’s the role of the noise schedule?\nWhy do we need sequence design (LigandMPNN) after backbone generation? Why can’t RFdiffusion output sequences directly?\nWhat’s the difference between unconditional and conditional generation in RFdiffusion?\nHow do hotspot residues guide the design process?\n\n\n\n\n\nComputational Concepts\n\n\n\n\n\n\nNoteReflection Questions\n\n\n\n\nWhy are GPUs faster than CPUs for these ML tools?\nWhen might CPU actually be faster than GPU?\nWhat’s the benefit of vectorization in numerical computing?\n\n\n\n\n\nConnecting the Tools\n\n\n\n\n\n\nNoteReflection Questions\n\n\n\n\nSketch out the typical workflow for designing a protein binder. What tools do you use at each step?\nWhere in the pipeline would you use structure prediction? Where would you use it for validation?\nWhat would you do if your designed binder had low pLDDT when you predicted its structure?",
     "crumbs": [
       "Thursday",
-      "3. Roundtable Discussion"
+      "3. Reflection & Capstone Introduction"
     ]
   },
   {
-    "objectID": "thursday/3-roundtable.html#discussion-format",
-    "href": "thursday/3-roundtable.html#discussion-format",
-    "title": "3. Roundtable Discussion",
-    "section": "Discussion Format",
-    "text": "Discussion Format\nThe roundtable is structured to encourage open dialogue and knowledge sharing among all participants. Come prepared with questions and observations from your work throughout the bootcamp.\n\n\n\n\n\n\nTipPreparation\n\n\n\nThink about which tools you found most useful, what challenges you encountered, and how you might apply these methods to your own research.",
+    "objectID": "thursday/3-roundtable.html#part-2-introduction-to-the-capstone-project",
+    "href": "thursday/3-roundtable.html#part-2-introduction-to-the-capstone-project",
+    "title": "3. Reflection & Capstone Introduction",
+    "section": "Part 2: Introduction to the Capstone Project",
+    "text": "Part 2: Introduction to the Capstone Project\nThe capstone project brings together everything you’ve learned. You’ll design a de novo protein binder for a target of your choice.\n\nWhat is Binder Design?\nBinder design is formulated as: “Given a target protein (and optionally a specific epitope), design a smaller protein capable of binding the target.”\nThis is one of the most important problems in computational protein design, with applications in:\n\nTherapeutics: Blocking disease-related protein interactions\nDiagnostics: Creating detection reagents\nResearch tools: Probing protein function\nSynthetic biology: Building new biological circuits\n\n\n\nThe Design Pipeline\n\n\n\n\n\nflowchart LR\n    Target[Target Selection] --&gt; Structure[Structure Analysis]\n    Structure --&gt; Backbone[Backbone Generation&lt;br/&gt;RFdiffusion]\n    Backbone --&gt; Sequence[Sequence Design&lt;br/&gt;LigandMPNN]\n    Sequence --&gt; Validation[Structure Prediction&lt;br/&gt;AlphaFold2/ESMFold]\n    Validation --&gt; Refinement[Iterate & Refine]\n\n    style Backbone fill:#f9f,stroke:#333,stroke-width:2px\n    style Sequence fill:#bbf,stroke:#333,stroke-width:2px\n    style Validation fill:#bfb,stroke:#333,stroke-width:2px\n\n\n\n\n\n\n\n\nAvailable Targets\nYou’ll choose from one of these curated targets, each representing a different challenge:\n\n\n\n\n\n\n\n\nCategory\nTargets\nChallenge Level\n\n\n\n\nImmune Checkpoint\nPD-L1, IFNAR2, IL-7Rα\nWell-studied interfaces, therapeutic relevance\n\n\nAllergen\nBet v 1\nSmaller target, antibody-like design\n\n\nEnzymes\nTrkA, TEM-1, GM2 Activator, Beta-Glucosidase\nDiverse binding sites, varied complexity\n\n\n\n\n\n\n\n\n\nTipChoosing Your Target\n\n\n\nConsider what interests you most: - Therapeutic relevance? → PD-L1, IFNAR2, IL-7Rα - Smaller, focused project? → Bet v 1 - Enzyme inhibition? → TEM-1, Beta-Glucosidase - Receptor binding? → TrkA",
     "crumbs": [
       "Thursday",
-      "3. Roundtable Discussion"
+      "3. Reflection & Capstone Introduction"
     ]
   },
   {
-    "objectID": "thursday/3-roundtable.html#topics-to-consider",
-    "href": "thursday/3-roundtable.html#topics-to-consider",
-    "title": "3. Roundtable Discussion",
-    "section": "Topics to Consider",
-    "text": "Topics to Consider\nAs you prepare for the discussion, consider these themes:\n\nTechnical Reflections\n\nWhich prediction tool (AlphaFold2, ESMFold, etc.) gave the best results for your proteins?\nHow did you decide which design tool to use for different applications?\nWhat surprised you about CPU vs GPU performance?\n\n\n\nPractical Applications\n\nHow might these tools fit into your current research workflow?\nWhat validation experiments would you need to trust the predictions?\nHow do you handle cases where different tools give conflicting predictions?\n\n\n\nFuture Directions\n\nWhat capabilities are still missing from current tools?\nHow might these tools evolve in the next few years?\nWhat ethical considerations arise from democratized protein design?",
+    "objectID": "thursday/3-roundtable.html#part-3-planning-your-approach",
+    "href": "thursday/3-roundtable.html#part-3-planning-your-approach",
+    "title": "3. Reflection & Capstone Introduction",
+    "section": "Part 3: Planning Your Approach",
+    "text": "Part 3: Planning Your Approach\nBefore starting the capstone, develop a plan. Answer these questions to guide your work.\n\nTarget Selection\n\n\n\n\n\n\nImportantPlanning Questions\n\n\n\n\nWhich target interests you most? Why?\nWhat PDB structure will you use? Have you looked at it in PyMOL?\nWhat residues define the binding interface? (Check the target’s detail page)\nAre there any potential challenges with your target (flexible regions, glycosylation sites, etc.)?\n\n\n\n\n\nDesign Strategy\n\n\n\n\n\n\nImportantPlanning Questions\n\n\n\n\nWhat size binder will you aim for? (Typical range: 50-100 residues)\nWill you use hotspot conditioning in RFdiffusion? Which residues?\nHow many designs will you generate at each step?\nWhat metrics will you use to filter designs? (pLDDT, PAE, interface contacts, etc.)\n\n\n\n\n\nDocumentation Plan\n\n\n\n\n\n\nImportantPlanning Questions\n\n\n\n\nHow will you keep track of your experiments? (Lab notebook, Jupyter notebook, README, etc.)\nWhat format will you use to present your work? (Report, slides, video, GitHub repo)\nWhat commands and settings will you record? (Think about reproducibility)",
     "crumbs": [
       "Thursday",
-      "3. Roundtable Discussion"
+      "3. Reflection & Capstone Introduction"
     ]
   },
   {
-    "objectID": "thursday/3-roundtable.html#preparing-for-the-capstone",
-    "href": "thursday/3-roundtable.html#preparing-for-the-capstone",
-    "title": "3. Roundtable Discussion",
-    "section": "Preparing for the Capstone",
-    "text": "Preparing for the Capstone\nThe roundtable also serves as a transition to the capstone project. Use this time to:\n\nDiscuss your target choice: Share which capstone target interests you and why\nPlan your approach: Get feedback on your design strategy\nForm collaborations: Find peers with complementary skills or interests\n\n\n\n\n← Docking\n\n\nBack to Home\n\n\nCapstone →",
+    "objectID": "thursday/3-roundtable.html#part-4-getting-started-checklist",
+    "href": "thursday/3-roundtable.html#part-4-getting-started-checklist",
+    "title": "3. Reflection & Capstone Introduction",
+    "section": "Part 4: Getting Started Checklist",
+    "text": "Part 4: Getting Started Checklist\nBefore moving to the capstone, make sure you can answer “yes” to these:\n\nI’ve reviewed the tools from Monday and know how to run them\nI understand the structure prediction outputs (pLDDT, PAE)\nI know how RFdiffusion and LigandMPNN work together\nI’ve chosen a target (or narrowed it down to 2-3 options)\nI’ve looked at my target structure in PyMOL\nI have a plan for documenting my work\n\n\n\n\n\n\n\nTipReady to Start?\n\n\n\nHead to the Capstone Project page to begin! Each target has a dedicated page with specific guidance, PDB information, and strategy tips.",
     "crumbs": [
       "Thursday",
-      "3. Roundtable Discussion"
+      "3. Reflection & Capstone Introduction"
+    ]
+  },
+  {
+    "objectID": "thursday/3-roundtable.html#additional-resources",
+    "href": "thursday/3-roundtable.html#additional-resources",
+    "title": "3. Reflection & Capstone Introduction",
+    "section": "Additional Resources",
+    "text": "Additional Resources\nIf you want to deepen your understanding before starting the capstone:\n\nPapers\n\nRFdiffusion paper - Watson et al., Nature 2023\nAlphaFold2 paper - Jumper et al., Nature 2021\nBindCraft preprint - Pacesa et al., bioRxiv 2024\n\n\n\nCommunities\n\nRosettaCommons Forums\nOpenFold Discussions\nProtein design Twitter/X community (#proteindesign)\n\n\n\n\n← Docking\n\n\nBack to Home\n\n\nCapstone →",
+    "crumbs": [
+      "Thursday",
+      "3. Reflection & Capstone Introduction"
     ]
   }
 ]
