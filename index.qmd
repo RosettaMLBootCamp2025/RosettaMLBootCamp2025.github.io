@@ -37,9 +37,8 @@ This bootcamp is organized into 4 days of content plus a capstone project. Each 
 
 ::: {.g-col-6}
 ### [Thursday](thursday/index.qmd) {.day-card}
-*Coming soon*
 
-Modules for Thursday.
+**Docking & Discussion**: Explore CPU vs GPU computing with a hands-on PyTorch activity, learn molecular docking for protein-ligand interactions, and participate in a roundtable discussion to reflect and prepare for the capstone.
 :::
 
 ::: {.g-col-12}
