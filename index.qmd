@@ -38,13 +38,13 @@ This bootcamp is organized into 4 days of content plus a capstone project. Each 
 ::: {.g-col-6}
 ### [Thursday](thursday/index.qmd) {.day-card}
 
-**Docking & Discussion**: Explore CPU vs GPU computing with a hands-on PyTorch activity, learn molecular docking for protein-ligand interactions, and participate in a roundtable discussion to reflect and prepare for the capstone.
+**Docking & Reflection**: Explore CPU vs GPU computing with a hands-on PyTorch activity, learn molecular docking for protein-ligand interactions, and reflect on your learning before starting the capstone project.
 :::
 
 ::: {.g-col-12}
-### [Capstone](capstone/index.qmd) {.day-card}
+### [Protein Binder Capstone Project](capstone/index.qmd) {.day-card}
 
-Capstone project bringing together everything you've learned.
+**De Novo Binder Design**: Design a protein binder for a target of your choice using RFdiffusion, LigandMPNN, and structure prediction tools. Choose from therapeutic targets like PD-L1, enzymes like TEM-1 beta-lactamase, or allergens like Bet v 1.
 :::
 
 :::
