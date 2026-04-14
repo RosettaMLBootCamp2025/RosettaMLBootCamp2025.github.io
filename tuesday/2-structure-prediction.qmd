@@ -4,10 +4,23 @@ title: "2. Introduction to Structure Prediction"
 
 This module provides the foundational concepts behind protein structure prediction—the theoretical framework that underlies tools like AlphaFold2, ESMFold, and other modern prediction methods.
 
-## Slides
+## Live Workshop Session
 
 ```{=html}
-<iframe src="https://docs.google.com/presentation/d/1apTG2V__OjZyX2wLwHDN2o-EsMHgcBRG/embed?start=false&loop=false&delayms=3000" frameborder="0" width="100%" height="500" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+<div class="workshop-companion">
+  <div class="wc-title">🎥 Live workshop recording — Protein structure prediction: history, challenges, and AI breakthroughs</div>
+  <div class="wc-video">
+    <iframe src="https://www.youtube-nocookie.com/embed/ObkIfV9KvDM"
+      title="Protein structure prediction: history, challenges, and AI breakthroughs"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+      allowfullscreen loading="lazy"></iframe>
+  </div>
+  <details>
+    <summary>📊 View slide deck</summary>
+    <iframe src="https://docs.google.com/presentation/d/1apTG2V__OjZyX2wLwHDN2o-EsMHgcBRG/embed?start=false&loop=false&delayms=3000"
+      allowfullscreen loading="lazy"></iframe>
+  </details>
+</div>
 ```
 
 ---

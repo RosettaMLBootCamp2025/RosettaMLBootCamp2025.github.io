@@ -4,10 +4,23 @@ title: "1. PyMOL and Visual Studio Code"
 
 This module introduces two essential tools for computational structural biology: **PyMOL** for molecular visualization and **Visual Studio Code (VSCode)** for code development and remote computing.
 
-## Slides
+## Live Workshop Session
 
 ```{=html}
-<iframe src="https://docs.google.com/presentation/d/18z-44xvzmgudaZLI-MRByvY3qHvsPVK5/embed?start=false&loop=false&delayms=3000" frameborder="0" width="100%" height="500" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+<div class="workshop-companion">
+  <div class="wc-title">🎥 Live workshop recording — Tools intro: PyMOL & VS Code</div>
+  <div class="wc-video">
+    <iframe src="https://www.youtube-nocookie.com/embed/MlzFudaWylc"
+      title="Tools intro: PyMOL & VS Code"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+      allowfullscreen loading="lazy"></iframe>
+  </div>
+  <details>
+    <summary>📊 View slide deck</summary>
+    <iframe src="https://docs.google.com/presentation/d/18z-44xvzmgudaZLI-MRByvY3qHvsPVK5/embed?start=false&loop=false&delayms=3000"
+      allowfullscreen loading="lazy"></iframe>
+  </details>
+</div>
 ```
 
 ---

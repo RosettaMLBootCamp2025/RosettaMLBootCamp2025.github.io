@@ -2,6 +2,21 @@
 title: "2. RFdiffusion: Advanced Design"
 ---
 
+## Live Workshop Session
+
+```{=html}
+<div class="workshop-companion">
+  <div class="wc-title">🎥 Live workshop recording — Backbone generation in protein design workflows</div>
+  <div class="wc-video">
+    <iframe src="https://www.youtube-nocookie.com/embed/oCmGYVh7tgQ"
+      title="Backbone generation in protein design workflows"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+      allowfullscreen loading="lazy"></iframe>
+  </div>
+</div>
+```
+
+
 ## Hands-On Exercise
 
 1. **Setup for the activity.**

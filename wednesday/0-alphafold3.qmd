@@ -2,6 +2,21 @@
 title: "1. AlphaFold3 vs. Chai-1"
 ---
 
+## Live Workshop Session
+
+```{=html}
+<div class="workshop-companion">
+  <div class="wc-title">🎥 Live workshop recording — AlphaFold3 Structure Prediction: what's new and why it matters</div>
+  <div class="wc-video">
+    <iframe src="https://www.youtube-nocookie.com/embed/P6sHA0EmzY8"
+      title="AlphaFold3 Structure Prediction: what's new and why it matters"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+      allowfullscreen loading="lazy"></iframe>
+  </div>
+</div>
+```
+
+
 ## Hands-On Exercise
 
 1. **Setup for the activity**

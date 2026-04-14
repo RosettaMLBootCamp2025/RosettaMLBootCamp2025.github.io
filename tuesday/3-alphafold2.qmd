@@ -4,10 +4,23 @@ title: "3. AlphaFold2 and OpenFold"
 
 This module dives deep into AlphaFold2—the breakthrough model that essentially "solved" the protein structure prediction problem—and OpenFold, its open-source, trainable implementation.
 
-## Slides
+## Live Workshop Session
 
 ```{=html}
-<iframe src="https://docs.google.com/presentation/d/1vzVMNFhw-46M93pYFMwOBICL1i7jEbjv/embed?start=false&loop=false&delayms=3000" frameborder="0" width="100%" height="500" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+<div class="workshop-companion">
+  <div class="wc-title">🎥 Live workshop recording — AlphaFold2 Structure Prediction</div>
+  <div class="wc-video">
+    <iframe src="https://www.youtube-nocookie.com/embed/zX6pmHCxvrk"
+      title="AlphaFold2 Structure Prediction"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+      allowfullscreen loading="lazy"></iframe>
+  </div>
+  <details>
+    <summary>📊 View slide deck</summary>
+    <iframe src="https://docs.google.com/presentation/d/1vzVMNFhw-46M93pYFMwOBICL1i7jEbjv/embed?start=false&loop=false&delayms=3000"
+      allowfullscreen loading="lazy"></iframe>
+  </details>
+</div>
 ```
 
 ---
