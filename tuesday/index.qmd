@@ -6,6 +6,15 @@ title: "Tuesday"
 
 Tuesday focuses on **protein structure prediction** using state-of-the-art tools. You'll learn the theoretical foundations of protein folding, visualize structures with PyMOL, predict structures using AlphaFold2, and compare different prediction methods to understand their strengths and trade-offs.
 
+::: {.day-objectives}
+<div class="do-title">By the end of Tuesday, you'll be able to:</div>
+- Explain the protein folding problem, Anfinsen's hypothesis, and Levinthal's paradox in plain language.
+- Navigate a protein structure in PyMOL: select residues, measure distances, and inspect interfaces.
+- Describe how AlphaFold2's MSA-based architecture (Evoformer + Structure Module) turns co-evolution into 3D coordinates.
+- Interpret AlphaFold2 confidence metrics — pLDDT (per-residue) and PAE (inter-residue) — and know what each tells you.
+- Choose between AlphaFold2 and ESMFold for a given task based on MSA availability, speed, and accuracy needs.
+:::
+
 ## Modules
 
 | Module | Topic | Description |

@@ -6,6 +6,15 @@ title: "Wednesday"
 
 Wednesday focuses on **advanced structure prediction and protein design**. You'll compare AlphaFold3 and Chai-1 for complex predictions (multimers, ligands, ions), then dive into RFdiffusion for de novo protein design including binder generation and symmetric oligomers.
 
+::: {.day-objectives}
+<div class="do-title">By the end of Wednesday, you'll be able to:</div>
+- Compare AlphaFold3 and Chai-1 across monomers, multimers, and protein-ligand complexes, and articulate their trade-offs.
+- Run RFdiffusion to generate unconditional monomers and interpret the resulting backbones.
+- Use motif scaffolding and hotspot residues to steer RFdiffusion toward a target binding interface.
+- Design symmetric oligomers and understand when symmetry is a useful design constraint.
+- Evaluate a designed backbone using confidence metrics and decide whether it's worth sequence-designing and predicting.
+:::
+
 ## Modules
 
 | Module | Topic | Description |
