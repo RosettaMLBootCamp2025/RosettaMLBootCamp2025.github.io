@@ -3,11 +3,23 @@ title: "Capstone Project"
 subtitle: "Computational Binder Design"
 ---
 
-## Live Workshop Session
+## Live Workshop Sessions
+
+Two companion recordings to watch before starting your capstone: a broad overview of the cutting-edge ML tooling landscape, and a practical walkthrough of a complete design workflow.
 
 ```{=html}
 <div class="workshop-companion">
-  <div class="wc-title">🎥 Live workshop recording — AI-driven protein design workflow: a practical example</div>
+  <div class="wc-title">🎥 Part 1 — Cutting-edge ML tools for protein design pipelines</div>
+  <div class="wc-video">
+    <iframe src="https://www.youtube-nocookie.com/embed/WOSBRgQBSm4"
+      title="Cutting-edge ML tools for protein design pipelines"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+      allowfullscreen loading="lazy"></iframe>
+  </div>
+</div>
+
+<div class="workshop-companion">
+  <div class="wc-title">🎥 Part 2 — AI-driven protein design workflow: a practical example</div>
   <div class="wc-video">
     <iframe src="https://www.youtube-nocookie.com/embed/gzg-v00Jnhc"
       title="AI-driven protein design workflow: a practical example"

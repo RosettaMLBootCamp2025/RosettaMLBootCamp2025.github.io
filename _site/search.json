@@ -426,18 +426,18 @@
     "href": "capstone/index.html",
     "title": "Capstone Project",
     "section": "",
-    "text": "🎥 Live workshop recording — AI-driven protein design workflow: a practical example",
+    "text": "Two companion recordings to watch before starting your capstone: a broad overview of the cutting-edge ML tooling landscape, and a practical walkthrough of a complete design workflow.\n\n  🎥 Part 1 — Cutting-edge ML tools for protein design pipelines\n  \n    \n  \n\n\n\n  🎥 Part 2 — AI-driven protein design workflow: a practical example",
     "crumbs": [
       "Capstone",
       "Capstone Project"
     ]
   },
   {
-    "objectID": "capstone/index.html#live-workshop-session",
-    "href": "capstone/index.html#live-workshop-session",
+    "objectID": "capstone/index.html#live-workshop-sessions",
+    "href": "capstone/index.html#live-workshop-sessions",
     "title": "Capstone Project",
     "section": "",
-    "text": "🎥 Live workshop recording — AI-driven protein design workflow: a practical example",
+    "text": "Two companion recordings to watch before starting your capstone: a broad overview of the cutting-edge ML tooling landscape, and a practical walkthrough of a complete design workflow.\n\n  🎥 Part 1 — Cutting-edge ML tools for protein design pipelines\n  \n    \n  \n\n\n\n  🎥 Part 2 — AI-driven protein design workflow: a practical example",
     "crumbs": [
       "Capstone",
       "Capstone Project"
@@ -1136,18 +1136,7 @@
     "href": "monday/index.html",
     "title": "Monday: Tool Installation",
     "section": "",
-    "text": "🎥 Live workshop recording — Cutting-edge ML tools for protein design pipelines",
-    "crumbs": [
-      "Monday",
-      "Monday: Tool Installation"
-    ]
-  },
-  {
-    "objectID": "monday/index.html#live-workshop-session",
-    "href": "monday/index.html#live-workshop-session",
-    "title": "Monday: Tool Installation",
-    "section": "",
-    "text": "🎥 Live workshop recording — Cutting-edge ML tools for protein design pipelines",
+    "text": "Monday is dedicated to installing the essential ML-based protein design and structure prediction tools on your HPC cluster. Each module guides you through installing a specific tool, from structure predictors like LocalColabFold and ESMFold to design tools like LigandMPNN and BindCraft.\n\n\nBy the end of Monday, you’ll be able to:\n\n\nRequest GPU resources and navigate a module-based HPC environment (CUDA, conda, containers).\nInstall and smoke-test each of the core structure prediction tools (LocalColabFold, ESMFold, Chai-1, Boltz-2) on your cluster.\nInstall and smoke-test the core design and docking tools (LigandMPNN, RFdiffusion2, DiffDock-PP, PLACER, BindCraft).\nExplain, at a high level, what each tool takes as input, produces as output, and when you’d reach for it.\nTroubleshoot the most common install failures (CUDA mismatch, missing weights, environment conflicts) well enough to keep moving.",
     "crumbs": [
       "Monday",
       "Monday: Tool Installation"
@@ -1157,8 +1146,8 @@
     "objectID": "monday/index.html#overview",
     "href": "monday/index.html#overview",
     "title": "Monday: Tool Installation",
-    "section": "Overview",
-    "text": "Overview\nMonday is dedicated to installing the essential ML-based protein design and structure prediction tools on your HPC cluster. Each module guides you through installing a specific tool, from structure predictors like LocalColabFold and ESMFold to design tools like LigandMPNN and BindCraft.\n\n\nBy the end of Monday, you’ll be able to:\n\n\nRequest GPU resources and navigate a module-based HPC environment (CUDA, conda, containers).\nInstall and smoke-test each of the core structure prediction tools (LocalColabFold, ESMFold, Chai-1, Boltz-2) on your cluster.\nInstall and smoke-test the core design and docking tools (LigandMPNN, RFdiffusion2, DiffDock-PP, PLACER, BindCraft).\nExplain, at a high level, what each tool takes as input, produces as output, and when you’d reach for it.\nTroubleshoot the most common install failures (CUDA mismatch, missing weights, environment conflicts) well enough to keep moving.",
+    "section": "",
+    "text": "Monday is dedicated to installing the essential ML-based protein design and structure prediction tools on your HPC cluster. Each module guides you through installing a specific tool, from structure predictors like LocalColabFold and ESMFold to design tools like LigandMPNN and BindCraft.\n\n\nBy the end of Monday, you’ll be able to:\n\n\nRequest GPU resources and navigate a module-based HPC environment (CUDA, conda, containers).\nInstall and smoke-test each of the core structure prediction tools (LocalColabFold, ESMFold, Chai-1, Boltz-2) on your cluster.\nInstall and smoke-test the core design and docking tools (LigandMPNN, RFdiffusion2, DiffDock-PP, PLACER, BindCraft).\nExplain, at a high level, what each tool takes as input, produces as output, and when you’d reach for it.\nTroubleshoot the most common install failures (CUDA mismatch, missing weights, environment conflicts) well enough to keep moving.",
     "crumbs": [
       "Monday",
       "Monday: Tool Installation"

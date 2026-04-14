@@ -2,21 +2,6 @@
 title: "Monday: Tool Installation"
 ---
 
-## Live Workshop Session
-
-```{=html}
-<div class="workshop-companion">
-  <div class="wc-title">🎥 Live workshop recording — Cutting-edge ML tools for protein design pipelines</div>
-  <div class="wc-video">
-    <iframe src="https://www.youtube-nocookie.com/embed/WOSBRgQBSm4"
-      title="Cutting-edge ML tools for protein design pipelines"
-      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-      allowfullscreen loading="lazy"></iframe>
-  </div>
-</div>
-```
-
-
 ## Overview
 
 Monday is dedicated to installing the essential ML-based protein design and structure prediction tools on your HPC cluster. Each module guides you through installing a specific tool, from structure predictors like LocalColabFold and ESMFold to design tools like LigandMPNN and BindCraft.
