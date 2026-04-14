@@ -64,9 +64,10 @@ website:
     - title: "Thursday"
       contents:
         - thursday/index.qmd
-        - thursday/1-cpu-vs-gpu.qmd
-        - thursday/2-docking.qmd
-        - thursday/3-roundtable.qmd
+        - thursday/1-pytorch.qmd
+        - thursday/2-cpu-vs-gpu.qmd
+        - thursday/3-docking.qmd
+        - thursday/4-roundtable.qmd
     - title: "Capstone"
       contents:
         - capstone/index.qmd
@@ -85,9 +86,18 @@ format:
     theme: cosmo
     css: styles.css
     toc: true
+    toc-depth: 3
+    toc-expand: 2
+    toc-location: right
     code-copy: true
     code-overflow: wrap
+    code-fold: false
+    code-tools: false
+    smooth-scroll: true
+    link-external-newwindow: true
     include-in-header: _includes/molstar.html
-    include-after-body: 
+    include-after-body:
       - _includes/progress-tracker.html
       - _includes/quiz.html
+      - _includes/day-progress.html
+      - _includes/back-to-top.html
