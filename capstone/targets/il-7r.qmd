@@ -5,15 +5,15 @@ subtitle: "Autoimmune Disease Targeting"
 
 ## Biological Context
 
-**Interleukin-7 Receptor alpha (IL-7R)** is crucial for the development and survival of T-cells.
+**Interleukin-7 Receptor alpha (IL-7Rα, CD127)** is a cytokine receptor subunit essential for T-cell development, B-cell lymphopoiesis, and memory T-cell homeostasis. It pairs with the common γ-chain (γc) on lymphocyte surfaces and signals through JAK1/JAK3 when IL-7 binds.
 
-**Why it matters:** Dysregulation of IL-7 signaling is implicated in T-cell acute lymphoblastic leukemia (T-ALL) and various autoimmune conditions like Multiple Sclerosis.
+**Why it matters:** Dysregulated IL-7 signaling is a driver in **T-cell acute lymphoblastic leukemia (T-ALL)** — gain-of-function IL-7Rα mutations are found in ~10% of pediatric T-ALL patients. It's also implicated in autoimmune diseases like multiple sclerosis and type 1 diabetes, where blocking IL-7Rα dampens pathogenic T-cell survival. An IL-7Rα antagonist (GSK2618960, an antibody against the IL-7 binding site) is in clinical development — a *de novo* binder with higher affinity or better manufacturability is a realistic design goal.
 
-**The Goal:** Design a binder that blocks the interaction between IL-7 and IL-7R. A high-affinity binder could serve as a therapeutic antagonist to dampen the immune response in autoimmune settings.
+**The Goal:** Design a high-affinity binder that occupies IL-7Rα's ligand-binding groove, preventing native IL-7 from engaging.
 
 ## Interactive Structure
 
-The viewer below shows **IL-7R alpha (Chain B)** bound to its cytokine **IL-7 (Chain A)**.
+The viewer below shows **IL-7Rα (Chain B)** bound to its cytokine **IL-7 (Chain A)**.
 
 <div class="molstar-container">
 <pdbe-molstar id="il7r-viewer" molecule-id="3di2" hide-controls="true" bg-color-r="255" bg-color-g="255" bg-color-b="255"></pdbe-molstar>
@@ -28,23 +28,34 @@ The viewer below shows **IL-7R alpha (Chain B)** bound to its cytokine **IL-7 (C
 
 ## Design Mission
 
-Create a binder that occupies the ligand-binding groove of IL-7R, preventing native IL-7 from binding.
+Create a binder that occupies the cytokine-binding groove of IL-7Rα, preventing IL-7 from docking.
 
 ### Target Specifications
 
 | Feature | Detail |
 |:---|:---|
-| **Target Name** | IL-7R alpha |
-| **PDB ID** | `3DI2` |
+| **Target Name** | IL-7Rα (CD127) extracellular domain |
+| **PDB ID** | [`3DI2`](https://www.rcsb.org/structure/3DI2) |
 | **Target Chain** | Chain B |
-| **Binder to Mimic**| Chain A (IL-7) |
-| **Interface / Hotspot** | The groove where Chain A sits. |
+| **Binder to mimic** | Chain A (IL-7) |
+| **Published interface hotspots** | `S31, L57, V58, E59, K77, K78, F79, L80, L81, I82, T104, K138, Y139, H191, Y192, F193` |
+| **Key "hot" residues** | **F79, L80, L81, I82** (hydrophobic ridge — site I) and **Y192, F193** (aromatic cluster — site II) are the core energetic contributors |
+
+::: {.callout-note}
+## About the residue list
+These are every IL-7Rα residue with any heavy atom within 5 Å of IL-7 in 3DI2. The interface is compact and centered on two clusters: a hydrophobic ridge (L80 / L81 / I82) and an aromatic pair (Y192 / F193). Both clusters should be in your hotspot set when running RFdiffusion.
+:::
 
 ### Strategy Tips
 
-1.  **Download PDB `3DI2`**.
-2.  **Clean the structure:** Keep Chain B.
-3.  **Hotspot Definition:** Use the residues on Chain B that contact Chain A to define the binding site.
+1. **Download PDB [`3DI2`](https://files.rcsb.org/download/3DI2.pdb).**
+2. **Clean the structure:** Keep Chain B (IL-7Rα). Remove Chain A (IL-7) and any crystallographic partners (chains C, D).
+3. **Define hotspots:** Pass 4–6 residues from the "hot" set (e.g., `B80,B81,B82,B192,B193`) to **RFdiffusion** / **BindCraft**.
+4. **Size matters:** IL-7 itself is small (~150 aa) and compact — a designed binder of similar size (60–100 aa minibinder) should be feasible. Larger binders risk steric clash with the nearby γc subunit.
+
+### Reference
+
+- McElroy, C.A. et al. (2009). *Structural and biophysical studies of the human IL-7/IL-7Rα complex.* Structure **17**, 54–65. [doi:10.1016/j.str.2008.10.019](https://doi.org/10.1016/j.str.2008.10.019) — primary citation for 3DI2.
 
 ---
 

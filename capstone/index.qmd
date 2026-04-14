@@ -3,6 +3,21 @@ title: "Capstone Project"
 subtitle: "Computational Binder Design"
 ---
 
+## Live Workshop Session
+
+```{=html}
+<div class="workshop-companion">
+  <div class="wc-title">🎥 Live workshop recording — AI-driven protein design workflow: a practical example</div>
+  <div class="wc-video">
+    <iframe src="https://www.youtube-nocookie.com/embed/gzg-v00Jnhc"
+      title="AI-driven protein design workflow: a practical example"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+      allowfullscreen loading="lazy"></iframe>
+  </div>
+</div>
+```
+
+
 ## Overview
 
 Binder design is often formulated as "given a target protein (and optionally a specific epitope on that protein), design a (often smaller) protein capable of binding the target". It is one of the most ubiquitous protein design problems and has many potential applications, largely functioning by blocking or competing with natural interactions involving the target protein.

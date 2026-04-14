@@ -5,15 +5,15 @@ subtitle: "Allergen Blocking"
 
 ## Biological Context
 
-**Bet v 1** is the major allergen found in birch pollen. It is responsible for seasonal allergies in millions of people worldwide.
+**Bet v 1** is the major allergen of **birch pollen** (*Betula verrucosa*) and the primary driver of spring pollen allergies in northern Europe and much of North America. More than 95% of birch-allergic patients are sensitized to Bet v 1, and cross-reactivity with homologous PR-10 proteins in apple, hazelnut, celery, and carrot is the molecular basis of the oral allergy syndrome that many birch-allergic patients experience with these foods.
 
-**Why it matters:** The allergic reaction is caused when the patient's antibodies (IgE) recognize and bind to epitopes on the surface of Bet v 1.
+**Why it matters:** Allergic reactions are triggered when patient IgE antibodies cross-link Bet v 1 on mast cells and basophils. Conventional allergen immunotherapy works by repeated exposure to progressively increase IgG4 (blocking antibodies) that compete with IgE for epitope binding. A designed **"masking" binder** that specifically covers the immunodominant IgE epitopes of Bet v 1 could prevent IgE engagement without the years of subcutaneous or sublingual desensitization that conventional immunotherapy requires. This is a frontier for protein design and a genuine translational opportunity.
 
-**The Goal:** Design a "masking" protein (similar to a neutralizing antibody) that binds tightly to the surface of Bet v 1. If your designed binder covers the IgE binding sites, it could theoretically prevent the allergic reaction.
+**The Goal:** Design a binder that covers one or more of the major IgE epitopes on Bet v 1, blocking IgE cross-linking.
 
 ## Interactive Structure
 
-The viewer below shows the structure of **Bet v 1**.
+The viewer below shows the structure of **Bet v 1** (PDB 4A88, isoform Bet v 1.0101).
 
 <div class="molstar-container">
 <pdbe-molstar id="betv1-viewer" molecule-id="4a88" hide-controls="true" bg-color-r="255" bg-color-g="255" bg-color-b="255"></pdbe-molstar>
@@ -28,22 +28,39 @@ The viewer below shows the structure of **Bet v 1**.
 
 ## Design Mission
 
-Create a protein that binds to a solvent-exposed patch on Bet v 1. Unlike the other targets, you aren't necessarily mimicking a natural partner—you are creating a blocker.
+Design a protein that binds tightly to a solvent-exposed surface of Bet v 1, preferably covering one of the major IgE epitopes. Unlike the cytokine-receptor targets, there's no single natural partner to mimic — your binder is functionally a surrogate blocking antibody.
 
 ### Target Specifications
 
 | Feature | Detail |
 |:---|:---|
-| **Target Name** | Bet v 1 |
-| **PDB ID** | `4A88` |
+| **Target Name** | Bet v 1.0101 (major birch pollen allergen) |
+| **PDB ID** | [`4A88`](https://www.rcsb.org/structure/4A88) |
 | **Target Chain** | Chain A |
-| **Interface / Hotspot** | Choose a large exposed surface patch. |
+| **Published dominant IgE epitope residue** | **E45** — mutation E45S reduces IgE binding by >95% (Spangfort et al. 2003) |
+| **Published IgE epitope residues (Mirza 2000, Spangfort 2003, Gepp 2014)** | `E8, T10, D27, T32, E42, N43, E45, N47, K55, K65, E73, N78, Y83, K97, D109, K123, E127, K134` — dispersed across the surface in at least three conformational patches |
+| **IgE epitope patch 1** (P-loop face) | `E8, T10, D27, T32, E42, E45, N47` — centered on the dominant residue E45 |
+| **IgE epitope patch 2** (opposite face) | `E73, N78, Y83, K97, D109` |
+| **IgE epitope patch 3** (C-terminal helix) | `K123, E127, K134` |
+
+::: {.callout-note}
+## About the residue list
+These epitope residues are compiled from published antibody–Bet v 1 co-crystal structures and mutational mapping of IgE binding (Mirza 2000 for the BV16 Fab complex; Spangfort 2003 for the E45S single-point abolition of IgE binding; Gepp 2014 for additional IgE epitope mapping). The 4A88 deposition is apo Bet v 1, so the residues here come from the cited literature rather than from proximity to a bound partner in 4A88 itself. **E45 is the single most important residue** — if your binder covers E45, you are almost certainly reducing IgE binding meaningfully.
+:::
 
 ### Strategy Tips
 
-1.  **Download PDB `4A88`**.
-2.  **Surface Mapping:** Since there is no single "natural ligand" to mimic, you have more freedom. Pick a surface patch that looks accessible (convex or flat surfaces are easier than deep pockets for protein-protein interactions).
-3.  **Pyligner/BindCraft:** These tools are excellent for identifying bindable patches on an antigen.
+1. **Download PDB [`4A88`](https://files.rcsb.org/download/4A88.pdb).**
+2. **Pick a patch:** Start with patch 1 (the P-loop / E45 face) — it's the most dominant IgE epitope and the best-validated.
+3. **Define hotspots:** Pass 4–6 residues from your chosen patch (e.g., `A10,A42,A45,A47`) to **RFdiffusion** / **BindCraft**.
+4. **Be honest about competition:** A real therapeutic would need to out-compete patient-derived IgE for these same residues. Your computational design won't be tested against real IgE in the capstone, but you should at least confirm (via AlphaFold2 or Chai-1) that the designed binder places its paratope directly over E45.
+5. **Consider pocket binding:** Bet v 1 has a large internal hydrophobic cavity (the PR-10 "Y-shaped" cavity) that binds various physiological ligands. Ligand binding causes subtle conformational changes that may affect IgE recognition — binders that stabilize an "IgE-hiding" conformation are a more speculative but intriguing strategy.
+
+### Reference
+
+- Spangfort, M.D. et al. (2003). *Dominating IgE-binding epitope of Bet v 1, the major allergen of birch pollen, characterized by X-ray crystallography and site-directed mutagenesis.* J. Immunol. **171**, 3084–3090. [doi:10.4049/jimmunol.171.6.3084](https://doi.org/10.4049/jimmunol.171.6.3084)
+- Mirza, O. et al. (2000). *Dominant epitopes and allergic cross-reactivity: complex formation between a Fab fragment of a monoclonal murine IgG antibody and the major allergen from birch pollen Bet v 1.* J. Immunol. **165**, 331–338. [doi:10.4049/jimmunol.165.1.331](https://doi.org/10.4049/jimmunol.165.1.331)
+- Kofler, S. et al. (2012). *The GA module, a mobile 4-helix bundle, confers Bet v 1–like allergenicity.* Allergy **67**, 1501–1509. — primary citation for 4A88.
 
 ---
 

@@ -5,15 +5,15 @@ subtitle: "Antibiotic Resistance Enzyme"
 
 ## Biological Context
 
-**TEM-1 Beta-Lactamase** is an enzyme produced by bacteria that confers resistance to penicillin and other beta-lactam antibiotics. It works by breaking the antibiotic molecule apart.
+**TEM-1 β-lactamase** is the archetypal class A serine β-lactamase and one of the most prevalent enzymes responsible for bacterial resistance to penicillins. It hydrolyzes the four-membered β-lactam ring of penicillin antibiotics using an active-site serine nucleophile, inactivating them before they can reach their target (the penicillin-binding proteins).
 
-**Why it matters:** This is a classic target for "Binder Design" as a means of inhibition. If you can design a protein that binds tightly to the active site or an allosteric site, you might stop the enzyme from working, making the bacteria susceptible to antibiotics again.
+**Why it matters:** TEM-1 and its descendants (extended-spectrum β-lactamases, ESBLs) are the reason we pair β-lactam antibiotics with inhibitors like clavulanic acid, sulbactam, and tazobactam — the inhibitors covalently disable the β-lactamase and let the antibiotic through. A *de novo* protein inhibitor of TEM-1 is an interesting academic target: it tests whether we can design high-affinity binders against a well-characterized enzyme active site, and the answer has implications for designing inhibitors of the newer carbapenemases (KPC, NDM) for which we urgently need therapeutics.
 
-**The Goal:** Design a binder that inhibits TEM-1 function. This is often done by targeting the active site groove.
+**The Goal:** Design a binder that occludes the active-site cleft of TEM-1. Unlike the cytokine-receptor targets, there's no natural protein partner to mimic — you're designing against a small-molecule pocket.
 
 ## Interactive Structure
 
-The viewer below shows **TEM-1 Beta-Lactamase**.
+The viewer below shows **TEM-1 β-lactamase** covalently modified by penicillin G (PDB 1FQG captures the acylated reaction intermediate).
 
 <div class="molstar-container">
 <pdbe-molstar id="tem1-viewer" molecule-id="1fqg" hide-controls="true" bg-color-r="255" bg-color-g="255" bg-color-b="255"></pdbe-molstar>
@@ -28,22 +28,36 @@ The viewer below shows **TEM-1 Beta-Lactamase**.
 
 ## Design Mission
 
-Create a binder that targets the active site cleft of TEM-1.
+Design a binder that occupies the active-site cleft, preventing β-lactam substrates from docking and being hydrolyzed.
 
 ### Target Specifications
 
 | Feature | Detail |
 |:---|:---|
-| **Target Name** | TEM-1 Beta-Lactamase |
-| **PDB ID** | `1FQG` |
+| **Target Name** | TEM-1 β-lactamase |
+| **PDB ID** | [`1FQG`](https://www.rcsb.org/structure/1FQG) |
 | **Target Chain** | Chain A |
-| **Interface / Hotspot** | The active site pocket (look for where inhibitors typically bind). |
+| **Active-site residues (within 5 Å of bound penicillin)** | `M69, S70, T71, K73, Y105, M129, S130, N132, N170, V216, K234, S235, G236, A237, G238, E239, R243, M270` |
+| **Catalytic residues** | **S70** (nucleophile), **K73** (general base), **S130** (proton shuttle), **E166** (deacylation), **K234** (substrate positioning) |
+| **Ω-loop (substrate specificity)** | residues 161–179 — these rim the active-site cleft |
+
+::: {.callout-note}
+## About the residue list
+These are every TEM-1 residue within 5 Å of the bound penicillin G in 1FQG — in other words, the residues that physically line the substrate-binding pocket. For binder design, these define the surface your binder needs to occlude. The catalytic residues (S70, K73, S130, E166, K234) are deeply buried at the bottom of the cleft; rim residues (the Ω-loop, R243, the 234–240 loop) are more accessible and easier to engage with a binder.
+:::
 
 ### Strategy Tips
 
-1.  **Download PDB `1FQG`**.
-2.  **Identify the Pocket:** Use tools like PyMOL to locate the concave active site.
-3.  **Targeting:** When using RFdiffusion, you may want to specify "binder"contigs that fill this specific pocket.
+1. **Download PDB [`1FQG`](https://files.rcsb.org/download/1FQG.pdb).**
+2. **Clean the structure:** Keep Chain A, remove water and the bound penicillin (HETATM record `PNM`).
+3. **Choose a strategy:**
+   - **Active-site occlusion**: target the residues rimming the pocket (e.g., `A130,A170,A237,A243`) — your binder clamps over the cleft.
+   - **Allosteric**: target a surface patch away from the active site. More novel but less likely to inhibit; ask whether deformation of the enzyme still blocks substrate access.
+4. **Validate computationally:** After designing a binder, dock a small β-lactam substrate (or use **PLACER**) into the binder/TEM-1 complex and confirm steric clash — the binder should *prevent* substrate entry, not just sit nearby.
+
+### Reference
+
+- Strynadka, N.C.J. et al. (1992). *Molecular structure of the acyl-enzyme intermediate in β-lactam hydrolysis at 1.7 Å resolution.* Nature **359**, 700–705. [doi:10.1038/359700a0](https://doi.org/10.1038/359700a0) — primary citation for 1FQG.
 
 ---
 

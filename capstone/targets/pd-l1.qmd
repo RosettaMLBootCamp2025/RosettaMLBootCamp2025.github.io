@@ -7,15 +7,16 @@ subtitle: "Immune Checkpoint Inhibitor Design"
 
 **Programmed Death-Ligand 1 (PD-L1)** is a critical protein expressed on the surface of many cells, including cancer cells. Under normal conditions, it acts as a "brake" on the immune system. When PD-L1 binds to the **PD-1 receptor** on T-cells, it signals the T-cell to become inactive.
 
-**Why it matters:** Cancer cells often hijack this mechanism by over-expressing PD-L1. This allows them to "trick" the immune system into ignoring the tumor.
+**Why it matters:** Cancer cells often hijack this mechanism by over-expressing PD-L1. This allows them to "trick" the immune system into ignoring the tumor. Therapeutic antibodies against PD-L1 (atezolizumab, durvalumab) have transformed oncology, but they are large, expensive to manufacture, and can trigger autoimmune side effects — a smaller, more controllable *de novo* binder would be a meaningful advance.
 
-**The Goal:** By designing a protein binder that sticks tightly to PD-L1, we can block it from interacting with PD-1. This releases the "brake," allowing T-cells to recognize and attack the cancer.
+**The Goal:** Design a protein binder that competes with PD-1 for the same interface on PD-L1. Blocking that interaction releases the "brake," allowing T-cells to recognize and attack the cancer.
 
 ## Interactive Structure
 
 Explore the native interaction between PD-L1 (the target) and PD-1 (the natural binder) below.
-*   **Target (PD-L1):** The surface we want to bind to.
-*   **Binder (PD-1):** The natural partner we want to compete with.
+
+*   **Target (PD-L1):** Chain A — the surface we want to bind to.
+*   **Binder (PD-1):** Chain B — the natural partner we want to compete with.
 
 <div class="molstar-container">
 <pdbe-molstar id="pd-l1-viewer" molecule-id="4zqk" hide-controls="true" bg-color-r="255" bg-color-g="255" bg-color-b="255"></pdbe-molstar>
@@ -37,16 +38,27 @@ Your objective is to create a **de novo protein binder** that binds to the same 
 | Feature | Detail |
 |:---|:---|
 | **Target Name** | PD-L1 (Programmed Death-Ligand 1) |
-| **PDB ID** | `4ZQK` |
-| **Target Chain** | Chain B |
-| **Interface / Hotspot** | Residues **54-66** and **113-123** (approximate binding loop area) |
+| **PDB ID** | [`4ZQK`](https://www.rcsb.org/structure/4ZQK) |
+| **Target Chain** | **Chain A** (PD-L1 IgV domain, residues 18–134) |
+| **Partner (to compete with)** | Chain B (PD-1) |
+| **Published interface hotspots** | `A18, F19, T20, V23, D26, I54, Y56, E58, N63, Q66, V76, R113, M115, S117, G119–I126` |
+| **Key "hot" residues** | **Y56, E58, R113, M115, A121, D122, Y123** — the densest contacts with PD-1 |
 
+::: {.callout-note}
+## About the residue list
+These residues are every PD-L1 position with any heavy atom within 5 Å of PD-1 in the deposited 4ZQK structure — the interface as actually observed, not my guess. For steering RFdiffusion or BindCraft, you don't need all 22; pick 3–6 "hot" residues from the highlighted set above to bias the design toward the real binding face.
+:::
 
 ### Strategy Tips
 
-1.  **Download PDB `4ZQK`**.
-2.  **Clean the structure:** Keep Chain B (PD-L1) as the target. Remove Chain A (PD-1) and any water molecules.
-3.  **Define the Interface:** When running tools like **RFdiffusion** or **BindCraft**, specify the hotspot residues listed above to guide the diffusion process to the correct face of the protein.
+1. **Download PDB [`4ZQK`](https://files.rcsb.org/download/4ZQK.pdb).**
+2. **Clean the structure:** Keep Chain A (PD-L1) as the target. Remove Chain B (PD-1) and any water molecules.
+3. **Define hotspots:** When running **RFdiffusion** or **BindCraft**, pass 3–6 residues from the "hot" set (e.g., `A56,A58,A113,A122,A123`) as hotspots. This biases diffusion toward the PD-1-competing face rather than some random patch.
+4. **Validate with AlphaFold2/Chai-1:** After designing a binder sequence, predict the complex and check that the designed interface residues still contact the published hotspots.
+
+### Reference
+
+- Zak, K.M. et al. (2015). *Structure of the complex of human programmed death 1, PD-1, and its ligand PD-L1.* Structure **23**, 2341–2348. [doi:10.1016/j.str.2015.09.010](https://doi.org/10.1016/j.str.2015.09.010)
 
 ---
 
