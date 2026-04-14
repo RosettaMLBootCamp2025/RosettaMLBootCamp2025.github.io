@@ -1,10 +1,229 @@
 /* css styles */
 
-/* Aggie Blue color scheme */
+/* ---------- Typography: Google Sans ---------- */
+@import url('https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Google+Sans+Mono:wght@400;500&display=swap');
+
 :root {
   --aggie-blue: #022851;
   --aggie-gold: #FFBF00;
+  --font-sans: 'Google Sans', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'Google Sans Mono', 'SF Mono', Menlo, Consolas, monospace;
 }
+
+body,
+.navbar,
+.sidebar,
+h1, h2, h3, h4, h5, h6,
+.quarto-title-block,
+.callout {
+  font-family: var(--font-sans);
+}
+
+code, pre, kbd, samp, .sourceCode {
+  font-family: var(--font-mono);
+}
+
+/* ---------- Workshop companion header card ---------- */
+.workshop-companion {
+  border-left: 4px solid var(--aggie-blue);
+  background: #f7f9fc;
+  padding: 0.9rem 1.1rem;
+  margin: 1.2rem 0 1.8rem 0;
+  border-radius: 0 6px 6px 0;
+  font-size: 0.95rem;
+}
+.workshop-companion .wc-title {
+  font-weight: 500;
+  color: var(--aggie-blue);
+  margin-bottom: 0.35rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.workshop-companion ul {
+  margin: 0.3rem 0 0 0;
+  padding-left: 1.25rem;
+}
+.workshop-companion li { margin: 0.15rem 0; }
+
+/* Responsive 16:9 video wrapper */
+.wc-video {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: #000;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-top: 0.5rem;
+}
+.wc-video iframe {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  border: 0;
+}
+.workshop-companion details {
+  margin-top: 0.75rem;
+}
+.workshop-companion details > summary {
+  cursor: pointer;
+  color: var(--aggie-blue);
+  font-weight: 500;
+  list-style: none;
+  padding: 0.35rem 0;
+}
+.workshop-companion details > summary::-webkit-details-marker { display: none; }
+.workshop-companion details > summary::before {
+  content: "▸";
+  display: inline-block;
+  margin-right: 0.4rem;
+  transition: transform 0.15s;
+}
+.workshop-companion details[open] > summary::before {
+  transform: rotate(90deg);
+}
+.workshop-companion details iframe {
+  width: 100%;
+  height: 480px;
+  border: 0;
+  margin-top: 0.5rem;
+  border-radius: 4px;
+}
+
+/* ---------- Day-level "By the end of this day" box ---------- */
+.day-objectives {
+  border: 1px solid #d8dde6;
+  background: linear-gradient(180deg, #fafbfd 0%, #f3f5fa 100%);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin: 1rem 0 1.5rem 0;
+}
+.day-objectives .do-title {
+  font-weight: 500;
+  color: var(--aggie-blue);
+  margin: 0 0 0.5rem 0;
+  font-size: 1.05rem;
+}
+.day-objectives ul { margin: 0; padding-left: 1.3rem; }
+.day-objectives li { margin: 0.2rem 0; }
+
+/* ---------- Day progress chip (top of lesson) ---------- */
+.day-progress-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #eef2f9;
+  color: var(--aggie-blue);
+  padding: 0.3rem 0.7rem;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  margin: 0.25rem 0 0.75rem 0;
+}
+.day-progress-chip .dpc-bar {
+  width: 90px;
+  height: 6px;
+  background: #dbe2ee;
+  border-radius: 3px;
+  overflow: hidden;
+}
+.day-progress-chip .dpc-fill {
+  height: 100%;
+  background: var(--aggie-blue);
+  transition: width 0.3s ease;
+}
+
+/* ---------- Callout consistency polish ---------- */
+.callout { border-radius: 6px; }
+.callout-note { border-left-color: var(--aggie-blue); }
+.callout-tip { border-left-color: #2a8a4a; }
+.callout-warning { border-left-color: #d08400; }
+.callout-important { border-left-color: #b02a37; }
+
+/* ---------- Right-sidebar TOC polish ---------- */
+#TOC, nav[role="doc-toc"], .sidebar-toc {
+  font-size: 0.88rem;
+}
+#TOC > ul, nav[role="doc-toc"] > ul {
+  border-left: 2px solid #eef0f5;
+  padding-left: 0.75rem;
+}
+nav[role="doc-toc"] a {
+  color: #4a5568;
+  text-decoration: none;
+  border-left: 2px solid transparent;
+  margin-left: -0.85rem;
+  padding-left: 0.8rem;
+}
+nav[role="doc-toc"] a:hover {
+  color: var(--aggie-blue);
+}
+nav[role="doc-toc"] a.active {
+  color: var(--aggie-blue);
+  font-weight: 500;
+  border-left-color: var(--aggie-blue);
+}
+nav[role="doc-toc"] > h2,
+.toc-title {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #6b7280;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+/* ---------- Floating "back to top" button ---------- */
+#back-to-top {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: var(--aggie-blue);
+  color: white;
+  border: none;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s;
+  z-index: 1000;
+  font-size: 1.1rem;
+}
+#back-to-top.visible {
+  opacity: 0.9;
+  pointer-events: auto;
+}
+#back-to-top:hover {
+  opacity: 1;
+  background: #011a38;
+}
+
+/* ---------- Collapsible section polish (for <details> blocks) ---------- */
+details.lesson-section {
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  padding: 0.6rem 1rem;
+  margin: 0.75rem 0;
+  background: #fbfcfd;
+}
+details.lesson-section > summary {
+  cursor: pointer;
+  font-weight: 500;
+  color: var(--aggie-blue);
+  list-style: none;
+  padding: 0.3rem 0;
+}
+details.lesson-section > summary::-webkit-details-marker { display: none; }
+details.lesson-section > summary::before {
+  content: "▸";
+  display: inline-block;
+  margin-right: 0.5rem;
+  transition: transform 0.15s;
+}
+details.lesson-section[open] > summary::before { transform: rotate(90deg); }
+details.lesson-section[open] { background: white; }
 
 /* Override Bootstrap primary buttons with Aggie Blue */
 .btn-primary {
@@ -39,6 +258,14 @@
 
 .day-card:hover {
   box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+/* Make day card titles (Monday/Tuesday/etc.) bold */
+.day-card,
+.day-card a,
+h3.day-card,
+h3.day-card a {
+  font-weight: 700;
 }
 
 /* Progress checkboxes */

@@ -2,13 +2,16 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.26">
+<meta name="generator" content="quarto-1.9.37">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
 <title>IL-7R Target Deep Dive – ML Protein Design Bootcamp 2025</title>
 <style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
 div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -32,15 +35,14 @@ ul.task-list li input[type="checkbox"] {
 <meta name="quarto:offset" content="../../">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-635a35c16803d16fd9db22f392043487.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-6dce83697ef593b6f21f66f8d1a1696b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -68,6 +70,7 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+<style>html{ scroll-behavior: smooth; }</style>
 <!-- Shared Mol* component include for target pages -->
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/pdbe-molstar@latest/build/pdbe-molstar-component.js"></script>
 <style>
@@ -224,7 +227,7 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
+        <nav id="TOC" role="doc-toc" class="toc-active" data-toc-expanded="2">
     <h2 id="toc-title">On this page</h2>
    
   <ul>
@@ -234,6 +237,7 @@ ul.task-list li input[type="checkbox"] {
   <ul class="collapse">
   <li><a href="#target-specifications" id="toc-target-specifications" class="nav-link" data-scroll-target="#target-specifications">Target Specifications</a></li>
   <li><a href="#strategy-tips" id="toc-strategy-tips" class="nav-link" data-scroll-target="#strategy-tips">Strategy Tips</a></li>
+  <li><a href="#reference" id="toc-reference" class="nav-link" data-scroll-target="#reference">Reference</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -263,13 +267,13 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="biological-context" class="level2">
 <h2 class="anchored" data-anchor-id="biological-context">Biological Context</h2>
-<p><strong>Interleukin-7 Receptor alpha (IL-7R)</strong> is crucial for the development and survival of T-cells.</p>
-<p><strong>Why it matters:</strong> Dysregulation of IL-7 signaling is implicated in T-cell acute lymphoblastic leukemia (T-ALL) and various autoimmune conditions like Multiple Sclerosis.</p>
-<p><strong>The Goal:</strong> Design a binder that blocks the interaction between IL-7 and IL-7R. A high-affinity binder could serve as a therapeutic antagonist to dampen the immune response in autoimmune settings.</p>
+<p><strong>Interleukin-7 Receptor alpha (IL-7Rα, CD127)</strong> is a cytokine receptor subunit essential for T-cell development, B-cell lymphopoiesis, and memory T-cell homeostasis. It pairs with the common γ-chain (γc) on lymphocyte surfaces and signals through JAK1/JAK3 when IL-7 binds.</p>
+<p><strong>Why it matters:</strong> Dysregulated IL-7 signaling is a driver in <strong>T-cell acute lymphoblastic leukemia (T-ALL)</strong> — gain-of-function IL-7Rα mutations are found in ~10% of pediatric T-ALL patients. It’s also implicated in autoimmune diseases like multiple sclerosis and type 1 diabetes, where blocking IL-7Rα dampens pathogenic T-cell survival. An IL-7Rα antagonist (GSK2618960, an antibody against the IL-7 binding site) is in clinical development — a <em>de novo</em> binder with higher affinity or better manufacturability is a realistic design goal.</p>
+<p><strong>The Goal:</strong> Design a high-affinity binder that occupies IL-7Rα’s ligand-binding groove, preventing native IL-7 from engaging.</p>
 </section>
 <section id="interactive-structure" class="level2">
 <h2 class="anchored" data-anchor-id="interactive-structure">Interactive Structure</h2>
-<p>The viewer below shows <strong>IL-7R alpha (Chain B)</strong> bound to its cytokine <strong>IL-7 (Chain A)</strong>.</p>
+<p>The viewer below shows <strong>IL-7Rα (Chain B)</strong> bound to its cytokine <strong>IL-7 (Chain A)</strong>.</p>
 <div class="molstar-container">
 <p><pdbe-molstar id="il7r-viewer" molecule-id="3di2" hide-controls="true" bg-color-r="255" bg-color-g="255" bg-color-b="255"></pdbe-molstar></p>
 </div>
@@ -293,7 +297,7 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="design-mission" class="level2">
 <h2 class="anchored" data-anchor-id="design-mission">Design Mission</h2>
-<p>Create a binder that occupies the ligand-binding groove of IL-7R, preventing native IL-7 from binding.</p>
+<p>Create a binder that occupies the cytokine-binding groove of IL-7Rα, preventing IL-7 from docking.</p>
 <section id="target-specifications" class="level3">
 <h3 class="anchored" data-anchor-id="target-specifications">Target Specifications</h3>
 <table class="caption-top table">
@@ -306,34 +310,58 @@ ul.task-list li input[type="checkbox"] {
 <tbody>
 <tr class="odd">
 <td style="text-align: left;"><strong>Target Name</strong></td>
-<td style="text-align: left;">IL-7R alpha</td>
+<td style="text-align: left;">IL-7Rα (CD127) extracellular domain</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"><strong>PDB ID</strong></td>
-<td style="text-align: left;"><code>3DI2</code></td>
+<td style="text-align: left;"><a href="https://www.rcsb.org/structure/3DI2"><code>3DI2</code></a></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;"><strong>Target Chain</strong></td>
 <td style="text-align: left;">Chain B</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><strong>Binder to Mimic</strong></td>
+<td style="text-align: left;"><strong>Binder to mimic</strong></td>
 <td style="text-align: left;">Chain A (IL-7)</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;"><strong>Interface / Hotspot</strong></td>
-<td style="text-align: left;">The groove where Chain A sits.</td>
+<td style="text-align: left;"><strong>Published interface hotspots</strong></td>
+<td style="text-align: left;"><code>S31, L57, V58, E59, K77, K78, F79, L80, L81, I82, T104, K138, Y139, H191, Y192, F193</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Key “hot” residues</strong></td>
+<td style="text-align: left;"><strong>F79, L80, L81, I82</strong> (hydrophobic ridge — site I) and <strong>Y192, F193</strong> (aromatic cluster — site II) are the core energetic contributors</td>
 </tr>
 </tbody>
 </table>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>About the residue list
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>These are every IL-7Rα residue with any heavy atom within 5 Å of IL-7 in 3DI2. The interface is compact and centered on two clusters: a hydrophobic ridge (L80 / L81 / I82) and an aromatic pair (Y192 / F193). Both clusters should be in your hotspot set when running RFdiffusion.</p>
+</div>
+</div>
 </section>
 <section id="strategy-tips" class="level3">
 <h3 class="anchored" data-anchor-id="strategy-tips">Strategy Tips</h3>
 <ol type="1">
-<li><strong>Download PDB <code>3DI2</code></strong>.</li>
-<li><strong>Clean the structure:</strong> Keep Chain B.</li>
-<li><strong>Hotspot Definition:</strong> Use the residues on Chain B that contact Chain A to define the binding site.</li>
+<li><strong>Download PDB <a href="https://files.rcsb.org/download/3DI2.pdb"><code>3DI2</code></a>.</strong></li>
+<li><strong>Clean the structure:</strong> Keep Chain B (IL-7Rα). Remove Chain A (IL-7) and any crystallographic partners (chains C, D).</li>
+<li><strong>Define hotspots:</strong> Pass 4–6 residues from the “hot” set (e.g., <code>B80,B81,B82,B192,B193</code>) to <strong>RFdiffusion</strong> / <strong>BindCraft</strong>.</li>
+<li><strong>Size matters:</strong> IL-7 itself is small (~150 aa) and compact — a designed binder of similar size (60–100 aa minibinder) should be feasible. Larger binders risk steric clash with the nearby γc subunit.</li>
 </ol>
+</section>
+<section id="reference" class="level3">
+<h3 class="anchored" data-anchor-id="reference">Reference</h3>
+<ul>
+<li>McElroy, C.A. et al.&nbsp;(2009). <em>Structural and biophysical studies of the human IL-7/IL-7Rα complex.</em> Structure <strong>17</strong>, 54–65. <a href="https://doi.org/10.1016/j.str.2008.10.019">doi:10.1016/j.str.2008.10.019</a> — primary citation for 3DI2.</li>
+</ul>
 <hr>
 <p><a href="../../capstone/index.html">← Back to Capstone Overview</a></p>
 
@@ -661,6 +689,76 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 });
 </script>
+<script>
+(function() {
+  // Day-level position chip: shows "Monday · Lesson 3 of 16" at the top of each lesson.
+  // Position is derived from the Quarto sidebar so it stays in sync with _quarto.yml.
+  document.addEventListener('DOMContentLoaded', function() {
+    const path = window.location.pathname.toLowerCase();
+    const match = path.match(/\/(monday|tuesday|wednesday|thursday|capstone)\//);
+    if (!match) return;
+    const day = match[1];
+    const dayLabel = day.charAt(0).toUpperCase() + day.slice(1);
+
+    // Skip the day index page itself
+    const isIndex = /\/index\.html?$/.test(path) || path.endsWith('/' + day + '/');
+    if (isIndex) return;
+
+    // Collect lesson links from the sidebar for the current day (exclude index and separators)
+    const sidebarLinks = Array.from(document.querySelectorAll('.sidebar a[href]'))
+      .map(function(a) {
+        try { return new URL(a.getAttribute('href'), window.location.href).pathname.toLowerCase(); }
+        catch (e) { return null; }
+      })
+      .filter(function(p) { return p && p.indexOf('/' + day + '/') !== -1; })
+      .filter(function(p) { return !/\/index\.html?$/.test(p); });
+
+    // Deduplicate while preserving order
+    const seen = new Set();
+    const lessons = sidebarLinks.filter(function(p) {
+      if (seen.has(p)) return false;
+      seen.add(p);
+      return true;
+    });
+
+    const total = lessons.length;
+    if (total === 0) return;
+
+    const currentIdx = lessons.indexOf(path);
+    if (currentIdx === -1) return;
+
+    const pct = Math.round(((currentIdx + 1) / total) * 100);
+    const title = document.querySelector('h1.title, .quarto-title h1');
+    if (!title) return;
+
+    const chip = document.createElement('div');
+    chip.className = 'day-progress-chip';
+    const noun = day === 'capstone' ? 'Target' : 'Lesson';
+    chip.innerHTML =
+      '<span>' + dayLabel + '</span>' +
+      '<span>· ' + noun + ' ' + (currentIdx + 1) + ' of ' + total + '</span>' +
+      '<span class="dpc-bar"><span class="dpc-fill" style="width:' + pct + '%"></span></span>';
+    title.insertAdjacentElement('afterend', chip);
+  });
+})();
+</script>
+<button id="back-to-top" aria-label="Back to top" title="Back to top">↑</button>
+<script>
+(function() {
+  const btn = document.getElementById('back-to-top');
+  if (!btn) return;
+  const threshold = 400;
+  function update() {
+    if (window.scrollY > threshold) btn.classList.add('visible');
+    else btn.classList.remove('visible');
+  }
+  window.addEventListener('scroll', update, { passive: true });
+  btn.addEventListener('click', function() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+  update();
+})();
+</script>
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
@@ -748,6 +846,11 @@ document.addEventListener('DOMContentLoaded', function() {
           if (link.dataset.originalHref !== undefined) {
             link.href = link.dataset.originalHref;
           }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
         }
       }
     function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
@@ -1066,4 +1169,5 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
+<script src="../../site_libs/quarto-html/zenscroll-min.js"></script>
 </body></html>

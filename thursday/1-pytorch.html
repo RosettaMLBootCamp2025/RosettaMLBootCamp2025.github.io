@@ -2,13 +2,16 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.26">
+<meta name="generator" content="quarto-1.9.37">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>1. CPU vs GPU Computing – ML Protein Design Bootcamp 2025</title>
+<title>1. PyTorch Foundations – ML Protein Design Bootcamp 2025</title>
 <style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
 div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -67,15 +70,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <meta name="quarto:offset" content="../">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-635a35c16803d16fd9db22f392043487.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-6dce83697ef593b6f21f66f8d1a1696b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -103,6 +105,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
+<style>html{ scroll-behavior: smooth; }</style>
 <!-- Shared Mol* component include for target pages -->
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/pdbe-molstar@latest/build/pdbe-molstar-component.js"></script>
 <style>
@@ -184,7 +187,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../thursday/1-cpu-vs-gpu.html">1. CPU vs GPU Computing</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../thursday/1-pytorch.html">1. PyTorch Foundations</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -204,20 +207,26 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../thursday/1-cpu-vs-gpu.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">1. CPU vs GPU Computing</span></a>
+  <a href="../thursday/1-pytorch.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">1. PyTorch Foundations</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../thursday/2-docking.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">2. Molecular Docking</span></a>
+  <a href="../thursday/2-cpu-vs-gpu.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2. CPU vs GPU Computing</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../thursday/3-roundtable.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">3. Reflection &amp; Capstone Introduction</span></a>
+  <a href="../thursday/3-docking.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3. Molecular Docking</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../thursday/4-roundtable.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">4. Reflection &amp; Capstone Introduction</span></a>
   </div>
 </li>
     </ul>
@@ -226,24 +235,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
+        <nav id="TOC" role="doc-toc" class="toc-active" data-toc-expanded="2">
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#slides" id="toc-slides" class="nav-link active" data-scroll-target="#slides">Slides</a></li>
+  <li><a href="#live-workshop-session" id="toc-live-workshop-session" class="nav-link active" data-scroll-target="#live-workshop-session">Live Workshop Session</a></li>
   <li><a href="#overview" id="toc-overview" class="nav-link" data-scroll-target="#overview">Overview</a></li>
-  <li><a href="#the-activity" id="toc-the-activity" class="nav-link" data-scroll-target="#the-activity">The Activity</a></li>
-  <li><a href="#access-the-notebook" id="toc-access-the-notebook" class="nav-link" data-scroll-target="#access-the-notebook">Access the Notebook</a></li>
-  <li><a href="#key-concepts" id="toc-key-concepts" class="nav-link" data-scroll-target="#key-concepts">Key Concepts</a>
+  <li><a href="#what-pytorch-actually-is" id="toc-what-pytorch-actually-is" class="nav-link" data-scroll-target="#what-pytorch-actually-is">What PyTorch Actually Is</a>
   <ul class="collapse">
-  <li><a href="#why-for-loops-are-slow" id="toc-why-for-loops-are-slow" class="nav-link" data-scroll-target="#why-for-loops-are-slow">Why For Loops Are Slow</a></li>
-  <li><a href="#what-is-vectorization" id="toc-what-is-vectorization" class="nav-link" data-scroll-target="#what-is-vectorization">What is Vectorization?</a></li>
-  <li><a href="#cpu-vs-gpu-architecture" id="toc-cpu-vs-gpu-architecture" class="nav-link" data-scroll-target="#cpu-vs-gpu-architecture">CPU vs GPU Architecture</a></li>
+  <li><a href="#tensors-the-core-data-structure" id="toc-tensors-the-core-data-structure" class="nav-link" data-scroll-target="#tensors-the-core-data-structure">Tensors: The Core Data Structure</a></li>
+  <li><a href="#autograd-the-gradient-engine" id="toc-autograd-the-gradient-engine" class="nav-link" data-scroll-target="#autograd-the-gradient-engine">Autograd: The Gradient Engine</a></li>
+  <li><a href="#the-standard-training-loop" id="toc-the-standard-training-loop" class="nav-link" data-scroll-target="#the-standard-training-loop">The Standard Training Loop</a></li>
   </ul></li>
-  <li><a href="#expected-results" id="toc-expected-results" class="nav-link" data-scroll-target="#expected-results">Expected Results</a>
-  <ul class="collapse">
-  <li><a href="#sample-timing-comparison" id="toc-sample-timing-comparison" class="nav-link" data-scroll-target="#sample-timing-comparison">Sample Timing Comparison</a></li>
-  </ul></li>
+  <li><a href="#why-this-matters-for-protein-design" id="toc-why-this-matters-for-protein-design" class="nav-link" data-scroll-target="#why-this-matters-for-protein-design">Why This Matters for Protein Design</a></li>
+  <li><a href="#practice-notebook" id="toc-practice-notebook" class="nav-link" data-scroll-target="#practice-notebook">Practice Notebook</a></li>
   <li><a href="#key-takeaways" id="toc-key-takeaways" class="nav-link" data-scroll-target="#key-takeaways">Key Takeaways</a></li>
   <li><a href="#questions-to-consider" id="toc-questions-to-consider" class="nav-link" data-scroll-target="#questions-to-consider">Questions to Consider</a></li>
   </ul>
@@ -254,7 +259,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">1. CPU vs GPU Computing</h1>
+<h1 class="title">1. PyTorch Foundations</h1>
 </div>
 
 
@@ -271,56 +276,118 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>This activity demonstrates the practical differences between CPU and GPU operations using Python and PyTorch. You’ll explore how vectorization and hardware acceleration dramatically impact computational performance.</p>
-<section id="slides" class="level2">
-<h2 class="anchored" data-anchor-id="slides">Slides</h2>
-<iframe src="https://docs.google.com/presentation/d/1j2KpBB0Vrgn8KGBHdYHkD_ETgFpLYxIa/embed?start=false&amp;loop=false&amp;delayms=3000" frameborder="0" width="100%" height="500" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+<p>Every major tool you’ve touched this week — <strong>AlphaFold2, ESMFold, RFdiffusion, Chai-1, Boltz-2, DiffDock</strong> — is built on PyTorch. When you’ve been running <code>colabfold_batch</code> or <code>rfdiffusion inference.output_prefix=...</code>, what’s actually happening under the hood is that PyTorch loads a model checkpoint, moves its weights onto the GPU, runs a forward pass on your input tensors, and returns tensors that get decoded into PDB coordinates. This lesson gives you the minimum mental model you need to understand, debug, and occasionally customize that pipeline.</p>
+<section id="live-workshop-session" class="level2">
+<h2 class="anchored" data-anchor-id="live-workshop-session">Live Workshop Session</h2>
+<div class="workshop-companion">
+  <div class="wc-title">🎥 Live workshop recording — PyTorch explained: from neural networks to real-world models</div>
+  <div class="wc-video">
+    <iframe src="https://www.youtube-nocookie.com/embed/xQkegATmO-c" title="PyTorch explained: from neural networks to real-world models" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="" loading="lazy"></iframe>
+  </div>
+  <details>
+    <summary>📊 View slide deck</summary>
+    <iframe src="https://docs.google.com/presentation/d/1FS7AqBrK71QIksVWlotjPxJ-O1UGeyg3NpU_AG6YhnU/embed?start=false&amp;loop=false&amp;delayms=3000" allowfullscreen="" loading="lazy"></iframe>
+  </details>
+</div>
 <hr>
 </section>
 <section id="overview" class="level2">
 <h2 class="anchored" data-anchor-id="overview">Overview</h2>
-<p>Modern machine learning and structural biology tools rely heavily on GPU acceleration. Understanding when and why GPUs outperform CPUs is essential for:</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Learning goals
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>By the end of this lesson you should be able to:</p>
 <ul>
-<li><strong>Running predictions efficiently</strong>: Tools like AlphaFold2, ESMFold, and RFdiffusion all benefit from GPU acceleration</li>
-<li><strong>Writing efficient code</strong>: Knowing how to vectorize operations can speed up your analysis scripts by orders of magnitude</li>
-<li><strong>Resource planning</strong>: Understanding computational requirements helps you estimate job times and request appropriate resources</li>
+<li>Explain what a PyTorch <strong>tensor</strong> is and how it differs from a NumPy array.</li>
+<li>Explain what <strong>autograd</strong> does and why it makes deep learning practical.</li>
+<li>Recognize the standard PyTorch training/inference loop in any model’s codebase.</li>
+<li>Move tensors between CPU and GPU (<code>.to(device)</code>) and reason about when that transfer costs you.</li>
+<li>Load a pretrained checkpoint and run a forward pass — the core pattern behind every tool this week.</li>
 </ul>
+</div>
+</div>
 </section>
-<section id="the-activity" class="level2">
-<h2 class="anchored" data-anchor-id="the-activity">The Activity</h2>
-<p>In this hands-on notebook, you’ll compute dot products using three different approaches:</p>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Method</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><strong>For Loop</strong></td>
-<td>Naive Python iteration through each element</td>
-</tr>
-<tr class="even">
-<td><strong>Vectorized</strong></td>
-<td>Using PyTorch’s element-wise operations</td>
-</tr>
-<tr class="odd">
-<td><strong>torch.dot</strong></td>
-<td>Built-in optimized function</td>
-</tr>
-</tbody>
-</table>
-<p>You’ll time each method on both CPU and GPU across varying data sizes to see the performance differences firsthand.</p>
+<section id="what-pytorch-actually-is" class="level2">
+<h2 class="anchored" data-anchor-id="what-pytorch-actually-is">What PyTorch Actually Is</h2>
+<p><strong>PyTorch is a numerical computing library with two features that make modern deep learning practical.</strong> The first is the <strong>tensor</strong> — a multi-dimensional array that looks and feels like a NumPy <code>ndarray</code>, but can live on a GPU and dispatch operations to thousands of cores in parallel. The second is <strong>autograd</strong> — every operation on a tensor is recorded on a dynamic computation graph, and calling <code>.backward()</code> on any scalar result walks that graph to compute gradients with respect to every input tensor that asked for them. Those two features, plus a Python-native API, are the entire reason researchers can prototype a new model like RFdiffusion in weeks instead of the months it would have taken in TensorFlow 1.x or pure CUDA.</p>
+<p>Everything else in the PyTorch ecosystem is built on top of those two primitives. <code>torch.nn</code> is a collection of modules (linear layers, convolutions, attention blocks) that each wrap parameter tensors and define a forward computation. <code>torch.optim</code> contains optimizers (Adam, SGD) that read the gradients autograd produced and update the parameters. <code>torch.utils.data</code> handles batching and shuffling. Higher-level libraries like <strong>PyTorch Lightning</strong> and <strong>Hugging Face Transformers</strong> sit on top of this. The models you’ve run this week — ESM-2 (the language model inside ESMFold), OpenFold (a PyTorch reimplementation of AlphaFold2), RFdiffusion — are all ordinary PyTorch modules underneath, which means once you can read one, you can read the rest.</p>
+<section id="tensors-the-core-data-structure" class="level3">
+<h3 class="anchored" data-anchor-id="tensors-the-core-data-structure">Tensors: The Core Data Structure</h3>
+<p>A tensor is an N-dimensional array with a <code>dtype</code> (e.g.&nbsp;<code>float32</code>), a <code>shape</code> (e.g.&nbsp;<code>(batch, seq_len, hidden)</code>), and a <code>device</code> (e.g.&nbsp;<code>cuda:0</code>). You can think of it as “NumPy plus a GPU backend plus gradient tracking.”</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a tensor on the CPU</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> torch.randn(<span class="dv">2</span>, <span class="dv">3</span>)              <span class="co"># shape (2, 3), float32, device=cpu</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(x.shape, x.dtype, x.device)  <span class="co"># torch.Size([2, 3]) torch.float32 cpu</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Move it to the GPU</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> x.to(<span class="st">"cuda"</span>)                   <span class="co"># shape (2, 3), float32, device=cuda:0</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Operations stay on the same device</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> x <span class="op">@</span> x.T                        <span class="co"># shape (2, 2), runs on GPU</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Tensors with requires_grad=True participate in autograd</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>w <span class="op">=</span> torch.randn(<span class="dv">3</span>, <span class="dv">1</span>, requires_grad<span class="op">=</span><span class="va">True</span>, device<span class="op">=</span><span class="st">"cuda"</span>)</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>loss <span class="op">=</span> (x <span class="op">@</span> w).<span class="bu">sum</span>()</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>loss.backward()                    <span class="co"># computes dloss/dw</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(w.grad.shape)                <span class="co"># torch.Size([3, 1])</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Rule of thumb
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If a function errors with “expected CUDA, got CPU” (or vice versa), you have tensors on different devices. Move them to the same device with <code>.to(device)</code> or <code>.cuda()</code> / <code>.cpu()</code>.</p>
+</div>
+</div>
 </section>
-<section id="access-the-notebook" class="level2">
-<h2 class="anchored" data-anchor-id="access-the-notebook">Access the Notebook</h2>
+<section id="autograd-the-gradient-engine" class="level3">
+<h3 class="anchored" data-anchor-id="autograd-the-gradient-engine">Autograd: The Gradient Engine</h3>
+<p>Autograd is deceptively simple. Every operation you perform on a tensor with <code>requires_grad=True</code> is recorded on a graph. When you call <code>.backward()</code> on a scalar, PyTorch traverses that graph in reverse and fills in the <code>.grad</code> attribute of every leaf tensor. <strong>You almost never implement gradients manually anymore</strong> — autograd does it for you, which is the entire reason deep learning research moves at the pace it does.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> torch.tensor([<span class="fl">2.0</span>], requires_grad<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> x <span class="op">**</span> <span class="dv">3</span> <span class="op">+</span> <span class="dv">2</span> <span class="op">*</span> x          <span class="co"># y = x^3 + 2x</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>y.backward()                <span class="co"># dy/dx = 3x^2 + 2</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(x.grad)               <span class="co"># tensor([14.])  (= 3*4 + 2)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="the-standard-training-loop" class="level3">
+<h3 class="anchored" data-anchor-id="the-standard-training-loop">The Standard Training Loop</h3>
+<p>Every PyTorch training script you’ll ever read follows this five-line skeleton. Once you see it, you can read any codebase:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> batch <span class="kw">in</span> dataloader:</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    pred <span class="op">=</span> model(batch.inputs)          <span class="co"># forward pass</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    loss <span class="op">=</span> loss_fn(pred, batch.labels)  <span class="co"># compute scalar loss</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    optimizer.zero_grad()               <span class="co"># clear stale gradients</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    loss.backward()                     <span class="co"># autograd fills in .grad</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    optimizer.step()                    <span class="co"># update parameters</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Inference is just the first two lines, wrapped in <code>with torch.no_grad():</code> to skip the graph-building overhead. That’s exactly what’s happening when you run AlphaFold2 or RFdiffusion — no training, just a forward pass through a pretrained model.</p>
+</section>
+</section>
+<section id="why-this-matters-for-protein-design" class="level2">
+<h2 class="anchored" data-anchor-id="why-this-matters-for-protein-design">Why This Matters for Protein Design</h2>
+<p>Understanding that every tool you’ve run this week is “a PyTorch model loaded from a checkpoint, fed tensors, returning tensors” gives you <strong>three practical superpowers</strong>:</p>
+<ul>
+<li><strong>Debugging.</strong> When a tool fails with a cryptic CUDA error, you can read the stack trace and see which tensor operation blew up — and often fix it by reducing batch size, truncating the input, or switching from <code>float32</code> to <code>float16</code>.</li>
+<li><strong>Customization.</strong> Most of these tools are just Python scripts around a PyTorch <code>nn.Module</code>. You can load the checkpoint yourself, patch the forward pass, or extract intermediate features (e.g.&nbsp;ESM-2 embeddings) for your own downstream analysis — none of which requires retraining anything.</li>
+<li><strong>Efficiency.</strong> If you’re writing analysis scripts that process thousands of predictions, using PyTorch tensors (even on CPU) is often 10–100× faster than Python lists or pandas for numerical work.</li>
+</ul>
+<p>You don’t need to implement attention from scratch. You do need to know what a tensor is, what <code>.to(device)</code> does, and why moving data between CPU and GPU has a cost — which is exactly what the <a href="../thursday/2-cpu-vs-gpu.html">next lesson</a> measures experimentally.</p>
+</section>
+<section id="practice-notebook" class="level2">
+<h2 class="anchored" data-anchor-id="practice-notebook">Practice Notebook</h2>
+<p>Work through the interactive PyTorch tutorial notebook below. It walks through tensor creation, device management, autograd, and a minimal end-to-end training example — all in a single Colab you can run without any local setup.</p>
 <div style="display: flex; gap: 10px; flex-wrap: wrap; margin: 20px 0;">
-  <a href="https://colab.research.google.com/github/RosettaMLBootCamp2025/RosettaMLBootCamp2025.github.io/blob/main/thursday/files/activity-CPUvsGPU.ipynb" class="btn btn-primary" target="_blank">
-    <i class="bi bi-play-circle"></i> Open in Google Colab
-  </a>
-  <a href="../thursday/files/activity-CPUvsGPU.html" class="btn btn-outline-primary" download="">
-    <i class="bi bi-download"></i> Download Notebook (.ipynb)
+  <a href="https://colab.research.google.com/drive/1MAy6Sp1ee6OuMFV4inHxDCGibjzBq_sa" class="btn btn-primary" target="_blank">
+    <i class="bi bi-play-circle"></i> Open PyTorch Tutorial in Colab
   </a>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled">
@@ -329,138 +396,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Recommended: Use Google Colab
+<span class="screen-reader-only">Tip</span>Recommended: Enable GPU in Colab
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Google Colab provides free access to GPUs, which is essential for this activity. Click “Runtime” → “Change runtime type” → Select “T4 GPU” to enable GPU acceleration.</p>
+<p>In Colab, go to <strong>Runtime → Change runtime type → T4 GPU</strong> before running the notebook. Several cells demonstrate GPU-specific behavior (tensor transfer, speedups) that only work with a GPU attached.</p>
 </div>
 </div>
-<hr>
-</section>
-<section id="key-concepts" class="level2">
-<h2 class="anchored" data-anchor-id="key-concepts">Key Concepts</h2>
-<section id="why-for-loops-are-slow" class="level3">
-<h3 class="anchored" data-anchor-id="why-for-loops-are-slow">Why For Loops Are Slow</h3>
-<p>Python for loops execute operations sequentially, one at a time. Each iteration involves:</p>
-<ul>
-<li>Python interpreter overhead</li>
-<li>Individual memory accesses</li>
-<li>No parallelization</li>
-</ul>
-<p>For a dot product of vectors with N elements, this means N separate operations executed one after another.</p>
-</section>
-<section id="what-is-vectorization" class="level3">
-<h3 class="anchored" data-anchor-id="what-is-vectorization">What is Vectorization?</h3>
-<p>Vectorization means expressing operations on entire arrays rather than individual elements. Instead of:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Slow: element-by-element</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> <span class="dv">0</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(a)):</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    result <span class="op">+=</span> a[i] <span class="op">*</span> b[i]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>You write:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fast: vectorized</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> (a <span class="op">*</span> b).<span class="bu">sum</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>The vectorized version:</p>
-<ul>
-<li>Executes in optimized C/C++ code under the hood</li>
-<li>Can use SIMD (Single Instruction, Multiple Data) instructions</li>
-<li>Processes multiple elements simultaneously</li>
-</ul>
-</section>
-<section id="cpu-vs-gpu-architecture" class="level3">
-<h3 class="anchored" data-anchor-id="cpu-vs-gpu-architecture">CPU vs GPU Architecture</h3>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 47%">
-<col style="width: 26%">
-<col style="width: 26%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Feature</th>
-<th>CPU</th>
-<th>GPU</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><strong>Cores</strong></td>
-<td>Few powerful cores (4-64)</td>
-<td>Many simple cores (thousands)</td>
-</tr>
-<tr class="even">
-<td><strong>Best for</strong></td>
-<td>Sequential, complex tasks</td>
-<td>Parallel, simple tasks</td>
-</tr>
-<tr class="odd">
-<td><strong>Memory</strong></td>
-<td>Fast access to RAM</td>
-<td>High bandwidth to VRAM</td>
-</tr>
-<tr class="even">
-<td><strong>Overhead</strong></td>
-<td>Low</td>
-<td>Data transfer cost</td>
-</tr>
-</tbody>
-</table>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>The Data Transfer Overhead
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Moving data between CPU memory and GPU memory takes time. For small operations, this overhead can exceed the computation time, making GPU slower than CPU. The GPU advantage only appears when the computation is large enough to amortize this cost.</p>
-</div>
-</div>
-<hr>
-</section>
-</section>
-<section id="expected-results" class="level2">
-<h2 class="anchored" data-anchor-id="expected-results">Expected Results</h2>
-<p>When you run the notebook, you should observe:</p>
-<ol type="1">
-<li><strong>For loops are always slowest</strong> - regardless of hardware</li>
-<li><strong>Vectorization provides massive speedup</strong> - often 10-100x faster than loops</li>
-<li><strong>GPU beats CPU for large data</strong> - but may be slower for small data due to transfer overhead</li>
-<li><strong>torch.dot is fastest overall</strong> - it’s optimized specifically for this operation</li>
-</ol>
-<section id="sample-timing-comparison" class="level3">
-<h3 class="anchored" data-anchor-id="sample-timing-comparison">Sample Timing Comparison</h3>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Method</th>
-<th>100 elements</th>
-<th>5000 elements</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>For Loop (CPU)</td>
-<td>~0.5 ms</td>
-<td>~10 ms</td>
-</tr>
-<tr class="even">
-<td>Vectorized (CPU)</td>
-<td>~0.02 ms</td>
-<td>~0.1 ms</td>
-</tr>
-<tr class="odd">
-<td>torch.dot (GPU)</td>
-<td>~0.1 ms*</td>
-<td>~0.05 ms</td>
-</tr>
-</tbody>
-</table>
-<p>*GPU times include data transfer overhead</p>
-<hr>
-</section>
 </section>
 <section id="key-takeaways" class="level2">
 <h2 class="anchored" data-anchor-id="key-takeaways">Key Takeaways</h2>
@@ -470,27 +412,28 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Important</span>Remember These Principles
+<span class="screen-reader-only">Important</span>Remember these principles
 </div>
 </div>
 <div class="callout-body-container callout-body">
 <ol type="1">
-<li><strong>Always vectorize when possible</strong> - Avoid Python for loops for numerical computations</li>
-<li><strong>GPU overhead matters</strong> - Small tasks may run faster on CPU</li>
-<li><strong>Use built-in functions</strong> - Libraries like PyTorch have highly optimized implementations</li>
-<li><strong>Profile your code</strong> - Measure before assuming what’s slow</li>
+<li><strong>Tensors</strong> are NumPy arrays with two superpowers: they can live on a GPU, and they can track gradients.</li>
+<li><strong>Autograd</strong> builds a dynamic computation graph as you run code and backpropagates on demand — you almost never write gradients by hand.</li>
+<li><strong>Every PyTorch model follows the same pattern</strong>: forward pass → loss → <code>.zero_grad()</code> → <code>.backward()</code> → <code>.step()</code>. Inference is just the forward pass inside <code>torch.no_grad()</code>.</li>
+<li><strong>Device placement is a source of bugs.</strong> If you see “expected CUDA, got CPU,” move your tensors to the same device with <code>.to(device)</code>.</li>
+<li><strong>Every ML tool this week is a PyTorch model under the hood</strong> — reading one codebase teaches you how to navigate them all.</li>
 </ol>
 </div>
 </div>
 </section>
 <section id="questions-to-consider" class="level2">
 <h2 class="anchored" data-anchor-id="questions-to-consider">Questions to Consider</h2>
-<p>After completing the activity, think about:</p>
+<p>After working through the notebook, think about:</p>
 <ol type="1">
-<li>At what data size did GPU start outperforming CPU for vectorized operations?</li>
-<li>Why does the for loop show “N/A” for GPU times in the notebook?</li>
-<li>How might these principles apply to running AlphaFold2 or other ML tools?</li>
-<li>What would happen if you ran the same experiment with matrix multiplication instead of dot products?</li>
+<li>What happens to a tensor’s <code>.grad</code> attribute if you run <code>.backward()</code> twice without calling <code>zero_grad()</code> in between?</li>
+<li>If AlphaFold2’s forward pass for a 500-residue protein takes 2 GB of VRAM, what’s different about the tensors compared to inference on a 50-residue peptide?</li>
+<li>Why do you think most protein-design tools disable gradient tracking (<code>torch.no_grad()</code> or <code>.eval()</code> mode) when running predictions?</li>
+<li>Where in the standard training loop would you add code to log loss values, save checkpoints, or profile GPU memory?</li>
 </ol>
 <hr>
 <div style="display: flex; justify-content: space-between; align-items: center;">
@@ -501,7 +444,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <a href="../index.html">Back to Home</a>
 </div>
 <div>
-<a href="../thursday/2-docking.html">Docking →</a>
+<a href="../thursday/2-cpu-vs-gpu.html">CPU vs GPU →</a>
 </div>
 </div>
 
@@ -828,6 +771,76 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 });
 </script>
+<script>
+(function() {
+  // Day-level position chip: shows "Monday · Lesson 3 of 16" at the top of each lesson.
+  // Position is derived from the Quarto sidebar so it stays in sync with _quarto.yml.
+  document.addEventListener('DOMContentLoaded', function() {
+    const path = window.location.pathname.toLowerCase();
+    const match = path.match(/\/(monday|tuesday|wednesday|thursday|capstone)\//);
+    if (!match) return;
+    const day = match[1];
+    const dayLabel = day.charAt(0).toUpperCase() + day.slice(1);
+
+    // Skip the day index page itself
+    const isIndex = /\/index\.html?$/.test(path) || path.endsWith('/' + day + '/');
+    if (isIndex) return;
+
+    // Collect lesson links from the sidebar for the current day (exclude index and separators)
+    const sidebarLinks = Array.from(document.querySelectorAll('.sidebar a[href]'))
+      .map(function(a) {
+        try { return new URL(a.getAttribute('href'), window.location.href).pathname.toLowerCase(); }
+        catch (e) { return null; }
+      })
+      .filter(function(p) { return p && p.indexOf('/' + day + '/') !== -1; })
+      .filter(function(p) { return !/\/index\.html?$/.test(p); });
+
+    // Deduplicate while preserving order
+    const seen = new Set();
+    const lessons = sidebarLinks.filter(function(p) {
+      if (seen.has(p)) return false;
+      seen.add(p);
+      return true;
+    });
+
+    const total = lessons.length;
+    if (total === 0) return;
+
+    const currentIdx = lessons.indexOf(path);
+    if (currentIdx === -1) return;
+
+    const pct = Math.round(((currentIdx + 1) / total) * 100);
+    const title = document.querySelector('h1.title, .quarto-title h1');
+    if (!title) return;
+
+    const chip = document.createElement('div');
+    chip.className = 'day-progress-chip';
+    const noun = day === 'capstone' ? 'Target' : 'Lesson';
+    chip.innerHTML =
+      '<span>' + dayLabel + '</span>' +
+      '<span>· ' + noun + ' ' + (currentIdx + 1) + ' of ' + total + '</span>' +
+      '<span class="dpc-bar"><span class="dpc-fill" style="width:' + pct + '%"></span></span>';
+    title.insertAdjacentElement('afterend', chip);
+  });
+})();
+</script>
+<button id="back-to-top" aria-label="Back to top" title="Back to top">↑</button>
+<script>
+(function() {
+  const btn = document.getElementById('back-to-top');
+  if (!btn) return;
+  const threshold = 400;
+  function update() {
+    if (window.scrollY > threshold) btn.classList.add('visible');
+    else btn.classList.remove('visible');
+  }
+  window.addEventListener('scroll', update, { passive: true });
+  btn.addEventListener('click', function() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+  update();
+})();
+</script>
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
@@ -915,6 +928,11 @@ document.addEventListener('DOMContentLoaded', function() {
           if (link.dataset.originalHref !== undefined) {
             link.href = link.dataset.originalHref;
           }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
         }
       }
     function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
@@ -1233,4 +1251,5 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
+<script src="../site_libs/quarto-html/zenscroll-min.js"></script>
 </body></html>
