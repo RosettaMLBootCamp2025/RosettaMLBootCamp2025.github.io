@@ -2,13 +2,16 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.26">
+<meta name="generator" content="quarto-1.9.37">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
 <title>Thursday: Docking &amp; Discussion – ML Protein Design Bootcamp 2025</title>
 <style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
 div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -32,15 +35,14 @@ ul.task-list li input[type="checkbox"] {
 <meta name="quarto:offset" content="../">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-b3b235ae6ba71d6e5c2a90c00144237d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-4d3f3448f837ff03356db176d8adb603.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -68,6 +70,7 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+<style>html{ scroll-behavior: smooth; }</style>
 <!-- Shared Mol* component include for target pages -->
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/pdbe-molstar@latest/build/pdbe-molstar-component.js"></script>
 <style>
@@ -169,20 +172,26 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../thursday/1-cpu-vs-gpu.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">1. CPU vs GPU Computing</span></a>
+  <a href="../thursday/1-pytorch.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1. PyTorch Foundations</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../thursday/2-docking.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">2. Molecular Docking</span></a>
+  <a href="../thursday/2-cpu-vs-gpu.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2. CPU vs GPU Computing</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../thursday/3-roundtable.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">3. Reflection &amp; Capstone Introduction</span></a>
+  <a href="../thursday/3-docking.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3. Molecular Docking</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../thursday/4-roundtable.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">4. Reflection &amp; Capstone Introduction</span></a>
   </div>
 </li>
     </ul>
@@ -191,12 +200,11 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
+        <nav id="TOC" role="doc-toc" class="toc-active" data-toc-expanded="2">
     <h2 id="toc-title">On this page</h2>
    
   <ul>
   <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">Overview</a></li>
-  <li><a href="#learning-objectives" id="toc-learning-objectives" class="nav-link" data-scroll-target="#learning-objectives">Learning Objectives</a></li>
   <li><a href="#modules" id="toc-modules" class="nav-link" data-scroll-target="#modules">Modules</a></li>
   <li><a href="#schedule" id="toc-schedule" class="nav-link" data-scroll-target="#schedule">Schedule</a></li>
   <li><a href="#preparation" id="toc-preparation" class="nav-link" data-scroll-target="#preparation">Preparation</a></li>
@@ -228,17 +236,19 @@ ul.task-list li input[type="checkbox"] {
 <section id="overview" class="level2">
 <h2 class="anchored" data-anchor-id="overview">Overview</h2>
 <p>Thursday brings together computational concepts with practical applications and collaborative discussion. You’ll explore the differences between CPU and GPU computing through hands-on experiments, learn about molecular docking for understanding protein-ligand interactions, and participate in a roundtable discussion to reflect on the bootcamp experience.</p>
-</section>
-<section id="learning-objectives" class="level2">
-<h2 class="anchored" data-anchor-id="learning-objectives">Learning Objectives</h2>
-<p>By the end of Thursday, you will be able to:</p>
+<div class="day-objectives">
+<div class="do-title">
+By the end of Thursday, you’ll be able to:
+</div>
 <ul>
-<li>Explain why GPUs outperform CPUs for certain computational tasks</li>
-<li>Understand the importance of vectorization in numerical computing</li>
-<li>Describe the principles of molecular docking</li>
-<li>Apply docking concepts to protein design workflows</li>
-<li>Articulate connections between different tools learned throughout the bootcamp</li>
+<li>Explain what a PyTorch tensor is, what autograd does, and why every major tool this week is built on them.</li>
+<li>Explain why GPUs outperform CPUs for certain computational tasks, and when they don’t.</li>
+<li>Describe how vectorization changes the cost of numerical operations in Python.</li>
+<li>Describe the principles of molecular docking — sampling, scoring, and ranking.</li>
+<li>Apply docking concepts to protein design workflows and reason about when to use DiffDock-PP vs.&nbsp;PLACER vs.&nbsp;Rosetta.</li>
+<li>Articulate connections between the tools you’ve learned this week and choose the right stack for your capstone target.</li>
 </ul>
+</div>
 </section>
 <section id="modules" class="level2">
 <h2 class="anchored" data-anchor-id="modules">Modules</h2>
@@ -252,17 +262,22 @@ ul.task-list li input[type="checkbox"] {
 </thead>
 <tbody>
 <tr class="odd">
-<td><a href="../thursday/1-cpu-vs-gpu.html">1</a></td>
+<td><a href="../thursday/1-pytorch.html">1</a></td>
+<td>PyTorch Foundations</td>
+<td>What tensors and autograd actually are, and why every ML tool this week is built on them</td>
+</tr>
+<tr class="even">
+<td><a href="../thursday/2-cpu-vs-gpu.html">2</a></td>
 <td>CPU vs GPU Computing</td>
 <td>Hands-on activity comparing computational performance</td>
 </tr>
-<tr class="even">
-<td><a href="../thursday/2-docking.html">2</a></td>
+<tr class="odd">
+<td><a href="../thursday/3-docking.html">3</a></td>
 <td>Molecular Docking</td>
 <td>Introduction to predicting molecular interactions</td>
 </tr>
-<tr class="odd">
-<td><a href="../thursday/3-roundtable.html">3</a></td>
+<tr class="even">
+<td><a href="../thursday/4-roundtable.html">4</a></td>
 <td>Reflection &amp; Capstone Introduction</td>
 <td>Self-reflect on your learning and plan your capstone project</td>
 </tr>
@@ -280,14 +295,18 @@ ul.task-list li input[type="checkbox"] {
 </thead>
 <tbody>
 <tr class="odd">
+<td>Early morning</td>
+<td>PyTorch Foundations</td>
+</tr>
+<tr class="even">
 <td>Morning</td>
 <td>CPU vs GPU Activity</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>Mid-day</td>
 <td>Docking Lesson</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>Afternoon</td>
 <td>Reflection &amp; Capstone Introduction</td>
 </tr>
@@ -637,6 +656,76 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 });
 </script>
+<script>
+(function() {
+  // Day-level position chip: shows "Monday · Lesson 3 of 16" at the top of each lesson.
+  // Position is derived from the Quarto sidebar so it stays in sync with _quarto.yml.
+  document.addEventListener('DOMContentLoaded', function() {
+    const path = window.location.pathname.toLowerCase();
+    const match = path.match(/\/(monday|tuesday|wednesday|thursday|capstone)\//);
+    if (!match) return;
+    const day = match[1];
+    const dayLabel = day.charAt(0).toUpperCase() + day.slice(1);
+
+    // Skip the day index page itself
+    const isIndex = /\/index\.html?$/.test(path) || path.endsWith('/' + day + '/');
+    if (isIndex) return;
+
+    // Collect lesson links from the sidebar for the current day (exclude index and separators)
+    const sidebarLinks = Array.from(document.querySelectorAll('.sidebar a[href]'))
+      .map(function(a) {
+        try { return new URL(a.getAttribute('href'), window.location.href).pathname.toLowerCase(); }
+        catch (e) { return null; }
+      })
+      .filter(function(p) { return p && p.indexOf('/' + day + '/') !== -1; })
+      .filter(function(p) { return !/\/index\.html?$/.test(p); });
+
+    // Deduplicate while preserving order
+    const seen = new Set();
+    const lessons = sidebarLinks.filter(function(p) {
+      if (seen.has(p)) return false;
+      seen.add(p);
+      return true;
+    });
+
+    const total = lessons.length;
+    if (total === 0) return;
+
+    const currentIdx = lessons.indexOf(path);
+    if (currentIdx === -1) return;
+
+    const pct = Math.round(((currentIdx + 1) / total) * 100);
+    const title = document.querySelector('h1.title, .quarto-title h1');
+    if (!title) return;
+
+    const chip = document.createElement('div');
+    chip.className = 'day-progress-chip';
+    const noun = day === 'capstone' ? 'Target' : 'Lesson';
+    chip.innerHTML =
+      '<span>' + dayLabel + '</span>' +
+      '<span>· ' + noun + ' ' + (currentIdx + 1) + ' of ' + total + '</span>' +
+      '<span class="dpc-bar"><span class="dpc-fill" style="width:' + pct + '%"></span></span>';
+    title.insertAdjacentElement('afterend', chip);
+  });
+})();
+</script>
+<button id="back-to-top" aria-label="Back to top" title="Back to top">↑</button>
+<script>
+(function() {
+  const btn = document.getElementById('back-to-top');
+  if (!btn) return;
+  const threshold = 400;
+  function update() {
+    if (window.scrollY > threshold) btn.classList.add('visible');
+    else btn.classList.remove('visible');
+  }
+  window.addEventListener('scroll', update, { passive: true });
+  btn.addEventListener('click', function() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+  update();
+})();
+</script>
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
@@ -724,6 +813,11 @@ document.addEventListener('DOMContentLoaded', function() {
           if (link.dataset.originalHref !== undefined) {
             link.href = link.dataset.originalHref;
           }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
         }
       }
     function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
@@ -1042,4 +1136,5 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
+<script src="../site_libs/quarto-html/zenscroll-min.js"></script>
 </body></html>

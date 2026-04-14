@@ -2,13 +2,16 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.26">
+<meta name="generator" content="quarto-1.9.37">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>2. Molecular Docking – ML Protein Design Bootcamp 2025</title>
+<title>3. Molecular Docking – ML Protein Design Bootcamp 2025</title>
 <style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
 div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -32,15 +35,14 @@ ul.task-list li input[type="checkbox"] {
 <meta name="quarto:offset" content="../">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-b3b235ae6ba71d6e5c2a90c00144237d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-4d3f3448f837ff03356db176d8adb603.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -68,6 +70,7 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+<style>html{ scroll-behavior: smooth; }</style>
 <!-- Shared Mol* component include for target pages -->
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/pdbe-molstar@latest/build/pdbe-molstar-component.js"></script>
 <style>
@@ -149,7 +152,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../thursday/2-docking.html">2. Molecular Docking</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../thursday/3-docking.html">3. Molecular Docking</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -169,20 +172,26 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../thursday/1-cpu-vs-gpu.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">1. CPU vs GPU Computing</span></a>
+  <a href="../thursday/1-pytorch.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1. PyTorch Foundations</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../thursday/2-docking.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">2. Molecular Docking</span></a>
+  <a href="../thursday/2-cpu-vs-gpu.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2. CPU vs GPU Computing</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../thursday/3-roundtable.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">3. Reflection &amp; Capstone Introduction</span></a>
+  <a href="../thursday/3-docking.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">3. Molecular Docking</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../thursday/4-roundtable.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">4. Reflection &amp; Capstone Introduction</span></a>
   </div>
 </li>
     </ul>
@@ -191,18 +200,21 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
+        <nav id="TOC" role="doc-toc" class="toc-active" data-toc-expanded="2">
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#slides" id="toc-slides" class="nav-link active" data-scroll-target="#slides">Slides</a></li>
+  <li><a href="#live-workshop-session" id="toc-live-workshop-session" class="nav-link active" data-scroll-target="#live-workshop-session">Live Workshop Session</a></li>
   <li><a href="#overview" id="toc-overview" class="nav-link" data-scroll-target="#overview">Overview</a></li>
   <li><a href="#why-docking-matters-for-ml-protein-design" id="toc-why-docking-matters-for-ml-protein-design" class="nav-link" data-scroll-target="#why-docking-matters-for-ml-protein-design">Why Docking Matters for ML Protein Design</a></li>
   <li><a href="#key-concepts" id="toc-key-concepts" class="nav-link" data-scroll-target="#key-concepts">Key Concepts</a>
   <ul class="collapse">
   <li><a href="#what-is-docking" id="toc-what-is-docking" class="nav-link" data-scroll-target="#what-is-docking">What is Docking?</a></li>
+  <li><a href="#how-docking-actually-works" id="toc-how-docking-actually-works" class="nav-link" data-scroll-target="#how-docking-actually-works">How Docking Actually Works</a></li>
+  <li><a href="#docking-in-protein-design" id="toc-docking-in-protein-design" class="nav-link" data-scroll-target="#docking-in-protein-design">Docking in Protein Design</a></li>
   <li><a href="#types-of-docking" id="toc-types-of-docking" class="nav-link" data-scroll-target="#types-of-docking">Types of Docking</a></li>
   <li><a href="#scoring-functions" id="toc-scoring-functions" class="nav-link" data-scroll-target="#scoring-functions">Scoring Functions</a></li>
+  <li><a href="#common-pitfalls" id="toc-common-pitfalls" class="nav-link" data-scroll-target="#common-pitfalls">Common Pitfalls</a></li>
   </ul></li>
   <li><a href="#common-docking-software" id="toc-common-docking-software" class="nav-link" data-scroll-target="#common-docking-software">Common Docking Software</a></li>
   <li><a href="#questions-to-consider" id="toc-questions-to-consider" class="nav-link" data-scroll-target="#questions-to-consider">Questions to Consider</a></li>
@@ -214,7 +226,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">2. Molecular Docking</h1>
+<h1 class="title">3. Molecular Docking</h1>
 </div>
 
 
@@ -232,9 +244,18 @@ ul.task-list li input[type="checkbox"] {
 
 
 <p>This module introduces molecular docking—a computational technique for predicting how molecules interact with each other, particularly how small molecules (ligands) bind to proteins.</p>
-<section id="slides" class="level2">
-<h2 class="anchored" data-anchor-id="slides">Slides</h2>
-<iframe src="https://docs.google.com/presentation/d/1g2qDfhvEAU0eZ63DcbQM7XqrudG5RYBa/embed?start=false&amp;loop=false&amp;delayms=3000" frameborder="0" width="100%" height="500" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+<section id="live-workshop-session" class="level2">
+<h2 class="anchored" data-anchor-id="live-workshop-session">Live Workshop Session</h2>
+<div class="workshop-companion">
+  <div class="wc-title">🎥 Live workshop recording — Modern Protein Docking: Traditional Methods vs AI Tools</div>
+  <div class="wc-video">
+    <iframe src="https://www.youtube-nocookie.com/embed/nVmuGyvV9Lg" title="Modern Protein Docking: Traditional Methods vs AI Tools" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="" loading="lazy"></iframe>
+  </div>
+  <details>
+    <summary>📊 View slide deck</summary>
+    <iframe src="https://docs.google.com/presentation/d/1g2qDfhvEAU0eZ63DcbQM7XqrudG5RYBa/embed?start=false&amp;loop=false&amp;delayms=3000" allowfullscreen="" loading="lazy"></iframe>
+  </details>
+</div>
 <hr>
 </section>
 <section id="overview" class="level2">
@@ -291,6 +312,15 @@ ul.task-list li input[type="checkbox"] {
 <li><strong>Scoring</strong>: Evaluating each pose using physics-based or empirical functions</li>
 <li><strong>Ranking</strong>: Identifying the most likely binding mode</li>
 </ol>
+</section>
+<section id="how-docking-actually-works" class="level3">
+<h3 class="anchored" data-anchor-id="how-docking-actually-works">How Docking Actually Works</h3>
+<p>At its core, docking is an <strong>optimization problem with two coupled halves</strong>: a <em>search</em> over possible poses and a <em>score</em> that tells you which poses are good. The search explores a high-dimensional space — three translational degrees of freedom, three rotational, plus every rotatable bond in a flexible ligand — which is far too large to enumerate exhaustively. Classical tools like AutoDock Vina tame this with genetic or Monte Carlo algorithms that propose random moves and accept or reject them based on score. Modern ML-based tools like DiffDock learn a <em>denoising process</em> that iteratively refines a random initial pose toward a plausible bound configuration, turning search into a learned trajectory rather than a stochastic walk.</p>
+<p>The scoring function is what makes or breaks a docking run. Physics-based scores sum up van der Waals contacts, electrostatics, desolvation, and torsional strain — they’re interpretable but approximate. ML-based scores learn what “bound” looks like directly from experimental complexes and can capture subtle geometric patterns, but they inherit the biases of their training data and can fail silently on chemotypes that look unfamiliar. Either way, <strong>scoring functions are optimized to rank poses for a given target, not to predict absolute binding affinity</strong> — a common source of confusion when docking results don’t match experiment.</p>
+</section>
+<section id="docking-in-protein-design" class="level3">
+<h3 class="anchored" data-anchor-id="docking-in-protein-design">Docking in Protein Design</h3>
+<p>In a design workflow, docking typically appears at two stages. <strong>Before design</strong>, it helps you understand the native interface: where does the natural ligand or partner sit, which residues line the pocket, and what geometry does your binder need to reproduce? <strong>After design</strong>, it’s a validation step — you’ve generated a backbone with RFdiffusion and a sequence with LigandMPNN, and now you want to check whether the designed pocket actually accommodates the target ligand or partner in a sensible pose. For protein-protein targets (PD-L1, IFNAR2, IL-7R in the capstone list), <strong>DiffDock-PP</strong> is the natural fit; for designed pockets that need to hold a small-molecule ligand or cofactor, <strong>PLACER</strong> gives you an ensemble of plausible placements rather than a single best guess, which is more honest given that designed pockets rarely have a single unambiguous binding mode.</p>
 </section>
 <section id="types-of-docking" class="level3">
 <h3 class="anchored" data-anchor-id="types-of-docking">Types of Docking</h3>
@@ -355,6 +385,24 @@ ul.task-list li input[type="checkbox"] {
 </div>
 <hr>
 </section>
+<section id="common-pitfalls" class="level3">
+<h3 class="anchored" data-anchor-id="common-pitfalls">Common Pitfalls</h3>
+<p>A few traps worth internalizing before you trust a docking result. <strong>First, the protein you dock into is already a choice.</strong> If your target structure is a crystal bound to a drug, the pocket may have been reshaped by that ligand — docking a different chemotype into it can give artifactually good scores. Apo (unbound) structures or AlphaFold predictions often have collapsed pockets that over-reject real binders. <strong>Second, scoring functions rank; they don’t calibrate.</strong> A top-scoring pose at −9 kcal/mol on one target is not directly comparable to −9 kcal/mol on another. Use docking to compare poses <em>within a single target</em>, not to compare targets. <strong>Third, ML docking tools can hallucinate.</strong> DiffDock will happily dock a ligand into a protein that has no real binding site — you need independent checks (sanity-check the pose with PyMOL, look for steric clashes, confirm hydrogen bonds make chemical sense) before believing a confident-looking output.</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>A good score is not a bound complex
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A scoring function’s job is to rank poses for a fixed protein-ligand pair. It is <strong>not</strong> trained to tell you whether binding will happen at all, what the Kd is, or whether two different ligands will have similar affinities. Treat docking scores as a within-target ranking tool and validate the top pose with chemistry.</p>
+</div>
+</div>
+<hr>
+</section>
 </section>
 <section id="common-docking-software" class="level2">
 <h2 class="anchored" data-anchor-id="common-docking-software">Common Docking Software</h2>
@@ -412,13 +460,13 @@ ul.task-list li input[type="checkbox"] {
 <hr>
 <div style="display: flex; justify-content: space-between; align-items: center;">
 <div>
-<a href="../thursday/1-cpu-vs-gpu.html">← CPU vs GPU</a>
+<a href="../thursday/2-cpu-vs-gpu.html">← CPU vs GPU</a>
 </div>
 <div>
 <a href="../index.html">Back to Home</a>
 </div>
 <div>
-<a href="../thursday/3-roundtable.html">Roundtable →</a>
+<a href="../thursday/4-roundtable.html">Roundtable →</a>
 </div>
 </div>
 
@@ -745,6 +793,76 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 });
 </script>
+<script>
+(function() {
+  // Day-level position chip: shows "Monday · Lesson 3 of 16" at the top of each lesson.
+  // Position is derived from the Quarto sidebar so it stays in sync with _quarto.yml.
+  document.addEventListener('DOMContentLoaded', function() {
+    const path = window.location.pathname.toLowerCase();
+    const match = path.match(/\/(monday|tuesday|wednesday|thursday|capstone)\//);
+    if (!match) return;
+    const day = match[1];
+    const dayLabel = day.charAt(0).toUpperCase() + day.slice(1);
+
+    // Skip the day index page itself
+    const isIndex = /\/index\.html?$/.test(path) || path.endsWith('/' + day + '/');
+    if (isIndex) return;
+
+    // Collect lesson links from the sidebar for the current day (exclude index and separators)
+    const sidebarLinks = Array.from(document.querySelectorAll('.sidebar a[href]'))
+      .map(function(a) {
+        try { return new URL(a.getAttribute('href'), window.location.href).pathname.toLowerCase(); }
+        catch (e) { return null; }
+      })
+      .filter(function(p) { return p && p.indexOf('/' + day + '/') !== -1; })
+      .filter(function(p) { return !/\/index\.html?$/.test(p); });
+
+    // Deduplicate while preserving order
+    const seen = new Set();
+    const lessons = sidebarLinks.filter(function(p) {
+      if (seen.has(p)) return false;
+      seen.add(p);
+      return true;
+    });
+
+    const total = lessons.length;
+    if (total === 0) return;
+
+    const currentIdx = lessons.indexOf(path);
+    if (currentIdx === -1) return;
+
+    const pct = Math.round(((currentIdx + 1) / total) * 100);
+    const title = document.querySelector('h1.title, .quarto-title h1');
+    if (!title) return;
+
+    const chip = document.createElement('div');
+    chip.className = 'day-progress-chip';
+    const noun = day === 'capstone' ? 'Target' : 'Lesson';
+    chip.innerHTML =
+      '<span>' + dayLabel + '</span>' +
+      '<span>· ' + noun + ' ' + (currentIdx + 1) + ' of ' + total + '</span>' +
+      '<span class="dpc-bar"><span class="dpc-fill" style="width:' + pct + '%"></span></span>';
+    title.insertAdjacentElement('afterend', chip);
+  });
+})();
+</script>
+<button id="back-to-top" aria-label="Back to top" title="Back to top">↑</button>
+<script>
+(function() {
+  const btn = document.getElementById('back-to-top');
+  if (!btn) return;
+  const threshold = 400;
+  function update() {
+    if (window.scrollY > threshold) btn.classList.add('visible');
+    else btn.classList.remove('visible');
+  }
+  window.addEventListener('scroll', update, { passive: true });
+  btn.addEventListener('click', function() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+  update();
+})();
+</script>
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
@@ -832,6 +950,11 @@ document.addEventListener('DOMContentLoaded', function() {
           if (link.dataset.originalHref !== undefined) {
             link.href = link.dataset.originalHref;
           }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
         }
       }
     function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
@@ -1150,4 +1273,5 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
+<script src="../site_libs/quarto-html/zenscroll-min.js"></script>
 </body></html>

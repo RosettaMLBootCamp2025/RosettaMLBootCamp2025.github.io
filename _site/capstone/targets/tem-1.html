@@ -2,13 +2,16 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.26">
+<meta name="generator" content="quarto-1.9.37">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
 <title>TEM-1 Beta-Lactamase Deep Dive – ML Protein Design Bootcamp 2025</title>
 <style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
 div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -32,15 +35,14 @@ ul.task-list li input[type="checkbox"] {
 <meta name="quarto:offset" content="../../">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-b3b235ae6ba71d6e5c2a90c00144237d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-4d3f3448f837ff03356db176d8adb603.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -68,6 +70,7 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+<style>html{ scroll-behavior: smooth; }</style>
 <!-- Shared Mol* component include for target pages -->
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/pdbe-molstar@latest/build/pdbe-molstar-component.js"></script>
 <style>
@@ -224,7 +227,7 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
+        <nav id="TOC" role="doc-toc" class="toc-active" data-toc-expanded="2">
     <h2 id="toc-title">On this page</h2>
    
   <ul>
@@ -234,6 +237,7 @@ ul.task-list li input[type="checkbox"] {
   <ul class="collapse">
   <li><a href="#target-specifications" id="toc-target-specifications" class="nav-link" data-scroll-target="#target-specifications">Target Specifications</a></li>
   <li><a href="#strategy-tips" id="toc-strategy-tips" class="nav-link" data-scroll-target="#strategy-tips">Strategy Tips</a></li>
+  <li><a href="#reference" id="toc-reference" class="nav-link" data-scroll-target="#reference">Reference</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -263,13 +267,13 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="biological-context" class="level2">
 <h2 class="anchored" data-anchor-id="biological-context">Biological Context</h2>
-<p><strong>TEM-1 Beta-Lactamase</strong> is an enzyme produced by bacteria that confers resistance to penicillin and other beta-lactam antibiotics. It works by breaking the antibiotic molecule apart.</p>
-<p><strong>Why it matters:</strong> This is a classic target for “Binder Design” as a means of inhibition. If you can design a protein that binds tightly to the active site or an allosteric site, you might stop the enzyme from working, making the bacteria susceptible to antibiotics again.</p>
-<p><strong>The Goal:</strong> Design a binder that inhibits TEM-1 function. This is often done by targeting the active site groove.</p>
+<p><strong>TEM-1 β-lactamase</strong> is the archetypal class A serine β-lactamase and one of the most prevalent enzymes responsible for bacterial resistance to penicillins. It hydrolyzes the four-membered β-lactam ring of penicillin antibiotics using an active-site serine nucleophile, inactivating them before they can reach their target (the penicillin-binding proteins).</p>
+<p><strong>Why it matters:</strong> TEM-1 and its descendants (extended-spectrum β-lactamases, ESBLs) are the reason we pair β-lactam antibiotics with inhibitors like clavulanic acid, sulbactam, and tazobactam — the inhibitors covalently disable the β-lactamase and let the antibiotic through. A <em>de novo</em> protein inhibitor of TEM-1 is an interesting academic target: it tests whether we can design high-affinity binders against a well-characterized enzyme active site, and the answer has implications for designing inhibitors of the newer carbapenemases (KPC, NDM) for which we urgently need therapeutics.</p>
+<p><strong>The Goal:</strong> Design a binder that occludes the active-site cleft of TEM-1. Unlike the cytokine-receptor targets, there’s no natural protein partner to mimic — you’re designing against a small-molecule pocket.</p>
 </section>
 <section id="interactive-structure" class="level2">
 <h2 class="anchored" data-anchor-id="interactive-structure">Interactive Structure</h2>
-<p>The viewer below shows <strong>TEM-1 Beta-Lactamase</strong>.</p>
+<p>The viewer below shows <strong>TEM-1 β-lactamase</strong> covalently modified by penicillin G (PDB 1FQG captures the acylated reaction intermediate).</p>
 <div class="molstar-container">
 <p><pdbe-molstar id="tem1-viewer" molecule-id="1fqg" hide-controls="true" bg-color-r="255" bg-color-g="255" bg-color-b="255"></pdbe-molstar></p>
 </div>
@@ -293,14 +297,10 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="design-mission" class="level2">
 <h2 class="anchored" data-anchor-id="design-mission">Design Mission</h2>
-<p>Create a binder that targets the active site cleft of TEM-1.</p>
+<p>Design a binder that occupies the active-site cleft, preventing β-lactam substrates from docking and being hydrolyzed.</p>
 <section id="target-specifications" class="level3">
 <h3 class="anchored" data-anchor-id="target-specifications">Target Specifications</h3>
 <table class="caption-top table">
-<colgroup>
-<col style="width: 50%">
-<col style="width: 50%">
-</colgroup>
 <thead>
 <tr class="header">
 <th style="text-align: left;">Feature</th>
@@ -310,30 +310,62 @@ ul.task-list li input[type="checkbox"] {
 <tbody>
 <tr class="odd">
 <td style="text-align: left;"><strong>Target Name</strong></td>
-<td style="text-align: left;">TEM-1 Beta-Lactamase</td>
+<td style="text-align: left;">TEM-1 β-lactamase</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"><strong>PDB ID</strong></td>
-<td style="text-align: left;"><code>1FQG</code></td>
+<td style="text-align: left;"><a href="https://www.rcsb.org/structure/1FQG"><code>1FQG</code></a></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;"><strong>Target Chain</strong></td>
 <td style="text-align: left;">Chain A</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><strong>Interface / Hotspot</strong></td>
-<td style="text-align: left;">The active site pocket (look for where inhibitors typically bind).</td>
+<td style="text-align: left;"><strong>Active-site residues (within 5 Å of bound penicillin)</strong></td>
+<td style="text-align: left;"><code>M69, S70, T71, K73, Y105, M129, S130, N132, N170, V216, K234, S235, G236, A237, G238, E239, R243, M270</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Catalytic residues</strong></td>
+<td style="text-align: left;"><strong>S70</strong> (nucleophile), <strong>K73</strong> (general base), <strong>S130</strong> (proton shuttle), <strong>E166</strong> (deacylation), <strong>K234</strong> (substrate positioning)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Ω-loop (substrate specificity)</strong></td>
+<td style="text-align: left;">residues 161–179 — these rim the active-site cleft</td>
 </tr>
 </tbody>
 </table>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>About the residue list
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>These are every TEM-1 residue within 5 Å of the bound penicillin G in 1FQG — in other words, the residues that physically line the substrate-binding pocket. For binder design, these define the surface your binder needs to occlude. The catalytic residues (S70, K73, S130, E166, K234) are deeply buried at the bottom of the cleft; rim residues (the Ω-loop, R243, the 234–240 loop) are more accessible and easier to engage with a binder.</p>
+</div>
+</div>
 </section>
 <section id="strategy-tips" class="level3">
 <h3 class="anchored" data-anchor-id="strategy-tips">Strategy Tips</h3>
 <ol type="1">
-<li><strong>Download PDB <code>1FQG</code></strong>.</li>
-<li><strong>Identify the Pocket:</strong> Use tools like PyMOL to locate the concave active site.</li>
-<li><strong>Targeting:</strong> When using RFdiffusion, you may want to specify “binder”contigs that fill this specific pocket.</li>
+<li><strong>Download PDB <a href="https://files.rcsb.org/download/1FQG.pdb"><code>1FQG</code></a>.</strong></li>
+<li><strong>Clean the structure:</strong> Keep Chain A, remove water and the bound penicillin (HETATM record <code>PNM</code>).</li>
+<li><strong>Choose a strategy:</strong>
+<ul>
+<li><strong>Active-site occlusion</strong>: target the residues rimming the pocket (e.g., <code>A130,A170,A237,A243</code>) — your binder clamps over the cleft.</li>
+<li><strong>Allosteric</strong>: target a surface patch away from the active site. More novel but less likely to inhibit; ask whether deformation of the enzyme still blocks substrate access.</li>
+</ul></li>
+<li><strong>Validate computationally:</strong> After designing a binder, dock a small β-lactam substrate (or use <strong>PLACER</strong>) into the binder/TEM-1 complex and confirm steric clash — the binder should <em>prevent</em> substrate entry, not just sit nearby.</li>
 </ol>
+</section>
+<section id="reference" class="level3">
+<h3 class="anchored" data-anchor-id="reference">Reference</h3>
+<ul>
+<li>Strynadka, N.C.J. et al.&nbsp;(1992). <em>Molecular structure of the acyl-enzyme intermediate in β-lactam hydrolysis at 1.7 Å resolution.</em> Nature <strong>359</strong>, 700–705. <a href="https://doi.org/10.1038/359700a0">doi:10.1038/359700a0</a> — primary citation for 1FQG.</li>
+</ul>
 <hr>
 <p><a href="../../capstone/index.html">← Back to Capstone Overview</a></p>
 
@@ -661,6 +693,76 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 });
 </script>
+<script>
+(function() {
+  // Day-level position chip: shows "Monday · Lesson 3 of 16" at the top of each lesson.
+  // Position is derived from the Quarto sidebar so it stays in sync with _quarto.yml.
+  document.addEventListener('DOMContentLoaded', function() {
+    const path = window.location.pathname.toLowerCase();
+    const match = path.match(/\/(monday|tuesday|wednesday|thursday|capstone)\//);
+    if (!match) return;
+    const day = match[1];
+    const dayLabel = day.charAt(0).toUpperCase() + day.slice(1);
+
+    // Skip the day index page itself
+    const isIndex = /\/index\.html?$/.test(path) || path.endsWith('/' + day + '/');
+    if (isIndex) return;
+
+    // Collect lesson links from the sidebar for the current day (exclude index and separators)
+    const sidebarLinks = Array.from(document.querySelectorAll('.sidebar a[href]'))
+      .map(function(a) {
+        try { return new URL(a.getAttribute('href'), window.location.href).pathname.toLowerCase(); }
+        catch (e) { return null; }
+      })
+      .filter(function(p) { return p && p.indexOf('/' + day + '/') !== -1; })
+      .filter(function(p) { return !/\/index\.html?$/.test(p); });
+
+    // Deduplicate while preserving order
+    const seen = new Set();
+    const lessons = sidebarLinks.filter(function(p) {
+      if (seen.has(p)) return false;
+      seen.add(p);
+      return true;
+    });
+
+    const total = lessons.length;
+    if (total === 0) return;
+
+    const currentIdx = lessons.indexOf(path);
+    if (currentIdx === -1) return;
+
+    const pct = Math.round(((currentIdx + 1) / total) * 100);
+    const title = document.querySelector('h1.title, .quarto-title h1');
+    if (!title) return;
+
+    const chip = document.createElement('div');
+    chip.className = 'day-progress-chip';
+    const noun = day === 'capstone' ? 'Target' : 'Lesson';
+    chip.innerHTML =
+      '<span>' + dayLabel + '</span>' +
+      '<span>· ' + noun + ' ' + (currentIdx + 1) + ' of ' + total + '</span>' +
+      '<span class="dpc-bar"><span class="dpc-fill" style="width:' + pct + '%"></span></span>';
+    title.insertAdjacentElement('afterend', chip);
+  });
+})();
+</script>
+<button id="back-to-top" aria-label="Back to top" title="Back to top">↑</button>
+<script>
+(function() {
+  const btn = document.getElementById('back-to-top');
+  if (!btn) return;
+  const threshold = 400;
+  function update() {
+    if (window.scrollY > threshold) btn.classList.add('visible');
+    else btn.classList.remove('visible');
+  }
+  window.addEventListener('scroll', update, { passive: true });
+  btn.addEventListener('click', function() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+  update();
+})();
+</script>
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
@@ -748,6 +850,11 @@ document.addEventListener('DOMContentLoaded', function() {
           if (link.dataset.originalHref !== undefined) {
             link.href = link.dataset.originalHref;
           }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
         }
       }
     function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
@@ -1066,4 +1173,5 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
+<script src="../../site_libs/quarto-html/zenscroll-min.js"></script>
 </body></html>

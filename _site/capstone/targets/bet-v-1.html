@@ -2,13 +2,16 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.26">
+<meta name="generator" content="quarto-1.9.37">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
 <title>Bet v 1 Target Deep Dive – ML Protein Design Bootcamp 2025</title>
 <style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
 div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -32,15 +35,14 @@ ul.task-list li input[type="checkbox"] {
 <meta name="quarto:offset" content="../../">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-b3b235ae6ba71d6e5c2a90c00144237d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-4d3f3448f837ff03356db176d8adb603.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -68,6 +70,7 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+<style>html{ scroll-behavior: smooth; }</style>
 <!-- Shared Mol* component include for target pages -->
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/pdbe-molstar@latest/build/pdbe-molstar-component.js"></script>
 <style>
@@ -224,7 +227,7 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
+        <nav id="TOC" role="doc-toc" class="toc-active" data-toc-expanded="2">
     <h2 id="toc-title">On this page</h2>
    
   <ul>
@@ -234,6 +237,7 @@ ul.task-list li input[type="checkbox"] {
   <ul class="collapse">
   <li><a href="#target-specifications" id="toc-target-specifications" class="nav-link" data-scroll-target="#target-specifications">Target Specifications</a></li>
   <li><a href="#strategy-tips" id="toc-strategy-tips" class="nav-link" data-scroll-target="#strategy-tips">Strategy Tips</a></li>
+  <li><a href="#reference" id="toc-reference" class="nav-link" data-scroll-target="#reference">Reference</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -263,13 +267,13 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="biological-context" class="level2">
 <h2 class="anchored" data-anchor-id="biological-context">Biological Context</h2>
-<p><strong>Bet v 1</strong> is the major allergen found in birch pollen. It is responsible for seasonal allergies in millions of people worldwide.</p>
-<p><strong>Why it matters:</strong> The allergic reaction is caused when the patient’s antibodies (IgE) recognize and bind to epitopes on the surface of Bet v 1.</p>
-<p><strong>The Goal:</strong> Design a “masking” protein (similar to a neutralizing antibody) that binds tightly to the surface of Bet v 1. If your designed binder covers the IgE binding sites, it could theoretically prevent the allergic reaction.</p>
+<p><strong>Bet v 1</strong> is the major allergen of <strong>birch pollen</strong> (<em>Betula verrucosa</em>) and the primary driver of spring pollen allergies in northern Europe and much of North America. More than 95% of birch-allergic patients are sensitized to Bet v 1, and cross-reactivity with homologous PR-10 proteins in apple, hazelnut, celery, and carrot is the molecular basis of the oral allergy syndrome that many birch-allergic patients experience with these foods.</p>
+<p><strong>Why it matters:</strong> Allergic reactions are triggered when patient IgE antibodies cross-link Bet v 1 on mast cells and basophils. Conventional allergen immunotherapy works by repeated exposure to progressively increase IgG4 (blocking antibodies) that compete with IgE for epitope binding. A designed <strong>“masking” binder</strong> that specifically covers the immunodominant IgE epitopes of Bet v 1 could prevent IgE engagement without the years of subcutaneous or sublingual desensitization that conventional immunotherapy requires. This is a frontier for protein design and a genuine translational opportunity.</p>
+<p><strong>The Goal:</strong> Design a binder that covers one or more of the major IgE epitopes on Bet v 1, blocking IgE cross-linking.</p>
 </section>
 <section id="interactive-structure" class="level2">
 <h2 class="anchored" data-anchor-id="interactive-structure">Interactive Structure</h2>
-<p>The viewer below shows the structure of <strong>Bet v 1</strong>.</p>
+<p>The viewer below shows the structure of <strong>Bet v 1</strong> (PDB 4A88, isoform Bet v 1.0101).</p>
 <div class="molstar-container">
 <p><pdbe-molstar id="betv1-viewer" molecule-id="4a88" hide-controls="true" bg-color-r="255" bg-color-g="255" bg-color-b="255"></pdbe-molstar></p>
 </div>
@@ -293,7 +297,7 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="design-mission" class="level2">
 <h2 class="anchored" data-anchor-id="design-mission">Design Mission</h2>
-<p>Create a protein that binds to a solvent-exposed patch on Bet v 1. Unlike the other targets, you aren’t necessarily mimicking a natural partner—you are creating a blocker.</p>
+<p>Design a protein that binds tightly to a solvent-exposed surface of Bet v 1, preferably covering one of the major IgE epitopes. Unlike the cytokine-receptor targets, there’s no single natural partner to mimic — your binder is functionally a surrogate blocking antibody.</p>
 <section id="target-specifications" class="level3">
 <h3 class="anchored" data-anchor-id="target-specifications">Target Specifications</h3>
 <table class="caption-top table">
@@ -306,30 +310,69 @@ ul.task-list li input[type="checkbox"] {
 <tbody>
 <tr class="odd">
 <td style="text-align: left;"><strong>Target Name</strong></td>
-<td style="text-align: left;">Bet v 1</td>
+<td style="text-align: left;">Bet v 1.0101 (major birch pollen allergen)</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"><strong>PDB ID</strong></td>
-<td style="text-align: left;"><code>4A88</code></td>
+<td style="text-align: left;"><a href="https://www.rcsb.org/structure/4A88"><code>4A88</code></a></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;"><strong>Target Chain</strong></td>
 <td style="text-align: left;">Chain A</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><strong>Interface / Hotspot</strong></td>
-<td style="text-align: left;">Choose a large exposed surface patch.</td>
+<td style="text-align: left;"><strong>Published dominant IgE epitope residue</strong></td>
+<td style="text-align: left;"><strong>E45</strong> — mutation E45S reduces IgE binding by &gt;95% (Spangfort et al.&nbsp;2003)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Published IgE epitope residues (Mirza 2000, Spangfort 2003, Gepp 2014)</strong></td>
+<td style="text-align: left;"><code>E8, T10, D27, T32, E42, N43, E45, N47, K55, K65, E73, N78, Y83, K97, D109, K123, E127, K134</code> — dispersed across the surface in at least three conformational patches</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>IgE epitope patch 1</strong> (P-loop face)</td>
+<td style="text-align: left;"><code>E8, T10, D27, T32, E42, E45, N47</code> — centered on the dominant residue E45</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>IgE epitope patch 2</strong> (opposite face)</td>
+<td style="text-align: left;"><code>E73, N78, Y83, K97, D109</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>IgE epitope patch 3</strong> (C-terminal helix)</td>
+<td style="text-align: left;"><code>K123, E127, K134</code></td>
 </tr>
 </tbody>
 </table>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>About the residue list
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>These epitope residues are compiled from published antibody–Bet v 1 co-crystal structures and mutational mapping of IgE binding (Mirza 2000 for the BV16 Fab complex; Spangfort 2003 for the E45S single-point abolition of IgE binding; Gepp 2014 for additional IgE epitope mapping). The 4A88 deposition is apo Bet v 1, so the residues here come from the cited literature rather than from proximity to a bound partner in 4A88 itself. <strong>E45 is the single most important residue</strong> — if your binder covers E45, you are almost certainly reducing IgE binding meaningfully.</p>
+</div>
+</div>
 </section>
 <section id="strategy-tips" class="level3">
 <h3 class="anchored" data-anchor-id="strategy-tips">Strategy Tips</h3>
 <ol type="1">
-<li><strong>Download PDB <code>4A88</code></strong>.</li>
-<li><strong>Surface Mapping:</strong> Since there is no single “natural ligand” to mimic, you have more freedom. Pick a surface patch that looks accessible (convex or flat surfaces are easier than deep pockets for protein-protein interactions).</li>
-<li><strong>Pyligner/BindCraft:</strong> These tools are excellent for identifying bindable patches on an antigen.</li>
+<li><strong>Download PDB <a href="https://files.rcsb.org/download/4A88.pdb"><code>4A88</code></a>.</strong></li>
+<li><strong>Pick a patch:</strong> Start with patch 1 (the P-loop / E45 face) — it’s the most dominant IgE epitope and the best-validated.</li>
+<li><strong>Define hotspots:</strong> Pass 4–6 residues from your chosen patch (e.g., <code>A10,A42,A45,A47</code>) to <strong>RFdiffusion</strong> / <strong>BindCraft</strong>.</li>
+<li><strong>Be honest about competition:</strong> A real therapeutic would need to out-compete patient-derived IgE for these same residues. Your computational design won’t be tested against real IgE in the capstone, but you should at least confirm (via AlphaFold2 or Chai-1) that the designed binder places its paratope directly over E45.</li>
+<li><strong>Consider pocket binding:</strong> Bet v 1 has a large internal hydrophobic cavity (the PR-10 “Y-shaped” cavity) that binds various physiological ligands. Ligand binding causes subtle conformational changes that may affect IgE recognition — binders that stabilize an “IgE-hiding” conformation are a more speculative but intriguing strategy.</li>
 </ol>
+</section>
+<section id="reference" class="level3">
+<h3 class="anchored" data-anchor-id="reference">Reference</h3>
+<ul>
+<li>Spangfort, M.D.&nbsp;et al.&nbsp;(2003). <em>Dominating IgE-binding epitope of Bet v 1, the major allergen of birch pollen, characterized by X-ray crystallography and site-directed mutagenesis.</em> J. Immunol. <strong>171</strong>, 3084–3090. <a href="https://doi.org/10.4049/jimmunol.171.6.3084">doi:10.4049/jimmunol.171.6.3084</a></li>
+<li>Mirza, O. et al.&nbsp;(2000). <em>Dominant epitopes and allergic cross-reactivity: complex formation between a Fab fragment of a monoclonal murine IgG antibody and the major allergen from birch pollen Bet v 1.</em> J. Immunol. <strong>165</strong>, 331–338. <a href="https://doi.org/10.4049/jimmunol.165.1.331">doi:10.4049/jimmunol.165.1.331</a></li>
+<li>Kofler, S. et al.&nbsp;(2012). <em>The GA module, a mobile 4-helix bundle, confers Bet v 1–like allergenicity.</em> Allergy <strong>67</strong>, 1501–1509. — primary citation for 4A88.</li>
+</ul>
 <hr>
 <p><a href="../../capstone/index.html">← Back to Capstone Overview</a></p>
 
@@ -657,6 +700,76 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 });
 </script>
+<script>
+(function() {
+  // Day-level position chip: shows "Monday · Lesson 3 of 16" at the top of each lesson.
+  // Position is derived from the Quarto sidebar so it stays in sync with _quarto.yml.
+  document.addEventListener('DOMContentLoaded', function() {
+    const path = window.location.pathname.toLowerCase();
+    const match = path.match(/\/(monday|tuesday|wednesday|thursday|capstone)\//);
+    if (!match) return;
+    const day = match[1];
+    const dayLabel = day.charAt(0).toUpperCase() + day.slice(1);
+
+    // Skip the day index page itself
+    const isIndex = /\/index\.html?$/.test(path) || path.endsWith('/' + day + '/');
+    if (isIndex) return;
+
+    // Collect lesson links from the sidebar for the current day (exclude index and separators)
+    const sidebarLinks = Array.from(document.querySelectorAll('.sidebar a[href]'))
+      .map(function(a) {
+        try { return new URL(a.getAttribute('href'), window.location.href).pathname.toLowerCase(); }
+        catch (e) { return null; }
+      })
+      .filter(function(p) { return p && p.indexOf('/' + day + '/') !== -1; })
+      .filter(function(p) { return !/\/index\.html?$/.test(p); });
+
+    // Deduplicate while preserving order
+    const seen = new Set();
+    const lessons = sidebarLinks.filter(function(p) {
+      if (seen.has(p)) return false;
+      seen.add(p);
+      return true;
+    });
+
+    const total = lessons.length;
+    if (total === 0) return;
+
+    const currentIdx = lessons.indexOf(path);
+    if (currentIdx === -1) return;
+
+    const pct = Math.round(((currentIdx + 1) / total) * 100);
+    const title = document.querySelector('h1.title, .quarto-title h1');
+    if (!title) return;
+
+    const chip = document.createElement('div');
+    chip.className = 'day-progress-chip';
+    const noun = day === 'capstone' ? 'Target' : 'Lesson';
+    chip.innerHTML =
+      '<span>' + dayLabel + '</span>' +
+      '<span>· ' + noun + ' ' + (currentIdx + 1) + ' of ' + total + '</span>' +
+      '<span class="dpc-bar"><span class="dpc-fill" style="width:' + pct + '%"></span></span>';
+    title.insertAdjacentElement('afterend', chip);
+  });
+})();
+</script>
+<button id="back-to-top" aria-label="Back to top" title="Back to top">↑</button>
+<script>
+(function() {
+  const btn = document.getElementById('back-to-top');
+  if (!btn) return;
+  const threshold = 400;
+  function update() {
+    if (window.scrollY > threshold) btn.classList.add('visible');
+    else btn.classList.remove('visible');
+  }
+  window.addEventListener('scroll', update, { passive: true });
+  btn.addEventListener('click', function() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+  update();
+})();
+</script>
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
@@ -744,6 +857,11 @@ document.addEventListener('DOMContentLoaded', function() {
           if (link.dataset.originalHref !== undefined) {
             link.href = link.dataset.originalHref;
           }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
         }
       }
     function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
@@ -1062,4 +1180,5 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
+<script src="../../site_libs/quarto-html/zenscroll-min.js"></script>
 </body></html>

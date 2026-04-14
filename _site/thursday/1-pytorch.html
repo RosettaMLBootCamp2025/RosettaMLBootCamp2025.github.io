@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>8. Boltz-2 – ML Protein Design Bootcamp 2025</title>
+<title>1. PyTorch Foundations – ML Protein Design Bootcamp 2025</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -146,7 +146,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="../monday/index.html" aria-current="page"> 
+    <a class="nav-link" href="../monday/index.html"> 
 <span class="menu-text">Monday</span></a>
   </li>  
   <li class="nav-item">
@@ -158,7 +158,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span class="menu-text">Wednesday</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../thursday/index.html"> 
+    <a class="nav-link active" href="../thursday/index.html" aria-current="page"> 
 <span class="menu-text">Thursday</span></a>
   </li>  
   <li class="nav-item">
@@ -187,7 +187,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../monday/8-boltz2.html">8. Boltz-2</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../thursday/1-pytorch.html">1. PyTorch Foundations</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -201,106 +201,32 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../monday/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Monday: Tool Installation</span></a>
-  </div>
-</li>
-        <li class="px-0"><hr class="sidebar-divider hi "></li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../monday/prework-1-env-git.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Pre-work 1: Environment Setup &amp; GitHub Basics</span></a>
+  <a href="../thursday/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Thursday: Docking &amp; Discussion</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../monday/prework-2-pymol-vscode.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Pre-work 2: PyMOL and VS Code Setup</span></a>
+  <a href="../thursday/1-pytorch.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">1. PyTorch Foundations</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../monday/prework-3-python.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Pre-work 3: Python Refresher</span></a>
+  <a href="../thursday/2-cpu-vs-gpu.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2. CPU vs GPU Computing</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../monday/1-hpc-setup.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">1. Common HPC Setup</span></a>
+  <a href="../thursday/3-docking.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3. Molecular Docking</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../monday/2-localcolabfold.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">2. LocalColabFold</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../monday/3-ligandmpnn.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">3. LigandMPNN</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../monday/4-rfdiffusion2.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">4. RFdiffusion2</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../monday/5-esmfold.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">5. ESMFold</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../monday/6-openfold.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">6. OpenFold (Optional)</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../monday/7-chai1.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">7. Chai-1</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../monday/8-boltz2.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">8. Boltz-2</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../monday/9-diffdock-pp.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">9. DiffDock-PP</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../monday/10-placer.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">10. PLACER</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../monday/11-bindcraft.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">11. BindCraft</span></a>
-  </div>
-</li>
-        <li class="px-0"><hr class="sidebar-divider hi "></li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../monday/12-esm3.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">12. ESM3 (Optional)</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../monday/13-rfdiffusion-aa.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">13. RFdiffusion All Atom (Optional)</span></a>
+  <a href="../thursday/4-roundtable.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">4. Reflection &amp; Capstone Introduction</span></a>
   </div>
 </li>
     </ul>
@@ -313,19 +239,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#why-use-boltz-2" id="toc-why-use-boltz-2" class="nav-link active" data-scroll-target="#why-use-boltz-2">Why Use Boltz-2?</a></li>
-  <li><a href="#resource-requirements" id="toc-resource-requirements" class="nav-link" data-scroll-target="#resource-requirements">Resource Requirements</a></li>
-  <li><a href="#preparation" id="toc-preparation" class="nav-link" data-scroll-target="#preparation">Preparation</a></li>
-  <li><a href="#installation" id="toc-installation" class="nav-link" data-scroll-target="#installation">Installation</a></li>
-  <li><a href="#testing-the-installation" id="toc-testing-the-installation" class="nav-link" data-scroll-target="#testing-the-installation">Testing the Installation</a></li>
-  <li><a href="#hpc-job-script" id="toc-hpc-job-script" class="nav-link" data-scroll-target="#hpc-job-script">HPC Job Script</a></li>
-  <li><a href="#usage-examples" id="toc-usage-examples" class="nav-link" data-scroll-target="#usage-examples">Usage Examples</a></li>
-  <li><a href="#input-format-yaml" id="toc-input-format-yaml" class="nav-link" data-scroll-target="#input-format-yaml">Input Format (YAML)</a></li>
-  <li><a href="#binding-affinity-predictions" id="toc-binding-affinity-predictions" class="nav-link" data-scroll-target="#binding-affinity-predictions">Binding Affinity Predictions</a></li>
-  <li><a href="#msa-server-authentication" id="toc-msa-server-authentication" class="nav-link" data-scroll-target="#msa-server-authentication">MSA Server Authentication</a></li>
-  <li><a href="#understanding-the-output" id="toc-understanding-the-output" class="nav-link" data-scroll-target="#understanding-the-output">Understanding the Output</a></li>
-  <li><a href="#performance-comparison" id="toc-performance-comparison" class="nav-link" data-scroll-target="#performance-comparison">Performance Comparison</a></li>
-  <li><a href="#troubleshooting" id="toc-troubleshooting" class="nav-link" data-scroll-target="#troubleshooting">Troubleshooting</a></li>
+  <li><a href="#live-workshop-session" id="toc-live-workshop-session" class="nav-link active" data-scroll-target="#live-workshop-session">Live Workshop Session</a></li>
+  <li><a href="#overview" id="toc-overview" class="nav-link" data-scroll-target="#overview">Overview</a></li>
+  <li><a href="#what-pytorch-actually-is" id="toc-what-pytorch-actually-is" class="nav-link" data-scroll-target="#what-pytorch-actually-is">What PyTorch Actually Is</a>
+  <ul class="collapse">
+  <li><a href="#tensors-the-core-data-structure" id="toc-tensors-the-core-data-structure" class="nav-link" data-scroll-target="#tensors-the-core-data-structure">Tensors: The Core Data Structure</a></li>
+  <li><a href="#autograd-the-gradient-engine" id="toc-autograd-the-gradient-engine" class="nav-link" data-scroll-target="#autograd-the-gradient-engine">Autograd: The Gradient Engine</a></li>
+  <li><a href="#the-standard-training-loop" id="toc-the-standard-training-loop" class="nav-link" data-scroll-target="#the-standard-training-loop">The Standard Training Loop</a></li>
+  </ul></li>
+  <li><a href="#why-this-matters-for-protein-design" id="toc-why-this-matters-for-protein-design" class="nav-link" data-scroll-target="#why-this-matters-for-protein-design">Why This Matters for Protein Design</a></li>
+  <li><a href="#practice-notebook" id="toc-practice-notebook" class="nav-link" data-scroll-target="#practice-notebook">Practice Notebook</a></li>
+  <li><a href="#key-takeaways" id="toc-key-takeaways" class="nav-link" data-scroll-target="#key-takeaways">Key Takeaways</a></li>
+  <li><a href="#questions-to-consider" id="toc-questions-to-consider" class="nav-link" data-scroll-target="#questions-to-consider">Questions to Consider</a></li>
   </ul>
 </nav>
     </div>
@@ -334,7 +259,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">8. Boltz-2</h1>
+<h1 class="title">1. PyTorch Foundations</h1>
 </div>
 
 
@@ -351,311 +276,175 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>Boltz-2 (<a href="https://doi.org/10.1101/2025.06.14.659707">paper</a>, <a href="https://github.com/jwohlwend/boltz">code</a>) is a biomolecular foundation model that jointly models complex structures and binding affinities. It’s the first deep learning model to approach the accuracy of physics-based free-energy perturbation (FEP) methods while running 1000x faster.</p>
-<section id="why-use-boltz-2" class="level2">
-<h2 class="anchored" data-anchor-id="why-use-boltz-2">Why Use Boltz-2?</h2>
-<ul>
-<li><strong>Structure + Affinity</strong>: Predict both binding pose and binding strength</li>
-<li><strong>Drug discovery ready</strong>: Affinity predictions useful for hit-to-lead optimization</li>
-<li><strong>Multi-modal</strong>: Handles proteins, nucleic acids, small molecules, covalent modifications</li>
-<li><strong>Speed</strong>: 1000x faster than FEP methods for affinity prediction</li>
-</ul>
-<p><strong>Related Tools</strong>: For structure prediction only, see <a href="../monday/7-chai1.html">Chai-1</a>. For protein-ligand docking, see <a href="../monday/10-placer.html">PLACER</a> or <a href="../monday/9-diffdock-pp.html">DiffDock-PP</a>.</p>
+<p>Every major tool you’ve touched this week — <strong>AlphaFold2, ESMFold, RFdiffusion, Chai-1, Boltz-2, DiffDock</strong> — is built on PyTorch. When you’ve been running <code>colabfold_batch</code> or <code>rfdiffusion inference.output_prefix=...</code>, what’s actually happening under the hood is that PyTorch loads a model checkpoint, moves its weights onto the GPU, runs a forward pass on your input tensors, and returns tensors that get decoded into PDB coordinates. This lesson gives you the minimum mental model you need to understand, debug, and occasionally customize that pipeline.</p>
+<section id="live-workshop-session" class="level2">
+<h2 class="anchored" data-anchor-id="live-workshop-session">Live Workshop Session</h2>
+<div class="workshop-companion">
+  <div class="wc-title">🎥 Live workshop recording — PyTorch explained: from neural networks to real-world models</div>
+  <div class="wc-video">
+    <iframe src="https://www.youtube-nocookie.com/embed/xQkegATmO-c" title="PyTorch explained: from neural networks to real-world models" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="" loading="lazy"></iframe>
+  </div>
+  <details>
+    <summary>📊 View slide deck</summary>
+    <iframe src="https://docs.google.com/presentation/d/1FS7AqBrK71QIksVWlotjPxJ-O1UGeyg3NpU_AG6YhnU/embed?start=false&amp;loop=false&amp;delayms=3000" allowfullscreen="" loading="lazy"></iframe>
+  </details>
+</div>
+<hr>
 </section>
-<section id="resource-requirements" class="level2">
-<h2 class="anchored" data-anchor-id="resource-requirements">Resource Requirements</h2>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Resource</th>
-<th>Minimum</th>
-<th>Recommended</th>
-<th>Notes</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>GPU RAM</td>
-<td>16 GB</td>
-<td>32+ GB</td>
-<td>Scales with complex size</td>
-</tr>
-<tr class="even">
-<td>CPU RAM</td>
-<td>16 GB</td>
-<td>32 GB</td>
-<td>For preprocessing</td>
-</tr>
-<tr class="odd">
-<td>Disk Space</td>
-<td>5 GB</td>
-<td>10 GB</td>
-<td>Model weights</td>
-</tr>
-<tr class="even">
-<td>Python</td>
-<td>3.9+</td>
-<td>3.11</td>
-<td>Required</td>
-</tr>
-</tbody>
-</table>
-</section>
-<section id="preparation" class="level2">
-<h2 class="anchored" data-anchor-id="preparation">Preparation</h2>
-<p><input type="checkbox" class="module-checkbox" data-module-id="boltz2-prep"> Mark as complete</p>
-<p><strong>Prerequisites</strong>:</p>
-<ul>
-<li>Completed <a href="../monday/1-hpc-setup.html">HPC Setup</a> guide</li>
-<li>Conda/Mamba installed</li>
-<li>CUDA-capable GPU (recommended) or CPU</li>
-</ul>
-<p><strong>Important</strong>: Install Boltz in a fresh Python environment to avoid dependency conflicts.</p>
-</section>
-<section id="installation" class="level2">
-<h2 class="anchored" data-anchor-id="installation">Installation</h2>
-<p><input type="checkbox" class="module-checkbox" data-module-id="boltz2-install"> Mark as complete</p>
-<ol type="1">
-<li>Create a fresh environment:</li>
-</ol>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">mamba</span> create <span class="at">-n</span> boltz python=3.11</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">mamba</span> activate boltz</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<ol start="2" type="1">
-<li>Install Boltz with CUDA support:</li>
-</ol>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install boltz<span class="pp">[</span><span class="ss">cuda</span><span class="pp">]</span> <span class="at">-U</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><strong>For CPU-only or non-CUDA GPUs</strong>:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install boltz <span class="at">-U</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><strong>Alternative: Install from GitHub</strong> (for latest updates):</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/jwohlwend/boltz.git</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> boltz</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install <span class="at">-e</span> .<span class="pp">[</span><span class="ss">cuda</span><span class="pp">]</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-<section id="testing-the-installation" class="level2">
-<h2 class="anchored" data-anchor-id="testing-the-installation">Testing the Installation</h2>
-<p><input type="checkbox" class="module-checkbox" data-module-id="boltz2-test"> Mark as complete</p>
-<p>Create a test YAML file <code>test_input.yaml</code>:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">version</span><span class="kw">:</span><span class="at"> </span><span class="dv">1</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sequences</span><span class="kw">:</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">protein</span><span class="kw">:</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">id</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="at">A</span><span class="kw">,</span><span class="at"> B</span><span class="kw">]</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">sequence</span><span class="kw">:</span><span class="at"> MKTVRQERLKSIVRILERSKEPVSGAQLAEELSVSRQVIVQDIAYLRSLGYNIVATPRGYVLAGG</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Run prediction:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">boltz</span> predict test_input.yaml <span class="at">--use_msa_server</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><strong>Success indicators</strong>:</p>
-<ul>
-<li>Command completes without errors</li>
-<li>Output directory contains:
-<ul>
-<li>Predicted structure files (CIF format)</li>
-<li>Confidence scores</li>
-</ul></li>
-</ul>
-<p><strong>Expected runtime</strong>: 1-3 minutes for this small test.</p>
-</section>
-<section id="hpc-job-script" class="level2">
-<h2 class="anchored" data-anchor-id="hpc-job-script">HPC Job Script</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/bin/bash</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --job-name=boltz</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --partition=gpu</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --gpus=1</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --cpus-per-task=8</span></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --mem=32G</span></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --time=04:00:00</span></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --output=%x_%j.out</span></span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load cuda/12.1</span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="co"># source ~/.bashrc</span></span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="ex">mamba</span> activate boltz</span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Run prediction</span></span>
-<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="ex">boltz</span> predict my_complex.yaml <span class="at">--use_msa_server</span> <span class="at">--out_dir</span> results/</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-<section id="usage-examples" class="level2">
-<h2 class="anchored" data-anchor-id="usage-examples">Usage Examples</h2>
-<p><strong>Structure prediction only</strong>:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">boltz</span> predict structure.yaml</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><strong>With MSA server</strong> (higher accuracy):</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">boltz</span> predict input.yaml <span class="at">--use_msa_server</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><strong>With affinity prediction</strong>:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># input.yaml</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">version</span><span class="kw">:</span><span class="at"> </span><span class="dv">1</span></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sequences</span><span class="kw">:</span></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">protein</span><span class="kw">:</span></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">id</span><span class="kw">:</span><span class="at"> A</span></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">sequence</span><span class="kw">:</span><span class="at"> MKTVRQERLK...</span></span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">ligand</span><span class="kw">:</span></span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">id</span><span class="kw">:</span><span class="at"> L</span></span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">smiles</span><span class="kw">:</span><span class="at"> </span><span class="st">"CC(C)CC1=CC=C(C=C1)C(C)C(=O)O"</span></span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="fu">properties</span><span class="kw">:</span></span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> affinity</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">boltz</span> predict input.yaml</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-<section id="input-format-yaml" class="level2">
-<h2 class="anchored" data-anchor-id="input-format-yaml">Input Format (YAML)</h2>
-<p>Boltz uses YAML files to describe biomolecules:</p>
-<p><strong>Simple protein</strong>:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">version</span><span class="kw">:</span><span class="at"> </span><span class="dv">1</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sequences</span><span class="kw">:</span></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">protein</span><span class="kw">:</span></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">id</span><span class="kw">:</span><span class="at"> A</span></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">sequence</span><span class="kw">:</span><span class="at"> MKTVRQERLKSIVRILERSKEPVSG...</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><strong>Protein-ligand complex</strong>:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">version</span><span class="kw">:</span><span class="at"> </span><span class="dv">1</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sequences</span><span class="kw">:</span></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">protein</span><span class="kw">:</span></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">id</span><span class="kw">:</span><span class="at"> A</span></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">sequence</span><span class="kw">:</span><span class="at"> MKTVRQERLK...</span></span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">ligand</span><span class="kw">:</span></span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">id</span><span class="kw">:</span><span class="at"> L</span></span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">smiles</span><span class="kw">:</span><span class="at"> </span><span class="st">"CCO"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><strong>Protein complex (homodimer)</strong>:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">version</span><span class="kw">:</span><span class="at"> </span><span class="dv">1</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sequences</span><span class="kw">:</span></span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">protein</span><span class="kw">:</span></span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">id</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="at">A</span><span class="kw">,</span><span class="at"> B</span><span class="kw">]</span><span class="co">  # Same sequence for both chains</span></span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">sequence</span><span class="kw">:</span><span class="at"> MKTVRQERLK...</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><strong>With affinity prediction</strong>:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">version</span><span class="kw">:</span><span class="at"> </span><span class="dv">1</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sequences</span><span class="kw">:</span></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">protein</span><span class="kw">:</span></span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">id</span><span class="kw">:</span><span class="at"> A</span></span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">sequence</span><span class="kw">:</span><span class="at"> MKTVRQERLK...</span></span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">ligand</span><span class="kw">:</span></span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">id</span><span class="kw">:</span><span class="at"> L</span></span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">smiles</span><span class="kw">:</span><span class="at"> </span><span class="st">"CC(=O)NC1=CC=C(O)C=C1"</span></span>
-<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="fu">properties</span><span class="kw">:</span></span>
-<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> affinity</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>See <a href="https://github.com/jwohlwend/boltz/blob/main/docs/prediction.md">prediction documentation</a> for full format details.</p>
-</section>
-<section id="binding-affinity-predictions" class="level2">
-<h2 class="anchored" data-anchor-id="binding-affinity-predictions">Binding Affinity Predictions</h2>
-<p>Boltz-2 provides two affinity metrics:</p>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 32%">
-<col style="width: 28%">
-<col style="width: 40%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Metric</th>
-<th>Range</th>
-<th>Use Case</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><code>affinity_probability_binary</code></td>
-<td>0-1</td>
-<td>Hit discovery - probability that ligand is a binder</td>
-</tr>
-<tr class="even">
-<td><code>affinity_pred_value</code></td>
-<td>log10(IC50) in μM</td>
-<td>Lead optimization - compare binding strengths</td>
-</tr>
-</tbody>
-</table>
-<p><strong>Interpretation</strong>:</p>
-<ul>
-<li><code>affinity_probability_binary</code>: Higher = more likely to bind</li>
-<li><code>affinity_pred_value</code>: Lower = stronger binding (lower IC50)</li>
-</ul>
-</section>
-<section id="msa-server-authentication" class="level2">
-<h2 class="anchored" data-anchor-id="msa-server-authentication">MSA Server Authentication</h2>
-<p>For servers requiring authentication:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">BOLTZ_MSA_TOKEN</span><span class="op">=</span><span class="st">"your_token_here"</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="ex">boltz</span> predict input.yaml <span class="at">--use_msa_server</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-<section id="understanding-the-output" class="level2">
-<h2 class="anchored" data-anchor-id="understanding-the-output">Understanding the Output</h2>
-<p>Output directory structure:</p>
-<pre><code>boltz_results_&lt;input&gt;/
-├── predictions/
-│   ├── model_0.cif      # Predicted structure
-│   └── confidence.json  # Confidence scores
-├── msa/                 # Generated MSAs (if using server)
-└── affinity/            # Affinity predictions (if requested)</code></pre>
-<p><strong>Confidence metrics</strong>:</p>
-<ul>
-<li><strong>pLDDT</strong>: Per-residue confidence</li>
-<li><strong>pTM</strong>: Predicted TM-score</li>
-<li><strong>interface pTM</strong>: For complexes</li>
-</ul>
-</section>
-<section id="performance-comparison" class="level2">
-<h2 class="anchored" data-anchor-id="performance-comparison">Performance Comparison</h2>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Method</th>
-<th>Speed</th>
-<th>Affinity Accuracy</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>FEP (physics-based)</td>
-<td>Hours-days</td>
-<td>Gold standard</td>
-</tr>
-<tr class="even">
-<td>Boltz-2</td>
-<td>Seconds-minutes</td>
-<td>Comparable to FEP</td>
-</tr>
-<tr class="odd">
-<td>Traditional docking</td>
-<td>Seconds</td>
-<td>Lower accuracy</td>
-</tr>
-</tbody>
-</table>
-</section>
-<section id="troubleshooting" class="level2">
-<h2 class="anchored" data-anchor-id="troubleshooting">Troubleshooting</h2>
-<div class="callout callout-style-default callout-warning callout-titled">
+<section id="overview" class="level2">
+<h2 class="anchored" data-anchor-id="overview">Overview</h2>
+<div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Warning</span>Common Issues
+<span class="screen-reader-only">Note</span>Learning goals
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><strong>Installation issues</strong>:</p>
+<p>By the end of this lesson you should be able to:</p>
 <ul>
-<li>Use a fresh environment</li>
-<li>Try removing <code>[cuda]</code> if CUDA issues arise</li>
-<li>Verify CUDA version compatibility</li>
+<li>Explain what a PyTorch <strong>tensor</strong> is and how it differs from a NumPy array.</li>
+<li>Explain what <strong>autograd</strong> does and why it makes deep learning practical.</li>
+<li>Recognize the standard PyTorch training/inference loop in any model’s codebase.</li>
+<li>Move tensors between CPU and GPU (<code>.to(device)</code>) and reason about when that transfer costs you.</li>
+<li>Load a pretrained checkpoint and run a forward pass — the core pattern behind every tool this week.</li>
 </ul>
-<p><strong>“MSA server error”</strong>:</p>
+</div>
+</div>
+</section>
+<section id="what-pytorch-actually-is" class="level2">
+<h2 class="anchored" data-anchor-id="what-pytorch-actually-is">What PyTorch Actually Is</h2>
+<p><strong>PyTorch is a numerical computing library with two features that make modern deep learning practical.</strong> The first is the <strong>tensor</strong> — a multi-dimensional array that looks and feels like a NumPy <code>ndarray</code>, but can live on a GPU and dispatch operations to thousands of cores in parallel. The second is <strong>autograd</strong> — every operation on a tensor is recorded on a dynamic computation graph, and calling <code>.backward()</code> on any scalar result walks that graph to compute gradients with respect to every input tensor that asked for them. Those two features, plus a Python-native API, are the entire reason researchers can prototype a new model like RFdiffusion in weeks instead of the months it would have taken in TensorFlow 1.x or pure CUDA.</p>
+<p>Everything else in the PyTorch ecosystem is built on top of those two primitives. <code>torch.nn</code> is a collection of modules (linear layers, convolutions, attention blocks) that each wrap parameter tensors and define a forward computation. <code>torch.optim</code> contains optimizers (Adam, SGD) that read the gradients autograd produced and update the parameters. <code>torch.utils.data</code> handles batching and shuffling. Higher-level libraries like <strong>PyTorch Lightning</strong> and <strong>Hugging Face Transformers</strong> sit on top of this. The models you’ve run this week — ESM-2 (the language model inside ESMFold), OpenFold (a PyTorch reimplementation of AlphaFold2), RFdiffusion — are all ordinary PyTorch modules underneath, which means once you can read one, you can read the rest.</p>
+<section id="tensors-the-core-data-structure" class="level3">
+<h3 class="anchored" data-anchor-id="tensors-the-core-data-structure">Tensors: The Core Data Structure</h3>
+<p>A tensor is an N-dimensional array with a <code>dtype</code> (e.g.&nbsp;<code>float32</code>), a <code>shape</code> (e.g.&nbsp;<code>(batch, seq_len, hidden)</code>), and a <code>device</code> (e.g.&nbsp;<code>cuda:0</code>). You can think of it as “NumPy plus a GPU backend plus gradient tracking.”</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a tensor on the CPU</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> torch.randn(<span class="dv">2</span>, <span class="dv">3</span>)              <span class="co"># shape (2, 3), float32, device=cpu</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(x.shape, x.dtype, x.device)  <span class="co"># torch.Size([2, 3]) torch.float32 cpu</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Move it to the GPU</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> x.to(<span class="st">"cuda"</span>)                   <span class="co"># shape (2, 3), float32, device=cuda:0</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Operations stay on the same device</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> x <span class="op">@</span> x.T                        <span class="co"># shape (2, 2), runs on GPU</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Tensors with requires_grad=True participate in autograd</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>w <span class="op">=</span> torch.randn(<span class="dv">3</span>, <span class="dv">1</span>, requires_grad<span class="op">=</span><span class="va">True</span>, device<span class="op">=</span><span class="st">"cuda"</span>)</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>loss <span class="op">=</span> (x <span class="op">@</span> w).<span class="bu">sum</span>()</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>loss.backward()                    <span class="co"># computes dloss/dw</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(w.grad.shape)                <span class="co"># torch.Size([3, 1])</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Rule of thumb
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If a function errors with “expected CUDA, got CPU” (or vice versa), you have tensors on different devices. Move them to the same device with <code>.to(device)</code> or <code>.cuda()</code> / <code>.cpu()</code>.</p>
+</div>
+</div>
+</section>
+<section id="autograd-the-gradient-engine" class="level3">
+<h3 class="anchored" data-anchor-id="autograd-the-gradient-engine">Autograd: The Gradient Engine</h3>
+<p>Autograd is deceptively simple. Every operation you perform on a tensor with <code>requires_grad=True</code> is recorded on a graph. When you call <code>.backward()</code> on a scalar, PyTorch traverses that graph in reverse and fills in the <code>.grad</code> attribute of every leaf tensor. <strong>You almost never implement gradients manually anymore</strong> — autograd does it for you, which is the entire reason deep learning research moves at the pace it does.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> torch.tensor([<span class="fl">2.0</span>], requires_grad<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> x <span class="op">**</span> <span class="dv">3</span> <span class="op">+</span> <span class="dv">2</span> <span class="op">*</span> x          <span class="co"># y = x^3 + 2x</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>y.backward()                <span class="co"># dy/dx = 3x^2 + 2</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(x.grad)               <span class="co"># tensor([14.])  (= 3*4 + 2)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="the-standard-training-loop" class="level3">
+<h3 class="anchored" data-anchor-id="the-standard-training-loop">The Standard Training Loop</h3>
+<p>Every PyTorch training script you’ll ever read follows this five-line skeleton. Once you see it, you can read any codebase:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> batch <span class="kw">in</span> dataloader:</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    pred <span class="op">=</span> model(batch.inputs)          <span class="co"># forward pass</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    loss <span class="op">=</span> loss_fn(pred, batch.labels)  <span class="co"># compute scalar loss</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    optimizer.zero_grad()               <span class="co"># clear stale gradients</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    loss.backward()                     <span class="co"># autograd fills in .grad</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    optimizer.step()                    <span class="co"># update parameters</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Inference is just the first two lines, wrapped in <code>with torch.no_grad():</code> to skip the graph-building overhead. That’s exactly what’s happening when you run AlphaFold2 or RFdiffusion — no training, just a forward pass through a pretrained model.</p>
+</section>
+</section>
+<section id="why-this-matters-for-protein-design" class="level2">
+<h2 class="anchored" data-anchor-id="why-this-matters-for-protein-design">Why This Matters for Protein Design</h2>
+<p>Understanding that every tool you’ve run this week is “a PyTorch model loaded from a checkpoint, fed tensors, returning tensors” gives you <strong>three practical superpowers</strong>:</p>
 <ul>
-<li>Check network connectivity</li>
-<li>Verify authentication token if required</li>
-<li>Try without <code>--use_msa_server</code> for testing</li>
+<li><strong>Debugging.</strong> When a tool fails with a cryptic CUDA error, you can read the stack trace and see which tensor operation blew up — and often fix it by reducing batch size, truncating the input, or switching from <code>float32</code> to <code>float16</code>.</li>
+<li><strong>Customization.</strong> Most of these tools are just Python scripts around a PyTorch <code>nn.Module</code>. You can load the checkpoint yourself, patch the forward pass, or extract intermediate features (e.g.&nbsp;ESM-2 embeddings) for your own downstream analysis — none of which requires retraining anything.</li>
+<li><strong>Efficiency.</strong> If you’re writing analysis scripts that process thousands of predictions, using PyTorch tensors (even on CPU) is often 10–100× faster than Python lists or pandas for numerical work.</li>
 </ul>
-<p><strong>Out of memory</strong>:</p>
-<ul>
-<li>Request more GPU memory</li>
-<li>Reduce complex size</li>
-<li>Try CPU-only mode for testing</li>
-</ul>
-<p><strong>Slow without GPU</strong>:</p>
-<ul>
-<li>CPU mode is functional but significantly slower</li>
-<li>Always use GPU for production runs</li>
-</ul>
-<p><strong>YAML parsing errors</strong>:</p>
-<ul>
-<li>Check YAML syntax (indentation matters)</li>
-<li>Ensure SMILES strings are quoted</li>
-<li>Verify sequence format</li>
-</ul>
+<p>You don’t need to implement attention from scratch. You do need to know what a tensor is, what <code>.to(device)</code> does, and why moving data between CPU and GPU has a cost — which is exactly what the <a href="../thursday/2-cpu-vs-gpu.html">next lesson</a> measures experimentally.</p>
+</section>
+<section id="practice-notebook" class="level2">
+<h2 class="anchored" data-anchor-id="practice-notebook">Practice Notebook</h2>
+<p>Work through the interactive PyTorch tutorial notebook below. It walks through tensor creation, device management, autograd, and a minimal end-to-end training example — all in a single Colab you can run without any local setup.</p>
+<div style="display: flex; gap: 10px; flex-wrap: wrap; margin: 20px 0;">
+  <a href="https://colab.research.google.com/drive/1MAy6Sp1ee6OuMFV4inHxDCGibjzBq_sa" class="btn btn-primary" target="_blank">
+    <i class="bi bi-play-circle"></i> Open PyTorch Tutorial in Colab
+  </a>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Recommended: Enable GPU in Colab
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>In Colab, go to <strong>Runtime → Change runtime type → T4 GPU</strong> before running the notebook. Several cells demonstrate GPU-specific behavior (tensor transfer, speedups) that only work with a GPU attached.</p>
+</div>
+</div>
+</section>
+<section id="key-takeaways" class="level2">
+<h2 class="anchored" data-anchor-id="key-takeaways">Key Takeaways</h2>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Remember these principles
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li><strong>Tensors</strong> are NumPy arrays with two superpowers: they can live on a GPU, and they can track gradients.</li>
+<li><strong>Autograd</strong> builds a dynamic computation graph as you run code and backpropagates on demand — you almost never write gradients by hand.</li>
+<li><strong>Every PyTorch model follows the same pattern</strong>: forward pass → loss → <code>.zero_grad()</code> → <code>.backward()</code> → <code>.step()</code>. Inference is just the forward pass inside <code>torch.no_grad()</code>.</li>
+<li><strong>Device placement is a source of bugs.</strong> If you see “expected CUDA, got CPU,” move your tensors to the same device with <code>.to(device)</code>.</li>
+<li><strong>Every ML tool this week is a PyTorch model under the hood</strong> — reading one codebase teaches you how to navigate them all.</li>
+</ol>
+</div>
+</div>
+</section>
+<section id="questions-to-consider" class="level2">
+<h2 class="anchored" data-anchor-id="questions-to-consider">Questions to Consider</h2>
+<p>After working through the notebook, think about:</p>
+<ol type="1">
+<li>What happens to a tensor’s <code>.grad</code> attribute if you run <code>.backward()</code> twice without calling <code>zero_grad()</code> in between?</li>
+<li>If AlphaFold2’s forward pass for a 500-residue protein takes 2 GB of VRAM, what’s different about the tensors compared to inference on a 50-residue peptide?</li>
+<li>Why do you think most protein-design tools disable gradient tracking (<code>torch.no_grad()</code> or <code>.eval()</code> mode) when running predictions?</li>
+<li>Where in the standard training loop would you add code to log loss values, save checkpoints, or profile GPU memory?</li>
+</ol>
+<hr>
+<div style="display: flex; justify-content: space-between; align-items: center;">
+<div>
+<a href="../thursday/index.html">← Thursday Overview</a>
+</div>
+<div>
+<a href="../index.html">Back to Home</a>
+</div>
+<div>
+<a href="../thursday/2-cpu-vs-gpu.html">CPU vs GPU →</a>
 </div>
 </div>
 

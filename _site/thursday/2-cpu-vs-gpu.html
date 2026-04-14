@@ -2,13 +2,16 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.26">
+<meta name="generator" content="quarto-1.9.37">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>3. Reflection &amp; Capstone Introduction – ML Protein Design Bootcamp 2025</title>
+<title>2. CPU vs GPU Computing – ML Protein Design Bootcamp 2025</title>
 <style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
 div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -19,6 +22,41 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -32,15 +70,14 @@ ul.task-list li input[type="checkbox"] {
 <meta name="quarto:offset" content="../">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-b3b235ae6ba71d6e5c2a90c00144237d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-4d3f3448f837ff03356db176d8adb603.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -68,6 +105,7 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+<style>html{ scroll-behavior: smooth; }</style>
 <!-- Shared Mol* component include for target pages -->
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/pdbe-molstar@latest/build/pdbe-molstar-component.js"></script>
 <style>
@@ -81,9 +119,6 @@ ul.task-list li input[type="checkbox"] {
     overflow: hidden;
   }
 </style>
-<script src="../site_libs/quarto-diagram/mermaid.min.js"></script>
-<script src="../site_libs/quarto-diagram/mermaid-init.js"></script>
-<link href="../site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
 
 
 <link rel="stylesheet" href="../styles.css">
@@ -152,7 +187,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../thursday/3-roundtable.html">3. Reflection &amp; Capstone Introduction</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../thursday/2-cpu-vs-gpu.html">2. CPU vs GPU Computing</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -172,20 +207,26 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../thursday/1-cpu-vs-gpu.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">1. CPU vs GPU Computing</span></a>
+  <a href="../thursday/1-pytorch.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1. PyTorch Foundations</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../thursday/2-docking.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">2. Molecular Docking</span></a>
+  <a href="../thursday/2-cpu-vs-gpu.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">2. CPU vs GPU Computing</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../thursday/3-roundtable.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">3. Reflection &amp; Capstone Introduction</span></a>
+  <a href="../thursday/3-docking.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3. Molecular Docking</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../thursday/4-roundtable.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">4. Reflection &amp; Capstone Introduction</span></a>
   </div>
 </li>
     </ul>
@@ -194,36 +235,28 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
+        <nav id="TOC" role="doc-toc" class="toc-active" data-toc-expanded="2">
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#slides" id="toc-slides" class="nav-link active" data-scroll-target="#slides">Slides</a></li>
-  <li><a href="#part-1-reflecting-on-your-learning" id="toc-part-1-reflecting-on-your-learning" class="nav-link" data-scroll-target="#part-1-reflecting-on-your-learning">Part 1: Reflecting on Your Learning</a>
+  <li><a href="#live-workshop-session" id="toc-live-workshop-session" class="nav-link active" data-scroll-target="#live-workshop-session">Live Workshop Session</a></li>
+  <li><a href="#overview" id="toc-overview" class="nav-link" data-scroll-target="#overview">Overview</a></li>
+  <li><a href="#the-activity" id="toc-the-activity" class="nav-link" data-scroll-target="#the-activity">The Activity</a></li>
+  <li><a href="#access-the-notebook" id="toc-access-the-notebook" class="nav-link" data-scroll-target="#access-the-notebook">Access the Notebook</a></li>
+  <li><a href="#key-concepts" id="toc-key-concepts" class="nav-link" data-scroll-target="#key-concepts">Key Concepts</a>
   <ul class="collapse">
-  <li><a href="#structure-prediction" id="toc-structure-prediction" class="nav-link" data-scroll-target="#structure-prediction">Structure Prediction</a></li>
-  <li><a href="#protein-design" id="toc-protein-design" class="nav-link" data-scroll-target="#protein-design">Protein Design</a></li>
-  <li><a href="#computational-concepts" id="toc-computational-concepts" class="nav-link" data-scroll-target="#computational-concepts">Computational Concepts</a></li>
-  <li><a href="#connecting-the-tools" id="toc-connecting-the-tools" class="nav-link" data-scroll-target="#connecting-the-tools">Connecting the Tools</a></li>
+  <li><a href="#why-for-loops-are-slow" id="toc-why-for-loops-are-slow" class="nav-link" data-scroll-target="#why-for-loops-are-slow">Why For Loops Are Slow</a></li>
+  <li><a href="#what-is-vectorization" id="toc-what-is-vectorization" class="nav-link" data-scroll-target="#what-is-vectorization">What is Vectorization?</a></li>
+  <li><a href="#cpu-vs-gpu-architecture" id="toc-cpu-vs-gpu-architecture" class="nav-link" data-scroll-target="#cpu-vs-gpu-architecture">CPU vs GPU Architecture</a></li>
+  <li><a href="#why-this-matters-for-everything-you-ran-this-week" id="toc-why-this-matters-for-everything-you-ran-this-week" class="nav-link" data-scroll-target="#why-this-matters-for-everything-you-ran-this-week">Why This Matters for Everything You Ran This Week</a></li>
+  <li><a href="#practical-consequences" id="toc-practical-consequences" class="nav-link" data-scroll-target="#practical-consequences">Practical Consequences</a></li>
   </ul></li>
-  <li><a href="#part-2-introduction-to-the-capstone-project" id="toc-part-2-introduction-to-the-capstone-project" class="nav-link" data-scroll-target="#part-2-introduction-to-the-capstone-project">Part 2: Introduction to the Capstone Project</a>
+  <li><a href="#expected-results" id="toc-expected-results" class="nav-link" data-scroll-target="#expected-results">Expected Results</a>
   <ul class="collapse">
-  <li><a href="#what-is-binder-design" id="toc-what-is-binder-design" class="nav-link" data-scroll-target="#what-is-binder-design">What is Binder Design?</a></li>
-  <li><a href="#the-design-pipeline" id="toc-the-design-pipeline" class="nav-link" data-scroll-target="#the-design-pipeline">The Design Pipeline</a></li>
-  <li><a href="#available-targets" id="toc-available-targets" class="nav-link" data-scroll-target="#available-targets">Available Targets</a></li>
+  <li><a href="#sample-timing-comparison" id="toc-sample-timing-comparison" class="nav-link" data-scroll-target="#sample-timing-comparison">Sample Timing Comparison</a></li>
   </ul></li>
-  <li><a href="#part-3-planning-your-approach" id="toc-part-3-planning-your-approach" class="nav-link" data-scroll-target="#part-3-planning-your-approach">Part 3: Planning Your Approach</a>
-  <ul class="collapse">
-  <li><a href="#target-selection" id="toc-target-selection" class="nav-link" data-scroll-target="#target-selection">Target Selection</a></li>
-  <li><a href="#design-strategy" id="toc-design-strategy" class="nav-link" data-scroll-target="#design-strategy">Design Strategy</a></li>
-  <li><a href="#documentation-plan" id="toc-documentation-plan" class="nav-link" data-scroll-target="#documentation-plan">Documentation Plan</a></li>
-  </ul></li>
-  <li><a href="#part-4-getting-started-checklist" id="toc-part-4-getting-started-checklist" class="nav-link" data-scroll-target="#part-4-getting-started-checklist">Part 4: Getting Started Checklist</a></li>
-  <li><a href="#additional-resources" id="toc-additional-resources" class="nav-link" data-scroll-target="#additional-resources">Additional Resources</a>
-  <ul class="collapse">
-  <li><a href="#papers" id="toc-papers" class="nav-link" data-scroll-target="#papers">Papers</a></li>
-  <li><a href="#communities" id="toc-communities" class="nav-link" data-scroll-target="#communities">Communities</a></li>
-  </ul></li>
+  <li><a href="#key-takeaways" id="toc-key-takeaways" class="nav-link" data-scroll-target="#key-takeaways">Key Takeaways</a></li>
+  <li><a href="#questions-to-consider" id="toc-questions-to-consider" class="nav-link" data-scroll-target="#questions-to-consider">Questions to Consider</a></li>
   </ul>
 </nav>
     </div>
@@ -232,7 +265,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">3. Reflection &amp; Capstone Introduction</h1>
+<h1 class="title">2. CPU vs GPU Computing</h1>
 </div>
 
 
@@ -249,313 +282,265 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>Before diving into the capstone project, take time to reflect on what you’ve learned and prepare your approach. This self-guided activity helps you consolidate your knowledge and plan your binder design project.</p>
-<section id="slides" class="level2">
-<h2 class="anchored" data-anchor-id="slides">Slides</h2>
-<iframe src="https://docs.google.com/presentation/d/1q7JIBgvSpYX4gPsRdyW8XZlx0jBR_G7Y/embed?start=false&amp;loop=false&amp;delayms=3000" frameborder="0" width="100%" height="500" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
-<hr>
-</section>
-<section id="part-1-reflecting-on-your-learning" class="level2">
-<h2 class="anchored" data-anchor-id="part-1-reflecting-on-your-learning">Part 1: Reflecting on Your Learning</h2>
-<p>Take 10-15 minutes to think through these questions. Consider writing your answers in a notebook or document—this reflection will help solidify your understanding and identify areas to revisit.</p>
-<section id="structure-prediction" class="level3">
-<h3 class="anchored" data-anchor-id="structure-prediction">Structure Prediction</h3>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Reflection Questions
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ol type="1">
-<li><strong>What surprised you most</strong> about how AlphaFold2 or ESMFold work?</li>
-<li><strong>When would you choose ESMFold over AlphaFold2?</strong> What are the trade-offs?</li>
-<li><strong>How do you interpret pLDDT scores?</strong> What score range makes you confident in a prediction?</li>
-<li><strong>What does the PAE matrix tell you</strong> that pLDDT alone doesn’t?</li>
-</ol>
-</div>
-</div>
-</section>
-<section id="protein-design" class="level3">
-<h3 class="anchored" data-anchor-id="protein-design">Protein Design</h3>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Reflection Questions
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ol type="1">
-<li><strong>How does RFdiffusion “know” what shape to generate?</strong> What’s the role of the noise schedule?</li>
-<li><strong>Why do we need sequence design (LigandMPNN) after backbone generation?</strong> Why can’t RFdiffusion output sequences directly?</li>
-<li><strong>What’s the difference between unconditional and conditional generation</strong> in RFdiffusion?</li>
-<li><strong>How do hotspot residues guide the design process?</strong></li>
-</ol>
-</div>
-</div>
-</section>
-<section id="computational-concepts" class="level3">
-<h3 class="anchored" data-anchor-id="computational-concepts">Computational Concepts</h3>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Reflection Questions
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ol type="1">
-<li><strong>Why are GPUs faster than CPUs</strong> for these ML tools?</li>
-<li><strong>When might CPU actually be faster</strong> than GPU?</li>
-<li><strong>What’s the benefit of vectorization</strong> in numerical computing?</li>
-</ol>
-</div>
-</div>
-</section>
-<section id="connecting-the-tools" class="level3">
-<h3 class="anchored" data-anchor-id="connecting-the-tools">Connecting the Tools</h3>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Reflection Questions
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ol type="1">
-<li><strong>Sketch out the typical workflow</strong> for designing a protein binder. What tools do you use at each step?</li>
-<li><strong>Where in the pipeline would you use structure prediction?</strong> Where would you use it for validation?</li>
-<li><strong>What would you do if your designed binder had low pLDDT</strong> when you predicted its structure?</li>
-</ol>
-</div>
+<p>This activity demonstrates the practical differences between CPU and GPU operations using Python and PyTorch. You’ll explore how vectorization and hardware acceleration dramatically impact computational performance. If you haven’t yet, start with <a href="../thursday/1-pytorch.html">PyTorch Foundations</a> — this lesson builds directly on those concepts.</p>
+<section id="live-workshop-session" class="level2">
+<h2 class="anchored" data-anchor-id="live-workshop-session">Live Workshop Session</h2>
+<div class="workshop-companion">
+  <div class="wc-title">🎥 Live workshop recording — Protein design compute: when to use GPU vs CPU</div>
+  <div class="wc-video">
+    <iframe src="https://www.youtube-nocookie.com/embed/IvqyD7tehSo" title="Protein design compute: when to use GPU vs CPU" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="" loading="lazy"></iframe>
+  </div>
+  <details>
+    <summary>📊 View slide deck</summary>
+    <iframe src="https://docs.google.com/presentation/d/1j2KpBB0Vrgn8KGBHdYHkD_ETgFpLYxIa/embed?start=false&amp;loop=false&amp;delayms=3000" allowfullscreen="" loading="lazy"></iframe>
+  </details>
 </div>
 <hr>
 </section>
-</section>
-<section id="part-2-introduction-to-the-capstone-project" class="level2">
-<h2 class="anchored" data-anchor-id="part-2-introduction-to-the-capstone-project">Part 2: Introduction to the Capstone Project</h2>
-<p>The capstone project brings together everything you’ve learned. You’ll design a <strong>de novo protein binder</strong> for a target of your choice.</p>
-<section id="what-is-binder-design" class="level3">
-<h3 class="anchored" data-anchor-id="what-is-binder-design">What is Binder Design?</h3>
-<p>Binder design is formulated as: <em>“Given a target protein (and optionally a specific epitope), design a smaller protein capable of binding the target.”</em></p>
-<p>This is one of the most important problems in computational protein design, with applications in:</p>
+<section id="overview" class="level2">
+<h2 class="anchored" data-anchor-id="overview">Overview</h2>
+<p>Modern machine learning and structural biology tools rely heavily on GPU acceleration. Understanding when and why GPUs outperform CPUs is essential for:</p>
 <ul>
-<li><strong>Therapeutics</strong>: Blocking disease-related protein interactions</li>
-<li><strong>Diagnostics</strong>: Creating detection reagents</li>
-<li><strong>Research tools</strong>: Probing protein function</li>
-<li><strong>Synthetic biology</strong>: Building new biological circuits</li>
+<li><strong>Running predictions efficiently</strong>: Tools like AlphaFold2, ESMFold, and RFdiffusion all benefit from GPU acceleration</li>
+<li><strong>Writing efficient code</strong>: Knowing how to vectorize operations can speed up your analysis scripts by orders of magnitude</li>
+<li><strong>Resource planning</strong>: Understanding computational requirements helps you estimate job times and request appropriate resources</li>
 </ul>
 </section>
-<section id="the-design-pipeline" class="level3">
-<h3 class="anchored" data-anchor-id="the-design-pipeline">The Design Pipeline</h3>
-<div class="cell" data-layout-align="default">
-<div class="cell-output-display">
-<div>
-<p></p><figure class="figure"><p></p>
-<div>
-<pre class="mermaid mermaid-js">flowchart LR
-    Target[Target Selection] --&gt; Structure[Structure Analysis]
-    Structure --&gt; Backbone[Backbone Generation&lt;br/&gt;RFdiffusion]
-    Backbone --&gt; Sequence[Sequence Design&lt;br/&gt;LigandMPNN]
-    Sequence --&gt; Validation[Structure Prediction&lt;br/&gt;AlphaFold2/ESMFold]
-    Validation --&gt; Refinement[Iterate &amp; Refine]
-
-    style Backbone fill:#f9f,stroke:#333,stroke-width:2px
-    style Sequence fill:#bbf,stroke:#333,stroke-width:2px
-    style Validation fill:#bfb,stroke:#333,stroke-width:2px
-</pre>
-</div>
-<p></p></figure><p></p>
-</div>
-</div>
-</div>
-</section>
-<section id="available-targets" class="level3">
-<h3 class="anchored" data-anchor-id="available-targets">Available Targets</h3>
-<p>You’ll choose from one of these curated targets, each representing a different challenge:</p>
+<section id="the-activity" class="level2">
+<h2 class="anchored" data-anchor-id="the-activity">The Activity</h2>
+<p>In this hands-on notebook, you’ll compute dot products using three different approaches:</p>
 <table class="caption-top table">
-<colgroup>
-<col style="width: 27%">
-<col style="width: 25%">
-<col style="width: 47%">
-</colgroup>
 <thead>
 <tr class="header">
-<th>Category</th>
-<th>Targets</th>
-<th>Challenge Level</th>
+<th>Method</th>
+<th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td><strong>Immune Checkpoint</strong></td>
-<td>PD-L1, IFNAR2, IL-7Rα</td>
-<td>Well-studied interfaces, therapeutic relevance</td>
+<td><strong>For Loop</strong></td>
+<td>Naive Python iteration through each element</td>
 </tr>
 <tr class="even">
-<td><strong>Allergen</strong></td>
-<td>Bet v 1</td>
-<td>Smaller target, antibody-like design</td>
+<td><strong>Vectorized</strong></td>
+<td>Using PyTorch’s element-wise operations</td>
 </tr>
 <tr class="odd">
-<td><strong>Enzymes</strong></td>
-<td>TrkA, TEM-1, GM2 Activator, Beta-Glucosidase</td>
-<td>Diverse binding sites, varied complexity</td>
+<td><strong>torch.dot</strong></td>
+<td>Built-in optimized function</td>
 </tr>
 </tbody>
 </table>
+<p>You’ll time each method on both CPU and GPU across varying data sizes to see the performance differences firsthand.</p>
+</section>
+<section id="access-the-notebook" class="level2">
+<h2 class="anchored" data-anchor-id="access-the-notebook">Access the Notebook</h2>
+<div style="display: flex; gap: 10px; flex-wrap: wrap; margin: 20px 0;">
+  <a href="https://colab.research.google.com/github/RosettaMLBootCamp2025/RosettaMLBootCamp2025.github.io/blob/main/thursday/files/activity-CPUvsGPU.ipynb" class="btn btn-primary" target="_blank">
+    <i class="bi bi-play-circle"></i> Open in Google Colab
+  </a>
+  <a href="../thursday/files/activity-CPUvsGPU.html" class="btn btn-outline-primary" download="">
+    <i class="bi bi-download"></i> Download Notebook (.ipynb)
+  </a>
+</div>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Choosing Your Target
+<span class="screen-reader-only">Tip</span>Recommended: Use Google Colab
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Consider what interests you most: - <strong>Therapeutic relevance?</strong> → PD-L1, IFNAR2, IL-7Rα - <strong>Smaller, focused project?</strong> → Bet v 1 - <strong>Enzyme inhibition?</strong> → TEM-1, Beta-Glucosidase - <strong>Receptor binding?</strong> → TrkA</p>
+<p>Google Colab provides free access to GPUs, which is essential for this activity. Click “Runtime” → “Change runtime type” → Select “T4 GPU” to enable GPU acceleration.</p>
 </div>
 </div>
 <hr>
 </section>
-</section>
-<section id="part-3-planning-your-approach" class="level2">
-<h2 class="anchored" data-anchor-id="part-3-planning-your-approach">Part 3: Planning Your Approach</h2>
-<p>Before starting the capstone, develop a plan. Answer these questions to guide your work.</p>
-<section id="target-selection" class="level3">
-<h3 class="anchored" data-anchor-id="target-selection">Target Selection</h3>
-<div class="callout callout-style-default callout-important callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Important</span>Planning Questions
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ol type="1">
-<li><strong>Which target interests you most?</strong> Why?</li>
-<li><strong>What PDB structure will you use?</strong> Have you looked at it in PyMOL?</li>
-<li><strong>What residues define the binding interface?</strong> (Check the target’s detail page)</li>
-<li><strong>Are there any potential challenges</strong> with your target (flexible regions, glycosylation sites, etc.)?</li>
-</ol>
-</div>
-</div>
-</section>
-<section id="design-strategy" class="level3">
-<h3 class="anchored" data-anchor-id="design-strategy">Design Strategy</h3>
-<div class="callout callout-style-default callout-important callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Important</span>Planning Questions
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ol type="1">
-<li><strong>What size binder will you aim for?</strong> (Typical range: 50-100 residues)</li>
-<li><strong>Will you use hotspot conditioning</strong> in RFdiffusion? Which residues?</li>
-<li><strong>How many designs will you generate</strong> at each step?</li>
-<li><strong>What metrics will you use to filter designs?</strong> (pLDDT, PAE, interface contacts, etc.)</li>
-</ol>
-</div>
-</div>
-</section>
-<section id="documentation-plan" class="level3">
-<h3 class="anchored" data-anchor-id="documentation-plan">Documentation Plan</h3>
-<div class="callout callout-style-default callout-important callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Important</span>Planning Questions
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ol type="1">
-<li><strong>How will you keep track of your experiments?</strong> (Lab notebook, Jupyter notebook, README, etc.)</li>
-<li><strong>What format will you use to present your work?</strong> (Report, slides, video, GitHub repo)</li>
-<li><strong>What commands and settings will you record?</strong> (Think about reproducibility)</li>
-</ol>
-</div>
-</div>
-<hr>
-</section>
-</section>
-<section id="part-4-getting-started-checklist" class="level2">
-<h2 class="anchored" data-anchor-id="part-4-getting-started-checklist">Part 4: Getting Started Checklist</h2>
-<p>Before moving to the capstone, make sure you can answer “yes” to these:</p>
-<ul class="task-list">
-<li><label><input type="checkbox">I’ve reviewed the tools from Monday and know how to run them</label></li>
-<li><label><input type="checkbox">I understand the structure prediction outputs (pLDDT, PAE)</label></li>
-<li><label><input type="checkbox">I know how RFdiffusion and LigandMPNN work together</label></li>
-<li><label><input type="checkbox">I’ve chosen a target (or narrowed it down to 2-3 options)</label></li>
-<li><label><input type="checkbox">I’ve looked at my target structure in PyMOL</label></li>
-<li><label><input type="checkbox">I have a plan for documenting my work</label></li>
-</ul>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Ready to Start?
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Head to the <a href="../capstone/index.html">Capstone Project</a> page to begin! Each target has a dedicated page with specific guidance, PDB information, and strategy tips.</p>
-</div>
-</div>
-<hr>
-</section>
-<section id="additional-resources" class="level2">
-<h2 class="anchored" data-anchor-id="additional-resources">Additional Resources</h2>
-<p>If you want to deepen your understanding before starting the capstone:</p>
-<section id="papers" class="level3">
-<h3 class="anchored" data-anchor-id="papers">Papers</h3>
+<section id="key-concepts" class="level2">
+<h2 class="anchored" data-anchor-id="key-concepts">Key Concepts</h2>
+<section id="why-for-loops-are-slow" class="level3">
+<h3 class="anchored" data-anchor-id="why-for-loops-are-slow">Why For Loops Are Slow</h3>
+<p>Python for loops execute operations sequentially, one at a time. Each iteration involves:</p>
 <ul>
-<li><a href="https://www.nature.com/articles/s41586-023-06415-8">RFdiffusion paper</a> - Watson et al., Nature 2023</li>
-<li><a href="https://www.nature.com/articles/s41586-021-03819-2">AlphaFold2 paper</a> - Jumper et al., Nature 2021</li>
-<li><a href="https://www.biorxiv.org/content/10.1101/2024.09.30.615802v1">BindCraft preprint</a> - Pacesa et al., bioRxiv 2024</li>
+<li>Python interpreter overhead</li>
+<li>Individual memory accesses</li>
+<li>No parallelization</li>
+</ul>
+<p>For a dot product of vectors with N elements, this means N separate operations executed one after another.</p>
+</section>
+<section id="what-is-vectorization" class="level3">
+<h3 class="anchored" data-anchor-id="what-is-vectorization">What is Vectorization?</h3>
+<p>Vectorization means expressing operations on entire arrays rather than individual elements. Instead of:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Slow: element-by-element</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(a)):</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    result <span class="op">+=</span> a[i] <span class="op">*</span> b[i]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>You write:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fast: vectorized</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> (a <span class="op">*</span> b).<span class="bu">sum</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The vectorized version:</p>
+<ul>
+<li>Executes in optimized C/C++ code under the hood</li>
+<li>Can use SIMD (Single Instruction, Multiple Data) instructions</li>
+<li>Processes multiple elements simultaneously</li>
 </ul>
 </section>
-<section id="communities" class="level3">
-<h3 class="anchored" data-anchor-id="communities">Communities</h3>
+<section id="cpu-vs-gpu-architecture" class="level3">
+<h3 class="anchored" data-anchor-id="cpu-vs-gpu-architecture">CPU vs GPU Architecture</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 47%">
+<col style="width: 26%">
+<col style="width: 26%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Feature</th>
+<th>CPU</th>
+<th>GPU</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Cores</strong></td>
+<td>Few powerful cores (4-64)</td>
+<td>Many simple cores (thousands)</td>
+</tr>
+<tr class="even">
+<td><strong>Best for</strong></td>
+<td>Sequential, complex tasks</td>
+<td>Parallel, simple tasks</td>
+</tr>
+<tr class="odd">
+<td><strong>Memory</strong></td>
+<td>Fast access to RAM</td>
+<td>High bandwidth to VRAM</td>
+</tr>
+<tr class="even">
+<td><strong>Overhead</strong></td>
+<td>Low</td>
+<td>Data transfer cost</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>The Data Transfer Overhead
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Moving data between CPU memory and GPU memory takes time. For small operations, this overhead can exceed the computation time, making GPU slower than CPU. The GPU advantage only appears when the computation is large enough to amortize this cost.</p>
+</div>
+</div>
+</section>
+<section id="why-this-matters-for-everything-you-ran-this-week" class="level3">
+<h3 class="anchored" data-anchor-id="why-this-matters-for-everything-you-ran-this-week">Why This Matters for Everything You Ran This Week</h3>
+<p>Every major tool you touched this week — AlphaFold2, ESMFold, RFdiffusion, Chai-1, Boltz-2, DiffDock — is built around dense tensor operations: matrix multiplies, attention, and convolutions. These are exactly the workloads GPUs were designed for. A transformer attention layer over a 500-residue protein is a few hundred matrix multiplications where each output element only needs a row of one matrix and a column of another — the same operation, thousands of times, with no dependencies between them. A CPU will march through them serially (or with modest SIMD parallelism); a GPU dispatches all of them to thousands of cores simultaneously. That’s why a single AlphaFold2 prediction that takes ten minutes on a GPU would take hours on a CPU, and why the HPC setup work you did on Monday was non-negotiable.</p>
+<p>But the GPU is not magic. It wins when the work is <strong>both large and parallel</strong>, and loses when either condition breaks. Small tensors (think: a single protein’s input embedding, or a batch size of one) leave most of the GPU’s cores idle while you pay the full cost of shuttling data across the PCIe bus to VRAM and back. This is why you’ll sometimes see AlphaFold2’s first prediction feel slow compared to its second — the first pays a warm-up cost (model weights loaded into VRAM, CUDA kernels JIT-compiled) that subsequent predictions amortize. It’s also why many preprocessing steps (MSA generation with HHblits, PDB parsing, small pandas operations) stay on the CPU — they’re either sequential by nature or too small to benefit.</p>
+</section>
+<section id="practical-consequences" class="level3">
+<h3 class="anchored" data-anchor-id="practical-consequences">Practical Consequences</h3>
+<p>A few heuristics that will save you time on the cluster:</p>
 <ul>
-<li><a href="https://www.rosettacommons.org/forum">RosettaCommons Forums</a></li>
-<li><a href="https://github.com/aqlaboratory/openfold/discussions">OpenFold Discussions</a></li>
-<li>Protein design Twitter/X community (#proteindesign)</li>
+<li><strong>Batch when you can.</strong> If you need to predict 50 structures, running them in a loop that re-initializes the model each time is the single worst pattern. Load the model once, then iterate.</li>
+<li><strong>Watch VRAM, not RAM.</strong> GPU out-of-memory errors are the #1 failure mode for AlphaFold2 on long sequences. A 1000-residue monomer in AF2 full mode can need 40+ GB of VRAM. Know your GPU’s limit.</li>
+<li><strong>Don’t GPU what you can’t parallelize.</strong> If your script spends most of its time in Python for-loops doing bookkeeping, the GPU is idle 95% of the time. Vectorize first, then worry about hardware.</li>
+<li><strong>Profile before optimizing.</strong> A two-line <code>time.time()</code> before/after each section of your code will tell you where the time actually goes — usually somewhere you didn’t expect.</li>
 </ul>
+<hr>
+</section>
+</section>
+<section id="expected-results" class="level2">
+<h2 class="anchored" data-anchor-id="expected-results">Expected Results</h2>
+<p>When you run the notebook, you should observe:</p>
+<ol type="1">
+<li><strong>For loops are always slowest</strong> - regardless of hardware</li>
+<li><strong>Vectorization provides massive speedup</strong> - often 10-100x faster than loops</li>
+<li><strong>GPU beats CPU for large data</strong> - but may be slower for small data due to transfer overhead</li>
+<li><strong>torch.dot is fastest overall</strong> - it’s optimized specifically for this operation</li>
+</ol>
+<section id="sample-timing-comparison" class="level3">
+<h3 class="anchored" data-anchor-id="sample-timing-comparison">Sample Timing Comparison</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Method</th>
+<th>100 elements</th>
+<th>5000 elements</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>For Loop (CPU)</td>
+<td>~0.5 ms</td>
+<td>~10 ms</td>
+</tr>
+<tr class="even">
+<td>Vectorized (CPU)</td>
+<td>~0.02 ms</td>
+<td>~0.1 ms</td>
+</tr>
+<tr class="odd">
+<td>torch.dot (GPU)</td>
+<td>~0.1 ms*</td>
+<td>~0.05 ms</td>
+</tr>
+</tbody>
+</table>
+<p>*GPU times include data transfer overhead</p>
+<hr>
+</section>
+</section>
+<section id="key-takeaways" class="level2">
+<h2 class="anchored" data-anchor-id="key-takeaways">Key Takeaways</h2>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Remember These Principles
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li><strong>Always vectorize when possible</strong> - Avoid Python for loops for numerical computations</li>
+<li><strong>GPU overhead matters</strong> - Small tasks may run faster on CPU</li>
+<li><strong>Use built-in functions</strong> - Libraries like PyTorch have highly optimized implementations</li>
+<li><strong>Profile your code</strong> - Measure before assuming what’s slow</li>
+</ol>
+</div>
+</div>
+</section>
+<section id="questions-to-consider" class="level2">
+<h2 class="anchored" data-anchor-id="questions-to-consider">Questions to Consider</h2>
+<p>After completing the activity, think about:</p>
+<ol type="1">
+<li>At what data size did GPU start outperforming CPU for vectorized operations?</li>
+<li>Why does the for loop show “N/A” for GPU times in the notebook?</li>
+<li>How might these principles apply to running AlphaFold2 or other ML tools?</li>
+<li>What would happen if you ran the same experiment with matrix multiplication instead of dot products?</li>
+</ol>
 <hr>
 <div style="display: flex; justify-content: space-between; align-items: center;">
 <div>
-<a href="../thursday/2-docking.html">← Docking</a>
+<a href="../thursday/1-pytorch.html">← PyTorch Foundations</a>
 </div>
 <div>
 <a href="../index.html">Back to Home</a>
 </div>
 <div>
-<a href="../capstone/index.html">Capstone →</a>
+<a href="../thursday/3-docking.html">Docking →</a>
 </div>
 </div>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->
@@ -878,6 +863,76 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 });
 </script>
+<script>
+(function() {
+  // Day-level position chip: shows "Monday · Lesson 3 of 16" at the top of each lesson.
+  // Position is derived from the Quarto sidebar so it stays in sync with _quarto.yml.
+  document.addEventListener('DOMContentLoaded', function() {
+    const path = window.location.pathname.toLowerCase();
+    const match = path.match(/\/(monday|tuesday|wednesday|thursday|capstone)\//);
+    if (!match) return;
+    const day = match[1];
+    const dayLabel = day.charAt(0).toUpperCase() + day.slice(1);
+
+    // Skip the day index page itself
+    const isIndex = /\/index\.html?$/.test(path) || path.endsWith('/' + day + '/');
+    if (isIndex) return;
+
+    // Collect lesson links from the sidebar for the current day (exclude index and separators)
+    const sidebarLinks = Array.from(document.querySelectorAll('.sidebar a[href]'))
+      .map(function(a) {
+        try { return new URL(a.getAttribute('href'), window.location.href).pathname.toLowerCase(); }
+        catch (e) { return null; }
+      })
+      .filter(function(p) { return p && p.indexOf('/' + day + '/') !== -1; })
+      .filter(function(p) { return !/\/index\.html?$/.test(p); });
+
+    // Deduplicate while preserving order
+    const seen = new Set();
+    const lessons = sidebarLinks.filter(function(p) {
+      if (seen.has(p)) return false;
+      seen.add(p);
+      return true;
+    });
+
+    const total = lessons.length;
+    if (total === 0) return;
+
+    const currentIdx = lessons.indexOf(path);
+    if (currentIdx === -1) return;
+
+    const pct = Math.round(((currentIdx + 1) / total) * 100);
+    const title = document.querySelector('h1.title, .quarto-title h1');
+    if (!title) return;
+
+    const chip = document.createElement('div');
+    chip.className = 'day-progress-chip';
+    const noun = day === 'capstone' ? 'Target' : 'Lesson';
+    chip.innerHTML =
+      '<span>' + dayLabel + '</span>' +
+      '<span>· ' + noun + ' ' + (currentIdx + 1) + ' of ' + total + '</span>' +
+      '<span class="dpc-bar"><span class="dpc-fill" style="width:' + pct + '%"></span></span>';
+    title.insertAdjacentElement('afterend', chip);
+  });
+})();
+</script>
+<button id="back-to-top" aria-label="Back to top" title="Back to top">↑</button>
+<script>
+(function() {
+  const btn = document.getElementById('back-to-top');
+  if (!btn) return;
+  const threshold = 400;
+  function update() {
+    if (window.scrollY > threshold) btn.classList.add('visible');
+    else btn.classList.remove('visible');
+  }
+  window.addEventListener('scroll', update, { passive: true });
+  btn.addEventListener('click', function() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+  update();
+})();
+</script>
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
@@ -965,6 +1020,11 @@ document.addEventListener('DOMContentLoaded', function() {
           if (link.dataset.originalHref !== undefined) {
             link.href = link.dataset.originalHref;
           }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
         }
       }
     function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
@@ -1283,4 +1343,5 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
+<script src="../site_libs/quarto-html/zenscroll-min.js"></script>
 </body></html>

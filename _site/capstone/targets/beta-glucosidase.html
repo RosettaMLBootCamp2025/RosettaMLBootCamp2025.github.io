@@ -2,13 +2,16 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.26">
+<meta name="generator" content="quarto-1.9.37">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
 <title>Beta-Glucosidase Deep Dive – ML Protein Design Bootcamp 2025</title>
 <style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
 div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -32,15 +35,14 @@ ul.task-list li input[type="checkbox"] {
 <meta name="quarto:offset" content="../../">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-b3b235ae6ba71d6e5c2a90c00144237d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-4d3f3448f837ff03356db176d8adb603.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -68,6 +70,7 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+<style>html{ scroll-behavior: smooth; }</style>
 <!-- Shared Mol* component include for target pages -->
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/pdbe-molstar@latest/build/pdbe-molstar-component.js"></script>
 <style>
@@ -224,7 +227,7 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
+        <nav id="TOC" role="doc-toc" class="toc-active" data-toc-expanded="2">
     <h2 id="toc-title">On this page</h2>
    
   <ul>
@@ -234,6 +237,7 @@ ul.task-list li input[type="checkbox"] {
   <ul class="collapse">
   <li><a href="#target-specifications" id="toc-target-specifications" class="nav-link" data-scroll-target="#target-specifications">Target Specifications</a></li>
   <li><a href="#strategy-tips" id="toc-strategy-tips" class="nav-link" data-scroll-target="#strategy-tips">Strategy Tips</a></li>
+  <li><a href="#reference" id="toc-reference" class="nav-link" data-scroll-target="#reference">Reference</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -263,13 +267,13 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="biological-context" class="level2">
 <h2 class="anchored" data-anchor-id="biological-context">Biological Context</h2>
-<p><strong>Beta-Glucosidase</strong> is an enzyme that breaks down complex sugars (glucosides) into glucose. It is relevant in both human metabolism (Gaucher’s disease) and industrial biofuel production.</p>
-<p><strong>Why it matters:</strong> In industrial applications, thermostable or stabilized versions of this enzyme are highly valuable. In health, chaperones (binders) that help fold unstable mutants can be therapeutic.</p>
-<p><strong>The Goal:</strong> Design a binder that stabilizes the enzyme without blocking its active site, or conversely, an inhibitor that blocks it.</p>
+<p><strong>β-Glucosidases</strong> are glycoside hydrolases (GH family 1 in this case) that cleave the β-glycosidic bond between a glucose residue and an aglycone, releasing free glucose. They’re found across all domains of life and are central to both <strong>human metabolism</strong> (the lysosomal β-glucosidase GBA is mutated in Gaucher’s disease) and <strong>industrial biotechnology</strong> (cellulose degradation for biofuels, where β-glucosidase is often the rate-limiting step).</p>
+<p><strong>Why it matters:</strong> Industrial β-glucosidases need to be thermostable and tolerant of high product concentrations. Pharmacological chaperones — small molecules or proteins that bind misfolded enzyme variants and help them fold — are a promising treatment modality for lysosomal storage diseases like Gaucher’s. In both cases, a designed protein binder has potential utility: as an inhibitor (to probe mechanism or engineer product feedback) or as a stabilizer (binding the folded state and rescuing destabilized mutants).</p>
+<p><strong>The Goal:</strong> Design a binder that either (a) occupies the active site as an inhibitor, or (b) binds a surface patch away from the active site to stabilize the fold.</p>
 </section>
 <section id="interactive-structure" class="level2">
 <h2 class="anchored" data-anchor-id="interactive-structure">Interactive Structure</h2>
-<p>The viewer below shows <strong>Beta-Glucosidase A</strong>.</p>
+<p>The viewer below shows <strong>β-Glucosidase</strong> (PDB 2JIE, from <em>Thermotoga neapolitana</em>) captured as the covalent glycosyl-enzyme intermediate with a 2-deoxy-2-fluoro-glucose mechanism-based inhibitor (HETATM <code>G2F</code>) trapped on the catalytic nucleophile.</p>
 <div class="molstar-container">
 <p><pdbe-molstar id="bgl-viewer" molecule-id="2jie" hide-controls="true" bg-color-r="255" bg-color-g="255" bg-color-b="255"></pdbe-molstar></p>
 </div>
@@ -293,14 +297,14 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="design-mission" class="level2">
 <h2 class="anchored" data-anchor-id="design-mission">Design Mission</h2>
-<p>Target a surface patch on Beta-Glucosidase.</p>
+<p>Choose one of two goals before you start designing:</p>
+<ul>
+<li><strong>Inhibitor:</strong> Target the active-site pocket to block substrate entry.</li>
+<li><strong>Stabilizer:</strong> Target a solvent-exposed surface patch away from the active site.</li>
+</ul>
 <section id="target-specifications" class="level3">
 <h3 class="anchored" data-anchor-id="target-specifications">Target Specifications</h3>
 <table class="caption-top table">
-<colgroup>
-<col style="width: 50%">
-<col style="width: 50%">
-</colgroup>
 <thead>
 <tr class="header">
 <th style="text-align: left;">Feature</th>
@@ -310,30 +314,62 @@ ul.task-list li input[type="checkbox"] {
 <tbody>
 <tr class="odd">
 <td style="text-align: left;"><strong>Target Name</strong></td>
-<td style="text-align: left;">Beta-Glucosidase</td>
+<td style="text-align: left;">β-Glucosidase (GH family 1)</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"><strong>PDB ID</strong></td>
-<td style="text-align: left;"><code>2JIE</code></td>
+<td style="text-align: left;"><a href="https://www.rcsb.org/structure/2JIE"><code>2JIE</code></a></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;"><strong>Target Chain</strong></td>
 <td style="text-align: left;">Chain A</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><strong>Interface / Hotspot</strong></td>
-<td style="text-align: left;">Surface patches away from the active site (for stabilization) or the active site (for inhibition).</td>
+<td style="text-align: left;"><strong>Active-site residues (within 5 Å of glucose-analog)</strong></td>
+<td style="text-align: left;"><code>S19, Q22, R79, H122, W123, N166, E167, N296, Y298, M326, W328, E356, W402, N407, E409, W410, F418</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Catalytic residues</strong></td>
+<td style="text-align: left;"><strong>E167</strong> (acid/base), <strong>E356</strong> (nucleophile) — classic GH1 retaining mechanism</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Tryptophan cage</strong></td>
+<td style="text-align: left;"><strong>W123, W328, W402, W410</strong> — the aromatic residues stacking against the sugar ring</td>
 </tr>
 </tbody>
 </table>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>About the residue list
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>These are every β-glucosidase residue within 5 Å of the covalently-bound 2-fluoro-glucose in 2JIE. The pocket is a deep, mostly buried cleft lined with aromatic residues — GH family 1 enzymes are famous for this “tryptophan cage” that recognizes the pyranose ring by CH-π stacking. For inhibitor design, the pocket is small and well-defined; your binder can’t enter it, but it can clamp over the surface and block substrate entry.</p>
+</div>
+</div>
 </section>
 <section id="strategy-tips" class="level3">
 <h3 class="anchored" data-anchor-id="strategy-tips">Strategy Tips</h3>
 <ol type="1">
-<li><strong>Download PDB <code>2JIE</code></strong>.</li>
-<li><strong>Define your Goal:</strong> Decide if you want to inhibit or stabilize.</li>
-<li><strong>Select Hotspot:</strong> Choose residues accordingly.</li>
+<li><strong>Download PDB <a href="https://files.rcsb.org/download/2JIE.pdb"><code>2JIE</code></a>.</strong></li>
+<li><strong>Clean the structure:</strong> Keep Chain A, remove the covalent inhibitor (<code>G2F</code>) and water.</li>
+<li><strong>Pick your strategy:</strong>
+<ul>
+<li><strong>Inhibitor:</strong> Target the rim of the active-site cleft (e.g., <code>A167,A328,A410,A418</code>). Your binder can’t enter the deep pocket but can occlude it.</li>
+<li><strong>Stabilizer:</strong> Look for a convex surface patch away from the active site — the α/β TIM-barrel N-terminus is often a good stabilization target because destabilizing mutations tend to cluster in the core and a surface-binding partner can restore folding.</li>
+</ul></li>
+<li><strong>Ask what you actually want:</strong> If you’re designing for industrial use (e.g., biofuel), you probably want a stabilizer that survives at 70°C. If you’re designing for mechanistic studies, you want a reversible inhibitor.</li>
 </ol>
+</section>
+<section id="reference" class="level3">
+<h3 class="anchored" data-anchor-id="reference">Reference</h3>
+<ul>
+<li>Marana, S.R. et al.&nbsp;(2006). <em>Structural basis for substrate recognition by a β-glucosidase.</em> <a href="https://www.rcsb.org/structure/2JIE">PDB entry 2JIE</a> — primary citation in the deposited structure.</li>
+</ul>
 <hr>
 <p><a href="../../capstone/index.html">← Back to Capstone Overview</a></p>
 
@@ -661,6 +697,76 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 });
 </script>
+<script>
+(function() {
+  // Day-level position chip: shows "Monday · Lesson 3 of 16" at the top of each lesson.
+  // Position is derived from the Quarto sidebar so it stays in sync with _quarto.yml.
+  document.addEventListener('DOMContentLoaded', function() {
+    const path = window.location.pathname.toLowerCase();
+    const match = path.match(/\/(monday|tuesday|wednesday|thursday|capstone)\//);
+    if (!match) return;
+    const day = match[1];
+    const dayLabel = day.charAt(0).toUpperCase() + day.slice(1);
+
+    // Skip the day index page itself
+    const isIndex = /\/index\.html?$/.test(path) || path.endsWith('/' + day + '/');
+    if (isIndex) return;
+
+    // Collect lesson links from the sidebar for the current day (exclude index and separators)
+    const sidebarLinks = Array.from(document.querySelectorAll('.sidebar a[href]'))
+      .map(function(a) {
+        try { return new URL(a.getAttribute('href'), window.location.href).pathname.toLowerCase(); }
+        catch (e) { return null; }
+      })
+      .filter(function(p) { return p && p.indexOf('/' + day + '/') !== -1; })
+      .filter(function(p) { return !/\/index\.html?$/.test(p); });
+
+    // Deduplicate while preserving order
+    const seen = new Set();
+    const lessons = sidebarLinks.filter(function(p) {
+      if (seen.has(p)) return false;
+      seen.add(p);
+      return true;
+    });
+
+    const total = lessons.length;
+    if (total === 0) return;
+
+    const currentIdx = lessons.indexOf(path);
+    if (currentIdx === -1) return;
+
+    const pct = Math.round(((currentIdx + 1) / total) * 100);
+    const title = document.querySelector('h1.title, .quarto-title h1');
+    if (!title) return;
+
+    const chip = document.createElement('div');
+    chip.className = 'day-progress-chip';
+    const noun = day === 'capstone' ? 'Target' : 'Lesson';
+    chip.innerHTML =
+      '<span>' + dayLabel + '</span>' +
+      '<span>· ' + noun + ' ' + (currentIdx + 1) + ' of ' + total + '</span>' +
+      '<span class="dpc-bar"><span class="dpc-fill" style="width:' + pct + '%"></span></span>';
+    title.insertAdjacentElement('afterend', chip);
+  });
+})();
+</script>
+<button id="back-to-top" aria-label="Back to top" title="Back to top">↑</button>
+<script>
+(function() {
+  const btn = document.getElementById('back-to-top');
+  if (!btn) return;
+  const threshold = 400;
+  function update() {
+    if (window.scrollY > threshold) btn.classList.add('visible');
+    else btn.classList.remove('visible');
+  }
+  window.addEventListener('scroll', update, { passive: true });
+  btn.addEventListener('click', function() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+  update();
+})();
+</script>
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
@@ -748,6 +854,11 @@ document.addEventListener('DOMContentLoaded', function() {
           if (link.dataset.originalHref !== undefined) {
             link.href = link.dataset.originalHref;
           }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
         }
       }
     function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
@@ -1066,4 +1177,5 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
+<script src="../../site_libs/quarto-html/zenscroll-min.js"></script>
 </body></html>
