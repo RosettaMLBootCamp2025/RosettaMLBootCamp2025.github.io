@@ -1,0 +1,131 @@
+---
+title: "3. Molecular Docking"
+---
+
+This module introduces molecular docking—a computational technique for predicting how molecules interact with each other, particularly how small molecules (ligands) bind to proteins.
+
+## Live Workshop Session
+
+```{=html}
+<div class="workshop-companion">
+  <div class="wc-title">🎥 Live workshop recording — Modern Protein Docking: Traditional Methods vs AI Tools</div>
+  <div class="wc-video">
+    <iframe src="https://www.youtube-nocookie.com/embed/nVmuGyvV9Lg"
+      title="Modern Protein Docking: Traditional Methods vs AI Tools"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+      allowfullscreen loading="lazy"></iframe>
+  </div>
+  <details>
+    <summary>📊 View slide deck</summary>
+    <iframe src="https://docs.google.com/presentation/d/1g2qDfhvEAU0eZ63DcbQM7XqrudG5RYBa/embed?start=false&loop=false&delayms=3000"
+      allowfullscreen loading="lazy"></iframe>
+  </details>
+</div>
+```
+
+---
+
+## Overview
+
+Molecular docking is fundamental to computational drug discovery and protein engineering. It allows you to:
+
+- **Predict binding poses**: Determine how a ligand fits into a protein's binding site
+- **Estimate binding affinity**: Score how strongly molecules interact
+- **Screen compound libraries**: Rapidly evaluate thousands of potential drug candidates
+- **Guide protein design**: Understand what makes a good binding pocket
+
+## Why Docking Matters for ML Protein Design
+
+In the context of this bootcamp, docking connects to several tools you've learned:
+
+| Tool | Docking Application |
+|------|---------------------|
+| **RFdiffusion** | Design proteins with specific binding pockets |
+| **LigandMPNN** | Design sequences that maintain ligand interactions |
+| **DiffDock-PP** | ML-based protein-protein docking |
+| **PLACER** | Ligand placement in designed pockets |
+| **BindCraft** | Binder design with docking validation |
+
+## Key Concepts
+
+### What is Docking?
+
+Docking algorithms search for the optimal orientation and conformation of a ligand within a protein's binding site. This involves:
+
+1. **Sampling**: Exploring different positions, orientations, and conformations
+2. **Scoring**: Evaluating each pose using physics-based or empirical functions
+3. **Ranking**: Identifying the most likely binding mode
+
+### How Docking Actually Works
+
+At its core, docking is an **optimization problem with two coupled halves**: a *search* over possible poses and a *score* that tells you which poses are good. The search explores a high-dimensional space — three translational degrees of freedom, three rotational, plus every rotatable bond in a flexible ligand — which is far too large to enumerate exhaustively. Classical tools like AutoDock Vina tame this with genetic or Monte Carlo algorithms that propose random moves and accept or reject them based on score. Modern ML-based tools like DiffDock learn a *denoising process* that iteratively refines a random initial pose toward a plausible bound configuration, turning search into a learned trajectory rather than a stochastic walk.
+
+The scoring function is what makes or breaks a docking run. Physics-based scores sum up van der Waals contacts, electrostatics, desolvation, and torsional strain — they're interpretable but approximate. ML-based scores learn what "bound" looks like directly from experimental complexes and can capture subtle geometric patterns, but they inherit the biases of their training data and can fail silently on chemotypes that look unfamiliar. Either way, **scoring functions are optimized to rank poses for a given target, not to predict absolute binding affinity** — a common source of confusion when docking results don't match experiment.
+
+### Docking in Protein Design
+
+In a design workflow, docking typically appears at two stages. **Before design**, it helps you understand the native interface: where does the natural ligand or partner sit, which residues line the pocket, and what geometry does your binder need to reproduce? **After design**, it's a validation step — you've generated a backbone with RFdiffusion and a sequence with LigandMPNN, and now you want to check whether the designed pocket actually accommodates the target ligand or partner in a sensible pose. For protein-protein targets (PD-L1, IFNAR2, IL-7R in the capstone list), **DiffDock-PP** is the natural fit; for designed pockets that need to hold a small-molecule ligand or cofactor, **PLACER** gives you an ensemble of plausible placements rather than a single best guess, which is more honest given that designed pockets rarely have a single unambiguous binding mode.
+
+### Types of Docking
+
+| Type | Description | Use Case |
+|------|-------------|----------|
+| **Rigid docking** | Protein and ligand treated as rigid bodies | Fast screening |
+| **Flexible ligand** | Ligand conformations explored | Standard docking |
+| **Flexible protein** | Both protein and ligand can move | Induced fit modeling |
+| **Protein-protein** | Docking two proteins together | Interface prediction |
+
+### Scoring Functions
+
+Docking programs use scoring functions to estimate binding affinity. Common approaches include:
+
+- **Physics-based**: Van der Waals, electrostatics, solvation
+- **Empirical**: Trained on experimental binding data
+- **Knowledge-based**: Statistical potentials from known structures
+- **ML-based**: Neural networks trained on binding data
+
+::: {.callout-note}
+## Scoring Function Limitations
+No scoring function is perfect. Docking is useful for ranking poses and identifying likely binding modes, but absolute binding energy predictions remain challenging.
+:::
+
+---
+
+### Common Pitfalls
+
+A few traps worth internalizing before you trust a docking result. **First, the protein you dock into is already a choice.** If your target structure is a crystal bound to a drug, the pocket may have been reshaped by that ligand — docking a different chemotype into it can give artifactually good scores. Apo (unbound) structures or AlphaFold predictions often have collapsed pockets that over-reject real binders. **Second, scoring functions rank; they don't calibrate.** A top-scoring pose at −9 kcal/mol on one target is not directly comparable to −9 kcal/mol on another. Use docking to compare poses *within a single target*, not to compare targets. **Third, ML docking tools can hallucinate.** DiffDock will happily dock a ligand into a protein that has no real binding site — you need independent checks (sanity-check the pose with PyMOL, look for steric clashes, confirm hydrogen bonds make chemical sense) before believing a confident-looking output.
+
+::: {.callout-warning}
+## A good score is not a bound complex
+A scoring function's job is to rank poses for a fixed protein-ligand pair. It is **not** trained to tell you whether binding will happen at all, what the Kd is, or whether two different ligands will have similar affinities. Treat docking scores as a within-target ranking tool and validate the top pose with chemistry.
+:::
+
+---
+
+## Common Docking Software
+
+| Software | Type | Notes |
+|----------|------|-------|
+| **AutoDock Vina** | Small molecule | Fast, widely used |
+| **GNINA** | ML-enhanced | CNN-based scoring |
+| **DiffDock** | ML-based | Diffusion model approach |
+| **HADDOCK** | Protein-protein | Data-driven docking |
+| **ClusPro** | Protein-protein | Web server available |
+| **Rosetta** | Both | Part of Rosetta suite |
+
+---
+
+## Questions to Consider
+
+1. How does the choice of scoring function affect docking results?
+2. When would you use rigid vs. flexible docking?
+3. How can docking guide your protein design projects in the capstone?
+4. What are the limitations of docking for predicting actual binding affinity?
+
+---
+
+<div style="display: flex; justify-content: space-between; align-items: center;">
+<div>[← CPU vs GPU](2-cpu-vs-gpu.qmd)</div>
+<div>[Back to Home](../index.qmd)</div>
+<div>[Roundtable →](4-roundtable.qmd)</div>
+</div>

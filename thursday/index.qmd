@@ -6,28 +6,30 @@ title: "Thursday: Docking & Discussion"
 
 Thursday brings together computational concepts with practical applications and collaborative discussion. You'll explore the differences between CPU and GPU computing through hands-on experiments, learn about molecular docking for understanding protein-ligand interactions, and participate in a roundtable discussion to reflect on the bootcamp experience.
 
-## Learning Objectives
-
-By the end of Thursday, you will be able to:
-
-- Explain why GPUs outperform CPUs for certain computational tasks
-- Understand the importance of vectorization in numerical computing
-- Describe the principles of molecular docking
-- Apply docking concepts to protein design workflows
-- Articulate connections between different tools learned throughout the bootcamp
+::: {.day-objectives}
+<div class="do-title">By the end of Thursday, you'll be able to:</div>
+- Explain what a PyTorch tensor is, what autograd does, and why every major tool this week is built on them.
+- Explain why GPUs outperform CPUs for certain computational tasks, and when they don't.
+- Describe how vectorization changes the cost of numerical operations in Python.
+- Describe the principles of molecular docking — sampling, scoring, and ranking.
+- Apply docking concepts to protein design workflows and reason about when to use DiffDock-PP vs. PLACER vs. Rosetta.
+- Articulate connections between the tools you've learned this week and choose the right stack for your capstone target.
+:::
 
 ## Modules
 
 | # | Module | Description |
 |---|--------|-------------|
-| [1](1-cpu-vs-gpu.qmd) | CPU vs GPU Computing | Hands-on activity comparing computational performance |
-| [2](2-docking.qmd) | Molecular Docking | Introduction to predicting molecular interactions |
-| [3](3-roundtable.qmd) | Reflection & Capstone Introduction | Self-reflect on your learning and plan your capstone project |
+| [1](1-pytorch.qmd) | PyTorch Foundations | What tensors and autograd actually are, and why every ML tool this week is built on them |
+| [2](2-cpu-vs-gpu.qmd) | CPU vs GPU Computing | Hands-on activity comparing computational performance |
+| [3](3-docking.qmd) | Molecular Docking | Introduction to predicting molecular interactions |
+| [4](4-roundtable.qmd) | Reflection & Capstone Introduction | Self-reflect on your learning and plan your capstone project |
 
 ## Schedule
 
 | Time | Activity |
 |------|----------|
+| Early morning | PyTorch Foundations |
 | Morning | CPU vs GPU Activity |
 | Mid-day | Docking Lesson |
 | Afternoon | Reflection & Capstone Introduction |

@@ -1,0 +1,156 @@
+---
+title: "1. PyTorch Foundations"
+---
+
+Every major tool you've touched this week — **AlphaFold2, ESMFold, RFdiffusion, Chai-1, Boltz-2, DiffDock** — is built on PyTorch. When you've been running `colabfold_batch` or `rfdiffusion inference.output_prefix=...`, what's actually happening under the hood is that PyTorch loads a model checkpoint, moves its weights onto the GPU, runs a forward pass on your input tensors, and returns tensors that get decoded into PDB coordinates. This lesson gives you the minimum mental model you need to understand, debug, and occasionally customize that pipeline.
+
+## Live Workshop Session
+
+```{=html}
+<div class="workshop-companion">
+  <div class="wc-title">🎥 Live workshop recording — PyTorch explained: from neural networks to real-world models</div>
+  <div class="wc-video">
+    <iframe src="https://www.youtube-nocookie.com/embed/xQkegATmO-c"
+      title="PyTorch explained: from neural networks to real-world models"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+      allowfullscreen loading="lazy"></iframe>
+  </div>
+  <details>
+    <summary>📊 View slide deck</summary>
+    <iframe src="https://docs.google.com/presentation/d/1FS7AqBrK71QIksVWlotjPxJ-O1UGeyg3NpU_AG6YhnU/embed?start=false&loop=false&delayms=3000"
+      allowfullscreen loading="lazy"></iframe>
+  </details>
+</div>
+```
+
+---
+
+## Overview
+
+::: {.callout-note}
+## Learning goals
+By the end of this lesson you should be able to:
+
+- Explain what a PyTorch **tensor** is and how it differs from a NumPy array.
+- Explain what **autograd** does and why it makes deep learning practical.
+- Recognize the standard PyTorch training/inference loop in any model's codebase.
+- Move tensors between CPU and GPU (`.to(device)`) and reason about when that transfer costs you.
+- Load a pretrained checkpoint and run a forward pass — the core pattern behind every tool this week.
+:::
+
+## What PyTorch Actually Is
+
+**PyTorch is a numerical computing library with two features that make modern deep learning practical.** The first is the **tensor** — a multi-dimensional array that looks and feels like a NumPy `ndarray`, but can live on a GPU and dispatch operations to thousands of cores in parallel. The second is **autograd** — every operation on a tensor is recorded on a dynamic computation graph, and calling `.backward()` on any scalar result walks that graph to compute gradients with respect to every input tensor that asked for them. Those two features, plus a Python-native API, are the entire reason researchers can prototype a new model like RFdiffusion in weeks instead of the months it would have taken in TensorFlow 1.x or pure CUDA.
+
+Everything else in the PyTorch ecosystem is built on top of those two primitives. `torch.nn` is a collection of modules (linear layers, convolutions, attention blocks) that each wrap parameter tensors and define a forward computation. `torch.optim` contains optimizers (Adam, SGD) that read the gradients autograd produced and update the parameters. `torch.utils.data` handles batching and shuffling. Higher-level libraries like **PyTorch Lightning** and **Hugging Face Transformers** sit on top of this. The models you've run this week — ESM-2 (the language model inside ESMFold), OpenFold (a PyTorch reimplementation of AlphaFold2), RFdiffusion — are all ordinary PyTorch modules underneath, which means once you can read one, you can read the rest.
+
+### Tensors: The Core Data Structure
+
+A tensor is an N-dimensional array with a `dtype` (e.g. `float32`), a `shape` (e.g. `(batch, seq_len, hidden)`), and a `device` (e.g. `cuda:0`). You can think of it as "NumPy plus a GPU backend plus gradient tracking."
+
+```python
+import torch
+
+# Create a tensor on the CPU
+x = torch.randn(2, 3)              # shape (2, 3), float32, device=cpu
+print(x.shape, x.dtype, x.device)  # torch.Size([2, 3]) torch.float32 cpu
+
+# Move it to the GPU
+x = x.to("cuda")                   # shape (2, 3), float32, device=cuda:0
+
+# Operations stay on the same device
+y = x @ x.T                        # shape (2, 2), runs on GPU
+
+# Tensors with requires_grad=True participate in autograd
+w = torch.randn(3, 1, requires_grad=True, device="cuda")
+loss = (x @ w).sum()
+loss.backward()                    # computes dloss/dw
+print(w.grad.shape)                # torch.Size([3, 1])
+```
+
+::: {.callout-tip}
+## Rule of thumb
+If a function errors with "expected CUDA, got CPU" (or vice versa), you have tensors on different devices. Move them to the same device with `.to(device)` or `.cuda()` / `.cpu()`.
+:::
+
+### Autograd: The Gradient Engine
+
+Autograd is deceptively simple. Every operation you perform on a tensor with `requires_grad=True` is recorded on a graph. When you call `.backward()` on a scalar, PyTorch traverses that graph in reverse and fills in the `.grad` attribute of every leaf tensor. **You almost never implement gradients manually anymore** — autograd does it for you, which is the entire reason deep learning research moves at the pace it does.
+
+```python
+x = torch.tensor([2.0], requires_grad=True)
+y = x ** 3 + 2 * x          # y = x^3 + 2x
+y.backward()                # dy/dx = 3x^2 + 2
+print(x.grad)               # tensor([14.])  (= 3*4 + 2)
+```
+
+### The Standard Training Loop
+
+Every PyTorch training script you'll ever read follows this five-line skeleton. Once you see it, you can read any codebase:
+
+```python
+for batch in dataloader:
+    pred = model(batch.inputs)          # forward pass
+    loss = loss_fn(pred, batch.labels)  # compute scalar loss
+    optimizer.zero_grad()               # clear stale gradients
+    loss.backward()                     # autograd fills in .grad
+    optimizer.step()                    # update parameters
+```
+
+Inference is just the first two lines, wrapped in `with torch.no_grad():` to skip the graph-building overhead. That's exactly what's happening when you run AlphaFold2 or RFdiffusion — no training, just a forward pass through a pretrained model.
+
+## Why This Matters for Protein Design
+
+Understanding that every tool you've run this week is "a PyTorch model loaded from a checkpoint, fed tensors, returning tensors" gives you **three practical superpowers**:
+
+- **Debugging.** When a tool fails with a cryptic CUDA error, you can read the stack trace and see which tensor operation blew up — and often fix it by reducing batch size, truncating the input, or switching from `float32` to `float16`.
+- **Customization.** Most of these tools are just Python scripts around a PyTorch `nn.Module`. You can load the checkpoint yourself, patch the forward pass, or extract intermediate features (e.g. ESM-2 embeddings) for your own downstream analysis — none of which requires retraining anything.
+- **Efficiency.** If you're writing analysis scripts that process thousands of predictions, using PyTorch tensors (even on CPU) is often 10–100× faster than Python lists or pandas for numerical work.
+
+You don't need to implement attention from scratch. You do need to know what a tensor is, what `.to(device)` does, and why moving data between CPU and GPU has a cost — which is exactly what the [next lesson](2-cpu-vs-gpu.qmd) measures experimentally.
+
+## Practice Notebook
+
+Work through the interactive PyTorch tutorial notebook below. It walks through tensor creation, device management, autograd, and a minimal end-to-end training example — all in a single Colab you can run without any local setup.
+
+```{=html}
+<div style="display: flex; gap: 10px; flex-wrap: wrap; margin: 20px 0;">
+  <a href="https://colab.research.google.com/drive/1MAy6Sp1ee6OuMFV4inHxDCGibjzBq_sa" class="btn btn-primary" target="_blank">
+    <i class="bi bi-play-circle"></i> Open PyTorch Tutorial in Colab
+  </a>
+</div>
+```
+
+::: {.callout-tip}
+## Recommended: Enable GPU in Colab
+In Colab, go to **Runtime → Change runtime type → T4 GPU** before running the notebook. Several cells demonstrate GPU-specific behavior (tensor transfer, speedups) that only work with a GPU attached.
+:::
+
+## Key Takeaways
+
+::: {.callout-important}
+## Remember these principles
+
+1. **Tensors** are NumPy arrays with two superpowers: they can live on a GPU, and they can track gradients.
+2. **Autograd** builds a dynamic computation graph as you run code and backpropagates on demand — you almost never write gradients by hand.
+3. **Every PyTorch model follows the same pattern**: forward pass → loss → `.zero_grad()` → `.backward()` → `.step()`. Inference is just the forward pass inside `torch.no_grad()`.
+4. **Device placement is a source of bugs.** If you see "expected CUDA, got CPU," move your tensors to the same device with `.to(device)`.
+5. **Every ML tool this week is a PyTorch model under the hood** — reading one codebase teaches you how to navigate them all.
+:::
+
+## Questions to Consider
+
+After working through the notebook, think about:
+
+1. What happens to a tensor's `.grad` attribute if you run `.backward()` twice without calling `zero_grad()` in between?
+2. If AlphaFold2's forward pass for a 500-residue protein takes 2 GB of VRAM, what's different about the tensors compared to inference on a 50-residue peptide?
+3. Why do you think most protein-design tools disable gradient tracking (`torch.no_grad()` or `.eval()` mode) when running predictions?
+4. Where in the standard training loop would you add code to log loss values, save checkpoints, or profile GPU memory?
+
+---
+
+<div style="display: flex; justify-content: space-between; align-items: center;">
+<div>[← Thursday Overview](index.qmd)</div>
+<div>[Back to Home](../index.qmd)</div>
+<div>[CPU vs GPU →](2-cpu-vs-gpu.qmd)</div>
+</div>
