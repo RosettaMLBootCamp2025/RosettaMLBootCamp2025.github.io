@@ -244,6 +244,10 @@ ESM3 can generate different "tracks":
 
 ## Troubleshooting
 
+::: {.callout-warning}
+## Common Issues
+
+
 **HuggingFace authentication errors**:
 
 - Verify token has "Read" permission
@@ -270,3 +274,5 @@ ESM3 can generate different "tracks":
 - GPU strongly recommended
 - Reduce `num_steps` for faster (lower quality) results
 - Use ESM C for embeddings (no structure generation)
+:::
+

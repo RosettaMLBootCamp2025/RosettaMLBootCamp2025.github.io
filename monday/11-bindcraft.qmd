@@ -226,6 +226,10 @@ my_binder_designs/
 
 ## Troubleshooting
 
+::: {.callout-warning}
+## Common Issues
+
+
 **GPU memory errors**:
 
 - Reduce target PDB size (trim chains)
@@ -255,3 +259,5 @@ my_binder_designs/
 - This is normal - protein design takes time
 - Monitor trajectory count, not clock time
 - Large targets are slower
+:::
+

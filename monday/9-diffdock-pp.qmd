@@ -180,6 +180,10 @@ visualization/
 
 ## Troubleshooting
 
+::: {.callout-warning}
+## Common Issues
+
+
 **PyG installation fails**:
 
 - Ensure CUDA toolkit is loaded before installing
@@ -225,3 +229,5 @@ python -c "import torch; print(torch.cuda.is_available())"
 - Check for error messages in terminal output
 - Verify input files exist and are formatted correctly
 - Ensure `storage/` directory was created
+:::
+

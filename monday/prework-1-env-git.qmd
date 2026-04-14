@@ -112,6 +112,10 @@ Open the generated `verification_result.json` file to confirm that `verification
 
 ## Troubleshooting
 
+::: {.callout-warning}
+## Common Issues
+
+
 ### PyRosetta Installation Issues
 
 If PyRosetta fails to install:
@@ -141,6 +145,7 @@ If you have trouble with git:
 If you have trouble pushing to GitHub, you may need to set up authentication:
 - Use GitHub's personal access token: https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token
 - Or set up SSH keys: https://docs.github.com/en/authentication/connecting-to-github-with-ssh
+:::
 
 ## Questions and Getting Help
 

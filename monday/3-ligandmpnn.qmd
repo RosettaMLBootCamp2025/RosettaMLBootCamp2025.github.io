@@ -4,6 +4,20 @@ title: "3. LigandMPNN"
 
 LigandMPNN ([paper](https://www.biorxiv.org/content/10.1101/2023.12.22.573103v1), [code](https://github.com/dauparas/LigandMPNN)) is a deep learning model for context-aware protein sequence design. It extends ProteinMPNN to handle small molecules, metal ions, and other non-protein components in protein design tasks.
 
+## Live Workshop Session
+
+```{=html}
+<div class="workshop-companion">
+  <div class="wc-title">🎥 Live workshop recording — Inverse folding using ProteinMPNN</div>
+  <div class="wc-video">
+    <iframe src="https://www.youtube-nocookie.com/embed/o8JWPjSH1Ig"
+      title="Inverse folding using ProteinMPNN"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+      allowfullscreen loading="lazy"></iframe>
+  </div>
+</div>
+```
+
 ## Why Use LigandMPNN?
 
 - **Ligand-aware design**: Design sequences that account for bound cofactors, substrates, or drug molecules
@@ -217,6 +231,10 @@ MVKLTAEGSE...
 
 ## Troubleshooting
 
+::: {.callout-warning}
+## Common Issues
+
+
 **"RuntimeError: CUDA out of memory"**:
 
 - Use CPU instead: remove CUDA module and run without GPU
@@ -246,3 +264,5 @@ MVKLTAEGSE...
 - This is expected - downstream relaxation is recommended
 - Use PyRosetta or Rosetta FastRelax
 - Or validate with your structure prediction tool of choice
+:::
+

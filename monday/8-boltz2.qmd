@@ -241,6 +241,10 @@ boltz_results_<input>/
 
 ## Troubleshooting
 
+::: {.callout-warning}
+## Common Issues
+
+
 **Installation issues**:
 
 - Use a fresh environment
@@ -269,3 +273,5 @@ boltz_results_<input>/
 - Check YAML syntax (indentation matters)
 - Ensure SMILES strings are quoted
 - Verify sequence format
+:::
+

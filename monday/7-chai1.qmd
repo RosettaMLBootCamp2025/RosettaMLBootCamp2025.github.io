@@ -233,6 +233,10 @@ For quick tests without installation: [lab.chaidiscovery.com](https://lab.chaidi
 
 ## Troubleshooting
 
+::: {.callout-warning}
+## Common Issues
+
+
 **"bfloat16 not supported"**:
 
 - Your GPU doesn't support bfloat16
@@ -262,3 +266,5 @@ export CHAI_DOWNLOADS_DIR=/scratch/$USER/chai_models
 - First run downloads ~5-10 GB of model weights
 - Subsequent runs are much faster
 - Set `CHAI_DOWNLOADS_DIR` to avoid re-downloading
+:::
+

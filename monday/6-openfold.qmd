@@ -217,6 +217,10 @@ If generating MSAs locally, OpenFold needs these databases:
 
 ## Troubleshooting
 
+::: {.callout-warning}
+## Common Issues
+
+
 **Compilation errors during install**:
 ```bash
 # Ensure CUDA toolkit is loaded
@@ -254,6 +258,7 @@ bash scripts/download_openfold_params.sh openfold/resources
 # Verify files exist
 ls openfold/resources/*.pt
 ```
+:::
 
 ## For Researchers: Training
 

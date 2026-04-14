@@ -197,6 +197,10 @@ The trajectory files can be loaded into PyMOL to visualize the diffusion process
 
 ## Troubleshooting
 
+::: {.callout-warning}
+## Common Issues
+
+
 **Container not found**:
 
 - Ensure `.sif` file is in current directory
@@ -224,3 +228,5 @@ chmod +x rf_se3_diffusion.sif
 git submodule init
 git submodule update
 ```
+:::
+

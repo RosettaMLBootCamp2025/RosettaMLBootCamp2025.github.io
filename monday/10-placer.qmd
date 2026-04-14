@@ -242,6 +242,10 @@ output/
 
 ## Troubleshooting
 
+::: {.callout-warning}
+## Common Issues
+
+
 **Non-planar aromatic rings**:
 
 - Provide SDF/MOL2 file with `--ligand_file`
@@ -271,3 +275,5 @@ python run_PLACER.py \
 - PLACER is generally memory-efficient
 - If issues persist, try reducing ensemble size
 - Or use CPU with multiple cores
+:::
+

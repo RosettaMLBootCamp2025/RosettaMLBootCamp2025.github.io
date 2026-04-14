@@ -193,6 +193,10 @@ RFdiffusion2 uses Hydra for configuration. Key config options:
 
 ## Troubleshooting
 
+::: {.callout-warning}
+## Common Issues
+
+
 **"No GPU available" / extremely slow**:
 
 - Ensure `--nv` flag is included
@@ -224,3 +228,5 @@ chmod +x rf_diffusion/exec/bakerlab_rf_diffusion_aa.sif
 
 - Ensure PYTHONPATH is set correctly
 - Container may need `--bind` for additional paths
+:::
+

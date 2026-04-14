@@ -136,6 +136,10 @@ If yes, you are ready for the next module!
 
 ## Troubleshooting
 
+::: {.callout-warning}
+## Common Issues
+
+
 ### PyMOL Issues
 
 **PyMOL won't launch:**
@@ -156,6 +160,7 @@ If yes, you are ready for the next module!
 **Python extension not working:**
 - Make sure Python is installed (you should have this from HW1)
 - Restart VS Code after installing extensions
+:::
 
 ## Questions and Getting Help
 

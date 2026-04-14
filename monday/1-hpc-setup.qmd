@@ -279,6 +279,10 @@ If you get out-of-memory errors:
 
 ## Troubleshooting Common Issues
 
+::: {.callout-warning}
+## Common Issues
+
+
 ### "CUDA out of memory"
 - Request more GPU memory
 - Reduce batch size
@@ -307,3 +311,5 @@ mamba activate my_env
 ```bash
 chmod +x container.sif
 ```
+:::
+

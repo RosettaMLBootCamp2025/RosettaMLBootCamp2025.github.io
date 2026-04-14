@@ -241,6 +241,10 @@ Approximate GPU memory by sequence length:
 
 ## Troubleshooting
 
+::: {.callout-warning}
+## Common Issues
+
+
 **OpenFold installation fails**:
 
 - Verify `nvcc` is available:
@@ -279,3 +283,5 @@ python -c "import torch; print(torch.cuda.is_available())"
   ```bash
   export TORCH_HOME=/scratch/$USER/torch_cache
   ```
+:::
+
