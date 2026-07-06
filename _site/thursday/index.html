@@ -385,8 +385,11 @@ By the end of Thursday, you’ll be able to:
   // Update progress bar on homepage
   function updateProgressBar() {
     const progress = getProgress();
+    const progressSummary = document.getElementById('progress-summary');
     const totalModules = document.querySelectorAll('.module-checkbox').length ||
-                         parseInt(document.body.dataset.totalModules) || 8; // fallback
+                         parseInt(progressSummary?.dataset.totalModules, 10) ||
+                         parseInt(document.body.dataset.totalModules, 10) ||
+                         42;
     const completed = progress.completed.length;
     const percent = Math.round((completed / totalModules) * 100);
 

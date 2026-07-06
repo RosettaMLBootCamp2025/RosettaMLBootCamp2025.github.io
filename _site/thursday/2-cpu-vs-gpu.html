@@ -305,6 +305,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><strong>Writing efficient code</strong>: Knowing how to vectorize operations can speed up your analysis scripts by orders of magnitude</li>
 <li><strong>Resource planning</strong>: Understanding computational requirements helps you estimate job times and request appropriate resources</li>
 </ul>
+<div class="lesson-visual">
+<img src="../images/course-dashboard/cpu-gpu-benchmark.png" alt="Timing chart comparing Python loops, vectorized CPU operations, and vectorized GPU operations across input sizes.">
+<p class="lesson-visual-caption">
+The practical lesson is not simply “GPU is faster.” Vectorization usually matters first, and the GPU wins once the workload is large enough to justify transfer and startup overhead.
+</p>
+</div>
 </section>
 <section id="the-activity" class="level2">
 <h2 class="anchored" data-anchor-id="the-activity">The Activity</h2>
@@ -592,8 +598,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   // Update progress bar on homepage
   function updateProgressBar() {
     const progress = getProgress();
+    const progressSummary = document.getElementById('progress-summary');
     const totalModules = document.querySelectorAll('.module-checkbox').length ||
-                         parseInt(document.body.dataset.totalModules) || 8; // fallback
+                         parseInt(progressSummary?.dataset.totalModules, 10) ||
+                         parseInt(document.body.dataset.totalModules, 10) ||
+                         42;
     const completed = progress.completed.length;
     const percent = Math.round((completed / totalModules) * 100);
 

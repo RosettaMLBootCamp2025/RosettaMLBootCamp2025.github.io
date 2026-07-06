@@ -173,7 +173,7 @@
     "href": "thursday/2-cpu-vs-gpu.html#overview",
     "title": "2. CPU vs GPU Computing",
     "section": "Overview",
-    "text": "Overview\nModern machine learning and structural biology tools rely heavily on GPU acceleration. Understanding when and why GPUs outperform CPUs is essential for:\n\nRunning predictions efficiently: Tools like AlphaFold2, ESMFold, and RFdiffusion all benefit from GPU acceleration\nWriting efficient code: Knowing how to vectorize operations can speed up your analysis scripts by orders of magnitude\nResource planning: Understanding computational requirements helps you estimate job times and request appropriate resources",
+    "text": "Overview\nModern machine learning and structural biology tools rely heavily on GPU acceleration. Understanding when and why GPUs outperform CPUs is essential for:\n\nRunning predictions efficiently: Tools like AlphaFold2, ESMFold, and RFdiffusion all benefit from GPU acceleration\nWriting efficient code: Knowing how to vectorize operations can speed up your analysis scripts by orders of magnitude\nResource planning: Understanding computational requirements helps you estimate job times and request appropriate resources\n\n\n\n\nThe practical lesson is not simply “GPU is faster.” Vectorization usually matters first, and the GPU wins once the workload is large enough to justify transfer and startup overhead.",
     "crumbs": [
       "Thursday",
       "2. CPU vs GPU Computing"
@@ -448,7 +448,7 @@
     "href": "capstone/index.html#overview",
     "title": "Capstone Project",
     "section": "Overview",
-    "text": "Overview\nBinder design is often formulated as “given a target protein (and optionally a specific epitope on that protein), design a (often smaller) protein capable of binding the target”. It is one of the most ubiquitous protein design problems and has many potential applications, largely functioning by blocking or competing with natural interactions involving the target protein.\nIn this bootcamp, you’ll have the opportunity to explore the computational binder design problem across three different categories of targets. Students will choose from a curated list of targets that have been validated with BindCraft and other computational binder design tools.",
+    "text": "Overview\nBinder design is often formulated as “given a target protein (and optionally a specific epitope on that protein), design a (often smaller) protein capable of binding the target”. It is one of the most ubiquitous protein design problems and has many potential applications, largely functioning by blocking or competing with natural interactions involving the target protein.\nIn this bootcamp, you’ll have the opportunity to explore the computational binder design problem across three different categories of targets. Students will choose from a curated list of targets that have been validated with BindCraft and other computational binder design tools.\n\n  \n    \n    Treat the capstone as an iterative evidence trail. Each pass should record the target, settings, outputs, validation result, and reason for keeping or discarding a design.\n  \n  \n    \n    Start from a real binding face. A small set of high-value hotspot residues gives RFdiffusion or BindCraft a much clearer target than an unrestricted protein surface.",
     "crumbs": [
       "Capstone",
       "Capstone Project"
@@ -679,28 +679,21 @@
     "href": "index.html",
     "title": "ML Protein Design Bootcamp 2025",
     "section": "",
-    "text": "Welcome back! You were last on:   Resume where you left off\nWelcome to the ML Protein Design Bootcamp 2025! This self-paced course covers machine learning tools for protein structure prediction and design."
+    "text": "Welcome back! You were last on: \n  \n  Resume where you left off"
   },
   {
-    "objectID": "index.html#course-overview",
-    "href": "index.html#course-overview",
+    "objectID": "index.html#course-dashboard",
+    "href": "index.html#course-dashboard",
     "title": "ML Protein Design Bootcamp 2025",
-    "section": "Course Overview",
-    "text": "Course Overview\nThis bootcamp is organized into 4 days of content plus a capstone project. Each day contains sequential modules that build on each other.\n\n\nMonday\nTool Installation: Install essential ML protein design tools on your HPC cluster including LocalColabFold, ESMFold, LigandMPNN, RFdiffusion2, Chai-1, Boltz-2, and BindCraft.\n\n\nTuesday\nStructure Prediction: Learn protein visualization with PyMOL, predict structures with AlphaFold2, and compare prediction methods (ESMFold vs AF2) to understand their trade-offs.\n\n\nWednesday\nAdvanced Prediction & Design: Compare AlphaFold3 and Chai-1 on complex predictions, then design proteins with RFdiffusion including binders and symmetric oligomers.\n\n\nThursday\nDocking & Reflection: Explore CPU vs GPU computing with a hands-on PyTorch activity, learn molecular docking for protein-ligand interactions, and reflect on your learning before starting the capstone project.\n\n\nProtein Binder Capstone Project\nDe Novo Binder Design: Design a protein binder for a target of your choice using RFdiffusion, LigandMPNN, and structure prediction tools. Choose from therapeutic targets like PD-L1, enzymes like TEM-1 beta-lactamase, or allergens like Bet v 1."
-  },
-  {
-    "objectID": "index.html#your-progress",
-    "href": "index.html#your-progress",
-    "title": "ML Protein Design Bootcamp 2025",
-    "section": "Your Progress",
-    "text": "Your Progress\n\n\nCompleted modules: 0\n\n\n&lt;div id=\"progress-bar\" class=\"progress-bar\" role=\"progressbar\" style=\"width: 0%;\" aria-valuenow=\"0\" aria-valuemin=\"0\" aria-valuemax=\"100\"&gt;0%&lt;/div&gt;\n\n\n\nReset Progress"
+    "section": "Course Dashboard",
+    "text": "Course Dashboard\n\n  \n    \n    \n      MondayPre-work + 13 modules\n      Tool Installation\n      Set up HPC access, CUDA, conda environments, containers, and the core prediction and design tools.\n      Required foundationOpen Monday -&gt;\n    \n  \n\n  \n    \n    \n      Tuesday4 modules\n      Structure Prediction\n      Use PyMOL, AlphaFold2, and ESMFold to predict structures and interpret confidence instead of treating outputs as answers.\n      Analysis heavyOpen Tuesday -&gt;\n    \n  \n\n  \n    \n    \n      Wednesday2 modules\n      Advanced Prediction and Design\n      Compare complex prediction tools, then generate and inspect protein backbones with RFdiffusion workflows.\n      Design workflowOpen Wednesday -&gt;\n    \n  \n\n  \n    \n    \n      Thursday4 modules\n      Compute, Docking, and Reflection\n      Connect PyTorch basics to GPU performance, docking intuition, and planning decisions for the capstone.\n      Compute intuitionOpen Thursday -&gt;\n    \n  \n\n  \n    \n    \n      CapstoneCurated target set\n      Protein Binder Design Project\n      Choose a target, define a binding face, generate binders, design sequences, validate structures, and document the rationale behind your choices.\n      ProjectOpen Capstone -&gt;"
   },
   {
     "objectID": "index.html#getting-started",
     "href": "index.html#getting-started",
     "title": "ML Protein Design Bootcamp 2025",
     "section": "Getting Started",
-    "text": "Getting Started\n\nChoose a day from the navigation above or the cards below\nWork through modules in order - each builds on the previous\nCheck off sections as you complete them - your progress is saved automatically\nReturn anytime - use the “Resume” button to pick up where you left off\n\n\nReport an Issue / Ask a Question (GitHub account required)"
+    "text": "Getting Started\n\nStart with the Monday HPC setup if you have not confirmed GPU access and environment paths.\nMove through the days in order when possible; later activities assume earlier tools and concepts.\nUse the checkboxes on setup pages only after the command, output, or file exists.\nReturn anytime and use the resume banner to pick up where you left off.\n\nReport an Issue / Ask a Question (GitHub account required)"
   },
   {
     "objectID": "monday/4-rfdiffusion2.html",
@@ -1136,7 +1129,7 @@
     "href": "monday/index.html",
     "title": "Monday: Tool Installation",
     "section": "",
-    "text": "Monday is dedicated to installing the essential ML-based protein design and structure prediction tools on your HPC cluster. Each module guides you through installing a specific tool, from structure predictors like LocalColabFold and ESMFold to design tools like LigandMPNN and BindCraft.\n\n\nBy the end of Monday, you’ll be able to:\n\n\nRequest GPU resources and navigate a module-based HPC environment (CUDA, conda, containers).\nInstall and smoke-test each of the core structure prediction tools (LocalColabFold, ESMFold, Chai-1, Boltz-2) on your cluster.\nInstall and smoke-test the core design and docking tools (LigandMPNN, RFdiffusion2, DiffDock-PP, PLACER, BindCraft).\nExplain, at a high level, what each tool takes as input, produces as output, and when you’d reach for it.\nTroubleshoot the most common install failures (CUDA mismatch, missing weights, environment conflicts) well enough to keep moving.",
+    "text": "Monday is dedicated to installing the essential ML-based protein design and structure prediction tools on your HPC cluster. Each module guides you through installing a specific tool, from structure predictors like LocalColabFold and ESMFold to design tools like LigandMPNN and BindCraft.\n\n\nBy the end of Monday, you’ll be able to:\n\n\nRequest GPU resources and navigate a module-based HPC environment (CUDA, conda, containers).\nInstall and confirm each of the core structure prediction tools (LocalColabFold, ESMFold, Chai-1, Boltz-2) on your cluster.\nInstall and confirm the core design and docking tools (LigandMPNN, RFdiffusion2, DiffDock-PP, PLACER, BindCraft).\nExplain, at a high level, what each tool takes as input, produces as output, and when you’d reach for it.\nTroubleshoot the most common install failures (CUDA mismatch, missing weights, environment conflicts) well enough to keep moving.\n\n\n\n\n\nUse this path as the mental model for Monday: prepare on a login node, request GPU resources through the scheduler, then confirm the tool works on the GPU node before moving on.",
     "crumbs": [
       "Monday",
       "Monday: Tool Installation"
@@ -1147,7 +1140,7 @@
     "href": "monday/index.html#overview",
     "title": "Monday: Tool Installation",
     "section": "",
-    "text": "Monday is dedicated to installing the essential ML-based protein design and structure prediction tools on your HPC cluster. Each module guides you through installing a specific tool, from structure predictors like LocalColabFold and ESMFold to design tools like LigandMPNN and BindCraft.\n\n\nBy the end of Monday, you’ll be able to:\n\n\nRequest GPU resources and navigate a module-based HPC environment (CUDA, conda, containers).\nInstall and smoke-test each of the core structure prediction tools (LocalColabFold, ESMFold, Chai-1, Boltz-2) on your cluster.\nInstall and smoke-test the core design and docking tools (LigandMPNN, RFdiffusion2, DiffDock-PP, PLACER, BindCraft).\nExplain, at a high level, what each tool takes as input, produces as output, and when you’d reach for it.\nTroubleshoot the most common install failures (CUDA mismatch, missing weights, environment conflicts) well enough to keep moving.",
+    "text": "Monday is dedicated to installing the essential ML-based protein design and structure prediction tools on your HPC cluster. Each module guides you through installing a specific tool, from structure predictors like LocalColabFold and ESMFold to design tools like LigandMPNN and BindCraft.\n\n\nBy the end of Monday, you’ll be able to:\n\n\nRequest GPU resources and navigate a module-based HPC environment (CUDA, conda, containers).\nInstall and confirm each of the core structure prediction tools (LocalColabFold, ESMFold, Chai-1, Boltz-2) on your cluster.\nInstall and confirm the core design and docking tools (LigandMPNN, RFdiffusion2, DiffDock-PP, PLACER, BindCraft).\nExplain, at a high level, what each tool takes as input, produces as output, and when you’d reach for it.\nTroubleshoot the most common install failures (CUDA mismatch, missing weights, environment conflicts) well enough to keep moving.\n\n\n\n\n\nUse this path as the mental model for Monday: prepare on a login node, request GPU resources through the scheduler, then confirm the tool works on the GPU node before moving on.",
     "crumbs": [
       "Monday",
       "Monday: Tool Installation"
@@ -3186,7 +3179,7 @@
     "href": "tuesday/4-esmfold.html#learning-objectives",
     "title": "4. ESMFold vs. AlphaFold2",
     "section": "Learning Objectives",
-    "text": "Learning Objectives\n\nUnderstand ESMFold’s language model approach vs AF2’s MSA-based approach\nWrite Python code to use ESMFold following official documentation\nCompare prediction quality, speed, and confidence across different models\nMake informed decisions about model selection for different use cases\nCritically evaluate strengths and limitations of different prediction methods",
+    "text": "Learning Objectives\n\nUnderstand ESMFold’s language model approach vs AF2’s MSA-based approach\nWrite Python code to use ESMFold following official documentation\nCompare prediction quality, speed, and confidence across different models\nMake informed decisions about model selection for different use cases\nCritically evaluate strengths and limitations of different prediction methods\n\n\n\n\nA useful structure-prediction review pairs residue-level confidence with pairwise uncertainty. High pLDDT alone is not enough if the PAE map says domains are uncertain relative to one another.",
     "crumbs": [
       "Tuesday",
       "4. ESMFold vs. AlphaFold2"
@@ -3505,7 +3498,7 @@
     "href": "wednesday/1-rfdiffusion.html",
     "title": "2. RFdiffusion: Advanced Design",
     "section": "",
-    "text": "🎥 Live workshop recording — Backbone generation in protein design workflows",
+    "text": "🎥 Live workshop recording — Backbone generation in protein design workflows\n  \n    \n  \n\n\n\n\nAfter each RFdiffusion run, inspect more than whether files were written. Look for topology, diversity, motif retention, hotspot contact, and whether symmetry or chain breaks behaved as intended.",
     "crumbs": [
       "Wednesday",
       "2. RFdiffusion: Advanced Design"
@@ -3516,7 +3509,7 @@
     "href": "wednesday/1-rfdiffusion.html#live-workshop-session",
     "title": "2. RFdiffusion: Advanced Design",
     "section": "",
-    "text": "🎥 Live workshop recording — Backbone generation in protein design workflows",
+    "text": "🎥 Live workshop recording — Backbone generation in protein design workflows\n  \n    \n  \n\n\n\n\nAfter each RFdiffusion run, inspect more than whether files were written. Look for topology, diversity, motif retention, hotspot contact, and whether symmetry or chain breaks behaved as intended.",
     "crumbs": [
       "Wednesday",
       "2. RFdiffusion: Advanced Design"

@@ -240,6 +240,12 @@ ul.task-list li input[type="checkbox"] {
     <iframe src="https://www.youtube-nocookie.com/embed/oCmGYVh7tgQ" title="Backbone generation in protein design workflows" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="" loading="lazy"></iframe>
   </div>
 </div>
+<div class="lesson-visual">
+<img src="../images/course-dashboard/rfdiffusion-output-gallery.png" alt="RFdiffusion output gallery showing unconditional designs, motif scaffolds, hotspot binders, and symmetric oligomers.">
+<p class="lesson-visual-caption">
+After each RFdiffusion run, inspect more than whether files were written. Look for topology, diversity, motif retention, hotspot contact, and whether symmetry or chain breaks behaved as intended.
+</p>
+</div>
 </section>
 <section id="hands-on-exercise" class="level2">
 <h2 class="anchored" data-anchor-id="hands-on-exercise">Hands-On Exercise</h2>
@@ -599,8 +605,11 @@ ul.task-list li input[type="checkbox"] {
   // Update progress bar on homepage
   function updateProgressBar() {
     const progress = getProgress();
+    const progressSummary = document.getElementById('progress-summary');
     const totalModules = document.querySelectorAll('.module-checkbox').length ||
-                         parseInt(document.body.dataset.totalModules) || 8; // fallback
+                         parseInt(progressSummary?.dataset.totalModules, 10) ||
+                         parseInt(document.body.dataset.totalModules, 10) ||
+                         42;
     const completed = progress.completed.length;
     const percent = Math.round((completed / totalModules) * 100);
 
