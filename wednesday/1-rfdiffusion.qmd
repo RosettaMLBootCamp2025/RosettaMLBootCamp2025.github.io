@@ -17,6 +17,11 @@ title: "2. RFdiffusion: Advanced Design"
 ```
 
 
+<div class="lesson-visual">
+  <img src="../images/course-dashboard/rfdiffusion-output-gallery.png" alt="RFdiffusion output gallery showing unconditional designs, motif scaffolds, hotspot binders, and symmetric oligomers.">
+  <p class="lesson-visual-caption">After each RFdiffusion run, inspect more than whether files were written. Look for topology, diversity, motif retention, hotspot contact, and whether symmetry or chain breaks behaved as intended.</p>
+</div>
+
 ## Hands-On Exercise
 
 1. **Setup for the activity.**

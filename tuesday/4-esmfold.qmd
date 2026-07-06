@@ -35,6 +35,11 @@ But there are trade-offs—ESMFold may miss evolutionary insights that help AF2 
 4. **Make informed decisions** about model selection for different use cases
 5. **Critically evaluate** strengths and limitations of different prediction methods
 
+<div class="lesson-visual">
+  <img src="../images/course-dashboard/prediction-confidence.png" alt="Example confidence dashboard with a pLDDT profile beside a PAE heatmap.">
+  <p class="lesson-visual-caption">A useful structure-prediction review pairs residue-level confidence with pairwise uncertainty. High pLDDT alone is not enough if the PAE map says domains are uncertain relative to one another.</p>
+</div>
+
 ---
 
 ## Hands-On Exercise

@@ -33,6 +33,11 @@ Modern machine learning and structural biology tools rely heavily on GPU acceler
 - **Writing efficient code**: Knowing how to vectorize operations can speed up your analysis scripts by orders of magnitude
 - **Resource planning**: Understanding computational requirements helps you estimate job times and request appropriate resources
 
+<div class="lesson-visual">
+  <img src="../images/course-dashboard/cpu-gpu-benchmark.png" alt="Timing chart comparing Python loops, vectorized CPU operations, and vectorized GPU operations across input sizes.">
+  <p class="lesson-visual-caption">The practical lesson is not simply "GPU is faster." Vectorization usually matters first, and the GPU wins once the workload is large enough to justify transfer and startup overhead.</p>
+</div>
+
 ## The Activity
 
 In this hands-on notebook, you'll compute dot products using three different approaches:

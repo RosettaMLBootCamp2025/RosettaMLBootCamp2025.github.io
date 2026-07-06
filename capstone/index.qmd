@@ -36,6 +36,19 @@ Binder design is often formulated as "given a target protein (and optionally a s
 
 In this bootcamp, you'll have the opportunity to explore the computational binder design problem across three different categories of targets. Students will choose from a curated list of targets that have been validated with BindCraft and other computational binder design tools.
 
+```{=html}
+<div class="visual-grid">
+  <div class="lesson-visual">
+    <img src="../images/course-dashboard/capstone-workflow.png" alt="Capstone workflow from target selection through backbone generation, sequence design, validation, and final selection.">
+    <p class="lesson-visual-caption">Treat the capstone as an iterative evidence trail. Each pass should record the target, settings, outputs, validation result, and reason for keeping or discarding a design.</p>
+  </div>
+  <div class="lesson-visual">
+    <img src="../images/course-dashboard/binder-target-interface.png" alt="Binder design target interface with hotspot residues on the target and a designed binder approaching the surface.">
+    <p class="lesson-visual-caption">Start from a real binding face. A small set of high-value hotspot residues gives RFdiffusion or BindCraft a much clearer target than an unrestricted protein surface.</p>
+  </div>
+</div>
+```
+
 ## Target Categories and Options
 
 ### Immune Checkpoint / Receptor Targets
