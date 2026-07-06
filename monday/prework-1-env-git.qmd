@@ -1,5 +1,8 @@
 ---
 title: "Pre-work 1: Environment Setup & GitHub Basics"
+resources:
+  - files/environment.yml
+  - files/verify_setup.py
 ---
 
 ## Overview
@@ -51,13 +54,24 @@ Verify installation by running:
 conda --version
 ```
 
-### Step 2: Create Your Working Directory
+### Step 2: Create Your Working Directory & Download the Setup Files
 
 Since this is a self-guided bootcamp, you'll need a place to organize your files.
 
 1.  Create a new folder for the bootcamp (e.g., `RosettaBootcamp2025`).
 2.  Inside that folder, create a subfolder for this module (e.g., `HW1-setup`).
-3.  Download the `environment.yml` and `verify_setup.py` files provided in the course materials (or create them manually if needed).
+3.  Download the two setup files below and save them **into that `HW1-setup` folder**:
+
+<a href="files/environment.yml" class="btn btn-primary" download>
+  <i class="bi bi-download"></i> Download environment.yml
+</a>
+<a href="files/verify_setup.py" class="btn btn-primary" download>
+  <i class="bi bi-download"></i> Download verify_setup.py
+</a>
+
+::: {.callout-tip}
+If your browser opens a file in a new tab instead of downloading it, right-click the button and choose **"Save link as…"**. Make sure the files keep their exact names (`environment.yml` and `verify_setup.py`).
+:::
 
 ### Step 3: Create the Conda Environment
 

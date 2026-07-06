@@ -1,0 +1,17 @@
+name: bootcamp2025_HW1
+channels:
+  - https://conda.rosettacommons.org
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.11
+  - pyrosetta
+  - numpy
+  - pandas
+  - matplotlib
+  - seaborn
+  - jupyter
+  - ipython
+  - scipy
+  - scikit-learn
+  - biopython
