@@ -344,6 +344,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><strong>Make informed decisions</strong> about model selection for different use cases</li>
 <li><strong>Critically evaluate</strong> strengths and limitations of different prediction methods</li>
 </ol>
+<div class="lesson-visual">
+<img src="../images/course-dashboard/prediction-confidence.png" alt="Example confidence dashboard with a pLDDT profile beside a PAE heatmap.">
+<p class="lesson-visual-caption">
+A useful structure-prediction review pairs residue-level confidence with pairwise uncertainty. High pLDDT alone is not enough if the PAE map says domains are uncertain relative to one another.
+</p>
+</div>
 <hr>
 </section>
 <section id="hands-on-exercise" class="level2">
@@ -800,8 +806,11 @@ Use ESMFold prediction
   // Update progress bar on homepage
   function updateProgressBar() {
     const progress = getProgress();
+    const progressSummary = document.getElementById('progress-summary');
     const totalModules = document.querySelectorAll('.module-checkbox').length ||
-                         parseInt(document.body.dataset.totalModules) || 8; // fallback
+                         parseInt(progressSummary?.dataset.totalModules, 10) ||
+                         parseInt(document.body.dataset.totalModules, 10) ||
+                         42;
     const completed = progress.completed.length;
     const percent = Math.round((completed / totalModules) * 100);
 

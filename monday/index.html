@@ -325,11 +325,17 @@ By the end of Monday, you’ll be able to:
 </div>
 <ul>
 <li>Request GPU resources and navigate a module-based HPC environment (CUDA, conda, containers).</li>
-<li>Install and smoke-test each of the core structure prediction tools (LocalColabFold, ESMFold, Chai-1, Boltz-2) on your cluster.</li>
-<li>Install and smoke-test the core design and docking tools (LigandMPNN, RFdiffusion2, DiffDock-PP, PLACER, BindCraft).</li>
+<li>Install and confirm each of the core structure prediction tools (LocalColabFold, ESMFold, Chai-1, Boltz-2) on your cluster.</li>
+<li>Install and confirm the core design and docking tools (LigandMPNN, RFdiffusion2, DiffDock-PP, PLACER, BindCraft).</li>
 <li>Explain, at a high level, what each tool takes as input, produces as output, and when you’d reach for it.</li>
 <li>Troubleshoot the most common install failures (CUDA mismatch, missing weights, environment conflicts) well enough to keep moving.</li>
 </ul>
+</div>
+<div class="lesson-visual">
+<img src="../images/course-dashboard/hpc-setup-path.png" alt="HPC setup path showing login node downloads, scheduler submission, GPU execution, and verification commands.">
+<p class="lesson-visual-caption">
+Use this path as the mental model for Monday: prepare on a login node, request GPU resources through the scheduler, then confirm the tool works on the GPU node before moving on.
+</p>
 </div>
 </section>
 <section id="pre-work" class="level2">
@@ -715,8 +721,11 @@ By the end of Monday, you’ll be able to:
   // Update progress bar on homepage
   function updateProgressBar() {
     const progress = getProgress();
+    const progressSummary = document.getElementById('progress-summary');
     const totalModules = document.querySelectorAll('.module-checkbox').length ||
-                         parseInt(document.body.dataset.totalModules) || 8; // fallback
+                         parseInt(progressSummary?.dataset.totalModules, 10) ||
+                         parseInt(document.body.dataset.totalModules, 10) ||
+                         42;
     const completed = progress.completed.length;
     const percent = Math.round((completed / totalModules) * 100);
 

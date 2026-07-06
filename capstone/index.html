@@ -289,6 +289,16 @@ ul.task-list li input[type="checkbox"] {
 <h2 class="anchored" data-anchor-id="overview">Overview</h2>
 <p>Binder design is often formulated as “given a target protein (and optionally a specific epitope on that protein), design a (often smaller) protein capable of binding the target”. It is one of the most ubiquitous protein design problems and has many potential applications, largely functioning by blocking or competing with natural interactions involving the target protein.</p>
 <p>In this bootcamp, you’ll have the opportunity to explore the computational binder design problem across three different categories of targets. Students will choose from a curated list of targets that have been validated with BindCraft and other computational binder design tools.</p>
+<div class="visual-grid">
+  <div class="lesson-visual">
+    <img src="../images/course-dashboard/capstone-workflow.png" alt="Capstone workflow from target selection through backbone generation, sequence design, validation, and final selection.">
+    <p class="lesson-visual-caption">Treat the capstone as an iterative evidence trail. Each pass should record the target, settings, outputs, validation result, and reason for keeping or discarding a design.</p>
+  </div>
+  <div class="lesson-visual">
+    <img src="../images/course-dashboard/binder-target-interface.png" alt="Binder design target interface with hotspot residues on the target and a designed binder approaching the surface.">
+    <p class="lesson-visual-caption">Start from a real binding face. A small set of high-value hotspot residues gives RFdiffusion or BindCraft a much clearer target than an unrestricted protein surface.</p>
+  </div>
+</div>
 </section>
 <section id="target-categories-and-options" class="level2">
 <h2 class="anchored" data-anchor-id="target-categories-and-options">Target Categories and Options</h2>
@@ -507,8 +517,11 @@ Note
   // Update progress bar on homepage
   function updateProgressBar() {
     const progress = getProgress();
+    const progressSummary = document.getElementById('progress-summary');
     const totalModules = document.querySelectorAll('.module-checkbox').length ||
-                         parseInt(document.body.dataset.totalModules) || 8; // fallback
+                         parseInt(progressSummary?.dataset.totalModules, 10) ||
+                         parseInt(document.body.dataset.totalModules, 10) ||
+                         42;
     const completed = progress.completed.length;
     const percent = Math.round((completed / totalModules) * 100);
 
