@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.37">
+<meta name="generator" content="quarto-1.9.38">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -74,10 +74,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-6dce83697ef593b6f21f66f8d1a1696b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-637a8987fd156daea465eecdbde71ac9.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -317,7 +317,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#instructions" id="toc-instructions" class="nav-link" data-scroll-target="#instructions">Instructions</a>
   <ul class="collapse">
   <li><a href="#step-1-install-anaconda-or-alternative" id="toc-step-1-install-anaconda-or-alternative" class="nav-link" data-scroll-target="#step-1-install-anaconda-or-alternative">Step 1: Install Anaconda (or Alternative)</a></li>
-  <li><a href="#step-2-create-your-working-directory" id="toc-step-2-create-your-working-directory" class="nav-link" data-scroll-target="#step-2-create-your-working-directory">Step 2: Create Your Working Directory</a></li>
+  <li><a href="#step-2-create-your-working-directory-download-the-setup-files" id="toc-step-2-create-your-working-directory-download-the-setup-files" class="nav-link" data-scroll-target="#step-2-create-your-working-directory-download-the-setup-files">Step 2: Create Your Working Directory &amp; Download the Setup Files</a></li>
   <li><a href="#step-3-create-the-conda-environment" id="toc-step-3-create-the-conda-environment" class="nav-link" data-scroll-target="#step-3-create-the-conda-environment">Step 3: Create the Conda Environment</a></li>
   <li><a href="#step-4-activate-the-environment" id="toc-step-4-activate-the-environment" class="nav-link" data-scroll-target="#step-4-activate-the-environment">Step 4: Activate the Environment</a></li>
   <li><a href="#step-5-run-the-verification-script" id="toc-step-5-run-the-verification-script" class="nav-link" data-scroll-target="#step-5-run-the-verification-script">Step 5: Run the Verification Script</a></li>
@@ -385,14 +385,28 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Verify installation by running:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> <span class="at">--version</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="step-2-create-your-working-directory" class="level3">
-<h3 class="anchored" data-anchor-id="step-2-create-your-working-directory">Step 2: Create Your Working Directory</h3>
+<section id="step-2-create-your-working-directory-download-the-setup-files" class="level3">
+<h3 class="anchored" data-anchor-id="step-2-create-your-working-directory-download-the-setup-files">Step 2: Create Your Working Directory &amp; Download the Setup Files</h3>
 <p>Since this is a self-guided bootcamp, you’ll need a place to organize your files.</p>
 <ol type="1">
 <li>Create a new folder for the bootcamp (e.g., <code>RosettaBootcamp2025</code>).</li>
 <li>Inside that folder, create a subfolder for this module (e.g., <code>HW1-setup</code>).</li>
-<li>Download the <code>environment.yml</code> and <code>verify_setup.py</code> files provided in the course materials (or create them manually if needed).</li>
+<li>Download the two setup files below and save them <strong>into that <code>HW1-setup</code> folder</strong>:</li>
 </ol>
+<p><a href="files/environment.yml" class="btn btn-primary" download=""> <i class="bi bi-download"></i> Download environment.yml </a> <a href="files/verify_setup.py" class="btn btn-primary" download=""> <i class="bi bi-download"></i> Download verify_setup.py </a></p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If your browser opens a file in a new tab instead of downloading it, right-click the button and choose <strong>“Save link as…”</strong>. Make sure the files keep their exact names (<code>environment.yml</code> and <code>verify_setup.py</code>).</p>
+</div>
+</div>
 </section>
 <section id="step-3-create-the-conda-environment" class="level3">
 <h3 class="anchored" data-anchor-id="step-3-create-the-conda-environment">Step 3: Create the Conda Environment</h3>
