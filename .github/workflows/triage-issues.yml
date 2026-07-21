@@ -1,0 +1,23 @@
+name: Triage new issues
+
+on:
+  issues:
+    types:
+      - opened
+
+permissions:
+  contents: read
+
+jobs:
+  assign:
+    name: Assign new issue
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    permissions:
+      issues: write
+    steps:
+      - name: Assign issue to Ian
+        env:
+          GH_TOKEN: ${{ github.token }}
+          ISSUE_URL: ${{ github.event.issue.html_url }}
+        run: gh issue edit "$ISSUE_URL" --add-assignee ianandersonlol

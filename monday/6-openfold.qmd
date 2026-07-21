@@ -272,4 +272,4 @@ python train_openfold.py \
     --config_preset initial_training
 ```
 
-See the [training documentation](https://openfold.readthedocs.io/en/latest/Training.html) for details.
+See the [training documentation](https://openfold.readthedocs.io/en/stable/Training_OpenFold.html) for details.

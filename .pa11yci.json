@@ -1,0 +1,22 @@
+{
+  "defaults": {
+    "ignore": [
+      "frame-tested"
+    ],
+    "runners": [
+      "axe"
+    ],
+    "standard": "WCAG2AA",
+    "timeout": 30000,
+    "wait": 250
+  },
+  "concurrency": 2,
+  "urls": [
+    "http://127.0.0.1:8000/",
+    "http://127.0.0.1:8000/monday/",
+    "http://127.0.0.1:8000/tuesday/",
+    "http://127.0.0.1:8000/wednesday/",
+    "http://127.0.0.1:8000/thursday/",
+    "http://127.0.0.1:8000/capstone/"
+  ]
+}

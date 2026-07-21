@@ -184,7 +184,7 @@ If you want to deepen your understanding before starting the capstone:
 
 ### Communities
 - [RosettaCommons Forums](https://www.rosettacommons.org/forum)
-- [OpenFold Discussions](https://github.com/aqlaboratory/openfold/discussions)
+- [OpenFold Issues](https://github.com/aqlaboratory/openfold/issues)
 - Protein design Twitter/X community (#proteindesign)
 
 ---

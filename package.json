@@ -1,0 +1,10 @@
+{
+  "name": "rosetta-ml-bootcamp-site",
+  "private": true,
+  "scripts": {
+    "test:accessibility": "pa11y-ci"
+  },
+  "devDependencies": {
+    "pa11y-ci": "4.1.1"
+  }
+}

@@ -34,7 +34,7 @@ toc: false
   <div class="progress-readout">
     <div><strong><span id="completed-count">0</span></strong> completed checkpoints</div>
     <div class="progress progress-dashboard">
-      <div id="progress-bar" class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>
+      <div id="progress-bar" class="progress-bar" role="progressbar" aria-label="Course completion" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>
     </div>
     <button onclick="clearProgress()" class="btn btn-outline-secondary btn-sm">Reset Progress</button>
   </div>

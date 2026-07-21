@@ -1,0 +1,3 @@
+# These publisher pages reject automated clients while remaining browser-accessible.
+^https://www\.science\.org/doi/
+^https://doi\.org/10\.4049/jimmunol\.

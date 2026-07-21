@@ -212,7 +212,7 @@ png my_figure.png, dpi=300
 ::: {.callout-note}
 ## More PyMOL Resources
 - **PyMOL Wiki**: [pymolwiki.org](https://pymolwiki.org) - Comprehensive command reference
-- **Tutorial PDF**: [PyRosetta Workshop PyMOL Tutorial](https://graylab.jhu.edu/pyrosetta/downloads/documentation/pyrosetta4_online_format/PyRosetta4_Workshop1_PyMOL.pdf)
+- **Tutorial PDF**: [PyRosetta Workshop PyMOL Tutorial](files/PyMOL.pdf)
 :::
 
 ### Resources

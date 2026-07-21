@@ -24,8 +24,7 @@ website:
     right:
       - href: about.qmd
         text: About
-      - icon: github
-        href: https://github.com/RosettaMLBootCamp2025/RosettaMLBootCamp2025.github.io/issues/new
+      - href: https://github.com/RosettaMLBootCamp2025/RosettaMLBootCamp2025.github.io/issues/new
         text: Report Issue
   sidebar:
     - title: "Monday"

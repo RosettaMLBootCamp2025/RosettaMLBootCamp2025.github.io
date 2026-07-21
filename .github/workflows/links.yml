@@ -1,0 +1,43 @@
+name: Check links
+
+on:
+  schedule:
+    - cron: "17 8 1 * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: monthly-link-check
+  cancel-in-progress: true
+
+jobs:
+  links:
+    name: Check rendered site links
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
+
+      - name: Set up Quarto
+        uses: quarto-dev/quarto-actions/setup@8a96df13519ee81fd526f2dfca5962811136661b # v2.2.0
+
+      - name: Render site
+        run: quarto render
+
+      - name: Check internal and external links
+        uses: lycheeverse/lychee-action@e7477775783ea5526144ba13e8db5eec57747ce8 # v2.9.0
+        with:
+          args: >-
+            --root-dir "${{ github.workspace }}/_site"
+            --verbose
+            --no-progress
+            --max-retries 2
+            --retry-wait-time 2
+            './_site/**/*.html'
+          fail: true
+          failIfEmpty: true
+          jobSummary: true
+          token: ${{ secrets.GITHUB_TOKEN }}
