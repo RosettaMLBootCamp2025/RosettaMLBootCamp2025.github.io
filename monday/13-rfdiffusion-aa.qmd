@@ -15,6 +15,13 @@ RFdiffusion All Atom ([code](https://github.com/baker-laboratory/rf_diffusion_al
 
 **Related Tools**: For the newer version, see [RFdiffusion2](4-rfdiffusion2.qmd). For sequence design, see [LigandMPNN](3-ligandmpnn.qmd).
 
+<!-- course-tool-pin: rfdiffusion-aa -->
+
+::: {.callout-note}
+## Recorded course pin
+The commands below use RFdiffusion All Atom commit `f913a19e16f30858ce7a724fe028475b1871319c` (reviewed 2026-08-30). The container and weights remain external downloads. See [Reproducible Setup & Compute Fallbacks](reproducibility.qmd) for the verification and analysis-only routes.
+:::
+
 ## Resource Requirements
 
 | Resource | Minimum | Recommended | Notes |
@@ -50,6 +57,8 @@ apptainer --version
 ```bash
 git clone https://github.com/baker-laboratory/rf_diffusion_all_atom.git
 cd rf_diffusion_all_atom
+git checkout --detach f913a19e16f30858ce7a724fe028475b1871319c
+git submodule update --init --recursive
 ```
 
 2. Download the Singularity container:
@@ -229,4 +238,3 @@ git submodule init
 git submodule update
 ```
 :::
-

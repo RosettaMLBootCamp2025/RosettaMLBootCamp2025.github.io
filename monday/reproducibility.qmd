@@ -1,0 +1,100 @@
+---
+title: "Reproducible Setup & Compute Fallbacks"
+subtitle: "Pins, preflight checks, and a route through the course when a GPU is unavailable"
+---
+
+## What the version record means
+
+Model software changes quickly. Every installation lesson now records an immutable package version or Git commit in [`data/tools.yml`](../data/tools.yml), and every capstone target uses the structure, chain, and hotspots in [`data/targets.yml`](../data/targets.yml).
+
+The pins were checked against the upstream projects on **August 30, 2026**. A pin makes the instructions repeatable; it does **not** prove that every GPU, driver, cluster module, or model download has been tested. In the tool manifest, a blank `last_full_smoke_test` deliberately means that a maintainer has not recorded a complete end-to-end rerun. Do not interpret “pinned” as “guaranteed on this cluster.”
+
+::: {.callout-important}
+## Run a one-design smoke test first
+
+Before requesting a long allocation, run the smallest test in the lesson and save its command, output log, environment export, GPU name, driver, and date. That record is the evidence that *your* stack works.
+:::
+
+## 1. Run the course preflight
+
+From the course repository:
+
+```bash
+python scripts/preflight.py --output preflight-report.txt
+```
+
+Select a tool to add its GPU and container expectations:
+
+```bash
+python scripts/preflight.py --tool rfdiffusion-original --check-network
+```
+
+`PASS` means the dependency was detected. `WARN` means resolve it or take the documented fallback. `INFO` records useful context but does not block the course. The script is read-only except when you explicitly request an output report.
+
+## 2. Keep environments isolated and record the solve
+
+Use one environment per model. After a successful smoke test, save both a human-readable history and a fully resolved record:
+
+```bash
+mkdir -p run-record
+conda env export --from-history > run-record/environment-history.yml
+conda list --explicit > run-record/environment-explicit.txt
+python -m pip freeze > run-record/pip-freeze.txt
+nvidia-smi > run-record/nvidia-smi.txt
+git rev-parse HEAD > run-record/tool-commit.txt
+```
+
+Also save the exact command or configuration, random seed, input identifiers, and model-weight filenames. If the upstream project publishes checksums, record those too.
+
+## 3. Choose the compute or analysis route
+
+Compute access is not a learning objective. When a queue, account, model license, download, or incompatible GPU blocks execution, continue with the same scientific checkpoint using existing outputs.
+
+| Lesson type | Run-it route | No-compute route | Equivalent evidence |
+|---|---|---|---|
+| Structure prediction | Generate the prediction locally or through an approved service | Use the prediction and confidence examples supplied in Tuesday's lessons | Annotated pLDDT/PAE interpretation and a method-selection memo |
+| Sequence design | Run LigandMPNN on a selected backbone | Start from the candidate sequences in a published/tool example and apply the lesson's ranking questions | Candidate table and selection rationale |
+| Backbone generation | Run RFdiffusion and retain successes and failures | Use the official, revision-pinned RFdiffusion output set in Wednesday's lesson | Backbone gallery, contact/topology observations, and keep/reject rationale |
+| Complex validation | Run Chai-1, Boltz, or an approved prediction service | Analyze the supplied confidence figures or an archived prediction from your project group | Interface-confidence interpretation with limitations |
+| Benchmarking | Run the CPU/GPU notebook on both devices | Use the provided benchmark results in Thursday's activity | Plot interpretation and a prediction of the crossover point |
+| Capstone | Produce a new end-to-end campaign | Build a staged evidence portfolio from canonical targets and known-good outputs, clearly labeled as re-analysis | The same rubric-scored portfolio; no claim of a novel generated binder |
+
+The no-compute route changes the provenance of the result, not the standard of reasoning. State which files you received, where they came from, and which steps you did not run.
+
+## 4. Verify immutable pins
+
+For a Git-based tool, the lesson performs a detached checkout. Confirm it before running:
+
+```bash
+git rev-parse HEAD
+git status --short
+```
+
+The first line must match the full commit in the lesson. A detached `HEAD` is expected for this use. For Python packages, confirm the resolved version:
+
+```bash
+python -m pip show PACKAGE_NAME
+```
+
+If you intentionally use a newer version, create a new environment and document the deviation. Do not silently replace the course pin with the default branch or `pip install -U`.
+
+## 5. Validate course records
+
+Course maintainers can detect stale target data, missing lesson metadata, typographic quotes in commands, stale generated browser data, and a stale Python-refresher archive with one command:
+
+```bash
+python scripts/validate_course_data.py
+```
+
+After intentionally editing a manifest, regenerate its checked-in derivatives and then validate again:
+
+```bash
+python scripts/validate_course_data.py --generate
+python scripts/validate_course_data.py
+```
+
+Report reproducibility problems with the tool ID, course pin, preflight report, failing command, and the first complete error traceback. Never include access tokens, private keys, or credentials in a report.
+
+---
+
+[← Back to Monday](index.qmd)

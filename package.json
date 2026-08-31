@@ -2,7 +2,8 @@
   "name": "rosetta-ml-bootcamp-site",
   "private": true,
   "scripts": {
-    "test:accessibility": "pa11y-ci"
+    "test:accessibility": "pa11y-ci --config .pa11yci.cjs && node scripts/check-responsive.mjs",
+    "test:responsive": "node scripts/check-responsive.mjs"
   },
   "devDependencies": {
     "pa11y-ci": "4.1.1"

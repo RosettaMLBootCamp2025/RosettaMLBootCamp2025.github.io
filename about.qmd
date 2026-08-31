@@ -2,6 +2,51 @@
 title: "About"
 ---
 
-This bootcamp covers machine learning tools for protein structure prediction and design.
+## What this course is
 
-*More information coming soon.*
+The ML Protein Design Bootcamp is a practical course in modern protein structure prediction and computational design. It begins with the environments and tools that make the work possible, then moves through confidence-aware structure prediction, backbone generation, sequence design, docking, and an open-ended binder-design capstone.
+
+The site is the asynchronous edition of a course originally taught in person in 2025. Its **Monday–Thursday structure is intentional**: it preserves the original cohort’s sequence and makes the live workshop recordings easier to place in context. Self-paced learners should treat each day as a stage rather than a fixed amount of calendar time.
+
+Read [Start Here](start-here.qmd) before beginning. It describes the core, full-bootcamp, and reference routes; prerequisite and compute expectations; and the evidence portfolio used throughout the course.
+
+## How the course teaches
+
+The course is organized around scientific judgment, not merely successful commands. A model output becomes useful only when you can explain its provenance, inspect its confidence and failure modes, compare it with alternatives, and decide what evidence would justify the next step.
+
+Most major activities therefore ask you to produce an artifact such as:
+
+- an environment verification log;
+- a structure view or confidence analysis;
+- a model-comparison memo;
+- a reproducible configuration and output gallery;
+- a benchmark with an explanation; or
+- a capstone selection decision supported by several forms of evidence.
+
+Workshop recordings preserve the live instructor explanation. Written lessons provide the durable route through the material. For the shortest coherent experience, prioritize each lesson’s **Read, Do, and Check** work and use recordings when the instructor context helps.
+
+## What completion means
+
+Completion is evidence-based. It does not mean installing every listed tool or obtaining a favorable prediction.
+
+- A **core-path learner** completes the named evidence checkpoints and can justify a small end-to-end workflow.
+- A **full-bootcamp learner** attempts the broader set of original workshop activities and documents both successes and failures.
+- A **reference-path learner** uses only the relevant modules but records enough environment, input, configuration, and output context to reproduce the work.
+
+The capstone is computational hypothesis generation. Its scores and structures are not experimental proof of binding, function, safety, or clinical utility.
+
+## A course built for changing tools
+
+ML protein-design software changes quickly. Repository heads, weights, Python packages, CUDA builds, hosted quotas, and interfaces may differ from the versions used in the original workshop. Follow the tested configuration and last-tested guidance where available, save exact versions in your portfolio, and report instructions that no longer reproduce.
+
+If compute or account access prevents a run, use supplied or previously generated outputs to complete the interpretation objective. Label their source clearly. Infrastructure access should not be confused with scientific understanding.
+
+## Questions and corrections
+
+Use the troubleshooting guidance on the relevant lesson first. If the page appears stale, an artifact is missing, or a command fails under the documented configuration, [open a course issue](https://github.com/RosettaMLBootCamp2025/RosettaMLBootCamp2025.github.io/issues/new) with the page URL, command, full error, environment, and expected result. A GitHub account is currently required.
+
+::: {.d-flex .justify-content-between}
+[← Course dashboard](index.qmd)
+
+[Start Here →](start-here.qmd)
+:::

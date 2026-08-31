@@ -13,6 +13,13 @@ RFdiffusion2 ([paper](https://www.biorxiv.org/content/10.1101/2025.04.10.488300v
 
 **Related Tools**: Use with [LigandMPNN](3-ligandmpnn.qmd) for sequence design after backbone generation. For the earlier version without atomic control, see [RFdiffusion All Atom](13-rfdiffusion-aa.qmd) (Optional).
 
+<!-- course-tool-pin: rfdiffusion2 -->
+
+::: {.callout-note}
+## Recorded course pin
+The commands below use RFdiffusion2 commit `d365cbf4db3958814a9f8e4f6f94fa309dfebc2b` (reviewed 2026-08-30). For validation status, a preflight command, and the analysis-only pathway when Apptainer or a compatible GPU is unavailable, see [Reproducible Setup & Compute Fallbacks](reproducibility.qmd).
+:::
+
 ## Resource Requirements
 
 | Resource | Minimum | Recommended | Notes |
@@ -49,6 +56,8 @@ nvidia-smi
 ```bash
 git clone https://github.com/RosettaCommons/RFdiffusion2.git
 cd RFdiffusion2
+git checkout --detach d365cbf4db3958814a9f8e4f6f94fa309dfebc2b
+git submodule update --init --recursive
 ```
 
 2. Add the repo to your PYTHONPATH (add to `~/.bashrc`):
@@ -229,4 +238,3 @@ chmod +x rf_diffusion/exec/bakerlab_rf_diffusion_aa.sif
 - Ensure PYTHONPATH is set correctly
 - Container may need `--bind` for additional paths
 :::
-

@@ -3,11 +3,18 @@ title: "TrkA Receptor Deep Dive"
 subtitle: "Nerve Growth Factor Receptor"
 ---
 
+<!-- canonical-target: trka; pdb=1WWW; chain=X; hotspots=X303,X343,X347,X350,X353 -->
+
+::: {.callout-note}
+## Reproducible target record
+This lesson uses the TrkA–NGF complex **1WWW, chain X**. `1WWC` is an NT-3–TrkC structure, not an alternative TrkA entry, and must not be used with these chain IDs or steering residues. The machine-readable source of truth is [`data/targets.yml`](../../data/targets.yml).
+:::
+
 ## Biological Context
 
 **Tropomyosin receptor kinase A (TrkA, NTRK1)** is the high-affinity receptor for **Nerve Growth Factor (NGF)**. NGF binding to the extracellular domain triggers dimerization, transphosphorylation of intracellular kinase domains, and downstream survival and differentiation signaling in sensory and sympathetic neurons.
 
-**Why it matters:** The NGF/TrkA axis is a validated pain target — anti-NGF antibodies (tanezumab) reached Phase III for osteoarthritis pain before safety concerns paused development. Blocking TrkA directly, instead of sequestering NGF, is an alternative strategy that would avoid systemic depletion of NGF. On the oncology side, TrkA fusions drive a subset of solid tumors and are targeted by larotrectinib / entrectinib (small molecules against the kinase domain). A *de novo* binder against the extracellular domain would be a complementary modality.
+**Why it matters:** The NGF/TrkA axis is a heavily studied pain target. The anti-NGF antibody tanezumab reached phase III for osteoarthritis pain, but its global program was discontinued in 2021 after regulatory benefit–risk concerns, including joint safety. Blocking TrkA directly, instead of sequestering NGF, is an alternative research strategy. On the oncology side, TrkA fusions drive a subset of solid tumors and are targeted by kinase inhibitors such as larotrectinib and entrectinib. A *de novo* extracellular binder would be a distinct, experimentally unvalidated modality.
 
 **The Goal:** Design a binder that engages the NGF-binding face of TrkA's d5 (membrane-proximal Ig-like) domain, competing with NGF.
 
@@ -18,6 +25,8 @@ The viewer below shows the extracellular d5 domain of **TrkA (chain X)** in comp
 <div class="molstar-container">
 <pdbe-molstar id="trka-viewer" molecule-id="1www" hide-controls="true" bg-color-r="255" bg-color-g="255" bg-color-b="255"></pdbe-molstar>
 </div>
+
+<p class="molstar-alternative"><strong>Non-interactive alternative:</strong> The target-specification table below describes the relevant chains and interface residues. You can also <a href="https://www.rcsb.org/structure/1WWW">open the 1WWW structure record</a> or <a href="https://files.rcsb.org/download/1WWW.pdb">download its PDB coordinates</a>. Manipulating the 3D viewer is optional.</p>
 
 ::: {.callout-tip}
 ## Viewer Controls
@@ -35,22 +44,22 @@ Design a protein that binds to the **NGF-binding face** of TrkA d5.
 | Feature | Detail |
 |:---|:---|
 | **Target Name** | TrkA d5 domain (extracellular, membrane-proximal Ig-like) |
-| **PDB ID** | [`1WWW`](https://www.rcsb.org/structure/1WWW) *(note: the Trk-NGF complex — not 1WWC, which is a monomer)* |
+| **PDB ID** | [`1WWW`](https://www.rcsb.org/structure/1WWW) *(TrkA–NGF; do not substitute 1WWC, an NT-3–TrkC structure)* |
 | **Target Chain** | Chain X (TrkA-d5) |
 | **Binder to mimic** | Chains V, W (NGF dimer) |
-| **Published interface hotspots** | `H291, V294–H298, C300, P302–S304, F327, L333–P335, H343–C345, R347, N349, Q350, T352–N355, M379–P382` |
-| **Key "hot" residues" | **F303, H343, R347, Q350, H353** dominate the direct contact surface; the ABED β-sheet face of d5 is the target |
+| **PDB-derived interface contacts (≤5 Å)** | `H291, V294–H298, C300, P302–S304, F327, L333–P335, H343–C345, R347, N349, Q350, T352–N355, M379–P382` |
+| **Candidate steering set** | `X303,X343,X347,X350,X353` (F303, H343, R347, Q350, H353), sampling the ABED β-sheet-facing contact surface |
 
 ::: {.callout-note}
 ## About the residue list
-These are every TrkA-d5 residue within 5 Å of NGF in 1WWW. The interface is large and relatively flat — a common feature of cytokine-receptor interfaces and a known difficult case for small-molecule drugs, but well-suited to *de novo* binder design.
+These are every TrkA-d5 residue within 5 Å of NGF in 1WWW. They describe the observed interface geometry, not measured energetic hotspots. The smaller course set is a steering hypothesis that spans dense contacts on a large, relatively flat surface.
 :::
 
 ### Strategy Tips
 
 1. **Download PDB [`1WWW`](https://files.rcsb.org/download/1WWW.pdb).**
 2. **Clean the structure:** Keep Chain X (TrkA-d5). Remove NGF (V, W) and any crystallographic partners.
-3. **Define hotspots:** Pass 4–6 residues from the hot set (e.g., `X303,X343,X347,X350,X353`) to **RFdiffusion** / **BindCraft**.
+3. **Define steering residues:** Begin with `X303,X343,X347,X350,X353` in **RFdiffusion** / **BindCraft**, then compare coverage and pose diversity with at least one smaller subset.
 4. **Beware of loop flexibility:** The AB loop of d5 (residues 294–304) is somewhat flexible; designs that make contacts almost exclusively with this loop may not survive in solution. Balance contacts between the rigid β-sheet core and the loops.
 
 ### Reference

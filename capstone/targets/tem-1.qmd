@@ -3,6 +3,8 @@ title: "TEM-1 Beta-Lactamase Deep Dive"
 subtitle: "Antibiotic Resistance Enzyme"
 ---
 
+<!-- canonical-target: tem-1; pdb=1FQG; chain=A; hotspots=A104,A105,A168,A171,A239,A240 -->
+
 ## Biological Context
 
 **TEM-1 β-lactamase** is the archetypal class A serine β-lactamase and one of the most prevalent enzymes responsible for bacterial resistance to penicillins. It hydrolyzes the four-membered β-lactam ring of penicillin antibiotics using an active-site serine nucleophile, inactivating them before they can reach their target (the penicillin-binding proteins).
@@ -13,11 +15,13 @@ subtitle: "Antibiotic Resistance Enzyme"
 
 ## Interactive Structure
 
-The viewer below shows **TEM-1 β-lactamase** covalently modified by penicillin G (PDB 1FQG captures the acylated reaction intermediate).
+The viewer below shows **the deacylation-defective TEM-1 E166N mutant** covalently modified by penicillin G. PDB 1FQG traps the acylated reaction intermediate; it is not a wild-type apo design target.
 
 <div class="molstar-container">
 <pdbe-molstar id="tem1-viewer" molecule-id="1fqg" hide-controls="true" bg-color-r="255" bg-color-g="255" bg-color-b="255"></pdbe-molstar>
 </div>
+
+<p class="molstar-alternative"><strong>Non-interactive alternative:</strong> The target-specification table below describes the relevant chain, catalytic site, and pocket residues. You can also <a href="https://www.rcsb.org/structure/1FQG">open the 1FQG structure record</a> or <a href="https://files.rcsb.org/download/1FQG.pdb">download its PDB coordinates</a>. Manipulating the 3D viewer is optional.</p>
 
 ::: {.callout-tip}
 ## Viewer Controls
@@ -37,21 +41,23 @@ Design a binder that occupies the active-site cleft, preventing β-lactam substr
 | **Target Name** | TEM-1 β-lactamase |
 | **PDB ID** | [`1FQG`](https://www.rcsb.org/structure/1FQG) |
 | **Target Chain** | Chain A |
+| **Entry caveat** | E166N mutant with covalently bound penicillin G; restore the wild-type Glu166 state or choose a verified wild-type structure before a final design campaign |
 | **Active-site residues (within 5 Å of bound penicillin)** | `M69, S70, T71, K73, Y105, M129, S130, N132, N170, V216, K234, S235, G236, A237, G238, E239, R243, M270` |
-| **Catalytic residues** | **S70** (nucleophile), **K73** (general base), **S130** (proton shuttle), **E166** (deacylation), **K234** (substrate positioning) |
+| **Wild-type catalytic residues** | **S70** (nucleophile), **K73** (general base), **S130** (proton shuttle), **E166** (deacylation), **K234** (substrate positioning); position 166 is **Asn** in 1FQG |
 | **Ω-loop (substrate specificity)** | residues 161–179 — these rim the active-site cleft |
+| **Provisional rim steering set** | `A104,A105,A168,A171,A239,A240` (E104, Y105, E168, E171, E239, R240), selected from comparatively exposed positions around the cleft |
 
 ::: {.callout-note}
 ## About the residue list
-These are every TEM-1 residue within 5 Å of the bound penicillin G in 1FQG — in other words, the residues that physically line the substrate-binding pocket. For binder design, these define the surface your binder needs to occlude. The catalytic residues (S70, K73, S130, E166, K234) are deeply buried at the bottom of the cleft; rim residues (the Ω-loop, R243, the 234–240 loop) are more accessible and easier to engage with a binder.
+The contact list identifies positions lining the small-molecule pocket, but many are too buried to steer a protein binder. The provisional course set instead samples comparatively exposed parts of the 104–105, Ω, and 239–240 rim regions. It is geometry-derived, not an energetic-hotspot claim, and must be rechecked after restoring wild-type position 166 or choosing another structure.
 :::
 
 ### Strategy Tips
 
 1. **Download PDB [`1FQG`](https://files.rcsb.org/download/1FQG.pdb).**
-2. **Clean the structure:** Keep Chain A, remove water and the bound penicillin (HETATM record `PNM`).
+2. **Prepare the target deliberately:** Keep Chain A and remove water and bound penicillin (`PNM`). If the design is meant to target wild-type TEM-1, restore N166 to Glu with a documented structure-preparation protocol and inspect/relax the local geometry—or switch to a verified wild-type structure and re-map every steering residue. Do not silently treat 1FQG as wild type.
 3. **Choose a strategy:**
-   - **Active-site occlusion**: target the residues rimming the pocket (e.g., `A130,A170,A237,A243`) — your binder clamps over the cleft.
+   - **Active-site occlusion**: after target preparation, begin with the provisional rim set `A104,A105,A168,A171,A239,A240` and confirm solvent exposure visually or by SASA before generation.
    - **Allosteric**: target a surface patch away from the active site. More novel but less likely to inhibit; ask whether deformation of the enzyme still blocks substrate access.
 4. **Validate computationally:** After designing a binder, dock a small β-lactam substrate (or use **PLACER**) into the binder/TEM-1 complex and confirm steric clash — the binder should *prevent* substrate entry, not just sit nearby.
 

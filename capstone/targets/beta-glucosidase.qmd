@@ -3,6 +3,8 @@ title: "Beta-Glucosidase Deep Dive"
 subtitle: "Enzymatic Catalyst"
 ---
 
+<!-- canonical-target: beta-glucosidase; pdb=2JIE; chain=A; hotspots=A298,A328,A412,A417 -->
+
 ## Biological Context
 
 **β-Glucosidases** are glycoside hydrolases (GH family 1 in this case) that cleave the β-glycosidic bond between a glucose residue and an aglycone, releasing free glucose. They're found across all domains of life and are central to both **human metabolism** (the lysosomal β-glucosidase GBA is mutated in Gaucher's disease) and **industrial biotechnology** (cellulose degradation for biofuels, where β-glucosidase is often the rate-limiting step).
@@ -13,11 +15,13 @@ subtitle: "Enzymatic Catalyst"
 
 ## Interactive Structure
 
-The viewer below shows **β-Glucosidase** (PDB 2JIE, from *Thermotoga neapolitana*) captured as the covalent glycosyl-enzyme intermediate with a 2-deoxy-2-fluoro-glucose mechanism-based inhibitor (HETATM `G2F`) trapped on the catalytic nucleophile.
+The viewer below shows **β-glucosidase B (BglB) from *Paenibacillus polymyxa*** (PDB 2JIE) captured as a covalent glycosyl-enzyme intermediate with a 2-deoxy-2-fluoro-glucose mechanism-based inhibitor (HETATM `G2F`) trapped on the catalytic nucleophile.
 
 <div class="molstar-container">
 <pdbe-molstar id="bgl-viewer" molecule-id="2jie" hide-controls="true" bg-color-r="255" bg-color-g="255" bg-color-b="255"></pdbe-molstar>
 </div>
+
+<p class="molstar-alternative"><strong>Non-interactive alternative:</strong> The target-specification table below describes the relevant chain, catalytic site, and pocket residues. You can also <a href="https://www.rcsb.org/structure/2JIE">open the 2JIE structure record</a> or <a href="https://files.rcsb.org/download/2JIE.pdb">download its PDB coordinates</a>. Manipulating the 3D viewer is optional.</p>
 
 ::: {.callout-tip}
 ## Viewer Controls
@@ -37,16 +41,16 @@ Choose one of two goals before you start designing:
 
 | Feature | Detail |
 |:---|:---|
-| **Target Name** | β-Glucosidase (GH family 1) |
+| **Target Name** | *Paenibacillus polymyxa* β-glucosidase B (BglB; GH family 1) |
 | **PDB ID** | [`2JIE`](https://www.rcsb.org/structure/2JIE) |
 | **Target Chain** | Chain A |
-| **Active-site residues (within 5 Å of glucose-analog)** | `S19, Q22, R79, H122, W123, N166, E167, N296, Y298, M326, W328, E356, W402, N407, E409, W410, F418` |
 | **Catalytic residues** | **E167** (acid/base), **E356** (nucleophile) — classic GH1 retaining mechanism |
-| **Tryptophan cage** | **W123, W328, W402, W410** — the aromatic residues stacking against the sugar ring |
+| **Pocket features** | The catalytic carboxylates and aromatic sugar-recognition cage lie mainly inside a deep cleft and are poor direct protein-binder steering points |
+| **Provisional rim steering set** | `A298,A328,A412,A417` (Y298, W328, W412, R417), chosen from comparatively exposed positions around the cleft |
 
 ::: {.callout-note}
 ## About the residue list
-These are every β-glucosidase residue within 5 Å of the covalently-bound 2-fluoro-glucose in 2JIE. The pocket is a deep, mostly buried cleft lined with aromatic residues — GH family 1 enzymes are famous for this "tryptophan cage" that recognizes the pyranose ring by CH-π stacking. For inhibitor design, the pocket is small and well-defined; your binder can't enter it, but it can clamp over the surface and block substrate entry.
+The covalent inhibitor marks a deep, mostly buried sugar-binding cleft. A protein binder cannot reach the same atoms as a small molecule, so catalytic and deep-pocket residues should not be used automatically as steering points. The course set samples the cleft rim by geometry and relative solvent exposure in 2JIE; it is provisional, not an energetic-hotspot claim. Recalculate exposure and visually inspect the prepared target before a campaign.
 :::
 
 ### Strategy Tips
@@ -54,13 +58,13 @@ These are every β-glucosidase residue within 5 Å of the covalently-bound 2-flu
 1. **Download PDB [`2JIE`](https://files.rcsb.org/download/2JIE.pdb).**
 2. **Clean the structure:** Keep Chain A, remove the covalent inhibitor (`G2F`) and water.
 3. **Pick your strategy:**
-   - **Inhibitor:** Target the rim of the active-site cleft (e.g., `A167,A328,A410,A418`). Your binder can't enter the deep pocket but can occlude it.
+   - **Inhibitor:** Start from the exposed rim set `A298,A328,A412,A417`. Confirm that each residue remains accessible after preparation and that a generated binder occludes substrate entry without being placed inside the cleft.
    - **Stabilizer:** Look for a convex surface patch away from the active site — the α/β TIM-barrel N-terminus is often a good stabilization target because destabilizing mutations tend to cluster in the core and a surface-binding partner can restore folding.
 4. **Ask what you actually want:** If you're designing for industrial use (e.g., biofuel), you probably want a stabilizer that survives at 70°C. If you're designing for mechanistic studies, you want a reversible inhibitor.
 
 ### Reference
 
-- Marana, S.R. et al. (2006). *Structural basis for substrate recognition by a β-glucosidase.* [PDB entry 2JIE](https://www.rcsb.org/structure/2JIE) — primary citation in the deposited structure.
+- Isorna, P. et al. (2007). *Crystal Structures of Paenibacillus polymyxa Beta-Glucosidase B Complexes Reveal the Molecular Basis of Substrate Specificity and Give New Insights Into the Catalytic Machinery of Family I Glycosidases.* *Journal of Molecular Biology* **371**, 1204–1218. [doi:10.1016/j.jmb.2007.05.082](https://doi.org/10.1016/j.jmb.2007.05.082) — primary citation for 2JIE.
 
 ---
 

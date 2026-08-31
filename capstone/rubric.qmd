@@ -1,0 +1,167 @@
+---
+title: "Capstone Evidence Guide & Rubric"
+subtitle: "How to know when your binder-design project is complete—and defensible"
+resources:
+  - files/capstone-evidence-template.zip
+---
+
+## Purpose
+
+The capstone is not complete merely because every command ran. A strong submission makes a reproducible, evidence-based argument for why one design should move forward and why the alternatives should not.
+
+Use this page at three points:
+
+1. **Before starting**, to plan what you will save.
+2. **At each milestone**, to check whether your evidence is sufficient.
+3. **Before finishing**, to self-assess the complete project.
+
+<a class="btn btn-primary" href="files/capstone-evidence-template.zip" download>Download the evidence template</a>
+
+## Required Evidence Portfolio
+
+Your final format can be a report, notebook, repository, slide deck, or video, but it should contain all seven artifacts below.
+
+### 1. Target and epitope brief
+
+[Evidence saved]{.task module-id="capstone-target-brief"}
+
+- Target name, biological role, structure accession, chain, and residue range
+- The binding surface or epitope you intend to target
+- Three to six hotspot residues and the evidence used to choose them
+- Important caveats such as missing density, glycosylation, alternate conformations, cofactors, or chain-numbering differences
+
+**Completion evidence:** one annotated structure image plus a concise rationale.
+
+### 2. Reproducible run configuration
+
+[Evidence saved]{.task module-id="capstone-run-config"}
+
+- Tool release or commit, environment, model checkpoint, and hardware
+- Exact input-file identifiers and checksums when practical
+- Commands, configuration files, random seeds, and output paths
+- Any deviations from the course's known-good stack
+
+**Completion evidence:** another learner could reconstruct the run without guessing hidden settings.
+
+### 3. Backbone-generation evidence
+
+[Evidence saved]{.task module-id="capstone-backbone-evidence"}
+
+- Number and type of designs generated
+- Representative gallery showing both successful and failed outputs
+- Topology, target contact, hotspot contact, clashes, and diversity observations
+- A documented first-pass filter
+
+**Completion evidence:** a gallery or table that explains why candidates were kept or removed.
+
+### 4. Sequence-design evidence
+
+[Evidence saved]{.task module-id="capstone-sequence-evidence"}
+
+- Sequence-design method and settings
+- Number of sequences generated per backbone
+- Sequence recovery, diversity, composition, and any fixed residues
+- Checks for obvious liabilities relevant to your target or intended use
+
+**Completion evidence:** a compact candidate table linking sequences back to their parent backbones.
+
+### 5. Structural validation
+
+[Evidence saved]{.task module-id="capstone-structural-validation"}
+
+- Complex-prediction method and settings
+- Per-chain confidence, interface confidence, and PAE interpretation
+- Interface geometry, hotspot recovery, clashes, and model agreement
+- At least one independent check beyond a single confidence score
+
+**Completion evidence:** figures and metrics that distinguish local fold confidence from interface confidence.
+
+### 6. Failure analysis and iteration
+
+[Evidence saved]{.task module-id="capstone-failure-analysis"}
+
+- At least one failed or misleading result
+- Your diagnosis of the likely cause
+- The change you made in response
+- Whether the next run supported your diagnosis
+
+**Completion evidence:** a short before/after comparison. A scientifically useful failure is stronger evidence than an unexplained success.
+
+### 7. Final selection memo
+
+[Evidence saved]{.task module-id="capstone-selection-memo"}
+
+- The candidate you would advance and the alternatives you rejected
+- The criteria and trade-offs behind that decision
+- Remaining uncertainty and the next computational or experimental test
+- A clear statement that computational confidence is not experimental validation
+
+**Completion evidence:** a one-page decision memo or equivalent final section.
+
+## Twenty-Point Self-Assessment Rubric
+
+Score each category from 1–4. Use the lowest description that still fits the work consistently.
+
+### A. Reproducibility
+
+- **4 — Reconstructable:** inputs, versions, commands, seeds, outputs, and deviations are complete and internally consistent.
+- **3 — Mostly reproducible:** the main run can be repeated, but one or two minor details require inference.
+- **2 — Partially documented:** settings are summarized, but exact inputs or commands are missing.
+- **1 — Not reproducible:** results cannot be connected reliably to a specific configuration.
+
+### B. Structural and computational evidence
+
+- **4 — Converging evidence:** multiple appropriate metrics and visual checks support the conclusions, with limitations interpreted correctly.
+- **3 — Adequate evidence:** core confidence and interface checks are present, but validation is narrow.
+- **2 — Score-driven:** conclusions rely primarily on one summary score or an attractive structure image.
+- **1 — Unsupported:** outputs are shown without meaningful validation.
+
+### C. Scientific judgment
+
+- **4 — Defensible decisions:** selection criteria are explicit, trade-offs are weighed, failures are investigated, and uncertainty changes the conclusion appropriately.
+- **3 — Reasonable decisions:** choices are explained and major limitations are acknowledged.
+- **2 — Descriptive decisions:** observations are listed, but the reasoning connecting them to selection is weak.
+- **1 — Completion-based:** a candidate is selected mainly because the pipeline produced it.
+
+### D. Iteration and learning
+
+- **4 — Hypothesis-driven iteration:** a failure or comparison motivates a specific change that is then evaluated.
+- **3 — Documented iteration:** multiple settings are compared and their effects are discussed.
+- **2 — Repetition without diagnosis:** several runs are shown, but changes are not tied to a clear hypothesis.
+- **1 — Single pass:** no meaningful iteration or failure analysis is included.
+
+### E. Communication
+
+- **4 — Clear evidence trail:** figures, tables, labels, captions, and narrative allow a reader to follow the complete argument efficiently.
+- **3 — Understandable:** the story is coherent with only minor gaps or presentation problems.
+- **2 — Fragmented:** key outputs exist, but their relationships or significance are hard to follow.
+- **1 — Incomplete:** essential artifacts or explanations are absent.
+
+## Interpreting Your Score
+
+- **17–20: Portfolio ready.** The work presents a defensible computational argument and clearly identifies what remains unproven.
+- **13–16: Complete with revisions.** Strengthen the lowest-scoring category before presenting or sharing the work.
+- **9–12: Pipeline run, not yet a scientific case.** Add missing evidence, comparison, and decision logic.
+- **5–8: Reconstruct the evidence trail.** Confirm inputs and outputs before drawing conclusions.
+
+::: {.callout-important}
+## Completion threshold
+
+For course completion, aim for **at least 13/20**, with no category below 2. The score is a self-assessment aid—not evidence that a binder will work experimentally.
+:::
+
+## Suggested Review Sequence
+
+1. Review your target brief before spending substantial compute.
+2. Review reproducibility and backbone evidence before sequence design.
+3. Review sequence and validation evidence before selecting a finalist.
+4. Complete the rubric and revise the lowest category.
+5. Compare your reasoning with the [worked selection example](exemplar.qmd).
+
+---
+
+::: {.d-flex .justify-content-between}
+[← Capstone overview](index.qmd)
+
+[Worked example →](exemplar.qmd)
+:::

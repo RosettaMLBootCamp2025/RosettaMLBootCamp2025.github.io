@@ -1,6 +1,6 @@
 <style>
 .quiz-container {
-  border: 1px solid #e0e0e0;
+  border: 1px solid #c9d1dc;
   border-radius: 8px;
   padding: 1.5rem;
   margin: 2rem 0;
@@ -21,9 +21,21 @@
   color: #0d6efd;
 }
 
+.quiz-fieldset {
+  border: 0;
+  margin: 0;
+  min-width: 0;
+  padding: 0;
+}
+
 .quiz-question {
+  color: #263238;
+  float: none;
   font-size: 1.1rem;
+  line-height: 1.45;
   margin-bottom: 1rem;
+  padding: 0;
+  width: 100%;
   font-weight: 500;
 }
 
@@ -34,10 +46,15 @@
 }
 
 .quiz-option {
-  padding: 0.75rem 1rem;
+  align-items: flex-start;
   border: 1px solid #dee2e6;
   border-radius: 6px;
   cursor: pointer;
+  display: flex;
+  gap: 0.75rem;
+  line-height: 1.45;
+  min-height: 44px;
+  padding: 0.75rem 1rem;
   transition: all 0.2s ease;
   background-color: white;
 }
@@ -47,10 +64,11 @@
   border-color: #adb5bd;
 }
 
-.quiz-option.selected {
+.quiz-option.selected,
+.quiz-option:has(.quiz-radio:checked) {
   background-color: #e7f1ff;
   border-color: #0d6efd;
-  color: #0d6efd;
+  color: #084298;
 }
 
 .quiz-option.correct {
@@ -65,12 +83,38 @@
   color: #842029;
 }
 
+.quiz-radio {
+  flex: 0 0 auto;
+  height: 1.25rem;
+  margin: 0.08rem 0 0;
+  width: 1.25rem;
+}
+
+.quiz-option:has(.quiz-radio:focus-visible) {
+  outline: 3px solid #0b5cab;
+  outline-offset: 3px;
+}
+
+.quiz-option-text {
+  min-width: 0;
+}
+
+.quiz-result-label {
+  display: block;
+  font-size: 0.86rem;
+  font-weight: 700;
+  margin-top: 0.25rem;
+}
+
 .quiz-feedback {
   margin-top: 1rem;
   padding: 0.75rem;
   border-radius: 6px;
-  display: none;
   font-size: 0.95rem;
+}
+
+.quiz-feedback[hidden] {
+  display: none;
 }
 
 .quiz-feedback.correct {
@@ -87,7 +131,8 @@
 
 .check-btn {
   margin-top: 1rem;
-  padding: 0.5rem 1rem;
+  min-height: 44px;
+  padding: 0.65rem 1rem;
   background-color: #0d6efd;
   color: white;
   border: none;
@@ -100,6 +145,11 @@
   background-color: #0b5ed7;
 }
 
+.check-btn:focus-visible {
+  outline: 3px solid #0b5cab;
+  outline-offset: 3px;
+}
+
 .check-btn:disabled {
   background-color: #6c757d;
   cursor: not-allowed;
@@ -110,45 +160,108 @@
 document.addEventListener('DOMContentLoaded', function() {
   const quizzes = document.querySelectorAll('.quiz-container');
 
-  quizzes.forEach(quiz => {
-    const options = quiz.querySelectorAll('.quiz-option');
+  quizzes.forEach((quiz, quizIndex) => {
+    const question = quiz.querySelector('.quiz-question');
+    const optionsContainer = quiz.querySelector('.quiz-options');
     const checkBtn = quiz.querySelector('.check-btn');
     const feedback = quiz.querySelector('.quiz-feedback');
     const correctIndex = parseInt(quiz.dataset.correctIndex);
+    if (!question || !optionsContainer || !checkBtn || !feedback) return;
+
+    const quizId = 'knowledge-check-' + (quizIndex + 1);
+    const header = quiz.querySelector('.quiz-header');
+    const icon = quiz.querySelector('.quiz-header i');
+    const fieldset = document.createElement('fieldset');
+    const legend = document.createElement('legend');
+    const originalOptions = Array.from(optionsContainer.querySelectorAll('.quiz-option'));
+    const feedbackId = quizId + '-feedback';
+
+    quiz.dataset.quizReady = 'true';
+    if (header) {
+      header.id = quizId + '-header';
+    }
+    if (icon) icon.setAttribute('aria-hidden', 'true');
+
+    fieldset.className = 'quiz-fieldset';
+    legend.className = 'quiz-question';
+    while (question.firstChild) legend.appendChild(question.firstChild);
+    question.replaceWith(fieldset);
+    fieldset.append(legend, optionsContainer);
+
+    originalOptions.forEach((option, optionIndex) => {
+      const optionId = quizId + '-option-' + (optionIndex + 1);
+      const label = document.createElement('label');
+      const radio = document.createElement('input');
+      const text = document.createElement('span');
+
+      label.className = option.className;
+      label.htmlFor = optionId;
+      radio.className = 'quiz-radio';
+      radio.type = 'radio';
+      radio.name = quizId;
+      radio.id = optionId;
+      radio.value = String(optionIndex);
+      text.className = 'quiz-option-text';
+      while (option.firstChild) text.appendChild(option.firstChild);
+      label.append(radio, text);
+      option.replaceWith(label);
+    });
+
+    const options = Array.from(optionsContainer.querySelectorAll('.quiz-option'));
+    const radios = Array.from(optionsContainer.querySelectorAll('.quiz-radio'));
+    checkBtn.type = 'button';
+    checkBtn.disabled = true;
+    checkBtn.setAttribute('aria-describedby', feedbackId);
+    feedback.id = feedbackId;
+    feedback.hidden = true;
+    feedback.setAttribute('role', 'status');
+    feedback.setAttribute('aria-live', 'polite');
+    feedback.setAttribute('aria-atomic', 'true');
     let selectedIndex = -1;
 
-    options.forEach((option, index) => {
-      option.addEventListener('click', () => {
-        if (checkBtn.disabled) return; // Already answered
-        
+    radios.forEach((radio, index) => {
+      radio.addEventListener('change', () => {
+        if (radio.disabled) return;
         options.forEach(opt => opt.classList.remove('selected'));
-        option.classList.add('selected');
+        options[index].classList.add('selected');
         selectedIndex = index;
+        checkBtn.disabled = false;
       });
     });
 
     checkBtn.addEventListener('click', () => {
       if (selectedIndex === -1) return;
 
-      // Disable interaction
       checkBtn.disabled = true;
       checkBtn.textContent = 'Submitted';
+      radios.forEach(radio => radio.disabled = true);
       
       const selectedOption = options[selectedIndex];
       const correctOption = options[correctIndex];
 
+      function addResultLabel(option, message) {
+        const result = document.createElement('span');
+        result.className = 'quiz-result-label';
+        result.textContent = message;
+        option.querySelector('.quiz-option-text').appendChild(result);
+      }
+
       if (selectedIndex === correctIndex) {
         selectedOption.classList.add('correct');
         selectedOption.classList.remove('selected');
+        addResultLabel(selectedOption, 'Your answer — correct');
         feedback.textContent = quiz.dataset.correctFeedback || "Correct! Great job.";
         feedback.className = 'quiz-feedback correct';
       } else {
         selectedOption.classList.add('incorrect');
         selectedOption.classList.remove('selected');
-        correctOption.classList.add('correct'); // Show the right answer
+        correctOption.classList.add('correct');
+        addResultLabel(selectedOption, 'Your answer — incorrect');
+        addResultLabel(correctOption, 'Correct answer');
         feedback.textContent = quiz.dataset.incorrectFeedback || "Not quite. The correct answer is highlighted.";
         feedback.className = 'quiz-feedback incorrect';
       }
+      feedback.hidden = false;
     });
   });
 });

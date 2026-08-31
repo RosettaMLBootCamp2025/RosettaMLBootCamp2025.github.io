@@ -13,6 +13,13 @@ Boltz-2 ([paper](https://doi.org/10.1101/2025.06.14.659707), [code](https://gith
 
 **Related Tools**: For structure prediction only, see [Chai-1](7-chai1.qmd). For protein-ligand docking, see [PLACER](10-placer.qmd) or [DiffDock-PP](9-diffdock-pp.qmd).
 
+<!-- course-tool-pin: boltz2 -->
+
+::: {.callout-note}
+## Recorded course pin
+This lesson uses `boltz==2.2.1` (reviewed 2026-08-30); the source alternative uses that release's commit `cb04aeccdd480fd4db707f0bbafde538397fa2ac`. See [Reproducible Setup & Compute Fallbacks](reproducibility.qmd) for validation status and the no-compute artifact.
+:::
+
 ## Resource Requirements
 
 | Resource | Minimum | Recommended | Notes |
@@ -46,18 +53,20 @@ mamba activate boltz
 
 2. Install Boltz with CUDA support:
 ```bash
-pip install boltz[cuda] -U
+pip install "boltz[cuda]==2.2.1"
 ```
 
 **For CPU-only or non-CUDA GPUs**:
 ```bash
-pip install boltz -U
+pip install "boltz==2.2.1"
 ```
 
-**Alternative: Install from GitHub** (for latest updates):
+**Alternative: Install the same release from GitHub**:
 ```bash
 git clone https://github.com/jwohlwend/boltz.git
 cd boltz
+git checkout --detach cb04aeccdd480fd4db707f0bbafde538397fa2ac
+git submodule update --init --recursive
 pip install -e .[cuda]
 ```
 
@@ -274,4 +283,3 @@ boltz_results_<input>/
 - Ensure SMILES strings are quoted
 - Verify sequence format
 :::
-

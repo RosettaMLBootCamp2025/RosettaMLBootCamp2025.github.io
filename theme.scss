@@ -1,0 +1,7 @@
+/*-- scss:defaults --*/
+
+// Keep the course readable and fully styled when external font CDNs are slow or
+// blocked. Cosmo otherwise imports Source Sans Pro from Google Fonts.
+$web-font-path: false;
+$font-family-sans-serif: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+$font-family-monospace: "SFMono-Regular", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;

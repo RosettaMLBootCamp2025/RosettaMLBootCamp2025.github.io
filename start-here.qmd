@@ -1,0 +1,137 @@
+---
+title: "Start Here"
+subtitle: "Choose a route, check your setup, and decide what evidence you will produce"
+toc: true
+---
+
+## Why the course is organized by day
+
+This site is the asynchronous version of the 2025 ML Protein Design Bootcamp. **Monday through Thursday preserve the sequence of the original in-person course** so that you can see what the cohort did and in what order. In the self-paced version, a “day” is a stage in the learning journey—not a promise that every learner will finish that material in one calendar day.
+
+The original sequence is:
+
+1. **Monday — prepare the environment and tools**
+2. **Tuesday — predict structures and interpret confidence**
+3. **Wednesday — compare complex predictors and generate backbones**
+4. **Thursday — connect the workflow to compute, docking, and project planning**
+5. **Capstone — assemble an evidence-based binder-design portfolio**
+
+You can follow that sequence closely, take only the core path, or use the site as a reference while working on your own problem.
+
+## Choose your route
+
+| Route | Best for | What to complete | Realistic effort* | Definition of complete |
+|---|---|---|---|---|
+| **Core path** | First-time learners who want the shortest coherent route to the capstone | Read the core material, complete the named “Do” activity for each major lesson, and collect the required evidence checkpoints | **16–24 active hours** before the capstone; **10–25 hours** for a small capstone | You can justify a prediction/design workflow and show the artifacts behind your decisions |
+| **Full bootcamp** | Learners who want to reproduce the breadth of the original workshop | Complete all original activities, recordings, optional architecture sections, and relevant tool installations | **35–55 active hours** before the capstone; **20–40 hours** for the capstone | You have attempted the full workshop sequence and documented both successful and failed runs |
+| **Reference path** | Experienced practitioners with a specific tool or question | Use the day dashboards to jump to a tool, concept, or target; complete only the readiness checks that its page names | Variable | You found, ran, or interpreted the item you came for and recorded enough context to reproduce it |
+
+*Active effort excludes large downloads, account approvals, scheduler queues, and long GPU jobs. Those can add minutes to days depending on your institution and chosen workload.
+
+::: {.callout-tip}
+## A good default
+
+If you are unsure, take the **core path**. You can return to full-workshop and reference material when a research question makes it useful.
+:::
+
+## What you should know before starting
+
+This course assumes that you can:
+
+- read a protein sequence and recognize residues, chains, structures, and binding interfaces;
+- edit a text file and run basic commands in a terminal;
+- read short Python scripts and change paths or parameters;
+- keep a computational lab notebook; and
+- ask what evidence supports a model output rather than treating a prediction as ground truth.
+
+You do **not** need prior experience with attention, diffusion models, PyTorch, or every tool in Monday. Use the [Python refresher](monday/prework-3-python.qmd) if basic functions, loops, dictionaries, files, or FASTA parsing feel unfamiliar.
+
+## Compute and account expectations
+
+| Resource | Enough for | What to expect |
+|---|---|---|
+| Modern browser + ordinary laptop | All reading, videos, target research, lightweight Python, and most PyMOL inspection | No dedicated GPU required |
+| Google Colab or a hosted prediction service | Thursday notebooks and selected prediction comparisons | Free access and quotas can change; save outputs immediately |
+| Linux HPC or GPU workstation | Local predictors, RFdiffusion, sequence design, and larger capstone runs | A scheduler, separate environments, and **16–24 GB GPU memory** cover many teaching examples; some tools or complexes need more |
+| Storage | Environments, weights, databases, and results | Plan for **50–100 GB** for a broad tool installation; full local sequence databases can require **terabytes** |
+| Accounts | Hosted prediction tools and code/model downloads | Some activities require Google, Chai, GitHub, or Hugging Face access; institutional policies may limit them |
+
+Exact requirements vary by tool. Read the resource table at the top of an installation page before downloading weights or requesting a GPU.
+
+Before a local install, use **[Reproducible Setup & Compute Fallbacks](monday/reproducibility.qmd)** to run the read-only course preflight, interpret version pins, and choose an equivalent analysis route when infrastructure is unavailable.
+
+::: {.callout-important}
+## No GPU or account access?
+
+You can still learn the scientific reasoning. Read the method and analyze any supplied example or previously generated outputs instead of running the job. In your evidence portfolio, label the source of those outputs and explain what you would change in a new run. Running a model is not the same as interpreting it well.
+:::
+
+## Your 15-minute readiness check
+
+Before beginning Monday, make a short `readiness.md` note and answer these questions:
+
+1. Which route are you taking: core, full, or reference?
+2. Can you open a terminal, run `python --version`, and identify the active environment?
+3. Can you open a PDB structure in PyMOL or another molecular viewer?
+4. If you plan to run models locally, can you access a Linux GPU node and run `nvidia-smi` there?
+5. Where will you store model weights, environments, and project outputs without exceeding a home-directory quota?
+6. What is your fallback if a hosted account, download, or GPU queue is unavailable?
+
+If any answer is “not yet,” begin with [Monday pre-work](monday/index.qmd#pre-work-and-readiness). If all answers are clear, use Monday’s tool map to install only what your route requires.
+
+## Use the Watch → Read → Do → Check loop
+
+Each day dashboard distinguishes four ways of engaging with the material:
+
+- **Watch** — the original workshop recording. It supplies instructor context and is usually optional when equivalent written material is present.
+- **Read** — the durable explanation, instructions, expected outputs, and troubleshooting guidance.
+- **Do** — the smallest authentic task that produces evidence: a figure, log, output structure, benchmark, comparison, or decision memo.
+- **Check** — compare the artifact with the stated completion criteria and record uncertainty or failure, not just success.
+
+For a core lesson, prioritize **Read + Do + Check**. Use Watch when you want the live explanation or when the page explicitly identifies it as required.
+
+## Build an evidence portfolio from the beginning
+
+Create one project folder before your first hands-on activity. A simple structure is enough:
+
+```text
+bootcamp-portfolio/
+├── README.md                 # route, machine/HPC context, and current status
+├── readiness.md              # prerequisite and fallback decisions
+├── environments/             # environment exports and tool versions
+├── inputs/                   # sequences, PDBs, and target notes
+├── configs/                  # scripts, YAML/JSON, and exact commands
+├── outputs/                  # raw model outputs; keep provenance intact
+├── figures/                  # confidence plots and structure views
+└── decision-log.md           # what you tried, observed, kept, and rejected
+```
+
+Every decision-log entry should answer:
+
+1. **Question:** What were you trying to learn or change?
+2. **Method:** What input, model/version, configuration, and compute did you use?
+3. **Evidence:** What output or metric did you inspect?
+4. **Interpretation:** What does the evidence support, and what does it not support?
+5. **Decision:** What will you keep, reject, or try next—and why?
+
+## When something fails
+
+Computational biology environments fail for ordinary reasons: incompatible CUDA/PyTorch builds, missing weights, changed repositories, quotas, paths, or scheduler policies. Treat recovery as part of the work.
+
+1. Save the exact command, full error, time, node/GPU, and active environment.
+2. Compare your versions and resources with [Reproducible Setup & Compute Fallbacks](monday/reproducibility.qmd) and the tool page.
+3. Reduce the problem to the smallest smoke test before retrying a long job.
+4. After about 30 focused minutes, switch to the no-compute analysis route so the infrastructure problem does not block the learning objective.
+5. Return to the installation later with the recorded evidence or [report the issue](https://github.com/RosettaMLBootCamp2025/RosettaMLBootCamp2025.github.io/issues/new).
+
+## Start the course
+
+- **New to the workflow:** begin with [Monday: Tool Installation](monday/index.qmd).
+- **Setup already verified:** begin with [Tuesday: Structure Prediction](tuesday/index.qmd).
+- **Working on a specific research task:** use the [course dashboard](index.qmd) or jump to the [capstone target set](capstone/index.qmd#choose-a-target).
+
+::: {.d-flex .justify-content-between}
+[← Course dashboard](index.qmd)
+
+[Begin Monday →](monday/index.qmd)
+:::

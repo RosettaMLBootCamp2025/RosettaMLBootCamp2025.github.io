@@ -1,33 +1,95 @@
 ---
-title: "Tuesday"
+title: "Tuesday: Structure Prediction"
+subtitle: "Historical day 2 · inspect structures, interpret confidence, and compare prediction strategies"
 ---
 
 ## Overview
 
-Tuesday focuses on **protein structure prediction** using state-of-the-art tools. You'll learn the theoretical foundations of protein folding, visualize structures with PyMOL, predict structures using AlphaFold2, and compare different prediction methods to understand their strengths and trade-offs.
+Tuesday preserves the structure-prediction day of the original workshop. The self-paced goal is not to memorize model architecture or obtain a plausible-looking PDB. It is to turn a prediction into a defensible interpretation: what is locally confident, what is uncertain relative to what, how the output compares with experiment or another model, and what decision the evidence supports.
 
 ::: {.day-objectives}
 <div class="do-title">By the end of Tuesday, you'll be able to:</div>
-- Explain the protein folding problem, Anfinsen's hypothesis, and Levinthal's paradox in plain language.
-- Navigate a protein structure in PyMOL: select residues, measure distances, and inspect interfaces.
-- Describe how AlphaFold2's MSA-based architecture (Evoformer + Structure Module) turns co-evolution into 3D coordinates.
-- Interpret AlphaFold2 confidence metrics — pLDDT (per-residue) and PAE (inter-residue) — and know what each tells you.
-- Choose between AlphaFold2 and ESMFold for a given task based on MSA availability, speed, and accuracy needs.
+- Inspect chains, residues, distances, interfaces, and confidence coloring in PyMOL.
+- Explain the folding problem, Anfinsen’s hypothesis, Levinthal’s paradox, and the role of modern prediction metrics.
+- Explain at a useful level how MSA information, the Evoformer, the structure module, and recycling contribute to AlphaFold2.
+- Interpret pLDDT and PAE without confusing local confidence with a globally determined arrangement.
+- Compare AlphaFold2 and ESMFold by evidence, speed, MSA dependence, and fitness for a stated question.
 :::
 
-## Modules
+## Tuesday contract
 
-| Module | Topic | Description |
-|--------|-------|-------------|
-| [1. PyMOL and VSCode](1-pymol.qmd) | Visualization & Development Tools | Learn protein structure visualization with PyMOL and remote development with VSCode |
-| [2. Structure Prediction](2-structure-prediction.qmd) | Foundational Concepts | Understand the protein folding problem, Anfinsen's hypothesis, Levinthal's paradox, and structure prediction metrics |
-| [3. AlphaFold2](3-alphafold2.qmd) | AlphaFold2 & OpenFold | Deep dive into AlphaFold2's architecture, run ColabFold predictions, and interpret confidence scores |
-| [4. ESMFold vs. AlphaFold2](4-esmfold.qmd) | Comparing Prediction Methods | Compare ESMFold's language model approach vs AF2's MSA-based approach. Learn when to use each tool |
+| | Core path | Full bootcamp |
+|---|---|---|
+| **Active effort** | **5–7 hours** | **8–11 hours** |
+| **Compute time** | Add **15–90 minutes per prediction** plus any hosted/HPC queue | Add several prediction variants and optional multimer runs |
+| **Compute** | Laptop + PyMOL; hosted ColabFold or local 16+ GB GPU for prediction | Local/hosted GPU, multiple model settings, and saved confidence outputs |
+| **Output** | Structure figure, metric interpretation, AF2 confidence analysis, and comparison memo | Core evidence plus architecture notes and parameter/model comparisons |
+| **Finished when** | You can state what you trust, what you do not trust, and what evidence you would seek next | You can also explain how inputs/settings plausibly changed the observed output |
 
----
+Recordings are the original live explanations. Unless a page says otherwise, they are **optional companions** to the written core and hands-on work.
 
-<div style="display: flex; justify-content: space-between; align-items: center;">
-<div>[← Monday](../monday/index.qmd)</div>
-<div>[Back to Home](../index.qmd)</div>
-<div>[Wednesday →](../wednesday/index.qmd)</div>
-</div>
+## Choose a Tuesday route
+
+### Core path
+
+Complete all four modules in order, but take the short route through AlphaFold2:
+
+1. Make one annotated PyMOL view.
+2. Build a metric-selection note from the structure-prediction lesson.
+3. Predict or obtain GFP outputs, interpret pLDDT and PAE, and make one trust/uncertainty decision.
+4. Compare the same target with ESMFold and AlphaFold2, then write a model-choice memo.
+
+### Full-bootcamp path
+
+Add the live recordings and slides, the [AlphaFold2 Architecture Deep Dive](3-alphafold2-deep-dive.qmd), model/recycle/MSA experiments, the optional multimer, and the optional ESMFold speed/memory/determinism sections.
+
+### Reference path
+
+- Need structure-viewing commands? Go directly to [PyMOL and VS Code](1-pymol.qmd).
+- Need metric or folding background? Use [Structure Prediction](2-structure-prediction.qmd).
+- Need AF2 confidence interpretation? Use the core [AlphaFold2 and OpenFold](3-alphafold2.qmd) lesson. Need implementation-level attention and geometry? Add the [architecture deep dive](3-alphafold2-deep-dive.qmd).
+- Need an MSA-free predictor comparison? Use [ESMFold vs. AlphaFold2](4-esmfold.qmd).
+
+## Watch → Read → Do → Check
+
+| Module | Active time | Watch | Read | Do | Check / artifact |
+|---|---:|---|---|---|---|
+| [1. PyMOL and VS Code](1-pymol.qmd) | 60–90 min | Optional original workshop recording | Navigation, selections, representations, sequence/structure connection, and remote workflow | Inspect one PDB; select a biologically meaningful region; measure or label it; save a figure | PNG, PDB ID, and command history make the view reproducible |
+| [2. Structure Prediction](2-structure-prediction.qmd) | 60–90 min | Optional original workshop recording | Folding foundations, CASP, RMSD/lDDT/GDT/TM-score, and method families | Compare two structures and choose the metric(s) appropriate to a stated question | One-page metric note explains why a single score is insufficient |
+| [3. AlphaFold2 and OpenFold](3-alphafold2.qmd) + [architecture deep dive](3-alphafold2-deep-dive.qmd) | 60–90 min core; +90–120 min deep dive | Optional recording/slides | Core workflow, MSA intuition, pLDDT, PAE, and practical limits; attention and geometry are optional enrichment | Predict GFP locally or in ColabFold, inspect the ranked PDB and confidence outputs, and compare with 1GFL | Figure combines structure/confidence evidence; note separates observation, interpretation, uncertainty, and next step |
+| [4. ESMFold vs. AlphaFold2](4-esmfold.qmd) | 2–3 hr plus inference | Optional original workshop recording | Language-model prediction, confidence extraction, tradeoffs, and disagreement | Run or inspect both models on the same sequence; align with 1GFL; compare confidence, RMSD, and runtime | Model-choice memo selects a method for two different scenarios and explains disagreement |
+
+::: {.callout-note}
+## If a prediction cannot run
+
+Use a saved ranked PDB, scores JSON, PAE image, and log from the course or a peer. Record their provenance and complete the same analysis. The learning checkpoint is the interpretation, not access to a particular GPU or hosted quota.
+:::
+
+## A reusable interpretation pattern
+
+For every predicted structure, write five short statements:
+
+1. **Input:** sequence(s), MSA mode/source, model/settings, and comparison structure if any.
+2. **Observation:** pLDDT pattern, PAE blocks/off-diagonal regions, agreement across models/seeds, and structural comparison.
+3. **Interpretation:** which local regions and relative arrangements are supported.
+4. **Uncertainty:** disorder, domain motion, interface ambiguity, sparse evolutionary information, or model disagreement.
+5. **Decision:** what the structure is fit for and what evidence is required before a higher-stakes use.
+
+“The structure looks right” is not an interpretation. “The core is locally confident, but high inter-domain PAE means the relative orientation should not define an interface experiment” is.
+
+## Tuesday evidence checkpoints
+
+- [PyMOL figure identifies a biological feature and includes the PDB ID plus commands needed to recreate it]{.task module-id="tuesday-pymol-evidence"}
+- [Metric note chooses RMSD, lDDT, GDT, or TM-score for a stated comparison and names at least one limitation]{.task module-id="tuesday-metrics-evidence"}
+- [AlphaFold2 artifact combines the ranked structure, pLDDT, PAE, comparison, uncertainty, and next-step decision]{.task module-id="tuesday-af2-evidence"}
+- [AF2–ESMFold memo compares evidence, runtime, MSA dependence, disagreement, and method choice for a stated use]{.task module-id="tuesday-model-choice-evidence"}
+
+## Next step
+
+Proceed when you can interpret uncertainty rather than merely generate coordinates. Wednesday extends that habit to multimodal complex prediction and then switches from predicting a sequence to generating backbones under design constraints.
+
+::: {.d-flex .justify-content-between}
+[← Monday](../monday/index.qmd)
+
+[Wednesday: Advanced Prediction and Design →](../wednesday/index.qmd)
+:::

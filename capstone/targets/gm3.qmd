@@ -3,6 +3,8 @@ title: "GM2 Activator Protein Deep Dive"
 subtitle: "Lipid Transport Protein"
 ---
 
+<!-- canonical-target: gm2ap; pdb=1G13; chain=A; hotspots=A58,A59,A63,A122,A127,A131 -->
+
 ## Biological Context
 
 **GM2 Activator Protein (GM2AP)** is a small (~17 kDa) lysosomal glycoprotein that acts as an essential cofactor for **β-hexosaminidase A** in the degradation of the ganglioside **GM2**. Because GM2 is embedded in the lysosomal membrane, β-hexosaminidase can't access it directly — GM2AP extracts a single GM2 molecule from the membrane into a soluble, presented form that the enzyme can process.
@@ -18,6 +20,8 @@ The viewer below shows the structure of **GM2AP** (PDB 1G13). Note that this par
 <div class="molstar-container">
 <pdbe-molstar id="gm3-viewer" molecule-id="1g13" hide-controls="true" bg-color-r="255" bg-color-g="255" bg-color-b="255"></pdbe-molstar>
 </div>
+
+<p class="molstar-alternative"><strong>Non-interactive alternative:</strong> The target-specification table below describes the relevant chain and pocket residues. You can also <a href="https://www.rcsb.org/structure/1G13">open the 1G13 structure record</a> or <a href="https://files.rcsb.org/download/1G13.pdb">download its PDB coordinates</a>. Manipulating the 3D viewer is optional.</p>
 
 ::: {.callout-tip}
 ## Viewer Controls
@@ -39,28 +43,28 @@ Design a binder that engages GM2AP. Two reasonable strategies:
 |:---|:---|
 | **Target Name** | GM2 Activator Protein (GM2AP) |
 | **PDB ID (apo)** | [`1G13`](https://www.rcsb.org/structure/1G13) |
-| **Alternative PDBs (with lipid)** | [`1PU5`](https://www.rcsb.org/structure/1PU5), [`1PUB`](https://www.rcsb.org/structure/1PUB) — GM2AP with bound platelet-activating factor / phosphatidylcholine |
+| **Alternative lipid-state PDBs** | [`1PU5`](https://www.rcsb.org/structure/1PU5) — GM2-bound structure with the ceramide tail observed and headgroup disordered; [`1PUB`](https://www.rcsb.org/structure/1PUB) — low-pH open state with trapped phospholipid (`3PH`) |
 | **Target Chain** | Chain A |
-| **Lipid-binding cavity residues (published, Wright 2000/2003)** | `V59, W63, F64, L65, M76, V100, V108, L122, V125, V126, L150, V153` — the hydrophobic core lining the cavity |
-| **Cavity rim / mouth** | `E29, R53, R80, I126` — more accessible from the outside and better hotspot candidates |
+| **Published cavity-mouth regions** | `V54–W63` and `V122–P129 / S130–T133` — two solvent-exposed lips around the hydrophobic cavity |
+| **Interface-/geometry-derived steering set** | `A58,A59,A63,A122,A127,A131` (E58, V59, W63, V122, E127, W131) |
 
 ::: {.callout-note}
 ## About the residue list
-The 1G13 entry does **not** have a bound lipid, so the residue list here is taken from the published lipid-bound structures (1PU5, 1PUB; Wright et al. 2003) rather than computed from 1G13 itself. For hotspot-directed design, the rim residues (E29, R53, R80, I126) are what your binder will actually contact; the deep-pocket residues are inaccessible to a protein binder but define the pocket's existence.
+The published structures identify two loops at the cavity mouth. The six course steering residues are verified, solvent-exposed positions in the deposited 1G13 coordinates that sample both lips; they mix hydrophobic mouth markers with exposed acidic boundary residues. They are **geometry-derived steering choices**, not measured energetic hotspots. Recheck exposure after any target preparation and compare the apo and lipid-bound states before committing to a campaign.
 :::
 
 ### Strategy Tips
 
 1. **Download PDB [`1G13`](https://files.rcsb.org/download/1G13.pdb)** for the target structure, and inspect [`1PU5`](https://files.rcsb.org/download/1PU5.pdb) to see the lipid-bound conformation.
-2. **Clean the structure:** Keep Chain A. The 1G13 deposition contains a crystallographic trimer — you only need one copy.
+2. **Clean the structure:** The asymmetric unit contains chains A, B, and C, while the author-assigned biological assemblies are monomers. Retain Chain A for the course target. Normalize MSE38 and MSE86 to methionine and record the change.
 3. **Pick your strategy:**
-   - **Pocket-blocker:** Pass rim residues (e.g., `A29,A53,A80,A126`) as hotspots — your binder sits over the cavity mouth and prevents lipid entry.
+   - **Pocket-blocker:** Begin with `A58,A59,A63,A122,A127,A131` as steering residues so the sampled interface spans both cavity lips; inspect whether each generated binder actually occludes the opening.
    - **Stabilizer:** Pick a convex surface patch away from the cavity (the C-terminal β-strand face is a reasonable candidate) and design a binder that staples across it.
 4. **Watch out for flexibility:** GM2AP undergoes a conformational change on lipid binding — the "mouth" opens. A binder designed against the apo state may not fit the open state and vice versa. If you have compute budget, design against both 1G13 and 1PU5 and pick a binder that works for both.
 
 ### Reference
 
-- Wright, C.S., Zhao, Q., Rastinejad, F. (2003). *Structural analysis of lipid complexes of GM2-activator protein.* J. Mol. Biol. **331**, 951–964. [doi:10.1016/S0022-2836(03)00809-X](https://doi.org/10.1016/S0022-2836(03)00809-X)
+- Wright, C.S., Zhao, Q., Rastinejad, F. (2003). *Structural analysis of lipid complexes of GM2-activator protein.* J. Mol. Biol. **331**, 951–964. [doi:10.1016/S0022-2836(03)00794-0](https://doi.org/10.1016/S0022-2836(03)00794-0)
 - Wright, C.S., Li, S.C., Rastinejad, F. (2000). *Crystal structure of human GM2-activator protein with a novel β-cup topology.* J. Mol. Biol. **304**, 411–422. [doi:10.1006/jmbi.2000.4225](https://doi.org/10.1006/jmbi.2000.4225) — primary citation for 1G13.
 
 ---

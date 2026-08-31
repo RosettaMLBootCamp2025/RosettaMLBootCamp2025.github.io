@@ -3,11 +3,13 @@ title: "IL-7R Target Deep Dive"
 subtitle: "Autoimmune Disease Targeting"
 ---
 
+<!-- canonical-target: il-7r; pdb=3DI2; chain=B; hotspots=B80,B81,B82,B192,B193 -->
+
 ## Biological Context
 
 **Interleukin-7 Receptor alpha (IL-7Rα, CD127)** is a cytokine receptor subunit essential for T-cell development, B-cell lymphopoiesis, and memory T-cell homeostasis. It pairs with the common γ-chain (γc) on lymphocyte surfaces and signals through JAK1/JAK3 when IL-7 binds.
 
-**Why it matters:** Dysregulated IL-7 signaling is a driver in **T-cell acute lymphoblastic leukemia (T-ALL)** — gain-of-function IL-7Rα mutations are found in ~10% of pediatric T-ALL patients. It's also implicated in autoimmune diseases like multiple sclerosis and type 1 diabetes, where blocking IL-7Rα dampens pathogenic T-cell survival. An IL-7Rα antagonist (GSK2618960, an antibody against the IL-7 binding site) is in clinical development — a *de novo* binder with higher affinity or better manufacturability is a realistic design goal.
+**Why it matters:** Dysregulated IL-7 signaling is a driver in **T-cell acute lymphoblastic leukemia (T-ALL)** — gain-of-function IL-7Rα mutations are found in a subset of pediatric T-ALL patients. It is also implicated in autoimmune disease, where blocking IL-7Rα can test whether pathogenic T-cell survival depends on this pathway. The antagonist antibody GSK2618960 was evaluated in phase I; a planned phase IIa Sjögren study ([NCT03239600](https://clinicaltrials.gov/study/NCT03239600)) was withdrawn before enrollment. A *de novo* binder here is a research hypothesis, not an established clinical-development path.
 
 **The Goal:** Design a high-affinity binder that occupies IL-7Rα's ligand-binding groove, preventing native IL-7 from engaging.
 
@@ -18,6 +20,8 @@ The viewer below shows **IL-7Rα (Chain B)** bound to its cytokine **IL-7 (Chain
 <div class="molstar-container">
 <pdbe-molstar id="il7r-viewer" molecule-id="3di2" hide-controls="true" bg-color-r="255" bg-color-g="255" bg-color-b="255"></pdbe-molstar>
 </div>
+
+<p class="molstar-alternative"><strong>Non-interactive alternative:</strong> The target-specification table below describes the relevant chains and interface residues. You can also <a href="https://www.rcsb.org/structure/3DI2">open the 3DI2 structure record</a> or <a href="https://files.rcsb.org/download/3DI2.pdb">download its PDB coordinates</a>. Manipulating the 3D viewer is optional.</p>
 
 ::: {.callout-tip}
 ## Viewer Controls
@@ -38,20 +42,21 @@ Create a binder that occupies the cytokine-binding groove of IL-7Rα, preventing
 | **PDB ID** | [`3DI2`](https://www.rcsb.org/structure/3DI2) |
 | **Target Chain** | Chain B |
 | **Binder to mimic** | Chain A (IL-7) |
-| **Published interface hotspots** | `S31, L57, V58, E59, K77, K78, F79, L80, L81, I82, T104, K138, Y139, H191, Y192, F193` |
-| **Key "hot" residues** | **F79, L80, L81, I82** (hydrophobic ridge — site I) and **Y192, F193** (aromatic cluster — site II) are the core energetic contributors |
+| **Entry caveat** | Target chain B carries I118V; ligand chain A carries E106A. The course steering set does not include either position. |
+| **PDB-derived interface contacts (≤5 Å)** | `S31, L57, V58, E59, K77, K78, F79, L80, L81, I82, T104, K138, Y139, H191, Y192, F193` |
+| **Candidate steering set** | `B80,B81,B82,B192,B193` (L80, L81, I82, Y192, F193), spanning the hydrophobic ridge and aromatic contact cluster |
 
 ::: {.callout-note}
 ## About the residue list
-These are every IL-7Rα residue with any heavy atom within 5 Å of IL-7 in 3DI2. The interface is compact and centered on two clusters: a hydrophobic ridge (L80 / L81 / I82) and an aromatic pair (Y192 / F193). Both clusters should be in your hotspot set when running RFdiffusion.
+These are every IL-7Rα residue with any heavy atom within 5 Å of IL-7 in 3DI2. The smaller course set samples two contact clusters, but proximity does not establish energetic-hotspot status. Treat the set as a geometry-derived starting point and compare alternative subsets.
 :::
 
 ### Strategy Tips
 
 1. **Download PDB [`3DI2`](https://files.rcsb.org/download/3DI2.pdb).**
 2. **Clean the structure:** Keep Chain B (IL-7Rα). Remove Chain A (IL-7) and any crystallographic partners (chains C, D).
-3. **Define hotspots:** Pass 4–6 residues from the "hot" set (e.g., `B80,B81,B82,B192,B193`) to **RFdiffusion** / **BindCraft**.
-4. **Size matters:** IL-7 itself is small (~150 aa) and compact — a designed binder of similar size (60–100 aa minibinder) should be feasible. Larger binders risk steric clash with the nearby γc subunit.
+3. **Define steering residues:** Begin with `B80,B81,B82,B192,B193` in **RFdiffusion** / **BindCraft**, then inspect whether the resulting interfaces cover both clusters.
+4. **Size matters:** IL-7 itself is small (~150 aa) and compact. A 60–100 aa minibinder is a reasonable teaching-scale hypothesis. Potential clash with the nearby γc subunit must be modeled separately because γc is absent from 3DI2.
 
 ### Reference
 

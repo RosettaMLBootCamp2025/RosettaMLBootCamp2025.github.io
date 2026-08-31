@@ -13,6 +13,13 @@ ESMFold ([paper](https://www.science.org/doi/abs/10.1126/science.ade2574), [code
 
 **Related Tools**: For MSA-based prediction with potentially higher accuracy, see [LocalColabFold](2-localcolabfold.qmd) or [OpenFold](6-openfold.qmd). For protein language model embeddings only, see [ESM3](12-esm3.qmd).
 
+<!-- course-tool-pin: esmfold -->
+
+::: {.callout-note}
+## Recorded course pin
+This lesson pins `fair-esm==2.0.0`, OpenFold commit `4b41059694619831a7db195b7e0988fc4ff3a307`, and dllogger commit `0478734ff7be75adde8d160e04872664d1c62e5f` (reviewed 2026-08-30). PyTorch/CUDA remains cluster-specific and must be recorded after a successful smoke test. See [Reproducible Setup & Compute Fallbacks](reproducibility.qmd).
+:::
+
 ## Resource Requirements
 
 | Resource | Minimum | Recommended | Notes |
@@ -57,12 +64,12 @@ mamba install pytorch pytorch-cuda=12.1 -c pytorch -c nvidia
 
 3. Install ESM with ESMFold dependencies:
 ```bash
-pip install "fair-esm[esmfold]"
+pip install "fair-esm[esmfold]==2.0.0"
 ```
 
 4. Install OpenFold dependencies:
 ```bash
-pip install 'dllogger @ git+https://github.com/NVIDIA/dllogger.git'
+pip install 'dllogger @ git+https://github.com/NVIDIA/dllogger.git@0478734ff7be75adde8d160e04872664d1c62e5f'
 pip install 'openfold @ git+https://github.com/aqlaboratory/openfold.git@4b41059694619831a7db195b7e0988fc4ff3a307'
 ```
 
@@ -70,7 +77,7 @@ pip install 'openfold @ git+https://github.com/aqlaboratory/openfold.git@4b41059
 
 **Alternative method** (using environment file):
 ```bash
-wget https://raw.githubusercontent.com/facebookresearch/esm/main/environment.yml
+wget https://raw.githubusercontent.com/facebookresearch/esm/2b369911bb5b4b0dda914521b9475cad1656b2ac/environment.yml
 mamba env create -f environment.yml
 mamba activate esmfold
 ```
@@ -284,4 +291,3 @@ python -c "import torch; print(torch.cuda.is_available())"
   export TORCH_HOME=/scratch/$USER/torch_cache
   ```
 :::
-

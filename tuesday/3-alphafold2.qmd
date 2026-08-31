@@ -2,990 +2,331 @@
 title: "3. AlphaFold2 and OpenFold"
 ---
 
-This module dives deep into AlphaFold2—the breakthrough model that essentially "solved" the protein structure prediction problem—and OpenFold, its open-source, trainable implementation.
+AlphaFold2 predicts a protein's three-dimensional structure from its amino-acid sequence. In this lesson, the goal is not simply to produce a PDB file: it is to decide which parts of a prediction are credible and explain the evidence behind that decision.
 
-## Live Workshop Session
+::: {.callout-note title="Lesson contract"}
+| | |
+|---|---|
+| **Time** | 60–90 minutes core; 30–45 minutes optional experiments |
+| **Prerequisites** | Tuesday lessons 1–2; FASTA familiarity; working ColabFold notebook or LocalColabFold installation |
+| **Watch / Read / Do** | Watch the workshop recording or read this page; complete the prediction and interpretation tasks |
+| **Outcomes** | Explain why MSAs help; interpret pLDDT, pTM, and PAE; compare a prediction with an experimental structure |
+| **Artifact** | GFP prediction folder plus a completed evidence table and short trust statement |
+| **Complete when** | You can identify confident and uncertain regions, report the comparison to 1GFL, and justify whether the model is useful for experimental planning |
+| **Next** | Continue to [ESMFold vs. AlphaFold2](4-esmfold.qmd) after saving your artifact |
+:::
+
+::: {.callout-tip title="Choose your route"}
+- **Watch + do:** Watch the workshop recording, pausing at the prompts below, then complete the core lab.
+- **Read + do:** Read the short explanations on this page and complete the core lab.
+- **Full bootcamp:** Complete the core lab, parameter experiments, and the [optional architecture deep dive](3-alphafold2-deep-dive.qmd).
+:::
+
+## Watch: Workshop Session
+
+The recording is an alternative explanation of the core ideas, not an additional requirement. Pause before each confidence plot is explained and make your own interpretation first.
 
 ```{=html}
 <div class="workshop-companion">
   <div class="wc-title">🎥 Live workshop recording — AlphaFold2 Structure Prediction</div>
   <div class="wc-video">
     <iframe src="https://www.youtube-nocookie.com/embed/zX6pmHCxvrk"
-      title="AlphaFold2 Structure Prediction"
+      title="AlphaFold2 Structure Prediction workshop recording"
       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
       allowfullscreen loading="lazy"></iframe>
   </div>
   <details>
     <summary>📊 View slide deck</summary>
     <iframe src="https://docs.google.com/presentation/d/1vzVMNFhw-46M93pYFMwOBICL1i7jEbjv/embed?start=false&loop=false&delayms=3000"
+      title="AlphaFold2 Structure Prediction workshop slides"
       allowfullscreen loading="lazy"></iframe>
   </details>
 </div>
 ```
 
----
+## Loop 1: Inspect Before You Predict
 
-## The AlphaFold2 Breakthrough
+### Explain
 
-### CASP14: A Watershed Moment
+AlphaFold2's result is a claim about structure accompanied by estimates of uncertainty. Its main outputs are:
 
-At the 14th Critical Assessment of protein Structure Prediction (CASP14) in 2020, AlphaFold2 achieved what many thought was impossible:
+1. **3D coordinates:** predicted atomic positions, usually saved as a PDB or mmCIF file.
+2. **pLDDT:** confidence in the local environment around each residue, from 0 to 100.
+3. **pTM:** confidence in the overall fold and relative placement of domains, from 0 to 1.
+4. **PAE:** predicted error in the relative position of every pair of residues.
 
-- **GDT-TS scores of ~90** on targets where the previous state-of-the-art was ~60
-- **Near-experimental accuracy** for many proteins
-- **Consistent performance** across diverse protein families
+### Predict
 
-This wasn't incremental improvement—it was a paradigm shift.
+Before reading the check below, write down which metric you would use for each question:
 
-::: {.callout-note}
-## The Scale of the Achievement
-To put this in perspective: before AlphaFold2, structure prediction was considered one of biology's grand challenges. Some estimated it would take decades more to solve. AlphaFold2 essentially closed this chapter.
+- Is this loop locally well modeled?
+- Are two domains positioned reliably relative to one another?
+- Is the overall fold likely to be correct?
+
+### Do
+
+Open one AlphaFold Database entry for a protein you know at [alphafold.ebi.ac.uk](https://alphafold.ebi.ac.uk). Inspect both the structure coloring and the PAE plot. Record one confident region and one uncertainty you would investigate.
+
+### Check
+
+- **Local region:** use pLDDT.
+- **Relative domain placement:** use PAE.
+- **Overall fold:** use pTM, supported by pLDDT and PAE rather than interpreted alone.
+
+::: {.callout-important title="Confidence is not correctness"}
+A confident prediction can still miss a ligand-induced state, alternative conformation, oligomeric assembly, or biological context. A low-confidence region may be intrinsically disordered or flexible rather than simply “wrong.” Treat the metrics as evidence, not a verdict.
 :::
 
-### AlphaFold2 vs OpenFold
+## Loop 2: Read Confidence as Evidence
 
-**AlphaFold2** (DeepMind):
-- Original implementation in JAX
-- Released weights and inference code
-- Not easily trainable by the community
+### Explain: pLDDT
 
-**OpenFold** (Columbia/Harvard):
-- Faithful PyTorch reproduction
-- Fully trainable on new data
-- Community-friendly and extensible
-- **3-5x faster** for most proteins
-- **Lower memory usage**: Can predict longer proteins on single GPUs
+| pLDDT | Interpretation | Sensible response |
+|---|---|---|
+| >90 | Very high local confidence | Usually suitable for residue-level interpretation |
+| 70–90 | Confident | Generally reliable local fold |
+| 50–70 | Low confidence | Treat local geometry cautiously |
+| <50 | Very low confidence | Consider disorder, flexibility, missing context, or failure |
 
-For this bootcamp, we'll use **ColabFold**, which combines AlphaFold2's models with fast MSA generation from MMseqs2.
+Low pLDDT often occurs in flexible loops and intrinsically disordered regions. It is information, not automatically a failed prediction.
 
-**Reference:** Ahdritz et al. (2024) - OpenFold paper
+### Explain: pTM, ipTM, and PAE
 
----
+- **pTM** estimates confidence in the global topology. Values above 0.8 are often strong; 0.5–0.8 requires scrutiny; below 0.5 is weak.
+- **ipTM** estimates confidence in a multimer interface and should be considered with interface PAE and biological evidence.
+- **PAE** answers a pairwise question: if the model is aligned on residue *i*, how uncertain is the position of residue *j*? Low values mean confident relative placement.
 
-## How AlphaFold2 Works
+On a PAE heatmap, low-error diagonal blocks often correspond to well-resolved domains. High error between blocks means the domains may each be credible while their relative orientation is not.
 
-### High-Level Architecture
+### Predict
 
-AlphaFold2's architecture flows from the sequence to the final 3D structure through several specialized modules.
+A two-domain protein has high pLDDT throughout but high PAE between the two domain blocks. Which conclusion is best?
+
+1. Both domains are certainly wrong.
+2. Each domain may be locally credible, but their relative orientation is uncertain.
+3. High pLDDT guarantees the complete model is correct.
+
+### Do
+
+Sketch a two-block PAE matrix and label the within-domain and between-domain regions. This takes one minute and makes later plots much easier to read.
+
+### Check
+
+The best conclusion is **2**. pLDDT evaluates local environments; PAE exposes uncertainty in relative placement.
+
+## Loop 3: Explain Where the Signal Comes From
+
+### Explain
+
+AlphaFold2 uses three main inputs:
+
+1. The **query sequence** to predict.
+2. A **multiple sequence alignment (MSA)** of related sequences.
+3. Optional **structural templates** from known homologs.
+
+An MSA reveals co-evolution. Residues that contact one another in 3D can undergo compensating mutations: when one side of an interaction changes, a change at the partner position may preserve the interaction. Across many diverse homologs, these correlated patterns constrain possible folds.
 
 ```{mermaid}
 flowchart LR
-    Seq[Input Sequence] --> MSA[MSA Generation]
-    Seq --> Templ[Template Search]
-    
-    MSA --> Evo[Evoformer]
-    Templ --> Evo
-    
-    Evo --> Struct[Structure Module]
-    Struct --> Coord[3D Coordinates]
-    
-    subgraph "Iterative Refinement (Recycling)"
-    Evo
-    Struct
-    end
-    
-    style Evo fill:#f9f,stroke:#333,stroke-width:2px
-    style Struct fill:#bbf,stroke:#333,stroke-width:2px
+    Seq[Query sequence] --> Search[Database search]
+    Search --> MSA[Multiple sequence alignment]
+    MSA --> Coev[Co-evolutionary signal]
+    Coev --> Model[AlphaFold2]
+    Seq --> Model
+    Templates[Optional templates] --> Model
+    Model --> Structure[Coordinates + confidence]
 ```
 
-### Inputs and Outputs
+MSA depth helps, but diversity matters more than a raw sequence count. The effective number of sequences, **Neff**, discounts redundant near-copies.
 
-**Inputs:**
-1. **Query sequence**: The protein you want to predict
-2. **Multiple Sequence Alignment (MSA)**: Related sequences found by database search
-3. **Templates** (optional): Known structures of homologous proteins
+| Neff | Typical expectation |
+|---|---|
+| >1000 | High-confidence predictions are likely |
+| 100–1000 | Good predictions for many proteins |
+| 30–100 | Some regions may be unreliable |
+| <30 | Significant uncertainty; compare alternative methods |
 
-**Outputs:**
-1. **3D coordinates**: Atomic positions for all residues
-2. **pLDDT scores**: Per-residue confidence (0-100)
-3. **pTM score**: Overall structure confidence
-4. **PAE matrix**: Predicted Aligned Error between residue pairs
+Proteins with few natural homologs—including many designed proteins—therefore present a special challenge.
 
-### The MSA: Why Evolutionary Information Matters
+### Predict
 
-The Multiple Sequence Alignment is arguably the most important input to AlphaFold2. It aligns your query sequence with evolutionarily related sequences to find co-evolution patterns.
+If 1,000 MSA rows are almost identical, will they provide the same information as 1,000 diverse homologs? State why in one sentence.
 
-```
-Query:     MKVLWAALLVTFLAGCQAKVEQAVETEPEPELRQQTEWQSGQRWELAL
-Homolog1:  MKVLWAALLVTFLAGCQAKVEQAVETEPEPELRQQTEWQSGQRWELAL
-Homolog2:  MKVLWGALLVTFLAGCQAKIEQAVETEPEPELRQQTEWQSGQRWDLAL
-Homolog3:  MKILWAALLVSFLAGCQAKVEQAVEAEPEPELRQQTEWQSGQRWELAL
-           ** **.****:******* :*****.**************.*:***
-```
+### Do
 
-::: {.callout-important}
-## The MSA is Critical
-AlphaFold2's accuracy depends heavily on MSA quality. Proteins with few homologs (orphan proteins, designed proteins) are harder to predict because there's less evolutionary information to leverage.
-:::
+When you run GFP below, open the MSA coverage plot. Note whether coverage and depth remain consistent across the full sequence or drop in particular regions.
 
-#### How MSAs are Generated
+### Check
 
-AlphaFold2 uses multiple database search tools to build comprehensive MSAs:
-
-**JackHMMER** (iterative profile HMM search):
-
-- Searches UniRef90, MGnify, and other databases
-- Iteratively builds a profile from hits and re-searches
-- Highly sensitive but computationally expensive
-- Used for the "genetic" MSA in AlphaFold2
-
-**HHBlits** (HMM-HMM search):
-
-- Searches clustered databases like BFD (Big Fantastic Database)
-- Faster than JackHMMER with comparable sensitivity
-- Used for additional MSA depth
-
-**MMseqs2** (ColabFold's approach):
-
-- 100-1000x faster than JackHMMER
-- Searches pre-computed ColabFold databases
-- Slight accuracy trade-off for massive speed gains
-- Makes AlphaFold2 practical for large-scale predictions
-
-::: {.callout-note}
-## MSA Depth Matters
-The number of effective sequences (Neff) in an MSA correlates strongly with prediction accuracy:
-
-| Neff | Expected Accuracy |
-|------|-------------------|
-| >1000 | High confidence predictions likely |
-| 100-1000 | Good predictions for most proteins |
-| 30-100 | Predictions may be unreliable in some regions |
-| <30 | Significant uncertainty; consider single-sequence methods |
-
-Neff accounts for sequence redundancy—100 nearly identical sequences contribute less information than 100 diverse sequences.
-:::
-
-#### Co-evolution: The Key to Structure Prediction
-
-The fundamental insight behind using MSAs for structure prediction is **co-evolution**: residues that are in physical contact in the 3D structure tend to mutate together during evolution to maintain their interaction.
-
-```{mermaid}
-flowchart LR
-    subgraph "In 3D Structure"
-        A[Residue i<br/>Asp⁻] <--> B[Residue j<br/>Lys⁺]
-    end
-
-    subgraph "During Evolution"
-        C[Asp⁻ → Lys⁺] --> D[Lys⁺ → Asp⁻]
-    end
-
-    A --> C
-    B --> D
-
-    style A fill:#ffcccc
-    style B fill:#ccccff
-```
-
-**Why does this happen?**
-
-Consider two residues forming a salt bridge (Asp⁻ interacting with Lys⁺):
-
-1. If position i mutates from Asp to Lys (negative to positive charge)
-2. The interaction is disrupted—the protein may misfold
-3. **Unless** position j compensates by mutating from Lys to Asp
-4. The complementary mutation restores the interaction
-
-This creates **correlated mutations** that we can detect statistically across thousands of homologous sequences.
-
-#### From Co-evolution to Contacts: Direct Coupling Analysis
-
-Before deep learning, methods like **Direct Coupling Analysis (DCA)** extracted contact predictions from MSAs:
-
-```{mermaid}
-flowchart TD
-    MSA[Multiple Sequence Alignment] --> MI[Mutual Information<br/>Raw correlations]
-    MI --> Problem[Problem: Transitive correlations<br/>A↔B and B↔C implies spurious A↔C]
-    Problem --> DCA[Direct Coupling Analysis<br/>Separates direct from indirect]
-    DCA --> Contacts[Contact Predictions]
-
-    style Problem fill:#ffcccc
-    style DCA fill:#ccffcc
-```
-
-**The challenge**: If residue A co-evolves with B, and B co-evolves with C, simple correlation analysis will show spurious A↔C co-evolution even if they never contact.
-
-**DCA's solution**: Use inverse covariance (precision) matrices or pseudolikelihood methods to separate **direct** couplings from **indirect** (transitive) correlations.
-
-AlphaFold2 doesn't explicitly compute DCA—instead, its attention mechanisms learn to extract these signals directly from the MSA representation.
-
-#### How AlphaFold2 Processes the MSA
-
-The MSA enters AlphaFold2 as a tensor with dimensions:
-
-- **Sequences**: Number of aligned sequences (typically ~500-5000, subsampled from full MSA)
-- **Residues**: Length of the query sequence
-- **Features**: One-hot encoding + positional features (22 dimensions per residue)
-
-The model processes this through two parallel representations:
-
-```{mermaid}
-flowchart TB
-    MSA[MSA Input<br/>N_seq × L × 22] --> MSArep[MSA Representation<br/>N_seq × L × 256]
-    MSA --> Pair[Pair Representation<br/>L × L × 128]
-
-    MSArep <--> Evo[Evoformer<br/>48 blocks]
-    Pair <--> Evo
-
-    Evo --> Final[To Structure Module]
-
-    style Evo fill:#f9f,stroke:#333,stroke-width:2px
-```
-
-- **MSA Representation**: Tracks information about each residue in each sequence
-- **Pair Representation**: Tracks relationships between all pairs of residues in the query
+Near-identical rows provide less independent evolutionary evidence, so their effective depth is lower than that of a diverse alignment.
 
 ```{=html}
-<div class="quiz-container" data-correct-index="1" data-correct-feedback="Exactly! Co-evolutionary signals (residues mutating together) act as distance constraints for the model." data-incorrect-feedback="Not quite. While more data helps, the specific reason is co-evolution.">
+<div class="quiz-container" data-correct-index="1" data-correct-feedback="Exactly! Co-evolutionary signals—residues changing together—provide evidence about likely 3D contacts." data-incorrect-feedback="Not quite. The key is the co-evolutionary pattern across related sequences.">
   <div class="quiz-header"><i class="bi bi-question-circle-fill"></i> Check Your Understanding</div>
-  <div class="quiz-question">Why is the MSA so critical for AlphaFold2's accuracy?</div>
+  <div class="quiz-question">Why is the MSA so important for AlphaFold2's accuracy?</div>
   <div class="quiz-options">
     <div class="quiz-option">It provides template structures for the model to copy.</div>
     <div class="quiz-option">It reveals co-evolutionary patterns that imply 3D contacts.</div>
-    <div class="quiz-option">It just increases the size of the training data.</div>
+    <div class="quiz-option">It only increases the size of the training data.</div>
   </div>
   <button class="check-btn">Check Answer</button>
   <div class="quiz-feedback"></div>
 </div>
 ```
 
-### The Evoformer: Learning from Evolution
+::: {.callout-note title="AlphaFold2, OpenFold, and ColabFold"}
+- **AlphaFold2** is DeepMind's original JAX implementation with released inference code and weights.
+- **OpenFold** is a trainable PyTorch reproduction designed for community research and extension.
+- **ColabFold** combines AlphaFold2 models with fast MMseqs2-based MSA generation, making inference more accessible.
 
-The Evoformer is AlphaFold2's core innovation—a specialized neural network architecture that processes evolutionary information to understand protein structure. It consists of **48 blocks**, each updating two interconnected representations.
-
-#### The Two Representations
-
-The Evoformer maintains and iteratively refines two tensors:
-
-**1. MSA Representation** (N_seq × L × 256):
-
-- Each entry represents one residue in one sequence
-- Captures per-position information across evolutionary history
-- Updated by row and column attention
-
-**2. Pair Representation** (L × L × 128):
-
-- Each entry represents the relationship between two residues
-- Encodes distance, orientation, and contact information
-- Updated by triangle attention and outer product mean
-
-```{mermaid}
-flowchart TB
-    subgraph "Evoformer Block (×48)"
-        subgraph "MSA Stack"
-            Row[Row-wise Attention<br/>with pair bias]
-            Col[Column-wise Attention]
-        end
-
-        subgraph "Communication"
-            OPM[Outer Product Mean<br/>MSA → Pair]
-        end
-
-        subgraph "Pair Stack"
-            TriStart[Triangle Attention<br/>Starting Node]
-            TriEnd[Triangle Attention<br/>Ending Node]
-            TriOut[Triangle Multiplicative<br/>Outgoing]
-            TriIn[Triangle Multiplicative<br/>Incoming]
-            Trans[Transition Layer]
-        end
-    end
-
-    Row --> Col
-    Col --> OPM
-    OPM --> TriStart
-    TriStart --> TriEnd
-    TriEnd --> TriOut
-    TriOut --> TriIn
-    TriIn --> Trans
-
-    style OPM fill:#ffd700
-```
-
-#### Row-wise Attention: Within-Sequence Reasoning
-
-Row attention operates along the residue dimension for each sequence in the MSA:
-
-```
-For each sequence s in the MSA:
-    Query, Key, Value = Linear projections of MSA representation
-    Attention weights = softmax(Q·K^T / √d + pair_bias)
-    Output = Attention weights · V
-```
-
-**Key insight**: The attention weights are **biased by the pair representation**. This means the model's understanding of residue relationships directly influences how it processes each sequence.
-
-**What this achieves**:
-
-- Residues that are structurally related attend to each other
-- Long-range dependencies are captured regardless of sequence distance
-- The pair bias acts like a "structural prior" during MSA processing
-
-#### Column-wise Attention: Cross-Sequence Reasoning
-
-Column attention operates across sequences at each position:
-
-```
-For each position i in the sequence:
-    Compare how position i appears across all sequences
-    Learn patterns of conservation and variation
-```
-
-**What this achieves**:
-
-- Identifies conserved residues (important for function/structure)
-- Detects co-varying positions (co-evolution signal)
-- Aggregates information from thousands of evolutionary samples
-
-::: {.callout-note}
-## Row vs Column Attention Intuition
-- **Row attention**: "What other positions in this sequence are relevant to position i?"
-- **Column attention**: "What can I learn about position i by looking at how it varies across evolution?"
+For the neural-network mechanics, continue to the [optional architecture deep dive](3-alphafold2-deep-dive.qmd). It covers Evoformer representations, outer product mean, triangle updates, invariant point attention, recycling, settings, and extensions.
 :::
 
-#### The Outer Product Mean: Bridging MSA and Pairs
+## Loop 4: Generate and Evaluate a GFP Prediction
 
-The **Outer Product Mean** is the critical operation that transfers co-evolution information from the MSA representation into the pair representation:
+### Explain
 
-```
-For positions i and j:
-    pair_update[i,j] = Mean over sequences s of (MSA[s,i] ⊗ MSA[s,j])
-```
+Green Fluorescent Protein (GFP) is a useful practice target because it is a compact, well-characterized protein with an experimental reference structure. Your job is to produce a prediction and then build an evidence-based trust statement.
 
-Where ⊗ denotes the outer product.
+### Predict
 
-**Intuition**: If positions i and j consistently appear together in certain amino acid combinations across many sequences, this outer product will capture that correlation and inject it into the pair representation.
+Before running the model, write two expectations:
 
-**This is how AlphaFold2 "learns" co-evolution**: The outer product implicitly computes correlation statistics between positions, similar to what DCA does explicitly—but in a learnable, differentiable way.
+- Will GFP appear as one coherent domain or several independently moving domains in PAE?
+- Which parts of the sequence, if any, do you expect to have lower pLDDT?
 
-#### Triangle Updates: Enforcing Geometric Consistency
+Keep these predictions. Comparing expectations with results is part of the exercise.
 
-The triangle updates are what make the pair representation geometrically consistent. They're based on a simple principle: **distances must satisfy the triangle inequality**.
+### Do: Run ColabFold
 
-```{mermaid}
-flowchart LR
-    subgraph "Triangle Inequality"
-        A((i)) --- B((j))
-        B --- C((k))
-        A --- C
-    end
+Download [1GFL.fasta](files/1GFL.fasta), or save the following as `gfp.fasta`:
 
-    subgraph "Constraint"
-        D[d_ij + d_jk ≥ d_ik]
-    end
-```
-
-If we know the relationships i↔k and k↔j, we can infer something about i↔j.
-
-**Triangle Attention** (Starting and Ending Node):
-
-- "Starting node": For edge i→j, attend over all edges i→k that share the starting node
-- "Ending node": For edge i→j, attend over all edges k→j that share the ending node
-
-```
-Triangle attention (starting):
-    For edge (i,j): aggregate information from all (i,k) edges
-
-Triangle attention (ending):
-    For edge (i,j): aggregate information from all (k,j) edges
-```
-
-**Triangle Multiplicative Updates** (Outgoing and Incoming):
-
-These use multiplicative gating to combine information:
-
-```
-Triangle multiplicative (outgoing):
-    pair[i,j] += Σ_k gate(pair[i,k]) × pair[k,j]
-
-Triangle multiplicative (incoming):
-    pair[i,j] += Σ_k pair[i,k] × gate(pair[k,j])
-```
-
-**Why both attention AND multiplicative?** They capture different types of relationships:
-
-- Attention: Soft selection of which intermediate nodes k matter
-- Multiplicative: Direct combination of path information
-
-::: {.callout-tip}
-## Triangle Updates Are Like Message Passing on a Graph
-Think of the pair representation as a fully-connected graph where each edge (i,j) stores information. Triangle updates pass messages along triangles, enforcing that if A is close to B and B is close to C, this constrains the A-C relationship.
-:::
-
-#### Evoformer Summary
-
-After 48 blocks, the Evoformer has:
-
-1. **Extracted co-evolutionary signals** from the MSA via column attention and outer product mean
-2. **Propagated structural information** through row attention with pair bias
-3. **Enforced geometric consistency** through triangle updates
-4. Built a **rich pair representation** encoding likely 3D relationships
-
-```{=html}
-<div class="quiz-container" data-correct-index="2" data-correct-feedback="Correct! The outer product mean computes correlation statistics between MSA positions and injects them into the pair representation." data-incorrect-feedback="Not quite. The outer product mean is the key operation for co-evolution.">
-  <div class="quiz-header"><i class="bi bi-question-circle-fill"></i> Check Your Understanding</div>
-  <div class="quiz-question">Which Evoformer operation transfers co-evolution signals from the MSA to the pair representation?</div>
-  <div class="quiz-options">
-    <div class="quiz-option">Row-wise attention</div>
-    <div class="quiz-option">Triangle multiplicative update</div>
-    <div class="quiz-option">Outer product mean</div>
-    <div class="quiz-option">Column-wise attention</div>
-  </div>
-  <button class="check-btn">Check Answer</button>
-  <div class="quiz-feedback"></div>
-</div>
-```
-
----
-
-### The Structure Module: From Representations to 3D Coordinates
-
-The Structure Module takes the refined representations from the Evoformer and converts them into actual 3D atomic coordinates. This is where AlphaFold2 transitions from "reasoning about structure" to "predicting structure."
-
-#### The Key Challenge: SE(3) Equivariance
-
-Protein structure prediction has a fundamental requirement: **the prediction should be independent of how we orient the input**.
-
-- If we rotate the coordinate frame, the predicted structure should rotate identically
-- If we translate the origin, distances should be preserved
-- The prediction should depend only on intrinsic properties, not arbitrary reference frames
-
-This is called **SE(3) equivariance** (Special Euclidean group in 3D = rotations + translations).
-
-**The problem**: Standard neural networks don't naturally respect this symmetry. A naive network would give different predictions for the same protein oriented differently.
-
-#### Frames: The Backbone Representation
-
-AlphaFold2 represents each residue using a **local coordinate frame** (also called a "rigid body" or "frame"):
-
-```{mermaid}
-flowchart LR
-    subgraph "Residue Frame"
-        O[Origin at Cα] --> X[x-axis: N→Cα direction]
-        O --> Y[y-axis: perpendicular in plane]
-        O --> Z[z-axis: completes right-hand system]
-    end
-```
-
-Each frame consists of:
-
-- **Translation** (t): The 3D position of the Cα atom
-- **Rotation** (R): A 3×3 rotation matrix defining the local orientation
-
-The backbone is thus represented as a sequence of frames: T₁, T₂, ..., T_L
-
-**Why frames?** They naturally encode:
-
-- Position (where is this residue?)
-- Orientation (how is the peptide bond oriented?)
-- Relative geometry (how do two residues relate in space?)
-
-#### Invariant Point Attention (IPA): The Core Innovation
-
-**Invariant Point Attention** is the structure module's key mechanism. It's a modified attention operation that:
-
-1. Is **invariant** to global rotations and translations
-2. Can reason about **3D geometric relationships**
-3. Uses both the **pair representation** and **current 3D coordinates**
-
-```{mermaid}
-flowchart TB
-    subgraph "IPA Inputs"
-        Single[Single Representation<br/>per-residue features]
-        Pair[Pair Representation<br/>from Evoformer]
-        Frames[Current Frames<br/>T_i for each residue]
-    end
-
-    subgraph "IPA Computation"
-        QKV[Generate Q, K, V<br/>in local frames]
-        Points[Generate query/key points<br/>in local coordinates]
-        Transform[Transform points to<br/>global frame]
-        Dist[Compute point-to-point<br/>distances]
-        Attn[Attention with<br/>pair bias + distance bias]
-    end
-
-    Single --> QKV
-    Frames --> Points
-    Points --> Transform
-    Transform --> Dist
-    Pair --> Attn
-    Dist --> Attn
-    QKV --> Attn
-
-    Attn --> Output[Updated Single<br/>Representation]
-```
-
-**The "invariant points" trick**:
-
-1. Each residue generates "query points" and "key points" in its local coordinate frame
-2. These points are transformed to the global frame using the current frame estimate
-3. Distances between points are computed (distances are invariant to rotation/translation!)
-4. These distances bias the attention weights
-
-**Why this works**: By working with distances between transformed points, IPA can reason about 3D geometry while remaining invariant to the choice of global reference frame.
-
-#### The Frame Update: Predicting Backbone Geometry
-
-After each IPA layer, the structure module updates the residue frames:
-
-```
-For each residue i:
-    quaternion, translation = MLP(single_representation[i])
-    T_i = T_i ∘ (quaternion_to_rotation(quaternion), translation)
-```
-
-**Key insight**: Updates are applied as **compositions** with the current frame, not absolute predictions. This makes learning easier—the network only needs to predict small refinements.
-
-The frames start from an initial guess (often just the identity—all residues at the origin with no rotation) and are iteratively refined.
-
-#### Side Chain Prediction: Torsion Angles
-
-The structure module also predicts **side chain conformations** using torsion (dihedral) angles:
-
-```
-backbone torsion angles: φ, ψ, ω
-side chain torsion angles: χ₁, χ₂, χ₃, χ₄ (depending on amino acid)
-```
-
-Each angle is predicted as:
-
-```
-(sin(angle), cos(angle)) = MLP(single_representation)
-angle = atan2(sin, cos)
-```
-
-**Why sin/cos instead of the angle directly?** Angles wrap around (0° = 360°), which creates discontinuities. Predicting (sin, cos) avoids this problem.
-
-#### From Frames to Atoms
-
-Once we have frames and torsion angles, computing atom positions is deterministic:
-
-```
-For each residue:
-    1. Place backbone atoms (N, Cα, C, O) using the frame
-    2. Place Cβ using ideal bond geometry
-    3. Rotate each side chain bond by predicted χ angles
-    4. All atom positions fall out of the geometry
-```
-
-This uses **idealized bond lengths and angles** from chemistry—the network only predicts the "free" degrees of freedom (frame rotations/translations and torsion angles).
-
-#### Structure Module Architecture Summary
-
-```{mermaid}
-flowchart TB
-    EvoOut[Evoformer Output<br/>Single + Pair repr.] --> Init[Initialize Frames<br/>Identity transforms]
-
-    subgraph "Structure Module (8 layers)"
-        Init --> IPA1[IPA Layer 1]
-        IPA1 --> Update1[Frame Update]
-        Update1 --> IPA2[IPA Layer 2]
-        IPA2 --> Update2[Frame Update]
-        Update2 --> Dots[...]
-        Dots --> IPA8[IPA Layer 8]
-        IPA8 --> Update8[Frame Update]
-    end
-
-    Update8 --> Torsion[Predict Torsion Angles]
-    Update8 --> Final[Final Frames]
-
-    Final --> Atoms[Compute Atom<br/>Positions]
-    Torsion --> Atoms
-
-    style IPA1 fill:#bbf
-    style IPA8 fill:#bbf
-```
-
-### Recycling: Iterative Refinement
-
-AlphaFold2 doesn't just run once—it **recycles** its predictions back as input for multiple rounds of refinement.
-
-```{mermaid}
-flowchart LR
-    subgraph "Recycle 1"
-        E1[Evoformer] --> S1[Structure Module]
-    end
-
-    subgraph "Recycle 2"
-        E2[Evoformer] --> S2[Structure Module]
-    end
-
-    subgraph "Recycle 3"
-        E3[Evoformer] --> S3[Structure Module]
-    end
-
-    S1 -->|"Pair repr + structure"| E2
-    S2 -->|"Pair repr + structure"| E3
-    S3 --> Final[Final Prediction]
-```
-
-**What gets recycled?**
-
-1. **Pair representation** from previous iteration
-2. **Predicted structure** (frames) from structure module
-3. **First row of MSA representation** (query sequence features)
-
-**Why recycle?**
-
-- The Evoformer can use structural information to better interpret the MSA
-- Iterative refinement allows progressive improvement
-- Similar to how Rosetta uses "iterative assembly" in fragment-based prediction
-
-**Typical recycling**: 3 rounds (default), up to 20 for difficult targets
-
-::: {.callout-note}
-## Recycling Creates an Implicit "Dynamics"
-Each recycle can be thought of as a step of optimization. The structure progressively "folds" from a random initial state toward the predicted final structure. This is somewhat analogous to molecular dynamics or energy minimization.
-:::
-
-```{=html}
-<div class="quiz-container" data-correct-index="1" data-correct-feedback="Correct! IPA uses distances between points in 3D, which are naturally invariant to rotations and translations of the coordinate system." data-incorrect-feedback="Not quite. The key is that distances are invariant to SE(3) transformations.">
-  <div class="quiz-header"><i class="bi bi-question-circle-fill"></i> Check Your Understanding</div>
-  <div class="quiz-question">Why does Invariant Point Attention (IPA) use distances between transformed points?</div>
-  <div class="quiz-options">
-    <div class="quiz-option">To make computation faster</div>
-    <div class="quiz-option">Distances are invariant to rotation and translation</div>
-    <div class="quiz-option">Points are easier to visualize than frames</div>
-    <div class="quiz-option">To reduce memory usage</div>
-  </div>
-  <button class="check-btn">Check Answer</button>
-  <div class="quiz-feedback"></div>
-</div>
-```
-
----
-
-## Key Parameters and Settings
-
-### Recycling Parameters
-
-| Parameter | What it does | Typical values |
-|-----------|--------------|----------------|
-| `num_recycles` | How many refinement passes | 3-20 (more = better but slower) |
-| `max_recycles` | Hard cap for recycling | 20 |
-| `recycle_early_stop_tolerance` | Stop if structure converges | 0.5 Å |
-
-**When to increase recycles:**
-- Large proteins (>500 residues)
-- Multi-domain proteins
-- When initial predictions look uncertain
-
-### MSA Settings
-
-| Parameter | What it does | Options |
-|-----------|--------------|---------|
-| `msa_mode` | How to generate MSA | `mmseqs2` (fast), `jackhmmer` (thorough) |
-| `pair_mode` | For multimers: how to pair sequences | `paired`, `unpaired`, `paired+unpaired` |
-| `use_msa` | Whether to use MSA at all | true/false |
-| `use_templates` | Whether to search for structural templates | true/false |
-
-::: {.callout-warning}
-## Single-Sequence Mode
-You can run AlphaFold2 without an MSA (`use_msa=false`), but accuracy drops significantly. Use this only for:
-- Designed proteins with no natural homologs
-- Quick preliminary scans
-- When comparing to ESMFold
-:::
-
-### Model Selection
-
-| Parameter | What it does | Options |
-|-----------|--------------|---------|
-| `model_type` | Monomer vs multimer | `monomer`, `monomer_ptm`, `multimer` |
-| `num_models` | Number of model versions to run | 1-5 |
-| `rank_by` | How to select best prediction | `plddt`, `ptm`, `iptm+ptm` |
-
-**The 5 models:**
-AlphaFold2 was trained with 5 different random initializations. Running all 5 provides:
-- Ensemble diversity (different predictions)
-- Uncertainty estimation (do they agree?)
-- Better chance of finding the best structure
-
-### Relaxation
-
-| Parameter | What it does |
-|-----------|--------------|
-| `use_amber` | Run Amber energy minimization |
-| `use_gpu_relax` | Use GPU for relaxation (faster) |
-
-**Why relax?**
-- Fixes minor clashes and bad geometry
-- Makes structures more physically realistic
-- Important for downstream applications (docking, MD)
-
----
-
-## AlphaFold2 Extensions
-
-### AlphaFold-Multimer
-
-Predicting protein complexes (multiple chains interacting):
-
-**Key modifications:**
-- Cross-chain MSA pairing for evolutionary signal
-- Losses account for chain permutation symmetry
-- Interface-aware training
-
-```python
-# In your FASTA file, separate chains with ":"
->complex
-SEQUENCEOFCHAINA:SEQUENCEOFCHAINB
-```
-
-### AlphaFold Database
-
-DeepMind released predictions for **200+ million proteins**—essentially all of UniProt.
-
-- **Access:** [alphafold.ebi.ac.uk](https://alphafold.ebi.ac.uk)
-- **Coverage:** Human proteome + 47 other key organisms
-- **Use case:** Check if your protein has already been predicted!
-
-### AF-Cluster
-
-**Idea:** Proteins can have multiple conformations. Can we bias AlphaFold2 toward different states?
-
-**Approach:**
-- Cluster the MSA into subgroups
-- Run predictions with different MSA subsets
-- Different clusters may yield different conformational states
-
-**Reference:** Wayment-Steele et al. (2022)
-
-### AFsample
-
-**Idea:** Generate diverse predictions through sampling.
-
-**Approach:**
-- Enable dropout during inference
-- Increase recycling
-- Generate multiple diverse predictions
-
-This is useful for understanding conformational flexibility and uncertainty.
-
-### Automated Workflows
-
-Tools like **EvoPro** and **BindCraft** use AlphaFold2 as part of larger design pipelines:
-
-- Generate candidate designs
-- Predict structures with AF2
-- Score and filter based on confidence
-- Iterate to improve designs
-
----
-
-## Understanding the Output
-
-### pLDDT: Per-Residue Confidence
-
-pLDDT (predicted Local Distance Difference Test) ranges from 0-100:
-
-| pLDDT | Interpretation | What to do |
-|-------|---------------|------------|
-| >90 | Very high confidence | Trust the local structure |
-| 70-90 | Confident | Generally reliable |
-| 50-70 | Low confidence | Treat with caution |
-| <50 | Very low confidence | Likely disordered or wrong |
-
-::: {.callout-tip}
-## Low pLDDT ≠ Wrong
-Low pLDDT regions often correspond to:
-- **Intrinsically disordered regions** (genuinely unstructured)
-- **Flexible loops** (multiple conformations possible)
-- **Crystal contacts** (structure depends on environment)
-
-Low confidence is information, not failure!
-:::
-
-### pTM and ipTM: Global Confidence
-
-- **pTM** (predicted TM-score): Overall structure confidence (0-1)
-- **ipTM** (interface pTM): Confidence in interface prediction (for multimers)
-
-| Score | Interpretation |
-|-------|---------------|
-| >0.8 | High confidence |
-| 0.5-0.8 | Moderate confidence |
-| <0.5 | Low confidence |
-
-### PAE: Predicted Aligned Error
-
-The PAE matrix shows confidence in **relative positions** between residue pairs.
-
-**Reading PAE plots:**
-- **Blue/low values**: Confident in relative position
-- **Red/high values**: Uncertain about relative position
-- **Diagonal blocks**: Domains (confident within, uncertain between)
-
-**PAE is crucial for:**
-- Identifying domain boundaries
-- Assessing multimer interface confidence
-- Understanding which parts of the structure are well-determined relative to each other
-
----
-
-## Practical Considerations
-
-### When to Use AlphaFold2
-
-**Best for:**
-- Proteins with many homologs in databases
-- Monomers and stable complexes
-- When accuracy is paramount
-
-**Less suitable for:**
-- Designed/synthetic proteins (few homologs)
-- Highly dynamic proteins
-- When speed is critical (use ESMFold instead)
-
-### Resource Requirements
-
-| Resource | Minimum | Recommended |
-|----------|---------|-------------|
-| GPU RAM | 16 GB | 40+ GB (A100) |
-| CPU RAM | 32 GB | 64 GB |
-| Disk | 15 GB | 100+ GB (with databases) |
-
-### Tips for Better Predictions
-
-1. **Check the AlphaFold Database first**—your protein may already be predicted
-2. **Use all 5 models** for important predictions
-3. **Examine pLDDT and PAE**—don't just look at the structure
-4. **Consider multiple conformations** for flexible proteins
-5. **Validate experimentally** for high-stakes applications
-
----
-
-## Hands-On Exercise
-
-### Part 1: Run ColabFold Prediction
-
-**Goal:** Generate your first AlphaFold2 prediction.
-
-We'll predict the structure of Green Fluorescent Protein (GFP) using ColabFold.
-
-**1. Prepare your sequence:**
-
-Create a file called `gfp.fasta`:
-```
+```text
 >GFP
 MSKGEELFTGVVPILVELDGDVNGHKFSVSGEGEGDATYGKLTLKFICTTGKLPVPWPTLVTTFSYGVQCFSRYPDHMKQHDFFKSAMPEGYVQERTIFFKDDGNYKTRAEVKFEGDTLVNRIELKGIDFKEDGNILGHKLEYNYNSHNVYIMADKQKNGIKVNFKIRHNIEDGSVQLADHYQQNTPIGDGPVLLPDNHYLSTQSALSKDPNEKRDHMVLLEFVTAAGITHGMDELYK
 ```
 
-You can also download this file: [1GFL.fasta](files/1GFL.fasta)
+Choose one route:
 
-**2. Run prediction:**
+**LocalColabFold or HPC**
 
-If using LocalColabFold on your HPC:
 ```bash
 colabfold_batch gfp.fasta gfp_output/
 ```
 
-If using the ColabFold notebook:
-- Go to [ColabFold](https://colab.research.google.com/github/sokrypton/ColabFold/blob/main/AlphaFold2.ipynb)
-- Paste your sequence
-- Run all cells
+**Hosted notebook**
 
-**3. Expected output:**
-- `gfp_relaxed_rank_001_*.pdb` - Best predicted structure
-- `gfp_scores_rank_001_*.json` - Confidence scores
-- `gfp_coverage.png` - MSA coverage
-- `gfp_pae.png` - PAE heatmap
+Open the [ColabFold notebook](https://colab.research.google.com/github/sokrypton/ColabFold/blob/main/AlphaFold2.ipynb), paste the sequence, and run all cells.
 
-**Expected runtime:** 5-15 minutes depending on your hardware.
+Expected runtime is approximately 5–15 minutes, depending on available hardware and queue time. Key outputs normally include:
 
-### Part 2: Analyze Your Prediction
+- a ranked PDB structure;
+- a JSON file of confidence scores;
+- an MSA coverage plot;
+- a PAE heatmap.
 
-**1. Load the structure in PyMOL:**
+::: {.callout-tip title="If compute is unavailable"}
+Use an instructor-provided or previously generated GFP output folder and complete the analysis. Interpreting evidence is the learning objective; a temporary GPU or queue failure should not stop the lesson.
+:::
+
+### Do: Analyze Local Confidence
+
+Load the top-ranked structure in PyMOL. Adjust the filename to match your output:
+
 ```python
 load gfp_output/gfp_relaxed_rank_001_alphafold2_ptm_model_1_seed_000.pdb, af2_gfp
-```
-
-**2. Color by confidence (pLDDT):**
-```python
 spectrum b, blue_white_red, minimum=50, maximum=100
 ```
 
-**3. Questions to answer:**
-- What is the overall pLDDT? (Check the JSON file or PyMOL's B-factor range)
-- Which regions have high confidence? Low confidence?
-- Does GFP have any disordered regions?
+Then answer:
 
-**4. Compare to experimental structure:**
+- Which regions have high or low pLDDT?
+- Does a low-confidence segment look like a terminal tail, loop, or larger structural region?
+- Does the confidence pattern match your prediction?
+
+### Do: Compare with Experiment
+
 ```python
 fetch 1GFL
 align af2_gfp, 1GFL
 ```
 
-- What is the RMSD between prediction and experiment?
-- Do the structures overlay well?
+Record the reported RMSD and inspect the overlay. Do not use RMSD alone: note whether deviations are global or concentrated in a few flexible regions.
 
-### Part 3: Explore the PAE
+### Do: Interpret PAE
 
-**1. Open `gfp_pae.png`**
+Open the PAE image and answer:
 
-**2. Interpret the plot:**
-- Is there one block (single domain) or multiple blocks?
-- Are there any high-PAE (red) regions?
-- What does this tell you about the structure?
+- Is the plot dominated by one low-error block or several blocks?
+- Are there high-PAE regions?
+- What does the pattern imply about GFP's domain organization and relative-coordinate confidence?
 
-### Part 4: Experiment with Parameters
+### Check: Build the Artifact
 
-Try running predictions with different settings:
+Fill in the evidence table and save it with your prediction outputs.
 
-**Experiment 1: Fewer recycles**
+| Evidence | Your GFP result | Interpretation |
+|---|---|---|
+| Average pLDDT | | |
+| pTM score | | |
+| RMSD to 1GFL | | |
+| Prediction time | | |
+| MSA depth / coverage | | |
+| Regions with pLDDT <70 | | |
+| PAE pattern | | |
+
+Finish with a three-sentence trust statement:
+
+1. Which parts of the model would you trust, and for what type of decision?
+2. Which uncertainty most limits its use?
+3. What additional evidence would you seek before a high-stakes experiment?
+
+::: {.callout-important title="Definition of completion"}
+This lesson is complete when your folder contains the prediction (or provided outputs), evidence table, and trust statement. A rendered structure alone is not sufficient.
+:::
+
+## Optional: Test One Assumption
+
+Choose one experiment; running all three is enrichment rather than core work.
+
+**Fewer recycles**
+
 ```bash
 colabfold_batch --num-recycle 1 gfp.fasta gfp_1recycle/
 ```
-Compare to the default (3 recycles). Is there a difference in quality?
 
-**Experiment 2: Single sequence (no MSA)**
+**Single-sequence mode**
+
 ```bash
 colabfold_batch --msa-mode single_sequence gfp.fasta gfp_single_seq/
 ```
-This mimics what ESMFold does. How does quality compare?
 
-**Experiment 3: All 5 models**
+**All five model parameter sets**
+
 ```bash
 colabfold_batch --num-models 5 gfp.fasta gfp_all_models/
 ```
-Do the different models agree? What's the variance in pLDDT?
 
-### Part 5: Multimer Prediction (Optional)
+Before each run, predict which metric will change most. Afterward, compare confidence, structural agreement, and runtime. Record whether the evidence supports your prediction.
 
-If you have time, try predicting a protein complex:
+### Optional Multimer Prediction
 
-**1. Create a multimer FASTA:**
-```
+In a FASTA entry, separate chains with a colon:
+
+```text
 >homodimer
-MSKGEELFTGVVPILVELDGDVNGHKFSVSGEGEGDATYGKLTLKFICTTGKLPVPWPTLVTTFSYGVQCFSRYPDHMKQHDFFKSAMPEGYVQERTIFFKDDGNYKTRAEVKFEGDTLVNRIELKGIDFKEDGNILGHKLEYNYNSHNVYIMADKQKNGIKVNFKIRHNIEDGSVQLADHYQQNTPIGDGPVLLPDNHYLSTQSALSKDPNEKRDHMVLLEFVTAAGITHGMDELYK:MSKGEELFTGVVPILVELDGDVNGHKFSVSGEGEGDATYGKLTLKFICTTGKLPVPWPTLVTTFSYGVQCFSRYPDHMKQHDFFKSAMPEGYVQERTIFFKDDGNYKTRAEVKFEGDTLVNRIELKGIDFKEDGNILGHKLEYNYNSHNVYIMADKQKNGIKVNFKIRHNIEDGSVQLADHYQQNTPIGDGPVLLPDNHYLSTQSALSKDPNEKRDHMVLLEFVTAAGITHGMDELYK
-```
-(Note: The `:` separates chains)
-
-**2. Run prediction:**
-```bash
-colabfold_batch homodimer.fasta homodimer_output/
+SEQUENCEOFCHAINA:SEQUENCEOFCHAINB
 ```
 
-**3. Analyze:**
-- What is the ipTM score?
-- Does the interface look reasonable?
-- Check PAE for interface confidence (off-diagonal blocks)
+Run `colabfold_batch homodimer.fasta homodimer_output/`, then interpret ipTM and the off-diagonal regions of the PAE plot. A plausible-looking interface without supporting ipTM, PAE, or biological evidence should not be treated as validated.
 
-### Questions to Consider
+## Decide and Continue
 
-1. How does prediction time scale with sequence length?
-2. Why might some regions have low pLDDT even in a well-folded protein?
-3. When would you trust a prediction enough to use it for experimental planning?
-4. What would you do if AlphaFold2 and ESMFold give different predictions?
+Before moving on, be able to answer these questions without reopening the page:
 
-### Record Your Results
+1. Why does evolutionary diversity matter more than a raw MSA row count?
+2. What different uncertainty does PAE reveal compared with pLDDT?
+3. When could a low-confidence region be biologically meaningful?
+4. What evidence would make you distrust an otherwise attractive structure?
 
-Fill in this table with your observations:
-
-| Metric | Your GFP Prediction |
-|--------|---------------------|
-| Average pLDDT | |
-| pTM score | |
-| RMSD to 1GFL | |
-| Prediction time | |
-| MSA depth | |
-| Regions with pLDDT < 70 | |
+For implementation detail, read the [AlphaFold2 architecture deep dive](3-alphafold2-deep-dive.qmd). Otherwise, save your artifact and continue to [ESMFold vs. AlphaFold2](4-esmfold.qmd).

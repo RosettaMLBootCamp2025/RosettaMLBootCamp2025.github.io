@@ -1,0 +1,251 @@
+---
+title: "AlphaFold2 Architecture Deep Dive"
+---
+
+This optional companion explains how AlphaFold2 turns an MSA and sequence into coordinates. It preserves the implementation detail from the live bootcamp while keeping the [core AlphaFold2 lesson](3-alphafold2.qmd) focused on prediction and interpretation.
+
+::: {.callout-note title="Deep-dive contract"}
+| | |
+|---|---|
+| **Time** | 90–120 minutes |
+| **Prerequisite** | Complete the confidence and MSA loops in the core lesson |
+| **Outcome** | Trace information through the Evoformer, structure module, and recycling loop |
+| **Artifact** | A one-page architecture sketch annotated with tensor roles and one sentence per major operation |
+| **Complete when** | You can explain how evolutionary correlations enter the pair representation and how invariant point attention updates a 3D structure |
+:::
+
+## Architecture at a Glance
+
+```{mermaid}
+flowchart LR
+    Seq[Input sequence] --> MSA[MSA generation]
+    Seq --> Templ[Template search]
+    MSA --> Evo[Evoformer]
+    Templ --> Evo
+    Evo --> Struct[Structure module]
+    Struct --> Coord[3D coordinates]
+    Struct -. recycled features .-> Evo
+```
+
+The model maintains three useful views of the protein:
+
+- An **MSA representation** tracks every residue in every aligned sequence.
+- A **pair representation** tracks relationships between every pair of query residues.
+- A **single representation**, derived from the query row, carries per-residue information into the structure module.
+
+## From MSA to Pairwise Geometry
+
+### Generating the MSA
+
+AlphaFold2 originally combines sensitive database searches:
+
+- **JackHMMER** iteratively searches sequence databases using profile HMMs.
+- **HHblits** uses HMM–HMM comparisons against clustered databases.
+- **MMseqs2**, used by ColabFold, searches precomputed databases much faster and makes large-scale prediction practical.
+
+Historically, direct coupling analysis (DCA) attempted to separate direct residue couplings from transitive correlations. AlphaFold2 does not explicitly run DCA; learned operations extract related signals from MSA features.
+
+### The Two Evoformer Representations
+
+The MSA is embedded as a tensor with axes for sequences, residues, and features. In the standard AlphaFold2 description, the Evoformer processes:
+
+- **MSA representation:** `N_seq × L × 256`
+- **Pair representation:** `L × L × 128`
+
+Across 48 Evoformer blocks, information flows within and between these representations.
+
+```{mermaid}
+flowchart TB
+    MSA[MSA input] --> MSArep[MSA representation]
+    MSA --> Pair[Pair representation]
+    MSArep <--> Evo[Evoformer ×48]
+    Pair <--> Evo
+    Evo --> Single[Single + pair features]
+```
+
+### Row and Column Attention
+
+**Row attention** asks which other positions in the same sequence are relevant to a residue. Pair features bias its attention weights, letting current structural hypotheses guide sequence processing.
+
+**Column attention** compares the same position across aligned sequences. It aggregates conservation and variation across evolutionary samples.
+
+The useful intuition is:
+
+- Row attention: “Which other residues in this sequence matter here?”
+- Column attention: “What does evolution reveal about this position?”
+
+### Outer Product Mean
+
+The **outer product mean** transfers information from the MSA representation to the pair representation. Conceptually:
+
+```text
+for positions i and j:
+    pair_update[i,j] = mean over sequences s of (
+        msa[s,i] outer-product msa[s,j]
+    )
+```
+
+If amino-acid patterns at positions *i* and *j* consistently occur together across homologs, this operation exposes that relationship to the pair stack. It is a learned, differentiable way to inject correlation statistics into pairwise reasoning.
+
+```{=html}
+<div class="quiz-container" data-correct-index="2" data-correct-feedback="Correct! The outer product mean summarizes relationships between MSA positions and injects them into the pair representation." data-incorrect-feedback="Not quite. Look for the operation that explicitly connects the MSA representation to pair features.">
+  <div class="quiz-header"><i class="bi bi-question-circle-fill"></i> Check Your Understanding</div>
+  <div class="quiz-question">Which Evoformer operation transfers co-evolution signals from the MSA to the pair representation?</div>
+  <div class="quiz-options">
+    <div class="quiz-option">Row-wise attention</div>
+    <div class="quiz-option">Triangle multiplicative update</div>
+    <div class="quiz-option">Outer product mean</div>
+    <div class="quiz-option">Column-wise attention</div>
+  </div>
+  <button class="check-btn">Check Answer</button>
+  <div class="quiz-feedback"></div>
+</div>
+```
+
+### Triangle Updates
+
+The pair representation is a fully connected graph: each edge stores information about a residue pair. Triangle updates pass messages through a third residue *k*, helping pairwise hypotheses become geometrically consistent.
+
+```{mermaid}
+flowchart LR
+    I((i)) --- J((j))
+    I --- K((k))
+    K --- J
+```
+
+For the edge *(i,j)*:
+
+- **Triangle attention** selects which intermediate residues *k* matter.
+- **Triangle multiplicative updates** combine information along paths *(i,k)* and *(k,j)*.
+
+Both incoming/outgoing multiplicative updates and starting/ending attention are used because they encode complementary directed relationships.
+
+### Evoformer Check
+
+Draw two boxes labeled “MSA” and “Pair.” Add arrows for row attention, column attention, outer product mean, and triangle updates. The only cross-representation arrow in this simplified sketch should be outer product mean from MSA to Pair.
+
+After 48 blocks, the model has extracted evolutionary patterns, propagated sequence and pair information, and built a rich representation of likely 3D relationships.
+
+## From Representations to Coordinates
+
+### The Symmetry Requirement
+
+A protein prediction should not depend on an arbitrary coordinate frame. If the input coordinate frame rotates or translates, the predicted structure should transform in the same way while its internal geometry remains unchanged. This is the idea behind **SE(3) equivariance**.
+
+AlphaFold2 associates each residue with a local rigid frame:
+
+- a translation locating the Cα atom;
+- a rotation defining local orientation.
+
+The backbone is represented as a sequence of frames, one per residue. Relative frame geometry conveys both position and orientation.
+
+### Invariant Point Attention
+
+Invariant point attention (IPA) combines learned residue features, pair features, and the current 3D estimate:
+
+1. Each residue generates query and key points in its local frame.
+2. Current residue frames transform those points into the global frame.
+3. Distances between transformed points bias attention.
+4. Because distances do not change under a shared global rotation or translation, the operation respects the required symmetry.
+
+```{mermaid}
+flowchart TB
+    Single[Single representation] --> Points[Query, key, and value points]
+    Frames[Current residue frames] --> Transform[Transform to global frame]
+    Points --> Transform
+    Transform --> Dist[Pairwise point distances]
+    Pair[Pair representation] --> Attn[Invariant point attention]
+    Dist --> Attn
+    Attn --> Updated[Updated residue features]
+```
+
+```{=html}
+<div class="quiz-container" data-correct-index="1" data-correct-feedback="Correct! Distances are unchanged by a shared rotation or translation, so they carry geometric information without tying the model to an arbitrary global frame." data-incorrect-feedback="Not quite. Focus on which geometric quantity remains unchanged under rotation and translation.">
+  <div class="quiz-header"><i class="bi bi-question-circle-fill"></i> Check Your Understanding</div>
+  <div class="quiz-question">Why does invariant point attention use distances between transformed points?</div>
+  <div class="quiz-options">
+    <div class="quiz-option">To make computation faster</div>
+    <div class="quiz-option">Distances are invariant to rotation and translation</div>
+    <div class="quiz-option">Points are easier to visualize than frames</div>
+    <div class="quiz-option">To reduce memory usage</div>
+  </div>
+  <button class="check-btn">Check Answer</button>
+  <div class="quiz-feedback"></div>
+</div>
+```
+
+### Frame and Side-Chain Updates
+
+After each IPA layer, the model predicts a small rotation and translation and composes that update with the current frame. Predicting refinements is easier than predicting every coordinate independently.
+
+Side chains are determined through predicted torsion angles. The network predicts each angle as sine and cosine values, avoiding the discontinuity where 0° and 360° represent the same orientation. Frames, torsions, and ideal chemical geometry then determine atom positions.
+
+## Recycling: Iterative Refinement
+
+AlphaFold2 feeds features from a predicted structure back into another pass:
+
+```{mermaid}
+flowchart LR
+    E1[Evoformer] --> S1[Structure module]
+    S1 -->|pair, structure, query features| E2[Evoformer]
+    E2 --> S2[Structure module]
+    S2 -->|recycle again| E3[Evoformer]
+    E3 --> S3[Final structure]
+```
+
+Recycling lets structural hypotheses inform another interpretation of the MSA. A typical inference uses three recycles, while difficult targets may benefit from more, at additional compute cost.
+
+::: {.callout-note title="A useful analogy, with limits"}
+Recycling resembles iterative optimization because the structure is progressively refined. It is not molecular dynamics and should not be interpreted as a physical folding trajectory.
+:::
+
+## Inference Settings
+
+### Recycling and MSA
+
+| Setting | Role | Typical choice |
+|---|---|---|
+| `num_recycles` | Refinement passes | 3 by default; more for difficult cases |
+| `msa_mode` | MSA generation route | MMseqs2 for ColabFold; JackHMMER for a thorough local search |
+| `pair_mode` | Multimer sequence pairing | Paired, unpaired, or both |
+| `use_templates` | Include structural templates | Depends on the question and protocol |
+
+Single-sequence mode can be useful for designed proteins with no homologs or as a controlled comparison, but it removes a major source of AlphaFold2's predictive signal.
+
+### Model Selection and Relaxation
+
+| Setting | Role |
+|---|---|
+| `model_type` | Select monomer, pTM-aware monomer, or multimer models |
+| `num_models` | Run one or more trained model parameter sets |
+| `rank_by` | Rank using pLDDT, pTM, or multimer confidence |
+| Amber relaxation | Improve clashes and local geometry after prediction |
+
+Running all five trained model parameter sets provides a practical agreement check. Consistent predictions increase confidence; disagreement identifies uncertainty that a single ranked model would hide.
+
+## Extensions and Related Workflows
+
+- **AlphaFold-Multimer** adds cross-chain reasoning and interface-aware training for complexes. Confidence requires ipTM and interface PAE, not appearance alone.
+- **AlphaFold Database** provides predictions for more than 200 million UniProt sequences; check it before spending compute on a known sequence.
+- **AF-Cluster** runs the model on MSA subclusters to explore alternative conformational states.
+- **AFsample** enables inference-time dropout and extensive sampling to seek structural diversity.
+- Workflows such as **EvoPro** and **BindCraft** use AlphaFold2 predictions as scoring and filtering steps inside iterative design pipelines.
+
+For proteins with rich MSAs and stable folds, AlphaFold2 remains a strong default. It is less decisive for designed sequences, dynamic systems, context-dependent assemblies, and cases where speed is more important than maximum accuracy.
+
+## Final Check and Artifact
+
+Annotate your architecture sketch with one sentence for each item:
+
+1. MSA representation
+2. Pair representation
+3. Outer product mean
+4. Triangle updates
+5. Invariant point attention
+6. Recycling
+
+Then explain this chain aloud or in writing:
+
+> Evolutionary variation supplies pairwise clues; the Evoformer turns them into geometric relationships; the structure module turns those relationships into equivariant coordinate updates; recycling refines the result.
+
+If you can defend each link in that chain, the deep dive is complete. Return to the [core lesson](3-alphafold2.qmd) to finish or review the GFP evidence artifact.

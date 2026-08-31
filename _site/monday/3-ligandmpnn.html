@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.37">
+<meta name="generator" content="quarto-1.10.18">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -12,15 +12,18 @@
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
 */
-code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: min(4vw, 1.5em);}
-div.column{flex: auto; overflow-x: auto;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */
   vertical-align: middle;
 }
 /* CSS for syntax highlighting */
@@ -74,10 +77,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-a20ec67e4eaf1004f696852e93606815.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-4d3f3448f837ff03356db176d8adb603.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-8a6c0a3bd53b22ee0b8bf446df975f0f.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -106,19 +109,197 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   }
 }</script>
 <style>html{ scroll-behavior: smooth; }</style>
-<!-- Shared Mol* component include for target pages -->
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/pdbe-molstar@latest/build/pdbe-molstar-component.js"></script>
-<style>
-  .molstar-container {
-    width: 100%;
-    height: 500px;
-    position: relative;
-    margin-bottom: 20px;
-    border: 1px solid #eee;
-    border-radius: 8px;
-    overflow: hidden;
+<!-- Load Mol* only on pages that contain a molecular viewer. -->
+<script>
+(function() {
+  'use strict';
+
+  const MOLSTAR_COMPONENT_URL = 'https://cdn.jsdelivr.net/npm/pdbe-molstar@3.3.0/build/pdbe-molstar-component.js';
+
+  function addMediaAlternatives() {
+    document.querySelectorAll('.workshop-companion').forEach(companion => {
+      const title = (companion.querySelector('.wc-title')?.textContent || 'Workshop session')
+        .replace(/^\s*🎥\s*/, '')
+        .replace(/^Live workshop recording\s*[—-]\s*/i, '')
+        .trim();
+
+      const video = companion.querySelector('.wc-video iframe');
+      if (video && !video.title) video.title = title + ' workshop recording';
+      if (video && !companion.querySelector('.media-alternative-video')) {
+        const match = video.src.match(/\/embed\/([^?&#/]+)/);
+        const note = document.createElement('p');
+        note.className = 'media-alternative media-alternative-video';
+        note.append(document.createTextNode('The recording is optional; the lesson text covers the core material. '));
+        if (match) {
+          const link = document.createElement('a');
+          link.href = 'https://www.youtube.com/watch?v=' + encodeURIComponent(match[1]);
+          link.target = '_blank';
+          link.rel = 'noopener';
+          link.textContent = 'Open the recording on YouTube';
+          link.setAttribute('aria-label', 'Open ' + title + ' on YouTube');
+          note.append(link, document.createTextNode(' if the embedded player is unavailable.'));
+        }
+        video.closest('.wc-video').insertAdjacentElement('afterend', note);
+      }
+
+      companion.querySelectorAll('details iframe').forEach(frame => {
+        if (!frame.title) frame.title = title + ' workshop slides';
+        const details = frame.closest('details');
+        if (!details || details.querySelector('.media-alternative-slides')) return;
+
+        const note = document.createElement('p');
+        const link = document.createElement('a');
+        note.className = 'media-alternative media-alternative-slides';
+        note.append(document.createTextNode('The slides are optional; equivalent explanations appear in the lesson. '));
+        link.href = frame.src.replace(/\/embed(?:\?.*)?$/, '/view');
+        link.target = '_blank';
+        link.rel = 'noopener';
+        link.textContent = 'Open the slide deck in a new tab';
+        link.setAttribute('aria-label', 'Open slides for ' + title + ' in a new tab');
+        note.appendChild(link);
+        frame.insertAdjacentElement('beforebegin', note);
+      });
+    });
   }
-</style>
+
+  function nameMermaidDiagrams() {
+    document.querySelectorAll('svg.mermaid-js:not([aria-labelledby])').forEach((diagram, index) => {
+      const namespace = 'http://www.w3.org/2000/svg';
+      const section = diagram.closest('section');
+      const heading = section && section.querySelector(':scope > h2, :scope > h3, :scope > h4');
+      const idBase = diagram.id || 'course-diagram-' + (index + 1);
+      const title = document.createElementNS(namespace, 'title');
+      const description = document.createElementNS(namespace, 'desc');
+      const steps = Array.from(diagram.querySelectorAll('.nodeLabel'))
+        .map(node => node.textContent.replace(/\s+/g, ' ').trim())
+        .filter((value, stepIndex, values) => value && values.indexOf(value) === stepIndex);
+
+      title.id = idBase + '-title';
+      title.textContent = heading ? 'Flowchart for ' + heading.textContent.trim() : 'Course workflow flowchart';
+      description.id = idBase + '-description';
+      description.textContent = steps.length
+        ? 'The flowchart contains these labeled steps: ' + steps.join('; ') + '.'
+        : 'A visual flowchart supporting the surrounding lesson text.';
+      diagram.prepend(description);
+      diagram.prepend(title);
+      diagram.setAttribute('aria-labelledby', title.id);
+      diagram.setAttribute('aria-describedby', description.id);
+    });
+  }
+
+  function improveSharedAccessibility() {
+    addMediaAlternatives();
+    nameMermaidDiagrams();
+    document.querySelectorAll('.navbar-toggler[role="menu"]').forEach(button => {
+      button.removeAttribute('role');
+    });
+
+    document.querySelectorAll('main table, main pre, main div.sourceCode, main .mermaid').forEach(region => {
+      if (region.scrollWidth > region.clientWidth + 1 && !region.hasAttribute('tabindex')) {
+        region.tabIndex = 0;
+      }
+    });
+  }
+
+  function prepareViewer(viewer) {
+    const container = viewer.closest('.molstar-container');
+    const moleculeId = (viewer.getAttribute('molecule-id') || '').toUpperCase();
+    if (!container) return;
+
+    const heading = container.previousElementSibling && container.previousElementSibling.matches('h2, h3')
+      ? container.previousElementSibling
+      : container.parentElement && container.parentElement.querySelector('h2, h3');
+    const alternative = container.nextElementSibling && container.nextElementSibling.matches('.molstar-alternative')
+      ? container.nextElementSibling
+      : null;
+    container.setAttribute('role', 'region');
+    if (heading && heading.id) container.setAttribute('aria-labelledby', heading.id);
+    else container.setAttribute('aria-label', 'Interactive molecular structure');
+    if (alternative) {
+      if (!alternative.id) alternative.id = (viewer.id || 'molecular-viewer') + '-alternative';
+      container.setAttribute('aria-describedby', alternative.id);
+    }
+    container.setAttribute('aria-busy', 'true');
+
+    viewer.dataset.accessibleName = moleculeId
+      ? 'Interactive three-dimensional molecular structure for PDB ' + moleculeId
+      : 'Interactive three-dimensional molecular structure';
+
+    function nameViewerLinks() {
+      viewer.querySelectorAll('a.msp-logo:not([aria-label])').forEach(link => {
+        link.setAttribute('aria-label', 'Open the Mol* project website');
+      });
+      viewer.querySelectorAll('a.msp-pdbe-link:not([aria-label])').forEach(link => {
+        link.setAttribute(
+          'aria-label',
+          moleculeId ? 'Open PDB ' + moleculeId + ' on PDBe' : 'Open this structure on PDBe'
+        );
+      });
+    }
+
+    nameViewerLinks();
+    const observer = new MutationObserver(nameViewerLinks);
+    observer.observe(viewer, {childList: true, subtree: true});
+
+    const status = document.createElement('p');
+    status.className = 'molstar-load-status';
+    status.setAttribute('role', 'status');
+    status.setAttribute('aria-live', 'polite');
+    status.textContent = 'Loading the optional interactive structure viewer…';
+    container.prepend(status);
+  }
+
+  function showLoadFailure() {
+    document.querySelectorAll('.molstar-container').forEach(container => {
+      container.setAttribute('aria-busy', 'false');
+      container.classList.add('molstar-failed');
+      const status = container.querySelector('.molstar-load-status');
+      if (status) {
+        status.setAttribute('role', 'alert');
+        status.textContent = 'The interactive viewer could not load. Use the non-interactive structure alternative below.';
+      }
+    });
+  }
+
+  function initialiseMolstar() {
+    const viewers = Array.from(document.querySelectorAll('pdbe-molstar'));
+    if (viewers.length === 0) return;
+
+    viewers.forEach(prepareViewer);
+    const script = document.createElement('script');
+    script.src = MOLSTAR_COMPONENT_URL;
+    script.async = true;
+    script.addEventListener('error', showLoadFailure);
+    script.addEventListener('load', () => {
+      const ready = window.customElements && customElements.whenDefined
+        ? customElements.whenDefined('pdbe-molstar')
+        : Promise.resolve();
+      ready.then(() => {
+        document.querySelectorAll('.molstar-container').forEach(container => {
+          container.setAttribute('aria-busy', 'false');
+          container.classList.add('molstar-ready');
+          const status = container.querySelector('.molstar-load-status');
+          if (status) status.remove();
+        });
+      }).catch(showLoadFailure);
+    });
+    document.head.appendChild(script);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+      improveSharedAccessibility();
+      initialiseMolstar();
+      window.setTimeout(improveSharedAccessibility, 500);
+      window.setTimeout(improveSharedAccessibility, 1500);
+    }, {once: true});
+  } else {
+    improveSharedAccessibility();
+    initialiseMolstar();
+  }
+  window.addEventListener('load', improveSharedAccessibility, {once: true});
+})();
+</script>
 
 
 <link rel="stylesheet" href="../styles.css">
@@ -142,39 +323,43 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../index.html"> 
+    <a class="nav-link" href="../index.html">
 <span class="menu-text">Home</span></a>
-  </li>  
+  </li>
   <li class="nav-item">
-    <a class="nav-link active" href="../monday/index.html" aria-current="page"> 
+    <a class="nav-link" href="../start-here.html">
+<span class="menu-text">Start Here</span></a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link active" href="../monday/index.html" aria-current="page">
 <span class="menu-text">Monday</span></a>
-  </li>  
+  </li>
   <li class="nav-item">
-    <a class="nav-link" href="../tuesday/index.html"> 
+    <a class="nav-link" href="../tuesday/index.html">
 <span class="menu-text">Tuesday</span></a>
-  </li>  
+  </li>
   <li class="nav-item">
-    <a class="nav-link" href="../wednesday/index.html"> 
+    <a class="nav-link" href="../wednesday/index.html">
 <span class="menu-text">Wednesday</span></a>
-  </li>  
+  </li>
   <li class="nav-item">
-    <a class="nav-link" href="../thursday/index.html"> 
+    <a class="nav-link" href="../thursday/index.html">
 <span class="menu-text">Thursday</span></a>
-  </li>  
+  </li>
   <li class="nav-item">
-    <a class="nav-link" href="../capstone/index.html"> 
+    <a class="nav-link" href="../capstone/index.html">
 <span class="menu-text">Capstone</span></a>
-  </li>  
+  </li>
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../about.html"> 
+    <a class="nav-link" href="../about.html">
 <span class="menu-text">About</span></a>
-  </li>  
+  </li>
   <li class="nav-item">
-    <a class="nav-link" href="https://github.com/RosettaMLBootCamp2025/RosettaMLBootCamp2025.github.io/issues/new"> 
+    <a class="nav-link" href="https://github.com/RosettaMLBootCamp2025/RosettaMLBootCamp2025.github.io/issues/new">
 <span class="menu-text">Report Issue</span></a>
-  </li>  
+  </li>
 </ul>
           </div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
@@ -187,7 +372,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
         <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../monday/3-ligandmpnn.html">3. LigandMPNN</a></li></ol></nav>
-        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         </a>
     </div>
   </nav>
@@ -196,108 +381,114 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
-    <div class="sidebar-menu-container"> 
+    <div class="sidebar-menu-container">
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
+  <div class="sidebar-item-container">
   <a href="../monday/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Monday: Tool Installation</span></a>
   </div>
 </li>
         <li class="px-0"><hr class="sidebar-divider hi "></li>
         <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
+  <div class="sidebar-item-container">
   <a href="../monday/prework-1-env-git.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Pre-work 1: Environment Setup &amp; GitHub Basics</span></a>
   </div>
 </li>
         <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
+  <div class="sidebar-item-container">
   <a href="../monday/prework-2-pymol-vscode.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Pre-work 2: PyMOL and VS Code Setup</span></a>
   </div>
 </li>
         <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
+  <div class="sidebar-item-container">
   <a href="../monday/prework-3-python.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Pre-work 3: Python Refresher</span></a>
   </div>
 </li>
         <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
+  <div class="sidebar-item-container">
   <a href="../monday/1-hpc-setup.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">1. Common HPC Setup</span></a>
   </div>
 </li>
         <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
+  <div class="sidebar-item-container">
+  <a href="../monday/reproducibility.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Reproducible Setup &amp; Compute Fallbacks</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container">
   <a href="../monday/2-localcolabfold.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">2. LocalColabFold</span></a>
   </div>
 </li>
         <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
+  <div class="sidebar-item-container">
   <a href="../monday/3-ligandmpnn.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">3. LigandMPNN</span></a>
   </div>
 </li>
         <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
+  <div class="sidebar-item-container">
   <a href="../monday/4-rfdiffusion2.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">4. RFdiffusion2</span></a>
   </div>
 </li>
         <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
+  <div class="sidebar-item-container">
   <a href="../monday/5-esmfold.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">5. ESMFold</span></a>
   </div>
 </li>
         <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
+  <div class="sidebar-item-container">
   <a href="../monday/6-openfold.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">6. OpenFold (Optional)</span></a>
   </div>
 </li>
         <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
+  <div class="sidebar-item-container">
   <a href="../monday/7-chai1.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">7. Chai-1</span></a>
   </div>
 </li>
         <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
+  <div class="sidebar-item-container">
   <a href="../monday/8-boltz2.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">8. Boltz-2</span></a>
   </div>
 </li>
         <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
+  <div class="sidebar-item-container">
   <a href="../monday/9-diffdock-pp.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">9. DiffDock-PP</span></a>
   </div>
 </li>
         <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
+  <div class="sidebar-item-container">
   <a href="../monday/10-placer.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">10. PLACER</span></a>
   </div>
 </li>
         <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
+  <div class="sidebar-item-container">
   <a href="../monday/11-bindcraft.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">11. BindCraft</span></a>
   </div>
 </li>
         <li class="px-0"><hr class="sidebar-divider hi "></li>
         <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
+  <div class="sidebar-item-container">
   <a href="../monday/12-esm3.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">12. ESM3 (Optional)</span></a>
   </div>
 </li>
         <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
+  <div class="sidebar-item-container">
   <a href="../monday/13-rfdiffusion-aa.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">13. RFdiffusion All Atom (Optional)</span></a>
   </div>
@@ -310,7 +501,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active" data-toc-expanded="2">
     <h2 id="toc-title">On this page</h2>
-   
+
   <ul>
   <li><a href="#live-workshop-session" id="toc-live-workshop-session" class="nav-link active" data-scroll-target="#live-workshop-session">Live Workshop Session</a></li>
   <li><a href="#why-use-ligandmpnn" id="toc-why-use-ligandmpnn" class="nav-link" data-scroll-target="#why-use-ligandmpnn">Why Use LigandMPNN?</a></li>
@@ -339,11 +530,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <div class="quarto-title-meta">
 
-    
-  
-    
+
+
+
   </div>
-  
+
 
 
 </header>
@@ -368,6 +559,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><strong>Flexible residue control</strong>: Fix, bias, or vary specific positions</li>
 </ul>
 <p><strong>Related Tools</strong>: Use with <a href="../monday/4-rfdiffusion2.html">RFdiffusion2</a> for backbone design, or <a href="../monday/11-bindcraft.html">BindCraft</a> for complete binder design pipelines.</p>
+<!-- course-tool-pin: ligandmpnn -->
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Recorded course pin
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The commands below use LigandMPNN commit <code>26ec57ac976ade5379920dbd43c7f97a91cf82de</code> (reviewed 2026-08-30). For validation status, environment-recording commands, and the equivalent no-compute artifact, see <a href="../monday/reproducibility.html">Reproducible Setup &amp; Compute Fallbacks</a>.</p>
+</div>
+</div>
 </section>
 <section id="resource-requirements" class="level2">
 <h2 class="anchored" data-anchor-id="resource-requirements">Resource Requirements</h2>
@@ -410,7 +615,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="preparation" class="level2">
 <h2 class="anchored" data-anchor-id="preparation">Preparation</h2>
-<p><input type="checkbox" class="module-checkbox" data-module-id="ligandmpnn-prep"> Mark as complete</p>
+<p><label class="module-task" for="module-checkbox-ligandmpnn-prep"><input type="checkbox" class="module-checkbox" id="module-checkbox-ligandmpnn-prep" data-module-id="ligandmpnn-prep"><span>Mark as complete</span></label></p>
 <p><strong>Prerequisites</strong>:</p>
 <ul>
 <li>Completed <a href="../monday/1-hpc-setup.html">HPC Setup</a> guide</li>
@@ -423,12 +628,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="installation" class="level2">
 <h2 class="anchored" data-anchor-id="installation">Installation</h2>
-<p><input type="checkbox" class="module-checkbox" data-module-id="ligandmpnn-install"> Mark as complete</p>
+<p><label class="module-task" for="module-checkbox-ligandmpnn-install"><input type="checkbox" class="module-checkbox" id="module-checkbox-ligandmpnn-install" data-module-id="ligandmpnn-install"><span>Mark as complete</span></label></p>
 <ol type="1">
 <li>Clone the LigandMPNN repository:</li>
 </ol>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/dauparas/LigandMPNN.git</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> LigandMPNN</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> LigandMPNN</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> checkout <span class="at">--detach</span> 26ec57ac976ade5379920dbd43c7f97a91cf82de</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> submodule update <span class="at">--init</span> <span class="at">--recursive</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ol start="2" type="1">
 <li>Download the model parameters: <em>Note: This step requires internet access. If your compute node doesn’t have internet, run this on a login node.</em></li>
 </ol>
@@ -447,7 +654,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="testing-the-installation" class="level2">
 <h2 class="anchored" data-anchor-id="testing-the-installation">Testing the Installation</h2>
-<p><input type="checkbox" class="module-checkbox" data-module-id="ligandmpnn-test"> Mark as complete</p>
+<p><label class="module-task" for="module-checkbox-ligandmpnn-test"><input type="checkbox" class="module-checkbox" id="module-checkbox-ligandmpnn-test" data-module-id="ligandmpnn-test"><span>Mark as complete</span></label></p>
 <p>Run a test design on the provided example structure:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> run.py <span class="dt">\</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">--seed</span> 111 <span class="dt">\</span></span>
@@ -679,176 +886,384 @@ MVKLTAEGSE...</code></pre>
 </section>
 
 </main> <!-- /main -->
+<!-- Generated by scripts/validate_course_data.py --generate; do not edit. -->
+<script>
+window.BOOTCAMP_COURSE = {"schema_version":1,"updated":"2026-08-30","duration_note":"Times are planning estimates for an independent learner and exclude long model downloads, queue waits, and capstone compute.","routes":{"core":"The shortest route that develops the concepts and artifacts needed for the capstone.","full":"The original bootcamp sequence, including additional tools and practice.","reference":"Optional specialist material to consult when a project needs it."},"milestones":[{"id":"capstone-target-brief","day":"capstone","title":"Target and epitope brief","path":"capstone/rubric.html","route":"core","artifact":"Annotated target structure and concise hotspot rationale","checkpoint_label":"Target, chain, epitope, hotspots, and caveats are documented","source":"capstone/rubric.qmd"},{"id":"capstone-run-config","day":"capstone","title":"Reproducible run configuration","path":"capstone/rubric.html","route":"core","artifact":"Versioned environment, inputs, commands, seeds, and output paths","checkpoint_label":"Another learner could reconstruct the run without guessing","source":"capstone/rubric.qmd"},{"id":"capstone-backbone-evidence","day":"capstone","title":"Backbone-generation evidence","path":"capstone/rubric.html","route":"core","artifact":"Representative backbone gallery with keep/reject decisions","checkpoint_label":"Successes and failures are evaluated against explicit filters","source":"capstone/rubric.qmd"},{"id":"capstone-sequence-evidence","day":"capstone","title":"Sequence-design evidence","path":"capstone/rubric.html","route":"core","artifact":"Candidate table linking designed sequences to parent backbones","checkpoint_label":"Sequence diversity, composition, constraints, and liabilities are assessed","source":"capstone/rubric.qmd"},{"id":"capstone-structural-validation","day":"capstone","title":"Structural validation","path":"capstone/rubric.html","route":"core","artifact":"Complex-confidence and interface-validation figures with metrics","checkpoint_label":"Interface evidence is distinguished from local fold confidence","source":"capstone/rubric.qmd"},{"id":"capstone-failure-analysis","day":"capstone","title":"Failure analysis and iteration","path":"capstone/rubric.html","route":"core","artifact":"Before/after account of one diagnosed failure and response","checkpoint_label":"A failure is diagnosed, acted on, and tested","source":"capstone/rubric.qmd"},{"id":"capstone-selection-memo","day":"capstone","title":"Final selection memo","path":"capstone/rubric.html","route":"core","artifact":"Decision memo naming the selected design, rejected alternatives, risks, and next experiment","checkpoint_label":"Final selection is supported by evidence and uncertainty","source":"capstone/rubric.qmd"}],"lessons":[{"id":"prework-environment-git","day":"prework","order":1,"title":"Environment Setup & GitHub Basics","path":"monday/prework-1-env-git.html","route":"core","status":"required","duration_minutes":45,"compute":"local CPU","artifact":"A working bootcamp environment and cloned practice repository","checkpoint_id":"prework-environment-git","checkpoint_label":"Environment verification passes","source":"monday/prework-1-env-git.qmd"},{"id":"prework-pymol-vscode","day":"prework","order":2,"title":"PyMOL and VS Code Setup","path":"monday/prework-2-pymol-vscode.html","route":"core","status":"required","duration_minutes":45,"compute":"local CPU","artifact":"A saved molecular view and editor verification result","checkpoint_id":"prework-pymol-vscode","checkpoint_label":"Visualization and editor checks pass","source":"monday/prework-2-pymol-vscode.qmd"},{"id":"prework-python","day":"prework","order":3,"title":"Python Refresher","path":"monday/prework-3-python.html","route":"full","status":"optional","duration_minutes":45,"compute":"local CPU","artifact":"Protein analysis_results.txt and passing tests","checkpoint_id":"prework-python","checkpoint_label":"All refresher tests pass","source":"monday/prework-3-python.qmd"},{"id":"reproducible-setup","day":"prework","order":4,"title":"Reproducible Setup & Compute Fallbacks","path":"monday/reproducibility.html","route":"core","status":"required","duration_minutes":20,"compute":"local CPU","artifact":"Saved preflight report and an explicit run-or-analysis fallback choice","checkpoint_id":"reproducible-setup","checkpoint_label":"Version status and fallback pathway are documented","source":"monday/reproducibility.qmd"},{"id":"hpc-setup","day":"monday","order":1,"title":"Common HPC Setup","path":"monday/1-hpc-setup.html","route":"core","status":"required","duration_minutes":60,"compute":"HPC login node; GPU node for verification","artifact":"Saved preflight report and a successful GPU allocation check","checkpoint_id":"hpc-setup","checkpoint_label":"Preflight report reviewed","source":"monday/1-hpc-setup.qmd"},{"id":"localcolabfold","day":"monday","order":2,"title":"LocalColabFold","path":"monday/2-localcolabfold.html","route":"core","status":"required","duration_minutes":90,"compute":"GPU recommended; provided-output route available","artifact":"Predicted PDB and confidence JSON, or an annotated known-good prediction","checkpoint_id":"localcolabfold","checkpoint_label":"Prediction output and confidence are interpreted","source":"monday/2-localcolabfold.qmd"},{"id":"ligandmpnn","day":"monday","order":3,"title":"LigandMPNN","path":"monday/3-ligandmpnn.html","route":"core","status":"required","duration_minutes":60,"compute":"CPU or GPU","artifact":"Designed FASTA sequences and a short selection rationale","checkpoint_id":"ligandmpnn","checkpoint_label":"Designed sequences are ranked and justified","source":"monday/3-ligandmpnn.qmd"},{"id":"rfdiffusion2","day":"monday","order":4,"title":"RFdiffusion2","path":"monday/4-rfdiffusion2.html","route":"full","status":"optional","duration_minutes":90,"compute":"CUDA GPU and Apptainer; analysis-only route available","artifact":"A generated backbone or an annotated known-good design","checkpoint_id":"rfdiffusion2","checkpoint_label":"Backbone geometry and constraints are evaluated","source":"monday/4-rfdiffusion2.qmd"},{"id":"esmfold-install","day":"monday","order":5,"title":"ESMFold","path":"monday/5-esmfold.html","route":"full","status":"optional","duration_minutes":75,"compute":"GPU recommended; CPU is slow","artifact":"Single-sequence structure prediction","checkpoint_id":"esmfold-install","checkpoint_label":"Prediction file is valid and confidence is checked","source":"monday/5-esmfold.qmd"},{"id":"openfold","day":"monday","order":6,"title":"OpenFold","path":"monday/6-openfold.html","route":"reference","status":"optional","duration_minutes":90,"compute":"GPU plus large shared databases","artifact":"Environment smoke-test record","checkpoint_id":"openfold","checkpoint_label":"OpenFold requirements and tradeoffs are documented","source":"monday/6-openfold.qmd"},{"id":"chai1","day":"monday","order":7,"title":"Chai-1","path":"monday/7-chai1.html","route":"full","status":"optional","duration_minutes":60,"compute":"Modern CUDA GPU recommended","artifact":"Complex prediction and confidence summary","checkpoint_id":"chai1","checkpoint_label":"Complex confidence is interpreted","source":"monday/7-chai1.qmd"},{"id":"boltz2","day":"monday","order":8,"title":"Boltz-2","path":"monday/8-boltz2.html","route":"full","status":"optional","duration_minutes":60,"compute":"GPU recommended; CPU supported","artifact":"CIF prediction and confidence summary","checkpoint_id":"boltz2","checkpoint_label":"Boltz output is inspected and compared","source":"monday/8-boltz2.qmd"},{"id":"diffdock-pp","day":"monday","order":9,"title":"DiffDock-PP","path":"monday/9-diffdock-pp.html","route":"reference","status":"optional","duration_minutes":75,"compute":"CUDA 11.6-era GPU stack","artifact":"Ranked protein-protein docking poses","checkpoint_id":"diffdock-pp","checkpoint_label":"Docking poses are ranked with limitations noted","source":"monday/9-diffdock-pp.qmd"},{"id":"placer","day":"monday","order":10,"title":"PLACER","path":"monday/10-placer.html","route":"reference","status":"optional","duration_minutes":60,"compute":"CPU or GPU","artifact":"Ranked ligand conformational ensemble","checkpoint_id":"placer","checkpoint_label":"Ensemble uncertainty is interpreted","source":"monday/10-placer.qmd"},{"id":"bindcraft","day":"monday","order":11,"title":"BindCraft","path":"monday/11-bindcraft.html","route":"full","status":"optional","duration_minutes":75,"compute":"24+ GB CUDA GPU; full campaigns take hours to days","artifact":"Validated settings file and a campaign plan or pilot trajectory","checkpoint_id":"bindcraft","checkpoint_label":"Campaign settings and stopping criteria are justified","source":"monday/11-bindcraft.qmd"},{"id":"esm3","day":"monday","order":12,"title":"ESM3","path":"monday/12-esm3.html","route":"reference","status":"optional","duration_minutes":60,"compute":"16+ GB GPU for local small model","artifact":"Generated sequence and optional structure","checkpoint_id":"esm3","checkpoint_label":"Generated protein is checked for plausibility","source":"monday/12-esm3.qmd"},{"id":"rfdiffusion-aa","day":"monday","order":13,"title":"RFdiffusion All Atom","path":"monday/13-rfdiffusion-aa.html","route":"reference","status":"optional","duration_minutes":75,"compute":"CUDA GPU and Apptainer","artifact":"All-atom design or documented comparison with RFdiffusion2","checkpoint_id":"rfdiffusion-aa","checkpoint_label":"Tool choice is justified for the design problem","source":"monday/13-rfdiffusion-aa.qmd"},{"id":"pymol-vscode-workflow","day":"tuesday","order":1,"title":"PyMOL and Visual Studio Code","path":"tuesday/1-pymol.html","route":"core","status":"required","duration_minutes":60,"compute":"local CPU","artifact":"Reproducible structure-inspection script and saved view","checkpoint_id":"pymol-vscode-workflow","checkpoint_label":"Structure view can be regenerated from the script","source":"tuesday/1-pymol.qmd"},{"id":"structure-prediction-intro","day":"tuesday","order":2,"title":"Introduction to Structure Prediction","path":"tuesday/2-structure-prediction.html","route":"core","status":"required","duration_minutes":75,"compute":"local CPU","artifact":"A method-selection memo for a sample sequence","checkpoint_id":"structure-prediction-intro","checkpoint_label":"Prediction method choice is supported by evidence","source":"tuesday/2-structure-prediction.qmd"},{"id":"alphafold2-openfold","day":"tuesday","order":3,"title":"AlphaFold2 and OpenFold","path":"tuesday/3-alphafold2.html","route":"core","status":"required","duration_minutes":90,"compute":"browser and optional GPU","artifact":"Annotated pLDDT/PAE interpretation and prediction comparison","checkpoint_id":"alphafold2-openfold","checkpoint_label":"Confidence and failure modes are explained","source":"tuesday/3-alphafold2.qmd"},{"id":"alphafold2-architecture-deep-dive","day":"tuesday","order":4,"title":"AlphaFold2 Architecture Deep Dive","path":"tuesday/3-alphafold2-deep-dive.html","route":"reference","status":"optional","duration_minutes":120,"compute":"none","artifact":"Architecture concept map or completed deep-dive quiz","checkpoint_id":"alphafold2-architecture-deep-dive","checkpoint_label":"Information flow through Evoformer, structure module, and recycling is explained","source":"tuesday/3-alphafold2-deep-dive.qmd"},{"id":"esmfold-comparison","day":"tuesday","order":5,"title":"ESMFold vs. AlphaFold2","path":"tuesday/4-esmfold.html","route":"core","status":"required","duration_minutes":150,"compute":"GPU or provided predictions","artifact":"Side-by-side method comparison","checkpoint_id":"esmfold-comparison","checkpoint_label":"Speed-confidence tradeoff is explained","source":"tuesday/4-esmfold.qmd"},{"id":"alphafold3-chai1","day":"wednesday","order":1,"title":"AlphaFold3 vs. Chai-1","path":"wednesday/0-alphafold3.html","route":"core","status":"required","duration_minutes":90,"compute":"web service or GPU; provided-output route possible","artifact":"Multimer prediction comparison and uncertainty notes","checkpoint_id":"alphafold3-chai1","checkpoint_label":"Multimodal prediction evidence is evaluated","source":"wednesday/0-alphafold3.qmd"},{"id":"rfdiffusion-advanced","day":"wednesday","order":2,"title":"RFdiffusion: Advanced Design","path":"wednesday/1-rfdiffusion.html","route":"core","status":"required","duration_minutes":180,"compute":"CUDA GPU or official known-good outputs","artifact":"Backbone gallery, hotspot analysis, and selection rationale","checkpoint_id":"rfdiffusion-advanced","checkpoint_label":"Design gallery is evaluated against explicit criteria","source":"wednesday/1-rfdiffusion.qmd"},{"id":"pytorch-foundations","day":"thursday","order":1,"title":"PyTorch Foundations","path":"thursday/1-pytorch.html","route":"core","status":"required","duration_minutes":75,"compute":"local CPU; GPU optional","artifact":"Working tensor/model notebook","checkpoint_id":"pytorch-foundations","checkpoint_label":"Core tensor and gradient operations run","source":"thursday/1-pytorch.qmd"},{"id":"cpu-vs-gpu","day":"thursday","order":2,"title":"CPU vs GPU Computing","path":"thursday/2-cpu-vs-gpu.html","route":"core","status":"required","duration_minutes":75,"compute":"CPU and CUDA GPU, or provided benchmark","artifact":"Benchmark plot with an explanation of crossover behavior","checkpoint_id":"cpu-vs-gpu","checkpoint_label":"Benchmark result and caveats are explained","source":"thursday/2-cpu-vs-gpu.qmd"},{"id":"molecular-docking","day":"thursday","order":3,"title":"Molecular Docking","path":"thursday/3-docking.html","route":"core","status":"required","duration_minutes":75,"compute":"CPU or GPU depending on tool","artifact":"Ranked poses with a defensible validation criterion","checkpoint_id":"molecular-docking","checkpoint_label":"Docking pose is assessed beyond score alone","source":"thursday/3-docking.qmd"},{"id":"reflection-capstone-intro","day":"thursday","order":4,"title":"Reflection & Capstone Introduction","path":"thursday/4-roundtable.html","route":"core","status":"required","duration_minutes":75,"compute":"none","artifact":"Target brief and capstone execution plan","checkpoint_id":"reflection-capstone-intro","checkpoint_label":"Capstone question, evidence, and fallback plan are defined","source":"thursday/4-roundtable.qmd"},{"id":"capstone","day":"capstone","order":1,"title":"Capstone Project","path":"capstone/index.html","route":"core","status":"required","duration_minutes":600,"duration":"10–25 active hr, plus compute","compute":"GPU recommended; staged no-compute evidence path available","artifact":"Reproducible design portfolio and final selection memo","checkpoint_id":"capstone","checkpoint_label":"Portfolio meets the capstone evidence rubric","source":"capstone/index.qmd"},{"id":"capstone-rubric","day":"capstone","order":2,"title":"Capstone Evidence Guide & Rubric","path":"capstone/rubric.html","route":"core","status":"required","duration_minutes":45,"compute":"none","artifact":"Completed evidence portfolio and rubric self-score","checkpoint_id":"capstone-rubric","checkpoint_label":"Evidence portfolio is complete and self-scored","source":"capstone/rubric.qmd"},{"id":"capstone-exemplar","day":"capstone","order":3,"title":"Worked Capstone Selection Example","path":"capstone/exemplar.html","route":"reference","status":"optional","duration_minutes":30,"compute":"none","artifact":"Notes comparing the exemplar's evidence trail with the learner's plan","checkpoint_id":"capstone-exemplar","checkpoint_label":"Exemplar reasoning pattern is compared with the project plan","source":"capstone/exemplar.qmd"},{"id":"target-pd-l1","day":"capstone","order":4,"title":"PD-L1 Target Deep Dive","path":"capstone/targets/pd-l1.html","route":"reference","status":"optional","duration_minutes":20,"compute":"none","artifact":"Target preparation and hotspot plan","checkpoint_id":"target-pd-l1","checkpoint_label":"PD-L1 target record is verified","source":"capstone/targets/pd-l1.qmd"},{"id":"target-il-7r","day":"capstone","order":5,"title":"IL-7R Target Deep Dive","path":"capstone/targets/il-7r.html","route":"reference","status":"optional","duration_minutes":20,"compute":"none","artifact":"Target preparation and hotspot plan","checkpoint_id":"target-il-7r","checkpoint_label":"IL-7R target record is verified","source":"capstone/targets/il-7r.qmd"},{"id":"target-trka","day":"capstone","order":6,"title":"TrkA Receptor Deep Dive","path":"capstone/targets/trka.html","route":"reference","status":"optional","duration_minutes":20,"compute":"none","artifact":"Target preparation and hotspot plan","checkpoint_id":"target-trka","checkpoint_label":"TrkA target record is verified","source":"capstone/targets/trka.qmd"},{"id":"target-ifnar2","day":"capstone","order":7,"title":"IFNAR2 Target Deep Dive","path":"capstone/targets/ifnar2.html","route":"reference","status":"optional","duration_minutes":20,"compute":"none","artifact":"Target preparation and hotspot plan","checkpoint_id":"target-ifnar2","checkpoint_label":"IFNAR2 target record is verified","source":"capstone/targets/ifnar2.qmd"},{"id":"target-bet-v-1","day":"capstone","order":8,"title":"Bet v 1 Target Deep Dive","path":"capstone/targets/bet-v-1.html","route":"reference","status":"optional","duration_minutes":20,"compute":"none","artifact":"Target preparation and hotspot plan","checkpoint_id":"target-bet-v-1","checkpoint_label":"Bet v 1 target record is verified","source":"capstone/targets/bet-v-1.qmd"},{"id":"target-gm2ap","day":"capstone","order":9,"title":"GM2 Activator Protein Deep Dive","path":"capstone/targets/gm3.html","route":"reference","status":"optional","duration_minutes":20,"compute":"none","artifact":"Target preparation and hotspot plan","checkpoint_id":"target-gm2ap","checkpoint_label":"GM2AP target record is verified","source":"capstone/targets/gm3.qmd"},{"id":"target-beta-glucosidase","day":"capstone","order":10,"title":"Beta-Glucosidase Deep Dive","path":"capstone/targets/beta-glucosidase.html","route":"reference","status":"optional","duration_minutes":20,"compute":"none","artifact":"Target preparation and hotspot plan","checkpoint_id":"target-beta-glucosidase","checkpoint_label":"Beta-glucosidase target record is verified","source":"capstone/targets/beta-glucosidase.qmd"},{"id":"target-tem-1","day":"capstone","order":11,"title":"TEM-1 Beta-Lactamase Deep Dive","path":"capstone/targets/tem-1.html","route":"reference","status":"optional","duration_minutes":20,"compute":"none","artifact":"Target preparation and hotspot plan","checkpoint_id":"target-tem-1","checkpoint_label":"TEM-1 target record is verified","source":"capstone/targets/tem-1.qmd"}]};
+</script>
 <script>
 (function() {
-  const STORAGE_KEY = 'bootcamp2025_progress';
+  'use strict';
+
+  const STORAGE_KEY = 'bootcamp_progress_v2';
+  const LEGACY_STORAGE_KEY = 'bootcamp2025_progress';
   const LAST_PAGE_KEY = 'bootcamp2025_lastpage';
+  const SCHEMA_VERSION = 2;
 
-  // Get current page path
-  const currentPath = window.location.pathname;
-  const isHomePage = currentPath === '/' || currentPath.endsWith('/index.html') || currentPath === '/index.html' || currentPath.match(/^\/[^\/]*\/?$/);
+  function normalisePath(path) {
+    if (!path) return '/';
+    const clean = path.split('#')[0].split('?')[0].replace(/\/+/g, '/');
+    if (clean.endsWith('/')) return clean + 'index.html';
+    return clean;
+  }
 
-  // Extract day from path
-  function getDayFromPath(path) {
-    const dayMap = {
-      'monday': 'Monday',
-      'tuesday': 'Tuesday',
-      'wednesday': 'Wednesday',
-      'thursday': 'Thursday',
-      'capstone': 'Capstone'
+  function lessonPath(lesson) {
+    const value = lesson.path || lesson.href || '';
+    return normalisePath(value.startsWith('/') ? value : '/' + value);
+  }
+
+  function checkpointId(lesson) {
+    return lesson.checkpoint_id || lesson.checkpointId || lesson.id;
+  }
+
+  function checkpointLabel(lesson) {
+    return lesson.checkpoint_label || lesson.checkpointLabel ||
+      (lesson.artifact
+        ? 'I produced and checked: ' + lesson.artifact
+        : 'I completed the lesson evidence check.');
+  }
+
+  function durationLabel(lesson) {
+    if (lesson.duration) return lesson.duration;
+    if (lesson.duration_minutes) return lesson.duration_minutes + ' min';
+    return null;
+  }
+
+  function isCoreLesson(lesson) {
+    if (lesson.required === false) return false;
+    return (lesson.route || 'core') === 'core';
+  }
+
+  function courseLessons() {
+    const source = window.BOOTCAMP_COURSE || {};
+    return Array.isArray(source.lessons) ? source.lessons.filter(checkpointId) : [];
+  }
+
+  function courseCheckpoints() {
+    const source = window.BOOTCAMP_COURSE || {};
+    const milestones = Array.isArray(source.milestones) ? source.milestones.filter(checkpointId) : [];
+    return courseLessons().concat(milestones);
+  }
+
+  function emptyState() {
+    return { version: SCHEMA_VERSION, completed: [], tasks: [], updatedAt: null };
+  }
+
+  function sanitiseState(value) {
+    const validIds = new Set(courseCheckpoints().map(checkpointId));
+    const completed = Array.isArray(value && value.completed)
+      ? value.completed.filter(id => typeof id === 'string' && (validIds.size === 0 || validIds.has(id)))
+      : [];
+    const tasks = Array.isArray(value && value.tasks)
+      ? value.tasks.filter(id => typeof id === 'string')
+      : [];
+    return {
+      version: SCHEMA_VERSION,
+      completed: Array.from(new Set(completed)),
+      tasks: Array.from(new Set(tasks)),
+      updatedAt: value && value.updatedAt ? value.updatedAt : null
     };
-    const match = path.match(/\/(monday|tuesday|wednesday|thursday|capstone)\//i);
-    return match ? dayMap[match[1].toLowerCase()] : null;
   }
 
-  // Save current page as last visited (except homepage)
-  if (!isHomePage) {
-    const pageTitle = document.title.replace(' - ML Protein Design Bootcamp 2025', '');
-    const day = getDayFromPath(currentPath);
-    localStorage.setItem(LAST_PAGE_KEY, JSON.stringify({
-      path: currentPath,
-      title: pageTitle,
-      day: day,
-      timestamp: Date.now()
-    }));
+  function loadState() {
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) return sanitiseState(JSON.parse(saved));
+
+      const legacy = localStorage.getItem(LEGACY_STORAGE_KEY);
+      if (legacy) {
+        const legacyState = JSON.parse(legacy);
+        const migrated = emptyState();
+        migrated.tasks = Array.isArray(legacyState.completed) ? legacyState.completed : [];
+        saveState(migrated);
+        return migrated;
+      }
+    } catch (error) {
+      console.warn('Course progress could not be loaded.', error);
+    }
+    return emptyState();
   }
 
-  // Load progress data
-  function getProgress() {
-    const data = localStorage.getItem(STORAGE_KEY);
-    return data ? JSON.parse(data) : { completed: [] };
+  function saveState(state) {
+    const clean = sanitiseState(state);
+    clean.updatedAt = new Date().toISOString();
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(clean));
+    } catch (error) {
+      console.warn('Course progress could not be saved.', error);
+    }
+    return clean;
   }
 
-  // Save progress data
-  function saveProgress(progress) {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
+  function setCompleted(id, completed) {
+    const state = loadState();
+    const values = new Set(state.completed);
+    if (completed) values.add(id);
+    else values.delete(id);
+    state.completed = Array.from(values);
+    saveState(state);
+    syncProgressUI();
   }
 
-  // Update progress bar on homepage
-  function updateProgressBar() {
-    const progress = getProgress();
-    const progressSummary = document.getElementById('progress-summary');
-    const totalModules = document.querySelectorAll('.module-checkbox').length ||
-                         parseInt(progressSummary?.dataset.totalModules, 10) ||
-                         parseInt(document.body.dataset.totalModules, 10) ||
-                         42;
-    const completed = progress.completed.length;
-    const percent = Math.round((completed / totalModules) * 100);
+  function setTaskCompleted(id, completed) {
+    const state = loadState();
+    const values = new Set(state.tasks);
+    if (completed) values.add(id);
+    else values.delete(id);
+    state.tasks = Array.from(values);
+    saveState(state);
+  }
+
+  function currentLesson() {
+    const path = normalisePath(window.location.pathname);
+    return courseLessons().find(lesson => {
+      const candidate = lessonPath(lesson);
+      return path === candidate || path.endsWith(candidate);
+    }) || null;
+  }
+
+  function createMetaItem(label, value) {
+    if (!value) return null;
+    const item = document.createElement('div');
+    item.className = 'lesson-contract-item';
+    const term = document.createElement('span');
+    term.className = 'lesson-contract-label';
+    term.textContent = label;
+    const detail = document.createElement('span');
+    detail.textContent = value;
+    item.append(term, detail);
+    return item;
+  }
+
+  function addLessonContract(lesson) {
+    if (!lesson || document.querySelector('.lesson-contract')) return;
+    const title = document.querySelector('h1.title, .quarto-title h1');
+    if (!title) return;
+
+    const contract = document.createElement('section');
+    contract.className = 'lesson-contract';
+    contract.setAttribute('aria-label', 'Lesson plan');
+
+    const eyebrow = document.createElement('p');
+    eyebrow.className = 'lesson-contract-eyebrow';
+    const route = lesson.route || 'core';
+    const routeLabels = { core: 'Core path', full: 'Full-bootcamp path', reference: 'Reference path' };
+    eyebrow.textContent = (lesson.status === 'optional' ? 'Optional · ' : '') +
+      (routeLabels[route] || (route.charAt(0).toUpperCase() + route.slice(1) + ' path'));
+    contract.appendChild(eyebrow);
+
+    const grid = document.createElement('div');
+    grid.className = 'lesson-contract-grid';
+    [
+      createMetaItem('Time', durationLabel(lesson)),
+      createMetaItem('Compute', lesson.compute),
+      createMetaItem('You will produce', lesson.artifact),
+      createMetaItem('Completion check', checkpointLabel(lesson))
+    ].filter(Boolean).forEach(item => grid.appendChild(item));
+    contract.appendChild(grid);
+
+    if (lesson.prerequisites) {
+      const prereq = document.createElement('p');
+      prereq.className = 'lesson-contract-prerequisites';
+      const strong = document.createElement('strong');
+      strong.textContent = 'Before you begin: ';
+      prereq.append(strong, document.createTextNode(
+        Array.isArray(lesson.prerequisites) ? lesson.prerequisites.join(' · ') : lesson.prerequisites
+      ));
+      contract.appendChild(prereq);
+    }
+
+    const insertionPoint = title.closest('#title-block-header, .quarto-title-block') || title;
+    insertionPoint.insertAdjacentElement('afterend', contract);
+  }
+
+  function addMasteryCheckpoint(lesson) {
+    if (!lesson || document.querySelector('.mastery-checkpoint')) return;
+    const id = checkpointId(lesson);
+    const state = loadState();
+    const main = document.querySelector('main') || document.querySelector('#quarto-content');
+    if (!main) return;
+
+    const section = document.createElement('section');
+    section.className = 'mastery-checkpoint';
+    section.setAttribute('aria-labelledby', 'mastery-checkpoint-title');
+
+    const heading = document.createElement('h2');
+    heading.id = 'mastery-checkpoint-title';
+    heading.textContent = 'Complete this lesson';
+
+    const help = document.createElement('p');
+    help.textContent = 'Check this only after you can point to the evidence—not merely after reading the page.';
+
+    const label = document.createElement('label');
+    label.className = 'mastery-checkpoint-label';
+    const checkbox = document.createElement('input');
+    checkbox.type = 'checkbox';
+    checkbox.className = 'mastery-checkbox';
+    checkbox.dataset.checkpointId = id;
+    checkbox.checked = state.completed.includes(id);
+    checkbox.addEventListener('change', () => setCompleted(id, checkbox.checked));
+    const text = document.createElement('span');
+    text.textContent = checkpointLabel(lesson);
+    label.append(checkbox, text);
+
+    section.append(heading, help, label);
+
+    const lessons = courseLessons();
+    const currentIndex = lessons.findIndex(item => checkpointId(item) === id);
+    const following = currentIndex >= 0 ? lessons.slice(currentIndex + 1) : [];
+    const next = isCoreLesson(lesson)
+      ? following.find(isCoreLesson)
+      : following[0];
+    if (next) {
+      const nextLink = document.createElement('a');
+      nextLink.className = 'btn btn-primary mastery-next-link';
+      nextLink.href = lessonPath(next);
+      nextLink.textContent = 'Continue to ' + next.title;
+      section.appendChild(nextLink);
+    }
+
+    const nav = main.querySelector('nav.page-navigation, .page-navigation, .module-nav');
+    if (nav) nav.insertAdjacentElement('beforebegin', section);
+    else main.appendChild(section);
+  }
+
+  function syncLegacyTaskCheckboxes() {
+    const state = loadState();
+    const masteryIds = new Set(courseCheckpoints().map(checkpointId));
+    document.querySelectorAll('.module-checkbox[data-module-id]').forEach(checkbox => {
+      const id = checkbox.dataset.moduleId;
+      const isMastery = masteryIds.has(id);
+      checkbox.checked = isMastery ? state.completed.includes(id) : state.tasks.includes(id);
+      if (!checkbox.dataset.progressBound) {
+        checkbox.dataset.progressBound = 'true';
+        checkbox.addEventListener('change', () => {
+          if (isMastery) setCompleted(id, checkbox.checked);
+          else setTaskCompleted(id, checkbox.checked);
+        });
+      }
+    });
+  }
+
+  function syncProgressUI() {
+    const checkpoints = courseCheckpoints();
+    const core = checkpoints.filter(isCoreLesson);
+    const optional = checkpoints.filter(lesson => !isCoreLesson(lesson));
+    const state = loadState();
+    const completed = new Set(state.completed);
+    const coreCompleted = core.filter(lesson => completed.has(checkpointId(lesson))).length;
+    const optionalCompleted = optional.filter(lesson => completed.has(checkpointId(lesson))).length;
+    const percent = core.length ? Math.round((coreCompleted / core.length) * 100) : 0;
 
     const bar = document.getElementById('progress-bar');
     const count = document.getElementById('completed-count');
-
+    const total = document.getElementById('checkpoint-total');
+    const optionalCount = document.getElementById('optional-completed-count');
     if (bar) {
       bar.style.width = percent + '%';
       bar.textContent = percent + '%';
-      bar.setAttribute('aria-valuenow', percent);
+      bar.setAttribute('aria-valuenow', String(percent));
     }
-    if (count) {
-      count.textContent = completed;
-    }
+    if (count) count.textContent = String(coreCompleted);
+    if (total) total.textContent = String(core.length);
+    if (optionalCount) optionalCount.textContent = String(optionalCompleted);
+
+    document.querySelectorAll('.mastery-checkbox[data-checkpoint-id]').forEach(checkbox => {
+      checkbox.checked = completed.has(checkbox.dataset.checkpointId);
+    });
   }
 
-  // Show resume banner on homepage if there's a saved page
   function showResumeBanner() {
-    const lastPage = localStorage.getItem(LAST_PAGE_KEY);
-    if (lastPage && isHomePage) {
-      const data = JSON.parse(lastPage);
+    const isHome = normalisePath(window.location.pathname) === '/index.html';
+    if (!isHome) return;
+    try {
+      const saved = JSON.parse(localStorage.getItem(LAST_PAGE_KEY) || 'null');
+      if (!saved || !saved.path) return;
       const banner = document.getElementById('resume-banner');
       const link = document.getElementById('resume-link');
       const title = document.getElementById('last-page-title');
-
-      if (banner && link && title && data.path) {
-        // Format title with day prefix if available
-        const displayTitle = data.day ? `${data.day}: ${data.title}` : data.title;
-        title.textContent = displayTitle;
-        link.href = data.path;
-        banner.style.display = 'block';
+      if (banner && link && title) {
+        title.textContent = saved.day ? saved.day + ': ' + saved.title : saved.title;
+        link.href = saved.path;
+        banner.hidden = false;
+        banner.style.display = '';
       }
+    } catch (error) {
+      console.warn('The resume link could not be restored.', error);
     }
   }
 
-  // Initialize checkboxes on module pages
-  function initCheckboxes() {
-    const checkboxes = document.querySelectorAll('.module-checkbox');
-    const progress = getProgress();
+  function saveLastPage(lesson) {
+    if (!lesson) return;
+    try {
+      localStorage.setItem(LAST_PAGE_KEY, JSON.stringify({
+        path: window.location.pathname,
+        title: lesson.title || document.title,
+        day: lesson.day || null,
+        timestamp: Date.now()
+      }));
+    } catch (error) {
+      console.warn('The resume link could not be saved.', error);
+    }
+  }
 
-    checkboxes.forEach(cb => {
-      const id = cb.dataset.moduleId;
+  function exportProgress() {
+    const blob = new Blob([JSON.stringify(loadState(), null, 2)], { type: 'application/json' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = 'ml-protein-bootcamp-progress.json';
+    link.click();
+    window.setTimeout(() => URL.revokeObjectURL(link.href), 0);
+  }
 
-      // Restore state
-      if (progress.completed.includes(id)) {
-        cb.checked = true;
-      }
-
-      // Save on change
-      cb.addEventListener('change', function() {
-        const progress = getProgress();
-        if (this.checked) {
-          if (!progress.completed.includes(id)) {
-            progress.completed.push(id);
-          }
-        } else {
-          progress.completed = progress.completed.filter(x => x !== id);
+  function importProgress(file) {
+    if (!file) return;
+    const reader = new FileReader();
+    reader.addEventListener('load', () => {
+      try {
+        const imported = JSON.parse(String(reader.result));
+        if (!imported || typeof imported !== 'object' ||
+            !Array.isArray(imported.completed) || !Array.isArray(imported.tasks)) {
+          throw new Error('Progress export has the wrong shape.');
         }
-        saveProgress(progress);
-        updateProgressBar();
-      });
+        saveState(imported);
+        syncProgressUI();
+        window.alert('Progress imported successfully.');
+      } catch (error) {
+        window.alert('That file is not a valid course progress export.');
+      }
     });
+    reader.readAsText(file);
   }
 
-  // Clear all progress
   window.clearProgress = function() {
+    if (!window.confirm('Reset all saved course progress in this browser? This cannot be undone unless you exported a backup.')) return;
     localStorage.removeItem(STORAGE_KEY);
+    localStorage.removeItem(LEGACY_STORAGE_KEY);
     localStorage.removeItem(LAST_PAGE_KEY);
-    location.reload();
+    window.location.reload();
   };
+  window.exportCourseProgress = exportProgress;
+  window.importCourseProgress = importProgress;
 
-  // Mark all checkboxes on current page as complete
-  window.markAllComplete = function() {
-    const checkboxes = document.querySelectorAll('.module-checkbox');
-    const progress = getProgress();
-
-    checkboxes.forEach(cb => {
-      const id = cb.dataset.moduleId;
-      cb.checked = true;
-      if (!progress.completed.includes(id)) {
-        progress.completed.push(id);
-      }
-    });
-
-    saveProgress(progress);
-    updateProgressBar();
-  };
-
-  // Add "Mark all as complete" button to pages with checkboxes
-  function addMarkAllButton() {
-    const checkboxes = document.querySelectorAll('.module-checkbox');
-    if (checkboxes.length > 0 && !isHomePage) {
-      // Find the title element and add button after it
-      const title = document.querySelector('h1.title, .quarto-title h1');
-      if (title) {
-        const btn = document.createElement('button');
-        btn.textContent = 'Mark all as complete';
-        btn.className = 'btn btn-outline-success btn-sm mark-all-btn';
-        btn.style.cssText = 'margin-top: 0.5rem; margin-bottom: 1rem;';
-        btn.onclick = window.markAllComplete;
-        title.insertAdjacentElement('afterend', btn);
-      }
-    }
-  }
-
-  // Run on page load
   document.addEventListener('DOMContentLoaded', function() {
+    const lesson = currentLesson();
+    saveLastPage(lesson);
     showResumeBanner();
-    initCheckboxes();
-    updateProgressBar();
-    addMarkAllButton();
+    addLessonContract(lesson);
+    addMasteryCheckpoint(lesson);
+    syncLegacyTaskCheckboxes();
+    syncProgressUI();
+
+    const exportButton = document.getElementById('export-progress');
+    const importInput = document.getElementById('import-progress');
+    if (exportButton) exportButton.addEventListener('click', exportProgress);
+    if (importInput) importInput.addEventListener('change', event => importProgress(event.target.files[0]));
   });
 })();
 </script>
 <style>
 .quiz-container {
-  border: 1px solid #e0e0e0;
+  border: 1px solid #c9d1dc;
   border-radius: 8px;
   padding: 1.5rem;
   margin: 2rem 0;
@@ -869,9 +1284,21 @@ MVKLTAEGSE...</code></pre>
   color: #0d6efd;
 }
 
+.quiz-fieldset {
+  border: 0;
+  margin: 0;
+  min-width: 0;
+  padding: 0;
+}
+
 .quiz-question {
+  color: #263238;
+  float: none;
   font-size: 1.1rem;
+  line-height: 1.45;
   margin-bottom: 1rem;
+  padding: 0;
+  width: 100%;
   font-weight: 500;
 }
 
@@ -882,10 +1309,15 @@ MVKLTAEGSE...</code></pre>
 }
 
 .quiz-option {
-  padding: 0.75rem 1rem;
+  align-items: flex-start;
   border: 1px solid #dee2e6;
   border-radius: 6px;
   cursor: pointer;
+  display: flex;
+  gap: 0.75rem;
+  line-height: 1.45;
+  min-height: 44px;
+  padding: 0.75rem 1rem;
   transition: all 0.2s ease;
   background-color: white;
 }
@@ -895,10 +1327,11 @@ MVKLTAEGSE...</code></pre>
   border-color: #adb5bd;
 }
 
-.quiz-option.selected {
+.quiz-option.selected,
+.quiz-option:has(.quiz-radio:checked) {
   background-color: #e7f1ff;
   border-color: #0d6efd;
-  color: #0d6efd;
+  color: #084298;
 }
 
 .quiz-option.correct {
@@ -913,12 +1346,38 @@ MVKLTAEGSE...</code></pre>
   color: #842029;
 }
 
+.quiz-radio {
+  flex: 0 0 auto;
+  height: 1.25rem;
+  margin: 0.08rem 0 0;
+  width: 1.25rem;
+}
+
+.quiz-option:has(.quiz-radio:focus-visible) {
+  outline: 3px solid #0b5cab;
+  outline-offset: 3px;
+}
+
+.quiz-option-text {
+  min-width: 0;
+}
+
+.quiz-result-label {
+  display: block;
+  font-size: 0.86rem;
+  font-weight: 700;
+  margin-top: 0.25rem;
+}
+
 .quiz-feedback {
   margin-top: 1rem;
   padding: 0.75rem;
   border-radius: 6px;
-  display: none;
   font-size: 0.95rem;
+}
+
+.quiz-feedback[hidden] {
+  display: none;
 }
 
 .quiz-feedback.correct {
@@ -935,7 +1394,8 @@ MVKLTAEGSE...</code></pre>
 
 .check-btn {
   margin-top: 1rem;
-  padding: 0.5rem 1rem;
+  min-height: 44px;
+  padding: 0.65rem 1rem;
   background-color: #0d6efd;
   color: white;
   border: none;
@@ -948,6 +1408,11 @@ MVKLTAEGSE...</code></pre>
   background-color: #0b5ed7;
 }
 
+.check-btn:focus-visible {
+  outline: 3px solid #0b5cab;
+  outline-offset: 3px;
+}
+
 .check-btn:disabled {
   background-color: #6c757d;
   cursor: not-allowed;
@@ -958,98 +1423,174 @@ MVKLTAEGSE...</code></pre>
 document.addEventListener('DOMContentLoaded', function() {
   const quizzes = document.querySelectorAll('.quiz-container');
 
-  quizzes.forEach(quiz => {
-    const options = quiz.querySelectorAll('.quiz-option');
+  quizzes.forEach((quiz, quizIndex) => {
+    const question = quiz.querySelector('.quiz-question');
+    const optionsContainer = quiz.querySelector('.quiz-options');
     const checkBtn = quiz.querySelector('.check-btn');
     const feedback = quiz.querySelector('.quiz-feedback');
     const correctIndex = parseInt(quiz.dataset.correctIndex);
+    if (!question || !optionsContainer || !checkBtn || !feedback) return;
+
+    const quizId = 'knowledge-check-' + (quizIndex + 1);
+    const header = quiz.querySelector('.quiz-header');
+    const icon = quiz.querySelector('.quiz-header i');
+    const fieldset = document.createElement('fieldset');
+    const legend = document.createElement('legend');
+    const originalOptions = Array.from(optionsContainer.querySelectorAll('.quiz-option'));
+    const feedbackId = quizId + '-feedback';
+
+    quiz.dataset.quizReady = 'true';
+    if (header) {
+      header.id = quizId + '-header';
+    }
+    if (icon) icon.setAttribute('aria-hidden', 'true');
+
+    fieldset.className = 'quiz-fieldset';
+    legend.className = 'quiz-question';
+    while (question.firstChild) legend.appendChild(question.firstChild);
+    question.replaceWith(fieldset);
+    fieldset.append(legend, optionsContainer);
+
+    originalOptions.forEach((option, optionIndex) => {
+      const optionId = quizId + '-option-' + (optionIndex + 1);
+      const label = document.createElement('label');
+      const radio = document.createElement('input');
+      const text = document.createElement('span');
+
+      label.className = option.className;
+      label.htmlFor = optionId;
+      radio.className = 'quiz-radio';
+      radio.type = 'radio';
+      radio.name = quizId;
+      radio.id = optionId;
+      radio.value = String(optionIndex);
+      text.className = 'quiz-option-text';
+      while (option.firstChild) text.appendChild(option.firstChild);
+      label.append(radio, text);
+      option.replaceWith(label);
+    });
+
+    const options = Array.from(optionsContainer.querySelectorAll('.quiz-option'));
+    const radios = Array.from(optionsContainer.querySelectorAll('.quiz-radio'));
+    checkBtn.type = 'button';
+    checkBtn.disabled = true;
+    checkBtn.setAttribute('aria-describedby', feedbackId);
+    feedback.id = feedbackId;
+    feedback.hidden = true;
+    feedback.setAttribute('role', 'status');
+    feedback.setAttribute('aria-live', 'polite');
+    feedback.setAttribute('aria-atomic', 'true');
     let selectedIndex = -1;
 
-    options.forEach((option, index) => {
-      option.addEventListener('click', () => {
-        if (checkBtn.disabled) return; // Already answered
-        
+    radios.forEach((radio, index) => {
+      radio.addEventListener('change', () => {
+        if (radio.disabled) return;
         options.forEach(opt => opt.classList.remove('selected'));
-        option.classList.add('selected');
+        options[index].classList.add('selected');
         selectedIndex = index;
+        checkBtn.disabled = false;
       });
     });
 
     checkBtn.addEventListener('click', () => {
       if (selectedIndex === -1) return;
 
-      // Disable interaction
       checkBtn.disabled = true;
       checkBtn.textContent = 'Submitted';
-      
+      radios.forEach(radio => radio.disabled = true);
+
       const selectedOption = options[selectedIndex];
       const correctOption = options[correctIndex];
+
+      function addResultLabel(option, message) {
+        const result = document.createElement('span');
+        result.className = 'quiz-result-label';
+        result.textContent = message;
+        option.querySelector('.quiz-option-text').appendChild(result);
+      }
 
       if (selectedIndex === correctIndex) {
         selectedOption.classList.add('correct');
         selectedOption.classList.remove('selected');
+        addResultLabel(selectedOption, 'Your answer — correct');
         feedback.textContent = quiz.dataset.correctFeedback || "Correct! Great job.";
         feedback.className = 'quiz-feedback correct';
       } else {
         selectedOption.classList.add('incorrect');
         selectedOption.classList.remove('selected');
-        correctOption.classList.add('correct'); // Show the right answer
+        correctOption.classList.add('correct');
+        addResultLabel(selectedOption, 'Your answer — incorrect');
+        addResultLabel(correctOption, 'Correct answer');
         feedback.textContent = quiz.dataset.incorrectFeedback || "Not quite. The correct answer is highlighted.";
         feedback.className = 'quiz-feedback incorrect';
       }
+      feedback.hidden = false;
     });
   });
 });
 </script>
 <script>
 (function() {
-  // Day-level position chip: shows "Monday · Lesson 3 of 16" at the top of each lesson.
-  // Position is derived from the Quarto sidebar so it stays in sync with _quarto.yml.
+  'use strict';
+
+  function normalisePath(path) {
+    if (!path) return '/';
+    const clean = path.split('#')[0].split('?')[0].toLowerCase();
+    return clean.endsWith('/') ? clean + 'index.html' : clean;
+  }
+
   document.addEventListener('DOMContentLoaded', function() {
-    const path = window.location.pathname.toLowerCase();
-    const match = path.match(/\/(monday|tuesday|wednesday|thursday|capstone)\//);
-    if (!match) return;
-    const day = match[1];
+    const path = normalisePath(window.location.pathname);
+    const dayMatch = path.match(/\/(monday|tuesday|wednesday|thursday|capstone)\//);
+    if (!dayMatch || /\/(monday|tuesday|wednesday|thursday|capstone)\/index\.html$/.test(path)) return;
+
+    const day = dayMatch[1];
     const dayLabel = day.charAt(0).toUpperCase() + day.slice(1);
+    const manifestLessons = window.BOOTCAMP_COURSE && Array.isArray(window.BOOTCAMP_COURSE.lessons)
+      ? window.BOOTCAMP_COURSE.lessons
+          .filter(item => {
+            const itemDay = String(item.day || '').toLowerCase();
+            return itemDay === day || (day === 'monday' && itemDay === 'prework');
+          })
+          .map(item => normalisePath('/' + String(item.path || item.href || '').replace(/^\/+/, '')))
+      : [];
 
-    // Skip the day index page itself
-    const isIndex = /\/index\.html?$/.test(path) || path.endsWith('/' + day + '/');
-    if (isIndex) return;
+    let lessons = manifestLessons;
+    if (!lessons.length) {
+      lessons = Array.from(document.querySelectorAll('.sidebar a[href]'))
+        .map(link => {
+          try { return normalisePath(new URL(link.getAttribute('href'), window.location.href).pathname); }
+          catch (error) { return null; }
+        })
+        .filter(candidate => candidate && candidate.includes('/' + day + '/'))
+        .filter(candidate => !candidate.endsWith('/' + day + '/index.html'));
+      lessons = lessons.filter((candidate, index) => lessons.indexOf(candidate) === index);
+    }
 
-    // Collect lesson links from the sidebar for the current day (exclude index and separators)
-    const sidebarLinks = Array.from(document.querySelectorAll('.sidebar a[href]'))
-      .map(function(a) {
-        try { return new URL(a.getAttribute('href'), window.location.href).pathname.toLowerCase(); }
-        catch (e) { return null; }
-      })
-      .filter(function(p) { return p && p.indexOf('/' + day + '/') !== -1; })
-      .filter(function(p) { return !/\/index\.html?$/.test(p); });
+    const currentIndex = lessons.findIndex(candidate => path === candidate || path.endsWith(candidate));
+    if (currentIndex < 0) return;
 
-    // Deduplicate while preserving order
-    const seen = new Set();
-    const lessons = sidebarLinks.filter(function(p) {
-      if (seen.has(p)) return false;
-      seen.add(p);
-      return true;
-    });
-
-    const total = lessons.length;
-    if (total === 0) return;
-
-    const currentIdx = lessons.indexOf(path);
-    if (currentIdx === -1) return;
-
-    const pct = Math.round(((currentIdx + 1) / total) * 100);
     const title = document.querySelector('h1.title, .quarto-title h1');
     if (!title) return;
+    const total = lessons.length;
+    const percent = Math.round(((currentIndex + 1) / total) * 100);
+    const noun = day === 'capstone' ? 'Target' : 'Lesson';
 
     const chip = document.createElement('div');
     chip.className = 'day-progress-chip';
-    const noun = day === 'capstone' ? 'Target' : 'Lesson';
-    chip.innerHTML =
-      '<span>' + dayLabel + '</span>' +
-      '<span>· ' + noun + ' ' + (currentIdx + 1) + ' of ' + total + '</span>' +
-      '<span class="dpc-bar"><span class="dpc-fill" style="width:' + pct + '%"></span></span>';
+    chip.setAttribute('role', 'status');
+    chip.setAttribute('aria-label', dayLabel + ', ' + noun + ' ' + (currentIndex + 1) + ' of ' + total);
+
+    const label = document.createElement('span');
+    label.textContent = dayLabel + ' · ' + noun + ' ' + (currentIndex + 1) + ' of ' + total;
+    const bar = document.createElement('span');
+    bar.className = 'dpc-bar';
+    bar.setAttribute('aria-hidden', 'true');
+    const fill = document.createElement('span');
+    fill.className = 'dpc-fill';
+    fill.style.width = percent + '%';
+    bar.appendChild(fill);
+    chip.append(label, bar);
     title.insertAdjacentElement('afterend', chip);
   });
 })();
@@ -1082,7 +1623,7 @@ document.addEventListener('DOMContentLoaded', function() {
     anchorJS.add('.anchored');
     const isCodeAnnotation = (el) => {
       for (const clz of el.classList) {
-        if (clz.startsWith('code-annotation-')) {                     
+        if (clz.startsWith('code-annotation-')) {
           return true;
         }
       }
@@ -1102,11 +1643,11 @@ document.addEventListener('DOMContentLoaded', function() {
         button.setAttribute("data-bs-toggle", "tooltip");
         button.setAttribute("data-bs-placement", "left");
         button.setAttribute("data-bs-title", "Copied!");
-        tooltip = new bootstrap.Tooltip(button, 
-          { trigger: "manual", 
+        tooltip = new bootstrap.Tooltip(button,
+          { trigger: "manual",
             customClass: "code-copy-button-tooltip",
             offset: [0, -8]});
-        tooltip.show();    
+        tooltip.show();
       }
       setTimeout(function() {
         if (tooltip) {
@@ -1188,7 +1729,7 @@ document.addEventListener('DOMContentLoaded', function() {
       if (onUntriggerFn) {
         config.onUntrigger = onUntriggerFn;
       }
-      window.tippy(el, config); 
+      window.tippy(el, config);
     }
     const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
     for (var i=0; i<noterefs.length; i++) {
@@ -1263,7 +1804,7 @@ document.addEventListener('DOMContentLoaded', function() {
       tippyHover(xref, undefined, function(instance) {
         instance.disable();
         let url = xref.getAttribute('href');
-        let hash = undefined; 
+        let hash = undefined;
         if (url.startsWith('#')) {
           hash = url;
         } else {
@@ -1291,7 +1832,7 @@ document.addEventListener('DOMContentLoaded', function() {
               if (note !== null) {
                 const html = processXRef(id, note);
                 instance.setContent(html);
-              } 
+              }
             }).finally(() => {
               instance.enable();
               instance.show();
@@ -1315,7 +1856,7 @@ document.addEventListener('DOMContentLoaded', function() {
               }
               const html = processXRef(null, note);
               instance.setContent(html);
-            } 
+            }
           }).finally(() => {
             instance.enable();
             instance.show();
@@ -1355,7 +1896,7 @@ document.addEventListener('DOMContentLoaded', function() {
               height = bottom - top;
             }
             if (top !== null && height !== null && parent !== null) {
-              // cook up a div (if necessary) and position it 
+              // cook up a div (if necessary) and position it
               let div = window.document.getElementById("code-annotation-line-highlight");
               if (div === null) {
                 div = window.document.createElement("div");

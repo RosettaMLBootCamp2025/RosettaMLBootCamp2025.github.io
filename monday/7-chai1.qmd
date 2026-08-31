@@ -13,6 +13,13 @@ Chai-1 ([paper](https://www.biorxiv.org/content/10.1101/2024.10.10.615955), [cod
 
 **Related Tools**: For protein-only predictions, see [ESMFold](5-esmfold.qmd) (faster) or [LocalColabFold](2-localcolabfold.qmd) (MSA-based). For binding affinity predictions, see [Boltz-2](8-boltz2.qmd).
 
+<!-- course-tool-pin: chai1 -->
+
+::: {.callout-note}
+## Recorded course pin
+This lesson uses `chai_lab==0.6.1` (reviewed 2026-08-30). If the GPU lacks bfloat16 support, follow the equivalent analysis route in [Reproducible Setup & Compute Fallbacks](reproducibility.qmd) instead of silently changing the environment.
+:::
+
 ## Resource Requirements
 
 | Resource | Minimum | Recommended | Notes |
@@ -61,9 +68,9 @@ pip install chai_lab==0.6.1
 
 **Expected download**: ~5-10 GB of model weights (downloaded on first run).
 
-**Alternative: Latest development version**:
+**Alternative: Install the same release from source**:
 ```bash
-pip install git+https://github.com/chaidiscovery/chai-lab.git
+pip install 'git+https://github.com/chaidiscovery/chai-lab.git@8d5ac0f93e9b6ea4c3a6545c253a6381c0f3694b'
 ```
 
 ## Testing the Installation
@@ -267,4 +274,3 @@ export CHAI_DOWNLOADS_DIR=/scratch/$USER/chai_models
 - Subsequent runs are much faster
 - Set `CHAI_DOWNLOADS_DIR` to avoid re-downloading
 :::
-

@@ -1,122 +1,124 @@
 ---
 title: "Monday: Tool Installation"
+subtitle: "Historical day 1 · prepare a reproducible environment, then install only the tools your route needs"
 ---
 
 ## Overview
 
-Monday is dedicated to installing the essential ML-based protein design and structure prediction tools on your HPC cluster. Each module guides you through installing a specific tool, from structure predictors like LocalColabFold and ESMFold to design tools like LigandMPNN and BindCraft.
+Monday preserves the first stage of the original in-person bootcamp: local setup, HPC orientation, and a broad tour of the prediction and design toolchain. In the asynchronous course, **you are not expected to install every tool before learning anything else**. Verify the foundation, choose a workflow, and capture a smoke-test artifact for each tool you intend to use.
 
 ::: {.day-objectives}
 <div class="do-title">By the end of Monday, you'll be able to:</div>
-- Request GPU resources and navigate a module-based HPC environment (CUDA, conda, containers).
-- Install and confirm each of the core structure prediction tools (LocalColabFold, ESMFold, Chai-1, Boltz-2) on your cluster.
-- Install and confirm the core design and docking tools (LigandMPNN, RFdiffusion2, DiffDock-PP, PLACER, BindCraft).
-- Explain, at a high level, what each tool takes as input, produces as output, and when you'd reach for it.
-- Troubleshoot the most common install failures (CUDA mismatch, missing weights, environment conflicts) well enough to keep moving.
+- Request GPU resources and distinguish login-node, CPU-node, and GPU-node work.
+- Record the Python, CUDA, PyTorch, container, model, and hardware context behind a run.
+- Select a structure predictor, sequence designer, and backbone/binder route for a stated problem.
+- Run a minimal smoke test and recognize the output that proves a tool is usable.
+- Diagnose common environment, path, weight, quota, and GPU-memory failures without losing the scientific learning objective.
 :::
 
 <div class="lesson-visual">
   <img src="../images/course-dashboard/hpc-setup-path.png" alt="HPC setup path showing login node downloads, scheduler submission, GPU execution, and verification commands.">
-  <p class="lesson-visual-caption">Use this path as the mental model for Monday: prepare on a login node, request GPU resources through the scheduler, then confirm the tool works on the GPU node before moving on.</p>
+  <p class="lesson-visual-caption">Prepare and download on the login node, request resources through the scheduler, run on the appropriate compute node, and save the command, environment, log, and output that verify the result.</p>
 </div>
 
-## Pre-work
+## Monday contract
 
-Before starting the main modules, complete these pre-work assignments to ensure your local environment is ready.
+| | Core path | Full bootcamp |
+|---|---|---|
+| **Active effort** | **4–8 hours**, depending on existing setup | **10–20 hours** across several sessions |
+| **Waiting time** | Allow another **2–12 hours** for downloads, environment solves, weights, and scheduler queues | Potentially **days** for all databases, builds, permissions, and test jobs |
+| **Compute** | Laptop for pre-work; Linux GPU/HPC for local model smoke tests | Linux GPU/HPC, container runtime, 50–100 GB tool storage, and tool-specific accounts/licenses |
+| **Output** | Readiness note, GPU verification log, smoke-test output for each chosen tool, and a tool-choice memo | The core evidence plus tested environments for the broader tool set |
+| **Finished when** | Another learner could identify your environment and rerun your smallest successful test | Each attempted install is versioned and labeled passed, failed-with-evidence, or intentionally skipped |
 
-| # | Module | Description | Status |
-|---|--------|-------------|--------|
-| P1 | [Environment & GitHub](prework-1-env-git.qmd) | Setup conda, git, and GitHub | Required |
-| P2 | [PyMOL & VS Code](prework-2-pymol-vscode.qmd) | Install visualization and coding tools | Required |
-| P3 | [Python Refresher](prework-3-python.qmd) | Refresh Python skills for bioinformatics | Recommended |
+Active effort does not include passive downloads or jobs. Stop and record a reproducible failure instead of repeatedly rebuilding an environment without new evidence.
 
-## Getting Started
+## Choose a Monday route
 
-Before installing individual tools, complete the **HPC Setup** module to ensure your environment is properly configured:
+### Core path
 
-| # | Module | Description | Status |
-|---|--------|-------------|--------|
-| 1 | [Common HPC Setup](1-hpc-setup.qmd) | CUDA, Conda, containers, and environment setup | **Start Here** |
+1. Complete the readiness checks below, [Common HPC Setup](1-hpc-setup.qmd), and the preflight in [Reproducible Setup & Compute Fallbacks](reproducibility.qmd).
+2. Set up PyMOL and VS Code; take the Python refresher only if its readiness questions expose a gap.
+3. Prepare **one structure-prediction route**: [LocalColabFold](2-localcolabfold.qmd) for local AlphaFold2, or plan to use the hosted notebook in Tuesday.
+4. Prepare [LigandMPNN](3-ligandmpnn.qmd) if you will sequence-design generated backbones.
+5. Prepare only the generator/pipeline your project will use. Wednesday teaches the original RFdiffusion workflow; [BindCraft](11-bindcraft.qmd) is an end-to-end alternative. RFdiffusion2 is a distinct, newer atom-level scaffolding tool and is not a drop-in replacement for the original lesson.
+6. Add [ESMFold](5-esmfold.qmd) only if you plan to run Tuesday’s comparison locally.
 
-## Tool Installation Modules
+### Full-bootcamp path
 
-| # | Tool | Description | Status |
-|---|------|-------------|--------|
-| 2 | [LocalColabFold](2-localcolabfold.qmd) | Fast AlphaFold2 structure prediction | Required |
-| 3 | [LigandMPNN](3-ligandmpnn.qmd) | Context-aware protein sequence design | Required |
-| 4 | [RFdiffusion2](4-rfdiffusion2.qmd) | Atom-level active site scaffolding | Required |
-| 5 | [ESMFold](5-esmfold.qmd) | Single-sequence structure prediction | Required |
-| 6 | [OpenFold](6-openfold.qmd) | Open-source AlphaFold2 reproduction | Optional |
-| 7 | [Chai-1](7-chai1.qmd) | Multi-modal biomolecular structure prediction | Required |
-| 8 | [Boltz-2](8-boltz2.qmd) | Structure + binding affinity prediction | Required |
-| 9 | [DiffDock-PP](9-diffdock-pp.qmd) | Protein-protein docking | Required |
-| 10 | [PLACER](10-placer.qmd) | Protein-ligand conformational ensemble prediction | Required |
-| 11 | [BindCraft](11-bindcraft.qmd) | End-to-end binder design pipeline | Required |
-| 12 | [ESM3](12-esm3.qmd) | Multimodal protein generation | Optional |
-| 13 | [RFdiffusion All Atom](13-rfdiffusion-aa.qmd) | All-atom protein design (predecessor to RFd2) | Optional |
+Complete the core path, then work through the remaining installation pages as a survey of the 2025 tool landscape. Keep separate environments. An unsuccessful installation with a complete diagnostic record is more useful than an unexplained “done” checkmark.
 
-## Tool Categories
+### Reference path
 
-### Structure Prediction
+Jump to the tool you need, but first read its **Preparation** and **Resource Requirements**. If it depends on CUDA, containers, SLURM, or shared storage that is unfamiliar, return to [Common HPC Setup](1-hpc-setup.qmd).
 
-| Tool | Input | Output | Speed | Best For |
-|------|-------|--------|-------|----------|
-| LocalColabFold | Sequence + MSA | Structure | Medium | High-accuracy single proteins |
-| ESMFold | Sequence only | Structure | Fast | Quick predictions, no MSA needed |
-| OpenFold | Sequence + MSA | Structure | Medium | Research, custom training |
-| Chai-1 | Multi-modal | Complex structures | Medium | Proteins + ligands + nucleic acids |
-| Boltz-2 | Multi-modal | Structure + affinity | Medium | Drug discovery |
+## Pre-work and readiness
 
-### Protein Design
+| Module | Core status | Active time | Do | Evidence |
+|---|---|---:|---|---|
+| [Environment & GitHub](prework-1-env-git.qmd) | Required unless already verified | 45–90 min | Create the environment and run the verification script | Environment export plus successful verification output |
+| [PyMOL & VS Code](prework-2-pymol-vscode.qmd) | Required | 45–90 min | Open a PDB, make a selection, save a figure, and verify editing/terminal access | PNG plus the commands used |
+| [Python refresher](prework-3-python.qmd) | Readiness-based | 60–120 min | Complete the protein-sequence utilities | Passing output plus one sentence naming the hardest concept |
+| [Common HPC Setup](1-hpc-setup.qmd) | Required for local GPU work | 60–120 min | Request a GPU and run the PyTorch check | Job script, scheduler log, `nvidia-smi`, and CUDA-aware PyTorch output |
+| [Reproducible setup & fallbacks](reproducibility.qmd) | Required for local model work | 20–40 min | Run the course preflight and choose a compute/analysis fallback | Saved preflight report plus version and fallback note |
 
-| Tool | Input | Output | Best For |
-|------|-------|--------|----------|
-| LigandMPNN | Backbone | Sequence | Sequence design with ligand context |
-| RFdiffusion2 | Constraints | Backbone | Active site scaffolding |
-| BindCraft | Target structure | Binder designs | End-to-end binder design |
+**No HPC route:** complete the laptop pre-work, use hosted services/notebooks where permitted, and record which local steps you are replacing. You can analyze supplied outputs when a GPU or account is unavailable.
 
-### Docking
+## Tool installation map
 
-| Tool | Input | Output | Best For |
-|------|-------|--------|----------|
-| DiffDock-PP | Two proteins | Docked complex | Protein-protein docking |
-| PLACER | Protein + ligand | Ensemble poses | Protein-ligand docking |
+The time below is hands-on setup and inspection time; downloads, dependency solving, databases, and queued smoke tests are additional.
 
-## Tips for Success
+| Tool | Role | Route | Typical active time | Key resource constraint | Evidence of a usable setup |
+|---|---|---|---:|---|---|
+| [LocalColabFold](2-localcolabfold.qmd) | MSA-based prediction | Core if running AF2 locally | 45–90 min | GPU; database/server access | Ranked PDB, scores JSON, PAE image, and log |
+| [LigandMPNN](3-ligandmpnn.qmd) | Context-aware sequence design | Core for backbone-to-sequence work | 45–75 min | GPU recommended; model weights | FASTA output, score file, and exact command |
+| [RFdiffusion2](4-rfdiffusion2.qmd) | Atom-level/ligand scaffolding | Reference/full | 45–90 min | 16+ GB GPU; Apptainer; 10–20 GB | Demo output directory and run log |
+| [ESMFold](5-esmfold.qmd) | Fast single-sequence prediction | Core if running Tuesday locally | 45–75 min | GPU memory scales with length | `test_result.pdb`, confidence summary, and log |
+| [OpenFold](6-openfold.qmd) | AF2 reproduction/research | Reference/full | 60–120 min | Build compatibility; optional ~2 TB databases | PDB plus pLDDT/pTM output |
+| [Chai-1](7-chai1.qmd) | Complex/multimodal prediction | Core only if using local Chai | 45–90 min | 16–24+ GB GPU; weights | Ranked complex and confidence outputs |
+| [Boltz-2](8-boltz2.qmd) | Structure and affinity prediction | Reference/full | 45–90 min | GPU; model downloads | Prediction directory plus confidence/affinity files |
+| [DiffDock-PP](9-diffdock-pp.qmd) | Protein–protein docking | Reference/full | 60–120 min | Older dependency/CUDA compatibility | Ranked docked PDBs and log |
+| [PLACER](10-placer.qmd) | Protein–ligand ensemble prediction | Reference/full | 45–90 min | GPU; weights | Pose ensemble, scores, and run configuration |
+| [BindCraft](11-bindcraft.qmd) | End-to-end binder pipeline | Core alternative/full | 60–120 min | 24+ GB GPU; PyRosetta; long campaigns | Successful example design folder and settings files |
+| [ESM3](12-esm3.qmd) | Multimodal protein generation | Optional/reference | 45–90 min | Hugging Face access; GPU | Generated sequence/structure and sampling settings |
+| [RFdiffusion All Atom](13-rfdiffusion-aa.qmd) | All-atom design predecessor | Optional/reference | 45–90 min | 16+ GB GPU; container | Test structure and run log |
 
-1. **Start with HPC Setup** - Complete Module 1 before installing any tools
+## Pick tools by question
 
-2. **Use separate conda environments** - Each tool should have its own environment to avoid dependency conflicts
+| If your question is… | Start with… | Compare or add when… |
+|---|---|---|
+| “What fold is compatible with this sequence?” | LocalColabFold/AlphaFold2 | ESMFold for speed or an MSA-independent comparison |
+| “How might this protein, ligand, ion, or nucleic acid complex assemble?” | Chai-1 or another complex predictor | Boltz-2 when affinity ranking is part of the question |
+| “What sequence fits this backbone and interface context?” | LigandMPNN | Use several temperatures/seeds and validate structures afterward |
+| “Can I generate a backbone around an interface or motif?” | Original RFdiffusion workflow in Wednesday | RFdiffusion2/RFdiffusion-AA for atom-level or ligand-centered constraints |
+| “Can I automate binder generation and filtering?” | BindCraft | Use a component workflow when you need more control over each stage |
+| “How might two proteins or a protein and ligand dock?” | DiffDock-PP or PLACER | Use Thursday’s docking framework to decide what sampling/scoring evidence is still missing |
 
-3. **Check GPU availability** - Most tools require GPU access; make sure you can request GPU nodes on your cluster
+## Monday evidence checkpoints
 
-4. **Note your paths** - Keep track of where you install each tool; you'll need these paths later
+Check an item only after the named file or record exists in your evidence portfolio.
 
-5. **Test each installation** - Don't move on until you've verified each tool works
+- [Readiness note names my route, compute, storage, accounts, and fallback]{.task module-id="monday-readiness-evidence"}
+- [GPU/HPC verification record includes the job script, environment, hardware output, and successful or diagnosed smoke test]{.task module-id="monday-hpc-evidence"}
+- [At least one chosen predictor has a reproducible smoke-test log and expected structure/confidence output]{.task module-id="monday-predictor-evidence"}
+- [My chosen design or sequence tool has a reproducible smoke-test artifact, or a documented no-compute analysis substitute]{.task module-id="monday-design-evidence"}
+- [Tool-choice memo states what I will use, what I will not use, and why]{.task module-id="monday-tool-choice-evidence"}
 
-6. **Check shared resources** - Your HPC may already have databases (AlphaFold, ColabFold) installed
+## If you are stuck
 
-## Resource Overview
+1. Confirm that downloads run where internet access is allowed and GPU tests run on a GPU node.
+2. Save the exact error and active environment before changing anything.
+3. Compare Python, PyTorch, CUDA, container, GPU, and model versions with [Reproducible Setup & Compute Fallbacks](reproducibility.qmd).
+4. Run the smallest test with one short input and a new output directory.
+5. If access remains blocked, complete the lesson with known-good outputs and return to the installation separately.
+6. Search the tool repository, then [report a course issue](https://github.com/RosettaMLBootCamp2025/RosettaMLBootCamp2025.github.io/issues/new) with the evidence above.
 
-Approximate requirements across all tools:
+## Next step
 
-| Resource | Total Needed |
-|----------|--------------|
-| Disk Space | 50-100 GB (tools only), 2+ TB (with databases) |
-| GPU RAM | 16-80 GB depending on task |
-| CPU RAM | 32-64 GB |
+Proceed when the core evidence exists—not when every optional tool is installed. Tuesday begins with structure inspection and then uses AlphaFold2/ESMFold outputs to practice confidence-aware interpretation.
 
-## Getting Help
+::: {.d-flex .justify-content-between}
+[← Start Here](../start-here.qmd)
 
-If you encounter issues:
-
-1. Check the tool's official documentation (linked in each module)
-2. Search for existing GitHub issues on the tool's repository
-3. [Report an issue](https://github.com/RosettaMLBootCamp2025/RosettaMLBootCamp2025.github.io/issues/new) on the bootcamp site (GitHub account required)
-
----
-
-<div style="display: flex; justify-content: space-between; align-items: center;">
-<div>[← Back to Home](../index.qmd)</div>
-<div>[Tuesday →](../tuesday/index.qmd)</div>
-</div>
+[Tuesday: Structure Prediction →](../tuesday/index.qmd)
+:::

@@ -1,15 +1,58 @@
 ---
 title: "Capstone Project"
-subtitle: "Computational Binder Design"
+subtitle: "Computational binder design as a reproducible evidence trail"
 ---
 
-## Live Workshop Sessions
+## Capstone mission
 
-Two companion recordings to watch before starting your capstone: a broad overview of the cutting-edge ML tooling landscape, and a practical walkthrough of a complete design workflow.
+Given a target protein and an intended binding surface, develop and defend a computational binder-design hypothesis. The deliverable is **not a claim that a binder works**. It is a reproducible portfolio showing how you selected a target and epitope, generated and sequence-designed candidates, validated complexes, learned from failure, and chose the next candidate or experiment.
+
+This capstone preserves the final project from the original in-person bootcamp. The live groups presented for about 20 minutes; self-paced learners can submit an equivalent written report, narrated slide deck, notebook, repository, or video.
+
+::: {.callout-important}
+## Read these before spending substantial compute
+
+- **[Evidence guide and 20-point rubric](rubric.qmd)** — the seven required artifacts, completion criteria, and self-assessment standard
+- **[Worked selection example](exemplar.qmd)** — an illustrative PD-L1 evidence trail that advances a lower-scoring candidate for better reasons
+- **[Download the evidence template](files/capstone-evidence-template.zip)** — a ready-to-fill Markdown portfolio outline
+:::
+
+## Capstone contract
+
+| | Core capstone | Full campaign |
+|---|---|---|
+| **Active effort** | **10–25 hours** | **20–40+ hours** |
+| **Compute time** | Add **5–30 hours** of generation, sequence design, validation, and queues | Add **20–100+ hours** for larger sweeps, seeds, methods, and repeated validation |
+| **Scope** | One target, one defined epitope, a teaching-scale campaign, several sequence variants, and at least two finalists | Broader hotspot/parameter/potential comparison with more candidates and independent checks |
+| **Output** | Seven-artifact evidence portfolio and completed rubric | Core portfolio plus deeper ablations, expanded validation, and presentation-ready synthesis |
+| **Finished when** | All seven artifacts exist; rubric is **at least 13/20 with no category below 2** | The evidence trail is reconstructable and further compute is driven by a new hypothesis, not missing documentation |
+
+Compute ranges are planning estimates, not guarantees. Target length, campaign size, GPU, queue policy, model, and failed jobs dominate wall-clock time. Start every stage with the smallest smoke test that could expose a bad path, chain, residue number, environment, or output assumption.
+
+## Two valid participation modes
+
+### Generation mode
+
+Run the pipeline yourself and preserve exact inputs, versions, commands/configurations, seeds, logs, raw outputs, and hardware context.
+
+### Analysis mode
+
+If GPU, account, model, license, or quota access is unavailable, use supplied or previously generated outputs. Preserve their source and reconstruct as much provenance as possible. You still complete target analysis, filtering, confidence/interface interpretation, failure analysis, and a conditional selection memo. Clearly distinguish evidence you generated from evidence you inherited.
+
+Both modes use the same rubric. Analysis mode is not permission to hide missing provenance; it is a scientifically honest fallback when infrastructure is outside the learner’s control.
+
+## Watch → Read → Do → Check
+
+- **Watch (optional):** the two original workshop recordings below provide the broad tool landscape and a practical workflow walkthrough.
+- **Read:** this overview, your selected target page, the [rubric](rubric.qmd), and the relevant tool lessons.
+- **Do:** produce the seven staged artifacts below, preserving failed and rejected outputs as well as finalists.
+- **Check:** score the portfolio with the rubric, compare the decision logic with the [worked example](exemplar.qmd), and revise the weakest category.
+
+## Original workshop recordings
 
 ```{=html}
 <div class="workshop-companion">
-  <div class="wc-title">🎥 Part 1 — Cutting-edge ML tools for protein design pipelines</div>
+  <div class="wc-title">Part 1 — Cutting-edge ML tools for protein design pipelines (optional context)</div>
   <div class="wc-video">
     <iframe src="https://www.youtube-nocookie.com/embed/WOSBRgQBSm4"
       title="Cutting-edge ML tools for protein design pipelines"
@@ -19,7 +62,7 @@ Two companion recordings to watch before starting your capstone: a broad overvie
 </div>
 
 <div class="workshop-companion">
-  <div class="wc-title">🎥 Part 2 — AI-driven protein design workflow: a practical example</div>
+  <div class="wc-title">Part 2 — AI-driven protein design workflow: a practical example (optional context)</div>
   <div class="wc-video">
     <iframe src="https://www.youtube-nocookie.com/embed/gzg-v00Jnhc"
       title="AI-driven protein design workflow: a practical example"
@@ -29,100 +72,118 @@ Two companion recordings to watch before starting your capstone: a broad overvie
 </div>
 ```
 
+## Choose a target
 
-## Overview
+Choose a target whose biological surface you can explain and whose structure you can prepare confidently. Do not choose solely because a name is familiar.
 
-Binder design is often formulated as "given a target protein (and optionally a specific epitope on that protein), design a (often smaller) protein capable of binding the target". It is one of the most ubiquitous protein design problems and has many potential applications, largely functioning by blocking or competing with natural interactions involving the target protein.
+| Target | Starting structure | Design context | First question to resolve |
+|---|---|---|---|
+| [PD-L1](targets/pd-l1.qmd) | [4ZQK](https://www.rcsb.org/structure/4ZQK) | Immune-checkpoint interface | Which PD-1-facing residues define a compact, accessible epitope? |
+| [IFNAR2](targets/ifnar2.qmd) | [3SE3](https://www.rcsb.org/structure/3SE3) | Cytokine-receptor surface | Which chain, state, and native interface support the intended competition hypothesis? |
+| [IL-7Rα](targets/il-7r.qmd) | [3DI2](https://www.rcsb.org/structure/3DI2) | Interleukin-receptor surface | How do chain numbering and the native ligand interface map to hotspots? |
+| [Bet v 1](targets/bet-v-1.qmd) | [4A88](https://www.rcsb.org/structure/4A88) | Allergen surface | Which exposed patch supports the intended blocking or recognition hypothesis? |
+| [TrkA receptor](targets/trka.qmd) | [1WWW](https://www.rcsb.org/structure/1WWW) | NGF-receptor complex | Use the TrkA–NGF complex; 1WWC is an NT-3–TrkC structure, not an alternative TrkA target |
+| [TEM-1 β-lactamase](targets/tem-1.qmd) | [1FQG](https://www.rcsb.org/structure/1FQG) | Enzyme surface/active-site context | Should a binder occlude a functional site or target a distinct exposed surface? |
+| [GM2 activator protein](targets/gm3.qmd) | [1G13](https://www.rcsb.org/structure/1G13) | Lipid-transport protein | Does the apo structure represent the pocket state relevant to the design mission? |
+| [β-Glucosidase](targets/beta-glucosidase.qmd) | [2JIE](https://www.rcsb.org/structure/2JIE) | Enzyme/ligand complex | How should the trapped intermediate and active-site geometry influence surface choice? |
 
-In this bootcamp, you'll have the opportunity to explore the computational binder design problem across three different categories of targets. Students will choose from a curated list of targets that have been validated with BindCraft and other computational binder design tools.
+Each target page provides structure context, candidate hotspots, preparation guidance, and an interactive view. Verify chain IDs and residue numbers in the exact file you will use; numbering from a paper, UniProt, a biological assembly, and a deposited PDB may differ.
 
-```{=html}
 <div class="visual-grid">
   <div class="lesson-visual">
     <img src="../images/course-dashboard/capstone-workflow.png" alt="Capstone workflow from target selection through backbone generation, sequence design, validation, and final selection.">
-    <p class="lesson-visual-caption">Treat the capstone as an iterative evidence trail. Each pass should record the target, settings, outputs, validation result, and reason for keeping or discarding a design.</p>
+    <p class="lesson-visual-caption">Treat the project as a sequence of evidence gates. Do not scale the next stage until the current artifact is reconstructable and interpretable.</p>
   </div>
   <div class="lesson-visual">
     <img src="../images/course-dashboard/binder-target-interface.png" alt="Binder design target interface with hotspot residues on the target and a designed binder approaching the surface.">
-    <p class="lesson-visual-caption">Start from a real binding face. A small set of high-value hotspot residues gives RFdiffusion or BindCraft a much clearer target than an unrestricted protein surface.</p>
+    <p class="lesson-visual-caption">A biologically motivated surface and a compact hotspot set provide a more testable design mission than an unrestricted target surface.</p>
   </div>
 </div>
-```
 
-## Target Categories and Options
+## Project stages and required evidence
 
-### Immune Checkpoint / Receptor Targets
+### Stage 1 — Define the target and epitope
 
-| Target | UniProt | Description |
-|--------|---------|-------|
-| [PD-L1](targets/pd-l1.qmd) | [Q9NZQ7](https://www.uniprot.org/uniprotkb/Q9NZQ7/entry) | Immune Checkpoint |
-| [IFNAR2](targets/ifnar2.qmd) | [P48551](https://www.uniprot.org/uniprotkb/P48551/entry) | Interferon receptor |
-| [IL-7Rα](targets/il-7r.qmd) | [P16871](https://www.uniprot.org/uniprotkb/P16871/entry) | Interleukin receptor |
+Inspect the biological assembly, chains, residue numbering, missing regions, ligands/cofactors, glycans, alternate states, and native partners. State the mechanism you hope a binder would test.
 
-### Antibody-like Targets
+**Exit artifact:** annotated target image plus a concise brief containing accession, chain/range, intended surface, three to six justified hotspots, and caveats.
 
-| Target | UniProt | Description |
-|--------|---------|-------|
-| [Bet v 1](targets/bet-v-1.qmd) | [P15494](https://www.uniprot.org/uniprotkb/P15494/entry) | Birch pollen allergen |
+[Target and epitope brief exists and its chain/residue numbering was checked against the exact input PDB]{.task module-id="capstone-target-brief"}
 
-### Enzyme / Small Molecule Binders
+### Stage 2 — Freeze a reproducible run configuration
 
-| Target | PDB | Description |
-|--------|-----|-------|
-| [TrkA receptor](targets/trka.qmd) | [1WWC](https://www.rcsb.org/structure/1WWC) | Nerve Growth Factor Receptor |
-| [TEM-1 Beta-Lactamase](targets/tem-1.qmd) | [1FQG](https://www.rcsb.org/structure/1FQG) | Antibiotic Resistance Enzyme |
-| [GM2 Activator Protein](targets/gm3.qmd) | [1G13](https://www.rcsb.org/structure/1G13) | Lipid Transport Protein |
-| [Beta-Glucosidase](targets/beta-glucosidase.qmd) | [2JIE](https://www.rcsb.org/structure/2JIE) | Enzymatic Catalyst |
+Record input identifiers/checksums, preparation commands, tool releases/commits, environment, checkpoints, hardware, exact commands/configurations, seeds, output paths, and deviations from the course’s known-good stack.
 
-## Project Structure
+**Exit artifact:** another learner can reconstruct the smoke test without guessing a hidden setting.
 
-Select a target from the list above and work through the binder design process. As you learn about each tool in the preceding lessons, explore how that tool works for your particular protein. Be sure to make note of any quirks or nuances related to your protein, e.g. any particular settings used or any issues encountered.
+[Reproducible configuration connects exact inputs, environment, versions, commands/configs, seeds, hardware, logs, and outputs]{.task module-id="capstone-run-config"}
 
-::: {.callout-tip}
-## Documentation Tip
-Keep a lab notebook (digital or physical) to document your predictions, results, settings tried, and commands used. This will be invaluable when synthesizing your findings at the end of the project.
-:::
+### Stage 3 — Generate and filter backbones
 
-## Goals
+Begin with one or two outputs. Confirm the input chain, contig/chain break, hotspots, length, output location, and structure integrity. Then scale to a teaching-size campaign. Show the full distribution—not only favorites—and apply a consistent first-pass filter for topology, target/hotspot contact, clashes, and diversity.
 
-- Gain hands-on experience running DL-based tools on specific proteins
-- Troubleshoot and address any issues related to your target protein
-- Learn about tips and tricks used to get more favorable outputs
-- Gain experience communicating about computational tools and settings
-- Gain experience interpreting results and exploring various settings
+**Exit artifact:** labeled gallery/table of successful and failed backbones with keep/reject reasons and attrition counts.
 
-## Synthesizing Your Work
+[Backbone gallery shows the complete sampled set or an auditable summary, consistent filters, attrition, failures, and advance decisions]{.task module-id="capstone-backbone-evidence"}
 
-A key part of learning is synthesizing and communicating what you've done. In the live workshop, students gave 20-minute group presentations. For self-paced learners, consider one of these formats to consolidate your learning:
+### Stage 4 — Design sequences
 
-- **Written report** summarizing your process and findings
-- **Video walkthrough** explaining your approach and results
-- **Jupyter notebook** with narrative text alongside code and figures
-- **GitHub repository** with a comprehensive README documenting your project
+Generate several sequences per advanced backbone. Preserve the parent-backbone link and record model/settings, fixed positions, temperature/seeds, recovery, diversity, composition, and relevant sequence liabilities.
 
-::: {.callout-tip}
-Even if you're not presenting to anyone, creating slides is a great way to learn! The process of organizing your work into a clear narrative helps solidify your understanding.
-:::
+**Exit artifact:** compact candidate table linking every sequence to its parent backbone and settings.
 
-However you choose to document your work, aim to cover the following:
+[Sequence table links candidates to parent backbones and records method/settings, diversity, composition, fixed positions, and liabilities]{.task module-id="capstone-sequence-evidence"}
 
-1. **Background and introduction** to target protein
-2. **Structure prediction results**
-3. **Backbone generation results**
-4. **Sequence design results**
-5. **Design rationale** - explain the specific choices, settings, and approaches used and why
+### Stage 5 — Validate the designed complex
 
-::: {.callout-note}
-I find the design rationale section to be the most helpful to my learning and understanding.
-:::
+Predict the binder–target complex and inspect per-chain fold confidence separately from interface confidence and relative-chain uncertainty. Evaluate PAE, interface geometry, hotspot recovery, clashes, consistency across predictions, and at least one independent check beyond a single headline score.
 
-6. **Results from miscellaneous tools**
-7. **Summary and takeaways**
+**Exit artifact:** comparable figures and metrics for at least two finalists, with explicit uncertainty.
 
----
+[Validation compares finalists using fold and interface evidence, PAE, geometry/hotspots, clashes, model agreement, and an independent check]{.task module-id="capstone-structural-validation"}
+
+### Stage 6 — Diagnose a failure and iterate
+
+Choose at least one failed or misleading result. Form a cause hypothesis, make one targeted change, and ask whether the next run supports that diagnosis. Changing many settings at once weakens the inference.
+
+**Exit artifact:** before/after comparison connecting failure → diagnosis → change → evidence → revised conclusion.
+
+[Failure analysis documents a misleading or failed result, a cause hypothesis, one targeted change, and whether new evidence supported it]{.task module-id="capstone-failure-analysis"}
+
+### Stage 7 — Make a conditional selection
+
+Define selection criteria before choosing a finalist. Compare the candidate you would advance with credible alternatives. State trade-offs, remaining uncertainty, and the next computational or experimental test that could change the decision.
+
+**Exit artifact:** one-page final selection memo or equivalent final section.
+
+[Final memo advances or rejects candidates using explicit criteria, trade-offs, uncertainty, and the next test without claiming experimental validation]{.task module-id="capstone-selection-memo"}
+
+## Completion and self-assessment
+
+Your format may be a report, notebook, repository README, narrated deck, or video, but the seven artifacts must remain easy to find and connected to their underlying files.
+
+Use the **[Capstone Evidence Guide & Rubric](rubric.qmd)** to score:
+
+1. reproducibility;
+2. structural and computational evidence;
+3. scientific judgment;
+4. iteration and learning; and
+5. communication.
+
+The course completion standard is **13/20 or higher with no category below 2**. A high course score means the computational case is clear and defensible. It does not predict experimental success.
+
+If your reasoning is becoming score-driven, compare it with the **[worked selection example](exemplar.qmd)**. The exemplar’s strongest candidate is not the one with the highest summary score; it is the one whose evidence best matches the biological mission while making the remaining defect explicit.
+
+## What to do next
+
+1. Download the [evidence template](files/capstone-evidence-template.zip).
+2. Choose a target and draft Stage 1 before running a model.
+3. Review the Stage 2 configuration with the rubric before scaling compute.
+4. Stop at each exit artifact; repair missing provenance or interpretation before continuing.
+5. Share the final portfolio with a peer if possible and ask them to identify one unsupported inference.
 
 ::: {.d-flex .justify-content-between}
 [← Thursday](../thursday/index.qmd)
 
-[Back to Home](../index.qmd)
+[Capstone rubric →](rubric.qmd)
 :::

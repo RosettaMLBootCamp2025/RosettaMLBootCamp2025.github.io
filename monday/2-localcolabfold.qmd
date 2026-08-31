@@ -13,6 +13,13 @@ LocalColabFold ([code](https://github.com/YoshitakaMo/localcolabfold)) is a loca
 
 **Related Tools**: For structure prediction without MSAs, see [ESMFold](5-esmfold.qmd). For multi-modal complexes, see [Chai-1](7-chai1.qmd) or [Boltz-2](8-boltz2.qmd).
 
+<!-- course-tool-pin: localcolabfold -->
+
+::: {.callout-note}
+## Recorded course pin
+This lesson downloads the installer from commit `e2e8c4a834a3d50ebaede3bb42786707fdc8f6ec` (reviewed 2026-08-30), not from the moving `main` branch. Review the distinction between a pinned revision and a tested GPU stack—and the no-compute alternative—on [Reproducible Setup & Compute Fallbacks](reproducibility.qmd).
+:::
+
 ## Resource Requirements
 
 | Resource | Minimum | Recommended | Notes |
@@ -48,7 +55,8 @@ nvcc --version      # Check CUDA version
 1. Download the installation script:
 Navigate to the directory where you want to install LocalColabFold (e.g., your scratch directory or apps folder).
 ```bash
-wget https://raw.githubusercontent.com/YoshitakaMo/localcolabfold/main/install_colabbatch_linux.sh
+wget https://raw.githubusercontent.com/YoshitakaMo/localcolabfold/e2e8c4a834a3d50ebaede3bb42786707fdc8f6ec/install_colabbatch_linux.sh
+echo "4d97ec29fe5375171516869cda80fb814636f96115728a1735c9cf6fb5f979c8  install_colabbatch_linux.sh" | sha256sum --check
 ```
 
 2. Make the script executable and run it:

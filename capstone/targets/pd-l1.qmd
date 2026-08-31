@@ -3,6 +3,13 @@ title: "PD-L1 Target Deep Dive"
 subtitle: "Immune Checkpoint Inhibitor Design"
 ---
 
+<!-- canonical-target: pd-l1; pdb=4ZQK; chain=A; hotspots=A56,A58,A113,A122,A123 -->
+
+::: {.callout-note}
+## Reproducible target record
+This lesson uses the course's canonical PD-L1 record: **4ZQK, chain A**. Do not substitute the older `5O45` exercise record without re-deriving chain IDs and hotspots. The machine-readable source of truth is [`data/targets.yml`](../../data/targets.yml).
+:::
+
 ## Biological Context
 
 **Programmed Death-Ligand 1 (PD-L1)** is a critical protein expressed on the surface of many cells, including cancer cells. Under normal conditions, it acts as a "brake" on the immune system. When PD-L1 binds to the **PD-1 receptor** on T-cells, it signals the T-cell to become inactive.
@@ -22,6 +29,8 @@ Explore the native interaction between PD-L1 (the target) and PD-1 (the natural 
 <pdbe-molstar id="pd-l1-viewer" molecule-id="4zqk" hide-controls="true" bg-color-r="255" bg-color-g="255" bg-color-b="255"></pdbe-molstar>
 </div>
 
+<p class="molstar-alternative"><strong>Non-interactive alternative:</strong> The target-specification table below describes the relevant chains and interface residues. You can also <a href="https://www.rcsb.org/structure/4ZQK">open the 4ZQK structure record</a> or <a href="https://files.rcsb.org/download/4ZQK.pdb">download its PDB coordinates</a>. Manipulating the 3D viewer is optional.</p>
+
 ::: {.callout-tip}
 ## Viewer Controls
 - **Rotate:** Left-click and drag
@@ -39,22 +48,23 @@ Your objective is to create a **de novo protein binder** that binds to the same 
 |:---|:---|
 | **Target Name** | PD-L1 (Programmed Death-Ligand 1) |
 | **PDB ID** | [`4ZQK`](https://www.rcsb.org/structure/4ZQK) |
-| **Target Chain** | **Chain A** (PD-L1 IgV domain, residues 18–134) |
+| **Target Chain** | **Chain A** (PD-L1 IgV domain, UniProt residues 18–132) |
 | **Partner (to compete with)** | Chain B (PD-1) |
-| **Published interface hotspots** | `A18, F19, T20, V23, D26, I54, Y56, E58, N63, Q66, V76, R113, M115, S117, G119–I126` |
-| **Key "hot" residues** | **Y56, E58, R113, M115, A121, D122, Y123** — the densest contacts with PD-1 |
+| **Entry caveat** | Target chain A is unmutated; partner PD-1 chain B carries C93S |
+| **PDB-derived interface contacts (≤5 Å)** | `A18, F19, T20, V23, D26, I54, Y56, E58, N63, Q66, V76, R113, M115, S117, G119–I126` |
+| **Candidate steering set** | `A56,A58,A113,A122,A123` (Y56, E58, R113, D122, Y123), selected from dense contacts on the PD-1-facing surface |
 
 ::: {.callout-note}
 ## About the residue list
-These residues are every PD-L1 position with any heavy atom within 5 Å of PD-1 in the deposited 4ZQK structure — the interface as actually observed, not my guess. For steering RFdiffusion or BindCraft, you don't need all 22; pick 3–6 "hot" residues from the highlighted set above to bias the design toward the real binding face.
+These residues are every PD-L1 position with any heavy atom within 5 Å of PD-1 in deposited 4ZQK. That makes them geometric interface contacts, not measured energetic hotspots. The smaller course set is a reproducible way to steer generation toward the PD-1-facing surface; it does not establish which contacts contribute most to affinity.
 :::
 
 ### Strategy Tips
 
 1. **Download PDB [`4ZQK`](https://files.rcsb.org/download/4ZQK.pdb).**
 2. **Clean the structure:** Keep Chain A (PD-L1) as the target. Remove Chain B (PD-1) and any water molecules.
-3. **Define hotspots:** When running **RFdiffusion** or **BindCraft**, pass 3–6 residues from the "hot" set (e.g., `A56,A58,A113,A122,A123`) as hotspots. This biases diffusion toward the PD-1-competing face rather than some random patch.
-4. **Validate with AlphaFold2/Chai-1:** After designing a binder sequence, predict the complex and check that the designed interface residues still contact the published hotspots.
+3. **Define steering residues:** When running **RFdiffusion** or **BindCraft**, begin with `A56,A58,A113,A122,A123`. This biases diffusion toward the PD-1-competing face rather than a random patch.
+4. **Validate with AlphaFold2/Chai-1:** After designing a binder sequence, predict the complex and check that the proposed interface covers the intended PD-1-facing region.
 
 ### Reference
 

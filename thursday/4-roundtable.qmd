@@ -67,6 +67,13 @@ Take 10-15 minutes to think through these questions. Consider writing your answe
 3. **What would you do if your designed binder had low pLDDT** when you predicted its structure?
 :::
 
+<details class="model-answer">
+<summary>Compare your workflow sketch with an expert response</summary>
+
+A defensible binder-design workflow begins by defining the biological mission and target interface, then preparing and inspecting a specific target structure. Backbone generation explores geometry; sequence design asks which amino acids can stabilize each retained backbone; complex prediction tests fold and interface consistency; structural and energetic checks remove obvious failures; and the evidence is logged before iteration. Prediction appears both early (to understand uncertain target regions) and late (to validate designed monomers and complexes), but no confidence score substitutes for experimental binding data.
+
+</details>
+
 ---
 
 ## Part 2: Introduction to the Capstone Project

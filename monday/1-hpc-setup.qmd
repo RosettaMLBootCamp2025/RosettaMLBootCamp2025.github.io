@@ -4,6 +4,11 @@ title: "1. Common HPC Setup"
 
 Before installing individual ML tools, ensure your HPC environment is properly configured. This guide covers the foundational setup that all subsequent modules depend on.
 
+::: {.callout-tip}
+## Save a preflight report first
+From the course repository, run `python scripts/preflight.py --output preflight-report.txt` (or `python ../scripts/preflight.py` when your shell is inside `monday/`). The report is safe to generate on a login node and tells you when to use the [documented no-compute pathway](reproducibility.qmd).
+:::
+
 ## Resource Requirements Overview
 
 Most ML protein tools share similar computational requirements. Here's a general guide:
@@ -76,7 +81,8 @@ Most tools use Conda environments. **Mamba is recommended** as it's significantl
 If your HPC doesn't have Mamba, install Miniforge:
 
 ```bash
-wget https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-Linux-x86_64.sh
+wget https://github.com/conda-forge/miniforge/releases/download/26.5.3-0/Miniforge3-Linux-x86_64.sh
+echo "14db468222ad564658656f769506056209b6dc375f5e7dfd31eb5ebbf08fa529  Miniforge3-Linux-x86_64.sh" | sha256sum --check
 bash Miniforge3-Linux-x86_64.sh
 ```
 
@@ -100,7 +106,8 @@ pkgs_dirs:
 
 3. **Export environments for reproducibility**:
 ```bash
-mamba env export > environment.yml
+mamba env export --from-history > environment-history.yml
+conda list --explicit > environment-explicit.txt
 ```
 
 ## Docker vs Singularity/Apptainer
@@ -312,4 +319,3 @@ mamba activate my_env
 chmod +x container.sif
 ```
 :::
-

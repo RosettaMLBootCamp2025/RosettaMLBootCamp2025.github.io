@@ -13,6 +13,13 @@ PLACER ([paper](https://www.biorxiv.org/content/10.1101/2024.09.25.614868v1), [c
 
 **Related Tools**: For protein-protein docking, see [DiffDock-PP](9-diffdock-pp.qmd). For structure prediction of complexes, see [Chai-1](7-chai1.qmd) or [Boltz-2](8-boltz2.qmd).
 
+<!-- course-tool-pin: placer -->
+
+::: {.callout-note}
+## Recorded course pin
+The commands below use PLACER commit `7dc5563300e7143582d85636bdd413d4c7688e9a` (reviewed 2026-08-30). For validation status, environment recording, and the equivalent ensemble-analysis artifact, see [Reproducible Setup & Compute Fallbacks](reproducibility.qmd).
+:::
+
 ## Resource Requirements
 
 | Resource | Minimum | Recommended | Notes |
@@ -46,6 +53,8 @@ PLACER ([paper](https://www.biorxiv.org/content/10.1101/2024.09.25.614868v1), [c
 ```bash
 git clone https://github.com/baker-laboratory/PLACER.git
 cd PLACER
+git checkout --detach 7dc5563300e7143582d85636bdd413d4c7688e9a
+git submodule update --init --recursive
 ```
 
 The repository includes model weights - no separate download needed.
@@ -276,4 +285,3 @@ python run_PLACER.py \
 - If issues persist, try reducing ensemble size
 - Or use CPU with multiple cores
 :::
-

@@ -1,167 +1,371 @@
 <script>
 (function() {
-  const STORAGE_KEY = 'bootcamp2025_progress';
+  'use strict';
+
+  const STORAGE_KEY = 'bootcamp_progress_v2';
+  const LEGACY_STORAGE_KEY = 'bootcamp2025_progress';
   const LAST_PAGE_KEY = 'bootcamp2025_lastpage';
+  const SCHEMA_VERSION = 2;
 
-  // Get current page path
-  const currentPath = window.location.pathname;
-  const isHomePage = currentPath === '/' || currentPath.endsWith('/index.html') || currentPath === '/index.html' || currentPath.match(/^\/[^\/]*\/?$/);
+  function normalisePath(path) {
+    if (!path) return '/';
+    const clean = path.split('#')[0].split('?')[0].replace(/\/+/g, '/');
+    if (clean.endsWith('/')) return clean + 'index.html';
+    return clean;
+  }
 
-  // Extract day from path
-  function getDayFromPath(path) {
-    const dayMap = {
-      'monday': 'Monday',
-      'tuesday': 'Tuesday',
-      'wednesday': 'Wednesday',
-      'thursday': 'Thursday',
-      'capstone': 'Capstone'
+  function lessonPath(lesson) {
+    const value = lesson.path || lesson.href || '';
+    return normalisePath(value.startsWith('/') ? value : '/' + value);
+  }
+
+  function checkpointId(lesson) {
+    return lesson.checkpoint_id || lesson.checkpointId || lesson.id;
+  }
+
+  function checkpointLabel(lesson) {
+    return lesson.checkpoint_label || lesson.checkpointLabel ||
+      (lesson.artifact
+        ? 'I produced and checked: ' + lesson.artifact
+        : 'I completed the lesson evidence check.');
+  }
+
+  function durationLabel(lesson) {
+    if (lesson.duration) return lesson.duration;
+    if (lesson.duration_minutes) return lesson.duration_minutes + ' min';
+    return null;
+  }
+
+  function isCoreLesson(lesson) {
+    if (lesson.required === false) return false;
+    return (lesson.route || 'core') === 'core';
+  }
+
+  function courseLessons() {
+    const source = window.BOOTCAMP_COURSE || {};
+    return Array.isArray(source.lessons) ? source.lessons.filter(checkpointId) : [];
+  }
+
+  function courseCheckpoints() {
+    const source = window.BOOTCAMP_COURSE || {};
+    const milestones = Array.isArray(source.milestones) ? source.milestones.filter(checkpointId) : [];
+    return courseLessons().concat(milestones);
+  }
+
+  function emptyState() {
+    return { version: SCHEMA_VERSION, completed: [], tasks: [], updatedAt: null };
+  }
+
+  function sanitiseState(value) {
+    const validIds = new Set(courseCheckpoints().map(checkpointId));
+    const completed = Array.isArray(value && value.completed)
+      ? value.completed.filter(id => typeof id === 'string' && (validIds.size === 0 || validIds.has(id)))
+      : [];
+    const tasks = Array.isArray(value && value.tasks)
+      ? value.tasks.filter(id => typeof id === 'string')
+      : [];
+    return {
+      version: SCHEMA_VERSION,
+      completed: Array.from(new Set(completed)),
+      tasks: Array.from(new Set(tasks)),
+      updatedAt: value && value.updatedAt ? value.updatedAt : null
     };
-    const match = path.match(/\/(monday|tuesday|wednesday|thursday|capstone)\//i);
-    return match ? dayMap[match[1].toLowerCase()] : null;
   }
 
-  // Save current page as last visited (except homepage)
-  if (!isHomePage) {
-    const pageTitle = document.title.replace(' - ML Protein Design Bootcamp 2025', '');
-    const day = getDayFromPath(currentPath);
-    localStorage.setItem(LAST_PAGE_KEY, JSON.stringify({
-      path: currentPath,
-      title: pageTitle,
-      day: day,
-      timestamp: Date.now()
-    }));
+  function loadState() {
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) return sanitiseState(JSON.parse(saved));
+
+      const legacy = localStorage.getItem(LEGACY_STORAGE_KEY);
+      if (legacy) {
+        const legacyState = JSON.parse(legacy);
+        const migrated = emptyState();
+        migrated.tasks = Array.isArray(legacyState.completed) ? legacyState.completed : [];
+        saveState(migrated);
+        return migrated;
+      }
+    } catch (error) {
+      console.warn('Course progress could not be loaded.', error);
+    }
+    return emptyState();
   }
 
-  // Load progress data
-  function getProgress() {
-    const data = localStorage.getItem(STORAGE_KEY);
-    return data ? JSON.parse(data) : { completed: [] };
+  function saveState(state) {
+    const clean = sanitiseState(state);
+    clean.updatedAt = new Date().toISOString();
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(clean));
+    } catch (error) {
+      console.warn('Course progress could not be saved.', error);
+    }
+    return clean;
   }
 
-  // Save progress data
-  function saveProgress(progress) {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
+  function setCompleted(id, completed) {
+    const state = loadState();
+    const values = new Set(state.completed);
+    if (completed) values.add(id);
+    else values.delete(id);
+    state.completed = Array.from(values);
+    saveState(state);
+    syncProgressUI();
   }
 
-  // Update progress bar on homepage
-  function updateProgressBar() {
-    const progress = getProgress();
-    const progressSummary = document.getElementById('progress-summary');
-    const totalModules = document.querySelectorAll('.module-checkbox').length ||
-                         parseInt(progressSummary?.dataset.totalModules, 10) ||
-                         parseInt(document.body.dataset.totalModules, 10) ||
-                         42;
-    const completed = progress.completed.length;
-    const percent = Math.round((completed / totalModules) * 100);
+  function setTaskCompleted(id, completed) {
+    const state = loadState();
+    const values = new Set(state.tasks);
+    if (completed) values.add(id);
+    else values.delete(id);
+    state.tasks = Array.from(values);
+    saveState(state);
+  }
+
+  function currentLesson() {
+    const path = normalisePath(window.location.pathname);
+    return courseLessons().find(lesson => {
+      const candidate = lessonPath(lesson);
+      return path === candidate || path.endsWith(candidate);
+    }) || null;
+  }
+
+  function createMetaItem(label, value) {
+    if (!value) return null;
+    const item = document.createElement('div');
+    item.className = 'lesson-contract-item';
+    const term = document.createElement('span');
+    term.className = 'lesson-contract-label';
+    term.textContent = label;
+    const detail = document.createElement('span');
+    detail.textContent = value;
+    item.append(term, detail);
+    return item;
+  }
+
+  function addLessonContract(lesson) {
+    if (!lesson || document.querySelector('.lesson-contract')) return;
+    const title = document.querySelector('h1.title, .quarto-title h1');
+    if (!title) return;
+
+    const contract = document.createElement('section');
+    contract.className = 'lesson-contract';
+    contract.setAttribute('aria-label', 'Lesson plan');
+
+    const eyebrow = document.createElement('p');
+    eyebrow.className = 'lesson-contract-eyebrow';
+    const route = lesson.route || 'core';
+    const routeLabels = { core: 'Core path', full: 'Full-bootcamp path', reference: 'Reference path' };
+    eyebrow.textContent = (lesson.status === 'optional' ? 'Optional · ' : '') +
+      (routeLabels[route] || (route.charAt(0).toUpperCase() + route.slice(1) + ' path'));
+    contract.appendChild(eyebrow);
+
+    const grid = document.createElement('div');
+    grid.className = 'lesson-contract-grid';
+    [
+      createMetaItem('Time', durationLabel(lesson)),
+      createMetaItem('Compute', lesson.compute),
+      createMetaItem('You will produce', lesson.artifact),
+      createMetaItem('Completion check', checkpointLabel(lesson))
+    ].filter(Boolean).forEach(item => grid.appendChild(item));
+    contract.appendChild(grid);
+
+    if (lesson.prerequisites) {
+      const prereq = document.createElement('p');
+      prereq.className = 'lesson-contract-prerequisites';
+      const strong = document.createElement('strong');
+      strong.textContent = 'Before you begin: ';
+      prereq.append(strong, document.createTextNode(
+        Array.isArray(lesson.prerequisites) ? lesson.prerequisites.join(' · ') : lesson.prerequisites
+      ));
+      contract.appendChild(prereq);
+    }
+
+    const insertionPoint = title.closest('#title-block-header, .quarto-title-block') || title;
+    insertionPoint.insertAdjacentElement('afterend', contract);
+  }
+
+  function addMasteryCheckpoint(lesson) {
+    if (!lesson || document.querySelector('.mastery-checkpoint')) return;
+    const id = checkpointId(lesson);
+    const state = loadState();
+    const main = document.querySelector('main') || document.querySelector('#quarto-content');
+    if (!main) return;
+
+    const section = document.createElement('section');
+    section.className = 'mastery-checkpoint';
+    section.setAttribute('aria-labelledby', 'mastery-checkpoint-title');
+
+    const heading = document.createElement('h2');
+    heading.id = 'mastery-checkpoint-title';
+    heading.textContent = 'Complete this lesson';
+
+    const help = document.createElement('p');
+    help.textContent = 'Check this only after you can point to the evidence—not merely after reading the page.';
+
+    const label = document.createElement('label');
+    label.className = 'mastery-checkpoint-label';
+    const checkbox = document.createElement('input');
+    checkbox.type = 'checkbox';
+    checkbox.className = 'mastery-checkbox';
+    checkbox.dataset.checkpointId = id;
+    checkbox.checked = state.completed.includes(id);
+    checkbox.addEventListener('change', () => setCompleted(id, checkbox.checked));
+    const text = document.createElement('span');
+    text.textContent = checkpointLabel(lesson);
+    label.append(checkbox, text);
+
+    section.append(heading, help, label);
+
+    const lessons = courseLessons();
+    const currentIndex = lessons.findIndex(item => checkpointId(item) === id);
+    const following = currentIndex >= 0 ? lessons.slice(currentIndex + 1) : [];
+    const next = isCoreLesson(lesson)
+      ? following.find(isCoreLesson)
+      : following[0];
+    if (next) {
+      const nextLink = document.createElement('a');
+      nextLink.className = 'btn btn-primary mastery-next-link';
+      nextLink.href = lessonPath(next);
+      nextLink.textContent = 'Continue to ' + next.title;
+      section.appendChild(nextLink);
+    }
+
+    const nav = main.querySelector('nav.page-navigation, .page-navigation, .module-nav');
+    if (nav) nav.insertAdjacentElement('beforebegin', section);
+    else main.appendChild(section);
+  }
+
+  function syncLegacyTaskCheckboxes() {
+    const state = loadState();
+    const masteryIds = new Set(courseCheckpoints().map(checkpointId));
+    document.querySelectorAll('.module-checkbox[data-module-id]').forEach(checkbox => {
+      const id = checkbox.dataset.moduleId;
+      const isMastery = masteryIds.has(id);
+      checkbox.checked = isMastery ? state.completed.includes(id) : state.tasks.includes(id);
+      if (!checkbox.dataset.progressBound) {
+        checkbox.dataset.progressBound = 'true';
+        checkbox.addEventListener('change', () => {
+          if (isMastery) setCompleted(id, checkbox.checked);
+          else setTaskCompleted(id, checkbox.checked);
+        });
+      }
+    });
+  }
+
+  function syncProgressUI() {
+    const checkpoints = courseCheckpoints();
+    const core = checkpoints.filter(isCoreLesson);
+    const optional = checkpoints.filter(lesson => !isCoreLesson(lesson));
+    const state = loadState();
+    const completed = new Set(state.completed);
+    const coreCompleted = core.filter(lesson => completed.has(checkpointId(lesson))).length;
+    const optionalCompleted = optional.filter(lesson => completed.has(checkpointId(lesson))).length;
+    const percent = core.length ? Math.round((coreCompleted / core.length) * 100) : 0;
 
     const bar = document.getElementById('progress-bar');
     const count = document.getElementById('completed-count');
-
+    const total = document.getElementById('checkpoint-total');
+    const optionalCount = document.getElementById('optional-completed-count');
     if (bar) {
       bar.style.width = percent + '%';
       bar.textContent = percent + '%';
-      bar.setAttribute('aria-valuenow', percent);
+      bar.setAttribute('aria-valuenow', String(percent));
     }
-    if (count) {
-      count.textContent = completed;
-    }
+    if (count) count.textContent = String(coreCompleted);
+    if (total) total.textContent = String(core.length);
+    if (optionalCount) optionalCount.textContent = String(optionalCompleted);
+
+    document.querySelectorAll('.mastery-checkbox[data-checkpoint-id]').forEach(checkbox => {
+      checkbox.checked = completed.has(checkbox.dataset.checkpointId);
+    });
   }
 
-  // Show resume banner on homepage if there's a saved page
   function showResumeBanner() {
-    const lastPage = localStorage.getItem(LAST_PAGE_KEY);
-    if (lastPage && isHomePage) {
-      const data = JSON.parse(lastPage);
+    const isHome = normalisePath(window.location.pathname) === '/index.html';
+    if (!isHome) return;
+    try {
+      const saved = JSON.parse(localStorage.getItem(LAST_PAGE_KEY) || 'null');
+      if (!saved || !saved.path) return;
       const banner = document.getElementById('resume-banner');
       const link = document.getElementById('resume-link');
       const title = document.getElementById('last-page-title');
-
-      if (banner && link && title && data.path) {
-        // Format title with day prefix if available
-        const displayTitle = data.day ? `${data.day}: ${data.title}` : data.title;
-        title.textContent = displayTitle;
-        link.href = data.path;
-        banner.style.display = 'block';
+      if (banner && link && title) {
+        title.textContent = saved.day ? saved.day + ': ' + saved.title : saved.title;
+        link.href = saved.path;
+        banner.hidden = false;
+        banner.style.display = '';
       }
+    } catch (error) {
+      console.warn('The resume link could not be restored.', error);
     }
   }
 
-  // Initialize checkboxes on module pages
-  function initCheckboxes() {
-    const checkboxes = document.querySelectorAll('.module-checkbox');
-    const progress = getProgress();
+  function saveLastPage(lesson) {
+    if (!lesson) return;
+    try {
+      localStorage.setItem(LAST_PAGE_KEY, JSON.stringify({
+        path: window.location.pathname,
+        title: lesson.title || document.title,
+        day: lesson.day || null,
+        timestamp: Date.now()
+      }));
+    } catch (error) {
+      console.warn('The resume link could not be saved.', error);
+    }
+  }
 
-    checkboxes.forEach(cb => {
-      const id = cb.dataset.moduleId;
+  function exportProgress() {
+    const blob = new Blob([JSON.stringify(loadState(), null, 2)], { type: 'application/json' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = 'ml-protein-bootcamp-progress.json';
+    link.click();
+    window.setTimeout(() => URL.revokeObjectURL(link.href), 0);
+  }
 
-      // Restore state
-      if (progress.completed.includes(id)) {
-        cb.checked = true;
-      }
-
-      // Save on change
-      cb.addEventListener('change', function() {
-        const progress = getProgress();
-        if (this.checked) {
-          if (!progress.completed.includes(id)) {
-            progress.completed.push(id);
-          }
-        } else {
-          progress.completed = progress.completed.filter(x => x !== id);
+  function importProgress(file) {
+    if (!file) return;
+    const reader = new FileReader();
+    reader.addEventListener('load', () => {
+      try {
+        const imported = JSON.parse(String(reader.result));
+        if (!imported || typeof imported !== 'object' ||
+            !Array.isArray(imported.completed) || !Array.isArray(imported.tasks)) {
+          throw new Error('Progress export has the wrong shape.');
         }
-        saveProgress(progress);
-        updateProgressBar();
-      });
+        saveState(imported);
+        syncProgressUI();
+        window.alert('Progress imported successfully.');
+      } catch (error) {
+        window.alert('That file is not a valid course progress export.');
+      }
     });
+    reader.readAsText(file);
   }
 
-  // Clear all progress
   window.clearProgress = function() {
+    if (!window.confirm('Reset all saved course progress in this browser? This cannot be undone unless you exported a backup.')) return;
     localStorage.removeItem(STORAGE_KEY);
+    localStorage.removeItem(LEGACY_STORAGE_KEY);
     localStorage.removeItem(LAST_PAGE_KEY);
-    location.reload();
+    window.location.reload();
   };
+  window.exportCourseProgress = exportProgress;
+  window.importCourseProgress = importProgress;
 
-  // Mark all checkboxes on current page as complete
-  window.markAllComplete = function() {
-    const checkboxes = document.querySelectorAll('.module-checkbox');
-    const progress = getProgress();
-
-    checkboxes.forEach(cb => {
-      const id = cb.dataset.moduleId;
-      cb.checked = true;
-      if (!progress.completed.includes(id)) {
-        progress.completed.push(id);
-      }
-    });
-
-    saveProgress(progress);
-    updateProgressBar();
-  };
-
-  // Add "Mark all as complete" button to pages with checkboxes
-  function addMarkAllButton() {
-    const checkboxes = document.querySelectorAll('.module-checkbox');
-    if (checkboxes.length > 0 && !isHomePage) {
-      // Find the title element and add button after it
-      const title = document.querySelector('h1.title, .quarto-title h1');
-      if (title) {
-        const btn = document.createElement('button');
-        btn.textContent = 'Mark all as complete';
-        btn.className = 'btn btn-outline-success btn-sm mark-all-btn';
-        btn.style.cssText = 'margin-top: 0.5rem; margin-bottom: 1rem;';
-        btn.onclick = window.markAllComplete;
-        title.insertAdjacentElement('afterend', btn);
-      }
-    }
-  }
-
-  // Run on page load
   document.addEventListener('DOMContentLoaded', function() {
+    const lesson = currentLesson();
+    saveLastPage(lesson);
     showResumeBanner();
-    initCheckboxes();
-    updateProgressBar();
-    addMarkAllButton();
+    addLessonContract(lesson);
+    addMasteryCheckpoint(lesson);
+    syncLegacyTaskCheckboxes();
+    syncProgressUI();
+
+    const exportButton = document.getElementById('export-progress');
+    const importInput = document.getElementById('import-progress');
+    if (exportButton) exportButton.addEventListener('click', exportProgress);
+    if (importInput) importInput.addEventListener('change', event => importProgress(event.target.files[0]));
   });
 })();
 </script>

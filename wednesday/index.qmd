@@ -1,31 +1,86 @@
 ---
-title: "Wednesday"
+title: "Wednesday: Advanced Prediction and Design"
+subtitle: "Historical day 3 · compare complex predictors, then generate and select constrained backbones"
 ---
 
 ## Overview
 
-Wednesday focuses on **advanced structure prediction and protein design**. You'll compare AlphaFold3 and Chai-1 for complex predictions (multimers, ligands, ions), then dive into RFdiffusion for de novo protein design including binder generation and symmetric oligomers.
+Wednesday preserves the transition in the original workshop from predicting a structure to designing one. First, you compare next-generation complex predictors on monomers, multimers, ions, and ligands. Then you use RFdiffusion to sample backbones under length, motif, interface, partial-diffusion, fold, or symmetry constraints.
+
+The self-paced emphasis is **comparison and selection**. A folder containing generated PDBs is not yet a result. Your evidence should show which constraints you used, how outputs differed, what failed, and why a subset deserves sequence design and validation.
 
 ::: {.day-objectives}
 <div class="do-title">By the end of Wednesday, you'll be able to:</div>
-- Compare AlphaFold3 and Chai-1 across monomers, multimers, and protein-ligand complexes, and articulate their trade-offs.
-- Run RFdiffusion to generate unconditional monomers and interpret the resulting backbones.
-- Use motif scaffolding and hotspot residues to steer RFdiffusion toward a target binding interface.
-- Design symmetric oligomers and understand when symmetry is a useful design constraint.
-- Evaluate a designed backbone using confidence metrics and decide whether it's worth sequence-designing and predicting.
+- Compare AlphaFold3 and Chai-1 outputs using structure, confidence, entity placement, and provenance rather than a single score.
+- Translate a design intent into an RFdiffusion contig, chain break, hotspot list, output prefix, and number of designs.
+- Distinguish unconditional generation, motif scaffolding, partial diffusion, interface design, fold conditioning, and symmetry constraints.
+- Inspect topology, diversity, motif retention, target contact, hotspots, clashes, and intended symmetry.
+- Select or reject generated backbones with an explicit evidence-based rationale.
 :::
 
-## Modules
+## Wednesday contract
 
-| Module | Topic | Description |
-|--------|-------|-------------|
-| [1. AlphaFold3 vs. Chai-1](0-alphafold3.qmd) | Comparing Next-Gen Predictors | Compare AF3 and Chai-1 on monomers, multimers, and protein-ligand complexes |
-| [2. RFdiffusion](1-rfdiffusion.qmd) | Advanced Protein Design | Design unconditional monomers, motif scaffolds, binders, and symmetric oligomers using RFdiffusion |
+| | Core path | Full bootcamp |
+|---|---|---|
+| **Active effort** | **3–5 hours** | **6–10 hours** |
+| **Compute time** | Add **1–4 hours** of hosted/local jobs plus queues | Add **4–12+ hours** for all RFdiffusion modes and larger galleries |
+| **Compute/accounts** | AlphaFold Server Google sign-in, Chai-Lab account, and/or a working RFdiffusion GPU environment | Same, with enough allocation/storage for several seeds and parameter sets |
+| **Output** | One predictor-comparison table and one backbone gallery with a selection memo | Core evidence plus all original activity modes and parameter/potential experiments |
+| **Finished when** | You can reproduce a run and explain why at least one candidate advanced or failed | You can also compare how different constraints changed the sampled distribution |
 
----
+Hosted access and queues can change. If an account or GPU is unavailable, analyze a matched set of saved outputs and record their source.
 
-<div style="display: flex; justify-content: space-between; align-items: center;">
-<div>[← Tuesday](../tuesday/index.qmd)</div>
-<div>[Back to Home](../index.qmd)</div>
-<div>[Thursday →](../thursday/index.qmd)</div>
-</div>
+## Choose a Wednesday route
+
+### Core path
+
+1. In [AlphaFold3 vs. Chai-1](0-alphafold3.qmd), compare both predictors on **one shared example**. Prefer the 8AJY multimer + ions if your accounts allow it because it exposes more than monomer fold agreement; otherwise use 1QYS.
+2. In [RFdiffusion](1-rfdiffusion.qmd), run one unconditional design as a smoke test, then run one hotspot-guided binder example for a chosen capstone target.
+3. Inspect all outputs, not only the top filename. Create a small gallery and advance, reject, or rerun each candidate using named criteria.
+
+### Full-bootcamp path
+
+Complete all AlphaFold3/Chai examples (monomer, multimer/ions, and protein–ligand), then work through the RFdiffusion modes: unconditional, motif scaffolding, partial diffusion, hotspot binder design, fold conditioning, and cyclic/dihedral/tetrahedral symmetry. Add the independent project’s potential-optimization comparison.
+
+### Reference path
+
+- Need a multimodal complex comparison? Use [AlphaFold3 vs. Chai-1](0-alphafold3.qmd).
+- Need a backbone-generation recipe? Jump to the relevant numbered mode in [RFdiffusion](1-rfdiffusion.qmd).
+- Already have backbones? Continue with your sequence designer and return to the [capstone validation stages](../capstone/index.qmd#stage-5-validate-the-designed-complex).
+
+## Watch → Read → Do → Check
+
+| Module | Active time | Watch | Read | Do | Check / artifact |
+|---|---:|---|---|---|---|
+| [1. AlphaFold3 vs. Chai-1](0-alphafold3.qmd) | 60–120 min plus queue | Recommended for the original conceptual comparison | Account/setup instructions, shared inputs, and analysis prompts | Submit one matched example to both tools or inspect matched saved outputs | Table records tool/version/date, entities, confidence, structural agreement, entity/interface placement, limitations, and intended use |
+| [2. RFdiffusion](1-rfdiffusion.qmd) | 2–4 hr core plus generation | Optional workshop context | Contigs, chain breaks, hotspots, conditioning modes, output inspection, and troubleshooting | Generate one smoke-test set and one hotspot-guided set; keep exact scripts/configs | Contact-sheet gallery and selection memo compare topology, diversity, target/hotspot contact, clashes, and next validation step |
+
+## A minimum backbone selection rubric
+
+Use the same criteria for every candidate so that selection does not become “this one looks nice.”
+
+| Criterion | Advance when… | Reject or rerun when… |
+|---|---|---|
+| **Run integrity** | Input, checkpoint/version, config, seed, log, and output are present | Provenance is missing or the run contains an unresolved error |
+| **Constraint satisfaction** | Length, chains, motif, hotspot, fold, or symmetry match the design intent | The requested motif/interface/symmetry is absent or misnumbered |
+| **Backbone plausibility** | The chain is continuous and compact with no obvious severe clashes or impossible geometry | The backbone is extended, broken, entangled, or penetrates the target |
+| **Diversity** | The set samples distinct poses/topologies worth validating | Near-duplicates dominate; revise seeds, ranges, noise, or potentials |
+| **Interface hypothesis** | The binder contacts the intended surface and hotspots without relying on a single visual angle | Contact is absent, misplaced, or dominated by an obvious clash |
+| **Next-stage value** | There is a clear reason to spend sequence-design and prediction compute | No candidate improves the evidence or tests a useful alternative |
+
+Backbone appearance is a screen, not evidence of binding. Sequence design, complex prediction, interface confidence, physical filtering, and ultimately experiment remain downstream.
+
+## Wednesday evidence checkpoints
+
+- [Matched predictor table compares AF3 and Chai-1 inputs, outputs, confidence, structure/entity placement, limitations, and a use-case decision]{.task module-id="wednesday-complex-comparison-evidence"}
+- [RFdiffusion portfolio includes the exact configuration, logs, a labeled gallery, failed examples, and a rationale for advancing or rerunning candidates]{.task module-id="wednesday-rfdiffusion-evidence"}
+
+## Next step
+
+If you are starting the capstone now, carry the Wednesday configuration and gallery forward instead of beginning a disconnected project. Thursday supplies compute intuition, docking cautions, and a planning checkpoint before the larger campaign.
+
+::: {.d-flex .justify-content-between}
+[← Tuesday](../tuesday/index.qmd)
+
+[Thursday: Compute, Docking, and Planning →](../thursday/index.qmd)
+:::

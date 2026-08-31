@@ -1,0 +1,1796 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Capstone Evidence Guide &amp; Rubric – ML Protein Design Bootcamp 2025</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-a20ec67e4eaf1004f696852e93606815.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-8a6c0a3bd53b22ee0b8bf446df975f0f.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+<!-- Load Mol* only on pages that contain a molecular viewer. -->
+<script>
+(function() {
+  'use strict';
+
+  const MOLSTAR_COMPONENT_URL = 'https://cdn.jsdelivr.net/npm/pdbe-molstar@3.3.0/build/pdbe-molstar-component.js';
+
+  function addMediaAlternatives() {
+    document.querySelectorAll('.workshop-companion').forEach(companion => {
+      const title = (companion.querySelector('.wc-title')?.textContent || 'Workshop session')
+        .replace(/^\s*🎥\s*/, '')
+        .replace(/^Live workshop recording\s*[—-]\s*/i, '')
+        .trim();
+
+      const video = companion.querySelector('.wc-video iframe');
+      if (video && !video.title) video.title = title + ' workshop recording';
+      if (video && !companion.querySelector('.media-alternative-video')) {
+        const match = video.src.match(/\/embed\/([^?&#/]+)/);
+        const note = document.createElement('p');
+        note.className = 'media-alternative media-alternative-video';
+        note.append(document.createTextNode('The recording is optional; the lesson text covers the core material. '));
+        if (match) {
+          const link = document.createElement('a');
+          link.href = 'https://www.youtube.com/watch?v=' + encodeURIComponent(match[1]);
+          link.target = '_blank';
+          link.rel = 'noopener';
+          link.textContent = 'Open the recording on YouTube';
+          link.setAttribute('aria-label', 'Open ' + title + ' on YouTube');
+          note.append(link, document.createTextNode(' if the embedded player is unavailable.'));
+        }
+        video.closest('.wc-video').insertAdjacentElement('afterend', note);
+      }
+
+      companion.querySelectorAll('details iframe').forEach(frame => {
+        if (!frame.title) frame.title = title + ' workshop slides';
+        const details = frame.closest('details');
+        if (!details || details.querySelector('.media-alternative-slides')) return;
+
+        const note = document.createElement('p');
+        const link = document.createElement('a');
+        note.className = 'media-alternative media-alternative-slides';
+        note.append(document.createTextNode('The slides are optional; equivalent explanations appear in the lesson. '));
+        link.href = frame.src.replace(/\/embed(?:\?.*)?$/, '/view');
+        link.target = '_blank';
+        link.rel = 'noopener';
+        link.textContent = 'Open the slide deck in a new tab';
+        link.setAttribute('aria-label', 'Open slides for ' + title + ' in a new tab');
+        note.appendChild(link);
+        frame.insertAdjacentElement('beforebegin', note);
+      });
+    });
+  }
+
+  function nameMermaidDiagrams() {
+    document.querySelectorAll('svg.mermaid-js:not([aria-labelledby])').forEach((diagram, index) => {
+      const namespace = 'http://www.w3.org/2000/svg';
+      const section = diagram.closest('section');
+      const heading = section && section.querySelector(':scope > h2, :scope > h3, :scope > h4');
+      const idBase = diagram.id || 'course-diagram-' + (index + 1);
+      const title = document.createElementNS(namespace, 'title');
+      const description = document.createElementNS(namespace, 'desc');
+      const steps = Array.from(diagram.querySelectorAll('.nodeLabel'))
+        .map(node => node.textContent.replace(/\s+/g, ' ').trim())
+        .filter((value, stepIndex, values) => value && values.indexOf(value) === stepIndex);
+
+      title.id = idBase + '-title';
+      title.textContent = heading ? 'Flowchart for ' + heading.textContent.trim() : 'Course workflow flowchart';
+      description.id = idBase + '-description';
+      description.textContent = steps.length
+        ? 'The flowchart contains these labeled steps: ' + steps.join('; ') + '.'
+        : 'A visual flowchart supporting the surrounding lesson text.';
+      diagram.prepend(description);
+      diagram.prepend(title);
+      diagram.setAttribute('aria-labelledby', title.id);
+      diagram.setAttribute('aria-describedby', description.id);
+    });
+  }
+
+  function improveSharedAccessibility() {
+    addMediaAlternatives();
+    nameMermaidDiagrams();
+    document.querySelectorAll('.navbar-toggler[role="menu"]').forEach(button => {
+      button.removeAttribute('role');
+    });
+
+    document.querySelectorAll('main table, main pre, main div.sourceCode, main .mermaid').forEach(region => {
+      if (region.scrollWidth > region.clientWidth + 1 && !region.hasAttribute('tabindex')) {
+        region.tabIndex = 0;
+      }
+    });
+  }
+
+  function prepareViewer(viewer) {
+    const container = viewer.closest('.molstar-container');
+    const moleculeId = (viewer.getAttribute('molecule-id') || '').toUpperCase();
+    if (!container) return;
+
+    const heading = container.previousElementSibling && container.previousElementSibling.matches('h2, h3')
+      ? container.previousElementSibling
+      : container.parentElement && container.parentElement.querySelector('h2, h3');
+    const alternative = container.nextElementSibling && container.nextElementSibling.matches('.molstar-alternative')
+      ? container.nextElementSibling
+      : null;
+    container.setAttribute('role', 'region');
+    if (heading && heading.id) container.setAttribute('aria-labelledby', heading.id);
+    else container.setAttribute('aria-label', 'Interactive molecular structure');
+    if (alternative) {
+      if (!alternative.id) alternative.id = (viewer.id || 'molecular-viewer') + '-alternative';
+      container.setAttribute('aria-describedby', alternative.id);
+    }
+    container.setAttribute('aria-busy', 'true');
+
+    viewer.dataset.accessibleName = moleculeId
+      ? 'Interactive three-dimensional molecular structure for PDB ' + moleculeId
+      : 'Interactive three-dimensional molecular structure';
+
+    function nameViewerLinks() {
+      viewer.querySelectorAll('a.msp-logo:not([aria-label])').forEach(link => {
+        link.setAttribute('aria-label', 'Open the Mol* project website');
+      });
+      viewer.querySelectorAll('a.msp-pdbe-link:not([aria-label])').forEach(link => {
+        link.setAttribute(
+          'aria-label',
+          moleculeId ? 'Open PDB ' + moleculeId + ' on PDBe' : 'Open this structure on PDBe'
+        );
+      });
+    }
+
+    nameViewerLinks();
+    const observer = new MutationObserver(nameViewerLinks);
+    observer.observe(viewer, {childList: true, subtree: true});
+
+    const status = document.createElement('p');
+    status.className = 'molstar-load-status';
+    status.setAttribute('role', 'status');
+    status.setAttribute('aria-live', 'polite');
+    status.textContent = 'Loading the optional interactive structure viewer…';
+    container.prepend(status);
+  }
+
+  function showLoadFailure() {
+    document.querySelectorAll('.molstar-container').forEach(container => {
+      container.setAttribute('aria-busy', 'false');
+      container.classList.add('molstar-failed');
+      const status = container.querySelector('.molstar-load-status');
+      if (status) {
+        status.setAttribute('role', 'alert');
+        status.textContent = 'The interactive viewer could not load. Use the non-interactive structure alternative below.';
+      }
+    });
+  }
+
+  function initialiseMolstar() {
+    const viewers = Array.from(document.querySelectorAll('pdbe-molstar'));
+    if (viewers.length === 0) return;
+
+    viewers.forEach(prepareViewer);
+    const script = document.createElement('script');
+    script.src = MOLSTAR_COMPONENT_URL;
+    script.async = true;
+    script.addEventListener('error', showLoadFailure);
+    script.addEventListener('load', () => {
+      const ready = window.customElements && customElements.whenDefined
+        ? customElements.whenDefined('pdbe-molstar')
+        : Promise.resolve();
+      ready.then(() => {
+        document.querySelectorAll('.molstar-container').forEach(container => {
+          container.setAttribute('aria-busy', 'false');
+          container.classList.add('molstar-ready');
+          const status = container.querySelector('.molstar-load-status');
+          if (status) status.remove();
+        });
+      }).catch(showLoadFailure);
+    });
+    document.head.appendChild(script);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+      improveSharedAccessibility();
+      initialiseMolstar();
+      window.setTimeout(improveSharedAccessibility, 500);
+      window.setTimeout(improveSharedAccessibility, 1500);
+    }, {once: true});
+  } else {
+    improveSharedAccessibility();
+    initialiseMolstar();
+  }
+  window.addEventListener('load', improveSharedAccessibility, {once: true});
+})();
+</script>
+
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-sidebar floating nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">ML Protein Design Bootcamp 2025</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html">
+<span class="menu-text">Home</span></a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="../start-here.html">
+<span class="menu-text">Start Here</span></a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="../monday/index.html">
+<span class="menu-text">Monday</span></a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="../tuesday/index.html">
+<span class="menu-text">Tuesday</span></a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="../wednesday/index.html">
+<span class="menu-text">Wednesday</span></a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="../thursday/index.html">
+<span class="menu-text">Thursday</span></a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link active" href="../capstone/index.html" aria-current="page">
+<span class="menu-text">Capstone</span></a>
+  </li>
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../about.html">
+<span class="menu-text">About</span></a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="https://github.com/RosettaMLBootCamp2025/RosettaMLBootCamp2025.github.io/issues/new">
+<span class="menu-text">Report Issue</span></a>
+  </li>
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../capstone/rubric.html">Capstone Evidence Guide &amp; Rubric</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="sidebar-menu-container">
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container">
+  <a href="../capstone/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Capstone Project</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container">
+  <a href="../capstone/rubric.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Capstone Evidence Guide &amp; Rubric</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container">
+  <a href="../capstone/exemplar.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Worked Capstone Selection Example</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+ <span class="menu-text">Targets</span>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container">
+  <a href="../capstone/targets/pd-l1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">PD-L1 Target Deep Dive</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container">
+  <a href="../capstone/targets/ifnar2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">IFNAR2 Target Deep Dive</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container">
+  <a href="../capstone/targets/il-7r.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">IL-7R Target Deep Dive</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container">
+  <a href="../capstone/targets/bet-v-1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Bet v 1 Target Deep Dive</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container">
+  <a href="../capstone/targets/trka.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">TrkA Receptor Deep Dive</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container">
+  <a href="../capstone/targets/tem-1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">TEM-1 Beta-Lactamase Deep Dive</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container">
+  <a href="../capstone/targets/gm3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">GM2 Activator Protein Deep Dive</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container">
+  <a href="../capstone/targets/beta-glucosidase.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Beta-Glucosidase Deep Dive</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active" data-toc-expanded="2">
+    <h2 id="toc-title">On this page</h2>
+
+  <ul>
+  <li><a href="#purpose" id="toc-purpose" class="nav-link active" data-scroll-target="#purpose">Purpose</a></li>
+  <li><a href="#required-evidence-portfolio" id="toc-required-evidence-portfolio" class="nav-link" data-scroll-target="#required-evidence-portfolio">Required Evidence Portfolio</a>
+  <ul class="collapse">
+  <li><a href="#target-and-epitope-brief" id="toc-target-and-epitope-brief" class="nav-link" data-scroll-target="#target-and-epitope-brief">1. Target and epitope brief</a></li>
+  <li><a href="#reproducible-run-configuration" id="toc-reproducible-run-configuration" class="nav-link" data-scroll-target="#reproducible-run-configuration">2. Reproducible run configuration</a></li>
+  <li><a href="#backbone-generation-evidence" id="toc-backbone-generation-evidence" class="nav-link" data-scroll-target="#backbone-generation-evidence">3. Backbone-generation evidence</a></li>
+  <li><a href="#sequence-design-evidence" id="toc-sequence-design-evidence" class="nav-link" data-scroll-target="#sequence-design-evidence">4. Sequence-design evidence</a></li>
+  <li><a href="#structural-validation" id="toc-structural-validation" class="nav-link" data-scroll-target="#structural-validation">5. Structural validation</a></li>
+  <li><a href="#failure-analysis-and-iteration" id="toc-failure-analysis-and-iteration" class="nav-link" data-scroll-target="#failure-analysis-and-iteration">6. Failure analysis and iteration</a></li>
+  <li><a href="#final-selection-memo" id="toc-final-selection-memo" class="nav-link" data-scroll-target="#final-selection-memo">7. Final selection memo</a></li>
+  </ul></li>
+  <li><a href="#twenty-point-self-assessment-rubric" id="toc-twenty-point-self-assessment-rubric" class="nav-link" data-scroll-target="#twenty-point-self-assessment-rubric">Twenty-Point Self-Assessment Rubric</a>
+  <ul class="collapse">
+  <li><a href="#a.-reproducibility" id="toc-a.-reproducibility" class="nav-link" data-scroll-target="#a.-reproducibility">A. Reproducibility</a></li>
+  <li><a href="#b.-structural-and-computational-evidence" id="toc-b.-structural-and-computational-evidence" class="nav-link" data-scroll-target="#b.-structural-and-computational-evidence">B. Structural and computational evidence</a></li>
+  <li><a href="#c.-scientific-judgment" id="toc-c.-scientific-judgment" class="nav-link" data-scroll-target="#c.-scientific-judgment">C. Scientific judgment</a></li>
+  <li><a href="#d.-iteration-and-learning" id="toc-d.-iteration-and-learning" class="nav-link" data-scroll-target="#d.-iteration-and-learning">D. Iteration and learning</a></li>
+  <li><a href="#e.-communication" id="toc-e.-communication" class="nav-link" data-scroll-target="#e.-communication">E. Communication</a></li>
+  </ul></li>
+  <li><a href="#interpreting-your-score" id="toc-interpreting-your-score" class="nav-link" data-scroll-target="#interpreting-your-score">Interpreting Your Score</a></li>
+  <li><a href="#suggested-review-sequence" id="toc-suggested-review-sequence" class="nav-link" data-scroll-target="#suggested-review-sequence">Suggested Review Sequence</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Capstone Evidence Guide &amp; Rubric</h1>
+<p class="subtitle lead">How to know when your binder-design project is complete—and defensible</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+
+
+
+  </div>
+
+
+
+</header>
+
+
+<section id="purpose" class="level2">
+<h2 class="anchored" data-anchor-id="purpose">Purpose</h2>
+<p>The capstone is not complete merely because every command ran. A strong submission makes a reproducible, evidence-based argument for why one design should move forward and why the alternatives should not.</p>
+<p>Use this page at three points:</p>
+<ol type="1">
+<li><strong>Before starting</strong>, to plan what you will save.</li>
+<li><strong>At each milestone</strong>, to check whether your evidence is sufficient.</li>
+<li><strong>Before finishing</strong>, to self-assess the complete project.</li>
+</ol>
+<p><a class="btn btn-primary" href="files/capstone-evidence-template.zip" download="">Download the evidence template</a></p>
+</section>
+<section id="required-evidence-portfolio" class="level2">
+<h2 class="anchored" data-anchor-id="required-evidence-portfolio">Required Evidence Portfolio</h2>
+<p>Your final format can be a report, notebook, repository, slide deck, or video, but it should contain all seven artifacts below.</p>
+<section id="target-and-epitope-brief" class="level3">
+<h3 class="anchored" data-anchor-id="target-and-epitope-brief">1. Target and epitope brief</h3>
+<p><label class="module-task" for="module-checkbox-capstone-target-brief"><input type="checkbox" class="module-checkbox" id="module-checkbox-capstone-target-brief" data-module-id="capstone-target-brief"><span>Evidence saved</span></label></p>
+<ul>
+<li>Target name, biological role, structure accession, chain, and residue range</li>
+<li>The binding surface or epitope you intend to target</li>
+<li>Three to six hotspot residues and the evidence used to choose them</li>
+<li>Important caveats such as missing density, glycosylation, alternate conformations, cofactors, or chain-numbering differences</li>
+</ul>
+<p><strong>Completion evidence:</strong> one annotated structure image plus a concise rationale.</p>
+</section>
+<section id="reproducible-run-configuration" class="level3">
+<h3 class="anchored" data-anchor-id="reproducible-run-configuration">2. Reproducible run configuration</h3>
+<p><label class="module-task" for="module-checkbox-capstone-run-config"><input type="checkbox" class="module-checkbox" id="module-checkbox-capstone-run-config" data-module-id="capstone-run-config"><span>Evidence saved</span></label></p>
+<ul>
+<li>Tool release or commit, environment, model checkpoint, and hardware</li>
+<li>Exact input-file identifiers and checksums when practical</li>
+<li>Commands, configuration files, random seeds, and output paths</li>
+<li>Any deviations from the course’s known-good stack</li>
+</ul>
+<p><strong>Completion evidence:</strong> another learner could reconstruct the run without guessing hidden settings.</p>
+</section>
+<section id="backbone-generation-evidence" class="level3">
+<h3 class="anchored" data-anchor-id="backbone-generation-evidence">3. Backbone-generation evidence</h3>
+<p><label class="module-task" for="module-checkbox-capstone-backbone-evidence"><input type="checkbox" class="module-checkbox" id="module-checkbox-capstone-backbone-evidence" data-module-id="capstone-backbone-evidence"><span>Evidence saved</span></label></p>
+<ul>
+<li>Number and type of designs generated</li>
+<li>Representative gallery showing both successful and failed outputs</li>
+<li>Topology, target contact, hotspot contact, clashes, and diversity observations</li>
+<li>A documented first-pass filter</li>
+</ul>
+<p><strong>Completion evidence:</strong> a gallery or table that explains why candidates were kept or removed.</p>
+</section>
+<section id="sequence-design-evidence" class="level3">
+<h3 class="anchored" data-anchor-id="sequence-design-evidence">4. Sequence-design evidence</h3>
+<p><label class="module-task" for="module-checkbox-capstone-sequence-evidence"><input type="checkbox" class="module-checkbox" id="module-checkbox-capstone-sequence-evidence" data-module-id="capstone-sequence-evidence"><span>Evidence saved</span></label></p>
+<ul>
+<li>Sequence-design method and settings</li>
+<li>Number of sequences generated per backbone</li>
+<li>Sequence recovery, diversity, composition, and any fixed residues</li>
+<li>Checks for obvious liabilities relevant to your target or intended use</li>
+</ul>
+<p><strong>Completion evidence:</strong> a compact candidate table linking sequences back to their parent backbones.</p>
+</section>
+<section id="structural-validation" class="level3">
+<h3 class="anchored" data-anchor-id="structural-validation">5. Structural validation</h3>
+<p><label class="module-task" for="module-checkbox-capstone-structural-validation"><input type="checkbox" class="module-checkbox" id="module-checkbox-capstone-structural-validation" data-module-id="capstone-structural-validation"><span>Evidence saved</span></label></p>
+<ul>
+<li>Complex-prediction method and settings</li>
+<li>Per-chain confidence, interface confidence, and PAE interpretation</li>
+<li>Interface geometry, hotspot recovery, clashes, and model agreement</li>
+<li>At least one independent check beyond a single confidence score</li>
+</ul>
+<p><strong>Completion evidence:</strong> figures and metrics that distinguish local fold confidence from interface confidence.</p>
+</section>
+<section id="failure-analysis-and-iteration" class="level3">
+<h3 class="anchored" data-anchor-id="failure-analysis-and-iteration">6. Failure analysis and iteration</h3>
+<p><label class="module-task" for="module-checkbox-capstone-failure-analysis"><input type="checkbox" class="module-checkbox" id="module-checkbox-capstone-failure-analysis" data-module-id="capstone-failure-analysis"><span>Evidence saved</span></label></p>
+<ul>
+<li>At least one failed or misleading result</li>
+<li>Your diagnosis of the likely cause</li>
+<li>The change you made in response</li>
+<li>Whether the next run supported your diagnosis</li>
+</ul>
+<p><strong>Completion evidence:</strong> a short before/after comparison. A scientifically useful failure is stronger evidence than an unexplained success.</p>
+</section>
+<section id="final-selection-memo" class="level3">
+<h3 class="anchored" data-anchor-id="final-selection-memo">7. Final selection memo</h3>
+<p><label class="module-task" for="module-checkbox-capstone-selection-memo"><input type="checkbox" class="module-checkbox" id="module-checkbox-capstone-selection-memo" data-module-id="capstone-selection-memo"><span>Evidence saved</span></label></p>
+<ul>
+<li>The candidate you would advance and the alternatives you rejected</li>
+<li>The criteria and trade-offs behind that decision</li>
+<li>Remaining uncertainty and the next computational or experimental test</li>
+<li>A clear statement that computational confidence is not experimental validation</li>
+</ul>
+<p><strong>Completion evidence:</strong> a one-page decision memo or equivalent final section.</p>
+</section>
+</section>
+<section id="twenty-point-self-assessment-rubric" class="level2">
+<h2 class="anchored" data-anchor-id="twenty-point-self-assessment-rubric">Twenty-Point Self-Assessment Rubric</h2>
+<p>Score each category from 1–4. Use the lowest description that still fits the work consistently.</p>
+<section id="a.-reproducibility" class="level3">
+<h3 class="anchored" data-anchor-id="a.-reproducibility">A. Reproducibility</h3>
+<ul>
+<li><strong>4 — Reconstructable:</strong> inputs, versions, commands, seeds, outputs, and deviations are complete and internally consistent.</li>
+<li><strong>3 — Mostly reproducible:</strong> the main run can be repeated, but one or two minor details require inference.</li>
+<li><strong>2 — Partially documented:</strong> settings are summarized, but exact inputs or commands are missing.</li>
+<li><strong>1 — Not reproducible:</strong> results cannot be connected reliably to a specific configuration.</li>
+</ul>
+</section>
+<section id="b.-structural-and-computational-evidence" class="level3">
+<h3 class="anchored" data-anchor-id="b.-structural-and-computational-evidence">B. Structural and computational evidence</h3>
+<ul>
+<li><strong>4 — Converging evidence:</strong> multiple appropriate metrics and visual checks support the conclusions, with limitations interpreted correctly.</li>
+<li><strong>3 — Adequate evidence:</strong> core confidence and interface checks are present, but validation is narrow.</li>
+<li><strong>2 — Score-driven:</strong> conclusions rely primarily on one summary score or an attractive structure image.</li>
+<li><strong>1 — Unsupported:</strong> outputs are shown without meaningful validation.</li>
+</ul>
+</section>
+<section id="c.-scientific-judgment" class="level3">
+<h3 class="anchored" data-anchor-id="c.-scientific-judgment">C. Scientific judgment</h3>
+<ul>
+<li><strong>4 — Defensible decisions:</strong> selection criteria are explicit, trade-offs are weighed, failures are investigated, and uncertainty changes the conclusion appropriately.</li>
+<li><strong>3 — Reasonable decisions:</strong> choices are explained and major limitations are acknowledged.</li>
+<li><strong>2 — Descriptive decisions:</strong> observations are listed, but the reasoning connecting them to selection is weak.</li>
+<li><strong>1 — Completion-based:</strong> a candidate is selected mainly because the pipeline produced it.</li>
+</ul>
+</section>
+<section id="d.-iteration-and-learning" class="level3">
+<h3 class="anchored" data-anchor-id="d.-iteration-and-learning">D. Iteration and learning</h3>
+<ul>
+<li><strong>4 — Hypothesis-driven iteration:</strong> a failure or comparison motivates a specific change that is then evaluated.</li>
+<li><strong>3 — Documented iteration:</strong> multiple settings are compared and their effects are discussed.</li>
+<li><strong>2 — Repetition without diagnosis:</strong> several runs are shown, but changes are not tied to a clear hypothesis.</li>
+<li><strong>1 — Single pass:</strong> no meaningful iteration or failure analysis is included.</li>
+</ul>
+</section>
+<section id="e.-communication" class="level3">
+<h3 class="anchored" data-anchor-id="e.-communication">E. Communication</h3>
+<ul>
+<li><strong>4 — Clear evidence trail:</strong> figures, tables, labels, captions, and narrative allow a reader to follow the complete argument efficiently.</li>
+<li><strong>3 — Understandable:</strong> the story is coherent with only minor gaps or presentation problems.</li>
+<li><strong>2 — Fragmented:</strong> key outputs exist, but their relationships or significance are hard to follow.</li>
+<li><strong>1 — Incomplete:</strong> essential artifacts or explanations are absent.</li>
+</ul>
+</section>
+</section>
+<section id="interpreting-your-score" class="level2">
+<h2 class="anchored" data-anchor-id="interpreting-your-score">Interpreting Your Score</h2>
+<ul>
+<li><strong>17–20: Portfolio ready.</strong> The work presents a defensible computational argument and clearly identifies what remains unproven.</li>
+<li><strong>13–16: Complete with revisions.</strong> Strengthen the lowest-scoring category before presenting or sharing the work.</li>
+<li><strong>9–12: Pipeline run, not yet a scientific case.</strong> Add missing evidence, comparison, and decision logic.</li>
+<li><strong>5–8: Reconstruct the evidence trail.</strong> Confirm inputs and outputs before drawing conclusions.</li>
+</ul>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Completion threshold
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>For course completion, aim for <strong>at least 13/20</strong>, with no category below 2. The score is a self-assessment aid—not evidence that a binder will work experimentally.</p>
+</div>
+</div>
+</section>
+<section id="suggested-review-sequence" class="level2">
+<h2 class="anchored" data-anchor-id="suggested-review-sequence">Suggested Review Sequence</h2>
+<ol type="1">
+<li>Review your target brief before spending substantial compute.</li>
+<li>Review reproducibility and backbone evidence before sequence design.</li>
+<li>Review sequence and validation evidence before selecting a finalist.</li>
+<li>Complete the rubric and revise the lowest category.</li>
+<li>Compare your reasoning with the <a href="../capstone/exemplar.html">worked selection example</a>.</li>
+</ol>
+<hr>
+<div class="d-flex justify-content-between">
+<p><a href="../capstone/index.html">← Capstone overview</a></p>
+<p><a href="../capstone/exemplar.html">Worked example →</a></p>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<!-- Generated by scripts/validate_course_data.py --generate; do not edit. -->
+<script>
+window.BOOTCAMP_COURSE = {"schema_version":1,"updated":"2026-08-30","duration_note":"Times are planning estimates for an independent learner and exclude long model downloads, queue waits, and capstone compute.","routes":{"core":"The shortest route that develops the concepts and artifacts needed for the capstone.","full":"The original bootcamp sequence, including additional tools and practice.","reference":"Optional specialist material to consult when a project needs it."},"milestones":[{"id":"capstone-target-brief","day":"capstone","title":"Target and epitope brief","path":"capstone/rubric.html","route":"core","artifact":"Annotated target structure and concise hotspot rationale","checkpoint_label":"Target, chain, epitope, hotspots, and caveats are documented","source":"capstone/rubric.qmd"},{"id":"capstone-run-config","day":"capstone","title":"Reproducible run configuration","path":"capstone/rubric.html","route":"core","artifact":"Versioned environment, inputs, commands, seeds, and output paths","checkpoint_label":"Another learner could reconstruct the run without guessing","source":"capstone/rubric.qmd"},{"id":"capstone-backbone-evidence","day":"capstone","title":"Backbone-generation evidence","path":"capstone/rubric.html","route":"core","artifact":"Representative backbone gallery with keep/reject decisions","checkpoint_label":"Successes and failures are evaluated against explicit filters","source":"capstone/rubric.qmd"},{"id":"capstone-sequence-evidence","day":"capstone","title":"Sequence-design evidence","path":"capstone/rubric.html","route":"core","artifact":"Candidate table linking designed sequences to parent backbones","checkpoint_label":"Sequence diversity, composition, constraints, and liabilities are assessed","source":"capstone/rubric.qmd"},{"id":"capstone-structural-validation","day":"capstone","title":"Structural validation","path":"capstone/rubric.html","route":"core","artifact":"Complex-confidence and interface-validation figures with metrics","checkpoint_label":"Interface evidence is distinguished from local fold confidence","source":"capstone/rubric.qmd"},{"id":"capstone-failure-analysis","day":"capstone","title":"Failure analysis and iteration","path":"capstone/rubric.html","route":"core","artifact":"Before/after account of one diagnosed failure and response","checkpoint_label":"A failure is diagnosed, acted on, and tested","source":"capstone/rubric.qmd"},{"id":"capstone-selection-memo","day":"capstone","title":"Final selection memo","path":"capstone/rubric.html","route":"core","artifact":"Decision memo naming the selected design, rejected alternatives, risks, and next experiment","checkpoint_label":"Final selection is supported by evidence and uncertainty","source":"capstone/rubric.qmd"}],"lessons":[{"id":"prework-environment-git","day":"prework","order":1,"title":"Environment Setup & GitHub Basics","path":"monday/prework-1-env-git.html","route":"core","status":"required","duration_minutes":45,"compute":"local CPU","artifact":"A working bootcamp environment and cloned practice repository","checkpoint_id":"prework-environment-git","checkpoint_label":"Environment verification passes","source":"monday/prework-1-env-git.qmd"},{"id":"prework-pymol-vscode","day":"prework","order":2,"title":"PyMOL and VS Code Setup","path":"monday/prework-2-pymol-vscode.html","route":"core","status":"required","duration_minutes":45,"compute":"local CPU","artifact":"A saved molecular view and editor verification result","checkpoint_id":"prework-pymol-vscode","checkpoint_label":"Visualization and editor checks pass","source":"monday/prework-2-pymol-vscode.qmd"},{"id":"prework-python","day":"prework","order":3,"title":"Python Refresher","path":"monday/prework-3-python.html","route":"full","status":"optional","duration_minutes":45,"compute":"local CPU","artifact":"Protein analysis_results.txt and passing tests","checkpoint_id":"prework-python","checkpoint_label":"All refresher tests pass","source":"monday/prework-3-python.qmd"},{"id":"reproducible-setup","day":"prework","order":4,"title":"Reproducible Setup & Compute Fallbacks","path":"monday/reproducibility.html","route":"core","status":"required","duration_minutes":20,"compute":"local CPU","artifact":"Saved preflight report and an explicit run-or-analysis fallback choice","checkpoint_id":"reproducible-setup","checkpoint_label":"Version status and fallback pathway are documented","source":"monday/reproducibility.qmd"},{"id":"hpc-setup","day":"monday","order":1,"title":"Common HPC Setup","path":"monday/1-hpc-setup.html","route":"core","status":"required","duration_minutes":60,"compute":"HPC login node; GPU node for verification","artifact":"Saved preflight report and a successful GPU allocation check","checkpoint_id":"hpc-setup","checkpoint_label":"Preflight report reviewed","source":"monday/1-hpc-setup.qmd"},{"id":"localcolabfold","day":"monday","order":2,"title":"LocalColabFold","path":"monday/2-localcolabfold.html","route":"core","status":"required","duration_minutes":90,"compute":"GPU recommended; provided-output route available","artifact":"Predicted PDB and confidence JSON, or an annotated known-good prediction","checkpoint_id":"localcolabfold","checkpoint_label":"Prediction output and confidence are interpreted","source":"monday/2-localcolabfold.qmd"},{"id":"ligandmpnn","day":"monday","order":3,"title":"LigandMPNN","path":"monday/3-ligandmpnn.html","route":"core","status":"required","duration_minutes":60,"compute":"CPU or GPU","artifact":"Designed FASTA sequences and a short selection rationale","checkpoint_id":"ligandmpnn","checkpoint_label":"Designed sequences are ranked and justified","source":"monday/3-ligandmpnn.qmd"},{"id":"rfdiffusion2","day":"monday","order":4,"title":"RFdiffusion2","path":"monday/4-rfdiffusion2.html","route":"full","status":"optional","duration_minutes":90,"compute":"CUDA GPU and Apptainer; analysis-only route available","artifact":"A generated backbone or an annotated known-good design","checkpoint_id":"rfdiffusion2","checkpoint_label":"Backbone geometry and constraints are evaluated","source":"monday/4-rfdiffusion2.qmd"},{"id":"esmfold-install","day":"monday","order":5,"title":"ESMFold","path":"monday/5-esmfold.html","route":"full","status":"optional","duration_minutes":75,"compute":"GPU recommended; CPU is slow","artifact":"Single-sequence structure prediction","checkpoint_id":"esmfold-install","checkpoint_label":"Prediction file is valid and confidence is checked","source":"monday/5-esmfold.qmd"},{"id":"openfold","day":"monday","order":6,"title":"OpenFold","path":"monday/6-openfold.html","route":"reference","status":"optional","duration_minutes":90,"compute":"GPU plus large shared databases","artifact":"Environment smoke-test record","checkpoint_id":"openfold","checkpoint_label":"OpenFold requirements and tradeoffs are documented","source":"monday/6-openfold.qmd"},{"id":"chai1","day":"monday","order":7,"title":"Chai-1","path":"monday/7-chai1.html","route":"full","status":"optional","duration_minutes":60,"compute":"Modern CUDA GPU recommended","artifact":"Complex prediction and confidence summary","checkpoint_id":"chai1","checkpoint_label":"Complex confidence is interpreted","source":"monday/7-chai1.qmd"},{"id":"boltz2","day":"monday","order":8,"title":"Boltz-2","path":"monday/8-boltz2.html","route":"full","status":"optional","duration_minutes":60,"compute":"GPU recommended; CPU supported","artifact":"CIF prediction and confidence summary","checkpoint_id":"boltz2","checkpoint_label":"Boltz output is inspected and compared","source":"monday/8-boltz2.qmd"},{"id":"diffdock-pp","day":"monday","order":9,"title":"DiffDock-PP","path":"monday/9-diffdock-pp.html","route":"reference","status":"optional","duration_minutes":75,"compute":"CUDA 11.6-era GPU stack","artifact":"Ranked protein-protein docking poses","checkpoint_id":"diffdock-pp","checkpoint_label":"Docking poses are ranked with limitations noted","source":"monday/9-diffdock-pp.qmd"},{"id":"placer","day":"monday","order":10,"title":"PLACER","path":"monday/10-placer.html","route":"reference","status":"optional","duration_minutes":60,"compute":"CPU or GPU","artifact":"Ranked ligand conformational ensemble","checkpoint_id":"placer","checkpoint_label":"Ensemble uncertainty is interpreted","source":"monday/10-placer.qmd"},{"id":"bindcraft","day":"monday","order":11,"title":"BindCraft","path":"monday/11-bindcraft.html","route":"full","status":"optional","duration_minutes":75,"compute":"24+ GB CUDA GPU; full campaigns take hours to days","artifact":"Validated settings file and a campaign plan or pilot trajectory","checkpoint_id":"bindcraft","checkpoint_label":"Campaign settings and stopping criteria are justified","source":"monday/11-bindcraft.qmd"},{"id":"esm3","day":"monday","order":12,"title":"ESM3","path":"monday/12-esm3.html","route":"reference","status":"optional","duration_minutes":60,"compute":"16+ GB GPU for local small model","artifact":"Generated sequence and optional structure","checkpoint_id":"esm3","checkpoint_label":"Generated protein is checked for plausibility","source":"monday/12-esm3.qmd"},{"id":"rfdiffusion-aa","day":"monday","order":13,"title":"RFdiffusion All Atom","path":"monday/13-rfdiffusion-aa.html","route":"reference","status":"optional","duration_minutes":75,"compute":"CUDA GPU and Apptainer","artifact":"All-atom design or documented comparison with RFdiffusion2","checkpoint_id":"rfdiffusion-aa","checkpoint_label":"Tool choice is justified for the design problem","source":"monday/13-rfdiffusion-aa.qmd"},{"id":"pymol-vscode-workflow","day":"tuesday","order":1,"title":"PyMOL and Visual Studio Code","path":"tuesday/1-pymol.html","route":"core","status":"required","duration_minutes":60,"compute":"local CPU","artifact":"Reproducible structure-inspection script and saved view","checkpoint_id":"pymol-vscode-workflow","checkpoint_label":"Structure view can be regenerated from the script","source":"tuesday/1-pymol.qmd"},{"id":"structure-prediction-intro","day":"tuesday","order":2,"title":"Introduction to Structure Prediction","path":"tuesday/2-structure-prediction.html","route":"core","status":"required","duration_minutes":75,"compute":"local CPU","artifact":"A method-selection memo for a sample sequence","checkpoint_id":"structure-prediction-intro","checkpoint_label":"Prediction method choice is supported by evidence","source":"tuesday/2-structure-prediction.qmd"},{"id":"alphafold2-openfold","day":"tuesday","order":3,"title":"AlphaFold2 and OpenFold","path":"tuesday/3-alphafold2.html","route":"core","status":"required","duration_minutes":90,"compute":"browser and optional GPU","artifact":"Annotated pLDDT/PAE interpretation and prediction comparison","checkpoint_id":"alphafold2-openfold","checkpoint_label":"Confidence and failure modes are explained","source":"tuesday/3-alphafold2.qmd"},{"id":"alphafold2-architecture-deep-dive","day":"tuesday","order":4,"title":"AlphaFold2 Architecture Deep Dive","path":"tuesday/3-alphafold2-deep-dive.html","route":"reference","status":"optional","duration_minutes":120,"compute":"none","artifact":"Architecture concept map or completed deep-dive quiz","checkpoint_id":"alphafold2-architecture-deep-dive","checkpoint_label":"Information flow through Evoformer, structure module, and recycling is explained","source":"tuesday/3-alphafold2-deep-dive.qmd"},{"id":"esmfold-comparison","day":"tuesday","order":5,"title":"ESMFold vs. AlphaFold2","path":"tuesday/4-esmfold.html","route":"core","status":"required","duration_minutes":150,"compute":"GPU or provided predictions","artifact":"Side-by-side method comparison","checkpoint_id":"esmfold-comparison","checkpoint_label":"Speed-confidence tradeoff is explained","source":"tuesday/4-esmfold.qmd"},{"id":"alphafold3-chai1","day":"wednesday","order":1,"title":"AlphaFold3 vs. Chai-1","path":"wednesday/0-alphafold3.html","route":"core","status":"required","duration_minutes":90,"compute":"web service or GPU; provided-output route possible","artifact":"Multimer prediction comparison and uncertainty notes","checkpoint_id":"alphafold3-chai1","checkpoint_label":"Multimodal prediction evidence is evaluated","source":"wednesday/0-alphafold3.qmd"},{"id":"rfdiffusion-advanced","day":"wednesday","order":2,"title":"RFdiffusion: Advanced Design","path":"wednesday/1-rfdiffusion.html","route":"core","status":"required","duration_minutes":180,"compute":"CUDA GPU or official known-good outputs","artifact":"Backbone gallery, hotspot analysis, and selection rationale","checkpoint_id":"rfdiffusion-advanced","checkpoint_label":"Design gallery is evaluated against explicit criteria","source":"wednesday/1-rfdiffusion.qmd"},{"id":"pytorch-foundations","day":"thursday","order":1,"title":"PyTorch Foundations","path":"thursday/1-pytorch.html","route":"core","status":"required","duration_minutes":75,"compute":"local CPU; GPU optional","artifact":"Working tensor/model notebook","checkpoint_id":"pytorch-foundations","checkpoint_label":"Core tensor and gradient operations run","source":"thursday/1-pytorch.qmd"},{"id":"cpu-vs-gpu","day":"thursday","order":2,"title":"CPU vs GPU Computing","path":"thursday/2-cpu-vs-gpu.html","route":"core","status":"required","duration_minutes":75,"compute":"CPU and CUDA GPU, or provided benchmark","artifact":"Benchmark plot with an explanation of crossover behavior","checkpoint_id":"cpu-vs-gpu","checkpoint_label":"Benchmark result and caveats are explained","source":"thursday/2-cpu-vs-gpu.qmd"},{"id":"molecular-docking","day":"thursday","order":3,"title":"Molecular Docking","path":"thursday/3-docking.html","route":"core","status":"required","duration_minutes":75,"compute":"CPU or GPU depending on tool","artifact":"Ranked poses with a defensible validation criterion","checkpoint_id":"molecular-docking","checkpoint_label":"Docking pose is assessed beyond score alone","source":"thursday/3-docking.qmd"},{"id":"reflection-capstone-intro","day":"thursday","order":4,"title":"Reflection & Capstone Introduction","path":"thursday/4-roundtable.html","route":"core","status":"required","duration_minutes":75,"compute":"none","artifact":"Target brief and capstone execution plan","checkpoint_id":"reflection-capstone-intro","checkpoint_label":"Capstone question, evidence, and fallback plan are defined","source":"thursday/4-roundtable.qmd"},{"id":"capstone","day":"capstone","order":1,"title":"Capstone Project","path":"capstone/index.html","route":"core","status":"required","duration_minutes":600,"duration":"10–25 active hr, plus compute","compute":"GPU recommended; staged no-compute evidence path available","artifact":"Reproducible design portfolio and final selection memo","checkpoint_id":"capstone","checkpoint_label":"Portfolio meets the capstone evidence rubric","source":"capstone/index.qmd"},{"id":"capstone-rubric","day":"capstone","order":2,"title":"Capstone Evidence Guide & Rubric","path":"capstone/rubric.html","route":"core","status":"required","duration_minutes":45,"compute":"none","artifact":"Completed evidence portfolio and rubric self-score","checkpoint_id":"capstone-rubric","checkpoint_label":"Evidence portfolio is complete and self-scored","source":"capstone/rubric.qmd"},{"id":"capstone-exemplar","day":"capstone","order":3,"title":"Worked Capstone Selection Example","path":"capstone/exemplar.html","route":"reference","status":"optional","duration_minutes":30,"compute":"none","artifact":"Notes comparing the exemplar's evidence trail with the learner's plan","checkpoint_id":"capstone-exemplar","checkpoint_label":"Exemplar reasoning pattern is compared with the project plan","source":"capstone/exemplar.qmd"},{"id":"target-pd-l1","day":"capstone","order":4,"title":"PD-L1 Target Deep Dive","path":"capstone/targets/pd-l1.html","route":"reference","status":"optional","duration_minutes":20,"compute":"none","artifact":"Target preparation and hotspot plan","checkpoint_id":"target-pd-l1","checkpoint_label":"PD-L1 target record is verified","source":"capstone/targets/pd-l1.qmd"},{"id":"target-il-7r","day":"capstone","order":5,"title":"IL-7R Target Deep Dive","path":"capstone/targets/il-7r.html","route":"reference","status":"optional","duration_minutes":20,"compute":"none","artifact":"Target preparation and hotspot plan","checkpoint_id":"target-il-7r","checkpoint_label":"IL-7R target record is verified","source":"capstone/targets/il-7r.qmd"},{"id":"target-trka","day":"capstone","order":6,"title":"TrkA Receptor Deep Dive","path":"capstone/targets/trka.html","route":"reference","status":"optional","duration_minutes":20,"compute":"none","artifact":"Target preparation and hotspot plan","checkpoint_id":"target-trka","checkpoint_label":"TrkA target record is verified","source":"capstone/targets/trka.qmd"},{"id":"target-ifnar2","day":"capstone","order":7,"title":"IFNAR2 Target Deep Dive","path":"capstone/targets/ifnar2.html","route":"reference","status":"optional","duration_minutes":20,"compute":"none","artifact":"Target preparation and hotspot plan","checkpoint_id":"target-ifnar2","checkpoint_label":"IFNAR2 target record is verified","source":"capstone/targets/ifnar2.qmd"},{"id":"target-bet-v-1","day":"capstone","order":8,"title":"Bet v 1 Target Deep Dive","path":"capstone/targets/bet-v-1.html","route":"reference","status":"optional","duration_minutes":20,"compute":"none","artifact":"Target preparation and hotspot plan","checkpoint_id":"target-bet-v-1","checkpoint_label":"Bet v 1 target record is verified","source":"capstone/targets/bet-v-1.qmd"},{"id":"target-gm2ap","day":"capstone","order":9,"title":"GM2 Activator Protein Deep Dive","path":"capstone/targets/gm3.html","route":"reference","status":"optional","duration_minutes":20,"compute":"none","artifact":"Target preparation and hotspot plan","checkpoint_id":"target-gm2ap","checkpoint_label":"GM2AP target record is verified","source":"capstone/targets/gm3.qmd"},{"id":"target-beta-glucosidase","day":"capstone","order":10,"title":"Beta-Glucosidase Deep Dive","path":"capstone/targets/beta-glucosidase.html","route":"reference","status":"optional","duration_minutes":20,"compute":"none","artifact":"Target preparation and hotspot plan","checkpoint_id":"target-beta-glucosidase","checkpoint_label":"Beta-glucosidase target record is verified","source":"capstone/targets/beta-glucosidase.qmd"},{"id":"target-tem-1","day":"capstone","order":11,"title":"TEM-1 Beta-Lactamase Deep Dive","path":"capstone/targets/tem-1.html","route":"reference","status":"optional","duration_minutes":20,"compute":"none","artifact":"Target preparation and hotspot plan","checkpoint_id":"target-tem-1","checkpoint_label":"TEM-1 target record is verified","source":"capstone/targets/tem-1.qmd"}]};
+</script>
+<script>
+(function() {
+  'use strict';
+
+  const STORAGE_KEY = 'bootcamp_progress_v2';
+  const LEGACY_STORAGE_KEY = 'bootcamp2025_progress';
+  const LAST_PAGE_KEY = 'bootcamp2025_lastpage';
+  const SCHEMA_VERSION = 2;
+
+  function normalisePath(path) {
+    if (!path) return '/';
+    const clean = path.split('#')[0].split('?')[0].replace(/\/+/g, '/');
+    if (clean.endsWith('/')) return clean + 'index.html';
+    return clean;
+  }
+
+  function lessonPath(lesson) {
+    const value = lesson.path || lesson.href || '';
+    return normalisePath(value.startsWith('/') ? value : '/' + value);
+  }
+
+  function checkpointId(lesson) {
+    return lesson.checkpoint_id || lesson.checkpointId || lesson.id;
+  }
+
+  function checkpointLabel(lesson) {
+    return lesson.checkpoint_label || lesson.checkpointLabel ||
+      (lesson.artifact
+        ? 'I produced and checked: ' + lesson.artifact
+        : 'I completed the lesson evidence check.');
+  }
+
+  function durationLabel(lesson) {
+    if (lesson.duration) return lesson.duration;
+    if (lesson.duration_minutes) return lesson.duration_minutes + ' min';
+    return null;
+  }
+
+  function isCoreLesson(lesson) {
+    if (lesson.required === false) return false;
+    return (lesson.route || 'core') === 'core';
+  }
+
+  function courseLessons() {
+    const source = window.BOOTCAMP_COURSE || {};
+    return Array.isArray(source.lessons) ? source.lessons.filter(checkpointId) : [];
+  }
+
+  function courseCheckpoints() {
+    const source = window.BOOTCAMP_COURSE || {};
+    const milestones = Array.isArray(source.milestones) ? source.milestones.filter(checkpointId) : [];
+    return courseLessons().concat(milestones);
+  }
+
+  function emptyState() {
+    return { version: SCHEMA_VERSION, completed: [], tasks: [], updatedAt: null };
+  }
+
+  function sanitiseState(value) {
+    const validIds = new Set(courseCheckpoints().map(checkpointId));
+    const completed = Array.isArray(value && value.completed)
+      ? value.completed.filter(id => typeof id === 'string' && (validIds.size === 0 || validIds.has(id)))
+      : [];
+    const tasks = Array.isArray(value && value.tasks)
+      ? value.tasks.filter(id => typeof id === 'string')
+      : [];
+    return {
+      version: SCHEMA_VERSION,
+      completed: Array.from(new Set(completed)),
+      tasks: Array.from(new Set(tasks)),
+      updatedAt: value && value.updatedAt ? value.updatedAt : null
+    };
+  }
+
+  function loadState() {
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) return sanitiseState(JSON.parse(saved));
+
+      const legacy = localStorage.getItem(LEGACY_STORAGE_KEY);
+      if (legacy) {
+        const legacyState = JSON.parse(legacy);
+        const migrated = emptyState();
+        migrated.tasks = Array.isArray(legacyState.completed) ? legacyState.completed : [];
+        saveState(migrated);
+        return migrated;
+      }
+    } catch (error) {
+      console.warn('Course progress could not be loaded.', error);
+    }
+    return emptyState();
+  }
+
+  function saveState(state) {
+    const clean = sanitiseState(state);
+    clean.updatedAt = new Date().toISOString();
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(clean));
+    } catch (error) {
+      console.warn('Course progress could not be saved.', error);
+    }
+    return clean;
+  }
+
+  function setCompleted(id, completed) {
+    const state = loadState();
+    const values = new Set(state.completed);
+    if (completed) values.add(id);
+    else values.delete(id);
+    state.completed = Array.from(values);
+    saveState(state);
+    syncProgressUI();
+  }
+
+  function setTaskCompleted(id, completed) {
+    const state = loadState();
+    const values = new Set(state.tasks);
+    if (completed) values.add(id);
+    else values.delete(id);
+    state.tasks = Array.from(values);
+    saveState(state);
+  }
+
+  function currentLesson() {
+    const path = normalisePath(window.location.pathname);
+    return courseLessons().find(lesson => {
+      const candidate = lessonPath(lesson);
+      return path === candidate || path.endsWith(candidate);
+    }) || null;
+  }
+
+  function createMetaItem(label, value) {
+    if (!value) return null;
+    const item = document.createElement('div');
+    item.className = 'lesson-contract-item';
+    const term = document.createElement('span');
+    term.className = 'lesson-contract-label';
+    term.textContent = label;
+    const detail = document.createElement('span');
+    detail.textContent = value;
+    item.append(term, detail);
+    return item;
+  }
+
+  function addLessonContract(lesson) {
+    if (!lesson || document.querySelector('.lesson-contract')) return;
+    const title = document.querySelector('h1.title, .quarto-title h1');
+    if (!title) return;
+
+    const contract = document.createElement('section');
+    contract.className = 'lesson-contract';
+    contract.setAttribute('aria-label', 'Lesson plan');
+
+    const eyebrow = document.createElement('p');
+    eyebrow.className = 'lesson-contract-eyebrow';
+    const route = lesson.route || 'core';
+    const routeLabels = { core: 'Core path', full: 'Full-bootcamp path', reference: 'Reference path' };
+    eyebrow.textContent = (lesson.status === 'optional' ? 'Optional · ' : '') +
+      (routeLabels[route] || (route.charAt(0).toUpperCase() + route.slice(1) + ' path'));
+    contract.appendChild(eyebrow);
+
+    const grid = document.createElement('div');
+    grid.className = 'lesson-contract-grid';
+    [
+      createMetaItem('Time', durationLabel(lesson)),
+      createMetaItem('Compute', lesson.compute),
+      createMetaItem('You will produce', lesson.artifact),
+      createMetaItem('Completion check', checkpointLabel(lesson))
+    ].filter(Boolean).forEach(item => grid.appendChild(item));
+    contract.appendChild(grid);
+
+    if (lesson.prerequisites) {
+      const prereq = document.createElement('p');
+      prereq.className = 'lesson-contract-prerequisites';
+      const strong = document.createElement('strong');
+      strong.textContent = 'Before you begin: ';
+      prereq.append(strong, document.createTextNode(
+        Array.isArray(lesson.prerequisites) ? lesson.prerequisites.join(' · ') : lesson.prerequisites
+      ));
+      contract.appendChild(prereq);
+    }
+
+    const insertionPoint = title.closest('#title-block-header, .quarto-title-block') || title;
+    insertionPoint.insertAdjacentElement('afterend', contract);
+  }
+
+  function addMasteryCheckpoint(lesson) {
+    if (!lesson || document.querySelector('.mastery-checkpoint')) return;
+    const id = checkpointId(lesson);
+    const state = loadState();
+    const main = document.querySelector('main') || document.querySelector('#quarto-content');
+    if (!main) return;
+
+    const section = document.createElement('section');
+    section.className = 'mastery-checkpoint';
+    section.setAttribute('aria-labelledby', 'mastery-checkpoint-title');
+
+    const heading = document.createElement('h2');
+    heading.id = 'mastery-checkpoint-title';
+    heading.textContent = 'Complete this lesson';
+
+    const help = document.createElement('p');
+    help.textContent = 'Check this only after you can point to the evidence—not merely after reading the page.';
+
+    const label = document.createElement('label');
+    label.className = 'mastery-checkpoint-label';
+    const checkbox = document.createElement('input');
+    checkbox.type = 'checkbox';
+    checkbox.className = 'mastery-checkbox';
+    checkbox.dataset.checkpointId = id;
+    checkbox.checked = state.completed.includes(id);
+    checkbox.addEventListener('change', () => setCompleted(id, checkbox.checked));
+    const text = document.createElement('span');
+    text.textContent = checkpointLabel(lesson);
+    label.append(checkbox, text);
+
+    section.append(heading, help, label);
+
+    const lessons = courseLessons();
+    const currentIndex = lessons.findIndex(item => checkpointId(item) === id);
+    const following = currentIndex >= 0 ? lessons.slice(currentIndex + 1) : [];
+    const next = isCoreLesson(lesson)
+      ? following.find(isCoreLesson)
+      : following[0];
+    if (next) {
+      const nextLink = document.createElement('a');
+      nextLink.className = 'btn btn-primary mastery-next-link';
+      nextLink.href = lessonPath(next);
+      nextLink.textContent = 'Continue to ' + next.title;
+      section.appendChild(nextLink);
+    }
+
+    const nav = main.querySelector('nav.page-navigation, .page-navigation, .module-nav');
+    if (nav) nav.insertAdjacentElement('beforebegin', section);
+    else main.appendChild(section);
+  }
+
+  function syncLegacyTaskCheckboxes() {
+    const state = loadState();
+    const masteryIds = new Set(courseCheckpoints().map(checkpointId));
+    document.querySelectorAll('.module-checkbox[data-module-id]').forEach(checkbox => {
+      const id = checkbox.dataset.moduleId;
+      const isMastery = masteryIds.has(id);
+      checkbox.checked = isMastery ? state.completed.includes(id) : state.tasks.includes(id);
+      if (!checkbox.dataset.progressBound) {
+        checkbox.dataset.progressBound = 'true';
+        checkbox.addEventListener('change', () => {
+          if (isMastery) setCompleted(id, checkbox.checked);
+          else setTaskCompleted(id, checkbox.checked);
+        });
+      }
+    });
+  }
+
+  function syncProgressUI() {
+    const checkpoints = courseCheckpoints();
+    const core = checkpoints.filter(isCoreLesson);
+    const optional = checkpoints.filter(lesson => !isCoreLesson(lesson));
+    const state = loadState();
+    const completed = new Set(state.completed);
+    const coreCompleted = core.filter(lesson => completed.has(checkpointId(lesson))).length;
+    const optionalCompleted = optional.filter(lesson => completed.has(checkpointId(lesson))).length;
+    const percent = core.length ? Math.round((coreCompleted / core.length) * 100) : 0;
+
+    const bar = document.getElementById('progress-bar');
+    const count = document.getElementById('completed-count');
+    const total = document.getElementById('checkpoint-total');
+    const optionalCount = document.getElementById('optional-completed-count');
+    if (bar) {
+      bar.style.width = percent + '%';
+      bar.textContent = percent + '%';
+      bar.setAttribute('aria-valuenow', String(percent));
+    }
+    if (count) count.textContent = String(coreCompleted);
+    if (total) total.textContent = String(core.length);
+    if (optionalCount) optionalCount.textContent = String(optionalCompleted);
+
+    document.querySelectorAll('.mastery-checkbox[data-checkpoint-id]').forEach(checkbox => {
+      checkbox.checked = completed.has(checkbox.dataset.checkpointId);
+    });
+  }
+
+  function showResumeBanner() {
+    const isHome = normalisePath(window.location.pathname) === '/index.html';
+    if (!isHome) return;
+    try {
+      const saved = JSON.parse(localStorage.getItem(LAST_PAGE_KEY) || 'null');
+      if (!saved || !saved.path) return;
+      const banner = document.getElementById('resume-banner');
+      const link = document.getElementById('resume-link');
+      const title = document.getElementById('last-page-title');
+      if (banner && link && title) {
+        title.textContent = saved.day ? saved.day + ': ' + saved.title : saved.title;
+        link.href = saved.path;
+        banner.hidden = false;
+        banner.style.display = '';
+      }
+    } catch (error) {
+      console.warn('The resume link could not be restored.', error);
+    }
+  }
+
+  function saveLastPage(lesson) {
+    if (!lesson) return;
+    try {
+      localStorage.setItem(LAST_PAGE_KEY, JSON.stringify({
+        path: window.location.pathname,
+        title: lesson.title || document.title,
+        day: lesson.day || null,
+        timestamp: Date.now()
+      }));
+    } catch (error) {
+      console.warn('The resume link could not be saved.', error);
+    }
+  }
+
+  function exportProgress() {
+    const blob = new Blob([JSON.stringify(loadState(), null, 2)], { type: 'application/json' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = 'ml-protein-bootcamp-progress.json';
+    link.click();
+    window.setTimeout(() => URL.revokeObjectURL(link.href), 0);
+  }
+
+  function importProgress(file) {
+    if (!file) return;
+    const reader = new FileReader();
+    reader.addEventListener('load', () => {
+      try {
+        const imported = JSON.parse(String(reader.result));
+        if (!imported || typeof imported !== 'object' ||
+            !Array.isArray(imported.completed) || !Array.isArray(imported.tasks)) {
+          throw new Error('Progress export has the wrong shape.');
+        }
+        saveState(imported);
+        syncProgressUI();
+        window.alert('Progress imported successfully.');
+      } catch (error) {
+        window.alert('That file is not a valid course progress export.');
+      }
+    });
+    reader.readAsText(file);
+  }
+
+  window.clearProgress = function() {
+    if (!window.confirm('Reset all saved course progress in this browser? This cannot be undone unless you exported a backup.')) return;
+    localStorage.removeItem(STORAGE_KEY);
+    localStorage.removeItem(LEGACY_STORAGE_KEY);
+    localStorage.removeItem(LAST_PAGE_KEY);
+    window.location.reload();
+  };
+  window.exportCourseProgress = exportProgress;
+  window.importCourseProgress = importProgress;
+
+  document.addEventListener('DOMContentLoaded', function() {
+    const lesson = currentLesson();
+    saveLastPage(lesson);
+    showResumeBanner();
+    addLessonContract(lesson);
+    addMasteryCheckpoint(lesson);
+    syncLegacyTaskCheckboxes();
+    syncProgressUI();
+
+    const exportButton = document.getElementById('export-progress');
+    const importInput = document.getElementById('import-progress');
+    if (exportButton) exportButton.addEventListener('click', exportProgress);
+    if (importInput) importInput.addEventListener('change', event => importProgress(event.target.files[0]));
+  });
+})();
+</script>
+<style>
+.quiz-container {
+  border: 1px solid #c9d1dc;
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin: 2rem 0;
+  background-color: #f8f9fa;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.quiz-header {
+  font-weight: 600;
+  color: #495057;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.quiz-header i {
+  color: #0d6efd;
+}
+
+.quiz-fieldset {
+  border: 0;
+  margin: 0;
+  min-width: 0;
+  padding: 0;
+}
+
+.quiz-question {
+  color: #263238;
+  float: none;
+  font-size: 1.1rem;
+  line-height: 1.45;
+  margin-bottom: 1rem;
+  padding: 0;
+  width: 100%;
+  font-weight: 500;
+}
+
+.quiz-options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.quiz-option {
+  align-items: flex-start;
+  border: 1px solid #dee2e6;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  gap: 0.75rem;
+  line-height: 1.45;
+  min-height: 44px;
+  padding: 0.75rem 1rem;
+  transition: all 0.2s ease;
+  background-color: white;
+}
+
+.quiz-option:hover {
+  background-color: #e9ecef;
+  border-color: #adb5bd;
+}
+
+.quiz-option.selected,
+.quiz-option:has(.quiz-radio:checked) {
+  background-color: #e7f1ff;
+  border-color: #0d6efd;
+  color: #084298;
+}
+
+.quiz-option.correct {
+  background-color: #d1e7dd;
+  border-color: #198754;
+  color: #0f5132;
+}
+
+.quiz-option.incorrect {
+  background-color: #f8d7da;
+  border-color: #dc3545;
+  color: #842029;
+}
+
+.quiz-radio {
+  flex: 0 0 auto;
+  height: 1.25rem;
+  margin: 0.08rem 0 0;
+  width: 1.25rem;
+}
+
+.quiz-option:has(.quiz-radio:focus-visible) {
+  outline: 3px solid #0b5cab;
+  outline-offset: 3px;
+}
+
+.quiz-option-text {
+  min-width: 0;
+}
+
+.quiz-result-label {
+  display: block;
+  font-size: 0.86rem;
+  font-weight: 700;
+  margin-top: 0.25rem;
+}
+
+.quiz-feedback {
+  margin-top: 1rem;
+  padding: 0.75rem;
+  border-radius: 6px;
+  font-size: 0.95rem;
+}
+
+.quiz-feedback[hidden] {
+  display: none;
+}
+
+.quiz-feedback.correct {
+  background-color: #d1e7dd;
+  color: #0f5132;
+  display: block;
+}
+
+.quiz-feedback.incorrect {
+  background-color: #f8d7da;
+  color: #842029;
+  display: block;
+}
+
+.check-btn {
+  margin-top: 1rem;
+  min-height: 44px;
+  padding: 0.65rem 1rem;
+  background-color: #0d6efd;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.check-btn:hover {
+  background-color: #0b5ed7;
+}
+
+.check-btn:focus-visible {
+  outline: 3px solid #0b5cab;
+  outline-offset: 3px;
+}
+
+.check-btn:disabled {
+  background-color: #6c757d;
+  cursor: not-allowed;
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const quizzes = document.querySelectorAll('.quiz-container');
+
+  quizzes.forEach((quiz, quizIndex) => {
+    const question = quiz.querySelector('.quiz-question');
+    const optionsContainer = quiz.querySelector('.quiz-options');
+    const checkBtn = quiz.querySelector('.check-btn');
+    const feedback = quiz.querySelector('.quiz-feedback');
+    const correctIndex = parseInt(quiz.dataset.correctIndex);
+    if (!question || !optionsContainer || !checkBtn || !feedback) return;
+
+    const quizId = 'knowledge-check-' + (quizIndex + 1);
+    const header = quiz.querySelector('.quiz-header');
+    const icon = quiz.querySelector('.quiz-header i');
+    const fieldset = document.createElement('fieldset');
+    const legend = document.createElement('legend');
+    const originalOptions = Array.from(optionsContainer.querySelectorAll('.quiz-option'));
+    const feedbackId = quizId + '-feedback';
+
+    quiz.dataset.quizReady = 'true';
+    if (header) {
+      header.id = quizId + '-header';
+    }
+    if (icon) icon.setAttribute('aria-hidden', 'true');
+
+    fieldset.className = 'quiz-fieldset';
+    legend.className = 'quiz-question';
+    while (question.firstChild) legend.appendChild(question.firstChild);
+    question.replaceWith(fieldset);
+    fieldset.append(legend, optionsContainer);
+
+    originalOptions.forEach((option, optionIndex) => {
+      const optionId = quizId + '-option-' + (optionIndex + 1);
+      const label = document.createElement('label');
+      const radio = document.createElement('input');
+      const text = document.createElement('span');
+
+      label.className = option.className;
+      label.htmlFor = optionId;
+      radio.className = 'quiz-radio';
+      radio.type = 'radio';
+      radio.name = quizId;
+      radio.id = optionId;
+      radio.value = String(optionIndex);
+      text.className = 'quiz-option-text';
+      while (option.firstChild) text.appendChild(option.firstChild);
+      label.append(radio, text);
+      option.replaceWith(label);
+    });
+
+    const options = Array.from(optionsContainer.querySelectorAll('.quiz-option'));
+    const radios = Array.from(optionsContainer.querySelectorAll('.quiz-radio'));
+    checkBtn.type = 'button';
+    checkBtn.disabled = true;
+    checkBtn.setAttribute('aria-describedby', feedbackId);
+    feedback.id = feedbackId;
+    feedback.hidden = true;
+    feedback.setAttribute('role', 'status');
+    feedback.setAttribute('aria-live', 'polite');
+    feedback.setAttribute('aria-atomic', 'true');
+    let selectedIndex = -1;
+
+    radios.forEach((radio, index) => {
+      radio.addEventListener('change', () => {
+        if (radio.disabled) return;
+        options.forEach(opt => opt.classList.remove('selected'));
+        options[index].classList.add('selected');
+        selectedIndex = index;
+        checkBtn.disabled = false;
+      });
+    });
+
+    checkBtn.addEventListener('click', () => {
+      if (selectedIndex === -1) return;
+
+      checkBtn.disabled = true;
+      checkBtn.textContent = 'Submitted';
+      radios.forEach(radio => radio.disabled = true);
+
+      const selectedOption = options[selectedIndex];
+      const correctOption = options[correctIndex];
+
+      function addResultLabel(option, message) {
+        const result = document.createElement('span');
+        result.className = 'quiz-result-label';
+        result.textContent = message;
+        option.querySelector('.quiz-option-text').appendChild(result);
+      }
+
+      if (selectedIndex === correctIndex) {
+        selectedOption.classList.add('correct');
+        selectedOption.classList.remove('selected');
+        addResultLabel(selectedOption, 'Your answer — correct');
+        feedback.textContent = quiz.dataset.correctFeedback || "Correct! Great job.";
+        feedback.className = 'quiz-feedback correct';
+      } else {
+        selectedOption.classList.add('incorrect');
+        selectedOption.classList.remove('selected');
+        correctOption.classList.add('correct');
+        addResultLabel(selectedOption, 'Your answer — incorrect');
+        addResultLabel(correctOption, 'Correct answer');
+        feedback.textContent = quiz.dataset.incorrectFeedback || "Not quite. The correct answer is highlighted.";
+        feedback.className = 'quiz-feedback incorrect';
+      }
+      feedback.hidden = false;
+    });
+  });
+});
+</script>
+<script>
+(function() {
+  'use strict';
+
+  function normalisePath(path) {
+    if (!path) return '/';
+    const clean = path.split('#')[0].split('?')[0].toLowerCase();
+    return clean.endsWith('/') ? clean + 'index.html' : clean;
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    const path = normalisePath(window.location.pathname);
+    const dayMatch = path.match(/\/(monday|tuesday|wednesday|thursday|capstone)\//);
+    if (!dayMatch || /\/(monday|tuesday|wednesday|thursday|capstone)\/index\.html$/.test(path)) return;
+
+    const day = dayMatch[1];
+    const dayLabel = day.charAt(0).toUpperCase() + day.slice(1);
+    const manifestLessons = window.BOOTCAMP_COURSE && Array.isArray(window.BOOTCAMP_COURSE.lessons)
+      ? window.BOOTCAMP_COURSE.lessons
+          .filter(item => {
+            const itemDay = String(item.day || '').toLowerCase();
+            return itemDay === day || (day === 'monday' && itemDay === 'prework');
+          })
+          .map(item => normalisePath('/' + String(item.path || item.href || '').replace(/^\/+/, '')))
+      : [];
+
+    let lessons = manifestLessons;
+    if (!lessons.length) {
+      lessons = Array.from(document.querySelectorAll('.sidebar a[href]'))
+        .map(link => {
+          try { return normalisePath(new URL(link.getAttribute('href'), window.location.href).pathname); }
+          catch (error) { return null; }
+        })
+        .filter(candidate => candidate && candidate.includes('/' + day + '/'))
+        .filter(candidate => !candidate.endsWith('/' + day + '/index.html'));
+      lessons = lessons.filter((candidate, index) => lessons.indexOf(candidate) === index);
+    }
+
+    const currentIndex = lessons.findIndex(candidate => path === candidate || path.endsWith(candidate));
+    if (currentIndex < 0) return;
+
+    const title = document.querySelector('h1.title, .quarto-title h1');
+    if (!title) return;
+    const total = lessons.length;
+    const percent = Math.round(((currentIndex + 1) / total) * 100);
+    const noun = day === 'capstone' ? 'Target' : 'Lesson';
+
+    const chip = document.createElement('div');
+    chip.className = 'day-progress-chip';
+    chip.setAttribute('role', 'status');
+    chip.setAttribute('aria-label', dayLabel + ', ' + noun + ' ' + (currentIndex + 1) + ' of ' + total);
+
+    const label = document.createElement('span');
+    label.textContent = dayLabel + ' · ' + noun + ' ' + (currentIndex + 1) + ' of ' + total;
+    const bar = document.createElement('span');
+    bar.className = 'dpc-bar';
+    bar.setAttribute('aria-hidden', 'true');
+    const fill = document.createElement('span');
+    fill.className = 'dpc-fill';
+    fill.style.width = percent + '%';
+    bar.appendChild(fill);
+    chip.append(label, bar);
+    title.insertAdjacentElement('afterend', chip);
+  });
+})();
+</script>
+<button id="back-to-top" aria-label="Back to top" title="Back to top">↑</button>
+<script>
+(function() {
+  const btn = document.getElementById('back-to-top');
+  if (!btn) return;
+  const threshold = 400;
+  function update() {
+    if (window.scrollY > threshold) btn.classList.add('visible');
+    else btn.classList.remove('visible');
+  }
+  window.addEventListener('scroll', update, { passive: true });
+  btn.addEventListener('click', function() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+  update();
+})();
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button,
+          { trigger: "manual",
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config);
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined;
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              }
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            }
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+<script src="../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

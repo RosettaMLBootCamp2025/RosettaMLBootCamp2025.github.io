@@ -3,21 +3,25 @@ title: "IFNAR2 Target Deep Dive"
 subtitle: "Cytokine Receptor Modulation"
 ---
 
+<!-- canonical-target: ifnar2; pdb=3SE3; chain=C; hotspots=C44,C46,C48,C80,C100,C103 -->
+
 ## Biological Context
 
 **Interferon Alpha/Beta Receptor 2 (IFNAR2)** is one of the two receptor subunits that recognize Type I interferons (IFN-α, IFN-β). Type I interferons are powerful antivirals and immune regulators — cells secrete them in response to viral infection, and signaling through the IFNAR1/IFNAR2 complex triggers hundreds of interferon-stimulated genes.
 
 **Why it matters:** Modulating this pathway matters in two opposite directions. In **antiviral therapy** (COVID-19, hepatitis C) you want to *enhance* or mimic IFN signaling. In **autoimmune disease** (lupus, interferonopathies) you want to *block* it — and a well-designed IFNAR2 binder that competes with natural IFN-α would do exactly that. IFNAR2's interface with IFN-α is one of the most thoroughly characterized cytokine-receptor interactions in the literature, which makes it an unusually well-instrumented target for *de novo* design.
 
-**The Goal:** Design a binder that occupies the IFN-α binding face of IFNAR2. Depending on orientation, your binder could block signaling (antagonist) or potentially trigger it (agonist).
+**The Goal:** Design a binder that occupies the IFN-α binding face of IFNAR2 as an antagonist hypothesis. A monovalent IFNAR2 binder is not an agonist merely because of its orientation; agonism would require productive IFNAR1 recruitment and receptor geometry, followed by experimental demonstration.
 
 ## Interactive Structure
 
-The viewer below shows **IFNAR2 (Chain B)** in complex with **IFN-α2 (Chain A)** and **IFNAR1 (Chain C)** — the ternary signaling complex.
+The viewer below shows **IFNAR2 (Chain C)** in complex with **IFN-α2 (Chain B)** and **IFNAR1 (Chain A)** — the ternary signaling complex.
 
 <div class="molstar-container">
 <pdbe-molstar id="ifnar2-viewer" molecule-id="3se3" hide-controls="true" bg-color-r="255" bg-color-g="255" bg-color-b="255"></pdbe-molstar>
 </div>
+
+<p class="molstar-alternative"><strong>Non-interactive alternative:</strong> The target-specification table below describes the relevant chains and interface residues. You can also <a href="https://www.rcsb.org/structure/3SE3">open the 3SE3 structure record</a> or <a href="https://files.rcsb.org/download/3SE3.pdb">download its PDB coordinates</a>. Manipulating the 3D viewer is optional.</p>
 
 ::: {.callout-tip}
 ## Viewer Controls
@@ -28,7 +32,7 @@ The viewer below shows **IFNAR2 (Chain B)** in complex with **IFN-α2 (Chain A)*
 
 ## Design Mission
 
-Create a binder that targets the **IFN-α binding interface** of IFNAR2 — the surface that in 3SE3 is buried by chain A.
+Create a binder that targets the **IFN-α binding interface** of IFNAR2 — the surface that in 3SE3 is buried by chain B.
 
 ### Target Specifications
 
@@ -36,27 +40,28 @@ Create a binder that targets the **IFN-α binding interface** of IFNAR2 — the 
 |:---|:---|
 | **Target Name** | IFNAR2 (Interferon alpha/beta receptor 2, extracellular domain) |
 | **PDB ID** | [`3SE3`](https://www.rcsb.org/structure/3SE3) |
-| **Target Chain** | Chain B |
-| **Binder to mimic** | Chain A (IFN-α2) |
-| **Published interface hotspots** | `P54, Y57, N58, S61–F64, N65, L66, S68, K70, D82, Y85, T86, Y89, Q90, L92, N93, E96, I116, L117, R120, K121, F123, Q124, T127` |
-| **Key "hot" residues** | **T44–K48 region, W100, I103, M148** are the classic energetic hot spots from alanine-scanning; in 3SE3 specifically, **L66, Y89, R120, F123, Q124** dominate direct contacts with IFN-α2 |
+| **Target Chain** | Chain C |
+| **Natural partner to mimic** | Chain B (IFN-α2) |
+| **Entry caveat** | 4.0 Å structure; IFN-α2 chain B is an engineered H58Y/E59N/Q62S variant, while IFNAR2 chain C is unmutated |
+| **Interface-derived steering set** | `C44,C46,C48,C80,C100,C103` (T44, M46, K48, V80, W100, I103) |
+| **Structural rationale** | T44/M46/K48 sample the IFN-α2 Arg33 anchor region; M46/T44/V80 and W100/I103 span two hydrophobic interaction clusters |
 
 ::: {.callout-note}
 ## About the residue list
-These are every IFNAR2 residue with any heavy atom within 5 Å of IFN-α2 in 3SE3. The IFN/IFNAR2 interface has been mapped by mutagenesis for decades (Roisman 2001, Thomas 2011) — focus hotspots on the tryptophan/aromatic cluster (Y85, Y89, W100, F123) where single mutations substantially impact binding.
+The six recommended residues are approximate, structure-derived contacts at the IFN-α2/IFNAR2 interface in 3SE3 and deliberately sample both interface lobes. At 4.0 Å, a distance cutoff should not be treated as atomic precision. These are **interface-derived steering residues**, not independently validated binder hotspots or a guarantee of binding. Verify chain and residue numbering in the exact prepared coordinates before launching a design run.
 :::
 
 ### Strategy Tips
 
 1. **Download PDB [`3SE3`](https://files.rcsb.org/download/3SE3.pdb).**
-2. **Clean the structure:** Keep Chain B only (IFNAR2). Remove IFN-α2 (A) and IFNAR1 (C).
-3. **Define hotspots:** For **RFdiffusion** / **BindCraft**, pass 4–6 of the "hot" residues (e.g., `B66,B89,B120,B123,B124`). The aromatic residues contribute outsized affinity; keep them in the hotspot set.
+2. **Clean the structure:** Keep Chain C only (IFNAR2). Remove IFN-α2 (B) and IFNAR1 (A).
+3. **Define steering residues:** For **RFdiffusion** / **BindCraft**, begin with `C44,C46,C48,C80,C100,C103`, then test whether smaller subsets change pose diversity or interface coverage.
 4. **Consider orientation:** IFN-α2 approaches IFNAR2 roughly along one face. Your binder must approach from the same general direction to avoid steric clash with IFNAR1 in a cellular context.
 
 ### Reference
 
 - Thomas, C. et al. (2011). *Structural linkage between ligand discrimination and receptor activation by type I interferons.* Cell **146**, 621–632. [doi:10.1016/j.cell.2011.06.048](https://doi.org/10.1016/j.cell.2011.06.048) — primary citation for 3SE3.
-- Roisman, L.C. et al. (2001). *Mutational analysis of the IFNAR2 binding site.* PNAS **98**, 13231–13236.
+- Roisman, L.C. et al. (2001). *Structure of the interferon-receptor complex determined by distance constraints from double-mutant cycles and flexible docking.* PNAS **98**, 13231–13236. [doi:10.1073/pnas.221290398](https://doi.org/10.1073/pnas.221290398)
 
 ---
 

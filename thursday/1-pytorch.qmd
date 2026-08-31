@@ -138,6 +138,17 @@ In Colab, go to **Runtime → Change runtime type → T4 GPU** before running th
 5. **Every ML tool this week is a PyTorch model under the hood** — reading one codebase teaches you how to navigate them all.
 :::
 
+## Check Your Understanding
+
+**Scenario:** A prediction script works once, but the second run immediately runs out of GPU memory. The model and input size did not change. Name two likely PyTorch causes and one check you would make before requesting a larger GPU.
+
+<details class="model-answer">
+<summary>Compare your reasoning with an expert response</summary>
+
+Two common causes are retaining tensors that still reference an autograd graph and keeping outputs or model copies on the GPU between runs. Confirm that inference uses `model.eval()` and `torch.no_grad()` (or `torch.inference_mode()`), release references to large tensors, and inspect allocated versus reserved memory with `torch.cuda.memory_summary()`. A larger GPU may hide the leak, but it does not fix it.
+
+</details>
+
 ## Questions to Consider
 
 After working through the notebook, think about:

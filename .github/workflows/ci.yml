@@ -1,35 +1,24 @@
-name: Validate site
+name: Validate and publish site
 
 on:
   pull_request:
+  push:
+    branches:
+      - main
   workflow_dispatch:
 
 permissions:
   contents: read
 
 concurrency:
-  group: validate-${{ github.event.pull_request.number || github.ref }}
+  group: site-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 
 jobs:
-  build:
-    name: Render Quarto site
+  validate:
+    name: Validate rendered site
     runs-on: ubuntu-latest
-    timeout-minutes: 15
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
-
-      - name: Set up Quarto
-        uses: quarto-dev/quarto-actions/setup@8a96df13519ee81fd526f2dfca5962811136661b # v2.2.0
-
-      - name: Render site
-        run: quarto render
-
-  accessibility:
-    name: Accessibility smoke test
-    runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 30
     steps:
       - name: Checkout repository
         uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
@@ -43,19 +32,70 @@ jobs:
           node-version: 24
           cache: npm
 
-      - name: Install accessibility tooling
+      - name: Install site test tooling
         run: npm ci
 
-      - name: Install browser for accessibility testing
+      - name: Install headless browser
         run: npx puppeteer browsers install chrome-headless-shell
+
+      - name: Validate course manifests and generated files
+        run: python3 scripts/validate_course_data.py
 
       - name: Render site
         run: quarto render
 
-      - name: Check representative pages against WCAG 2.1 AA
+      - name: Validate rendered links and resources
+        run: python3 scripts/check_rendered_site.py
+
+      - name: Run full accessibility and responsive suite
         run: |
           python3 -m http.server 8000 --directory _site >"${RUNNER_TEMP}/quarto-site.log" 2>&1 &
           site_server_pid=$!
           trap 'kill "$site_server_pid" 2>/dev/null || true' EXIT
           curl --retry 10 --retry-connrefused --retry-delay 1 --fail --silent --show-error http://127.0.0.1:8000/ >/dev/null
           npm run test:accessibility
+
+      - name: Preserve validated site for deployment
+        if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: validated-site
+          path: _site/
+          if-no-files-found: error
+          include-hidden-files: true
+          retention-days: 1
+
+  deploy:
+    name: Deploy validated site
+    needs: validate
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
+
+      - name: Set up Quarto
+        uses: quarto-dev/quarto-actions/setup@8a96df13519ee81fd526f2dfca5962811136661b # v2.2.0
+
+      - name: Remove the checked-in render
+        run: |
+          test -n "${GITHUB_WORKSPACE}"
+          rm -rf -- "${GITHUB_WORKSPACE}/_site"
+          mkdir -- "${GITHUB_WORKSPACE}/_site"
+
+      - name: Download validated site
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          name: validated-site
+          path: _site
+
+      - name: Publish validated site to GitHub Pages
+        uses: quarto-dev/quarto-actions/publish@8a96df13519ee81fd526f2dfca5962811136661b # v2.2.0
+        with:
+          target: gh-pages
+          render: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

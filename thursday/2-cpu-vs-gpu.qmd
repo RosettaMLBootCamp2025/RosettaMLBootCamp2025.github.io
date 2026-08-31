@@ -68,6 +68,11 @@ You'll time each method on both CPU and GPU across varying data sizes to see the
 Google Colab provides free access to GPUs, which is essential for this activity. Click "Runtime" → "Change runtime type" → Select "T4 GPU" to enable GPU acceleration.
 :::
 
+::: {.callout-note}
+## CPU-only fallback
+If a GPU runtime is unavailable, run the notebook on CPU. It will record GPU values as `N/A` instead of failing. Use the sample timing table below to explain the expected crossover, then state explicitly that you predicted rather than measured GPU behavior. Maintainers can check notebook structure with `python scripts/validate_course_data.py`; inside any environment with PyTorch, add `--smoke-notebook` to run tiny CPU-only operations without requesting a GPU.
+:::
+
 ---
 
 ## Key Concepts
@@ -169,12 +174,23 @@ When you run the notebook, you should observe:
 4. **Profile your code** - Measure before assuming what's slow
 :::
 
+## Check Your Understanding
+
+**Prediction:** You time a dot product with 100 elements and find that the GPU is slower than the CPU. Does this show that GPU acceleration is broken? What experiment would distinguish transfer/startup overhead from an implementation error?
+
+<details class="model-answer">
+<summary>Compare your reasoning with an expert response</summary>
+
+No. A tiny operation may finish on the CPU before GPU transfer and kernel-launch overhead can be recovered. Repeat the benchmark across increasing vector sizes, warm up the GPU first, synchronize before stopping the timer, and compare both end-to-end timing and compute-only timing. A crossover at larger sizes supports the overhead explanation; consistently poor compute-only performance suggests a benchmarking or device-placement problem.
+
+</details>
+
 ## Questions to Consider
 
 After completing the activity, think about:
 
 1. At what data size did GPU start outperforming CPU for vectorized operations?
-2. Why does the for loop show "N/A" for GPU times in the notebook?
+2. If every GPU time shows `N/A`, what hardware check should you perform, and how can you still complete the analysis honestly?
 3. How might these principles apply to running AlphaFold2 or other ML tools?
 4. What would happen if you ran the same experiment with matrix multiplication instead of dot products?
 

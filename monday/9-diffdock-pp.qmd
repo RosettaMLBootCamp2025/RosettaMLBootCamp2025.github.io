@@ -13,6 +13,13 @@ DiffDock-PP ([paper](https://arxiv.org/abs/2304.03889), [code](https://github.co
 
 **Related Tools**: For protein-ligand docking, see [PLACER](10-placer.qmd). For flexible ligand binding with ensemble generation, see [PLACER](10-placer.qmd). For structure prediction of complexes, see [Chai-1](7-chai1.qmd) or [Boltz-2](8-boltz2.qmd).
 
+<!-- course-tool-pin: diffdock-pp -->
+
+::: {.callout-note}
+## Recorded course pin
+The commands below use DiffDock-PP commit `25a28900736c0730821e45265ee8e409751c358a` with the course's legacy PyTorch 1.13/CUDA 11.6 environment (reviewed 2026-08-30). Use an isolated environment; if that CUDA stack is unavailable, take the no-compute docking-analysis route in [Reproducible Setup & Compute Fallbacks](reproducibility.qmd).
+:::
+
 ## Resource Requirements
 
 | Resource | Minimum | Recommended | Notes |
@@ -46,6 +53,8 @@ module avail cuda
 ```bash
 git clone https://github.com/ketatam/DiffDock-PP.git
 cd DiffDock-PP
+git checkout --detach 25a28900736c0730821e45265ee8e409751c358a
+git submodule update --init --recursive
 ```
 
 2. Create a new environment:
@@ -230,4 +239,3 @@ python -c "import torch; print(torch.cuda.is_available())"
 - Verify input files exist and are formatted correctly
 - Ensure `storage/` directory was created
 :::
-

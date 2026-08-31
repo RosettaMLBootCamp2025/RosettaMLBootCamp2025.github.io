@@ -1,0 +1,111 @@
+---
+title: "Worked Capstone Selection Example"
+subtitle: "An illustrative evidence trail—not a validated binder"
+---
+
+::: {.callout-warning}
+## Illustrative data
+
+The candidate names and numerical results on this page are fictional. They demonstrate the expected reasoning and documentation pattern; they are not experimentally or computationally validated PD-L1 binders.
+:::
+
+## The design question
+
+**Mission:** design a small binder that approaches the PD-1-facing surface of PD-L1 while contacting a compact set of native-interface hotspots.
+
+**Chosen structure:** PD-L1 chain A from `4ZQK`.
+
+**Initial hotspots:** A56, A58, A113, A122, and A123.
+
+**Why these residues:** they form two nearby contact clusters on the observed PD-1 interface. Using both clusters encourages the generated binder to cover the intended face rather than attach to an unrelated exposed patch.
+
+## Run record
+
+The project notebook records:
+
+- Exact structure download URL and preparation commands
+- Hash of the cleaned target file
+- RFdiffusion release or commit and checkpoint
+- Full contig and hotspot configuration
+- Number of designs, seeds, GPU model, and run date
+- LigandMPNN and complex-prediction versions and commands
+
+The original files are stored under immutable run directories such as `runs/2025-07-18_hotspot_v1/`; summary figures are generated from those directories rather than edited manually.
+
+## First-pass backbone review
+
+Thirty hotspot-conditioned backbones were generated. The first filter removed:
+
+- 8 designs that did not contact both hotspot clusters
+- 5 with severe target or self clashes
+- 4 with extended or implausible binder topology
+- 3 near-duplicates that added little structural diversity
+
+Ten backbones advanced to sequence design. The report includes a montage of all 30, not only the successful ten, so the selection rate and common failure modes remain visible.
+
+## Candidate comparison
+
+Three candidates survived sequence design and complex prediction.
+
+### Candidate PDL1-A
+
+- Strong binder fold confidence
+- Compact interface and good hotspot coverage
+- Low predicted error within each chain
+- High uncertainty in the relative chain orientation
+
+**Interpretation:** attractive monomer and interface geometry, but the inter-chain uncertainty prevents a confident advance decision.
+
+### Candidate PDL1-B
+
+- Slightly lower binder confidence than A
+- Consistent interface orientation across multiple predictions
+- Contacts four of five intended hotspots
+- One buried unsatisfied polar group near the interface
+
+**Interpretation:** the most reproducible interface, but the polar defect needs redesign or explicit energetic evaluation.
+
+### Candidate PDL1-C
+
+- Highest single summary score
+- Contacts only one hotspot cluster
+- Several models rotate the binder toward a different PD-L1 surface
+- Sequence contains a hydrophobic surface patch away from the interface
+
+**Interpretation:** the headline score is misleading. The geometry does not support the original competitive-binding mission.
+
+## Selection memo
+
+**Advance PDL1-B conditionally.** It is not the highest-scoring candidate, but it has the strongest agreement across independent complex predictions and best preserves the intended interface geometry. Before additional expensive computation, redesign the buried polar position, generate a small sequence neighborhood, and test whether the interface orientation remains stable.
+
+**Hold PDL1-A as a backup.** Its fold and contacts are promising, but chain-orientation uncertainty requires more sampling.
+
+**Reject PDL1-C.** The high summary score does not compensate for missing the design mission and exhibiting a potential solubility liability.
+
+## What makes this a strong submission
+
+The example does not claim that PDL1-B binds. It does five more defensible things:
+
+1. Connects every conclusion to a saved run and identifiable input.
+2. Shows failures and attrition, not only finalists.
+3. Separates fold confidence from interface confidence.
+4. Chooses a candidate using the biological mission rather than one number.
+5. Ends with the uncertainty and next test that could change the decision.
+
+## Your turn
+
+Use the same pattern for your target:
+
+- State the design mission.
+- Define selection criteria before looking at final scores.
+- Preserve rejected designs and explain why they failed.
+- Compare at least two plausible finalists.
+- Make a conditional decision and name the next test.
+
+---
+
+::: {.d-flex .justify-content-between}
+[← Evidence guide and rubric](rubric.qmd)
+
+[Capstone overview](index.qmd)
+:::

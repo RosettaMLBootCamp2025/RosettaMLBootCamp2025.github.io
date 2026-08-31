@@ -14,6 +14,11 @@ This assignment ensures you have properly set up your development environment an
 3. Verify your installation with a Python script
 4. Commit and push your verification results to GitHub
 
+::: {.callout-note}
+## General environment vs. model environments
+This is a lightweight readiness environment, not a single environment for every ML model. Use the exact, isolated tool environments and version records described in [Reproducible Setup & Compute Fallbacks](reproducibility.qmd). After this environment passes verification, save `conda env export --from-history` and `conda list --explicit` outputs with your result.
+:::
+
 ## Instructions
 
 ### Step 1: Install Anaconda (or Alternative)

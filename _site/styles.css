@@ -1,7 +1,6 @@
 /* css styles */
 
-/* ---------- Typography: Google Sans ---------- */
-@import url('https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Google+Sans+Mono:wght@400;500&display=swap');
+/* ---------- Typography ---------- */
 
 :root {
   --aggie-blue: #022851;
@@ -543,4 +542,499 @@ h3.day-card a {
   margin-top: 30px;
   padding-top: 20px;
   border-top: 1px solid #ddd;
+}
+
+/* ---------- Accessible interaction and responsive scientific content ---------- */
+*:focus {
+  scroll-margin-block: 5rem;
+}
+
+:where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+  outline: 3px solid #0b5cab;
+  outline-offset: 3px;
+}
+
+.btn,
+button,
+.navbar .nav-link,
+.navbar-toggler,
+.sidebar-navigation .sidebar-link,
+details > summary {
+  min-height: 44px;
+}
+
+.btn,
+button,
+.navbar .nav-link,
+.navbar-toggler,
+.sidebar-navigation .sidebar-link {
+  align-items: center;
+  display: inline-flex;
+}
+
+#back-to-top {
+  height: 44px;
+  width: 44px;
+}
+
+.page-columns,
+.quarto-container,
+main.content,
+main.content > *,
+main.content section,
+.column-body,
+.column-page,
+.column-screen {
+  min-width: 0;
+}
+
+img,
+svg,
+video,
+canvas,
+iframe {
+  max-width: 100%;
+}
+
+figure,
+.cell,
+.cell-output,
+.cell-output-display,
+.sourceCode {
+  max-width: 100%;
+  min-width: 0;
+}
+
+/* Keep a wide table scrollable inside the article instead of widening the page. */
+main.content table {
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  width: 100%;
+  -webkit-overflow-scrolling: touch;
+}
+
+main.content table caption {
+  display: table-caption;
+  text-align: left;
+}
+
+main.content th,
+main.content td {
+  overflow-wrap: break-word;
+  vertical-align: top;
+}
+
+/* Protein sequences and long commands can otherwise create multi-screen overflow. */
+:where(p, li, dd, td, th) > code {
+  overflow-wrap: anywhere;
+  white-space: normal;
+  word-break: break-word;
+}
+
+main.content a {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+main.content :where(p, li, dd, td) a:not(.btn) {
+  text-decoration: underline;
+  text-decoration-thickness: 0.08em;
+  text-underline-offset: 0.16em;
+}
+
+div.sourceCode,
+pre {
+  max-width: 100%;
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
+div.sourceCode > pre {
+  overflow-x: visible;
+}
+
+/* The generated syntax palette includes several colors that sit just below AA
+   contrast on the light code background. Keep useful highlighting with a
+   smaller, verified high-contrast palette. */
+div.sourceCode code,
+div.sourceCode code span {
+  color: #1f2937 !important;
+}
+
+div.sourceCode code :where(.kw, .cf, .op) {
+  color: #6b21a8 !important;
+}
+
+div.sourceCode code :where(.st, .vs) {
+  color: #075d35 !important;
+}
+
+div.sourceCode code :where(.at, .dv, .bn, .fl) {
+  color: #7c2d12 !important;
+}
+
+div.sourceCode code :where(.fu, .ex, .bu) {
+  color: #064f96 !important;
+}
+
+div.sourceCode code .co {
+  color: #4b5563 !important;
+}
+
+main.content blockquote,
+main.content blockquote *,
+main.content mjx-container,
+main.content mjx-container * {
+  color: #374151 !important;
+  opacity: 1 !important;
+}
+
+.sidebar-navigation .sidebar-link,
+.sidebar-navigation .sidebar-link .menu-text {
+  color: #364152;
+}
+
+:where(table, pre, div.sourceCode, .mermaid)[tabindex="0"]:focus-visible {
+  outline: 3px solid #0b5cab;
+  outline-offset: 3px;
+}
+
+.navbar-container,
+.navbar-brand-container,
+.navbar-brand {
+  min-width: 0;
+}
+
+.navbar-brand-container {
+  flex: 1 1 auto;
+  margin-left: 0 !important;
+  margin-right: 0.5rem !important;
+}
+
+.navbar-brand {
+  max-width: 100%;
+  white-space: normal;
+}
+
+.navbar-title {
+  display: block;
+  line-height: 1.15;
+  max-width: 100%;
+  overflow: visible;
+  text-overflow: clip;
+  white-space: normal;
+}
+
+.module-nav,
+.page-navigation {
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.workshop-companion details > summary,
+details.lesson-section > summary {
+  align-items: center;
+  display: flex;
+  padding-block: 0.55rem;
+}
+
+.workshop-companion details iframe {
+  aspect-ratio: 16 / 9;
+  height: auto;
+  min-height: min(280px, 65vh);
+}
+
+.media-alternative {
+  background: #ffffff;
+  border-left: 3px solid #7a8da6;
+  color: #364152;
+  font-size: 0.9rem;
+  line-height: 1.45;
+  margin: 0.65rem 0 0;
+  padding: 0.55rem 0.7rem;
+}
+
+.media-alternative a {
+  color: #064f96;
+  font-weight: 500;
+  text-decoration: underline;
+  text-decoration-thickness: 0.08em;
+  text-underline-offset: 0.16em;
+}
+
+/* Mermaid uses low-contrast translucent edge-label backgrounds by default. */
+.mermaid,
+.mermaid-js {
+  max-width: 100%;
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
+.mermaid svg,
+svg.mermaid-js {
+  height: auto;
+  max-width: 100%;
+}
+
+.mermaid .edgeLabel,
+.mermaid .label,
+.mermaid .nodeLabel,
+.mermaid-js .edgeLabel,
+.mermaid-js .label,
+.mermaid-js .nodeLabel,
+.mermaid-js .nodeLabel p {
+  background-color: #f1f5f9 !important;
+  color: #1f2937 !important;
+}
+
+.mermaid .edgeLabel rect,
+.mermaid .labelBkg,
+.mermaid-js .edgeLabel rect,
+.mermaid-js .labelBkg {
+  fill: #ffffff !important;
+  opacity: 1 !important;
+}
+
+/* ---------- Manifest-driven lesson contract and mastery check ---------- */
+.lesson-contract {
+  background: #f7f9fc;
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--aggie-blue);
+  border-radius: 8px;
+  color: var(--ink);
+  margin: 1rem 0 1.5rem;
+  padding: 1rem 1.1rem;
+}
+
+.lesson-contract-eyebrow {
+  color: var(--aggie-blue);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  margin: 0 0 0.75rem;
+  text-transform: uppercase;
+}
+
+.lesson-contract-grid {
+  display: grid;
+  gap: 0.85rem 1.25rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.lesson-contract-item {
+  display: grid;
+  gap: 0.2rem;
+  min-width: 0;
+}
+
+.lesson-contract-label {
+  color: #4f5d70;
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.lesson-contract-prerequisites {
+  border-top: 1px solid var(--border);
+  margin: 0.9rem 0 0;
+  padding-top: 0.8rem;
+}
+
+.mastery-checkpoint {
+  background: #f4f8f5;
+  border: 1px solid #9bbda6;
+  border-left: 4px solid #2a6f3f;
+  border-radius: 8px;
+  margin: 2rem 0 1.5rem;
+  padding: 1.1rem 1.2rem;
+}
+
+.mastery-checkpoint h2 {
+  color: #164c29;
+  font-size: 1.3rem;
+  margin-top: 0;
+}
+
+.mastery-checkpoint-label,
+.module-task {
+  align-items: flex-start;
+  cursor: pointer;
+  display: inline-flex;
+  gap: 0.7rem;
+  line-height: 1.45;
+  min-height: 44px;
+  padding-block: 0.55rem;
+}
+
+.mastery-checkpoint-label {
+  background: #ffffff;
+  border: 1px solid #b7cabc;
+  border-radius: 6px;
+  display: flex;
+  padding: 0.75rem;
+}
+
+.mastery-checkbox,
+.module-checkbox {
+  accent-color: #176b36;
+  cursor: pointer;
+  flex: 0 0 auto;
+  height: 1.35rem;
+  margin: 0.05rem 0 0;
+  width: 1.35rem;
+}
+
+.mastery-checkpoint-label:has(.mastery-checkbox:focus-visible),
+.module-task:has(.module-checkbox:focus-visible) {
+  border-radius: 4px;
+  outline: 3px solid #0b5cab;
+  outline-offset: 3px;
+}
+
+.mastery-next-link {
+  margin-top: 1rem;
+  max-width: 100%;
+  white-space: normal;
+}
+
+/* ---------- Formative expert-response reveals ---------- */
+details.model-answer {
+  background: #f7f9fc;
+  border: 1px solid #b9c8da;
+  border-radius: 8px;
+  margin: 1rem 0 1.5rem;
+  padding: 0 1rem 0.8rem;
+}
+
+details.model-answer > summary {
+  align-items: center;
+  color: var(--aggie-blue);
+  cursor: pointer;
+  display: flex;
+  font-weight: 700;
+  list-style: none;
+  padding: 0.65rem 0;
+}
+
+details.model-answer > summary::-webkit-details-marker {
+  display: none;
+}
+
+details.model-answer > summary::before {
+  content: "▸";
+  display: inline-block;
+  margin-right: 0.5rem;
+  transition: transform 0.15s ease;
+}
+
+details.model-answer[open] > summary::before {
+  transform: rotate(90deg);
+}
+
+details.model-answer[open] {
+  background: #ffffff;
+}
+
+/* ---------- Optional molecular viewer and persistent text alternative ---------- */
+.molstar-container {
+  background: #f7f9fc;
+  border: 1px solid #b7c2cf;
+  border-radius: 8px;
+  height: clamp(320px, 62vh, 500px);
+  margin-bottom: 0.75rem;
+  max-width: 100%;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+}
+
+.molstar-container pdbe-molstar {
+  display: block;
+  height: 100%;
+  width: 100%;
+}
+
+.molstar-load-status {
+  align-items: center;
+  background: #f7f9fc;
+  display: flex;
+  inset: 0;
+  justify-content: center;
+  margin: 0;
+  padding: 1rem;
+  position: absolute;
+  text-align: center;
+  z-index: 2;
+}
+
+.molstar-container.molstar-failed pdbe-molstar {
+  visibility: hidden;
+}
+
+.molstar-container .msp-pdbe-link {
+  background-color: #ffffff !important;
+  color: #1f2937 !important;
+}
+
+.molstar-container .msp-task-state > div > div {
+  background-color: #ffffff !important;
+  color: #1f2937 !important;
+}
+
+.molstar-alternative {
+  background: #f7f9fc;
+  border-left: 4px solid var(--aggie-blue);
+  margin: 0 0 1rem;
+  padding: 0.75rem 0.9rem;
+}
+
+.molstar-alternative a {
+  text-decoration: underline;
+  text-decoration-thickness: 0.08em;
+  text-underline-offset: 0.16em;
+}
+
+@media (max-width: 700px) {
+  .lesson-contract-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .navbar-title {
+    font-size: clamp(0.8rem, 3.6vw, 1rem);
+  }
+
+  .molstar-container {
+    height: min(420px, 65vh);
+  }
+}
+
+@media (max-width: 420px) {
+  .course-hero,
+  .course-progress-panel,
+  .lesson-contract,
+  .mastery-checkpoint,
+  .quiz-container {
+    padding-left: 0.85rem;
+    padding-right: 0.85rem;
+  }
+
+  .navbar-title {
+    font-size: 0.8rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
 }

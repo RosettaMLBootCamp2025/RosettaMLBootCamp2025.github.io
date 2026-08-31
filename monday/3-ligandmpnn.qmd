@@ -27,6 +27,13 @@ LigandMPNN ([paper](https://www.biorxiv.org/content/10.1101/2023.12.22.573103v1)
 
 **Related Tools**: Use with [RFdiffusion2](4-rfdiffusion2.qmd) for backbone design, or [BindCraft](11-bindcraft.qmd) for complete binder design pipelines.
 
+<!-- course-tool-pin: ligandmpnn -->
+
+::: {.callout-note}
+## Recorded course pin
+The commands below use LigandMPNN commit `26ec57ac976ade5379920dbd43c7f97a91cf82de` (reviewed 2026-08-30). For validation status, environment-recording commands, and the equivalent no-compute artifact, see [Reproducible Setup & Compute Fallbacks](reproducibility.qmd).
+:::
+
 ## Resource Requirements
 
 | Resource | Minimum | Recommended | Notes |
@@ -60,6 +67,8 @@ nvcc --version      # For GPU support (optional)
 ```bash
 git clone https://github.com/dauparas/LigandMPNN.git
 cd LigandMPNN
+git checkout --detach 26ec57ac976ade5379920dbd43c7f97a91cf82de
+git submodule update --init --recursive
 ```
 
 2. Download the model parameters:
@@ -265,4 +274,3 @@ MVKLTAEGSE...
 - Use PyRosetta or Rosetta FastRelax
 - Or validate with your structure prediction tool of choice
 :::
-

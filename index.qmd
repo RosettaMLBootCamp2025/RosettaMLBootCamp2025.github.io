@@ -14,9 +14,10 @@ toc: false
   <div class="course-hero-copy">
     <p class="course-eyebrow">Self-paced course</p>
     <h2>Build judgment across modern ML protein design workflows.</h2>
-    <p>This bootcamp moves from environment setup to structure prediction, backbone generation, docking, and a binder-design capstone. Each section is meant to produce something concrete: a configured tool, a prediction, a comparison, or a design decision.</p>
+    <p>This asynchronous edition preserves the Monday–Thursday sequence of the original 2025 workshop. Move from environment setup to structure prediction, backbone generation, docking, and a binder-design capstone—producing evidence at every stage.</p>
     <div class="course-hero-actions">
-      <a class="btn btn-primary" href="monday/index.html">Start with Monday</a>
+      <a class="btn btn-primary" href="start-here.html">Choose your route</a>
+      <a class="btn btn-outline-primary" href="monday/index.html">Begin Monday</a>
       <a class="btn btn-outline-primary" href="capstone/index.html">Preview capstone</a>
     </div>
   </div>
@@ -25,21 +26,39 @@ toc: false
   </figure>
 </section>
 
-<section class="course-progress-panel" id="progress-summary" data-total-modules="42">
+<section class="course-progress-panel" id="progress-summary">
   <div>
     <p class="course-eyebrow">Your progress</p>
-    <h2>Course checkpoint tracker</h2>
-    <p>Completion is saved in this browser. Use it to keep track of setup and verification steps as you move through the course.</p>
+    <h2>Evidence checkpoint tracker</h2>
+    <p>Check an item only after its named artifact or decision exists. Progress is saved in this browser; it measures collected evidence, not time spent or model success.</p>
   </div>
   <div class="progress-readout">
-    <div><strong><span id="completed-count">0</span></strong> completed checkpoints</div>
+    <div><strong><span id="completed-count">0</span> / <span id="checkpoint-total">0</span></strong> required evidence checkpoints</div>
+    <div><strong><span id="optional-completed-count">0</span></strong> optional checkpoints completed</div>
     <div class="progress progress-dashboard">
-      <div id="progress-bar" class="progress-bar" role="progressbar" aria-label="Course completion" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>
+      <div id="progress-bar" class="progress-bar" role="progressbar" aria-label="Required evidence completion" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>
     </div>
-    <button onclick="clearProgress()" class="btn btn-outline-secondary btn-sm">Reset Progress</button>
+    <div class="d-flex flex-wrap gap-2">
+      <button id="export-progress" class="btn btn-outline-primary btn-sm" type="button">Export progress</button>
+      <button onclick="clearProgress()" class="btn btn-outline-secondary btn-sm" type="button">Reset progress</button>
+    </div>
+    <div>
+      <label for="import-progress" class="form-label">Import a progress file</label>
+      <input id="import-progress" class="form-control form-control-sm" type="file" accept="application/json,.json">
+    </div>
   </div>
 </section>
 ```
+
+## Three Ways Through the Course
+
+| Route | Use it when | Before the capstone | Estimated active effort* |
+|---|---|---|---|
+| **Core** | You want the shortest coherent learning path | Complete each day’s core “Read + Do + Check” work and evidence checkpoints | 16–24 hours |
+| **Full bootcamp** | You want the breadth of the original workshop | Add all recordings, activities, optional technical deep dives, and relevant installations | 35–55 hours |
+| **Reference** | You already have a workflow or a specific question | Jump by tool, concept, or target; follow the prerequisites named on that page | Variable |
+
+*Downloads, scheduler queues, and GPU runtime are additional. [Compare the routes, prerequisites, and compute options in Start Here →](start-here.qmd)
 
 ## Course Dashboard
 
@@ -48,7 +67,7 @@ toc: false
   <a class="course-card" href="monday/index.html">
     <img src="images/course-dashboard/hpc-setup-path.png" alt="HPC setup path showing login node, scheduler, GPU node, and verification commands.">
     <span class="course-card-body">
-      <span class="course-card-meta"><span>Monday</span><span>Pre-work + 13 modules</span></span>
+      <span class="course-card-meta"><span>Monday</span><span>4–8 core hours + installs</span></span>
       <span class="course-card-title">Tool Installation</span>
       <span class="course-card-text">Set up HPC access, CUDA, conda environments, containers, and the core prediction and design tools.</span>
       <span class="course-card-footer"><span class="course-badge required">Required foundation</span><span>Open Monday -></span></span>
@@ -58,7 +77,7 @@ toc: false
   <a class="course-card" href="tuesday/index.html">
     <img src="images/course-dashboard/prediction-confidence.png" alt="Structure prediction confidence dashboard with a pLDDT profile and PAE heatmap.">
     <span class="course-card-body">
-      <span class="course-card-meta"><span>Tuesday</span><span>4 modules</span></span>
+      <span class="course-card-meta"><span>Tuesday</span><span>5–7 core hours + jobs</span></span>
       <span class="course-card-title">Structure Prediction</span>
       <span class="course-card-text">Use PyMOL, AlphaFold2, and ESMFold to predict structures and interpret confidence instead of treating outputs as answers.</span>
       <span class="course-card-footer"><span class="course-badge analysis">Analysis heavy</span><span>Open Tuesday -></span></span>
@@ -68,7 +87,7 @@ toc: false
   <a class="course-card" href="wednesday/index.html">
     <img src="images/course-dashboard/rfdiffusion-output-gallery.png" alt="RFdiffusion output gallery showing unconditional, motif, hotspot, and symmetric backbone designs.">
     <span class="course-card-body">
-      <span class="course-card-meta"><span>Wednesday</span><span>2 modules</span></span>
+      <span class="course-card-meta"><span>Wednesday</span><span>3–5 core hours + jobs</span></span>
       <span class="course-card-title">Advanced Prediction and Design</span>
       <span class="course-card-text">Compare complex prediction tools, then generate and inspect protein backbones with RFdiffusion workflows.</span>
       <span class="course-card-footer"><span class="course-badge design">Design workflow</span><span>Open Wednesday -></span></span>
@@ -78,7 +97,7 @@ toc: false
   <a class="course-card" href="thursday/index.html">
     <img src="images/course-dashboard/cpu-gpu-benchmark.png" alt="CPU versus GPU timing chart showing vectorization and workload-size effects.">
     <span class="course-card-body">
-      <span class="course-card-meta"><span>Thursday</span><span>4 modules</span></span>
+      <span class="course-card-meta"><span>Thursday</span><span>3–5 core hours</span></span>
       <span class="course-card-title">Compute, Docking, and Reflection</span>
       <span class="course-card-text">Connect PyTorch basics to GPU performance, docking intuition, and planning decisions for the capstone.</span>
       <span class="course-card-footer"><span class="course-badge compute">Compute intuition</span><span>Open Thursday -></span></span>
@@ -88,7 +107,7 @@ toc: false
   <a class="course-card course-card-wide" href="capstone/index.html">
     <img src="images/course-dashboard/binder-target-interface.png" alt="Binder design target interface showing a target chain, hotspot residues, and a designed binder.">
     <span class="course-card-body">
-      <span class="course-card-meta"><span>Capstone</span><span>Curated target set</span></span>
+      <span class="course-card-meta"><span>Capstone</span><span>10–25 core hours + jobs</span></span>
       <span class="course-card-title">Protein Binder Design Project</span>
       <span class="course-card-text">Choose a target, define a binding face, generate binders, design sequences, validate structures, and document the rationale behind your choices.</span>
       <span class="course-card-footer"><span class="course-badge project">Project</span><span>Open Capstone -></span></span>
@@ -99,9 +118,11 @@ toc: false
 
 ## Getting Started
 
-1. Start with the **Monday HPC setup** if you have not confirmed GPU access and environment paths.
-2. Move through the days in order when possible; later activities assume earlier tools and concepts.
-3. Use the checkboxes on setup pages only after the command, output, or file exists.
-4. Return anytime and use the resume banner to pick up where you left off.
+1. Read **[Start Here](start-here.qmd)** and choose the core, full-bootcamp, or reference route.
+2. Create the evidence-portfolio folders and record your compute/account fallback.
+3. Start with **[Monday’s readiness checks](monday/index.qmd#pre-work-and-readiness)** unless your environment is already verified.
+4. Move through the historical days in order when possible; later activities assume earlier concepts even when they use a different tool.
+5. Check a progress item only after its named log, structure, figure, comparison, or decision memo exists.
+6. Return anytime and use the resume banner to pick up where you left off.
 
 <a href="https://github.com/RosettaMLBootCamp2025/RosettaMLBootCamp2025.github.io/issues/new" class="btn btn-primary">Report an Issue / Ask a Question (GitHub account required)</a>

@@ -1,6 +1,14 @@
 project:
   type: website
   output-dir: _site
+  render:
+    - "*.qmd"
+    - "**/*.qmd"
+  resources:
+    - data/*.yml
+    - scripts/preflight.py
+    - capstone/files/capstone-evidence-template.zip
+    - thursday/files/activity-CPUvsGPU.ipynb
 
 filters:
   - filters/task.lua
@@ -11,6 +19,8 @@ website:
     left:
       - text: "Home"
         href: index.qmd
+      - text: "Start Here"
+        href: start-here.qmd
       - text: "Monday"
         href: monday/index.qmd
       - text: "Tuesday"
@@ -35,6 +45,7 @@ website:
         - monday/prework-2-pymol-vscode.qmd
         - monday/prework-3-python.qmd
         - monday/1-hpc-setup.qmd
+        - monday/reproducibility.qmd
         - monday/2-localcolabfold.qmd
         - monday/3-ligandmpnn.qmd
         - monday/4-rfdiffusion2.qmd
@@ -54,6 +65,8 @@ website:
         - tuesday/1-pymol.qmd
         - tuesday/2-structure-prediction.qmd
         - tuesday/3-alphafold2.qmd
+        - text: "Optional: Architecture Deep Dive"
+          href: tuesday/3-alphafold2-deep-dive.qmd
         - tuesday/4-esmfold.qmd
     - title: "Wednesday"
       contents:
@@ -70,6 +83,8 @@ website:
     - title: "Capstone"
       contents:
         - capstone/index.qmd
+        - capstone/rubric.qmd
+        - capstone/exemplar.qmd
         - text: "Targets"
         - capstone/targets/pd-l1.qmd
         - capstone/targets/ifnar2.qmd
@@ -82,7 +97,9 @@ website:
 
 format:
   html:
-    theme: cosmo
+    theme:
+      - cosmo
+      - theme.scss
     css: styles.css
     toc: true
     toc-depth: 3
@@ -96,6 +113,7 @@ format:
     link-external-newwindow: true
     include-in-header: _includes/molstar.html
     include-after-body:
+      - _includes/course-data.html
       - _includes/progress-tracker.html
       - _includes/quiz.html
       - _includes/day-progress.html

@@ -15,6 +15,13 @@ ESM3 ([paper](https://www.science.org/doi/10.1126/science.ads0018), [code](https
 
 **Related Tools**: For structure prediction only, see [ESMFold](5-esmfold.qmd). For sequence design given structure, see [LigandMPNN](3-ligandmpnn.qmd).
 
+<!-- course-tool-pin: esm3 -->
+
+::: {.callout-note}
+## Recorded course pin
+This lesson uses `esm==3.2.1.post1` (reviewed 2026-08-30). Model access and GPU availability are separate from package installation; if either is unavailable, use the generation-analysis pathway in [Reproducible Setup & Compute Fallbacks](reproducibility.qmd).
+:::
+
 ## Resource Requirements
 
 | Resource | Minimum | Recommended | Notes |
@@ -52,7 +59,7 @@ mamba activate esm3
 
 2. Install the ESM library:
 ```bash
-pip install esm
+pip install "esm==3.2.1.post1"
 ```
 
 ## HuggingFace Authentication
@@ -275,4 +282,3 @@ ESM3 can generate different "tracks":
 - Reduce `num_steps` for faster (lower quality) results
 - Use ESM C for embeddings (no structure generation)
 :::
-

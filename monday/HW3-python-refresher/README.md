@@ -41,15 +41,21 @@ If all tests pass (green), your code is correct! If any fail (red), read the err
 When you run `analyze_sequence.py`, you should see output similar to:
 
 ```
-Analyzing sequences from sample.fasta...
+Protein Sequence Analysis Results
+======================================================================
 
-Sequence: gene_example_1
-  Length: 120 bp
-  GC Content: 45.83%
-  Reverse Complement: CGATCG...
+Sequence: hemoglobin_alpha_human
+  Length: 142 aa
+  Molecular Weight: 15258.11 Da
+  Hydrophobic residues: 70
+  Positive charges: 24
+  Negative charges: 12
+  Net charge: 12
 
 Results written to analysis_results.txt
 ```
+
+Small molecular-weight differences from rounding are acceptable. Your file should contain the same metrics for all four protein records in `sample.fasta`.
 
 ## Questions and Getting Help
 

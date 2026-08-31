@@ -1,52 +1,65 @@
 <script>
 (function() {
-  // Day-level position chip: shows "Monday · Lesson 3 of 16" at the top of each lesson.
-  // Position is derived from the Quarto sidebar so it stays in sync with _quarto.yml.
+  'use strict';
+
+  function normalisePath(path) {
+    if (!path) return '/';
+    const clean = path.split('#')[0].split('?')[0].toLowerCase();
+    return clean.endsWith('/') ? clean + 'index.html' : clean;
+  }
+
   document.addEventListener('DOMContentLoaded', function() {
-    const path = window.location.pathname.toLowerCase();
-    const match = path.match(/\/(monday|tuesday|wednesday|thursday|capstone)\//);
-    if (!match) return;
-    const day = match[1];
+    const path = normalisePath(window.location.pathname);
+    const dayMatch = path.match(/\/(monday|tuesday|wednesday|thursday|capstone)\//);
+    if (!dayMatch || /\/(monday|tuesday|wednesday|thursday|capstone)\/index\.html$/.test(path)) return;
+
+    const day = dayMatch[1];
     const dayLabel = day.charAt(0).toUpperCase() + day.slice(1);
+    const manifestLessons = window.BOOTCAMP_COURSE && Array.isArray(window.BOOTCAMP_COURSE.lessons)
+      ? window.BOOTCAMP_COURSE.lessons
+          .filter(item => {
+            const itemDay = String(item.day || '').toLowerCase();
+            return itemDay === day || (day === 'monday' && itemDay === 'prework');
+          })
+          .map(item => normalisePath('/' + String(item.path || item.href || '').replace(/^\/+/, '')))
+      : [];
 
-    // Skip the day index page itself
-    const isIndex = /\/index\.html?$/.test(path) || path.endsWith('/' + day + '/');
-    if (isIndex) return;
+    let lessons = manifestLessons;
+    if (!lessons.length) {
+      lessons = Array.from(document.querySelectorAll('.sidebar a[href]'))
+        .map(link => {
+          try { return normalisePath(new URL(link.getAttribute('href'), window.location.href).pathname); }
+          catch (error) { return null; }
+        })
+        .filter(candidate => candidate && candidate.includes('/' + day + '/'))
+        .filter(candidate => !candidate.endsWith('/' + day + '/index.html'));
+      lessons = lessons.filter((candidate, index) => lessons.indexOf(candidate) === index);
+    }
 
-    // Collect lesson links from the sidebar for the current day (exclude index and separators)
-    const sidebarLinks = Array.from(document.querySelectorAll('.sidebar a[href]'))
-      .map(function(a) {
-        try { return new URL(a.getAttribute('href'), window.location.href).pathname.toLowerCase(); }
-        catch (e) { return null; }
-      })
-      .filter(function(p) { return p && p.indexOf('/' + day + '/') !== -1; })
-      .filter(function(p) { return !/\/index\.html?$/.test(p); });
+    const currentIndex = lessons.findIndex(candidate => path === candidate || path.endsWith(candidate));
+    if (currentIndex < 0) return;
 
-    // Deduplicate while preserving order
-    const seen = new Set();
-    const lessons = sidebarLinks.filter(function(p) {
-      if (seen.has(p)) return false;
-      seen.add(p);
-      return true;
-    });
-
-    const total = lessons.length;
-    if (total === 0) return;
-
-    const currentIdx = lessons.indexOf(path);
-    if (currentIdx === -1) return;
-
-    const pct = Math.round(((currentIdx + 1) / total) * 100);
     const title = document.querySelector('h1.title, .quarto-title h1');
     if (!title) return;
+    const total = lessons.length;
+    const percent = Math.round(((currentIndex + 1) / total) * 100);
+    const noun = day === 'capstone' ? 'Target' : 'Lesson';
 
     const chip = document.createElement('div');
     chip.className = 'day-progress-chip';
-    const noun = day === 'capstone' ? 'Target' : 'Lesson';
-    chip.innerHTML =
-      '<span>' + dayLabel + '</span>' +
-      '<span>· ' + noun + ' ' + (currentIdx + 1) + ' of ' + total + '</span>' +
-      '<span class="dpc-bar"><span class="dpc-fill" style="width:' + pct + '%"></span></span>';
+    chip.setAttribute('role', 'status');
+    chip.setAttribute('aria-label', dayLabel + ', ' + noun + ' ' + (currentIndex + 1) + ' of ' + total);
+
+    const label = document.createElement('span');
+    label.textContent = dayLabel + ' · ' + noun + ' ' + (currentIndex + 1) + ' of ' + total;
+    const bar = document.createElement('span');
+    bar.className = 'dpc-bar';
+    bar.setAttribute('aria-hidden', 'true');
+    const fill = document.createElement('span');
+    fill.className = 'dpc-fill';
+    fill.style.width = percent + '%';
+    bar.appendChild(fill);
+    chip.append(label, bar);
     title.insertAdjacentElement('afterend', chip);
   });
 })();

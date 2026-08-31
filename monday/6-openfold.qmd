@@ -13,6 +13,13 @@ OpenFold ([paper](https://www.biorxiv.org/content/10.1101/2022.11.20.517210v1), 
 
 **Related Tools**: For faster predictions without MSAs, see [ESMFold](5-esmfold.qmd). For a more user-friendly MSA-based option, see [LocalColabFold](2-localcolabfold.qmd).
 
+<!-- course-tool-pin: openfold -->
+
+::: {.callout-note}
+## Recorded course pin
+The commands below use OpenFold commit `be2ec1841f16c966c65ae0e7599ebbadc725757d` (reviewed 2026-08-30). OpenFold's database and compiler requirements vary substantially by cluster; run the preflight and read the fallback route in [Reproducible Setup & Compute Fallbacks](reproducibility.qmd) before downloading databases.
+:::
+
 ## Resource Requirements
 
 | Resource | Minimum | Recommended | Notes |
@@ -20,7 +27,7 @@ OpenFold ([paper](https://www.biorxiv.org/content/10.1101/2022.11.20.517210v1), 
 | GPU RAM | 16 GB | 40+ GB | A100 for large proteins |
 | CPU RAM | 32 GB | 64+ GB | MSA generation is memory-intensive |
 | Disk Space | 500 GB | 2+ TB | Sequence databases are large |
-| CUDA | 11.3+ | 12.1+ | Required for compilation |
+| CUDA | 11.3+ | 12.4 | The pinned upstream environment resolves PyTorch CUDA 12.4 |
 
 **Note**: OpenFold requires significant disk space for sequence databases if generating MSAs locally. Check if your HPC already has AlphaFold/OpenFold databases installed.
 
@@ -54,6 +61,8 @@ Many HPCs have pre-installed AlphaFold databases that OpenFold can use.
 ```bash
 git clone https://github.com/aqlaboratory/openfold.git
 cd openfold
+git checkout --detach be2ec1841f16c966c65ae0e7599ebbadc725757d
+git submodule update --init --recursive
 ```
 
 2. Create the conda environment:
@@ -125,7 +134,7 @@ python run_pretrained_openfold.py \
 #SBATCH --time=08:00:00
 #SBATCH --output=%x_%j.out
 
-module load cuda/12.1
+module load cuda/12.4
 
 # source ~/.bashrc # Source shell profile if needed
 mamba activate openfold_venv
@@ -224,7 +233,7 @@ If generating MSAs locally, OpenFold needs these databases:
 **Compilation errors during install**:
 ```bash
 # Ensure CUDA toolkit is loaded
-module load cuda/12.1
+module load cuda/12.4
 nvcc --version
 
 # Clean and retry
