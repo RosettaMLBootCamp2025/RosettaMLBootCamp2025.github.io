@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.38">
+<meta name="generator" content="quarto-1.10.18">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -12,16 +12,54 @@
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
 */
-code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: min(4vw, 1.5em);}
-div.column{flex: auto; overflow-x: auto;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -39,10 +77,10 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-a20ec67e4eaf1004f696852e93606815.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-20bab2b58192ebcdf7b86101a1c208b2.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-f30aeeacf7f98f019823d5f7d2da7dd2.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -71,19 +109,198 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 <style>html{ scroll-behavior: smooth; }</style>
-<!-- Shared Mol* component include for target pages -->
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/pdbe-molstar@latest/build/pdbe-molstar-component.js"></script>
-<style>
-  .molstar-container {
-    width: 100%;
-    height: 500px;
-    position: relative;
-    margin-bottom: 20px;
-    border: 1px solid #eee;
-    border-radius: 8px;
-    overflow: hidden;
+<!-- Load Mol* only on pages that contain a molecular viewer. -->
+<script>
+(function() {
+  'use strict';
+
+  const MOLSTAR_COMPONENT_URL = 'https://cdn.jsdelivr.net/npm/pdbe-molstar@3.3.0/build/pdbe-molstar-component.js';
+
+  function addMediaAlternatives() {
+    document.querySelectorAll('.workshop-companion').forEach(companion => {
+      const title = (companion.querySelector('.wc-title')?.textContent || 'Workshop session')
+        .replace(/^\s*🎥\s*/, '')
+        .replace(/^Live workshop recording\s*[—-]\s*/i, '')
+        .trim();
+
+      const video = companion.querySelector('.wc-video iframe');
+      if (video && !video.title) video.title = title + ' workshop recording';
+      if (video && !companion.querySelector('.media-alternative-video')) {
+        const match = video.src.match(/\/embed\/([^?&#/]+)/);
+        const note = document.createElement('p');
+        note.className = 'media-alternative media-alternative-video';
+        note.append(document.createTextNode('The recording is optional; the lesson text covers the core material. '));
+        if (match) {
+          const link = document.createElement('a');
+          link.href = 'https://www.youtube.com/watch?v=' + encodeURIComponent(match[1]);
+          link.target = '_blank';
+          link.rel = 'noopener';
+          link.textContent = 'Open the recording on YouTube';
+          link.setAttribute('aria-label', 'Open ' + title + ' on YouTube');
+          note.append(link, document.createTextNode(' if the embedded player is unavailable.'));
+        }
+        video.closest('.wc-video').insertAdjacentElement('afterend', note);
+      }
+
+      companion.querySelectorAll('details iframe').forEach(frame => {
+        if (!frame.title) frame.title = title + ' workshop slides';
+        const details = frame.closest('details');
+        if (!details || details.querySelector('.media-alternative-slides')) return;
+
+        const note = document.createElement('p');
+        const link = document.createElement('a');
+        note.className = 'media-alternative media-alternative-slides';
+        note.append(document.createTextNode('The slides are optional; equivalent explanations appear in the lesson. '));
+        link.href = frame.src.replace(/\/embed(?:\?.*)?$/, '/view');
+        link.target = '_blank';
+        link.rel = 'noopener';
+        link.textContent = 'Open the slide deck in a new tab';
+        link.setAttribute('aria-label', 'Open slides for ' + title + ' in a new tab');
+        note.appendChild(link);
+        frame.insertAdjacentElement('beforebegin', note);
+      });
+    });
   }
-</style>
+
+  function nameMermaidDiagrams() {
+    document.querySelectorAll('svg.mermaid-js:not([aria-labelledby])').forEach((diagram, index) => {
+      const namespace = 'http://www.w3.org/2000/svg';
+      const section = diagram.closest('section');
+      const heading = section && section.querySelector(':scope > h2, :scope > h3, :scope > h4');
+      const idBase = diagram.id || 'course-diagram-' + (index + 1);
+      const title = document.createElementNS(namespace, 'title');
+      const description = document.createElementNS(namespace, 'desc');
+      const steps = Array.from(diagram.querySelectorAll('.nodeLabel'))
+        .map(node => node.textContent.replace(/\s+/g, ' ').trim())
+        .filter((value, stepIndex, values) => value && values.indexOf(value) === stepIndex);
+
+      title.id = idBase + '-title';
+      title.textContent = heading ? 'Flowchart for ' + heading.textContent.trim() : 'Course workflow flowchart';
+      description.id = idBase + '-description';
+      description.textContent = steps.length
+        ? 'The flowchart contains these labeled steps: ' + steps.join('; ') + '.'
+        : 'A visual flowchart supporting the surrounding lesson text.';
+      diagram.prepend(description);
+      diagram.prepend(title);
+      diagram.setAttribute('aria-labelledby', title.id);
+      diagram.setAttribute('aria-describedby', description.id);
+    });
+  }
+
+  function improveSharedAccessibility() {
+    addMediaAlternatives();
+    nameMermaidDiagrams();
+    document.querySelectorAll('.navbar-toggler[role="menu"]').forEach(button => {
+      button.removeAttribute('role');
+    });
+
+    document.querySelectorAll('main table, main pre:not(.sourceCode), main div.sourceCode, main .mermaid').forEach(region => {
+      const isCodeBlock = region.matches('div.sourceCode');
+      if ((isCodeBlock || region.scrollWidth > region.clientWidth + 1) && !region.hasAttribute('tabindex')) {
+        region.tabIndex = 0;
+      }
+    });
+  }
+
+  function prepareViewer(viewer) {
+    const container = viewer.closest('.molstar-container');
+    const moleculeId = (viewer.getAttribute('molecule-id') || '').toUpperCase();
+    if (!container) return;
+
+    const heading = container.previousElementSibling && container.previousElementSibling.matches('h2, h3')
+      ? container.previousElementSibling
+      : container.parentElement && container.parentElement.querySelector('h2, h3');
+    const alternative = container.nextElementSibling && container.nextElementSibling.matches('.molstar-alternative')
+      ? container.nextElementSibling
+      : null;
+    container.setAttribute('role', 'region');
+    if (heading && heading.id) container.setAttribute('aria-labelledby', heading.id);
+    else container.setAttribute('aria-label', 'Interactive molecular structure');
+    if (alternative) {
+      if (!alternative.id) alternative.id = (viewer.id || 'molecular-viewer') + '-alternative';
+      container.setAttribute('aria-describedby', alternative.id);
+    }
+    container.setAttribute('aria-busy', 'true');
+
+    viewer.dataset.accessibleName = moleculeId
+      ? 'Interactive three-dimensional molecular structure for PDB ' + moleculeId
+      : 'Interactive three-dimensional molecular structure';
+
+    function nameViewerLinks() {
+      viewer.querySelectorAll('a.msp-logo:not([aria-label])').forEach(link => {
+        link.setAttribute('aria-label', 'Open the Mol* project website');
+      });
+      viewer.querySelectorAll('a.msp-pdbe-link:not([aria-label])').forEach(link => {
+        link.setAttribute(
+          'aria-label',
+          moleculeId ? 'Open PDB ' + moleculeId + ' on PDBe' : 'Open this structure on PDBe'
+        );
+      });
+    }
+
+    nameViewerLinks();
+    const observer = new MutationObserver(nameViewerLinks);
+    observer.observe(viewer, {childList: true, subtree: true});
+
+    const status = document.createElement('p');
+    status.className = 'molstar-load-status';
+    status.setAttribute('role', 'status');
+    status.setAttribute('aria-live', 'polite');
+    status.textContent = 'Loading the optional interactive structure viewer…';
+    container.prepend(status);
+  }
+
+  function showLoadFailure() {
+    document.querySelectorAll('.molstar-container').forEach(container => {
+      container.setAttribute('aria-busy', 'false');
+      container.classList.add('molstar-failed');
+      const status = container.querySelector('.molstar-load-status');
+      if (status) {
+        status.setAttribute('role', 'alert');
+        status.textContent = 'The interactive viewer could not load. Use the non-interactive structure alternative below.';
+      }
+    });
+  }
+
+  function initialiseMolstar() {
+    const viewers = Array.from(document.querySelectorAll('pdbe-molstar'));
+    if (viewers.length === 0) return;
+
+    viewers.forEach(prepareViewer);
+    const script = document.createElement('script');
+    script.src = MOLSTAR_COMPONENT_URL;
+    script.async = true;
+    script.addEventListener('error', showLoadFailure);
+    script.addEventListener('load', () => {
+      const ready = window.customElements && customElements.whenDefined
+        ? customElements.whenDefined('pdbe-molstar')
+        : Promise.resolve();
+      ready.then(() => {
+        document.querySelectorAll('.molstar-container').forEach(container => {
+          container.setAttribute('aria-busy', 'false');
+          container.classList.add('molstar-ready');
+          const status = container.querySelector('.molstar-load-status');
+          if (status) status.remove();
+        });
+      }).catch(showLoadFailure);
+    });
+    document.head.appendChild(script);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+      improveSharedAccessibility();
+      initialiseMolstar();
+      window.setTimeout(improveSharedAccessibility, 500);
+      window.setTimeout(improveSharedAccessibility, 1500);
+    }, {once: true});
+  } else {
+    improveSharedAccessibility();
+    initialiseMolstar();
+  }
+  window.addEventListener('load', improveSharedAccessibility, {once: true});
+})();
+</script>
 
 
 <link rel="stylesheet" href="../styles.css">
@@ -109,6 +326,10 @@ ul.task-list li input[type="checkbox"] {
   <li class="nav-item">
     <a class="nav-link" href="../index.html"> 
 <span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../start-here.html"> 
+<span class="menu-text">Start Here</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="../monday/index.html"> 
@@ -166,7 +387,7 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../wednesday/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Wednesday</span></a>
+ <span class="menu-text">Wednesday: Advanced Prediction and Design</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -192,11 +413,16 @@ ul.task-list li input[type="checkbox"] {
    
   <ul>
   <li><a href="#live-workshop-session" id="toc-live-workshop-session" class="nav-link active" data-scroll-target="#live-workshop-session">Live Workshop Session</a></li>
+  <li><a href="#before-you-begin-choose-an-execution-path" id="toc-before-you-begin-choose-an-execution-path" class="nav-link" data-scroll-target="#before-you-begin-choose-an-execution-path">Before You Begin: Choose an Execution Path</a>
+  <ul class="collapse">
+  <li><a href="#run-path-install-and-smoke-test-original-rfdiffusion" id="toc-run-path-install-and-smoke-test-original-rfdiffusion" class="nav-link" data-scroll-target="#run-path-install-and-smoke-test-original-rfdiffusion">Run path: install and smoke-test original RFdiffusion</a></li>
+  <li><a href="#analysis-path-use-official-known-good-outputs" id="toc-analysis-path-use-official-known-good-outputs" class="nav-link" data-scroll-target="#analysis-path-use-official-known-good-outputs">Analysis path: use official known-good outputs</a></li>
+  </ul></li>
   <li><a href="#hands-on-exercise" id="toc-hands-on-exercise" class="nav-link" data-scroll-target="#hands-on-exercise">Hands-On Exercise</a></li>
   <li><a href="#independent-project" id="toc-independent-project" class="nav-link" data-scroll-target="#independent-project">Independent Project</a>
   <ul class="collapse">
   <li><a href="#milestone-1-target-preparation-initial-exploration" id="toc-milestone-1-target-preparation-initial-exploration" class="nav-link" data-scroll-target="#milestone-1-target-preparation-initial-exploration">Milestone 1: Target Preparation &amp; Initial Exploration</a></li>
-  <li><a href="#milestone-2-unconditional-binder-generation" id="toc-milestone-2-unconditional-binder-generation" class="nav-link" data-scroll-target="#milestone-2-unconditional-binder-generation">Milestone 2: Unconditional Binder Generation</a></li>
+  <li><a href="#milestone-2-hotspot-free-target-conditioned-binder-generation" id="toc-milestone-2-hotspot-free-target-conditioned-binder-generation" class="nav-link" data-scroll-target="#milestone-2-hotspot-free-target-conditioned-binder-generation">Milestone 2: Hotspot-free, target-conditioned Binder Generation</a></li>
   <li><a href="#milestone-3-hotspot-guided-binder-design" id="toc-milestone-3-hotspot-guided-binder-design" class="nav-link" data-scroll-target="#milestone-3-hotspot-guided-binder-design">Milestone 3: Hotspot-Guided Binder Design</a></li>
   <li><a href="#milestone-4-potential-optimization" id="toc-milestone-4-potential-optimization" class="nav-link" data-scroll-target="#milestone-4-potential-optimization">Milestone 4: Potential Optimization</a></li>
   <li><a href="#milestone-5-analysis-selection" id="toc-milestone-5-analysis-selection" class="nav-link" data-scroll-target="#milestone-5-analysis-selection">Milestone 5: Analysis &amp; Selection</a></li>
@@ -245,17 +471,79 @@ ul.task-list li input[type="checkbox"] {
 After each RFdiffusion run, inspect more than whether files were written. Look for topology, diversity, motif retention, hotspot contact, and whether symmetry or chain breaks behaved as intended.
 </p>
 </div>
+<!-- course-tool-pin: rfdiffusion-original -->
+</section>
+<section id="before-you-begin-choose-an-execution-path" class="level2">
+<h2 class="anchored" data-anchor-id="before-you-begin-choose-an-execution-path">Before You Begin: Choose an Execution Path</h2>
+<p>The activities on this page use the <strong>original RFdiffusion</strong>, not RFdiffusion2 or RFdiffusion All Atom. Use one of these equivalent learning paths:</p>
+<ul>
+<li><strong>Run path:</strong> install the immutable course revision below, run one smoke-test design, then complete the exercises your compute budget permits.</li>
+<li><strong>Analysis path:</strong> download the official, revision-pinned target and example outputs below. Complete the inspection, comparison, and selection prompts without claiming that you generated those structures.</li>
+</ul>
+<p>Both paths produce the required artifact: a backbone gallery with observations about topology, diversity, target contact, hotspot contact, failure modes, and a reasoned keep/reject decision.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Version status
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The course revision is RFdiffusion commit <code>86507b6538f51fce57b5a72477165f03999ed7ae</code>, reviewed against the upstream repository on 2026-08-30. The commands are statically checked, but a complete maintainer GPU smoke test is not recorded. Run the one-design test on your own hardware before starting a campaign. See <a href="../monday/reproducibility.html">Reproducible Setup &amp; Compute Fallbacks</a> for the evidence to save.</p>
+</div>
+</div>
+<section id="run-path-install-and-smoke-test-original-rfdiffusion" class="level3">
+<h3 class="anchored" data-anchor-id="run-path-install-and-smoke-test-original-rfdiffusion">Run path: install and smoke-test original RFdiffusion</h3>
+<p>Install on a networked login node. The upstream environment targets a CUDA 11.1-era stack, so use a separate environment from the newer Monday tools.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/RosettaCommons/RFdiffusion.git</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> RFdiffusion</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> checkout <span class="at">--detach</span> 86507b6538f51fce57b5a72477165f03999ed7ae</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> submodule update <span class="at">--init</span> <span class="at">--recursive</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> env create <span class="at">-f</span> env/SE3nv.yml</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> activate SE3nv</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> pip install <span class="at">--no-cache-dir</span> <span class="at">-r</span> env/SE3Transformer/requirements.txt</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> pip install ./env/SE3Transformer</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> pip install <span class="at">-e</span> .</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Download the three checkpoints used across the exercises. These are large external files; if compute nodes have no network, download them here before requesting a GPU.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> models</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">wget</span> <span class="at">-nc</span> <span class="at">-P</span> models https://files.ipd.uw.edu/pub/RFdiffusion/6f5902ac237024bdd0c176cb93063dc4/Base_ckpt.pt</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">wget</span> <span class="at">-nc</span> <span class="at">-P</span> models https://files.ipd.uw.edu/pub/RFdiffusion/e29311f6f1bf1af907f9ef9f44b8328b/Complex_base_ckpt.pt</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">wget</span> <span class="at">-nc</span> <span class="at">-P</span> models https://files.ipd.uw.edu/pub/RFdiffusion/60f09a193fb5e5ccdc4980417708dbab/Complex_Fold_base_ckpt.pt</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>From the RFdiffusion repository root, run the smallest useful smoke test:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> smoke_test</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> scripts/run_inference.py <span class="dt">\</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">'contigmap.contigs=[75-75]'</span> <span class="dt">\</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  inference.output_prefix=smoke_test/design <span class="dt">\</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  inference.num_designs=1</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="bu">test</span> <span class="at">-s</span> smoke_test/design_0.pdb</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">RFDIFFUSION_ROOT</span><span class="op">=</span><span class="st">"</span><span class="va">$PWD</span><span class="st">"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>If the final command succeeds, keep that shell open for the exercises. <code>RFDIFFUSION_ROOT</code> prevents the nested activity steps from losing track of the installation directory.</p>
+</section>
+<section id="analysis-path-use-official-known-good-outputs" class="level3">
+<h3 class="anchored" data-anchor-id="analysis-path-use-official-known-good-outputs">Analysis path: use official known-good outputs</h3>
+<p>These files are maintained in the RFdiffusion repository at the exact course commit. They are small enough to inspect on a laptop and do not require model weights.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> rfdiffusion-known-good</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> rfdiffusion-known-good</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-LO</span> https://raw.githubusercontent.com/RosettaCommons/RFdiffusion/86507b6538f51fce57b5a72477165f03999ed7ae/tutorials/protein_binder_design/Part1-Diffusion/channel-toxin.pdb</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-LO</span> https://raw.githubusercontent.com/RosettaCommons/RFdiffusion/86507b6538f51fce57b5a72477165f03999ed7ae/tutorials/protein_binder_design/Part1-Diffusion/outputs-test/binder__0.pdb</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-LO</span> https://raw.githubusercontent.com/RosettaCommons/RFdiffusion/86507b6538f51fce57b5a72477165f03999ed7ae/tutorials/protein_binder_design/Part1-Diffusion/outputs-test/binder__1.pdb</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-LO</span> https://raw.githubusercontent.com/RosettaCommons/RFdiffusion/86507b6538f51fce57b5a72477165f03999ed7ae/tutorials/protein_binder_design/Part1-Diffusion/outputs-test/binder__2.pdb</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Open the target and all three complexes together. For each candidate, identify the target and binder chains, describe the binder topology, note whether it contacts a compact target patch, flag visible clashes or extended regions, and record one reason to keep or reject it. Finish by ranking the three candidates and naming one additional computation you would request before sequence design.</p>
+</section>
 </section>
 <section id="hands-on-exercise" class="level2">
 <h2 class="anchored" data-anchor-id="hands-on-exercise">Hands-On Exercise</h2>
 <ol type="1">
 <li><strong>Setup for the activity.</strong>
 <ol type="1">
-<li>Go to the RFdiffusion installation and make a new directory for the activity: <code>mkdir activity</code>.</li>
+<li>Go to the RFdiffusion installation and make a new directory for the activity: <code>cd "$RFDIFFUSION_ROOT"; mkdir -p activity</code>.</li>
 </ol></li>
 <li><strong>Generate unconditional monomers.</strong>
 <ol type="1">
-<li>Make new folder for this example: <code>cd activity; mkdir 1_uncond; cd 1_uncond</code></li>
+<li>Make a new folder for this example: <code>cd "$RFDIFFUSION_ROOT"; mkdir -p activity/1_uncond; cd activity/1_uncond</code></li>
 <li>Copy <code>design_unconditional.sh</code> here: <code>cp ../../examples/design_unconditional.sh .</code></li>
 <li>Edit the design script by using 1) <code>'contigmap.contigs=[75-150]'</code>, 2) <code>inference.num_designs=5</code> , 3) <code>../../scripts/run_inference.py</code>.</li>
 <li>Run the script: <code>bash design_unconditional.sh</code>
@@ -266,12 +554,12 @@ After each RFdiffusion run, inspect more than whether files were written. Look f
 </ol></li>
 <li><strong>Generate monomers that scaffold a motif.</strong>
 <ol type="1">
-<li>Make new folder for this example: <code>cd activity; mkdir 2_motifs; cd 2_motifs</code></li>
+<li>Make a new folder for this example: <code>cd "$RFDIFFUSION_ROOT"; mkdir -p activity/2_motifs; cd activity/2_motifs</code></li>
 <li>Copy <code>design_motifscaffolding.sh</code> here: <code>cp ../../examples/design_motifscaffolding.sh .</code></li>
 <li>For this example, we’ll be scaffolding a site from RSV-F protein. Let’s copy that .pdb here: <code>cp ../../examples/input_pdbs/5TPN.pdb .</code></li>
 <li>Edit the design script by using 1) <code>inference.input_pdb=5TPN.pdb</code>, 2) <code>'contigmap.contigs=[10-40/A163-181/10-40]'</code>, 3) <code>inference.num_designs=5</code> , 4) <code>../../scripts/run_inference.py</code>.
 <ul>
-<li>The backbone we’re generating will have 10-40 residues (randomly sampled), the the motif residues 163-181 (inclusive) on chain A of the input, then 10-40 residues (randomly sampled).</li>
+<li>The backbone we’re generating will have 10–40 residues (randomly sampled), the motif residues 163–181 (inclusive) on chain A of the input, then 10–40 residues (randomly sampled).</li>
 </ul></li>
 <li>Run the script: <code>bash design_motifscaffolding.sh</code>
 <ul>
@@ -280,10 +568,10 @@ After each RFdiffusion run, inspect more than whether files were written. Look f
 </ol></li>
 <li><strong>Generate partially diffused structures.</strong>
 <ol type="1">
-<li>Make new folder for this example: <code>cd activity; mkdir 3_partial; cd 3_partial</code></li>
+<li>Make a new folder for this example: <code>cd "$RFDIFFUSION_ROOT"; mkdir -p activity/3_partial; cd activity/3_partial</code></li>
 <li>Copy <code>design_partialdiffusion.sh</code> here: <code>cp ../../examples/design_partialdiffusion.sh .</code></li>
 <li>For this example, we’ll be partially noising and denoising a 79 residue protein 2KL8. Let’s copy that .pdb here: <code>cp ../../examples/input_pdbs/2KL8.pdb .</code></li>
-<li>Edit the design script by using 1) <code>inference.input_pdb=2KL8.pdb</code>, 2) <code>'contigmap.contigs=[79-79]’</code>, and 3) <code>inference.num_designs=5</code>.
+<li>Edit the design script by using 1) <code>inference.input_pdb=2KL8.pdb</code>, 2) <code>'contigmap.contigs=[79-79]'</code>, and 3) <code>inference.num_designs=5</code>.
 <ul>
 <li>Here we’re generating diversity around a particular fold by noising and denoising 10 steps (20% of the full trajectory). We’re adding noise to the entire structure (all 79 residues), but part of the structure can also be held fixed.</li>
 </ul></li>
@@ -294,12 +582,12 @@ After each RFdiffusion run, inspect more than whether files were written. Look f
 </ol></li>
 <li><strong>Generate binders with hotspots.</strong>
 <ol type="1">
-<li>Make new folder for this example: <code>cd activity; mkdir 4_hotspot; cd 4_hotspot</code></li>
+<li>Make a new folder for this example: <code>cd "$RFDIFFUSION_ROOT"; mkdir -p activity/4_hotspot; cd activity/4_hotspot</code></li>
 <li>Copy <code>design_ppi.sh</code> here: <code>cp ../../examples/design_ppi.sh .</code></li>
 <li>For this example, we’ll be designing binders to insulin receptor. Let’s copy that .pdb here: <code>cp ../../examples/input_pdbs/insulin_target.pdb .</code></li>
-<li>Edit the design script by using 1) <code>inference.input_pdb=insulin_target.pdb</code>, 2) <code>'contigmap.contigs=[A1-150/0 70-100]’</code>, 3) ’<code>ppi.hotspot_res=[A59,A83,A91]’</code>, 4) <code>inference.num_designs=5</code>, 5) <code>denoiser.noise_scale_ca=0</code>, and 6) <code>denoiser.noise_scale_frame=0</code>.
+<li>Edit the design script by using 1) <code>inference.input_pdb=insulin_target.pdb</code>, 2) <code>'contigmap.contigs=[A1-150/0 70-100]'</code>, 3) <code>'ppi.hotspot_res=[A59,A83,A91]'</code>, 4) <code>inference.num_designs=5</code>, 5) <code>denoiser.noise_scale_ca=0</code>, and 6) <code>denoiser.noise_scale_frame=0</code>.
 <ul>
-<li>Here, we’re designing binders to insulin receptor. The contig describes the protein we want: residues 1-150 of the A chain of the receptor, a chainbreak (we don’t want to fuse the binder and target!), a 70-100 residue binder to be diffused. We also tell diffusion to target three specific residues, specifically residues 59, 83 and 91 of chain A. Finally, we reduce the noise added during inference to 0 to improve the quality of the designs.</li>
+<li>Here, we’re designing binders to insulin receptor. The contig describes the protein we want: residues 1–150 of the A chain of the receptor, a chain break (we don’t want to fuse the binder and target!), and a 70–100 residue binder to be diffused. We also tell diffusion to target residues 59, 83, and 91 of chain A. Finally, we reduce the noise added during inference to 0 to improve the quality of the designs.</li>
 </ul></li>
 <li>Run the script: <code>bash design_ppi.sh</code>
 <ul>
@@ -308,7 +596,7 @@ After each RFdiffusion run, inspect more than whether files were written. Look f
 </ol></li>
 <li><strong>Generate fold-conditioned structures.</strong>
 <ol type="1">
-<li>Make new folder for this example: <code>cd activity; mkdir 5_fold_cond; cd 5_fold_cond</code></li>
+<li>Make a new folder for this example: <code>cd "$RFDIFFUSION_ROOT"; mkdir -p activity/5_fold_cond; cd activity/5_fold_cond</code></li>
 <li>Copy <code>design_timbarrel.sh</code> here: <code>cp ../../examples/design_timbarrel.sh .</code></li>
 <li>For this example, we’ll be diffusing a TIM barrel by providing course-grained specification of the fold. Let’s copy that fold information here: <code>cp -r ../../examples/tim_barrel_scaffold/ .</code>
 <ul>
@@ -316,8 +604,7 @@ After each RFdiffusion run, inspect more than whether files were written. Look f
 </ul></li>
 <li>Edit the design script by using <code>inference.num_designs=5</code>.
 <ul>
-<li>Here, we’re making a TIM barrel by providing course-grained specification of the fold. We specify the output path. We tell RFdiffusion that we want to do scaffoldguided design, and that we are not making a binder to a target (just a monomer). We provide a path to a directory of TIM barrel scaffolds, generated with the helper script <code>helper_scripts/make_secstruc_adj.py</code>. We generate 5 designs, with a reduced noise scale during inference of 0.5. We also sample additional length to increase diversity of the outputs by masking the loops and inserting 0-5 residues into each loop. We also add 0-5 residues to the N and the C-terminus. These allow use to sample additional diversity in our designs.</li>
-<li>You may need to edit <code>rfdiffusion/inference/model_runners.py</code> like 751 to <code>self.blockadjacency = iu.BlockAdjacency(conf, conf.inference.num_designs)</code></li>
+<li>Here, we’re making a TIM barrel by providing a coarse-grained specification of the fold. We specify the output path, request scaffold-guided monomer design, and provide a directory of TIM-barrel scaffolds generated with <code>helper_scripts/make_secstruc_adj.py</code>. We generate five designs with an inference noise scale of 0.5, mask loops, insert 0–5 residues into each loop, and add 0–5 residues to each terminus to sample additional diversity.</li>
 </ul></li>
 <li>Run the script: <code>bash design_timbarrel.sh</code>
 <ul>
@@ -326,11 +613,11 @@ After each RFdiffusion run, inspect more than whether files were written. Look f
 </ol></li>
 <li><strong>Generate oligomers of various symmetries.</strong>
 <ol type="1">
-<li>Make new folder for this example: <code>cd activity; mkdir 6_symmetry; cd 6_symmetry</code></li>
+<li>Make a new folder for this example: <code>cd "$RFDIFFUSION_ROOT"; mkdir -p activity/6_symmetry; cd activity/6_symmetry</code></li>
 <li>Copy <code>design_cyclic_oligos.sh</code>, <code>design_dihedral_oligos.sh</code>, and <code>design_tetrahedral_oligos.sh</code> here: <code>cp ../../examples/design_cyclic_oligos.sh .</code>, <code>cp ../../examples/design_dihedral_oligos.sh .</code>, and <code>cp ../../examples/design_tetrahedral_oligos.sh .</code></li>
 <li><strong>Generate cyclic oligomers:</strong>
 <ol type="1">
-<li>Edit the <code>design_cyclic_oligos.sh</code> script by changing 1) <code>inference.symmetry="C4”</code>, 2) <code>inference.num_designs=5</code>, 3) <code>inference.output_prefix="example_outputs/C4_oligo”</code>, and 4) <code>'contigmap.contigs=[200-200]’</code>.
+<li>Edit the <code>design_cyclic_oligos.sh</code> script by changing 1) <code>inference.symmetry="C4"</code>, 2) <code>inference.num_designs=5</code>, 3) <code>inference.output_prefix="example_outputs/C4_oligo"</code>, and 4) <code>'contigmap.contigs=[200-200]'</code>.
 <ul>
 <li>In this example, we generate 5 designs of C4 symmetric oligomers. For symmetrical diffusion, we need the symmetry config. We also apply an external potential to promote contacts both within (with a relative weight of 1) and between chains (relative weight 0.1). We specify that we want to apply these potentials to all chains, with a guide scale of 2.0 (a sensible starting point). We decay this potential with quadratic form, so that it is applied more strongly initially. We specify a total length of 200 aa, so each chain is 50 residues long.</li>
 </ul></li>
@@ -354,7 +641,7 @@ After each RFdiffusion run, inspect more than whether files were written. Look f
 </ol></li>
 <li><strong>Generate tetrahedral oligomers:</strong>
 <ol type="1">
-<li>Edit the <code>design_tetrahedral_oligos.sh</code> script by changing 1) <code>inference.num_designs=2</code>, 2) <code>'contigmap.contigs=[720-720]’</code>.
+<li>Edit the <code>design_tetrahedral_oligos.sh</code> script by changing 1) <code>inference.num_designs=2</code>, 2) <code>'contigmap.contigs=[720-720]'</code>.
 <ul>
 <li>In this example, we generate tetrahedral symmetric oligomers. We use the symmetry config, and specify we want a tetrahedral oligomer, with 2 designs generated. We specify the output prefix, and also the potential we want to apply. This external potential promotes contacts both within (with a relative weight of 1) and between chains (relative weight 0.1). We specify that we want to apply these potentials to all chains, with a guide scale of 2.0 (a sensible starting point). We decay this potential with quadratic form, so that it is applied more strongly initially. We specify a total length of 720 aa, so each chain is 60 residues long</li>
 </ul></li>
@@ -379,10 +666,10 @@ After each RFdiffusion run, inspect more than whether files were written. Look f
 <li>Run 2-3 test designs to verify your setup is working correctly</li>
 </ul>
 </section>
-<section id="milestone-2-unconditional-binder-generation" class="level3">
-<h3 class="anchored" data-anchor-id="milestone-2-unconditional-binder-generation">Milestone 2: Unconditional Binder Generation</h3>
+<section id="milestone-2-hotspot-free-target-conditioned-binder-generation" class="level3">
+<h3 class="anchored" data-anchor-id="milestone-2-hotspot-free-target-conditioned-binder-generation">Milestone 2: Hotspot-free, target-conditioned Binder Generation</h3>
 <ul>
-<li>Generate at least 10 unconditional binders of length 70-100 towards your target protein.
+<li>Generate at least 10 binders of length 70–100 in the presence of your target, but omit <code>ppi.hotspot_res</code>. This is an unguided target-conditioned baseline, not unconditional monomer generation.
 <ul>
 <li>Is there a particular epitope on the target that RFdiffusion prefers?</li>
 <li>Is there a particular binder topology that RFdiffusion prefers?</li>
@@ -392,53 +679,55 @@ After each RFdiffusion run, inspect more than whether files were written. Look f
 <section id="milestone-3-hotspot-guided-binder-design" class="level3">
 <h3 class="anchored" data-anchor-id="milestone-3-hotspot-guided-binder-design">Milestone 3: Hotspot-Guided Binder Design</h3>
 <ul>
-<li>Each of the targets that were assigned were previously used in binder design experiments (<a href="https://www.nature.com/articles/s41586-023-06415-8">1</a>, <a href="https://www.biorxiv.org/content/10.1101/2024.09.30.615802">2</a>). These experiments made use of hotspots located on the target proteins. Generate at least 10 binders towards your target protein using the hotspots below.
+<li>Protein-binder studies such as <a href="https://www.nature.com/articles/s41586-023-06415-8">Watson et al.</a> and <a href="https://www.biorxiv.org/content/10.1101/2024.09.30.615802">the BindCraft preprint</a> illustrate hotspot-guided campaigns. For this course, use the canonical structure, chain, and interface-derived steering hotspots below; they intentionally replace the historic live-workshop records where those records differ from the capstone target pages. Generate at least 10 hotspot-guided binders toward your target.
 <ul>
 <li>Is there a particular binder topology that RFdiffusion prefers to generate?</li>
 </ul></li>
 </ul>
+<!-- Generated by scripts/validate_course_data.py --generate; do not edit. -->
 <table class="caption-top table">
 <thead>
 <tr class="header">
 <th>Target</th>
 <th>UniProt ID</th>
 <th>PDB ID</th>
-<th>Hotspot Residues (chain and residue index from PDB)</th>
+<th>Recommended steering hotspots</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td>PD-L1</td>
 <td><a href="https://www.uniprot.org/uniprotkb/Q9NZQ7/entry">Q9NZQ7</a></td>
-<td><a href="https://www.rcsb.org/structure/5O45">5O45</a></td>
-<td>A56, A115, A123</td>
+<td><a href="https://www.rcsb.org/structure/4ZQK">4ZQK</a></td>
+<td>A56, A58, A113, A122, A123</td>
 </tr>
 <tr class="even">
-<td>IL-7Rɑ</td>
+<td>IL-7R alpha</td>
 <td><a href="https://www.uniprot.org/uniprotkb/P16871/entry">P16871</a></td>
-<td><a href="https://www.rcsb.org/structure/3DI3">3DI3</a></td>
-<td>B58, B80, B139</td>
+<td><a href="https://www.rcsb.org/structure/3DI2">3DI2</a></td>
+<td>B80, B81, B82, B192, B193</td>
 </tr>
 <tr class="odd">
 <td>TrkA receptor</td>
 <td><a href="https://www.uniprot.org/uniprotkb/P04629/entry">P04629</a></td>
 <td><a href="https://www.rcsb.org/structure/1WWW">1WWW</a></td>
-<td>X294, X296, X333</td>
+<td>X303, X343, X347, X350, X353</td>
 </tr>
 <tr class="even">
 <td>IFNAR2</td>
 <td><a href="https://www.uniprot.org/uniprotkb/P48551/entry">P48551</a></td>
-<td><a href="https://www.rcsb.org/structure/2LAG">2LAG</a></td>
-<td>B52, B82, B98</td>
+<td><a href="https://www.rcsb.org/structure/3SE3">3SE3</a></td>
+<td>C44, C46, C48, C80, C100, C103</td>
 </tr>
 <tr class="odd">
-<td>Bet v 1-A</td>
+<td>Bet v 1</td>
 <td><a href="https://www.uniprot.org/uniprotkb/P15494/entry">P15494</a></td>
-<td><a href="https://www.rcsb.org/structure/1bv1">1BV1</a></td>
-<td>A24, A28, A43</td>
+<td><a href="https://www.rcsb.org/structure/4A88">4A88</a></td>
+<td>A10, A42, A45, A47</td>
 </tr>
 </tbody>
 </table>
+<p>The exact PDB, chain, and hotspot records above come from <code>data/targets.yml</code>. Use the linked target deep-dive page to understand how each set was chosen.</p>
 </section>
 <section id="milestone-4-potential-optimization" class="level3">
 <h3 class="anchored" data-anchor-id="milestone-4-potential-optimization">Milestone 4: Potential Optimization</h3>
@@ -453,7 +742,7 @@ After each RFdiffusion run, inspect more than whether files were written. Look f
 <section id="milestone-5-analysis-selection" class="level3">
 <h3 class="anchored" data-anchor-id="milestone-5-analysis-selection">Milestone 5: Analysis &amp; Selection</h3>
 <ul>
-<li>Compare your unconditional vs.&nbsp;hotspot-guided vs.&nbsp;potential-optimized designs</li>
+<li>Compare your hotspot-free target-conditioned, hotspot-guided, and potential-optimized designs</li>
 <li>Identify your top 3-5 most promising binder designs</li>
 <li>Document what makes these designs stand out (binding pose, topology, contact with hotspots, etc.)</li>
 </ul>
@@ -524,16 +813,11 @@ After each RFdiffusion run, inspect more than whether files were written. Look f
 <td>Verify symmetry string (e.g., “C4”, “D2”, “T”), check potential settings</td>
 </tr>
 <tr class="even">
-<td><strong>“BlockAdjacency” error in fold-conditioned</strong></td>
-<td>Known bug in model_runners.py</td>
-<td>Edit <code>rfdiffusion/inference/model_runners.py</code> line ~751 as noted in activity</td>
-</tr>
-<tr class="odd">
 <td><strong>Very slow generation times</strong></td>
 <td>Normal for large/complex designs</td>
 <td>Tetrahedral oligomers can take 30-60 min. Consider using <code>screen</code> or <code>tmux</code></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><strong>All designs look very similar</strong></td>
 <td>Insufficient diversity sampling</td>
 <td>Increase contig length ranges (e.g., <code>[60-100]</code> instead of <code>[80-80]</code>), adjust noise scales</td>
@@ -556,176 +840,384 @@ After each RFdiffusion run, inspect more than whether files were written. Look f
 </section>
 
 </main> <!-- /main -->
+<!-- Generated by scripts/validate_course_data.py --generate; do not edit. -->
+<script>
+window.BOOTCAMP_COURSE = {"schema_version":1,"updated":"2026-08-30","duration_note":"Times are planning estimates for an independent learner and exclude long model downloads, queue waits, and capstone compute.","routes":{"core":"The shortest route that develops the concepts and artifacts needed for the capstone.","full":"The original bootcamp sequence, including additional tools and practice.","reference":"Optional specialist material to consult when a project needs it."},"milestones":[{"id":"capstone-target-brief","day":"capstone","title":"Target and epitope brief","path":"capstone/rubric.html","route":"core","artifact":"Annotated target structure and concise hotspot rationale","checkpoint_label":"Target, chain, epitope, hotspots, and caveats are documented","source":"capstone/rubric.qmd"},{"id":"capstone-run-config","day":"capstone","title":"Reproducible run configuration","path":"capstone/rubric.html","route":"core","artifact":"Versioned environment, inputs, commands, seeds, and output paths","checkpoint_label":"Another learner could reconstruct the run without guessing","source":"capstone/rubric.qmd"},{"id":"capstone-backbone-evidence","day":"capstone","title":"Backbone-generation evidence","path":"capstone/rubric.html","route":"core","artifact":"Representative backbone gallery with keep/reject decisions","checkpoint_label":"Successes and failures are evaluated against explicit filters","source":"capstone/rubric.qmd"},{"id":"capstone-sequence-evidence","day":"capstone","title":"Sequence-design evidence","path":"capstone/rubric.html","route":"core","artifact":"Candidate table linking designed sequences to parent backbones","checkpoint_label":"Sequence diversity, composition, constraints, and liabilities are assessed","source":"capstone/rubric.qmd"},{"id":"capstone-structural-validation","day":"capstone","title":"Structural validation","path":"capstone/rubric.html","route":"core","artifact":"Complex-confidence and interface-validation figures with metrics","checkpoint_label":"Interface evidence is distinguished from local fold confidence","source":"capstone/rubric.qmd"},{"id":"capstone-failure-analysis","day":"capstone","title":"Failure analysis and iteration","path":"capstone/rubric.html","route":"core","artifact":"Before/after account of one diagnosed failure and response","checkpoint_label":"A failure is diagnosed, acted on, and tested","source":"capstone/rubric.qmd"},{"id":"capstone-selection-memo","day":"capstone","title":"Final selection memo","path":"capstone/rubric.html","route":"core","artifact":"Decision memo naming the selected design, rejected alternatives, risks, and next experiment","checkpoint_label":"Final selection is supported by evidence and uncertainty","source":"capstone/rubric.qmd"}],"lessons":[{"id":"prework-environment-git","day":"prework","order":1,"title":"Environment Setup & GitHub Basics","path":"monday/prework-1-env-git.html","route":"core","status":"required","duration_minutes":45,"compute":"local CPU","artifact":"A working bootcamp environment and cloned practice repository","checkpoint_id":"prework-environment-git","checkpoint_label":"Environment verification passes","source":"monday/prework-1-env-git.qmd"},{"id":"prework-pymol-vscode","day":"prework","order":2,"title":"PyMOL and VS Code Setup","path":"monday/prework-2-pymol-vscode.html","route":"core","status":"required","duration_minutes":45,"compute":"local CPU","artifact":"A saved molecular view and editor verification result","checkpoint_id":"prework-pymol-vscode","checkpoint_label":"Visualization and editor checks pass","source":"monday/prework-2-pymol-vscode.qmd"},{"id":"prework-python","day":"prework","order":3,"title":"Python Refresher","path":"monday/prework-3-python.html","route":"full","status":"optional","duration_minutes":45,"compute":"local CPU","artifact":"Protein analysis_results.txt and passing tests","checkpoint_id":"prework-python","checkpoint_label":"All refresher tests pass","source":"monday/prework-3-python.qmd"},{"id":"reproducible-setup","day":"prework","order":4,"title":"Reproducible Setup & Compute Fallbacks","path":"monday/reproducibility.html","route":"core","status":"required","duration_minutes":20,"compute":"local CPU","artifact":"Saved preflight report and an explicit run-or-analysis fallback choice","checkpoint_id":"reproducible-setup","checkpoint_label":"Version status and fallback pathway are documented","source":"monday/reproducibility.qmd"},{"id":"hpc-setup","day":"monday","order":1,"title":"Common HPC Setup","path":"monday/1-hpc-setup.html","route":"core","status":"required","duration_minutes":60,"compute":"HPC login node; GPU node for verification","artifact":"Saved preflight report and a successful GPU allocation check","checkpoint_id":"hpc-setup","checkpoint_label":"Preflight report reviewed","source":"monday/1-hpc-setup.qmd"},{"id":"localcolabfold","day":"monday","order":2,"title":"LocalColabFold","path":"monday/2-localcolabfold.html","route":"core","status":"required","duration_minutes":90,"compute":"GPU recommended; provided-output route available","artifact":"Predicted PDB and confidence JSON, or an annotated known-good prediction","checkpoint_id":"localcolabfold","checkpoint_label":"Prediction output and confidence are interpreted","source":"monday/2-localcolabfold.qmd"},{"id":"ligandmpnn","day":"monday","order":3,"title":"LigandMPNN","path":"monday/3-ligandmpnn.html","route":"core","status":"required","duration_minutes":60,"compute":"CPU or GPU","artifact":"Designed FASTA sequences and a short selection rationale","checkpoint_id":"ligandmpnn","checkpoint_label":"Designed sequences are ranked and justified","source":"monday/3-ligandmpnn.qmd"},{"id":"rfdiffusion2","day":"monday","order":4,"title":"RFdiffusion2","path":"monday/4-rfdiffusion2.html","route":"full","status":"optional","duration_minutes":90,"compute":"CUDA GPU and Apptainer; analysis-only route available","artifact":"A generated backbone or an annotated known-good design","checkpoint_id":"rfdiffusion2","checkpoint_label":"Backbone geometry and constraints are evaluated","source":"monday/4-rfdiffusion2.qmd"},{"id":"esmfold-install","day":"monday","order":5,"title":"ESMFold","path":"monday/5-esmfold.html","route":"full","status":"optional","duration_minutes":75,"compute":"GPU recommended; CPU is slow","artifact":"Single-sequence structure prediction","checkpoint_id":"esmfold-install","checkpoint_label":"Prediction file is valid and confidence is checked","source":"monday/5-esmfold.qmd"},{"id":"openfold","day":"monday","order":6,"title":"OpenFold","path":"monday/6-openfold.html","route":"reference","status":"optional","duration_minutes":90,"compute":"GPU plus large shared databases","artifact":"Environment smoke-test record","checkpoint_id":"openfold","checkpoint_label":"OpenFold requirements and tradeoffs are documented","source":"monday/6-openfold.qmd"},{"id":"chai1","day":"monday","order":7,"title":"Chai-1","path":"monday/7-chai1.html","route":"full","status":"optional","duration_minutes":60,"compute":"Modern CUDA GPU recommended","artifact":"Complex prediction and confidence summary","checkpoint_id":"chai1","checkpoint_label":"Complex confidence is interpreted","source":"monday/7-chai1.qmd"},{"id":"boltz2","day":"monday","order":8,"title":"Boltz-2","path":"monday/8-boltz2.html","route":"full","status":"optional","duration_minutes":60,"compute":"GPU recommended; CPU supported","artifact":"CIF prediction and confidence summary","checkpoint_id":"boltz2","checkpoint_label":"Boltz output is inspected and compared","source":"monday/8-boltz2.qmd"},{"id":"diffdock-pp","day":"monday","order":9,"title":"DiffDock-PP","path":"monday/9-diffdock-pp.html","route":"reference","status":"optional","duration_minutes":75,"compute":"CUDA 11.6-era GPU stack","artifact":"Ranked protein-protein docking poses","checkpoint_id":"diffdock-pp","checkpoint_label":"Docking poses are ranked with limitations noted","source":"monday/9-diffdock-pp.qmd"},{"id":"placer","day":"monday","order":10,"title":"PLACER","path":"monday/10-placer.html","route":"reference","status":"optional","duration_minutes":60,"compute":"CPU or GPU","artifact":"Ranked ligand conformational ensemble","checkpoint_id":"placer","checkpoint_label":"Ensemble uncertainty is interpreted","source":"monday/10-placer.qmd"},{"id":"bindcraft","day":"monday","order":11,"title":"BindCraft","path":"monday/11-bindcraft.html","route":"full","status":"optional","duration_minutes":75,"compute":"24+ GB CUDA GPU; full campaigns take hours to days","artifact":"Validated settings file and a campaign plan or pilot trajectory","checkpoint_id":"bindcraft","checkpoint_label":"Campaign settings and stopping criteria are justified","source":"monday/11-bindcraft.qmd"},{"id":"esm3","day":"monday","order":12,"title":"ESM3","path":"monday/12-esm3.html","route":"reference","status":"optional","duration_minutes":60,"compute":"16+ GB GPU for local small model","artifact":"Generated sequence and optional structure","checkpoint_id":"esm3","checkpoint_label":"Generated protein is checked for plausibility","source":"monday/12-esm3.qmd"},{"id":"rfdiffusion-aa","day":"monday","order":13,"title":"RFdiffusion All Atom","path":"monday/13-rfdiffusion-aa.html","route":"reference","status":"optional","duration_minutes":75,"compute":"CUDA GPU and Apptainer","artifact":"All-atom design or documented comparison with RFdiffusion2","checkpoint_id":"rfdiffusion-aa","checkpoint_label":"Tool choice is justified for the design problem","source":"monday/13-rfdiffusion-aa.qmd"},{"id":"pymol-vscode-workflow","day":"tuesday","order":1,"title":"PyMOL and Visual Studio Code","path":"tuesday/1-pymol.html","route":"core","status":"required","duration_minutes":60,"compute":"local CPU","artifact":"Reproducible structure-inspection script and saved view","checkpoint_id":"pymol-vscode-workflow","checkpoint_label":"Structure view can be regenerated from the script","source":"tuesday/1-pymol.qmd"},{"id":"structure-prediction-intro","day":"tuesday","order":2,"title":"Introduction to Structure Prediction","path":"tuesday/2-structure-prediction.html","route":"core","status":"required","duration_minutes":75,"compute":"local CPU","artifact":"A method-selection memo for a sample sequence","checkpoint_id":"structure-prediction-intro","checkpoint_label":"Prediction method choice is supported by evidence","source":"tuesday/2-structure-prediction.qmd"},{"id":"alphafold2-openfold","day":"tuesday","order":3,"title":"AlphaFold2 and OpenFold","path":"tuesday/3-alphafold2.html","route":"core","status":"required","duration_minutes":90,"compute":"browser and optional GPU","artifact":"Annotated pLDDT/PAE interpretation and prediction comparison","checkpoint_id":"alphafold2-openfold","checkpoint_label":"Confidence and failure modes are explained","source":"tuesday/3-alphafold2.qmd"},{"id":"alphafold2-architecture-deep-dive","day":"tuesday","order":4,"title":"AlphaFold2 Architecture Deep Dive","path":"tuesday/3-alphafold2-deep-dive.html","route":"reference","status":"optional","duration_minutes":120,"compute":"none","artifact":"Architecture concept map or completed deep-dive quiz","checkpoint_id":"alphafold2-architecture-deep-dive","checkpoint_label":"Information flow through Evoformer, structure module, and recycling is explained","source":"tuesday/3-alphafold2-deep-dive.qmd"},{"id":"esmfold-comparison","day":"tuesday","order":5,"title":"ESMFold vs. AlphaFold2","path":"tuesday/4-esmfold.html","route":"core","status":"required","duration_minutes":150,"compute":"GPU or provided predictions","artifact":"Side-by-side method comparison","checkpoint_id":"esmfold-comparison","checkpoint_label":"Speed-confidence tradeoff is explained","source":"tuesday/4-esmfold.qmd"},{"id":"alphafold3-chai1","day":"wednesday","order":1,"title":"AlphaFold3 vs. Chai-1","path":"wednesday/0-alphafold3.html","route":"core","status":"required","duration_minutes":90,"compute":"web service or GPU; provided-output route possible","artifact":"Multimer prediction comparison and uncertainty notes","checkpoint_id":"alphafold3-chai1","checkpoint_label":"Multimodal prediction evidence is evaluated","source":"wednesday/0-alphafold3.qmd"},{"id":"rfdiffusion-advanced","day":"wednesday","order":2,"title":"RFdiffusion: Advanced Design","path":"wednesday/1-rfdiffusion.html","route":"core","status":"required","duration_minutes":180,"compute":"CUDA GPU or official known-good outputs","artifact":"Backbone gallery, hotspot analysis, and selection rationale","checkpoint_id":"rfdiffusion-advanced","checkpoint_label":"Design gallery is evaluated against explicit criteria","source":"wednesday/1-rfdiffusion.qmd"},{"id":"pytorch-foundations","day":"thursday","order":1,"title":"PyTorch Foundations","path":"thursday/1-pytorch.html","route":"core","status":"required","duration_minutes":75,"compute":"local CPU; GPU optional","artifact":"Working tensor/model notebook","checkpoint_id":"pytorch-foundations","checkpoint_label":"Core tensor and gradient operations run","source":"thursday/1-pytorch.qmd"},{"id":"cpu-vs-gpu","day":"thursday","order":2,"title":"CPU vs GPU Computing","path":"thursday/2-cpu-vs-gpu.html","route":"core","status":"required","duration_minutes":75,"compute":"CPU and CUDA GPU, or provided benchmark","artifact":"Benchmark plot with an explanation of crossover behavior","checkpoint_id":"cpu-vs-gpu","checkpoint_label":"Benchmark result and caveats are explained","source":"thursday/2-cpu-vs-gpu.qmd"},{"id":"molecular-docking","day":"thursday","order":3,"title":"Molecular Docking","path":"thursday/3-docking.html","route":"core","status":"required","duration_minutes":75,"compute":"CPU or GPU depending on tool","artifact":"Ranked poses with a defensible validation criterion","checkpoint_id":"molecular-docking","checkpoint_label":"Docking pose is assessed beyond score alone","source":"thursday/3-docking.qmd"},{"id":"reflection-capstone-intro","day":"thursday","order":4,"title":"Reflection & Capstone Introduction","path":"thursday/4-roundtable.html","route":"core","status":"required","duration_minutes":75,"compute":"none","artifact":"Target brief and capstone execution plan","checkpoint_id":"reflection-capstone-intro","checkpoint_label":"Capstone question, evidence, and fallback plan are defined","source":"thursday/4-roundtable.qmd"},{"id":"capstone","day":"capstone","order":1,"title":"Capstone Project","path":"capstone/index.html","route":"core","status":"required","duration_minutes":600,"duration":"10–25 active hr, plus compute","compute":"GPU recommended; staged no-compute evidence path available","artifact":"Reproducible design portfolio and final selection memo","checkpoint_id":"capstone","checkpoint_label":"Portfolio meets the capstone evidence rubric","source":"capstone/index.qmd"},{"id":"capstone-rubric","day":"capstone","order":2,"title":"Capstone Evidence Guide & Rubric","path":"capstone/rubric.html","route":"core","status":"required","duration_minutes":45,"compute":"none","artifact":"Completed evidence portfolio and rubric self-score","checkpoint_id":"capstone-rubric","checkpoint_label":"Evidence portfolio is complete and self-scored","source":"capstone/rubric.qmd"},{"id":"capstone-exemplar","day":"capstone","order":3,"title":"Worked Capstone Selection Example","path":"capstone/exemplar.html","route":"reference","status":"optional","duration_minutes":30,"compute":"none","artifact":"Notes comparing the exemplar's evidence trail with the learner's plan","checkpoint_id":"capstone-exemplar","checkpoint_label":"Exemplar reasoning pattern is compared with the project plan","source":"capstone/exemplar.qmd"},{"id":"target-pd-l1","day":"capstone","order":4,"title":"PD-L1 Target Deep Dive","path":"capstone/targets/pd-l1.html","route":"reference","status":"optional","duration_minutes":20,"compute":"none","artifact":"Target preparation and hotspot plan","checkpoint_id":"target-pd-l1","checkpoint_label":"PD-L1 target record is verified","source":"capstone/targets/pd-l1.qmd"},{"id":"target-il-7r","day":"capstone","order":5,"title":"IL-7R Target Deep Dive","path":"capstone/targets/il-7r.html","route":"reference","status":"optional","duration_minutes":20,"compute":"none","artifact":"Target preparation and hotspot plan","checkpoint_id":"target-il-7r","checkpoint_label":"IL-7R target record is verified","source":"capstone/targets/il-7r.qmd"},{"id":"target-trka","day":"capstone","order":6,"title":"TrkA Receptor Deep Dive","path":"capstone/targets/trka.html","route":"reference","status":"optional","duration_minutes":20,"compute":"none","artifact":"Target preparation and hotspot plan","checkpoint_id":"target-trka","checkpoint_label":"TrkA target record is verified","source":"capstone/targets/trka.qmd"},{"id":"target-ifnar2","day":"capstone","order":7,"title":"IFNAR2 Target Deep Dive","path":"capstone/targets/ifnar2.html","route":"reference","status":"optional","duration_minutes":20,"compute":"none","artifact":"Target preparation and hotspot plan","checkpoint_id":"target-ifnar2","checkpoint_label":"IFNAR2 target record is verified","source":"capstone/targets/ifnar2.qmd"},{"id":"target-bet-v-1","day":"capstone","order":8,"title":"Bet v 1 Target Deep Dive","path":"capstone/targets/bet-v-1.html","route":"reference","status":"optional","duration_minutes":20,"compute":"none","artifact":"Target preparation and hotspot plan","checkpoint_id":"target-bet-v-1","checkpoint_label":"Bet v 1 target record is verified","source":"capstone/targets/bet-v-1.qmd"},{"id":"target-gm2ap","day":"capstone","order":9,"title":"GM2 Activator Protein Deep Dive","path":"capstone/targets/gm3.html","route":"reference","status":"optional","duration_minutes":20,"compute":"none","artifact":"Target preparation and hotspot plan","checkpoint_id":"target-gm2ap","checkpoint_label":"GM2AP target record is verified","source":"capstone/targets/gm3.qmd"},{"id":"target-beta-glucosidase","day":"capstone","order":10,"title":"Beta-Glucosidase Deep Dive","path":"capstone/targets/beta-glucosidase.html","route":"reference","status":"optional","duration_minutes":20,"compute":"none","artifact":"Target preparation and hotspot plan","checkpoint_id":"target-beta-glucosidase","checkpoint_label":"Beta-glucosidase target record is verified","source":"capstone/targets/beta-glucosidase.qmd"},{"id":"target-tem-1","day":"capstone","order":11,"title":"TEM-1 Beta-Lactamase Deep Dive","path":"capstone/targets/tem-1.html","route":"reference","status":"optional","duration_minutes":20,"compute":"none","artifact":"Target preparation and hotspot plan","checkpoint_id":"target-tem-1","checkpoint_label":"TEM-1 target record is verified","source":"capstone/targets/tem-1.qmd"}]};
+</script>
 <script>
 (function() {
-  const STORAGE_KEY = 'bootcamp2025_progress';
+  'use strict';
+
+  const STORAGE_KEY = 'bootcamp_progress_v2';
+  const LEGACY_STORAGE_KEY = 'bootcamp2025_progress';
   const LAST_PAGE_KEY = 'bootcamp2025_lastpage';
+  const SCHEMA_VERSION = 2;
 
-  // Get current page path
-  const currentPath = window.location.pathname;
-  const isHomePage = currentPath === '/' || currentPath.endsWith('/index.html') || currentPath === '/index.html' || currentPath.match(/^\/[^\/]*\/?$/);
+  function normalisePath(path) {
+    if (!path) return '/';
+    const clean = path.split('#')[0].split('?')[0].replace(/\/+/g, '/');
+    if (clean.endsWith('/')) return clean + 'index.html';
+    return clean;
+  }
 
-  // Extract day from path
-  function getDayFromPath(path) {
-    const dayMap = {
-      'monday': 'Monday',
-      'tuesday': 'Tuesday',
-      'wednesday': 'Wednesday',
-      'thursday': 'Thursday',
-      'capstone': 'Capstone'
+  function lessonPath(lesson) {
+    const value = lesson.path || lesson.href || '';
+    return normalisePath(value.startsWith('/') ? value : '/' + value);
+  }
+
+  function checkpointId(lesson) {
+    return lesson.checkpoint_id || lesson.checkpointId || lesson.id;
+  }
+
+  function checkpointLabel(lesson) {
+    return lesson.checkpoint_label || lesson.checkpointLabel ||
+      (lesson.artifact
+        ? 'I produced and checked: ' + lesson.artifact
+        : 'I completed the lesson evidence check.');
+  }
+
+  function durationLabel(lesson) {
+    if (lesson.duration) return lesson.duration;
+    if (lesson.duration_minutes) return lesson.duration_minutes + ' min';
+    return null;
+  }
+
+  function isCoreLesson(lesson) {
+    if (lesson.required === false) return false;
+    return (lesson.route || 'core') === 'core';
+  }
+
+  function courseLessons() {
+    const source = window.BOOTCAMP_COURSE || {};
+    return Array.isArray(source.lessons) ? source.lessons.filter(checkpointId) : [];
+  }
+
+  function courseCheckpoints() {
+    const source = window.BOOTCAMP_COURSE || {};
+    const milestones = Array.isArray(source.milestones) ? source.milestones.filter(checkpointId) : [];
+    return courseLessons().concat(milestones);
+  }
+
+  function emptyState() {
+    return { version: SCHEMA_VERSION, completed: [], tasks: [], updatedAt: null };
+  }
+
+  function sanitiseState(value) {
+    const validIds = new Set(courseCheckpoints().map(checkpointId));
+    const completed = Array.isArray(value && value.completed)
+      ? value.completed.filter(id => typeof id === 'string' && (validIds.size === 0 || validIds.has(id)))
+      : [];
+    const tasks = Array.isArray(value && value.tasks)
+      ? value.tasks.filter(id => typeof id === 'string')
+      : [];
+    return {
+      version: SCHEMA_VERSION,
+      completed: Array.from(new Set(completed)),
+      tasks: Array.from(new Set(tasks)),
+      updatedAt: value && value.updatedAt ? value.updatedAt : null
     };
-    const match = path.match(/\/(monday|tuesday|wednesday|thursday|capstone)\//i);
-    return match ? dayMap[match[1].toLowerCase()] : null;
   }
 
-  // Save current page as last visited (except homepage)
-  if (!isHomePage) {
-    const pageTitle = document.title.replace(' - ML Protein Design Bootcamp 2025', '');
-    const day = getDayFromPath(currentPath);
-    localStorage.setItem(LAST_PAGE_KEY, JSON.stringify({
-      path: currentPath,
-      title: pageTitle,
-      day: day,
-      timestamp: Date.now()
-    }));
+  function loadState() {
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) return sanitiseState(JSON.parse(saved));
+
+      const legacy = localStorage.getItem(LEGACY_STORAGE_KEY);
+      if (legacy) {
+        const legacyState = JSON.parse(legacy);
+        const migrated = emptyState();
+        migrated.tasks = Array.isArray(legacyState.completed) ? legacyState.completed : [];
+        saveState(migrated);
+        return migrated;
+      }
+    } catch (error) {
+      console.warn('Course progress could not be loaded.', error);
+    }
+    return emptyState();
   }
 
-  // Load progress data
-  function getProgress() {
-    const data = localStorage.getItem(STORAGE_KEY);
-    return data ? JSON.parse(data) : { completed: [] };
+  function saveState(state) {
+    const clean = sanitiseState(state);
+    clean.updatedAt = new Date().toISOString();
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(clean));
+    } catch (error) {
+      console.warn('Course progress could not be saved.', error);
+    }
+    return clean;
   }
 
-  // Save progress data
-  function saveProgress(progress) {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
+  function setCompleted(id, completed) {
+    const state = loadState();
+    const values = new Set(state.completed);
+    if (completed) values.add(id);
+    else values.delete(id);
+    state.completed = Array.from(values);
+    saveState(state);
+    syncProgressUI();
   }
 
-  // Update progress bar on homepage
-  function updateProgressBar() {
-    const progress = getProgress();
-    const progressSummary = document.getElementById('progress-summary');
-    const totalModules = document.querySelectorAll('.module-checkbox').length ||
-                         parseInt(progressSummary?.dataset.totalModules, 10) ||
-                         parseInt(document.body.dataset.totalModules, 10) ||
-                         42;
-    const completed = progress.completed.length;
-    const percent = Math.round((completed / totalModules) * 100);
+  function setTaskCompleted(id, completed) {
+    const state = loadState();
+    const values = new Set(state.tasks);
+    if (completed) values.add(id);
+    else values.delete(id);
+    state.tasks = Array.from(values);
+    saveState(state);
+  }
+
+  function currentLesson() {
+    const path = normalisePath(window.location.pathname);
+    return courseLessons().find(lesson => {
+      const candidate = lessonPath(lesson);
+      return path === candidate || path.endsWith(candidate);
+    }) || null;
+  }
+
+  function createMetaItem(label, value) {
+    if (!value) return null;
+    const item = document.createElement('div');
+    item.className = 'lesson-contract-item';
+    const term = document.createElement('span');
+    term.className = 'lesson-contract-label';
+    term.textContent = label;
+    const detail = document.createElement('span');
+    detail.textContent = value;
+    item.append(term, detail);
+    return item;
+  }
+
+  function addLessonContract(lesson) {
+    if (!lesson || document.querySelector('.lesson-contract')) return;
+    const title = document.querySelector('h1.title, .quarto-title h1');
+    if (!title) return;
+
+    const contract = document.createElement('section');
+    contract.className = 'lesson-contract';
+    contract.setAttribute('aria-label', 'Lesson plan');
+
+    const eyebrow = document.createElement('p');
+    eyebrow.className = 'lesson-contract-eyebrow';
+    const route = lesson.route || 'core';
+    const routeLabels = { core: 'Core path', full: 'Full-bootcamp path', reference: 'Reference path' };
+    eyebrow.textContent = (lesson.status === 'optional' ? 'Optional · ' : '') +
+      (routeLabels[route] || (route.charAt(0).toUpperCase() + route.slice(1) + ' path'));
+    contract.appendChild(eyebrow);
+
+    const grid = document.createElement('div');
+    grid.className = 'lesson-contract-grid';
+    [
+      createMetaItem('Time', durationLabel(lesson)),
+      createMetaItem('Compute', lesson.compute),
+      createMetaItem('You will produce', lesson.artifact),
+      createMetaItem('Completion check', checkpointLabel(lesson))
+    ].filter(Boolean).forEach(item => grid.appendChild(item));
+    contract.appendChild(grid);
+
+    if (lesson.prerequisites) {
+      const prereq = document.createElement('p');
+      prereq.className = 'lesson-contract-prerequisites';
+      const strong = document.createElement('strong');
+      strong.textContent = 'Before you begin: ';
+      prereq.append(strong, document.createTextNode(
+        Array.isArray(lesson.prerequisites) ? lesson.prerequisites.join(' · ') : lesson.prerequisites
+      ));
+      contract.appendChild(prereq);
+    }
+
+    const insertionPoint = title.closest('#title-block-header, .quarto-title-block') || title;
+    insertionPoint.insertAdjacentElement('afterend', contract);
+  }
+
+  function addMasteryCheckpoint(lesson) {
+    if (!lesson || document.querySelector('.mastery-checkpoint')) return;
+    const id = checkpointId(lesson);
+    const state = loadState();
+    const main = document.querySelector('main') || document.querySelector('#quarto-content');
+    if (!main) return;
+
+    const section = document.createElement('section');
+    section.className = 'mastery-checkpoint';
+    section.setAttribute('aria-labelledby', 'mastery-checkpoint-title');
+
+    const heading = document.createElement('h2');
+    heading.id = 'mastery-checkpoint-title';
+    heading.textContent = 'Complete this lesson';
+
+    const help = document.createElement('p');
+    help.textContent = 'Check this only after you can point to the evidence—not merely after reading the page.';
+
+    const label = document.createElement('label');
+    label.className = 'mastery-checkpoint-label';
+    const checkbox = document.createElement('input');
+    checkbox.type = 'checkbox';
+    checkbox.className = 'mastery-checkbox';
+    checkbox.dataset.checkpointId = id;
+    checkbox.checked = state.completed.includes(id);
+    checkbox.addEventListener('change', () => setCompleted(id, checkbox.checked));
+    const text = document.createElement('span');
+    text.textContent = checkpointLabel(lesson);
+    label.append(checkbox, text);
+
+    section.append(heading, help, label);
+
+    const lessons = courseLessons();
+    const currentIndex = lessons.findIndex(item => checkpointId(item) === id);
+    const following = currentIndex >= 0 ? lessons.slice(currentIndex + 1) : [];
+    const next = isCoreLesson(lesson)
+      ? following.find(isCoreLesson)
+      : following[0];
+    if (next) {
+      const nextLink = document.createElement('a');
+      nextLink.className = 'btn btn-primary mastery-next-link';
+      nextLink.href = lessonPath(next);
+      nextLink.textContent = 'Continue to ' + next.title;
+      section.appendChild(nextLink);
+    }
+
+    const nav = main.querySelector('nav.page-navigation, .page-navigation, .module-nav');
+    if (nav) nav.insertAdjacentElement('beforebegin', section);
+    else main.appendChild(section);
+  }
+
+  function syncLegacyTaskCheckboxes() {
+    const state = loadState();
+    const masteryIds = new Set(courseCheckpoints().map(checkpointId));
+    document.querySelectorAll('.module-checkbox[data-module-id]').forEach(checkbox => {
+      const id = checkbox.dataset.moduleId;
+      const isMastery = masteryIds.has(id);
+      checkbox.checked = isMastery ? state.completed.includes(id) : state.tasks.includes(id);
+      if (!checkbox.dataset.progressBound) {
+        checkbox.dataset.progressBound = 'true';
+        checkbox.addEventListener('change', () => {
+          if (isMastery) setCompleted(id, checkbox.checked);
+          else setTaskCompleted(id, checkbox.checked);
+        });
+      }
+    });
+  }
+
+  function syncProgressUI() {
+    const checkpoints = courseCheckpoints();
+    const core = checkpoints.filter(isCoreLesson);
+    const optional = checkpoints.filter(lesson => !isCoreLesson(lesson));
+    const state = loadState();
+    const completed = new Set(state.completed);
+    const coreCompleted = core.filter(lesson => completed.has(checkpointId(lesson))).length;
+    const optionalCompleted = optional.filter(lesson => completed.has(checkpointId(lesson))).length;
+    const percent = core.length ? Math.round((coreCompleted / core.length) * 100) : 0;
 
     const bar = document.getElementById('progress-bar');
     const count = document.getElementById('completed-count');
-
+    const total = document.getElementById('checkpoint-total');
+    const optionalCount = document.getElementById('optional-completed-count');
     if (bar) {
       bar.style.width = percent + '%';
       bar.textContent = percent + '%';
-      bar.setAttribute('aria-valuenow', percent);
+      bar.setAttribute('aria-valuenow', String(percent));
     }
-    if (count) {
-      count.textContent = completed;
-    }
+    if (count) count.textContent = String(coreCompleted);
+    if (total) total.textContent = String(core.length);
+    if (optionalCount) optionalCount.textContent = String(optionalCompleted);
+
+    document.querySelectorAll('.mastery-checkbox[data-checkpoint-id]').forEach(checkbox => {
+      checkbox.checked = completed.has(checkbox.dataset.checkpointId);
+    });
   }
 
-  // Show resume banner on homepage if there's a saved page
   function showResumeBanner() {
-    const lastPage = localStorage.getItem(LAST_PAGE_KEY);
-    if (lastPage && isHomePage) {
-      const data = JSON.parse(lastPage);
+    const isHome = normalisePath(window.location.pathname) === '/index.html';
+    if (!isHome) return;
+    try {
+      const saved = JSON.parse(localStorage.getItem(LAST_PAGE_KEY) || 'null');
+      if (!saved || !saved.path) return;
       const banner = document.getElementById('resume-banner');
       const link = document.getElementById('resume-link');
       const title = document.getElementById('last-page-title');
-
-      if (banner && link && title && data.path) {
-        // Format title with day prefix if available
-        const displayTitle = data.day ? `${data.day}: ${data.title}` : data.title;
-        title.textContent = displayTitle;
-        link.href = data.path;
-        banner.style.display = 'block';
+      if (banner && link && title) {
+        title.textContent = saved.day ? saved.day + ': ' + saved.title : saved.title;
+        link.href = saved.path;
+        banner.hidden = false;
+        banner.style.display = '';
       }
+    } catch (error) {
+      console.warn('The resume link could not be restored.', error);
     }
   }
 
-  // Initialize checkboxes on module pages
-  function initCheckboxes() {
-    const checkboxes = document.querySelectorAll('.module-checkbox');
-    const progress = getProgress();
+  function saveLastPage(lesson) {
+    if (!lesson) return;
+    try {
+      localStorage.setItem(LAST_PAGE_KEY, JSON.stringify({
+        path: window.location.pathname,
+        title: lesson.title || document.title,
+        day: lesson.day || null,
+        timestamp: Date.now()
+      }));
+    } catch (error) {
+      console.warn('The resume link could not be saved.', error);
+    }
+  }
 
-    checkboxes.forEach(cb => {
-      const id = cb.dataset.moduleId;
+  function exportProgress() {
+    const blob = new Blob([JSON.stringify(loadState(), null, 2)], { type: 'application/json' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = 'ml-protein-bootcamp-progress.json';
+    link.click();
+    window.setTimeout(() => URL.revokeObjectURL(link.href), 0);
+  }
 
-      // Restore state
-      if (progress.completed.includes(id)) {
-        cb.checked = true;
-      }
-
-      // Save on change
-      cb.addEventListener('change', function() {
-        const progress = getProgress();
-        if (this.checked) {
-          if (!progress.completed.includes(id)) {
-            progress.completed.push(id);
-          }
-        } else {
-          progress.completed = progress.completed.filter(x => x !== id);
+  function importProgress(file) {
+    if (!file) return;
+    const reader = new FileReader();
+    reader.addEventListener('load', () => {
+      try {
+        const imported = JSON.parse(String(reader.result));
+        if (!imported || typeof imported !== 'object' ||
+            !Array.isArray(imported.completed) || !Array.isArray(imported.tasks)) {
+          throw new Error('Progress export has the wrong shape.');
         }
-        saveProgress(progress);
-        updateProgressBar();
-      });
+        saveState(imported);
+        syncProgressUI();
+        window.alert('Progress imported successfully.');
+      } catch (error) {
+        window.alert('That file is not a valid course progress export.');
+      }
     });
+    reader.readAsText(file);
   }
 
-  // Clear all progress
   window.clearProgress = function() {
+    if (!window.confirm('Reset all saved course progress in this browser? This cannot be undone unless you exported a backup.')) return;
     localStorage.removeItem(STORAGE_KEY);
+    localStorage.removeItem(LEGACY_STORAGE_KEY);
     localStorage.removeItem(LAST_PAGE_KEY);
-    location.reload();
+    window.location.reload();
   };
+  window.exportCourseProgress = exportProgress;
+  window.importCourseProgress = importProgress;
 
-  // Mark all checkboxes on current page as complete
-  window.markAllComplete = function() {
-    const checkboxes = document.querySelectorAll('.module-checkbox');
-    const progress = getProgress();
-
-    checkboxes.forEach(cb => {
-      const id = cb.dataset.moduleId;
-      cb.checked = true;
-      if (!progress.completed.includes(id)) {
-        progress.completed.push(id);
-      }
-    });
-
-    saveProgress(progress);
-    updateProgressBar();
-  };
-
-  // Add "Mark all as complete" button to pages with checkboxes
-  function addMarkAllButton() {
-    const checkboxes = document.querySelectorAll('.module-checkbox');
-    if (checkboxes.length > 0 && !isHomePage) {
-      // Find the title element and add button after it
-      const title = document.querySelector('h1.title, .quarto-title h1');
-      if (title) {
-        const btn = document.createElement('button');
-        btn.textContent = 'Mark all as complete';
-        btn.className = 'btn btn-outline-success btn-sm mark-all-btn';
-        btn.style.cssText = 'margin-top: 0.5rem; margin-bottom: 1rem;';
-        btn.onclick = window.markAllComplete;
-        title.insertAdjacentElement('afterend', btn);
-      }
-    }
-  }
-
-  // Run on page load
   document.addEventListener('DOMContentLoaded', function() {
+    const lesson = currentLesson();
+    saveLastPage(lesson);
     showResumeBanner();
-    initCheckboxes();
-    updateProgressBar();
-    addMarkAllButton();
+    addLessonContract(lesson);
+    addMasteryCheckpoint(lesson);
+    syncLegacyTaskCheckboxes();
+    syncProgressUI();
+
+    const exportButton = document.getElementById('export-progress');
+    const importInput = document.getElementById('import-progress');
+    if (exportButton) exportButton.addEventListener('click', exportProgress);
+    if (importInput) importInput.addEventListener('change', event => importProgress(event.target.files[0]));
   });
 })();
 </script>
 <style>
 .quiz-container {
-  border: 1px solid #e0e0e0;
+  border: 1px solid #c9d1dc;
   border-radius: 8px;
   padding: 1.5rem;
   margin: 2rem 0;
@@ -746,9 +1238,21 @@ After each RFdiffusion run, inspect more than whether files were written. Look f
   color: #0d6efd;
 }
 
+.quiz-fieldset {
+  border: 0;
+  margin: 0;
+  min-width: 0;
+  padding: 0;
+}
+
 .quiz-question {
+  color: #263238;
+  float: none;
   font-size: 1.1rem;
+  line-height: 1.45;
   margin-bottom: 1rem;
+  padding: 0;
+  width: 100%;
   font-weight: 500;
 }
 
@@ -759,10 +1263,15 @@ After each RFdiffusion run, inspect more than whether files were written. Look f
 }
 
 .quiz-option {
-  padding: 0.75rem 1rem;
+  align-items: flex-start;
   border: 1px solid #dee2e6;
   border-radius: 6px;
   cursor: pointer;
+  display: flex;
+  gap: 0.75rem;
+  line-height: 1.45;
+  min-height: 44px;
+  padding: 0.75rem 1rem;
   transition: all 0.2s ease;
   background-color: white;
 }
@@ -772,10 +1281,11 @@ After each RFdiffusion run, inspect more than whether files were written. Look f
   border-color: #adb5bd;
 }
 
-.quiz-option.selected {
+.quiz-option.selected,
+.quiz-option:has(.quiz-radio:checked) {
   background-color: #e7f1ff;
   border-color: #0d6efd;
-  color: #0d6efd;
+  color: #084298;
 }
 
 .quiz-option.correct {
@@ -790,12 +1300,38 @@ After each RFdiffusion run, inspect more than whether files were written. Look f
   color: #842029;
 }
 
+.quiz-radio {
+  flex: 0 0 auto;
+  height: 1.25rem;
+  margin: 0.08rem 0 0;
+  width: 1.25rem;
+}
+
+.quiz-option:has(.quiz-radio:focus-visible) {
+  outline: 3px solid #0b5cab;
+  outline-offset: 3px;
+}
+
+.quiz-option-text {
+  min-width: 0;
+}
+
+.quiz-result-label {
+  display: block;
+  font-size: 0.86rem;
+  font-weight: 700;
+  margin-top: 0.25rem;
+}
+
 .quiz-feedback {
   margin-top: 1rem;
   padding: 0.75rem;
   border-radius: 6px;
-  display: none;
   font-size: 0.95rem;
+}
+
+.quiz-feedback[hidden] {
+  display: none;
 }
 
 .quiz-feedback.correct {
@@ -812,7 +1348,8 @@ After each RFdiffusion run, inspect more than whether files were written. Look f
 
 .check-btn {
   margin-top: 1rem;
-  padding: 0.5rem 1rem;
+  min-height: 44px;
+  padding: 0.65rem 1rem;
   background-color: #0d6efd;
   color: white;
   border: none;
@@ -825,6 +1362,11 @@ After each RFdiffusion run, inspect more than whether files were written. Look f
   background-color: #0b5ed7;
 }
 
+.check-btn:focus-visible {
+  outline: 3px solid #0b5cab;
+  outline-offset: 3px;
+}
+
 .check-btn:disabled {
   background-color: #6c757d;
   cursor: not-allowed;
@@ -835,98 +1377,174 @@ After each RFdiffusion run, inspect more than whether files were written. Look f
 document.addEventListener('DOMContentLoaded', function() {
   const quizzes = document.querySelectorAll('.quiz-container');
 
-  quizzes.forEach(quiz => {
-    const options = quiz.querySelectorAll('.quiz-option');
+  quizzes.forEach((quiz, quizIndex) => {
+    const question = quiz.querySelector('.quiz-question');
+    const optionsContainer = quiz.querySelector('.quiz-options');
     const checkBtn = quiz.querySelector('.check-btn');
     const feedback = quiz.querySelector('.quiz-feedback');
     const correctIndex = parseInt(quiz.dataset.correctIndex);
+    if (!question || !optionsContainer || !checkBtn || !feedback) return;
+
+    const quizId = 'knowledge-check-' + (quizIndex + 1);
+    const header = quiz.querySelector('.quiz-header');
+    const icon = quiz.querySelector('.quiz-header i');
+    const fieldset = document.createElement('fieldset');
+    const legend = document.createElement('legend');
+    const originalOptions = Array.from(optionsContainer.querySelectorAll('.quiz-option'));
+    const feedbackId = quizId + '-feedback';
+
+    quiz.dataset.quizReady = 'true';
+    if (header) {
+      header.id = quizId + '-header';
+    }
+    if (icon) icon.setAttribute('aria-hidden', 'true');
+
+    fieldset.className = 'quiz-fieldset';
+    legend.className = 'quiz-question';
+    while (question.firstChild) legend.appendChild(question.firstChild);
+    question.replaceWith(fieldset);
+    fieldset.append(legend, optionsContainer);
+
+    originalOptions.forEach((option, optionIndex) => {
+      const optionId = quizId + '-option-' + (optionIndex + 1);
+      const label = document.createElement('label');
+      const radio = document.createElement('input');
+      const text = document.createElement('span');
+
+      label.className = option.className;
+      label.htmlFor = optionId;
+      radio.className = 'quiz-radio';
+      radio.type = 'radio';
+      radio.name = quizId;
+      radio.id = optionId;
+      radio.value = String(optionIndex);
+      text.className = 'quiz-option-text';
+      while (option.firstChild) text.appendChild(option.firstChild);
+      label.append(radio, text);
+      option.replaceWith(label);
+    });
+
+    const options = Array.from(optionsContainer.querySelectorAll('.quiz-option'));
+    const radios = Array.from(optionsContainer.querySelectorAll('.quiz-radio'));
+    checkBtn.type = 'button';
+    checkBtn.disabled = true;
+    checkBtn.setAttribute('aria-describedby', feedbackId);
+    feedback.id = feedbackId;
+    feedback.hidden = true;
+    feedback.setAttribute('role', 'status');
+    feedback.setAttribute('aria-live', 'polite');
+    feedback.setAttribute('aria-atomic', 'true');
     let selectedIndex = -1;
 
-    options.forEach((option, index) => {
-      option.addEventListener('click', () => {
-        if (checkBtn.disabled) return; // Already answered
-        
+    radios.forEach((radio, index) => {
+      radio.addEventListener('change', () => {
+        if (radio.disabled) return;
         options.forEach(opt => opt.classList.remove('selected'));
-        option.classList.add('selected');
+        options[index].classList.add('selected');
         selectedIndex = index;
+        checkBtn.disabled = false;
       });
     });
 
     checkBtn.addEventListener('click', () => {
       if (selectedIndex === -1) return;
 
-      // Disable interaction
       checkBtn.disabled = true;
       checkBtn.textContent = 'Submitted';
+      radios.forEach(radio => radio.disabled = true);
       
       const selectedOption = options[selectedIndex];
       const correctOption = options[correctIndex];
 
+      function addResultLabel(option, message) {
+        const result = document.createElement('span');
+        result.className = 'quiz-result-label';
+        result.textContent = message;
+        option.querySelector('.quiz-option-text').appendChild(result);
+      }
+
       if (selectedIndex === correctIndex) {
         selectedOption.classList.add('correct');
         selectedOption.classList.remove('selected');
+        addResultLabel(selectedOption, 'Your answer — correct');
         feedback.textContent = quiz.dataset.correctFeedback || "Correct! Great job.";
         feedback.className = 'quiz-feedback correct';
       } else {
         selectedOption.classList.add('incorrect');
         selectedOption.classList.remove('selected');
-        correctOption.classList.add('correct'); // Show the right answer
+        correctOption.classList.add('correct');
+        addResultLabel(selectedOption, 'Your answer — incorrect');
+        addResultLabel(correctOption, 'Correct answer');
         feedback.textContent = quiz.dataset.incorrectFeedback || "Not quite. The correct answer is highlighted.";
         feedback.className = 'quiz-feedback incorrect';
       }
+      feedback.hidden = false;
     });
   });
 });
 </script>
 <script>
 (function() {
-  // Day-level position chip: shows "Monday · Lesson 3 of 16" at the top of each lesson.
-  // Position is derived from the Quarto sidebar so it stays in sync with _quarto.yml.
+  'use strict';
+
+  function normalisePath(path) {
+    if (!path) return '/';
+    const clean = path.split('#')[0].split('?')[0].toLowerCase();
+    return clean.endsWith('/') ? clean + 'index.html' : clean;
+  }
+
   document.addEventListener('DOMContentLoaded', function() {
-    const path = window.location.pathname.toLowerCase();
-    const match = path.match(/\/(monday|tuesday|wednesday|thursday|capstone)\//);
-    if (!match) return;
-    const day = match[1];
+    const path = normalisePath(window.location.pathname);
+    const dayMatch = path.match(/\/(monday|tuesday|wednesday|thursday|capstone)\//);
+    if (!dayMatch || /\/(monday|tuesday|wednesday|thursday|capstone)\/index\.html$/.test(path)) return;
+
+    const day = dayMatch[1];
     const dayLabel = day.charAt(0).toUpperCase() + day.slice(1);
+    const manifestLessons = window.BOOTCAMP_COURSE && Array.isArray(window.BOOTCAMP_COURSE.lessons)
+      ? window.BOOTCAMP_COURSE.lessons
+          .filter(item => {
+            const itemDay = String(item.day || '').toLowerCase();
+            return itemDay === day || (day === 'monday' && itemDay === 'prework');
+          })
+          .map(item => normalisePath('/' + String(item.path || item.href || '').replace(/^\/+/, '')))
+      : [];
 
-    // Skip the day index page itself
-    const isIndex = /\/index\.html?$/.test(path) || path.endsWith('/' + day + '/');
-    if (isIndex) return;
+    let lessons = manifestLessons;
+    if (!lessons.length) {
+      lessons = Array.from(document.querySelectorAll('.sidebar a[href]'))
+        .map(link => {
+          try { return normalisePath(new URL(link.getAttribute('href'), window.location.href).pathname); }
+          catch (error) { return null; }
+        })
+        .filter(candidate => candidate && candidate.includes('/' + day + '/'))
+        .filter(candidate => !candidate.endsWith('/' + day + '/index.html'));
+      lessons = lessons.filter((candidate, index) => lessons.indexOf(candidate) === index);
+    }
 
-    // Collect lesson links from the sidebar for the current day (exclude index and separators)
-    const sidebarLinks = Array.from(document.querySelectorAll('.sidebar a[href]'))
-      .map(function(a) {
-        try { return new URL(a.getAttribute('href'), window.location.href).pathname.toLowerCase(); }
-        catch (e) { return null; }
-      })
-      .filter(function(p) { return p && p.indexOf('/' + day + '/') !== -1; })
-      .filter(function(p) { return !/\/index\.html?$/.test(p); });
+    const currentIndex = lessons.findIndex(candidate => path === candidate || path.endsWith(candidate));
+    if (currentIndex < 0) return;
 
-    // Deduplicate while preserving order
-    const seen = new Set();
-    const lessons = sidebarLinks.filter(function(p) {
-      if (seen.has(p)) return false;
-      seen.add(p);
-      return true;
-    });
-
-    const total = lessons.length;
-    if (total === 0) return;
-
-    const currentIdx = lessons.indexOf(path);
-    if (currentIdx === -1) return;
-
-    const pct = Math.round(((currentIdx + 1) / total) * 100);
     const title = document.querySelector('h1.title, .quarto-title h1');
     if (!title) return;
+    const total = lessons.length;
+    const percent = Math.round(((currentIndex + 1) / total) * 100);
+    const noun = day === 'capstone' ? 'Target' : 'Lesson';
 
     const chip = document.createElement('div');
     chip.className = 'day-progress-chip';
-    const noun = day === 'capstone' ? 'Target' : 'Lesson';
-    chip.innerHTML =
-      '<span>' + dayLabel + '</span>' +
-      '<span>· ' + noun + ' ' + (currentIdx + 1) + ' of ' + total + '</span>' +
-      '<span class="dpc-bar"><span class="dpc-fill" style="width:' + pct + '%"></span></span>';
+    chip.setAttribute('role', 'status');
+    chip.setAttribute('aria-label', dayLabel + ', ' + noun + ' ' + (currentIndex + 1) + ' of ' + total);
+
+    const label = document.createElement('span');
+    label.textContent = dayLabel + ' · ' + noun + ' ' + (currentIndex + 1) + ' of ' + total;
+    const bar = document.createElement('span');
+    bar.className = 'dpc-bar';
+    bar.setAttribute('aria-hidden', 'true');
+    const fill = document.createElement('span');
+    fill.className = 'dpc-fill';
+    fill.style.width = percent + '%';
+    bar.appendChild(fill);
+    chip.append(label, bar);
     title.insertAdjacentElement('afterend', chip);
   });
 })();
@@ -1021,7 +1639,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp("https:\/\/RosettaMLBootCamp2025\.github\.io\/");
+        var filterRegex = new RegExp('/' + window.location.host + '/');
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }

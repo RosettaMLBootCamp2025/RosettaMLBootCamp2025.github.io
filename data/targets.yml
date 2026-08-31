@@ -1,0 +1,103 @@
+{
+  "schema_version": 1,
+  "updated": "2026-08-30",
+  "source_of_truth": "This file is authoritative for course PDB IDs, target chains, recommended steering residues, and target-preparation caveats. Detailed pages may contain larger literature-derived interface lists.",
+  "targets": [
+    {
+      "id": "pd-l1",
+      "name": "PD-L1",
+      "uniprot": "Q9NZQ7",
+      "pdb": "4ZQK",
+      "target_chain": "A",
+      "partner_chains": ["B"],
+      "hotspots": ["A56", "A58", "A113", "A122", "A123"],
+      "preparation_notes": "Target chain A is unmutated and maps to UniProt residues 18-132; partner PD-1 chain B carries C93S.",
+      "page": "capstone/targets/pd-l1.qmd",
+      "wednesday_assignment": true
+    },
+    {
+      "id": "il-7r",
+      "name": "IL-7R alpha",
+      "uniprot": "P16871",
+      "pdb": "3DI2",
+      "target_chain": "B",
+      "partner_chains": ["A"],
+      "hotspots": ["B80", "B81", "B82", "B192", "B193"],
+      "preparation_notes": "Target chain B carries I118V and ligand chain A carries E106A; neither position is in the course steering set.",
+      "page": "capstone/targets/il-7r.qmd",
+      "wednesday_assignment": true
+    },
+    {
+      "id": "trka",
+      "name": "TrkA receptor",
+      "uniprot": "P04629",
+      "pdb": "1WWW",
+      "target_chain": "X",
+      "partner_chains": ["V", "W"],
+      "hotspots": ["X303", "X343", "X347", "X350", "X353"],
+      "preparation_notes": "Use the TrkA-NGF complex 1WWW; 1WWC is an NT-3-TrkC structure and is not interchangeable.",
+      "page": "capstone/targets/trka.qmd",
+      "wednesday_assignment": true
+    },
+    {
+      "id": "ifnar2",
+      "name": "IFNAR2",
+      "uniprot": "P48551",
+      "pdb": "3SE3",
+      "target_chain": "C",
+      "partner_chains": ["B"],
+      "hotspots": ["C44", "C46", "C48", "C80", "C100", "C103"],
+      "preparation_notes": "3SE3 is 4.0 A; IFNAR2 chain C is unmutated, while partner IFN-alpha2 chain B carries H58Y/E59N/Q62S.",
+      "page": "capstone/targets/ifnar2.qmd",
+      "wednesday_assignment": true
+    },
+    {
+      "id": "bet-v-1",
+      "name": "Bet v 1",
+      "uniprot": "P15494",
+      "pdb": "4A88",
+      "target_chain": "A",
+      "partner_chains": [],
+      "hotspots": ["A10", "A42", "A45", "A47"],
+      "preparation_notes": "4A88 is apo Bet v 1.0101; epitope steering choices come from external antibody and IgE-mapping studies.",
+      "page": "capstone/targets/bet-v-1.qmd",
+      "wednesday_assignment": true
+    },
+    {
+      "id": "gm2ap",
+      "name": "GM2 activator protein",
+      "uniprot": "P17900",
+      "pdb": "1G13",
+      "target_chain": "A",
+      "partner_chains": [],
+      "hotspots": ["A58", "A59", "A63", "A122", "A127", "A131"],
+      "preparation_notes": "1G13 is apo and contains MSE at positions 38 and 86; normalize those residues to methionine and compare a lipid-bound state.",
+      "page": "capstone/targets/gm3.qmd",
+      "wednesday_assignment": false
+    },
+    {
+      "id": "beta-glucosidase",
+      "name": "Beta-glucosidase B (BglB)",
+      "uniprot": "P22505",
+      "pdb": "2JIE",
+      "target_chain": "A",
+      "partner_chains": [],
+      "hotspots": ["A298", "A328", "A412", "A417"],
+      "preparation_notes": "Target chain A is unmutated; remove covalent G2F and recalculate exposure before using the provisional cleft-rim set.",
+      "page": "capstone/targets/beta-glucosidase.qmd",
+      "wednesday_assignment": false
+    },
+    {
+      "id": "tem-1",
+      "name": "TEM-1 beta-lactamase",
+      "uniprot": "P62593",
+      "pdb": "1FQG",
+      "target_chain": "A",
+      "partner_chains": [],
+      "hotspots": ["A104", "A105", "A168", "A171", "A239", "A240"],
+      "preparation_notes": "1FQG is the deacylation-defective E166N mutant; restore Glu166 with documented preparation or use a verified wild-type structure and remap steering residues.",
+      "page": "capstone/targets/tem-1.qmd",
+      "wednesday_assignment": false
+    }
+  ]
+}

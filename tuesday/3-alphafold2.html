@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.38">
+<meta name="generator" content="quarto-1.10.18">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -12,10 +12,13 @@
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
 */
-code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: min(4vw, 1.5em);}
-div.column{flex: auto; overflow-x: auto;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -74,10 +77,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-a20ec67e4eaf1004f696852e93606815.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-20bab2b58192ebcdf7b86101a1c208b2.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-f30aeeacf7f98f019823d5f7d2da7dd2.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -106,19 +109,198 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   }
 }</script>
 <style>html{ scroll-behavior: smooth; }</style>
-<!-- Shared Mol* component include for target pages -->
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/pdbe-molstar@latest/build/pdbe-molstar-component.js"></script>
-<style>
-  .molstar-container {
-    width: 100%;
-    height: 500px;
-    position: relative;
-    margin-bottom: 20px;
-    border: 1px solid #eee;
-    border-radius: 8px;
-    overflow: hidden;
+<!-- Load Mol* only on pages that contain a molecular viewer. -->
+<script>
+(function() {
+  'use strict';
+
+  const MOLSTAR_COMPONENT_URL = 'https://cdn.jsdelivr.net/npm/pdbe-molstar@3.3.0/build/pdbe-molstar-component.js';
+
+  function addMediaAlternatives() {
+    document.querySelectorAll('.workshop-companion').forEach(companion => {
+      const title = (companion.querySelector('.wc-title')?.textContent || 'Workshop session')
+        .replace(/^\s*🎥\s*/, '')
+        .replace(/^Live workshop recording\s*[—-]\s*/i, '')
+        .trim();
+
+      const video = companion.querySelector('.wc-video iframe');
+      if (video && !video.title) video.title = title + ' workshop recording';
+      if (video && !companion.querySelector('.media-alternative-video')) {
+        const match = video.src.match(/\/embed\/([^?&#/]+)/);
+        const note = document.createElement('p');
+        note.className = 'media-alternative media-alternative-video';
+        note.append(document.createTextNode('The recording is optional; the lesson text covers the core material. '));
+        if (match) {
+          const link = document.createElement('a');
+          link.href = 'https://www.youtube.com/watch?v=' + encodeURIComponent(match[1]);
+          link.target = '_blank';
+          link.rel = 'noopener';
+          link.textContent = 'Open the recording on YouTube';
+          link.setAttribute('aria-label', 'Open ' + title + ' on YouTube');
+          note.append(link, document.createTextNode(' if the embedded player is unavailable.'));
+        }
+        video.closest('.wc-video').insertAdjacentElement('afterend', note);
+      }
+
+      companion.querySelectorAll('details iframe').forEach(frame => {
+        if (!frame.title) frame.title = title + ' workshop slides';
+        const details = frame.closest('details');
+        if (!details || details.querySelector('.media-alternative-slides')) return;
+
+        const note = document.createElement('p');
+        const link = document.createElement('a');
+        note.className = 'media-alternative media-alternative-slides';
+        note.append(document.createTextNode('The slides are optional; equivalent explanations appear in the lesson. '));
+        link.href = frame.src.replace(/\/embed(?:\?.*)?$/, '/view');
+        link.target = '_blank';
+        link.rel = 'noopener';
+        link.textContent = 'Open the slide deck in a new tab';
+        link.setAttribute('aria-label', 'Open slides for ' + title + ' in a new tab');
+        note.appendChild(link);
+        frame.insertAdjacentElement('beforebegin', note);
+      });
+    });
   }
-</style>
+
+  function nameMermaidDiagrams() {
+    document.querySelectorAll('svg.mermaid-js:not([aria-labelledby])').forEach((diagram, index) => {
+      const namespace = 'http://www.w3.org/2000/svg';
+      const section = diagram.closest('section');
+      const heading = section && section.querySelector(':scope > h2, :scope > h3, :scope > h4');
+      const idBase = diagram.id || 'course-diagram-' + (index + 1);
+      const title = document.createElementNS(namespace, 'title');
+      const description = document.createElementNS(namespace, 'desc');
+      const steps = Array.from(diagram.querySelectorAll('.nodeLabel'))
+        .map(node => node.textContent.replace(/\s+/g, ' ').trim())
+        .filter((value, stepIndex, values) => value && values.indexOf(value) === stepIndex);
+
+      title.id = idBase + '-title';
+      title.textContent = heading ? 'Flowchart for ' + heading.textContent.trim() : 'Course workflow flowchart';
+      description.id = idBase + '-description';
+      description.textContent = steps.length
+        ? 'The flowchart contains these labeled steps: ' + steps.join('; ') + '.'
+        : 'A visual flowchart supporting the surrounding lesson text.';
+      diagram.prepend(description);
+      diagram.prepend(title);
+      diagram.setAttribute('aria-labelledby', title.id);
+      diagram.setAttribute('aria-describedby', description.id);
+    });
+  }
+
+  function improveSharedAccessibility() {
+    addMediaAlternatives();
+    nameMermaidDiagrams();
+    document.querySelectorAll('.navbar-toggler[role="menu"]').forEach(button => {
+      button.removeAttribute('role');
+    });
+
+    document.querySelectorAll('main table, main pre:not(.sourceCode), main div.sourceCode, main .mermaid').forEach(region => {
+      const isCodeBlock = region.matches('div.sourceCode');
+      if ((isCodeBlock || region.scrollWidth > region.clientWidth + 1) && !region.hasAttribute('tabindex')) {
+        region.tabIndex = 0;
+      }
+    });
+  }
+
+  function prepareViewer(viewer) {
+    const container = viewer.closest('.molstar-container');
+    const moleculeId = (viewer.getAttribute('molecule-id') || '').toUpperCase();
+    if (!container) return;
+
+    const heading = container.previousElementSibling && container.previousElementSibling.matches('h2, h3')
+      ? container.previousElementSibling
+      : container.parentElement && container.parentElement.querySelector('h2, h3');
+    const alternative = container.nextElementSibling && container.nextElementSibling.matches('.molstar-alternative')
+      ? container.nextElementSibling
+      : null;
+    container.setAttribute('role', 'region');
+    if (heading && heading.id) container.setAttribute('aria-labelledby', heading.id);
+    else container.setAttribute('aria-label', 'Interactive molecular structure');
+    if (alternative) {
+      if (!alternative.id) alternative.id = (viewer.id || 'molecular-viewer') + '-alternative';
+      container.setAttribute('aria-describedby', alternative.id);
+    }
+    container.setAttribute('aria-busy', 'true');
+
+    viewer.dataset.accessibleName = moleculeId
+      ? 'Interactive three-dimensional molecular structure for PDB ' + moleculeId
+      : 'Interactive three-dimensional molecular structure';
+
+    function nameViewerLinks() {
+      viewer.querySelectorAll('a.msp-logo:not([aria-label])').forEach(link => {
+        link.setAttribute('aria-label', 'Open the Mol* project website');
+      });
+      viewer.querySelectorAll('a.msp-pdbe-link:not([aria-label])').forEach(link => {
+        link.setAttribute(
+          'aria-label',
+          moleculeId ? 'Open PDB ' + moleculeId + ' on PDBe' : 'Open this structure on PDBe'
+        );
+      });
+    }
+
+    nameViewerLinks();
+    const observer = new MutationObserver(nameViewerLinks);
+    observer.observe(viewer, {childList: true, subtree: true});
+
+    const status = document.createElement('p');
+    status.className = 'molstar-load-status';
+    status.setAttribute('role', 'status');
+    status.setAttribute('aria-live', 'polite');
+    status.textContent = 'Loading the optional interactive structure viewer…';
+    container.prepend(status);
+  }
+
+  function showLoadFailure() {
+    document.querySelectorAll('.molstar-container').forEach(container => {
+      container.setAttribute('aria-busy', 'false');
+      container.classList.add('molstar-failed');
+      const status = container.querySelector('.molstar-load-status');
+      if (status) {
+        status.setAttribute('role', 'alert');
+        status.textContent = 'The interactive viewer could not load. Use the non-interactive structure alternative below.';
+      }
+    });
+  }
+
+  function initialiseMolstar() {
+    const viewers = Array.from(document.querySelectorAll('pdbe-molstar'));
+    if (viewers.length === 0) return;
+
+    viewers.forEach(prepareViewer);
+    const script = document.createElement('script');
+    script.src = MOLSTAR_COMPONENT_URL;
+    script.async = true;
+    script.addEventListener('error', showLoadFailure);
+    script.addEventListener('load', () => {
+      const ready = window.customElements && customElements.whenDefined
+        ? customElements.whenDefined('pdbe-molstar')
+        : Promise.resolve();
+      ready.then(() => {
+        document.querySelectorAll('.molstar-container').forEach(container => {
+          container.setAttribute('aria-busy', 'false');
+          container.classList.add('molstar-ready');
+          const status = container.querySelector('.molstar-load-status');
+          if (status) status.remove();
+        });
+      }).catch(showLoadFailure);
+    });
+    document.head.appendChild(script);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+      improveSharedAccessibility();
+      initialiseMolstar();
+      window.setTimeout(improveSharedAccessibility, 500);
+      window.setTimeout(improveSharedAccessibility, 1500);
+    }, {once: true});
+  } else {
+    improveSharedAccessibility();
+    initialiseMolstar();
+  }
+  window.addEventListener('load', improveSharedAccessibility, {once: true});
+})();
+</script>
 <script src="../site_libs/quarto-diagram/mermaid.min.js"></script>
 <script src="../site_libs/quarto-diagram/mermaid-init.js"></script>
 <link href="../site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
@@ -147,6 +329,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li class="nav-item">
     <a class="nav-link" href="../index.html"> 
 <span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../start-here.html"> 
+<span class="menu-text">Start Here</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="../monday/index.html"> 
@@ -204,7 +390,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../tuesday/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Tuesday</span></a>
+ <span class="menu-text">Tuesday: Structure Prediction</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -227,6 +413,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../tuesday/3-alphafold2-deep-dive.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Optional: Architecture Deep Dive</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../tuesday/4-esmfold.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">4. ESMFold vs.&nbsp;AlphaFold2</span></a>
   </div>
@@ -241,58 +433,44 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#live-workshop-session" id="toc-live-workshop-session" class="nav-link active" data-scroll-target="#live-workshop-session">Live Workshop Session</a></li>
-  <li><a href="#the-alphafold2-breakthrough" id="toc-the-alphafold2-breakthrough" class="nav-link" data-scroll-target="#the-alphafold2-breakthrough">The AlphaFold2 Breakthrough</a>
+  <li><a href="#watch-workshop-session" id="toc-watch-workshop-session" class="nav-link active" data-scroll-target="#watch-workshop-session">Watch: Workshop Session</a></li>
+  <li><a href="#loop-1-inspect-before-you-predict" id="toc-loop-1-inspect-before-you-predict" class="nav-link" data-scroll-target="#loop-1-inspect-before-you-predict">Loop 1: Inspect Before You Predict</a>
   <ul class="collapse">
-  <li><a href="#casp14-a-watershed-moment" id="toc-casp14-a-watershed-moment" class="nav-link" data-scroll-target="#casp14-a-watershed-moment">CASP14: A Watershed Moment</a></li>
-  <li><a href="#alphafold2-vs-openfold" id="toc-alphafold2-vs-openfold" class="nav-link" data-scroll-target="#alphafold2-vs-openfold">AlphaFold2 vs OpenFold</a></li>
+  <li><a href="#explain" id="toc-explain" class="nav-link" data-scroll-target="#explain">Explain</a></li>
+  <li><a href="#predict" id="toc-predict" class="nav-link" data-scroll-target="#predict">Predict</a></li>
+  <li><a href="#do" id="toc-do" class="nav-link" data-scroll-target="#do">Do</a></li>
+  <li><a href="#check" id="toc-check" class="nav-link" data-scroll-target="#check">Check</a></li>
   </ul></li>
-  <li><a href="#how-alphafold2-works" id="toc-how-alphafold2-works" class="nav-link" data-scroll-target="#how-alphafold2-works">How AlphaFold2 Works</a>
+  <li><a href="#loop-2-read-confidence-as-evidence" id="toc-loop-2-read-confidence-as-evidence" class="nav-link" data-scroll-target="#loop-2-read-confidence-as-evidence">Loop 2: Read Confidence as Evidence</a>
   <ul class="collapse">
-  <li><a href="#high-level-architecture" id="toc-high-level-architecture" class="nav-link" data-scroll-target="#high-level-architecture">High-Level Architecture</a></li>
-  <li><a href="#inputs-and-outputs" id="toc-inputs-and-outputs" class="nav-link" data-scroll-target="#inputs-and-outputs">Inputs and Outputs</a></li>
-  <li><a href="#the-msa-why-evolutionary-information-matters" id="toc-the-msa-why-evolutionary-information-matters" class="nav-link" data-scroll-target="#the-msa-why-evolutionary-information-matters">The MSA: Why Evolutionary Information Matters</a></li>
-  <li><a href="#the-evoformer-learning-from-evolution" id="toc-the-evoformer-learning-from-evolution" class="nav-link" data-scroll-target="#the-evoformer-learning-from-evolution">The Evoformer: Learning from Evolution</a></li>
-  <li><a href="#the-structure-module-from-representations-to-3d-coordinates" id="toc-the-structure-module-from-representations-to-3d-coordinates" class="nav-link" data-scroll-target="#the-structure-module-from-representations-to-3d-coordinates">The Structure Module: From Representations to 3D Coordinates</a></li>
-  <li><a href="#recycling-iterative-refinement" id="toc-recycling-iterative-refinement" class="nav-link" data-scroll-target="#recycling-iterative-refinement">Recycling: Iterative Refinement</a></li>
+  <li><a href="#explain-plddt" id="toc-explain-plddt" class="nav-link" data-scroll-target="#explain-plddt">Explain: pLDDT</a></li>
+  <li><a href="#explain-ptm-iptm-and-pae" id="toc-explain-ptm-iptm-and-pae" class="nav-link" data-scroll-target="#explain-ptm-iptm-and-pae">Explain: pTM, ipTM, and PAE</a></li>
+  <li><a href="#predict-1" id="toc-predict-1" class="nav-link" data-scroll-target="#predict-1">Predict</a></li>
+  <li><a href="#do-1" id="toc-do-1" class="nav-link" data-scroll-target="#do-1">Do</a></li>
+  <li><a href="#check-1" id="toc-check-1" class="nav-link" data-scroll-target="#check-1">Check</a></li>
   </ul></li>
-  <li><a href="#key-parameters-and-settings" id="toc-key-parameters-and-settings" class="nav-link" data-scroll-target="#key-parameters-and-settings">Key Parameters and Settings</a>
+  <li><a href="#loop-3-explain-where-the-signal-comes-from" id="toc-loop-3-explain-where-the-signal-comes-from" class="nav-link" data-scroll-target="#loop-3-explain-where-the-signal-comes-from">Loop 3: Explain Where the Signal Comes From</a>
   <ul class="collapse">
-  <li><a href="#recycling-parameters" id="toc-recycling-parameters" class="nav-link" data-scroll-target="#recycling-parameters">Recycling Parameters</a></li>
-  <li><a href="#msa-settings" id="toc-msa-settings" class="nav-link" data-scroll-target="#msa-settings">MSA Settings</a></li>
-  <li><a href="#model-selection" id="toc-model-selection" class="nav-link" data-scroll-target="#model-selection">Model Selection</a></li>
-  <li><a href="#relaxation" id="toc-relaxation" class="nav-link" data-scroll-target="#relaxation">Relaxation</a></li>
+  <li><a href="#explain-1" id="toc-explain-1" class="nav-link" data-scroll-target="#explain-1">Explain</a></li>
+  <li><a href="#predict-2" id="toc-predict-2" class="nav-link" data-scroll-target="#predict-2">Predict</a></li>
+  <li><a href="#do-2" id="toc-do-2" class="nav-link" data-scroll-target="#do-2">Do</a></li>
+  <li><a href="#check-2" id="toc-check-2" class="nav-link" data-scroll-target="#check-2">Check</a></li>
   </ul></li>
-  <li><a href="#alphafold2-extensions" id="toc-alphafold2-extensions" class="nav-link" data-scroll-target="#alphafold2-extensions">AlphaFold2 Extensions</a>
+  <li><a href="#loop-4-generate-and-evaluate-a-gfp-prediction" id="toc-loop-4-generate-and-evaluate-a-gfp-prediction" class="nav-link" data-scroll-target="#loop-4-generate-and-evaluate-a-gfp-prediction">Loop 4: Generate and Evaluate a GFP Prediction</a>
   <ul class="collapse">
-  <li><a href="#alphafold-multimer" id="toc-alphafold-multimer" class="nav-link" data-scroll-target="#alphafold-multimer">AlphaFold-Multimer</a></li>
-  <li><a href="#alphafold-database" id="toc-alphafold-database" class="nav-link" data-scroll-target="#alphafold-database">AlphaFold Database</a></li>
-  <li><a href="#af-cluster" id="toc-af-cluster" class="nav-link" data-scroll-target="#af-cluster">AF-Cluster</a></li>
-  <li><a href="#afsample" id="toc-afsample" class="nav-link" data-scroll-target="#afsample">AFsample</a></li>
-  <li><a href="#automated-workflows" id="toc-automated-workflows" class="nav-link" data-scroll-target="#automated-workflows">Automated Workflows</a></li>
+  <li><a href="#explain-2" id="toc-explain-2" class="nav-link" data-scroll-target="#explain-2">Explain</a></li>
+  <li><a href="#predict-3" id="toc-predict-3" class="nav-link" data-scroll-target="#predict-3">Predict</a></li>
+  <li><a href="#do-run-colabfold" id="toc-do-run-colabfold" class="nav-link" data-scroll-target="#do-run-colabfold">Do: Run ColabFold</a></li>
+  <li><a href="#do-analyze-local-confidence" id="toc-do-analyze-local-confidence" class="nav-link" data-scroll-target="#do-analyze-local-confidence">Do: Analyze Local Confidence</a></li>
+  <li><a href="#do-compare-with-experiment" id="toc-do-compare-with-experiment" class="nav-link" data-scroll-target="#do-compare-with-experiment">Do: Compare with Experiment</a></li>
+  <li><a href="#do-interpret-pae" id="toc-do-interpret-pae" class="nav-link" data-scroll-target="#do-interpret-pae">Do: Interpret PAE</a></li>
+  <li><a href="#check-build-the-artifact" id="toc-check-build-the-artifact" class="nav-link" data-scroll-target="#check-build-the-artifact">Check: Build the Artifact</a></li>
   </ul></li>
-  <li><a href="#understanding-the-output" id="toc-understanding-the-output" class="nav-link" data-scroll-target="#understanding-the-output">Understanding the Output</a>
+  <li><a href="#optional-test-one-assumption" id="toc-optional-test-one-assumption" class="nav-link" data-scroll-target="#optional-test-one-assumption">Optional: Test One Assumption</a>
   <ul class="collapse">
-  <li><a href="#plddt-per-residue-confidence" id="toc-plddt-per-residue-confidence" class="nav-link" data-scroll-target="#plddt-per-residue-confidence">pLDDT: Per-Residue Confidence</a></li>
-  <li><a href="#ptm-and-iptm-global-confidence" id="toc-ptm-and-iptm-global-confidence" class="nav-link" data-scroll-target="#ptm-and-iptm-global-confidence">pTM and ipTM: Global Confidence</a></li>
-  <li><a href="#pae-predicted-aligned-error" id="toc-pae-predicted-aligned-error" class="nav-link" data-scroll-target="#pae-predicted-aligned-error">PAE: Predicted Aligned Error</a></li>
+  <li><a href="#optional-multimer-prediction" id="toc-optional-multimer-prediction" class="nav-link" data-scroll-target="#optional-multimer-prediction">Optional Multimer Prediction</a></li>
   </ul></li>
-  <li><a href="#practical-considerations" id="toc-practical-considerations" class="nav-link" data-scroll-target="#practical-considerations">Practical Considerations</a>
-  <ul class="collapse">
-  <li><a href="#when-to-use-alphafold2" id="toc-when-to-use-alphafold2" class="nav-link" data-scroll-target="#when-to-use-alphafold2">When to Use AlphaFold2</a></li>
-  <li><a href="#resource-requirements" id="toc-resource-requirements" class="nav-link" data-scroll-target="#resource-requirements">Resource Requirements</a></li>
-  <li><a href="#tips-for-better-predictions" id="toc-tips-for-better-predictions" class="nav-link" data-scroll-target="#tips-for-better-predictions">Tips for Better Predictions</a></li>
-  </ul></li>
-  <li><a href="#hands-on-exercise" id="toc-hands-on-exercise" class="nav-link" data-scroll-target="#hands-on-exercise">Hands-On Exercise</a>
-  <ul class="collapse">
-  <li><a href="#part-1-run-colabfold-prediction" id="toc-part-1-run-colabfold-prediction" class="nav-link" data-scroll-target="#part-1-run-colabfold-prediction">Part 1: Run ColabFold Prediction</a></li>
-  <li><a href="#part-2-analyze-your-prediction" id="toc-part-2-analyze-your-prediction" class="nav-link" data-scroll-target="#part-2-analyze-your-prediction">Part 2: Analyze Your Prediction</a></li>
-  <li><a href="#part-3-explore-the-pae" id="toc-part-3-explore-the-pae" class="nav-link" data-scroll-target="#part-3-explore-the-pae">Part 3: Explore the PAE</a></li>
-  <li><a href="#part-4-experiment-with-parameters" id="toc-part-4-experiment-with-parameters" class="nav-link" data-scroll-target="#part-4-experiment-with-parameters">Part 4: Experiment with Parameters</a></li>
-  <li><a href="#part-5-multimer-prediction-optional" id="toc-part-5-multimer-prediction-optional" class="nav-link" data-scroll-target="#part-5-multimer-prediction-optional">Part 5: Multimer Prediction (Optional)</a></li>
-  <li><a href="#questions-to-consider" id="toc-questions-to-consider" class="nav-link" data-scroll-target="#questions-to-consider">Questions to Consider</a></li>
-  <li><a href="#record-your-results" id="toc-record-your-results" class="nav-link" data-scroll-target="#record-your-results">Record Your Results</a></li>
-  </ul></li>
+  <li><a href="#decide-and-continue" id="toc-decide-and-continue" class="nav-link" data-scroll-target="#decide-and-continue">Decide and Continue</a></li>
   </ul>
 </nav>
     </div>
@@ -318,1333 +496,853 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>This module dives deep into AlphaFold2—the breakthrough model that essentially “solved” the protein structure prediction problem—and OpenFold, its open-source, trainable implementation.</p>
-<section id="live-workshop-session" class="level2">
-<h2 class="anchored" data-anchor-id="live-workshop-session">Live Workshop Session</h2>
+<p>AlphaFold2 predicts a protein’s three-dimensional structure from its amino-acid sequence. In this lesson, the goal is not simply to produce a PDB file: it is to decide which parts of a prediction are credible and explain the evidence behind that decision.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Lesson contract">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Lesson contract
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<table class="caption-top table">
+<tbody>
+<tr class="odd">
+<td><strong>Time</strong></td>
+<td>60–90 minutes core; 30–45 minutes optional experiments</td>
+</tr>
+<tr class="even">
+<td><strong>Prerequisites</strong></td>
+<td>Tuesday lessons 1–2; FASTA familiarity; working ColabFold notebook or LocalColabFold installation</td>
+</tr>
+<tr class="odd">
+<td><strong>Watch / Read / Do</strong></td>
+<td>Watch the workshop recording or read this page; complete the prediction and interpretation tasks</td>
+</tr>
+<tr class="even">
+<td><strong>Outcomes</strong></td>
+<td>Explain why MSAs help; interpret pLDDT, pTM, and PAE; compare a prediction with an experimental structure</td>
+</tr>
+<tr class="odd">
+<td><strong>Artifact</strong></td>
+<td>GFP prediction folder plus a completed evidence table and short trust statement</td>
+</tr>
+<tr class="even">
+<td><strong>Complete when</strong></td>
+<td>You can identify confident and uncertain regions, report the comparison to 1GFL, and justify whether the model is useful for experimental planning</td>
+</tr>
+<tr class="odd">
+<td><strong>Next</strong></td>
+<td>Continue to <a href="../tuesday/4-esmfold.html">ESMFold vs.&nbsp;AlphaFold2</a> after saving your artifact</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Choose your route">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Choose your route
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><strong>Watch + do:</strong> Watch the workshop recording, pausing at the prompts below, then complete the core lab.</li>
+<li><strong>Read + do:</strong> Read the short explanations on this page and complete the core lab.</li>
+<li><strong>Full bootcamp:</strong> Complete the core lab, parameter experiments, and the <a href="../tuesday/3-alphafold2-deep-dive.html">optional architecture deep dive</a>.</li>
+</ul>
+</div>
+</div>
+<section id="watch-workshop-session" class="level2">
+<h2 class="anchored" data-anchor-id="watch-workshop-session">Watch: Workshop Session</h2>
+<p>The recording is an alternative explanation of the core ideas, not an additional requirement. Pause before each confidence plot is explained and make your own interpretation first.</p>
 <div class="workshop-companion">
   <div class="wc-title">🎥 Live workshop recording — AlphaFold2 Structure Prediction</div>
   <div class="wc-video">
-    <iframe src="https://www.youtube-nocookie.com/embed/zX6pmHCxvrk" title="AlphaFold2 Structure Prediction" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="" loading="lazy"></iframe>
+    <iframe src="https://www.youtube-nocookie.com/embed/zX6pmHCxvrk" title="AlphaFold2 Structure Prediction workshop recording" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="" loading="lazy"></iframe>
   </div>
   <details>
     <summary>📊 View slide deck</summary>
-    <iframe src="https://docs.google.com/presentation/d/1vzVMNFhw-46M93pYFMwOBICL1i7jEbjv/embed?start=false&amp;loop=false&amp;delayms=3000" allowfullscreen="" loading="lazy"></iframe>
+    <iframe src="https://docs.google.com/presentation/d/1vzVMNFhw-46M93pYFMwOBICL1i7jEbjv/embed?start=false&amp;loop=false&amp;delayms=3000" title="AlphaFold2 Structure Prediction workshop slides" allowfullscreen="" loading="lazy"></iframe>
   </details>
 </div>
-<hr>
 </section>
-<section id="the-alphafold2-breakthrough" class="level2">
-<h2 class="anchored" data-anchor-id="the-alphafold2-breakthrough">The AlphaFold2 Breakthrough</h2>
-<section id="casp14-a-watershed-moment" class="level3">
-<h3 class="anchored" data-anchor-id="casp14-a-watershed-moment">CASP14: A Watershed Moment</h3>
-<p>At the 14th Critical Assessment of protein Structure Prediction (CASP14) in 2020, AlphaFold2 achieved what many thought was impossible:</p>
-<ul>
-<li><strong>GDT-TS scores of ~90</strong> on targets where the previous state-of-the-art was ~60</li>
-<li><strong>Near-experimental accuracy</strong> for many proteins</li>
-<li><strong>Consistent performance</strong> across diverse protein families</li>
-</ul>
-<p>This wasn’t incremental improvement—it was a paradigm shift.</p>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>The Scale of the Achievement
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>To put this in perspective: before AlphaFold2, structure prediction was considered one of biology’s grand challenges. Some estimated it would take decades more to solve. AlphaFold2 essentially closed this chapter.</p>
-</div>
-</div>
-</section>
-<section id="alphafold2-vs-openfold" class="level3">
-<h3 class="anchored" data-anchor-id="alphafold2-vs-openfold">AlphaFold2 vs OpenFold</h3>
-<p><strong>AlphaFold2</strong> (DeepMind): - Original implementation in JAX - Released weights and inference code - Not easily trainable by the community</p>
-<p><strong>OpenFold</strong> (Columbia/Harvard): - Faithful PyTorch reproduction - Fully trainable on new data - Community-friendly and extensible - <strong>3-5x faster</strong> for most proteins - <strong>Lower memory usage</strong>: Can predict longer proteins on single GPUs</p>
-<p>For this bootcamp, we’ll use <strong>ColabFold</strong>, which combines AlphaFold2’s models with fast MSA generation from MMseqs2.</p>
-<p><strong>Reference:</strong> Ahdritz et al.&nbsp;(2024) - OpenFold paper</p>
-<hr>
-</section>
-</section>
-<section id="how-alphafold2-works" class="level2">
-<h2 class="anchored" data-anchor-id="how-alphafold2-works">How AlphaFold2 Works</h2>
-<section id="high-level-architecture" class="level3">
-<h3 class="anchored" data-anchor-id="high-level-architecture">High-Level Architecture</h3>
-<p>AlphaFold2’s architecture flows from the sequence to the final 3D structure through several specialized modules.</p>
-<div class="cell" data-layout-align="default">
-<div class="cell-output-display">
-<div>
-<p></p><figure class="figure"><p></p>
-<div>
-<pre class="mermaid mermaid-js">flowchart LR
-    Seq[Input Sequence] --&gt; MSA[MSA Generation]
-    Seq --&gt; Templ[Template Search]
-    
-    MSA --&gt; Evo[Evoformer]
-    Templ --&gt; Evo
-    
-    Evo --&gt; Struct[Structure Module]
-    Struct --&gt; Coord[3D Coordinates]
-    
-    subgraph "Iterative Refinement (Recycling)"
-    Evo
-    Struct
-    end
-    
-    style Evo fill:#f9f,stroke:#333,stroke-width:2px
-    style Struct fill:#bbf,stroke:#333,stroke-width:2px
-</pre>
-</div>
-<p></p></figure><p></p>
-</div>
-</div>
-</div>
-</section>
-<section id="inputs-and-outputs" class="level3">
-<h3 class="anchored" data-anchor-id="inputs-and-outputs">Inputs and Outputs</h3>
-<p><strong>Inputs:</strong> 1. <strong>Query sequence</strong>: The protein you want to predict 2. <strong>Multiple Sequence Alignment (MSA)</strong>: Related sequences found by database search 3. <strong>Templates</strong> (optional): Known structures of homologous proteins</p>
-<p><strong>Outputs:</strong> 1. <strong>3D coordinates</strong>: Atomic positions for all residues 2. <strong>pLDDT scores</strong>: Per-residue confidence (0-100) 3. <strong>pTM score</strong>: Overall structure confidence 4. <strong>PAE matrix</strong>: Predicted Aligned Error between residue pairs</p>
-</section>
-<section id="the-msa-why-evolutionary-information-matters" class="level3">
-<h3 class="anchored" data-anchor-id="the-msa-why-evolutionary-information-matters">The MSA: Why Evolutionary Information Matters</h3>
-<p>The Multiple Sequence Alignment is arguably the most important input to AlphaFold2. It aligns your query sequence with evolutionarily related sequences to find co-evolution patterns.</p>
-<pre><code>Query:     MKVLWAALLVTFLAGCQAKVEQAVETEPEPELRQQTEWQSGQRWELAL
-Homolog1:  MKVLWAALLVTFLAGCQAKVEQAVETEPEPELRQQTEWQSGQRWELAL
-Homolog2:  MKVLWGALLVTFLAGCQAKIEQAVETEPEPELRQQTEWQSGQRWDLAL
-Homolog3:  MKILWAALLVSFLAGCQAKVEQAVEAEPEPELRQQTEWQSGQRWELAL
-           ** **.****:******* :*****.**************.*:***</code></pre>
-<div class="callout callout-style-default callout-important callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Important</span>The MSA is Critical
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>AlphaFold2’s accuracy depends heavily on MSA quality. Proteins with few homologs (orphan proteins, designed proteins) are harder to predict because there’s less evolutionary information to leverage.</p>
-</div>
-</div>
-<section id="how-msas-are-generated" class="level4">
-<h4 class="anchored" data-anchor-id="how-msas-are-generated">How MSAs are Generated</h4>
-<p>AlphaFold2 uses multiple database search tools to build comprehensive MSAs:</p>
-<p><strong>JackHMMER</strong> (iterative profile HMM search):</p>
-<ul>
-<li>Searches UniRef90, MGnify, and other databases</li>
-<li>Iteratively builds a profile from hits and re-searches</li>
-<li>Highly sensitive but computationally expensive</li>
-<li>Used for the “genetic” MSA in AlphaFold2</li>
-</ul>
-<p><strong>HHBlits</strong> (HMM-HMM search):</p>
-<ul>
-<li>Searches clustered databases like BFD (Big Fantastic Database)</li>
-<li>Faster than JackHMMER with comparable sensitivity</li>
-<li>Used for additional MSA depth</li>
-</ul>
-<p><strong>MMseqs2</strong> (ColabFold’s approach):</p>
-<ul>
-<li>100-1000x faster than JackHMMER</li>
-<li>Searches pre-computed ColabFold databases</li>
-<li>Slight accuracy trade-off for massive speed gains</li>
-<li>Makes AlphaFold2 practical for large-scale predictions</li>
-</ul>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>MSA Depth Matters
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>The number of effective sequences (Neff) in an MSA correlates strongly with prediction accuracy:</p>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Neff</th>
-<th>Expected Accuracy</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>&gt;1000</td>
-<td>High confidence predictions likely</td>
-</tr>
-<tr class="even">
-<td>100-1000</td>
-<td>Good predictions for most proteins</td>
-</tr>
-<tr class="odd">
-<td>30-100</td>
-<td>Predictions may be unreliable in some regions</td>
-</tr>
-<tr class="even">
-<td>&lt;30</td>
-<td>Significant uncertainty; consider single-sequence methods</td>
-</tr>
-</tbody>
-</table>
-<p>Neff accounts for sequence redundancy—100 nearly identical sequences contribute less information than 100 diverse sequences.</p>
-</div>
-</div>
-</section>
-<section id="co-evolution-the-key-to-structure-prediction" class="level4">
-<h4 class="anchored" data-anchor-id="co-evolution-the-key-to-structure-prediction">Co-evolution: The Key to Structure Prediction</h4>
-<p>The fundamental insight behind using MSAs for structure prediction is <strong>co-evolution</strong>: residues that are in physical contact in the 3D structure tend to mutate together during evolution to maintain their interaction.</p>
-<div class="cell" data-layout-align="default">
-<div class="cell-output-display">
-<div>
-<p></p><figure class="figure"><p></p>
-<div>
-<pre class="mermaid mermaid-js">flowchart LR
-    subgraph "In 3D Structure"
-        A[Residue i&lt;br/&gt;Asp⁻] &lt;--&gt; B[Residue j&lt;br/&gt;Lys⁺]
-    end
-
-    subgraph "During Evolution"
-        C[Asp⁻ → Lys⁺] --&gt; D[Lys⁺ → Asp⁻]
-    end
-
-    A --&gt; C
-    B --&gt; D
-
-    style A fill:#ffcccc
-    style B fill:#ccccff
-</pre>
-</div>
-<p></p></figure><p></p>
-</div>
-</div>
-</div>
-<p><strong>Why does this happen?</strong></p>
-<p>Consider two residues forming a salt bridge (Asp⁻ interacting with Lys⁺):</p>
+<section id="loop-1-inspect-before-you-predict" class="level2">
+<h2 class="anchored" data-anchor-id="loop-1-inspect-before-you-predict">Loop 1: Inspect Before You Predict</h2>
+<section id="explain" class="level3">
+<h3 class="anchored" data-anchor-id="explain">Explain</h3>
+<p>AlphaFold2’s result is a claim about structure accompanied by estimates of uncertainty. Its main outputs are:</p>
 <ol type="1">
-<li>If position i mutates from Asp to Lys (negative to positive charge)</li>
-<li>The interaction is disrupted—the protein may misfold</li>
-<li><strong>Unless</strong> position j compensates by mutating from Lys to Asp</li>
-<li>The complementary mutation restores the interaction</li>
+<li><strong>3D coordinates:</strong> predicted atomic positions, usually saved as a PDB or mmCIF file.</li>
+<li><strong>pLDDT:</strong> confidence in the local environment around each residue, from 0 to 100.</li>
+<li><strong>pTM:</strong> confidence in the overall fold and relative placement of domains, from 0 to 1.</li>
+<li><strong>PAE:</strong> predicted error in the relative position of every pair of residues.</li>
 </ol>
-<p>This creates <strong>correlated mutations</strong> that we can detect statistically across thousands of homologous sequences.</p>
 </section>
-<section id="from-co-evolution-to-contacts-direct-coupling-analysis" class="level4">
-<h4 class="anchored" data-anchor-id="from-co-evolution-to-contacts-direct-coupling-analysis">From Co-evolution to Contacts: Direct Coupling Analysis</h4>
-<p>Before deep learning, methods like <strong>Direct Coupling Analysis (DCA)</strong> extracted contact predictions from MSAs:</p>
-<div class="cell" data-layout-align="default">
-<div class="cell-output-display">
-<div>
-<p></p><figure class="figure"><p></p>
-<div>
-<pre class="mermaid mermaid-js">flowchart TD
-    MSA[Multiple Sequence Alignment] --&gt; MI[Mutual Information&lt;br/&gt;Raw correlations]
-    MI --&gt; Problem[Problem: Transitive correlations&lt;br/&gt;A↔B and B↔C implies spurious A↔C]
-    Problem --&gt; DCA[Direct Coupling Analysis&lt;br/&gt;Separates direct from indirect]
-    DCA --&gt; Contacts[Contact Predictions]
-
-    style Problem fill:#ffcccc
-    style DCA fill:#ccffcc
-</pre>
-</div>
-<p></p></figure><p></p>
-</div>
-</div>
-</div>
-<p><strong>The challenge</strong>: If residue A co-evolves with B, and B co-evolves with C, simple correlation analysis will show spurious A↔︎C co-evolution even if they never contact.</p>
-<p><strong>DCA’s solution</strong>: Use inverse covariance (precision) matrices or pseudolikelihood methods to separate <strong>direct</strong> couplings from <strong>indirect</strong> (transitive) correlations.</p>
-<p>AlphaFold2 doesn’t explicitly compute DCA—instead, its attention mechanisms learn to extract these signals directly from the MSA representation.</p>
-</section>
-<section id="how-alphafold2-processes-the-msa" class="level4">
-<h4 class="anchored" data-anchor-id="how-alphafold2-processes-the-msa">How AlphaFold2 Processes the MSA</h4>
-<p>The MSA enters AlphaFold2 as a tensor with dimensions:</p>
+<section id="predict" class="level3">
+<h3 class="anchored" data-anchor-id="predict">Predict</h3>
+<p>Before reading the check below, write down which metric you would use for each question:</p>
 <ul>
-<li><strong>Sequences</strong>: Number of aligned sequences (typically ~500-5000, subsampled from full MSA)</li>
-<li><strong>Residues</strong>: Length of the query sequence</li>
-<li><strong>Features</strong>: One-hot encoding + positional features (22 dimensions per residue)</li>
-</ul>
-<p>The model processes this through two parallel representations:</p>
-<div class="cell" data-layout-align="default">
-<div class="cell-output-display">
-<div>
-<p></p><figure class="figure"><p></p>
-<div>
-<pre class="mermaid mermaid-js">flowchart TB
-    MSA[MSA Input&lt;br/&gt;N_seq × L × 22] --&gt; MSArep[MSA Representation&lt;br/&gt;N_seq × L × 256]
-    MSA --&gt; Pair[Pair Representation&lt;br/&gt;L × L × 128]
-
-    MSArep &lt;--&gt; Evo[Evoformer&lt;br/&gt;48 blocks]
-    Pair &lt;--&gt; Evo
-
-    Evo --&gt; Final[To Structure Module]
-
-    style Evo fill:#f9f,stroke:#333,stroke-width:2px
-</pre>
-</div>
-<p></p></figure><p></p>
-</div>
-</div>
-</div>
-<ul>
-<li><strong>MSA Representation</strong>: Tracks information about each residue in each sequence</li>
-<li><strong>Pair Representation</strong>: Tracks relationships between all pairs of residues in the query</li>
-</ul>
-<div class="quiz-container" data-correct-index="1" data-correct-feedback="Exactly! Co-evolutionary signals (residues mutating together) act as distance constraints for the model." data-incorrect-feedback="Not quite. While more data helps, the specific reason is co-evolution.">
-  <div class="quiz-header"><i class="bi bi-question-circle-fill"></i> Check Your Understanding</div>
-  <div class="quiz-question">Why is the MSA so critical for AlphaFold2's accuracy?</div>
-  <div class="quiz-options">
-    <div class="quiz-option">It provides template structures for the model to copy.</div>
-    <div class="quiz-option">It reveals co-evolutionary patterns that imply 3D contacts.</div>
-    <div class="quiz-option">It just increases the size of the training data.</div>
-  </div>
-  <button class="check-btn">Check Answer</button>
-  <div class="quiz-feedback"></div>
-</div>
-</section>
-</section>
-<section id="the-evoformer-learning-from-evolution" class="level3">
-<h3 class="anchored" data-anchor-id="the-evoformer-learning-from-evolution">The Evoformer: Learning from Evolution</h3>
-<p>The Evoformer is AlphaFold2’s core innovation—a specialized neural network architecture that processes evolutionary information to understand protein structure. It consists of <strong>48 blocks</strong>, each updating two interconnected representations.</p>
-<section id="the-two-representations" class="level4">
-<h4 class="anchored" data-anchor-id="the-two-representations">The Two Representations</h4>
-<p>The Evoformer maintains and iteratively refines two tensors:</p>
-<p><strong>1. MSA Representation</strong> (N_seq × L × 256):</p>
-<ul>
-<li>Each entry represents one residue in one sequence</li>
-<li>Captures per-position information across evolutionary history</li>
-<li>Updated by row and column attention</li>
-</ul>
-<p><strong>2. Pair Representation</strong> (L × L × 128):</p>
-<ul>
-<li>Each entry represents the relationship between two residues</li>
-<li>Encodes distance, orientation, and contact information</li>
-<li>Updated by triangle attention and outer product mean</li>
-</ul>
-<div class="cell" data-layout-align="default">
-<div class="cell-output-display">
-<div>
-<p></p><figure class="figure"><p></p>
-<div>
-<pre class="mermaid mermaid-js">flowchart TB
-    subgraph "Evoformer Block (×48)"
-        subgraph "MSA Stack"
-            Row[Row-wise Attention&lt;br/&gt;with pair bias]
-            Col[Column-wise Attention]
-        end
-
-        subgraph "Communication"
-            OPM[Outer Product Mean&lt;br/&gt;MSA → Pair]
-        end
-
-        subgraph "Pair Stack"
-            TriStart[Triangle Attention&lt;br/&gt;Starting Node]
-            TriEnd[Triangle Attention&lt;br/&gt;Ending Node]
-            TriOut[Triangle Multiplicative&lt;br/&gt;Outgoing]
-            TriIn[Triangle Multiplicative&lt;br/&gt;Incoming]
-            Trans[Transition Layer]
-        end
-    end
-
-    Row --&gt; Col
-    Col --&gt; OPM
-    OPM --&gt; TriStart
-    TriStart --&gt; TriEnd
-    TriEnd --&gt; TriOut
-    TriOut --&gt; TriIn
-    TriIn --&gt; Trans
-
-    style OPM fill:#ffd700
-</pre>
-</div>
-<p></p></figure><p></p>
-</div>
-</div>
-</div>
-</section>
-<section id="row-wise-attention-within-sequence-reasoning" class="level4">
-<h4 class="anchored" data-anchor-id="row-wise-attention-within-sequence-reasoning">Row-wise Attention: Within-Sequence Reasoning</h4>
-<p>Row attention operates along the residue dimension for each sequence in the MSA:</p>
-<pre><code>For each sequence s in the MSA:
-    Query, Key, Value = Linear projections of MSA representation
-    Attention weights = softmax(Q·K^T / √d + pair_bias)
-    Output = Attention weights · V</code></pre>
-<p><strong>Key insight</strong>: The attention weights are <strong>biased by the pair representation</strong>. This means the model’s understanding of residue relationships directly influences how it processes each sequence.</p>
-<p><strong>What this achieves</strong>:</p>
-<ul>
-<li>Residues that are structurally related attend to each other</li>
-<li>Long-range dependencies are captured regardless of sequence distance</li>
-<li>The pair bias acts like a “structural prior” during MSA processing</li>
+<li>Is this loop locally well modeled?</li>
+<li>Are two domains positioned reliably relative to one another?</li>
+<li>Is the overall fold likely to be correct?</li>
 </ul>
 </section>
-<section id="column-wise-attention-cross-sequence-reasoning" class="level4">
-<h4 class="anchored" data-anchor-id="column-wise-attention-cross-sequence-reasoning">Column-wise Attention: Cross-Sequence Reasoning</h4>
-<p>Column attention operates across sequences at each position:</p>
-<pre><code>For each position i in the sequence:
-    Compare how position i appears across all sequences
-    Learn patterns of conservation and variation</code></pre>
-<p><strong>What this achieves</strong>:</p>
+<section id="do" class="level3">
+<h3 class="anchored" data-anchor-id="do">Do</h3>
+<p>Open one AlphaFold Database entry for a protein you know at <a href="https://alphafold.ebi.ac.uk">alphafold.ebi.ac.uk</a>. Inspect both the structure coloring and the PAE plot. Record one confident region and one uncertainty you would investigate.</p>
+</section>
+<section id="check" class="level3">
+<h3 class="anchored" data-anchor-id="check">Check</h3>
 <ul>
-<li>Identifies conserved residues (important for function/structure)</li>
-<li>Detects co-varying positions (co-evolution signal)</li>
-<li>Aggregates information from thousands of evolutionary samples</li>
+<li><strong>Local region:</strong> use pLDDT.</li>
+<li><strong>Relative domain placement:</strong> use PAE.</li>
+<li><strong>Overall fold:</strong> use pTM, supported by pLDDT and PAE rather than interpreted alone.</li>
 </ul>
-<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout callout-style-default callout-important callout-titled" title="Confidence is not correctness">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Row vs Column Attention Intuition
+<span class="screen-reader-only">Important</span>Confidence is not correctness
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<ul>
-<li><strong>Row attention</strong>: “What other positions in this sequence are relevant to position i?”</li>
-<li><strong>Column attention</strong>: “What can I learn about position i by looking at how it varies across evolution?”</li>
-</ul>
-</div>
-</div>
-</section>
-<section id="the-outer-product-mean-bridging-msa-and-pairs" class="level4">
-<h4 class="anchored" data-anchor-id="the-outer-product-mean-bridging-msa-and-pairs">The Outer Product Mean: Bridging MSA and Pairs</h4>
-<p>The <strong>Outer Product Mean</strong> is the critical operation that transfers co-evolution information from the MSA representation into the pair representation:</p>
-<pre><code>For positions i and j:
-    pair_update[i,j] = Mean over sequences s of (MSA[s,i] ⊗ MSA[s,j])</code></pre>
-<p>Where ⊗ denotes the outer product.</p>
-<p><strong>Intuition</strong>: If positions i and j consistently appear together in certain amino acid combinations across many sequences, this outer product will capture that correlation and inject it into the pair representation.</p>
-<p><strong>This is how AlphaFold2 “learns” co-evolution</strong>: The outer product implicitly computes correlation statistics between positions, similar to what DCA does explicitly—but in a learnable, differentiable way.</p>
-</section>
-<section id="triangle-updates-enforcing-geometric-consistency" class="level4">
-<h4 class="anchored" data-anchor-id="triangle-updates-enforcing-geometric-consistency">Triangle Updates: Enforcing Geometric Consistency</h4>
-<p>The triangle updates are what make the pair representation geometrically consistent. They’re based on a simple principle: <strong>distances must satisfy the triangle inequality</strong>.</p>
-<div class="cell" data-layout-align="default">
-<div class="cell-output-display">
-<div>
-<p></p><figure class="figure"><p></p>
-<div>
-<pre class="mermaid mermaid-js">flowchart LR
-    subgraph "Triangle Inequality"
-        A((i)) --- B((j))
-        B --- C((k))
-        A --- C
-    end
-
-    subgraph "Constraint"
-        D[d_ij + d_jk ≥ d_ik]
-    end
-</pre>
-</div>
-<p></p></figure><p></p>
-</div>
-</div>
-</div>
-<p>If we know the relationships i↔︎k and k↔︎j, we can infer something about i↔︎j.</p>
-<p><strong>Triangle Attention</strong> (Starting and Ending Node):</p>
-<ul>
-<li>“Starting node”: For edge i→j, attend over all edges i→k that share the starting node</li>
-<li>“Ending node”: For edge i→j, attend over all edges k→j that share the ending node</li>
-</ul>
-<pre><code>Triangle attention (starting):
-    For edge (i,j): aggregate information from all (i,k) edges
-
-Triangle attention (ending):
-    For edge (i,j): aggregate information from all (k,j) edges</code></pre>
-<p><strong>Triangle Multiplicative Updates</strong> (Outgoing and Incoming):</p>
-<p>These use multiplicative gating to combine information:</p>
-<pre><code>Triangle multiplicative (outgoing):
-    pair[i,j] += Σ_k gate(pair[i,k]) × pair[k,j]
-
-Triangle multiplicative (incoming):
-    pair[i,j] += Σ_k pair[i,k] × gate(pair[k,j])</code></pre>
-<p><strong>Why both attention AND multiplicative?</strong> They capture different types of relationships:</p>
-<ul>
-<li>Attention: Soft selection of which intermediate nodes k matter</li>
-<li>Multiplicative: Direct combination of path information</li>
-</ul>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Triangle Updates Are Like Message Passing on a Graph
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Think of the pair representation as a fully-connected graph where each edge (i,j) stores information. Triangle updates pass messages along triangles, enforcing that if A is close to B and B is close to C, this constrains the A-C relationship.</p>
-</div>
-</div>
-</section>
-<section id="evoformer-summary" class="level4">
-<h4 class="anchored" data-anchor-id="evoformer-summary">Evoformer Summary</h4>
-<p>After 48 blocks, the Evoformer has:</p>
-<ol type="1">
-<li><strong>Extracted co-evolutionary signals</strong> from the MSA via column attention and outer product mean</li>
-<li><strong>Propagated structural information</strong> through row attention with pair bias</li>
-<li><strong>Enforced geometric consistency</strong> through triangle updates</li>
-<li>Built a <strong>rich pair representation</strong> encoding likely 3D relationships</li>
-</ol>
-<div class="quiz-container" data-correct-index="2" data-correct-feedback="Correct! The outer product mean computes correlation statistics between MSA positions and injects them into the pair representation." data-incorrect-feedback="Not quite. The outer product mean is the key operation for co-evolution.">
-  <div class="quiz-header"><i class="bi bi-question-circle-fill"></i> Check Your Understanding</div>
-  <div class="quiz-question">Which Evoformer operation transfers co-evolution signals from the MSA to the pair representation?</div>
-  <div class="quiz-options">
-    <div class="quiz-option">Row-wise attention</div>
-    <div class="quiz-option">Triangle multiplicative update</div>
-    <div class="quiz-option">Outer product mean</div>
-    <div class="quiz-option">Column-wise attention</div>
-  </div>
-  <button class="check-btn">Check Answer</button>
-  <div class="quiz-feedback"></div>
-</div>
-<hr>
-</section>
-</section>
-<section id="the-structure-module-from-representations-to-3d-coordinates" class="level3">
-<h3 class="anchored" data-anchor-id="the-structure-module-from-representations-to-3d-coordinates">The Structure Module: From Representations to 3D Coordinates</h3>
-<p>The Structure Module takes the refined representations from the Evoformer and converts them into actual 3D atomic coordinates. This is where AlphaFold2 transitions from “reasoning about structure” to “predicting structure.”</p>
-<section id="the-key-challenge-se3-equivariance" class="level4">
-<h4 class="anchored" data-anchor-id="the-key-challenge-se3-equivariance">The Key Challenge: SE(3) Equivariance</h4>
-<p>Protein structure prediction has a fundamental requirement: <strong>the prediction should be independent of how we orient the input</strong>.</p>
-<ul>
-<li>If we rotate the coordinate frame, the predicted structure should rotate identically</li>
-<li>If we translate the origin, distances should be preserved</li>
-<li>The prediction should depend only on intrinsic properties, not arbitrary reference frames</li>
-</ul>
-<p>This is called <strong>SE(3) equivariance</strong> (Special Euclidean group in 3D = rotations + translations).</p>
-<p><strong>The problem</strong>: Standard neural networks don’t naturally respect this symmetry. A naive network would give different predictions for the same protein oriented differently.</p>
-</section>
-<section id="frames-the-backbone-representation" class="level4">
-<h4 class="anchored" data-anchor-id="frames-the-backbone-representation">Frames: The Backbone Representation</h4>
-<p>AlphaFold2 represents each residue using a <strong>local coordinate frame</strong> (also called a “rigid body” or “frame”):</p>
-<div class="cell" data-layout-align="default">
-<div class="cell-output-display">
-<div>
-<p></p><figure class="figure"><p></p>
-<div>
-<pre class="mermaid mermaid-js">flowchart LR
-    subgraph "Residue Frame"
-        O[Origin at Cα] --&gt; X[x-axis: N→Cα direction]
-        O --&gt; Y[y-axis: perpendicular in plane]
-        O --&gt; Z[z-axis: completes right-hand system]
-    end
-</pre>
-</div>
-<p></p></figure><p></p>
-</div>
-</div>
-</div>
-<p>Each frame consists of:</p>
-<ul>
-<li><strong>Translation</strong> (t): The 3D position of the Cα atom</li>
-<li><strong>Rotation</strong> (R): A 3×3 rotation matrix defining the local orientation</li>
-</ul>
-<p>The backbone is thus represented as a sequence of frames: T₁, T₂, …, T_L</p>
-<p><strong>Why frames?</strong> They naturally encode:</p>
-<ul>
-<li>Position (where is this residue?)</li>
-<li>Orientation (how is the peptide bond oriented?)</li>
-<li>Relative geometry (how do two residues relate in space?)</li>
-</ul>
-</section>
-<section id="invariant-point-attention-ipa-the-core-innovation" class="level4">
-<h4 class="anchored" data-anchor-id="invariant-point-attention-ipa-the-core-innovation">Invariant Point Attention (IPA): The Core Innovation</h4>
-<p><strong>Invariant Point Attention</strong> is the structure module’s key mechanism. It’s a modified attention operation that:</p>
-<ol type="1">
-<li>Is <strong>invariant</strong> to global rotations and translations</li>
-<li>Can reason about <strong>3D geometric relationships</strong></li>
-<li>Uses both the <strong>pair representation</strong> and <strong>current 3D coordinates</strong></li>
-</ol>
-<div class="cell" data-layout-align="default">
-<div class="cell-output-display">
-<div>
-<p></p><figure class="figure"><p></p>
-<div>
-<pre class="mermaid mermaid-js">flowchart TB
-    subgraph "IPA Inputs"
-        Single[Single Representation&lt;br/&gt;per-residue features]
-        Pair[Pair Representation&lt;br/&gt;from Evoformer]
-        Frames[Current Frames&lt;br/&gt;T_i for each residue]
-    end
-
-    subgraph "IPA Computation"
-        QKV[Generate Q, K, V&lt;br/&gt;in local frames]
-        Points[Generate query/key points&lt;br/&gt;in local coordinates]
-        Transform[Transform points to&lt;br/&gt;global frame]
-        Dist[Compute point-to-point&lt;br/&gt;distances]
-        Attn[Attention with&lt;br/&gt;pair bias + distance bias]
-    end
-
-    Single --&gt; QKV
-    Frames --&gt; Points
-    Points --&gt; Transform
-    Transform --&gt; Dist
-    Pair --&gt; Attn
-    Dist --&gt; Attn
-    QKV --&gt; Attn
-
-    Attn --&gt; Output[Updated Single&lt;br/&gt;Representation]
-</pre>
-</div>
-<p></p></figure><p></p>
-</div>
-</div>
-</div>
-<p><strong>The “invariant points” trick</strong>:</p>
-<ol type="1">
-<li>Each residue generates “query points” and “key points” in its local coordinate frame</li>
-<li>These points are transformed to the global frame using the current frame estimate</li>
-<li>Distances between points are computed (distances are invariant to rotation/translation!)</li>
-<li>These distances bias the attention weights</li>
-</ol>
-<p><strong>Why this works</strong>: By working with distances between transformed points, IPA can reason about 3D geometry while remaining invariant to the choice of global reference frame.</p>
-</section>
-<section id="the-frame-update-predicting-backbone-geometry" class="level4">
-<h4 class="anchored" data-anchor-id="the-frame-update-predicting-backbone-geometry">The Frame Update: Predicting Backbone Geometry</h4>
-<p>After each IPA layer, the structure module updates the residue frames:</p>
-<pre><code>For each residue i:
-    quaternion, translation = MLP(single_representation[i])
-    T_i = T_i ∘ (quaternion_to_rotation(quaternion), translation)</code></pre>
-<p><strong>Key insight</strong>: Updates are applied as <strong>compositions</strong> with the current frame, not absolute predictions. This makes learning easier—the network only needs to predict small refinements.</p>
-<p>The frames start from an initial guess (often just the identity—all residues at the origin with no rotation) and are iteratively refined.</p>
-</section>
-<section id="side-chain-prediction-torsion-angles" class="level4">
-<h4 class="anchored" data-anchor-id="side-chain-prediction-torsion-angles">Side Chain Prediction: Torsion Angles</h4>
-<p>The structure module also predicts <strong>side chain conformations</strong> using torsion (dihedral) angles:</p>
-<pre><code>backbone torsion angles: φ, ψ, ω
-side chain torsion angles: χ₁, χ₂, χ₃, χ₄ (depending on amino acid)</code></pre>
-<p>Each angle is predicted as:</p>
-<pre><code>(sin(angle), cos(angle)) = MLP(single_representation)
-angle = atan2(sin, cos)</code></pre>
-<p><strong>Why sin/cos instead of the angle directly?</strong> Angles wrap around (0° = 360°), which creates discontinuities. Predicting (sin, cos) avoids this problem.</p>
-</section>
-<section id="from-frames-to-atoms" class="level4">
-<h4 class="anchored" data-anchor-id="from-frames-to-atoms">From Frames to Atoms</h4>
-<p>Once we have frames and torsion angles, computing atom positions is deterministic:</p>
-<pre><code>For each residue:
-    1. Place backbone atoms (N, Cα, C, O) using the frame
-    2. Place Cβ using ideal bond geometry
-    3. Rotate each side chain bond by predicted χ angles
-    4. All atom positions fall out of the geometry</code></pre>
-<p>This uses <strong>idealized bond lengths and angles</strong> from chemistry—the network only predicts the “free” degrees of freedom (frame rotations/translations and torsion angles).</p>
-</section>
-<section id="structure-module-architecture-summary" class="level4">
-<h4 class="anchored" data-anchor-id="structure-module-architecture-summary">Structure Module Architecture Summary</h4>
-<div class="cell" data-layout-align="default">
-<div class="cell-output-display">
-<div>
-<p></p><figure class="figure"><p></p>
-<div>
-<pre class="mermaid mermaid-js">flowchart TB
-    EvoOut[Evoformer Output&lt;br/&gt;Single + Pair repr.] --&gt; Init[Initialize Frames&lt;br/&gt;Identity transforms]
-
-    subgraph "Structure Module (8 layers)"
-        Init --&gt; IPA1[IPA Layer 1]
-        IPA1 --&gt; Update1[Frame Update]
-        Update1 --&gt; IPA2[IPA Layer 2]
-        IPA2 --&gt; Update2[Frame Update]
-        Update2 --&gt; Dots[...]
-        Dots --&gt; IPA8[IPA Layer 8]
-        IPA8 --&gt; Update8[Frame Update]
-    end
-
-    Update8 --&gt; Torsion[Predict Torsion Angles]
-    Update8 --&gt; Final[Final Frames]
-
-    Final --&gt; Atoms[Compute Atom&lt;br/&gt;Positions]
-    Torsion --&gt; Atoms
-
-    style IPA1 fill:#bbf
-    style IPA8 fill:#bbf
-</pre>
-</div>
-<p></p></figure><p></p>
-</div>
+<p>A confident prediction can still miss a ligand-induced state, alternative conformation, oligomeric assembly, or biological context. A low-confidence region may be intrinsically disordered or flexible rather than simply “wrong.” Treat the metrics as evidence, not a verdict.</p>
 </div>
 </div>
 </section>
 </section>
-<section id="recycling-iterative-refinement" class="level3">
-<h3 class="anchored" data-anchor-id="recycling-iterative-refinement">Recycling: Iterative Refinement</h3>
-<p>AlphaFold2 doesn’t just run once—it <strong>recycles</strong> its predictions back as input for multiple rounds of refinement.</p>
-<div class="cell" data-layout-align="default">
-<div class="cell-output-display">
-<div>
-<p></p><figure class="figure"><p></p>
-<div>
-<pre class="mermaid mermaid-js">flowchart LR
-    subgraph "Recycle 1"
-        E1[Evoformer] --&gt; S1[Structure Module]
-    end
-
-    subgraph "Recycle 2"
-        E2[Evoformer] --&gt; S2[Structure Module]
-    end
-
-    subgraph "Recycle 3"
-        E3[Evoformer] --&gt; S3[Structure Module]
-    end
-
-    S1 --&gt;|"Pair repr + structure"| E2
-    S2 --&gt;|"Pair repr + structure"| E3
-    S3 --&gt; Final[Final Prediction]
-</pre>
-</div>
-<p></p></figure><p></p>
-</div>
-</div>
-</div>
-<p><strong>What gets recycled?</strong></p>
-<ol type="1">
-<li><strong>Pair representation</strong> from previous iteration</li>
-<li><strong>Predicted structure</strong> (frames) from structure module</li>
-<li><strong>First row of MSA representation</strong> (query sequence features)</li>
-</ol>
-<p><strong>Why recycle?</strong></p>
-<ul>
-<li>The Evoformer can use structural information to better interpret the MSA</li>
-<li>Iterative refinement allows progressive improvement</li>
-<li>Similar to how Rosetta uses “iterative assembly” in fragment-based prediction</li>
-</ul>
-<p><strong>Typical recycling</strong>: 3 rounds (default), up to 20 for difficult targets</p>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Recycling Creates an Implicit “Dynamics”
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Each recycle can be thought of as a step of optimization. The structure progressively “folds” from a random initial state toward the predicted final structure. This is somewhat analogous to molecular dynamics or energy minimization.</p>
-</div>
-</div>
-<div class="quiz-container" data-correct-index="1" data-correct-feedback="Correct! IPA uses distances between points in 3D, which are naturally invariant to rotations and translations of the coordinate system." data-incorrect-feedback="Not quite. The key is that distances are invariant to SE(3) transformations.">
-  <div class="quiz-header"><i class="bi bi-question-circle-fill"></i> Check Your Understanding</div>
-  <div class="quiz-question">Why does Invariant Point Attention (IPA) use distances between transformed points?</div>
-  <div class="quiz-options">
-    <div class="quiz-option">To make computation faster</div>
-    <div class="quiz-option">Distances are invariant to rotation and translation</div>
-    <div class="quiz-option">Points are easier to visualize than frames</div>
-    <div class="quiz-option">To reduce memory usage</div>
-  </div>
-  <button class="check-btn">Check Answer</button>
-  <div class="quiz-feedback"></div>
-</div>
-<hr>
-</section>
-</section>
-<section id="key-parameters-and-settings" class="level2">
-<h2 class="anchored" data-anchor-id="key-parameters-and-settings">Key Parameters and Settings</h2>
-<section id="recycling-parameters" class="level3">
-<h3 class="anchored" data-anchor-id="recycling-parameters">Recycling Parameters</h3>
+<section id="loop-2-read-confidence-as-evidence" class="level2">
+<h2 class="anchored" data-anchor-id="loop-2-read-confidence-as-evidence">Loop 2: Read Confidence as Evidence</h2>
+<section id="explain-plddt" class="level3">
+<h3 class="anchored" data-anchor-id="explain-plddt">Explain: pLDDT</h3>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 26%">
-<col style="width: 34%">
-<col style="width: 39%">
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
 </colgroup>
-<thead>
-<tr class="header">
-<th>Parameter</th>
-<th>What it does</th>
-<th>Typical values</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><code>num_recycles</code></td>
-<td>How many refinement passes</td>
-<td>3-20 (more = better but slower)</td>
-</tr>
-<tr class="even">
-<td><code>max_recycles</code></td>
-<td>Hard cap for recycling</td>
-<td>20</td>
-</tr>
-<tr class="odd">
-<td><code>recycle_early_stop_tolerance</code></td>
-<td>Stop if structure converges</td>
-<td>0.5 Å</td>
-</tr>
-</tbody>
-</table>
-<p><strong>When to increase recycles:</strong> - Large proteins (&gt;500 residues) - Multi-domain proteins - When initial predictions look uncertain</p>
-</section>
-<section id="msa-settings" class="level3">
-<h3 class="anchored" data-anchor-id="msa-settings">MSA Settings</h3>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 32%">
-<col style="width: 41%">
-<col style="width: 26%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Parameter</th>
-<th>What it does</th>
-<th>Options</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><code>msa_mode</code></td>
-<td>How to generate MSA</td>
-<td><code>mmseqs2</code> (fast), <code>jackhmmer</code> (thorough)</td>
-</tr>
-<tr class="even">
-<td><code>pair_mode</code></td>
-<td>For multimers: how to pair sequences</td>
-<td><code>paired</code>, <code>unpaired</code>, <code>paired+unpaired</code></td>
-</tr>
-<tr class="odd">
-<td><code>use_msa</code></td>
-<td>Whether to use MSA at all</td>
-<td>true/false</td>
-</tr>
-<tr class="even">
-<td><code>use_templates</code></td>
-<td>Whether to search for structural templates</td>
-<td>true/false</td>
-</tr>
-</tbody>
-</table>
-<div class="callout callout-style-default callout-warning callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Warning</span>Single-Sequence Mode
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>You can run AlphaFold2 without an MSA (<code>use_msa=false</code>), but accuracy drops significantly. Use this only for: - Designed proteins with no natural homologs - Quick preliminary scans - When comparing to ESMFold</p>
-</div>
-</div>
-</section>
-<section id="model-selection" class="level3">
-<h3 class="anchored" data-anchor-id="model-selection">Model Selection</h3>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 32%">
-<col style="width: 41%">
-<col style="width: 26%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Parameter</th>
-<th>What it does</th>
-<th>Options</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><code>model_type</code></td>
-<td>Monomer vs multimer</td>
-<td><code>monomer</code>, <code>monomer_ptm</code>, <code>multimer</code></td>
-</tr>
-<tr class="even">
-<td><code>num_models</code></td>
-<td>Number of model versions to run</td>
-<td>1-5</td>
-</tr>
-<tr class="odd">
-<td><code>rank_by</code></td>
-<td>How to select best prediction</td>
-<td><code>plddt</code>, <code>ptm</code>, <code>iptm+ptm</code></td>
-</tr>
-</tbody>
-</table>
-<p><strong>The 5 models:</strong> AlphaFold2 was trained with 5 different random initializations. Running all 5 provides: - Ensemble diversity (different predictions) - Uncertainty estimation (do they agree?) - Better chance of finding the best structure</p>
-</section>
-<section id="relaxation" class="level3">
-<h3 class="anchored" data-anchor-id="relaxation">Relaxation</h3>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Parameter</th>
-<th>What it does</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><code>use_amber</code></td>
-<td>Run Amber energy minimization</td>
-</tr>
-<tr class="even">
-<td><code>use_gpu_relax</code></td>
-<td>Use GPU for relaxation (faster)</td>
-</tr>
-</tbody>
-</table>
-<p><strong>Why relax?</strong> - Fixes minor clashes and bad geometry - Makes structures more physically realistic - Important for downstream applications (docking, MD)</p>
-<hr>
-</section>
-</section>
-<section id="alphafold2-extensions" class="level2">
-<h2 class="anchored" data-anchor-id="alphafold2-extensions">AlphaFold2 Extensions</h2>
-<section id="alphafold-multimer" class="level3">
-<h3 class="anchored" data-anchor-id="alphafold-multimer">AlphaFold-Multimer</h3>
-<p>Predicting protein complexes (multiple chains interacting):</p>
-<p><strong>Key modifications:</strong> - Cross-chain MSA pairing for evolutionary signal - Losses account for chain permutation symmetry - Interface-aware training</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># In your FASTA file, separate chains with ":"</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span><span class="bu">complex</span></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>SEQUENCEOFCHAINA:SEQUENCEOFCHAINB</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-<section id="alphafold-database" class="level3">
-<h3 class="anchored" data-anchor-id="alphafold-database">AlphaFold Database</h3>
-<p>DeepMind released predictions for <strong>200+ million proteins</strong>—essentially all of UniProt.</p>
-<ul>
-<li><strong>Access:</strong> <a href="https://alphafold.ebi.ac.uk">alphafold.ebi.ac.uk</a></li>
-<li><strong>Coverage:</strong> Human proteome + 47 other key organisms</li>
-<li><strong>Use case:</strong> Check if your protein has already been predicted!</li>
-</ul>
-</section>
-<section id="af-cluster" class="level3">
-<h3 class="anchored" data-anchor-id="af-cluster">AF-Cluster</h3>
-<p><strong>Idea:</strong> Proteins can have multiple conformations. Can we bias AlphaFold2 toward different states?</p>
-<p><strong>Approach:</strong> - Cluster the MSA into subgroups - Run predictions with different MSA subsets - Different clusters may yield different conformational states</p>
-<p><strong>Reference:</strong> Wayment-Steele et al.&nbsp;(2022)</p>
-</section>
-<section id="afsample" class="level3">
-<h3 class="anchored" data-anchor-id="afsample">AFsample</h3>
-<p><strong>Idea:</strong> Generate diverse predictions through sampling.</p>
-<p><strong>Approach:</strong> - Enable dropout during inference - Increase recycling - Generate multiple diverse predictions</p>
-<p>This is useful for understanding conformational flexibility and uncertainty.</p>
-</section>
-<section id="automated-workflows" class="level3">
-<h3 class="anchored" data-anchor-id="automated-workflows">Automated Workflows</h3>
-<p>Tools like <strong>EvoPro</strong> and <strong>BindCraft</strong> use AlphaFold2 as part of larger design pipelines:</p>
-<ul>
-<li>Generate candidate designs</li>
-<li>Predict structures with AF2</li>
-<li>Score and filter based on confidence</li>
-<li>Iterate to improve designs</li>
-</ul>
-<hr>
-</section>
-</section>
-<section id="understanding-the-output" class="level2">
-<h2 class="anchored" data-anchor-id="understanding-the-output">Understanding the Output</h2>
-<section id="plddt-per-residue-confidence" class="level3">
-<h3 class="anchored" data-anchor-id="plddt-per-residue-confidence">pLDDT: Per-Residue Confidence</h3>
-<p>pLDDT (predicted Local Distance Difference Test) ranges from 0-100:</p>
-<table class="caption-top table">
 <thead>
 <tr class="header">
 <th>pLDDT</th>
 <th>Interpretation</th>
-<th>What to do</th>
+<th>Sensible response</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td>&gt;90</td>
-<td>Very high confidence</td>
-<td>Trust the local structure</td>
+<td>Very high local confidence</td>
+<td>Usually suitable for residue-level interpretation</td>
 </tr>
 <tr class="even">
-<td>70-90</td>
+<td>70–90</td>
 <td>Confident</td>
-<td>Generally reliable</td>
+<td>Generally reliable local fold</td>
 </tr>
 <tr class="odd">
-<td>50-70</td>
+<td>50–70</td>
 <td>Low confidence</td>
-<td>Treat with caution</td>
+<td>Treat local geometry cautiously</td>
 </tr>
 <tr class="even">
 <td>&lt;50</td>
 <td>Very low confidence</td>
-<td>Likely disordered or wrong</td>
+<td>Consider disorder, flexibility, missing context, or failure</td>
 </tr>
 </tbody>
 </table>
-<div class="callout callout-style-default callout-tip callout-titled">
+<p>Low pLDDT often occurs in flexible loops and intrinsically disordered regions. It is information, not automatically a failed prediction.</p>
+</section>
+<section id="explain-ptm-iptm-and-pae" class="level3">
+<h3 class="anchored" data-anchor-id="explain-ptm-iptm-and-pae">Explain: pTM, ipTM, and PAE</h3>
+<ul>
+<li><strong>pTM</strong> estimates confidence in the global topology. Values above 0.8 are often strong; 0.5–0.8 requires scrutiny; below 0.5 is weak.</li>
+<li><strong>ipTM</strong> estimates confidence in a multimer interface and should be considered with interface PAE and biological evidence.</li>
+<li><strong>PAE</strong> answers a pairwise question: if the model is aligned on residue <em>i</em>, how uncertain is the position of residue <em>j</em>? Low values mean confident relative placement.</li>
+</ul>
+<p>On a PAE heatmap, low-error diagonal blocks often correspond to well-resolved domains. High error between blocks means the domains may each be credible while their relative orientation is not.</p>
+</section>
+<section id="predict-1" class="level3">
+<h3 class="anchored" data-anchor-id="predict-1">Predict</h3>
+<p>A two-domain protein has high pLDDT throughout but high PAE between the two domain blocks. Which conclusion is best?</p>
+<ol type="1">
+<li>Both domains are certainly wrong.</li>
+<li>Each domain may be locally credible, but their relative orientation is uncertain.</li>
+<li>High pLDDT guarantees the complete model is correct.</li>
+</ol>
+</section>
+<section id="do-1" class="level3">
+<h3 class="anchored" data-anchor-id="do-1">Do</h3>
+<p>Sketch a two-block PAE matrix and label the within-domain and between-domain regions. This takes one minute and makes later plots much easier to read.</p>
+</section>
+<section id="check-1" class="level3">
+<h3 class="anchored" data-anchor-id="check-1">Check</h3>
+<p>The best conclusion is <strong>2</strong>. pLDDT evaluates local environments; PAE exposes uncertainty in relative placement.</p>
+</section>
+</section>
+<section id="loop-3-explain-where-the-signal-comes-from" class="level2">
+<h2 class="anchored" data-anchor-id="loop-3-explain-where-the-signal-comes-from">Loop 3: Explain Where the Signal Comes From</h2>
+<section id="explain-1" class="level3">
+<h3 class="anchored" data-anchor-id="explain-1">Explain</h3>
+<p>AlphaFold2 uses three main inputs:</p>
+<ol type="1">
+<li>The <strong>query sequence</strong> to predict.</li>
+<li>A <strong>multiple sequence alignment (MSA)</strong> of related sequences.</li>
+<li>Optional <strong>structural templates</strong> from known homologs.</li>
+</ol>
+<p>An MSA reveals co-evolution. Residues that contact one another in 3D can undergo compensating mutations: when one side of an interaction changes, a change at the partner position may preserve the interaction. Across many diverse homologs, these correlated patterns constrain possible folds.</p>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart LR
+    Seq[Query sequence] --&gt; Search[Database search]
+    Search --&gt; MSA[Multiple sequence alignment]
+    MSA --&gt; Coev[Co-evolutionary signal]
+    Coev --&gt; Model[AlphaFold2]
+    Seq --&gt; Model
+    Templates[Optional templates] --&gt; Model
+    Model --&gt; Structure[Coordinates + confidence]
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<p>MSA depth helps, but diversity matters more than a raw sequence count. The effective number of sequences, <strong>Neff</strong>, discounts redundant near-copies.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Neff</th>
+<th>Typical expectation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>&gt;1000</td>
+<td>High-confidence predictions are likely</td>
+</tr>
+<tr class="even">
+<td>100–1000</td>
+<td>Good predictions for many proteins</td>
+</tr>
+<tr class="odd">
+<td>30–100</td>
+<td>Some regions may be unreliable</td>
+</tr>
+<tr class="even">
+<td>&lt;30</td>
+<td>Significant uncertainty; compare alternative methods</td>
+</tr>
+</tbody>
+</table>
+<p>Proteins with few natural homologs—including many designed proteins—therefore present a special challenge.</p>
+</section>
+<section id="predict-2" class="level3">
+<h3 class="anchored" data-anchor-id="predict-2">Predict</h3>
+<p>If 1,000 MSA rows are almost identical, will they provide the same information as 1,000 diverse homologs? State why in one sentence.</p>
+</section>
+<section id="do-2" class="level3">
+<h3 class="anchored" data-anchor-id="do-2">Do</h3>
+<p>When you run GFP below, open the MSA coverage plot. Note whether coverage and depth remain consistent across the full sequence or drop in particular regions.</p>
+</section>
+<section id="check-2" class="level3">
+<h3 class="anchored" data-anchor-id="check-2">Check</h3>
+<p>Near-identical rows provide less independent evolutionary evidence, so their effective depth is lower than that of a diverse alignment.</p>
+<div class="quiz-container" data-correct-index="1" data-correct-feedback="Exactly! Co-evolutionary signals—residues changing together—provide evidence about likely 3D contacts." data-incorrect-feedback="Not quite. The key is the co-evolutionary pattern across related sequences.">
+  <div class="quiz-header"><i class="bi bi-question-circle-fill"></i> Check Your Understanding</div>
+  <div class="quiz-question">Why is the MSA so important for AlphaFold2's accuracy?</div>
+  <div class="quiz-options">
+    <div class="quiz-option">It provides template structures for the model to copy.</div>
+    <div class="quiz-option">It reveals co-evolutionary patterns that imply 3D contacts.</div>
+    <div class="quiz-option">It only increases the size of the training data.</div>
+  </div>
+  <button class="check-btn">Check Answer</button>
+  <div class="quiz-feedback"></div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="AlphaFold2, OpenFold, and ColabFold">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Low pLDDT ≠ Wrong
+<span class="screen-reader-only">Note</span>AlphaFold2, OpenFold, and ColabFold
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Low pLDDT regions often correspond to: - <strong>Intrinsically disordered regions</strong> (genuinely unstructured) - <strong>Flexible loops</strong> (multiple conformations possible) - <strong>Crystal contacts</strong> (structure depends on environment)</p>
-<p>Low confidence is information, not failure!</p>
-</div>
-</div>
-</section>
-<section id="ptm-and-iptm-global-confidence" class="level3">
-<h3 class="anchored" data-anchor-id="ptm-and-iptm-global-confidence">pTM and ipTM: Global Confidence</h3>
 <ul>
-<li><strong>pTM</strong> (predicted TM-score): Overall structure confidence (0-1)</li>
-<li><strong>ipTM</strong> (interface pTM): Confidence in interface prediction (for multimers)</li>
+<li><strong>AlphaFold2</strong> is DeepMind’s original JAX implementation with released inference code and weights.</li>
+<li><strong>OpenFold</strong> is a trainable PyTorch reproduction designed for community research and extension.</li>
+<li><strong>ColabFold</strong> combines AlphaFold2 models with fast MMseqs2-based MSA generation, making inference more accessible.</li>
 </ul>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Score</th>
-<th>Interpretation</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>&gt;0.8</td>
-<td>High confidence</td>
-</tr>
-<tr class="even">
-<td>0.5-0.8</td>
-<td>Moderate confidence</td>
-</tr>
-<tr class="odd">
-<td>&lt;0.5</td>
-<td>Low confidence</td>
-</tr>
-</tbody>
-</table>
-</section>
-<section id="pae-predicted-aligned-error" class="level3">
-<h3 class="anchored" data-anchor-id="pae-predicted-aligned-error">PAE: Predicted Aligned Error</h3>
-<p>The PAE matrix shows confidence in <strong>relative positions</strong> between residue pairs.</p>
-<p><strong>Reading PAE plots:</strong> - <strong>Blue/low values</strong>: Confident in relative position - <strong>Red/high values</strong>: Uncertain about relative position - <strong>Diagonal blocks</strong>: Domains (confident within, uncertain between)</p>
-<p><strong>PAE is crucial for:</strong> - Identifying domain boundaries - Assessing multimer interface confidence - Understanding which parts of the structure are well-determined relative to each other</p>
-<hr>
+<p>For the neural-network mechanics, continue to the <a href="../tuesday/3-alphafold2-deep-dive.html">optional architecture deep dive</a>. It covers Evoformer representations, outer product mean, triangle updates, invariant point attention, recycling, settings, and extensions.</p>
+</div>
+</div>
 </section>
 </section>
-<section id="practical-considerations" class="level2">
-<h2 class="anchored" data-anchor-id="practical-considerations">Practical Considerations</h2>
-<section id="when-to-use-alphafold2" class="level3">
-<h3 class="anchored" data-anchor-id="when-to-use-alphafold2">When to Use AlphaFold2</h3>
-<p><strong>Best for:</strong> - Proteins with many homologs in databases - Monomers and stable complexes - When accuracy is paramount</p>
-<p><strong>Less suitable for:</strong> - Designed/synthetic proteins (few homologs) - Highly dynamic proteins - When speed is critical (use ESMFold instead)</p>
+<section id="loop-4-generate-and-evaluate-a-gfp-prediction" class="level2">
+<h2 class="anchored" data-anchor-id="loop-4-generate-and-evaluate-a-gfp-prediction">Loop 4: Generate and Evaluate a GFP Prediction</h2>
+<section id="explain-2" class="level3">
+<h3 class="anchored" data-anchor-id="explain-2">Explain</h3>
+<p>Green Fluorescent Protein (GFP) is a useful practice target because it is a compact, well-characterized protein with an experimental reference structure. Your job is to produce a prediction and then build an evidence-based trust statement.</p>
 </section>
-<section id="resource-requirements" class="level3">
-<h3 class="anchored" data-anchor-id="resource-requirements">Resource Requirements</h3>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Resource</th>
-<th>Minimum</th>
-<th>Recommended</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>GPU RAM</td>
-<td>16 GB</td>
-<td>40+ GB (A100)</td>
-</tr>
-<tr class="even">
-<td>CPU RAM</td>
-<td>32 GB</td>
-<td>64 GB</td>
-</tr>
-<tr class="odd">
-<td>Disk</td>
-<td>15 GB</td>
-<td>100+ GB (with databases)</td>
-</tr>
-</tbody>
-</table>
+<section id="predict-3" class="level3">
+<h3 class="anchored" data-anchor-id="predict-3">Predict</h3>
+<p>Before running the model, write two expectations:</p>
+<ul>
+<li>Will GFP appear as one coherent domain or several independently moving domains in PAE?</li>
+<li>Which parts of the sequence, if any, do you expect to have lower pLDDT?</li>
+</ul>
+<p>Keep these predictions. Comparing expectations with results is part of the exercise.</p>
 </section>
-<section id="tips-for-better-predictions" class="level3">
-<h3 class="anchored" data-anchor-id="tips-for-better-predictions">Tips for Better Predictions</h3>
-<ol type="1">
-<li><strong>Check the AlphaFold Database first</strong>—your protein may already be predicted</li>
-<li><strong>Use all 5 models</strong> for important predictions</li>
-<li><strong>Examine pLDDT and PAE</strong>—don’t just look at the structure</li>
-<li><strong>Consider multiple conformations</strong> for flexible proteins</li>
-<li><strong>Validate experimentally</strong> for high-stakes applications</li>
-</ol>
-<hr>
-</section>
-</section>
-<section id="hands-on-exercise" class="level2">
-<h2 class="anchored" data-anchor-id="hands-on-exercise">Hands-On Exercise</h2>
-<section id="part-1-run-colabfold-prediction" class="level3">
-<h3 class="anchored" data-anchor-id="part-1-run-colabfold-prediction">Part 1: Run ColabFold Prediction</h3>
-<p><strong>Goal:</strong> Generate your first AlphaFold2 prediction.</p>
-<p>We’ll predict the structure of Green Fluorescent Protein (GFP) using ColabFold.</p>
-<p><strong>1. Prepare your sequence:</strong></p>
-<p>Create a file called <code>gfp.fasta</code>:</p>
-<pre><code>&gt;GFP
+<section id="do-run-colabfold" class="level3">
+<h3 class="anchored" data-anchor-id="do-run-colabfold">Do: Run ColabFold</h3>
+<p>Download <a href="files/1GFL.fasta">1GFL.fasta</a>, or save the following as <code>gfp.fasta</code>:</p>
+<pre class="text"><code>&gt;GFP
 MSKGEELFTGVVPILVELDGDVNGHKFSVSGEGEGDATYGKLTLKFICTTGKLPVPWPTLVTTFSYGVQCFSRYPDHMKQHDFFKSAMPEGYVQERTIFFKDDGNYKTRAEVKFEGDTLVNRIELKGIDFKEDGNILGHKLEYNYNSHNVYIMADKQKNGIKVNFKIRHNIEDGSVQLADHYQQNTPIGDGPVLLPDNHYLSTQSALSKDPNEKRDHMVLLEFVTAAGITHGMDELYK</code></pre>
-<p>You can also download this file: <a href="files/1GFL.fasta">1GFL.fasta</a></p>
-<p><strong>2. Run prediction:</strong></p>
-<p>If using LocalColabFold on your HPC:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">colabfold_batch</span> gfp.fasta gfp_output/</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>If using the ColabFold notebook: - Go to <a href="https://colab.research.google.com/github/sokrypton/ColabFold/blob/main/AlphaFold2.ipynb">ColabFold</a> - Paste your sequence - Run all cells</p>
-<p><strong>3. Expected output:</strong> - <code>gfp_relaxed_rank_001_*.pdb</code> - Best predicted structure - <code>gfp_scores_rank_001_*.json</code> - Confidence scores - <code>gfp_coverage.png</code> - MSA coverage - <code>gfp_pae.png</code> - PAE heatmap</p>
-<p><strong>Expected runtime:</strong> 5-15 minutes depending on your hardware.</p>
-</section>
-<section id="part-2-analyze-your-prediction" class="level3">
-<h3 class="anchored" data-anchor-id="part-2-analyze-your-prediction">Part 2: Analyze Your Prediction</h3>
-<p><strong>1. Load the structure in PyMOL:</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>load gfp_output<span class="op">/</span>gfp_relaxed_rank_001_alphafold2_ptm_model_1_seed_000.pdb, af2_gfp</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><strong>2. Color by confidence (pLDDT):</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>spectrum b, blue_white_red, minimum<span class="op">=</span><span class="dv">50</span>, maximum<span class="op">=</span><span class="dv">100</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><strong>3. Questions to answer:</strong> - What is the overall pLDDT? (Check the JSON file or PyMOL’s B-factor range) - Which regions have high confidence? Low confidence? - Does GFP have any disordered regions?</p>
-<p><strong>4. Compare to experimental structure:</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>fetch <span class="dv">1</span><span class="er">GFL</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>align af2_gfp, <span class="dv">1</span><span class="er">GFL</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Choose one route:</p>
+<p><strong>LocalColabFold or HPC</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">colabfold_batch</span> gfp.fasta gfp_output/</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Hosted notebook</strong></p>
+<p>Open the <a href="https://colab.research.google.com/github/sokrypton/ColabFold/blob/main/AlphaFold2.ipynb">ColabFold notebook</a>, paste the sequence, and run all cells.</p>
+<p>Expected runtime is approximately 5–15 minutes, depending on available hardware and queue time. Key outputs normally include:</p>
 <ul>
-<li>What is the RMSD between prediction and experiment?</li>
-<li>Do the structures overlay well?</li>
+<li>a ranked PDB structure;</li>
+<li>a JSON file of confidence scores;</li>
+<li>an MSA coverage plot;</li>
+<li>a PAE heatmap.</li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled" title="If compute is unavailable">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>If compute is unavailable
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Use an instructor-provided or previously generated GFP output folder and complete the analysis. Interpreting evidence is the learning objective; a temporary GPU or queue failure should not stop the lesson.</p>
+</div>
+</div>
+</section>
+<section id="do-analyze-local-confidence" class="level3">
+<h3 class="anchored" data-anchor-id="do-analyze-local-confidence">Do: Analyze Local Confidence</h3>
+<p>Load the top-ranked structure in PyMOL. Adjust the filename to match your output:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>load gfp_output<span class="op">/</span>gfp_relaxed_rank_001_alphafold2_ptm_model_1_seed_000.pdb, af2_gfp</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>spectrum b, blue_white_red, minimum<span class="op">=</span><span class="dv">50</span>, maximum<span class="op">=</span><span class="dv">100</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Then answer:</p>
+<ul>
+<li>Which regions have high or low pLDDT?</li>
+<li>Does a low-confidence segment look like a terminal tail, loop, or larger structural region?</li>
+<li>Does the confidence pattern match your prediction?</li>
 </ul>
 </section>
-<section id="part-3-explore-the-pae" class="level3">
-<h3 class="anchored" data-anchor-id="part-3-explore-the-pae">Part 3: Explore the PAE</h3>
-<p><strong>1. Open <code>gfp_pae.png</code></strong></p>
-<p><strong>2. Interpret the plot:</strong> - Is there one block (single domain) or multiple blocks? - Are there any high-PAE (red) regions? - What does this tell you about the structure?</p>
+<section id="do-compare-with-experiment" class="level3">
+<h3 class="anchored" data-anchor-id="do-compare-with-experiment">Do: Compare with Experiment</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>fetch <span class="dv">1</span><span class="er">GFL</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>align af2_gfp, <span class="dv">1</span><span class="er">GFL</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Record the reported RMSD and inspect the overlay. Do not use RMSD alone: note whether deviations are global or concentrated in a few flexible regions.</p>
 </section>
-<section id="part-4-experiment-with-parameters" class="level3">
-<h3 class="anchored" data-anchor-id="part-4-experiment-with-parameters">Part 4: Experiment with Parameters</h3>
-<p>Try running predictions with different settings:</p>
-<p><strong>Experiment 1: Fewer recycles</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="ex">colabfold_batch</span> <span class="at">--num-recycle</span> 1 gfp.fasta gfp_1recycle/</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Compare to the default (3 recycles). Is there a difference in quality?</p>
-<p><strong>Experiment 2: Single sequence (no MSA)</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="ex">colabfold_batch</span> <span class="at">--msa-mode</span> single_sequence gfp.fasta gfp_single_seq/</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>This mimics what ESMFold does. How does quality compare?</p>
-<p><strong>Experiment 3: All 5 models</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="ex">colabfold_batch</span> <span class="at">--num-models</span> 5 gfp.fasta gfp_all_models/</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Do the different models agree? What’s the variance in pLDDT?</p>
+<section id="do-interpret-pae" class="level3">
+<h3 class="anchored" data-anchor-id="do-interpret-pae">Do: Interpret PAE</h3>
+<p>Open the PAE image and answer:</p>
+<ul>
+<li>Is the plot dominated by one low-error block or several blocks?</li>
+<li>Are there high-PAE regions?</li>
+<li>What does the pattern imply about GFP’s domain organization and relative-coordinate confidence?</li>
+</ul>
 </section>
-<section id="part-5-multimer-prediction-optional" class="level3">
-<h3 class="anchored" data-anchor-id="part-5-multimer-prediction-optional">Part 5: Multimer Prediction (Optional)</h3>
-<p>If you have time, try predicting a protein complex:</p>
-<p><strong>1. Create a multimer FASTA:</strong></p>
-<pre><code>&gt;homodimer
-MSKGEELFTGVVPILVELDGDVNGHKFSVSGEGEGDATYGKLTLKFICTTGKLPVPWPTLVTTFSYGVQCFSRYPDHMKQHDFFKSAMPEGYVQERTIFFKDDGNYKTRAEVKFEGDTLVNRIELKGIDFKEDGNILGHKLEYNYNSHNVYIMADKQKNGIKVNFKIRHNIEDGSVQLADHYQQNTPIGDGPVLLPDNHYLSTQSALSKDPNEKRDHMVLLEFVTAAGITHGMDELYK:MSKGEELFTGVVPILVELDGDVNGHKFSVSGEGEGDATYGKLTLKFICTTGKLPVPWPTLVTTFSYGVQCFSRYPDHMKQHDFFKSAMPEGYVQERTIFFKDDGNYKTRAEVKFEGDTLVNRIELKGIDFKEDGNILGHKLEYNYNSHNVYIMADKQKNGIKVNFKIRHNIEDGSVQLADHYQQNTPIGDGPVLLPDNHYLSTQSALSKDPNEKRDHMVLLEFVTAAGITHGMDELYK</code></pre>
-<p>(Note: The <code>:</code> separates chains)</p>
-<p><strong>2. Run prediction:</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="ex">colabfold_batch</span> homodimer.fasta homodimer_output/</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><strong>3. Analyze:</strong> - What is the ipTM score? - Does the interface look reasonable? - Check PAE for interface confidence (off-diagonal blocks)</p>
-</section>
-<section id="questions-to-consider" class="level3">
-<h3 class="anchored" data-anchor-id="questions-to-consider">Questions to Consider</h3>
-<ol type="1">
-<li>How does prediction time scale with sequence length?</li>
-<li>Why might some regions have low pLDDT even in a well-folded protein?</li>
-<li>When would you trust a prediction enough to use it for experimental planning?</li>
-<li>What would you do if AlphaFold2 and ESMFold give different predictions?</li>
-</ol>
-</section>
-<section id="record-your-results" class="level3">
-<h3 class="anchored" data-anchor-id="record-your-results">Record Your Results</h3>
-<p>Fill in this table with your observations:</p>
+<section id="check-build-the-artifact" class="level3">
+<h3 class="anchored" data-anchor-id="check-build-the-artifact">Check: Build the Artifact</h3>
+<p>Fill in the evidence table and save it with your prediction outputs.</p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
-<th>Metric</th>
-<th>Your GFP Prediction</th>
+<th>Evidence</th>
+<th>Your GFP result</th>
+<th>Interpretation</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td>Average pLDDT</td>
 <td></td>
+<td></td>
 </tr>
 <tr class="even">
 <td>pTM score</td>
+<td></td>
 <td></td>
 </tr>
 <tr class="odd">
 <td>RMSD to 1GFL</td>
 <td></td>
+<td></td>
 </tr>
 <tr class="even">
 <td>Prediction time</td>
 <td></td>
+<td></td>
 </tr>
 <tr class="odd">
-<td>MSA depth</td>
+<td>MSA depth / coverage</td>
+<td></td>
 <td></td>
 </tr>
 <tr class="even">
-<td>Regions with pLDDT &lt; 70</td>
+<td>Regions with pLDDT &lt;70</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>PAE pattern</td>
+<td></td>
 <td></td>
 </tr>
 </tbody>
 </table>
-
-
+<p>Finish with a three-sentence trust statement:</p>
+<ol type="1">
+<li>Which parts of the model would you trust, and for what type of decision?</li>
+<li>Which uncertainty most limits its use?</li>
+<li>What additional evidence would you seek before a high-stakes experiment?</li>
+</ol>
+<div class="callout callout-style-default callout-important callout-titled" title="Definition of completion">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Definition of completion
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This lesson is complete when your folder contains the prediction (or provided outputs), evidence table, and trust statement. A rendered structure alone is not sufficient.</p>
+</div>
+</div>
 </section>
+</section>
+<section id="optional-test-one-assumption" class="level2">
+<h2 class="anchored" data-anchor-id="optional-test-one-assumption">Optional: Test One Assumption</h2>
+<p>Choose one experiment; running all three is enrichment rather than core work.</p>
+<p><strong>Fewer recycles</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">colabfold_batch</span> <span class="at">--num-recycle</span> 1 gfp.fasta gfp_1recycle/</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Single-sequence mode</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">colabfold_batch</span> <span class="at">--msa-mode</span> single_sequence gfp.fasta gfp_single_seq/</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>All five model parameter sets</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">colabfold_batch</span> <span class="at">--num-models</span> 5 gfp.fasta gfp_all_models/</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Before each run, predict which metric will change most. Afterward, compare confidence, structural agreement, and runtime. Record whether the evidence supports your prediction.</p>
+<section id="optional-multimer-prediction" class="level3">
+<h3 class="anchored" data-anchor-id="optional-multimer-prediction">Optional Multimer Prediction</h3>
+<p>In a FASTA entry, separate chains with a colon:</p>
+<pre class="text"><code>&gt;homodimer
+SEQUENCEOFCHAINA:SEQUENCEOFCHAINB</code></pre>
+<p>Run <code>colabfold_batch homodimer.fasta homodimer_output/</code>, then interpret ipTM and the off-diagonal regions of the PAE plot. A plausible-looking interface without supporting ipTM, PAE, or biological evidence should not be treated as validated.</p>
+</section>
+</section>
+<section id="decide-and-continue" class="level2">
+<h2 class="anchored" data-anchor-id="decide-and-continue">Decide and Continue</h2>
+<p>Before moving on, be able to answer these questions without reopening the page:</p>
+<ol type="1">
+<li>Why does evolutionary diversity matter more than a raw MSA row count?</li>
+<li>What different uncertainty does PAE reveal compared with pLDDT?</li>
+<li>When could a low-confidence region be biologically meaningful?</li>
+<li>What evidence would make you distrust an otherwise attractive structure?</li>
+</ol>
+<p>For implementation detail, read the <a href="../tuesday/3-alphafold2-deep-dive.html">AlphaFold2 architecture deep dive</a>. Otherwise, save your artifact and continue to <a href="../tuesday/4-esmfold.html">ESMFold vs.&nbsp;AlphaFold2</a>.</p>
+
+
 </section>
 
 </main> <!-- /main -->
+<!-- Generated by scripts/validate_course_data.py --generate; do not edit. -->
+<script>
+window.BOOTCAMP_COURSE = {"schema_version":1,"updated":"2026-08-30","duration_note":"Times are planning estimates for an independent learner and exclude long model downloads, queue waits, and capstone compute.","routes":{"core":"The shortest route that develops the concepts and artifacts needed for the capstone.","full":"The original bootcamp sequence, including additional tools and practice.","reference":"Optional specialist material to consult when a project needs it."},"milestones":[{"id":"capstone-target-brief","day":"capstone","title":"Target and epitope brief","path":"capstone/rubric.html","route":"core","artifact":"Annotated target structure and concise hotspot rationale","checkpoint_label":"Target, chain, epitope, hotspots, and caveats are documented","source":"capstone/rubric.qmd"},{"id":"capstone-run-config","day":"capstone","title":"Reproducible run configuration","path":"capstone/rubric.html","route":"core","artifact":"Versioned environment, inputs, commands, seeds, and output paths","checkpoint_label":"Another learner could reconstruct the run without guessing","source":"capstone/rubric.qmd"},{"id":"capstone-backbone-evidence","day":"capstone","title":"Backbone-generation evidence","path":"capstone/rubric.html","route":"core","artifact":"Representative backbone gallery with keep/reject decisions","checkpoint_label":"Successes and failures are evaluated against explicit filters","source":"capstone/rubric.qmd"},{"id":"capstone-sequence-evidence","day":"capstone","title":"Sequence-design evidence","path":"capstone/rubric.html","route":"core","artifact":"Candidate table linking designed sequences to parent backbones","checkpoint_label":"Sequence diversity, composition, constraints, and liabilities are assessed","source":"capstone/rubric.qmd"},{"id":"capstone-structural-validation","day":"capstone","title":"Structural validation","path":"capstone/rubric.html","route":"core","artifact":"Complex-confidence and interface-validation figures with metrics","checkpoint_label":"Interface evidence is distinguished from local fold confidence","source":"capstone/rubric.qmd"},{"id":"capstone-failure-analysis","day":"capstone","title":"Failure analysis and iteration","path":"capstone/rubric.html","route":"core","artifact":"Before/after account of one diagnosed failure and response","checkpoint_label":"A failure is diagnosed, acted on, and tested","source":"capstone/rubric.qmd"},{"id":"capstone-selection-memo","day":"capstone","title":"Final selection memo","path":"capstone/rubric.html","route":"core","artifact":"Decision memo naming the selected design, rejected alternatives, risks, and next experiment","checkpoint_label":"Final selection is supported by evidence and uncertainty","source":"capstone/rubric.qmd"}],"lessons":[{"id":"prework-environment-git","day":"prework","order":1,"title":"Environment Setup & GitHub Basics","path":"monday/prework-1-env-git.html","route":"core","status":"required","duration_minutes":45,"compute":"local CPU","artifact":"A working bootcamp environment and cloned practice repository","checkpoint_id":"prework-environment-git","checkpoint_label":"Environment verification passes","source":"monday/prework-1-env-git.qmd"},{"id":"prework-pymol-vscode","day":"prework","order":2,"title":"PyMOL and VS Code Setup","path":"monday/prework-2-pymol-vscode.html","route":"core","status":"required","duration_minutes":45,"compute":"local CPU","artifact":"A saved molecular view and editor verification result","checkpoint_id":"prework-pymol-vscode","checkpoint_label":"Visualization and editor checks pass","source":"monday/prework-2-pymol-vscode.qmd"},{"id":"prework-python","day":"prework","order":3,"title":"Python Refresher","path":"monday/prework-3-python.html","route":"full","status":"optional","duration_minutes":45,"compute":"local CPU","artifact":"Protein analysis_results.txt and passing tests","checkpoint_id":"prework-python","checkpoint_label":"All refresher tests pass","source":"monday/prework-3-python.qmd"},{"id":"reproducible-setup","day":"prework","order":4,"title":"Reproducible Setup & Compute Fallbacks","path":"monday/reproducibility.html","route":"core","status":"required","duration_minutes":20,"compute":"local CPU","artifact":"Saved preflight report and an explicit run-or-analysis fallback choice","checkpoint_id":"reproducible-setup","checkpoint_label":"Version status and fallback pathway are documented","source":"monday/reproducibility.qmd"},{"id":"hpc-setup","day":"monday","order":1,"title":"Common HPC Setup","path":"monday/1-hpc-setup.html","route":"core","status":"required","duration_minutes":60,"compute":"HPC login node; GPU node for verification","artifact":"Saved preflight report and a successful GPU allocation check","checkpoint_id":"hpc-setup","checkpoint_label":"Preflight report reviewed","source":"monday/1-hpc-setup.qmd"},{"id":"localcolabfold","day":"monday","order":2,"title":"LocalColabFold","path":"monday/2-localcolabfold.html","route":"core","status":"required","duration_minutes":90,"compute":"GPU recommended; provided-output route available","artifact":"Predicted PDB and confidence JSON, or an annotated known-good prediction","checkpoint_id":"localcolabfold","checkpoint_label":"Prediction output and confidence are interpreted","source":"monday/2-localcolabfold.qmd"},{"id":"ligandmpnn","day":"monday","order":3,"title":"LigandMPNN","path":"monday/3-ligandmpnn.html","route":"core","status":"required","duration_minutes":60,"compute":"CPU or GPU","artifact":"Designed FASTA sequences and a short selection rationale","checkpoint_id":"ligandmpnn","checkpoint_label":"Designed sequences are ranked and justified","source":"monday/3-ligandmpnn.qmd"},{"id":"rfdiffusion2","day":"monday","order":4,"title":"RFdiffusion2","path":"monday/4-rfdiffusion2.html","route":"full","status":"optional","duration_minutes":90,"compute":"CUDA GPU and Apptainer; analysis-only route available","artifact":"A generated backbone or an annotated known-good design","checkpoint_id":"rfdiffusion2","checkpoint_label":"Backbone geometry and constraints are evaluated","source":"monday/4-rfdiffusion2.qmd"},{"id":"esmfold-install","day":"monday","order":5,"title":"ESMFold","path":"monday/5-esmfold.html","route":"full","status":"optional","duration_minutes":75,"compute":"GPU recommended; CPU is slow","artifact":"Single-sequence structure prediction","checkpoint_id":"esmfold-install","checkpoint_label":"Prediction file is valid and confidence is checked","source":"monday/5-esmfold.qmd"},{"id":"openfold","day":"monday","order":6,"title":"OpenFold","path":"monday/6-openfold.html","route":"reference","status":"optional","duration_minutes":90,"compute":"GPU plus large shared databases","artifact":"Environment smoke-test record","checkpoint_id":"openfold","checkpoint_label":"OpenFold requirements and tradeoffs are documented","source":"monday/6-openfold.qmd"},{"id":"chai1","day":"monday","order":7,"title":"Chai-1","path":"monday/7-chai1.html","route":"full","status":"optional","duration_minutes":60,"compute":"Modern CUDA GPU recommended","artifact":"Complex prediction and confidence summary","checkpoint_id":"chai1","checkpoint_label":"Complex confidence is interpreted","source":"monday/7-chai1.qmd"},{"id":"boltz2","day":"monday","order":8,"title":"Boltz-2","path":"monday/8-boltz2.html","route":"full","status":"optional","duration_minutes":60,"compute":"GPU recommended; CPU supported","artifact":"CIF prediction and confidence summary","checkpoint_id":"boltz2","checkpoint_label":"Boltz output is inspected and compared","source":"monday/8-boltz2.qmd"},{"id":"diffdock-pp","day":"monday","order":9,"title":"DiffDock-PP","path":"monday/9-diffdock-pp.html","route":"reference","status":"optional","duration_minutes":75,"compute":"CUDA 11.6-era GPU stack","artifact":"Ranked protein-protein docking poses","checkpoint_id":"diffdock-pp","checkpoint_label":"Docking poses are ranked with limitations noted","source":"monday/9-diffdock-pp.qmd"},{"id":"placer","day":"monday","order":10,"title":"PLACER","path":"monday/10-placer.html","route":"reference","status":"optional","duration_minutes":60,"compute":"CPU or GPU","artifact":"Ranked ligand conformational ensemble","checkpoint_id":"placer","checkpoint_label":"Ensemble uncertainty is interpreted","source":"monday/10-placer.qmd"},{"id":"bindcraft","day":"monday","order":11,"title":"BindCraft","path":"monday/11-bindcraft.html","route":"full","status":"optional","duration_minutes":75,"compute":"24+ GB CUDA GPU; full campaigns take hours to days","artifact":"Validated settings file and a campaign plan or pilot trajectory","checkpoint_id":"bindcraft","checkpoint_label":"Campaign settings and stopping criteria are justified","source":"monday/11-bindcraft.qmd"},{"id":"esm3","day":"monday","order":12,"title":"ESM3","path":"monday/12-esm3.html","route":"reference","status":"optional","duration_minutes":60,"compute":"16+ GB GPU for local small model","artifact":"Generated sequence and optional structure","checkpoint_id":"esm3","checkpoint_label":"Generated protein is checked for plausibility","source":"monday/12-esm3.qmd"},{"id":"rfdiffusion-aa","day":"monday","order":13,"title":"RFdiffusion All Atom","path":"monday/13-rfdiffusion-aa.html","route":"reference","status":"optional","duration_minutes":75,"compute":"CUDA GPU and Apptainer","artifact":"All-atom design or documented comparison with RFdiffusion2","checkpoint_id":"rfdiffusion-aa","checkpoint_label":"Tool choice is justified for the design problem","source":"monday/13-rfdiffusion-aa.qmd"},{"id":"pymol-vscode-workflow","day":"tuesday","order":1,"title":"PyMOL and Visual Studio Code","path":"tuesday/1-pymol.html","route":"core","status":"required","duration_minutes":60,"compute":"local CPU","artifact":"Reproducible structure-inspection script and saved view","checkpoint_id":"pymol-vscode-workflow","checkpoint_label":"Structure view can be regenerated from the script","source":"tuesday/1-pymol.qmd"},{"id":"structure-prediction-intro","day":"tuesday","order":2,"title":"Introduction to Structure Prediction","path":"tuesday/2-structure-prediction.html","route":"core","status":"required","duration_minutes":75,"compute":"local CPU","artifact":"A method-selection memo for a sample sequence","checkpoint_id":"structure-prediction-intro","checkpoint_label":"Prediction method choice is supported by evidence","source":"tuesday/2-structure-prediction.qmd"},{"id":"alphafold2-openfold","day":"tuesday","order":3,"title":"AlphaFold2 and OpenFold","path":"tuesday/3-alphafold2.html","route":"core","status":"required","duration_minutes":90,"compute":"browser and optional GPU","artifact":"Annotated pLDDT/PAE interpretation and prediction comparison","checkpoint_id":"alphafold2-openfold","checkpoint_label":"Confidence and failure modes are explained","source":"tuesday/3-alphafold2.qmd"},{"id":"alphafold2-architecture-deep-dive","day":"tuesday","order":4,"title":"AlphaFold2 Architecture Deep Dive","path":"tuesday/3-alphafold2-deep-dive.html","route":"reference","status":"optional","duration_minutes":120,"compute":"none","artifact":"Architecture concept map or completed deep-dive quiz","checkpoint_id":"alphafold2-architecture-deep-dive","checkpoint_label":"Information flow through Evoformer, structure module, and recycling is explained","source":"tuesday/3-alphafold2-deep-dive.qmd"},{"id":"esmfold-comparison","day":"tuesday","order":5,"title":"ESMFold vs. AlphaFold2","path":"tuesday/4-esmfold.html","route":"core","status":"required","duration_minutes":150,"compute":"GPU or provided predictions","artifact":"Side-by-side method comparison","checkpoint_id":"esmfold-comparison","checkpoint_label":"Speed-confidence tradeoff is explained","source":"tuesday/4-esmfold.qmd"},{"id":"alphafold3-chai1","day":"wednesday","order":1,"title":"AlphaFold3 vs. Chai-1","path":"wednesday/0-alphafold3.html","route":"core","status":"required","duration_minutes":90,"compute":"web service or GPU; provided-output route possible","artifact":"Multimer prediction comparison and uncertainty notes","checkpoint_id":"alphafold3-chai1","checkpoint_label":"Multimodal prediction evidence is evaluated","source":"wednesday/0-alphafold3.qmd"},{"id":"rfdiffusion-advanced","day":"wednesday","order":2,"title":"RFdiffusion: Advanced Design","path":"wednesday/1-rfdiffusion.html","route":"core","status":"required","duration_minutes":180,"compute":"CUDA GPU or official known-good outputs","artifact":"Backbone gallery, hotspot analysis, and selection rationale","checkpoint_id":"rfdiffusion-advanced","checkpoint_label":"Design gallery is evaluated against explicit criteria","source":"wednesday/1-rfdiffusion.qmd"},{"id":"pytorch-foundations","day":"thursday","order":1,"title":"PyTorch Foundations","path":"thursday/1-pytorch.html","route":"core","status":"required","duration_minutes":75,"compute":"local CPU; GPU optional","artifact":"Working tensor/model notebook","checkpoint_id":"pytorch-foundations","checkpoint_label":"Core tensor and gradient operations run","source":"thursday/1-pytorch.qmd"},{"id":"cpu-vs-gpu","day":"thursday","order":2,"title":"CPU vs GPU Computing","path":"thursday/2-cpu-vs-gpu.html","route":"core","status":"required","duration_minutes":75,"compute":"CPU and CUDA GPU, or provided benchmark","artifact":"Benchmark plot with an explanation of crossover behavior","checkpoint_id":"cpu-vs-gpu","checkpoint_label":"Benchmark result and caveats are explained","source":"thursday/2-cpu-vs-gpu.qmd"},{"id":"molecular-docking","day":"thursday","order":3,"title":"Molecular Docking","path":"thursday/3-docking.html","route":"core","status":"required","duration_minutes":75,"compute":"CPU or GPU depending on tool","artifact":"Ranked poses with a defensible validation criterion","checkpoint_id":"molecular-docking","checkpoint_label":"Docking pose is assessed beyond score alone","source":"thursday/3-docking.qmd"},{"id":"reflection-capstone-intro","day":"thursday","order":4,"title":"Reflection & Capstone Introduction","path":"thursday/4-roundtable.html","route":"core","status":"required","duration_minutes":75,"compute":"none","artifact":"Target brief and capstone execution plan","checkpoint_id":"reflection-capstone-intro","checkpoint_label":"Capstone question, evidence, and fallback plan are defined","source":"thursday/4-roundtable.qmd"},{"id":"capstone","day":"capstone","order":1,"title":"Capstone Project","path":"capstone/index.html","route":"core","status":"required","duration_minutes":600,"duration":"10–25 active hr, plus compute","compute":"GPU recommended; staged no-compute evidence path available","artifact":"Reproducible design portfolio and final selection memo","checkpoint_id":"capstone","checkpoint_label":"Portfolio meets the capstone evidence rubric","source":"capstone/index.qmd"},{"id":"capstone-rubric","day":"capstone","order":2,"title":"Capstone Evidence Guide & Rubric","path":"capstone/rubric.html","route":"core","status":"required","duration_minutes":45,"compute":"none","artifact":"Completed evidence portfolio and rubric self-score","checkpoint_id":"capstone-rubric","checkpoint_label":"Evidence portfolio is complete and self-scored","source":"capstone/rubric.qmd"},{"id":"capstone-exemplar","day":"capstone","order":3,"title":"Worked Capstone Selection Example","path":"capstone/exemplar.html","route":"reference","status":"optional","duration_minutes":30,"compute":"none","artifact":"Notes comparing the exemplar's evidence trail with the learner's plan","checkpoint_id":"capstone-exemplar","checkpoint_label":"Exemplar reasoning pattern is compared with the project plan","source":"capstone/exemplar.qmd"},{"id":"target-pd-l1","day":"capstone","order":4,"title":"PD-L1 Target Deep Dive","path":"capstone/targets/pd-l1.html","route":"reference","status":"optional","duration_minutes":20,"compute":"none","artifact":"Target preparation and hotspot plan","checkpoint_id":"target-pd-l1","checkpoint_label":"PD-L1 target record is verified","source":"capstone/targets/pd-l1.qmd"},{"id":"target-il-7r","day":"capstone","order":5,"title":"IL-7R Target Deep Dive","path":"capstone/targets/il-7r.html","route":"reference","status":"optional","duration_minutes":20,"compute":"none","artifact":"Target preparation and hotspot plan","checkpoint_id":"target-il-7r","checkpoint_label":"IL-7R target record is verified","source":"capstone/targets/il-7r.qmd"},{"id":"target-trka","day":"capstone","order":6,"title":"TrkA Receptor Deep Dive","path":"capstone/targets/trka.html","route":"reference","status":"optional","duration_minutes":20,"compute":"none","artifact":"Target preparation and hotspot plan","checkpoint_id":"target-trka","checkpoint_label":"TrkA target record is verified","source":"capstone/targets/trka.qmd"},{"id":"target-ifnar2","day":"capstone","order":7,"title":"IFNAR2 Target Deep Dive","path":"capstone/targets/ifnar2.html","route":"reference","status":"optional","duration_minutes":20,"compute":"none","artifact":"Target preparation and hotspot plan","checkpoint_id":"target-ifnar2","checkpoint_label":"IFNAR2 target record is verified","source":"capstone/targets/ifnar2.qmd"},{"id":"target-bet-v-1","day":"capstone","order":8,"title":"Bet v 1 Target Deep Dive","path":"capstone/targets/bet-v-1.html","route":"reference","status":"optional","duration_minutes":20,"compute":"none","artifact":"Target preparation and hotspot plan","checkpoint_id":"target-bet-v-1","checkpoint_label":"Bet v 1 target record is verified","source":"capstone/targets/bet-v-1.qmd"},{"id":"target-gm2ap","day":"capstone","order":9,"title":"GM2 Activator Protein Deep Dive","path":"capstone/targets/gm3.html","route":"reference","status":"optional","duration_minutes":20,"compute":"none","artifact":"Target preparation and hotspot plan","checkpoint_id":"target-gm2ap","checkpoint_label":"GM2AP target record is verified","source":"capstone/targets/gm3.qmd"},{"id":"target-beta-glucosidase","day":"capstone","order":10,"title":"Beta-Glucosidase Deep Dive","path":"capstone/targets/beta-glucosidase.html","route":"reference","status":"optional","duration_minutes":20,"compute":"none","artifact":"Target preparation and hotspot plan","checkpoint_id":"target-beta-glucosidase","checkpoint_label":"Beta-glucosidase target record is verified","source":"capstone/targets/beta-glucosidase.qmd"},{"id":"target-tem-1","day":"capstone","order":11,"title":"TEM-1 Beta-Lactamase Deep Dive","path":"capstone/targets/tem-1.html","route":"reference","status":"optional","duration_minutes":20,"compute":"none","artifact":"Target preparation and hotspot plan","checkpoint_id":"target-tem-1","checkpoint_label":"TEM-1 target record is verified","source":"capstone/targets/tem-1.qmd"}]};
+</script>
 <script>
 (function() {
-  const STORAGE_KEY = 'bootcamp2025_progress';
+  'use strict';
+
+  const STORAGE_KEY = 'bootcamp_progress_v2';
+  const LEGACY_STORAGE_KEY = 'bootcamp2025_progress';
   const LAST_PAGE_KEY = 'bootcamp2025_lastpage';
+  const SCHEMA_VERSION = 2;
 
-  // Get current page path
-  const currentPath = window.location.pathname;
-  const isHomePage = currentPath === '/' || currentPath.endsWith('/index.html') || currentPath === '/index.html' || currentPath.match(/^\/[^\/]*\/?$/);
+  function normalisePath(path) {
+    if (!path) return '/';
+    const clean = path.split('#')[0].split('?')[0].replace(/\/+/g, '/');
+    if (clean.endsWith('/')) return clean + 'index.html';
+    return clean;
+  }
 
-  // Extract day from path
-  function getDayFromPath(path) {
-    const dayMap = {
-      'monday': 'Monday',
-      'tuesday': 'Tuesday',
-      'wednesday': 'Wednesday',
-      'thursday': 'Thursday',
-      'capstone': 'Capstone'
+  function lessonPath(lesson) {
+    const value = lesson.path || lesson.href || '';
+    return normalisePath(value.startsWith('/') ? value : '/' + value);
+  }
+
+  function checkpointId(lesson) {
+    return lesson.checkpoint_id || lesson.checkpointId || lesson.id;
+  }
+
+  function checkpointLabel(lesson) {
+    return lesson.checkpoint_label || lesson.checkpointLabel ||
+      (lesson.artifact
+        ? 'I produced and checked: ' + lesson.artifact
+        : 'I completed the lesson evidence check.');
+  }
+
+  function durationLabel(lesson) {
+    if (lesson.duration) return lesson.duration;
+    if (lesson.duration_minutes) return lesson.duration_minutes + ' min';
+    return null;
+  }
+
+  function isCoreLesson(lesson) {
+    if (lesson.required === false) return false;
+    return (lesson.route || 'core') === 'core';
+  }
+
+  function courseLessons() {
+    const source = window.BOOTCAMP_COURSE || {};
+    return Array.isArray(source.lessons) ? source.lessons.filter(checkpointId) : [];
+  }
+
+  function courseCheckpoints() {
+    const source = window.BOOTCAMP_COURSE || {};
+    const milestones = Array.isArray(source.milestones) ? source.milestones.filter(checkpointId) : [];
+    return courseLessons().concat(milestones);
+  }
+
+  function emptyState() {
+    return { version: SCHEMA_VERSION, completed: [], tasks: [], updatedAt: null };
+  }
+
+  function sanitiseState(value) {
+    const validIds = new Set(courseCheckpoints().map(checkpointId));
+    const completed = Array.isArray(value && value.completed)
+      ? value.completed.filter(id => typeof id === 'string' && (validIds.size === 0 || validIds.has(id)))
+      : [];
+    const tasks = Array.isArray(value && value.tasks)
+      ? value.tasks.filter(id => typeof id === 'string')
+      : [];
+    return {
+      version: SCHEMA_VERSION,
+      completed: Array.from(new Set(completed)),
+      tasks: Array.from(new Set(tasks)),
+      updatedAt: value && value.updatedAt ? value.updatedAt : null
     };
-    const match = path.match(/\/(monday|tuesday|wednesday|thursday|capstone)\//i);
-    return match ? dayMap[match[1].toLowerCase()] : null;
   }
 
-  // Save current page as last visited (except homepage)
-  if (!isHomePage) {
-    const pageTitle = document.title.replace(' - ML Protein Design Bootcamp 2025', '');
-    const day = getDayFromPath(currentPath);
-    localStorage.setItem(LAST_PAGE_KEY, JSON.stringify({
-      path: currentPath,
-      title: pageTitle,
-      day: day,
-      timestamp: Date.now()
-    }));
+  function loadState() {
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) return sanitiseState(JSON.parse(saved));
+
+      const legacy = localStorage.getItem(LEGACY_STORAGE_KEY);
+      if (legacy) {
+        const legacyState = JSON.parse(legacy);
+        const migrated = emptyState();
+        migrated.tasks = Array.isArray(legacyState.completed) ? legacyState.completed : [];
+        saveState(migrated);
+        return migrated;
+      }
+    } catch (error) {
+      console.warn('Course progress could not be loaded.', error);
+    }
+    return emptyState();
   }
 
-  // Load progress data
-  function getProgress() {
-    const data = localStorage.getItem(STORAGE_KEY);
-    return data ? JSON.parse(data) : { completed: [] };
+  function saveState(state) {
+    const clean = sanitiseState(state);
+    clean.updatedAt = new Date().toISOString();
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(clean));
+    } catch (error) {
+      console.warn('Course progress could not be saved.', error);
+    }
+    return clean;
   }
 
-  // Save progress data
-  function saveProgress(progress) {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
+  function setCompleted(id, completed) {
+    const state = loadState();
+    const values = new Set(state.completed);
+    if (completed) values.add(id);
+    else values.delete(id);
+    state.completed = Array.from(values);
+    saveState(state);
+    syncProgressUI();
   }
 
-  // Update progress bar on homepage
-  function updateProgressBar() {
-    const progress = getProgress();
-    const progressSummary = document.getElementById('progress-summary');
-    const totalModules = document.querySelectorAll('.module-checkbox').length ||
-                         parseInt(progressSummary?.dataset.totalModules, 10) ||
-                         parseInt(document.body.dataset.totalModules, 10) ||
-                         42;
-    const completed = progress.completed.length;
-    const percent = Math.round((completed / totalModules) * 100);
+  function setTaskCompleted(id, completed) {
+    const state = loadState();
+    const values = new Set(state.tasks);
+    if (completed) values.add(id);
+    else values.delete(id);
+    state.tasks = Array.from(values);
+    saveState(state);
+  }
+
+  function currentLesson() {
+    const path = normalisePath(window.location.pathname);
+    return courseLessons().find(lesson => {
+      const candidate = lessonPath(lesson);
+      return path === candidate || path.endsWith(candidate);
+    }) || null;
+  }
+
+  function createMetaItem(label, value) {
+    if (!value) return null;
+    const item = document.createElement('div');
+    item.className = 'lesson-contract-item';
+    const term = document.createElement('span');
+    term.className = 'lesson-contract-label';
+    term.textContent = label;
+    const detail = document.createElement('span');
+    detail.textContent = value;
+    item.append(term, detail);
+    return item;
+  }
+
+  function addLessonContract(lesson) {
+    if (!lesson || document.querySelector('.lesson-contract')) return;
+    const title = document.querySelector('h1.title, .quarto-title h1');
+    if (!title) return;
+
+    const contract = document.createElement('section');
+    contract.className = 'lesson-contract';
+    contract.setAttribute('aria-label', 'Lesson plan');
+
+    const eyebrow = document.createElement('p');
+    eyebrow.className = 'lesson-contract-eyebrow';
+    const route = lesson.route || 'core';
+    const routeLabels = { core: 'Core path', full: 'Full-bootcamp path', reference: 'Reference path' };
+    eyebrow.textContent = (lesson.status === 'optional' ? 'Optional · ' : '') +
+      (routeLabels[route] || (route.charAt(0).toUpperCase() + route.slice(1) + ' path'));
+    contract.appendChild(eyebrow);
+
+    const grid = document.createElement('div');
+    grid.className = 'lesson-contract-grid';
+    [
+      createMetaItem('Time', durationLabel(lesson)),
+      createMetaItem('Compute', lesson.compute),
+      createMetaItem('You will produce', lesson.artifact),
+      createMetaItem('Completion check', checkpointLabel(lesson))
+    ].filter(Boolean).forEach(item => grid.appendChild(item));
+    contract.appendChild(grid);
+
+    if (lesson.prerequisites) {
+      const prereq = document.createElement('p');
+      prereq.className = 'lesson-contract-prerequisites';
+      const strong = document.createElement('strong');
+      strong.textContent = 'Before you begin: ';
+      prereq.append(strong, document.createTextNode(
+        Array.isArray(lesson.prerequisites) ? lesson.prerequisites.join(' · ') : lesson.prerequisites
+      ));
+      contract.appendChild(prereq);
+    }
+
+    const insertionPoint = title.closest('#title-block-header, .quarto-title-block') || title;
+    insertionPoint.insertAdjacentElement('afterend', contract);
+  }
+
+  function addMasteryCheckpoint(lesson) {
+    if (!lesson || document.querySelector('.mastery-checkpoint')) return;
+    const id = checkpointId(lesson);
+    const state = loadState();
+    const main = document.querySelector('main') || document.querySelector('#quarto-content');
+    if (!main) return;
+
+    const section = document.createElement('section');
+    section.className = 'mastery-checkpoint';
+    section.setAttribute('aria-labelledby', 'mastery-checkpoint-title');
+
+    const heading = document.createElement('h2');
+    heading.id = 'mastery-checkpoint-title';
+    heading.textContent = 'Complete this lesson';
+
+    const help = document.createElement('p');
+    help.textContent = 'Check this only after you can point to the evidence—not merely after reading the page.';
+
+    const label = document.createElement('label');
+    label.className = 'mastery-checkpoint-label';
+    const checkbox = document.createElement('input');
+    checkbox.type = 'checkbox';
+    checkbox.className = 'mastery-checkbox';
+    checkbox.dataset.checkpointId = id;
+    checkbox.checked = state.completed.includes(id);
+    checkbox.addEventListener('change', () => setCompleted(id, checkbox.checked));
+    const text = document.createElement('span');
+    text.textContent = checkpointLabel(lesson);
+    label.append(checkbox, text);
+
+    section.append(heading, help, label);
+
+    const lessons = courseLessons();
+    const currentIndex = lessons.findIndex(item => checkpointId(item) === id);
+    const following = currentIndex >= 0 ? lessons.slice(currentIndex + 1) : [];
+    const next = isCoreLesson(lesson)
+      ? following.find(isCoreLesson)
+      : following[0];
+    if (next) {
+      const nextLink = document.createElement('a');
+      nextLink.className = 'btn btn-primary mastery-next-link';
+      nextLink.href = lessonPath(next);
+      nextLink.textContent = 'Continue to ' + next.title;
+      section.appendChild(nextLink);
+    }
+
+    const nav = main.querySelector('nav.page-navigation, .page-navigation, .module-nav');
+    if (nav) nav.insertAdjacentElement('beforebegin', section);
+    else main.appendChild(section);
+  }
+
+  function syncLegacyTaskCheckboxes() {
+    const state = loadState();
+    const masteryIds = new Set(courseCheckpoints().map(checkpointId));
+    document.querySelectorAll('.module-checkbox[data-module-id]').forEach(checkbox => {
+      const id = checkbox.dataset.moduleId;
+      const isMastery = masteryIds.has(id);
+      checkbox.checked = isMastery ? state.completed.includes(id) : state.tasks.includes(id);
+      if (!checkbox.dataset.progressBound) {
+        checkbox.dataset.progressBound = 'true';
+        checkbox.addEventListener('change', () => {
+          if (isMastery) setCompleted(id, checkbox.checked);
+          else setTaskCompleted(id, checkbox.checked);
+        });
+      }
+    });
+  }
+
+  function syncProgressUI() {
+    const checkpoints = courseCheckpoints();
+    const core = checkpoints.filter(isCoreLesson);
+    const optional = checkpoints.filter(lesson => !isCoreLesson(lesson));
+    const state = loadState();
+    const completed = new Set(state.completed);
+    const coreCompleted = core.filter(lesson => completed.has(checkpointId(lesson))).length;
+    const optionalCompleted = optional.filter(lesson => completed.has(checkpointId(lesson))).length;
+    const percent = core.length ? Math.round((coreCompleted / core.length) * 100) : 0;
 
     const bar = document.getElementById('progress-bar');
     const count = document.getElementById('completed-count');
-
+    const total = document.getElementById('checkpoint-total');
+    const optionalCount = document.getElementById('optional-completed-count');
     if (bar) {
       bar.style.width = percent + '%';
       bar.textContent = percent + '%';
-      bar.setAttribute('aria-valuenow', percent);
+      bar.setAttribute('aria-valuenow', String(percent));
     }
-    if (count) {
-      count.textContent = completed;
-    }
+    if (count) count.textContent = String(coreCompleted);
+    if (total) total.textContent = String(core.length);
+    if (optionalCount) optionalCount.textContent = String(optionalCompleted);
+
+    document.querySelectorAll('.mastery-checkbox[data-checkpoint-id]').forEach(checkbox => {
+      checkbox.checked = completed.has(checkbox.dataset.checkpointId);
+    });
   }
 
-  // Show resume banner on homepage if there's a saved page
   function showResumeBanner() {
-    const lastPage = localStorage.getItem(LAST_PAGE_KEY);
-    if (lastPage && isHomePage) {
-      const data = JSON.parse(lastPage);
+    const isHome = normalisePath(window.location.pathname) === '/index.html';
+    if (!isHome) return;
+    try {
+      const saved = JSON.parse(localStorage.getItem(LAST_PAGE_KEY) || 'null');
+      if (!saved || !saved.path) return;
       const banner = document.getElementById('resume-banner');
       const link = document.getElementById('resume-link');
       const title = document.getElementById('last-page-title');
-
-      if (banner && link && title && data.path) {
-        // Format title with day prefix if available
-        const displayTitle = data.day ? `${data.day}: ${data.title}` : data.title;
-        title.textContent = displayTitle;
-        link.href = data.path;
-        banner.style.display = 'block';
+      if (banner && link && title) {
+        title.textContent = saved.day ? saved.day + ': ' + saved.title : saved.title;
+        link.href = saved.path;
+        banner.hidden = false;
+        banner.style.display = '';
       }
+    } catch (error) {
+      console.warn('The resume link could not be restored.', error);
     }
   }
 
-  // Initialize checkboxes on module pages
-  function initCheckboxes() {
-    const checkboxes = document.querySelectorAll('.module-checkbox');
-    const progress = getProgress();
+  function saveLastPage(lesson) {
+    if (!lesson) return;
+    try {
+      localStorage.setItem(LAST_PAGE_KEY, JSON.stringify({
+        path: window.location.pathname,
+        title: lesson.title || document.title,
+        day: lesson.day || null,
+        timestamp: Date.now()
+      }));
+    } catch (error) {
+      console.warn('The resume link could not be saved.', error);
+    }
+  }
 
-    checkboxes.forEach(cb => {
-      const id = cb.dataset.moduleId;
+  function exportProgress() {
+    const blob = new Blob([JSON.stringify(loadState(), null, 2)], { type: 'application/json' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = 'ml-protein-bootcamp-progress.json';
+    link.click();
+    window.setTimeout(() => URL.revokeObjectURL(link.href), 0);
+  }
 
-      // Restore state
-      if (progress.completed.includes(id)) {
-        cb.checked = true;
-      }
-
-      // Save on change
-      cb.addEventListener('change', function() {
-        const progress = getProgress();
-        if (this.checked) {
-          if (!progress.completed.includes(id)) {
-            progress.completed.push(id);
-          }
-        } else {
-          progress.completed = progress.completed.filter(x => x !== id);
+  function importProgress(file) {
+    if (!file) return;
+    const reader = new FileReader();
+    reader.addEventListener('load', () => {
+      try {
+        const imported = JSON.parse(String(reader.result));
+        if (!imported || typeof imported !== 'object' ||
+            !Array.isArray(imported.completed) || !Array.isArray(imported.tasks)) {
+          throw new Error('Progress export has the wrong shape.');
         }
-        saveProgress(progress);
-        updateProgressBar();
-      });
+        saveState(imported);
+        syncProgressUI();
+        window.alert('Progress imported successfully.');
+      } catch (error) {
+        window.alert('That file is not a valid course progress export.');
+      }
     });
+    reader.readAsText(file);
   }
 
-  // Clear all progress
   window.clearProgress = function() {
+    if (!window.confirm('Reset all saved course progress in this browser? This cannot be undone unless you exported a backup.')) return;
     localStorage.removeItem(STORAGE_KEY);
+    localStorage.removeItem(LEGACY_STORAGE_KEY);
     localStorage.removeItem(LAST_PAGE_KEY);
-    location.reload();
+    window.location.reload();
   };
+  window.exportCourseProgress = exportProgress;
+  window.importCourseProgress = importProgress;
 
-  // Mark all checkboxes on current page as complete
-  window.markAllComplete = function() {
-    const checkboxes = document.querySelectorAll('.module-checkbox');
-    const progress = getProgress();
-
-    checkboxes.forEach(cb => {
-      const id = cb.dataset.moduleId;
-      cb.checked = true;
-      if (!progress.completed.includes(id)) {
-        progress.completed.push(id);
-      }
-    });
-
-    saveProgress(progress);
-    updateProgressBar();
-  };
-
-  // Add "Mark all as complete" button to pages with checkboxes
-  function addMarkAllButton() {
-    const checkboxes = document.querySelectorAll('.module-checkbox');
-    if (checkboxes.length > 0 && !isHomePage) {
-      // Find the title element and add button after it
-      const title = document.querySelector('h1.title, .quarto-title h1');
-      if (title) {
-        const btn = document.createElement('button');
-        btn.textContent = 'Mark all as complete';
-        btn.className = 'btn btn-outline-success btn-sm mark-all-btn';
-        btn.style.cssText = 'margin-top: 0.5rem; margin-bottom: 1rem;';
-        btn.onclick = window.markAllComplete;
-        title.insertAdjacentElement('afterend', btn);
-      }
-    }
-  }
-
-  // Run on page load
   document.addEventListener('DOMContentLoaded', function() {
+    const lesson = currentLesson();
+    saveLastPage(lesson);
     showResumeBanner();
-    initCheckboxes();
-    updateProgressBar();
-    addMarkAllButton();
+    addLessonContract(lesson);
+    addMasteryCheckpoint(lesson);
+    syncLegacyTaskCheckboxes();
+    syncProgressUI();
+
+    const exportButton = document.getElementById('export-progress');
+    const importInput = document.getElementById('import-progress');
+    if (exportButton) exportButton.addEventListener('click', exportProgress);
+    if (importInput) importInput.addEventListener('change', event => importProgress(event.target.files[0]));
   });
 })();
 </script>
 <style>
 .quiz-container {
-  border: 1px solid #e0e0e0;
+  border: 1px solid #c9d1dc;
   border-radius: 8px;
   padding: 1.5rem;
   margin: 2rem 0;
@@ -1665,9 +1363,21 @@ MSKGEELFTGVVPILVELDGDVNGHKFSVSGEGEGDATYGKLTLKFICTTGKLPVPWPTLVTTFSYGVQCFSRYPDHMKQ
   color: #0d6efd;
 }
 
+.quiz-fieldset {
+  border: 0;
+  margin: 0;
+  min-width: 0;
+  padding: 0;
+}
+
 .quiz-question {
+  color: #263238;
+  float: none;
   font-size: 1.1rem;
+  line-height: 1.45;
   margin-bottom: 1rem;
+  padding: 0;
+  width: 100%;
   font-weight: 500;
 }
 
@@ -1678,10 +1388,15 @@ MSKGEELFTGVVPILVELDGDVNGHKFSVSGEGEGDATYGKLTLKFICTTGKLPVPWPTLVTTFSYGVQCFSRYPDHMKQ
 }
 
 .quiz-option {
-  padding: 0.75rem 1rem;
+  align-items: flex-start;
   border: 1px solid #dee2e6;
   border-radius: 6px;
   cursor: pointer;
+  display: flex;
+  gap: 0.75rem;
+  line-height: 1.45;
+  min-height: 44px;
+  padding: 0.75rem 1rem;
   transition: all 0.2s ease;
   background-color: white;
 }
@@ -1691,10 +1406,11 @@ MSKGEELFTGVVPILVELDGDVNGHKFSVSGEGEGDATYGKLTLKFICTTGKLPVPWPTLVTTFSYGVQCFSRYPDHMKQ
   border-color: #adb5bd;
 }
 
-.quiz-option.selected {
+.quiz-option.selected,
+.quiz-option:has(.quiz-radio:checked) {
   background-color: #e7f1ff;
   border-color: #0d6efd;
-  color: #0d6efd;
+  color: #084298;
 }
 
 .quiz-option.correct {
@@ -1709,12 +1425,38 @@ MSKGEELFTGVVPILVELDGDVNGHKFSVSGEGEGDATYGKLTLKFICTTGKLPVPWPTLVTTFSYGVQCFSRYPDHMKQ
   color: #842029;
 }
 
+.quiz-radio {
+  flex: 0 0 auto;
+  height: 1.25rem;
+  margin: 0.08rem 0 0;
+  width: 1.25rem;
+}
+
+.quiz-option:has(.quiz-radio:focus-visible) {
+  outline: 3px solid #0b5cab;
+  outline-offset: 3px;
+}
+
+.quiz-option-text {
+  min-width: 0;
+}
+
+.quiz-result-label {
+  display: block;
+  font-size: 0.86rem;
+  font-weight: 700;
+  margin-top: 0.25rem;
+}
+
 .quiz-feedback {
   margin-top: 1rem;
   padding: 0.75rem;
   border-radius: 6px;
-  display: none;
   font-size: 0.95rem;
+}
+
+.quiz-feedback[hidden] {
+  display: none;
 }
 
 .quiz-feedback.correct {
@@ -1731,7 +1473,8 @@ MSKGEELFTGVVPILVELDGDVNGHKFSVSGEGEGDATYGKLTLKFICTTGKLPVPWPTLVTTFSYGVQCFSRYPDHMKQ
 
 .check-btn {
   margin-top: 1rem;
-  padding: 0.5rem 1rem;
+  min-height: 44px;
+  padding: 0.65rem 1rem;
   background-color: #0d6efd;
   color: white;
   border: none;
@@ -1744,6 +1487,11 @@ MSKGEELFTGVVPILVELDGDVNGHKFSVSGEGEGDATYGKLTLKFICTTGKLPVPWPTLVTTFSYGVQCFSRYPDHMKQ
   background-color: #0b5ed7;
 }
 
+.check-btn:focus-visible {
+  outline: 3px solid #0b5cab;
+  outline-offset: 3px;
+}
+
 .check-btn:disabled {
   background-color: #6c757d;
   cursor: not-allowed;
@@ -1754,98 +1502,174 @@ MSKGEELFTGVVPILVELDGDVNGHKFSVSGEGEGDATYGKLTLKFICTTGKLPVPWPTLVTTFSYGVQCFSRYPDHMKQ
 document.addEventListener('DOMContentLoaded', function() {
   const quizzes = document.querySelectorAll('.quiz-container');
 
-  quizzes.forEach(quiz => {
-    const options = quiz.querySelectorAll('.quiz-option');
+  quizzes.forEach((quiz, quizIndex) => {
+    const question = quiz.querySelector('.quiz-question');
+    const optionsContainer = quiz.querySelector('.quiz-options');
     const checkBtn = quiz.querySelector('.check-btn');
     const feedback = quiz.querySelector('.quiz-feedback');
     const correctIndex = parseInt(quiz.dataset.correctIndex);
+    if (!question || !optionsContainer || !checkBtn || !feedback) return;
+
+    const quizId = 'knowledge-check-' + (quizIndex + 1);
+    const header = quiz.querySelector('.quiz-header');
+    const icon = quiz.querySelector('.quiz-header i');
+    const fieldset = document.createElement('fieldset');
+    const legend = document.createElement('legend');
+    const originalOptions = Array.from(optionsContainer.querySelectorAll('.quiz-option'));
+    const feedbackId = quizId + '-feedback';
+
+    quiz.dataset.quizReady = 'true';
+    if (header) {
+      header.id = quizId + '-header';
+    }
+    if (icon) icon.setAttribute('aria-hidden', 'true');
+
+    fieldset.className = 'quiz-fieldset';
+    legend.className = 'quiz-question';
+    while (question.firstChild) legend.appendChild(question.firstChild);
+    question.replaceWith(fieldset);
+    fieldset.append(legend, optionsContainer);
+
+    originalOptions.forEach((option, optionIndex) => {
+      const optionId = quizId + '-option-' + (optionIndex + 1);
+      const label = document.createElement('label');
+      const radio = document.createElement('input');
+      const text = document.createElement('span');
+
+      label.className = option.className;
+      label.htmlFor = optionId;
+      radio.className = 'quiz-radio';
+      radio.type = 'radio';
+      radio.name = quizId;
+      radio.id = optionId;
+      radio.value = String(optionIndex);
+      text.className = 'quiz-option-text';
+      while (option.firstChild) text.appendChild(option.firstChild);
+      label.append(radio, text);
+      option.replaceWith(label);
+    });
+
+    const options = Array.from(optionsContainer.querySelectorAll('.quiz-option'));
+    const radios = Array.from(optionsContainer.querySelectorAll('.quiz-radio'));
+    checkBtn.type = 'button';
+    checkBtn.disabled = true;
+    checkBtn.setAttribute('aria-describedby', feedbackId);
+    feedback.id = feedbackId;
+    feedback.hidden = true;
+    feedback.setAttribute('role', 'status');
+    feedback.setAttribute('aria-live', 'polite');
+    feedback.setAttribute('aria-atomic', 'true');
     let selectedIndex = -1;
 
-    options.forEach((option, index) => {
-      option.addEventListener('click', () => {
-        if (checkBtn.disabled) return; // Already answered
-        
+    radios.forEach((radio, index) => {
+      radio.addEventListener('change', () => {
+        if (radio.disabled) return;
         options.forEach(opt => opt.classList.remove('selected'));
-        option.classList.add('selected');
+        options[index].classList.add('selected');
         selectedIndex = index;
+        checkBtn.disabled = false;
       });
     });
 
     checkBtn.addEventListener('click', () => {
       if (selectedIndex === -1) return;
 
-      // Disable interaction
       checkBtn.disabled = true;
       checkBtn.textContent = 'Submitted';
+      radios.forEach(radio => radio.disabled = true);
       
       const selectedOption = options[selectedIndex];
       const correctOption = options[correctIndex];
 
+      function addResultLabel(option, message) {
+        const result = document.createElement('span');
+        result.className = 'quiz-result-label';
+        result.textContent = message;
+        option.querySelector('.quiz-option-text').appendChild(result);
+      }
+
       if (selectedIndex === correctIndex) {
         selectedOption.classList.add('correct');
         selectedOption.classList.remove('selected');
+        addResultLabel(selectedOption, 'Your answer — correct');
         feedback.textContent = quiz.dataset.correctFeedback || "Correct! Great job.";
         feedback.className = 'quiz-feedback correct';
       } else {
         selectedOption.classList.add('incorrect');
         selectedOption.classList.remove('selected');
-        correctOption.classList.add('correct'); // Show the right answer
+        correctOption.classList.add('correct');
+        addResultLabel(selectedOption, 'Your answer — incorrect');
+        addResultLabel(correctOption, 'Correct answer');
         feedback.textContent = quiz.dataset.incorrectFeedback || "Not quite. The correct answer is highlighted.";
         feedback.className = 'quiz-feedback incorrect';
       }
+      feedback.hidden = false;
     });
   });
 });
 </script>
 <script>
 (function() {
-  // Day-level position chip: shows "Monday · Lesson 3 of 16" at the top of each lesson.
-  // Position is derived from the Quarto sidebar so it stays in sync with _quarto.yml.
+  'use strict';
+
+  function normalisePath(path) {
+    if (!path) return '/';
+    const clean = path.split('#')[0].split('?')[0].toLowerCase();
+    return clean.endsWith('/') ? clean + 'index.html' : clean;
+  }
+
   document.addEventListener('DOMContentLoaded', function() {
-    const path = window.location.pathname.toLowerCase();
-    const match = path.match(/\/(monday|tuesday|wednesday|thursday|capstone)\//);
-    if (!match) return;
-    const day = match[1];
+    const path = normalisePath(window.location.pathname);
+    const dayMatch = path.match(/\/(monday|tuesday|wednesday|thursday|capstone)\//);
+    if (!dayMatch || /\/(monday|tuesday|wednesday|thursday|capstone)\/index\.html$/.test(path)) return;
+
+    const day = dayMatch[1];
     const dayLabel = day.charAt(0).toUpperCase() + day.slice(1);
+    const manifestLessons = window.BOOTCAMP_COURSE && Array.isArray(window.BOOTCAMP_COURSE.lessons)
+      ? window.BOOTCAMP_COURSE.lessons
+          .filter(item => {
+            const itemDay = String(item.day || '').toLowerCase();
+            return itemDay === day || (day === 'monday' && itemDay === 'prework');
+          })
+          .map(item => normalisePath('/' + String(item.path || item.href || '').replace(/^\/+/, '')))
+      : [];
 
-    // Skip the day index page itself
-    const isIndex = /\/index\.html?$/.test(path) || path.endsWith('/' + day + '/');
-    if (isIndex) return;
+    let lessons = manifestLessons;
+    if (!lessons.length) {
+      lessons = Array.from(document.querySelectorAll('.sidebar a[href]'))
+        .map(link => {
+          try { return normalisePath(new URL(link.getAttribute('href'), window.location.href).pathname); }
+          catch (error) { return null; }
+        })
+        .filter(candidate => candidate && candidate.includes('/' + day + '/'))
+        .filter(candidate => !candidate.endsWith('/' + day + '/index.html'));
+      lessons = lessons.filter((candidate, index) => lessons.indexOf(candidate) === index);
+    }
 
-    // Collect lesson links from the sidebar for the current day (exclude index and separators)
-    const sidebarLinks = Array.from(document.querySelectorAll('.sidebar a[href]'))
-      .map(function(a) {
-        try { return new URL(a.getAttribute('href'), window.location.href).pathname.toLowerCase(); }
-        catch (e) { return null; }
-      })
-      .filter(function(p) { return p && p.indexOf('/' + day + '/') !== -1; })
-      .filter(function(p) { return !/\/index\.html?$/.test(p); });
+    const currentIndex = lessons.findIndex(candidate => path === candidate || path.endsWith(candidate));
+    if (currentIndex < 0) return;
 
-    // Deduplicate while preserving order
-    const seen = new Set();
-    const lessons = sidebarLinks.filter(function(p) {
-      if (seen.has(p)) return false;
-      seen.add(p);
-      return true;
-    });
-
-    const total = lessons.length;
-    if (total === 0) return;
-
-    const currentIdx = lessons.indexOf(path);
-    if (currentIdx === -1) return;
-
-    const pct = Math.round(((currentIdx + 1) / total) * 100);
     const title = document.querySelector('h1.title, .quarto-title h1');
     if (!title) return;
+    const total = lessons.length;
+    const percent = Math.round(((currentIndex + 1) / total) * 100);
+    const noun = day === 'capstone' ? 'Target' : 'Lesson';
 
     const chip = document.createElement('div');
     chip.className = 'day-progress-chip';
-    const noun = day === 'capstone' ? 'Target' : 'Lesson';
-    chip.innerHTML =
-      '<span>' + dayLabel + '</span>' +
-      '<span>· ' + noun + ' ' + (currentIdx + 1) + ' of ' + total + '</span>' +
-      '<span class="dpc-bar"><span class="dpc-fill" style="width:' + pct + '%"></span></span>';
+    chip.setAttribute('role', 'status');
+    chip.setAttribute('aria-label', dayLabel + ', ' + noun + ' ' + (currentIndex + 1) + ' of ' + total);
+
+    const label = document.createElement('span');
+    label.textContent = dayLabel + ' · ' + noun + ' ' + (currentIndex + 1) + ' of ' + total;
+    const bar = document.createElement('span');
+    bar.className = 'dpc-bar';
+    bar.setAttribute('aria-hidden', 'true');
+    const fill = document.createElement('span');
+    fill.className = 'dpc-fill';
+    fill.style.width = percent + '%';
+    bar.appendChild(fill);
+    chip.append(label, bar);
     title.insertAdjacentElement('afterend', chip);
   });
 })();
@@ -1940,7 +1764,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp("https:\/\/RosettaMLBootCamp2025\.github\.io\/");
+        var filterRegex = new RegExp('/' + window.location.host + '/');
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }

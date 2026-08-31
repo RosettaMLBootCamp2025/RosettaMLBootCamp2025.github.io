@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Monday: Tool Installation – ML Protein Design Bootcamp 2025</title>
+<title>AlphaFold2 Architecture Deep Dive – ML Protein Design Bootcamp 2025</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -266,6 +266,9 @@ ul.task-list li input[type="checkbox"] {
   window.addEventListener('load', improveSharedAccessibility, {once: true});
 })();
 </script>
+<script src="../site_libs/quarto-diagram/mermaid.min.js"></script>
+<script src="../site_libs/quarto-diagram/mermaid-init.js"></script>
+<link href="../site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
 
 
 <link rel="stylesheet" href="../styles.css">
@@ -297,11 +300,11 @@ ul.task-list li input[type="checkbox"] {
 <span class="menu-text">Start Here</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="../monday/index.html" aria-current="page"> 
+    <a class="nav-link" href="../monday/index.html"> 
 <span class="menu-text">Monday</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../tuesday/index.html"> 
+    <a class="nav-link active" href="../tuesday/index.html" aria-current="page"> 
 <span class="menu-text">Tuesday</span></a>
   </li>  
   <li class="nav-item">
@@ -337,7 +340,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../monday/index.html">Monday: Tool Installation</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../tuesday/3-alphafold2-deep-dive.html">Optional: Architecture Deep Dive</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -351,112 +354,38 @@ ul.task-list li input[type="checkbox"] {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../monday/index.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Monday: Tool Installation</span></a>
-  </div>
-</li>
-        <li class="px-0"><hr class="sidebar-divider hi "></li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../monday/prework-1-env-git.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Pre-work 1: Environment Setup &amp; GitHub Basics</span></a>
+  <a href="../tuesday/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Tuesday: Structure Prediction</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../monday/prework-2-pymol-vscode.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Pre-work 2: PyMOL and VS Code Setup</span></a>
+  <a href="../tuesday/1-pymol.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1. PyMOL and Visual Studio Code</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../monday/prework-3-python.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Pre-work 3: Python Refresher</span></a>
+  <a href="../tuesday/2-structure-prediction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2. Introduction to Structure Prediction</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../monday/1-hpc-setup.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">1. Common HPC Setup</span></a>
+  <a href="../tuesday/3-alphafold2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3. AlphaFold2 and OpenFold</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../monday/reproducibility.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Reproducible Setup &amp; Compute Fallbacks</span></a>
+  <a href="../tuesday/3-alphafold2-deep-dive.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Optional: Architecture Deep Dive</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../monday/2-localcolabfold.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">2. LocalColabFold</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../monday/3-ligandmpnn.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">3. LigandMPNN</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../monday/4-rfdiffusion2.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">4. RFdiffusion2</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../monday/5-esmfold.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">5. ESMFold</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../monday/6-openfold.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">6. OpenFold (Optional)</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../monday/7-chai1.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">7. Chai-1</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../monday/8-boltz2.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">8. Boltz-2</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../monday/9-diffdock-pp.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">9. DiffDock-PP</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../monday/10-placer.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">10. PLACER</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../monday/11-bindcraft.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">11. BindCraft</span></a>
-  </div>
-</li>
-        <li class="px-0"><hr class="sidebar-divider hi "></li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../monday/12-esm3.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">12. ESM3 (Optional)</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../monday/13-rfdiffusion-aa.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">13. RFdiffusion All Atom (Optional)</span></a>
+  <a href="../tuesday/4-esmfold.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">4. ESMFold vs.&nbsp;AlphaFold2</span></a>
   </div>
 </li>
     </ul>
@@ -469,20 +398,30 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">Overview</a></li>
-  <li><a href="#monday-contract" id="toc-monday-contract" class="nav-link" data-scroll-target="#monday-contract">Monday contract</a></li>
-  <li><a href="#choose-a-monday-route" id="toc-choose-a-monday-route" class="nav-link" data-scroll-target="#choose-a-monday-route">Choose a Monday route</a>
+  <li><a href="#architecture-at-a-glance" id="toc-architecture-at-a-glance" class="nav-link active" data-scroll-target="#architecture-at-a-glance">Architecture at a Glance</a></li>
+  <li><a href="#from-msa-to-pairwise-geometry" id="toc-from-msa-to-pairwise-geometry" class="nav-link" data-scroll-target="#from-msa-to-pairwise-geometry">From MSA to Pairwise Geometry</a>
   <ul class="collapse">
-  <li><a href="#core-path" id="toc-core-path" class="nav-link" data-scroll-target="#core-path">Core path</a></li>
-  <li><a href="#full-bootcamp-path" id="toc-full-bootcamp-path" class="nav-link" data-scroll-target="#full-bootcamp-path">Full-bootcamp path</a></li>
-  <li><a href="#reference-path" id="toc-reference-path" class="nav-link" data-scroll-target="#reference-path">Reference path</a></li>
+  <li><a href="#generating-the-msa" id="toc-generating-the-msa" class="nav-link" data-scroll-target="#generating-the-msa">Generating the MSA</a></li>
+  <li><a href="#the-two-evoformer-representations" id="toc-the-two-evoformer-representations" class="nav-link" data-scroll-target="#the-two-evoformer-representations">The Two Evoformer Representations</a></li>
+  <li><a href="#row-and-column-attention" id="toc-row-and-column-attention" class="nav-link" data-scroll-target="#row-and-column-attention">Row and Column Attention</a></li>
+  <li><a href="#outer-product-mean" id="toc-outer-product-mean" class="nav-link" data-scroll-target="#outer-product-mean">Outer Product Mean</a></li>
+  <li><a href="#triangle-updates" id="toc-triangle-updates" class="nav-link" data-scroll-target="#triangle-updates">Triangle Updates</a></li>
+  <li><a href="#evoformer-check" id="toc-evoformer-check" class="nav-link" data-scroll-target="#evoformer-check">Evoformer Check</a></li>
   </ul></li>
-  <li><a href="#pre-work-and-readiness" id="toc-pre-work-and-readiness" class="nav-link" data-scroll-target="#pre-work-and-readiness">Pre-work and readiness</a></li>
-  <li><a href="#tool-installation-map" id="toc-tool-installation-map" class="nav-link" data-scroll-target="#tool-installation-map">Tool installation map</a></li>
-  <li><a href="#pick-tools-by-question" id="toc-pick-tools-by-question" class="nav-link" data-scroll-target="#pick-tools-by-question">Pick tools by question</a></li>
-  <li><a href="#monday-evidence-checkpoints" id="toc-monday-evidence-checkpoints" class="nav-link" data-scroll-target="#monday-evidence-checkpoints">Monday evidence checkpoints</a></li>
-  <li><a href="#if-you-are-stuck" id="toc-if-you-are-stuck" class="nav-link" data-scroll-target="#if-you-are-stuck">If you are stuck</a></li>
-  <li><a href="#next-step" id="toc-next-step" class="nav-link" data-scroll-target="#next-step">Next step</a></li>
+  <li><a href="#from-representations-to-coordinates" id="toc-from-representations-to-coordinates" class="nav-link" data-scroll-target="#from-representations-to-coordinates">From Representations to Coordinates</a>
+  <ul class="collapse">
+  <li><a href="#the-symmetry-requirement" id="toc-the-symmetry-requirement" class="nav-link" data-scroll-target="#the-symmetry-requirement">The Symmetry Requirement</a></li>
+  <li><a href="#invariant-point-attention" id="toc-invariant-point-attention" class="nav-link" data-scroll-target="#invariant-point-attention">Invariant Point Attention</a></li>
+  <li><a href="#frame-and-side-chain-updates" id="toc-frame-and-side-chain-updates" class="nav-link" data-scroll-target="#frame-and-side-chain-updates">Frame and Side-Chain Updates</a></li>
+  </ul></li>
+  <li><a href="#recycling-iterative-refinement" id="toc-recycling-iterative-refinement" class="nav-link" data-scroll-target="#recycling-iterative-refinement">Recycling: Iterative Refinement</a></li>
+  <li><a href="#inference-settings" id="toc-inference-settings" class="nav-link" data-scroll-target="#inference-settings">Inference Settings</a>
+  <ul class="collapse">
+  <li><a href="#recycling-and-msa" id="toc-recycling-and-msa" class="nav-link" data-scroll-target="#recycling-and-msa">Recycling and MSA</a></li>
+  <li><a href="#model-selection-and-relaxation" id="toc-model-selection-and-relaxation" class="nav-link" data-scroll-target="#model-selection-and-relaxation">Model Selection and Relaxation</a></li>
+  </ul></li>
+  <li><a href="#extensions-and-related-workflows" id="toc-extensions-and-related-workflows" class="nav-link" data-scroll-target="#extensions-and-related-workflows">Extensions and Related Workflows</a></li>
+  <li><a href="#final-check-and-artifact" id="toc-final-check-and-artifact" class="nav-link" data-scroll-target="#final-check-and-artifact">Final Check and Artifact</a></li>
   </ul>
 </nav>
     </div>
@@ -491,8 +430,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Monday: Tool Installation</h1>
-<p class="subtitle lead">Historical day 1 · prepare a reproducible environment, then install only the tools your route needs</p>
+<h1 class="title">AlphaFold2 Architecture Deep Dive</h1>
 </div>
 
 
@@ -509,30 +447,273 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="overview" class="level2">
-<h2 class="anchored" data-anchor-id="overview">Overview</h2>
-<p>Monday preserves the first stage of the original in-person bootcamp: local setup, HPC orientation, and a broad tour of the prediction and design toolchain. In the asynchronous course, <strong>you are not expected to install every tool before learning anything else</strong>. Verify the foundation, choose a workflow, and capture a smoke-test artifact for each tool you intend to use.</p>
-<div class="day-objectives">
-<div class="do-title">
-By the end of Monday, you’ll be able to:
+<p>This optional companion explains how AlphaFold2 turns an MSA and sequence into coordinates. It preserves the implementation detail from the live bootcamp while keeping the <a href="../tuesday/3-alphafold2.html">core AlphaFold2 lesson</a> focused on prediction and interpretation.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Deep-dive contract">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
 </div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Deep-dive contract
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td><strong>Time</strong></td>
+<td>90–120 minutes</td>
+</tr>
+<tr class="even">
+<td><strong>Prerequisite</strong></td>
+<td>Complete the confidence and MSA loops in the core lesson</td>
+</tr>
+<tr class="odd">
+<td><strong>Outcome</strong></td>
+<td>Trace information through the Evoformer, structure module, and recycling loop</td>
+</tr>
+<tr class="even">
+<td><strong>Artifact</strong></td>
+<td>A one-page architecture sketch annotated with tensor roles and one sentence per major operation</td>
+</tr>
+<tr class="odd">
+<td><strong>Complete when</strong></td>
+<td>You can explain how evolutionary correlations enter the pair representation and how invariant point attention updates a 3D structure</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<section id="architecture-at-a-glance" class="level2">
+<h2 class="anchored" data-anchor-id="architecture-at-a-glance">Architecture at a Glance</h2>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart LR
+    Seq[Input sequence] --&gt; MSA[MSA generation]
+    Seq --&gt; Templ[Template search]
+    MSA --&gt; Evo[Evoformer]
+    Templ --&gt; Evo
+    Evo --&gt; Struct[Structure module]
+    Struct --&gt; Coord[3D coordinates]
+    Struct -. recycled features .-&gt; Evo
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<p>The model maintains three useful views of the protein:</p>
 <ul>
-<li>Request GPU resources and distinguish login-node, CPU-node, and GPU-node work.</li>
-<li>Record the Python, CUDA, PyTorch, container, model, and hardware context behind a run.</li>
-<li>Select a structure predictor, sequence designer, and backbone/binder route for a stated problem.</li>
-<li>Run a minimal smoke test and recognize the output that proves a tool is usable.</li>
-<li>Diagnose common environment, path, weight, quota, and GPU-memory failures without losing the scientific learning objective.</li>
+<li>An <strong>MSA representation</strong> tracks every residue in every aligned sequence.</li>
+<li>A <strong>pair representation</strong> tracks relationships between every pair of query residues.</li>
+<li>A <strong>single representation</strong>, derived from the query row, carries per-residue information into the structure module.</li>
 </ul>
+</section>
+<section id="from-msa-to-pairwise-geometry" class="level2">
+<h2 class="anchored" data-anchor-id="from-msa-to-pairwise-geometry">From MSA to Pairwise Geometry</h2>
+<section id="generating-the-msa" class="level3">
+<h3 class="anchored" data-anchor-id="generating-the-msa">Generating the MSA</h3>
+<p>AlphaFold2 originally combines sensitive database searches:</p>
+<ul>
+<li><strong>JackHMMER</strong> iteratively searches sequence databases using profile HMMs.</li>
+<li><strong>HHblits</strong> uses HMM–HMM comparisons against clustered databases.</li>
+<li><strong>MMseqs2</strong>, used by ColabFold, searches precomputed databases much faster and makes large-scale prediction practical.</li>
+</ul>
+<p>Historically, direct coupling analysis (DCA) attempted to separate direct residue couplings from transitive correlations. AlphaFold2 does not explicitly run DCA; learned operations extract related signals from MSA features.</p>
+</section>
+<section id="the-two-evoformer-representations" class="level3">
+<h3 class="anchored" data-anchor-id="the-two-evoformer-representations">The Two Evoformer Representations</h3>
+<p>The MSA is embedded as a tensor with axes for sequences, residues, and features. In the standard AlphaFold2 description, the Evoformer processes:</p>
+<ul>
+<li><strong>MSA representation:</strong> <code>N_seq × L × 256</code></li>
+<li><strong>Pair representation:</strong> <code>L × L × 128</code></li>
+</ul>
+<p>Across 48 Evoformer blocks, information flows within and between these representations.</p>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart TB
+    MSA[MSA input] --&gt; MSArep[MSA representation]
+    MSA --&gt; Pair[Pair representation]
+    MSArep &lt;--&gt; Evo[Evoformer ×48]
+    Pair &lt;--&gt; Evo
+    Evo --&gt; Single[Single + pair features]
+</pre>
 </div>
-<div class="lesson-visual">
-<img src="../images/course-dashboard/hpc-setup-path.png" alt="HPC setup path showing login node downloads, scheduler submission, GPU execution, and verification commands.">
-<p class="lesson-visual-caption">
-Prepare and download on the login node, request resources through the scheduler, run on the appropriate compute node, and save the command, environment, log, and output that verify the result.
-</p>
+<p></p></figure><p></p>
+</div>
+</div>
 </div>
 </section>
-<section id="monday-contract" class="level2">
-<h2 class="anchored" data-anchor-id="monday-contract">Monday contract</h2>
+<section id="row-and-column-attention" class="level3">
+<h3 class="anchored" data-anchor-id="row-and-column-attention">Row and Column Attention</h3>
+<p><strong>Row attention</strong> asks which other positions in the same sequence are relevant to a residue. Pair features bias its attention weights, letting current structural hypotheses guide sequence processing.</p>
+<p><strong>Column attention</strong> compares the same position across aligned sequences. It aggregates conservation and variation across evolutionary samples.</p>
+<p>The useful intuition is:</p>
+<ul>
+<li>Row attention: “Which other residues in this sequence matter here?”</li>
+<li>Column attention: “What does evolution reveal about this position?”</li>
+</ul>
+</section>
+<section id="outer-product-mean" class="level3">
+<h3 class="anchored" data-anchor-id="outer-product-mean">Outer Product Mean</h3>
+<p>The <strong>outer product mean</strong> transfers information from the MSA representation to the pair representation. Conceptually:</p>
+<pre class="text"><code>for positions i and j:
+    pair_update[i,j] = mean over sequences s of (
+        msa[s,i] outer-product msa[s,j]
+    )</code></pre>
+<p>If amino-acid patterns at positions <em>i</em> and <em>j</em> consistently occur together across homologs, this operation exposes that relationship to the pair stack. It is a learned, differentiable way to inject correlation statistics into pairwise reasoning.</p>
+<div class="quiz-container" data-correct-index="2" data-correct-feedback="Correct! The outer product mean summarizes relationships between MSA positions and injects them into the pair representation." data-incorrect-feedback="Not quite. Look for the operation that explicitly connects the MSA representation to pair features.">
+  <div class="quiz-header"><i class="bi bi-question-circle-fill"></i> Check Your Understanding</div>
+  <div class="quiz-question">Which Evoformer operation transfers co-evolution signals from the MSA to the pair representation?</div>
+  <div class="quiz-options">
+    <div class="quiz-option">Row-wise attention</div>
+    <div class="quiz-option">Triangle multiplicative update</div>
+    <div class="quiz-option">Outer product mean</div>
+    <div class="quiz-option">Column-wise attention</div>
+  </div>
+  <button class="check-btn">Check Answer</button>
+  <div class="quiz-feedback"></div>
+</div>
+</section>
+<section id="triangle-updates" class="level3">
+<h3 class="anchored" data-anchor-id="triangle-updates">Triangle Updates</h3>
+<p>The pair representation is a fully connected graph: each edge stores information about a residue pair. Triangle updates pass messages through a third residue <em>k</em>, helping pairwise hypotheses become geometrically consistent.</p>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart LR
+    I((i)) --- J((j))
+    I --- K((k))
+    K --- J
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<p>For the edge <em>(i,j)</em>:</p>
+<ul>
+<li><strong>Triangle attention</strong> selects which intermediate residues <em>k</em> matter.</li>
+<li><strong>Triangle multiplicative updates</strong> combine information along paths <em>(i,k)</em> and <em>(k,j)</em>.</li>
+</ul>
+<p>Both incoming/outgoing multiplicative updates and starting/ending attention are used because they encode complementary directed relationships.</p>
+</section>
+<section id="evoformer-check" class="level3">
+<h3 class="anchored" data-anchor-id="evoformer-check">Evoformer Check</h3>
+<p>Draw two boxes labeled “MSA” and “Pair.” Add arrows for row attention, column attention, outer product mean, and triangle updates. The only cross-representation arrow in this simplified sketch should be outer product mean from MSA to Pair.</p>
+<p>After 48 blocks, the model has extracted evolutionary patterns, propagated sequence and pair information, and built a rich representation of likely 3D relationships.</p>
+</section>
+</section>
+<section id="from-representations-to-coordinates" class="level2">
+<h2 class="anchored" data-anchor-id="from-representations-to-coordinates">From Representations to Coordinates</h2>
+<section id="the-symmetry-requirement" class="level3">
+<h3 class="anchored" data-anchor-id="the-symmetry-requirement">The Symmetry Requirement</h3>
+<p>A protein prediction should not depend on an arbitrary coordinate frame. If the input coordinate frame rotates or translates, the predicted structure should transform in the same way while its internal geometry remains unchanged. This is the idea behind <strong>SE(3) equivariance</strong>.</p>
+<p>AlphaFold2 associates each residue with a local rigid frame:</p>
+<ul>
+<li>a translation locating the Cα atom;</li>
+<li>a rotation defining local orientation.</li>
+</ul>
+<p>The backbone is represented as a sequence of frames, one per residue. Relative frame geometry conveys both position and orientation.</p>
+</section>
+<section id="invariant-point-attention" class="level3">
+<h3 class="anchored" data-anchor-id="invariant-point-attention">Invariant Point Attention</h3>
+<p>Invariant point attention (IPA) combines learned residue features, pair features, and the current 3D estimate:</p>
+<ol type="1">
+<li>Each residue generates query and key points in its local frame.</li>
+<li>Current residue frames transform those points into the global frame.</li>
+<li>Distances between transformed points bias attention.</li>
+<li>Because distances do not change under a shared global rotation or translation, the operation respects the required symmetry.</li>
+</ol>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart TB
+    Single[Single representation] --&gt; Points[Query, key, and value points]
+    Frames[Current residue frames] --&gt; Transform[Transform to global frame]
+    Points --&gt; Transform
+    Transform --&gt; Dist[Pairwise point distances]
+    Pair[Pair representation] --&gt; Attn[Invariant point attention]
+    Dist --&gt; Attn
+    Attn --&gt; Updated[Updated residue features]
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<div class="quiz-container" data-correct-index="1" data-correct-feedback="Correct! Distances are unchanged by a shared rotation or translation, so they carry geometric information without tying the model to an arbitrary global frame." data-incorrect-feedback="Not quite. Focus on which geometric quantity remains unchanged under rotation and translation.">
+  <div class="quiz-header"><i class="bi bi-question-circle-fill"></i> Check Your Understanding</div>
+  <div class="quiz-question">Why does invariant point attention use distances between transformed points?</div>
+  <div class="quiz-options">
+    <div class="quiz-option">To make computation faster</div>
+    <div class="quiz-option">Distances are invariant to rotation and translation</div>
+    <div class="quiz-option">Points are easier to visualize than frames</div>
+    <div class="quiz-option">To reduce memory usage</div>
+  </div>
+  <button class="check-btn">Check Answer</button>
+  <div class="quiz-feedback"></div>
+</div>
+</section>
+<section id="frame-and-side-chain-updates" class="level3">
+<h3 class="anchored" data-anchor-id="frame-and-side-chain-updates">Frame and Side-Chain Updates</h3>
+<p>After each IPA layer, the model predicts a small rotation and translation and composes that update with the current frame. Predicting refinements is easier than predicting every coordinate independently.</p>
+<p>Side chains are determined through predicted torsion angles. The network predicts each angle as sine and cosine values, avoiding the discontinuity where 0° and 360° represent the same orientation. Frames, torsions, and ideal chemical geometry then determine atom positions.</p>
+</section>
+</section>
+<section id="recycling-iterative-refinement" class="level2">
+<h2 class="anchored" data-anchor-id="recycling-iterative-refinement">Recycling: Iterative Refinement</h2>
+<p>AlphaFold2 feeds features from a predicted structure back into another pass:</p>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart LR
+    E1[Evoformer] --&gt; S1[Structure module]
+    S1 --&gt;|pair, structure, query features| E2[Evoformer]
+    E2 --&gt; S2[Structure module]
+    S2 --&gt;|recycle again| E3[Evoformer]
+    E3 --&gt; S3[Final structure]
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<p>Recycling lets structural hypotheses inform another interpretation of the MSA. A typical inference uses three recycles, while difficult targets may benefit from more, at additional compute cost.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="A useful analogy, with limits">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>A useful analogy, with limits
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Recycling resembles iterative optimization because the structure is progressively refined. It is not molecular dynamics and should not be interpreted as a physical folding trajectory.</p>
+</div>
+</div>
+</section>
+<section id="inference-settings" class="level2">
+<h2 class="anchored" data-anchor-id="inference-settings">Inference Settings</h2>
+<section id="recycling-and-msa" class="level3">
+<h3 class="anchored" data-anchor-id="recycling-and-msa">Recycling and MSA</h3>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 33%">
@@ -541,307 +722,98 @@ Prepare and download on the login node, request resources through the scheduler,
 </colgroup>
 <thead>
 <tr class="header">
-<th></th>
-<th>Core path</th>
-<th>Full bootcamp</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><strong>Active effort</strong></td>
-<td><strong>4–8 hours</strong>, depending on existing setup</td>
-<td><strong>10–20 hours</strong> across several sessions</td>
-</tr>
-<tr class="even">
-<td><strong>Waiting time</strong></td>
-<td>Allow another <strong>2–12 hours</strong> for downloads, environment solves, weights, and scheduler queues</td>
-<td>Potentially <strong>days</strong> for all databases, builds, permissions, and test jobs</td>
-</tr>
-<tr class="odd">
-<td><strong>Compute</strong></td>
-<td>Laptop for pre-work; Linux GPU/HPC for local model smoke tests</td>
-<td>Linux GPU/HPC, container runtime, 50–100 GB tool storage, and tool-specific accounts/licenses</td>
-</tr>
-<tr class="even">
-<td><strong>Output</strong></td>
-<td>Readiness note, GPU verification log, smoke-test output for each chosen tool, and a tool-choice memo</td>
-<td>The core evidence plus tested environments for the broader tool set</td>
-</tr>
-<tr class="odd">
-<td><strong>Finished when</strong></td>
-<td>Another learner could identify your environment and rerun your smallest successful test</td>
-<td>Each attempted install is versioned and labeled passed, failed-with-evidence, or intentionally skipped</td>
-</tr>
-</tbody>
-</table>
-<p>Active effort does not include passive downloads or jobs. Stop and record a reproducible failure instead of repeatedly rebuilding an environment without new evidence.</p>
-</section>
-<section id="choose-a-monday-route" class="level2">
-<h2 class="anchored" data-anchor-id="choose-a-monday-route">Choose a Monday route</h2>
-<section id="core-path" class="level3">
-<h3 class="anchored" data-anchor-id="core-path">Core path</h3>
-<ol type="1">
-<li>Complete the readiness checks below, <a href="../monday/1-hpc-setup.html">Common HPC Setup</a>, and the preflight in <a href="../monday/reproducibility.html">Reproducible Setup &amp; Compute Fallbacks</a>.</li>
-<li>Set up PyMOL and VS Code; take the Python refresher only if its readiness questions expose a gap.</li>
-<li>Prepare <strong>one structure-prediction route</strong>: <a href="../monday/2-localcolabfold.html">LocalColabFold</a> for local AlphaFold2, or plan to use the hosted notebook in Tuesday.</li>
-<li>Prepare <a href="../monday/3-ligandmpnn.html">LigandMPNN</a> if you will sequence-design generated backbones.</li>
-<li>Prepare only the generator/pipeline your project will use. Wednesday teaches the original RFdiffusion workflow; <a href="../monday/11-bindcraft.html">BindCraft</a> is an end-to-end alternative. RFdiffusion2 is a distinct, newer atom-level scaffolding tool and is not a drop-in replacement for the original lesson.</li>
-<li>Add <a href="../monday/5-esmfold.html">ESMFold</a> only if you plan to run Tuesday’s comparison locally.</li>
-</ol>
-</section>
-<section id="full-bootcamp-path" class="level3">
-<h3 class="anchored" data-anchor-id="full-bootcamp-path">Full-bootcamp path</h3>
-<p>Complete the core path, then work through the remaining installation pages as a survey of the 2025 tool landscape. Keep separate environments. An unsuccessful installation with a complete diagnostic record is more useful than an unexplained “done” checkmark.</p>
-</section>
-<section id="reference-path" class="level3">
-<h3 class="anchored" data-anchor-id="reference-path">Reference path</h3>
-<p>Jump to the tool you need, but first read its <strong>Preparation</strong> and <strong>Resource Requirements</strong>. If it depends on CUDA, containers, SLURM, or shared storage that is unfamiliar, return to <a href="../monday/1-hpc-setup.html">Common HPC Setup</a>.</p>
-</section>
-</section>
-<section id="pre-work-and-readiness" class="level2">
-<h2 class="anchored" data-anchor-id="pre-work-and-readiness">Pre-work and readiness</h2>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Module</th>
-<th>Core status</th>
-<th style="text-align: right;">Active time</th>
-<th>Do</th>
-<th>Evidence</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><a href="../monday/prework-1-env-git.html">Environment &amp; GitHub</a></td>
-<td>Required unless already verified</td>
-<td style="text-align: right;">45–90 min</td>
-<td>Create the environment and run the verification script</td>
-<td>Environment export plus successful verification output</td>
-</tr>
-<tr class="even">
-<td><a href="../monday/prework-2-pymol-vscode.html">PyMOL &amp; VS Code</a></td>
-<td>Required</td>
-<td style="text-align: right;">45–90 min</td>
-<td>Open a PDB, make a selection, save a figure, and verify editing/terminal access</td>
-<td>PNG plus the commands used</td>
-</tr>
-<tr class="odd">
-<td><a href="../monday/prework-3-python.html">Python refresher</a></td>
-<td>Readiness-based</td>
-<td style="text-align: right;">60–120 min</td>
-<td>Complete the protein-sequence utilities</td>
-<td>Passing output plus one sentence naming the hardest concept</td>
-</tr>
-<tr class="even">
-<td><a href="../monday/1-hpc-setup.html">Common HPC Setup</a></td>
-<td>Required for local GPU work</td>
-<td style="text-align: right;">60–120 min</td>
-<td>Request a GPU and run the PyTorch check</td>
-<td>Job script, scheduler log, <code>nvidia-smi</code>, and CUDA-aware PyTorch output</td>
-</tr>
-<tr class="odd">
-<td><a href="../monday/reproducibility.html">Reproducible setup &amp; fallbacks</a></td>
-<td>Required for local model work</td>
-<td style="text-align: right;">20–40 min</td>
-<td>Run the course preflight and choose a compute/analysis fallback</td>
-<td>Saved preflight report plus version and fallback note</td>
-</tr>
-</tbody>
-</table>
-<p><strong>No HPC route:</strong> complete the laptop pre-work, use hosted services/notebooks where permitted, and record which local steps you are replacing. You can analyze supplied outputs when a GPU or account is unavailable.</p>
-</section>
-<section id="tool-installation-map" class="level2">
-<h2 class="anchored" data-anchor-id="tool-installation-map">Tool installation map</h2>
-<p>The time below is hands-on setup and inspection time; downloads, dependency solving, databases, and queued smoke tests are additional.</p>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Tool</th>
+<th>Setting</th>
 <th>Role</th>
-<th>Route</th>
-<th style="text-align: right;">Typical active time</th>
-<th>Key resource constraint</th>
-<th>Evidence of a usable setup</th>
+<th>Typical choice</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td><a href="../monday/2-localcolabfold.html">LocalColabFold</a></td>
-<td>MSA-based prediction</td>
-<td>Core if running AF2 locally</td>
-<td style="text-align: right;">45–90 min</td>
-<td>GPU; database/server access</td>
-<td>Ranked PDB, scores JSON, PAE image, and log</td>
+<td><code>num_recycles</code></td>
+<td>Refinement passes</td>
+<td>3 by default; more for difficult cases</td>
 </tr>
 <tr class="even">
-<td><a href="../monday/3-ligandmpnn.html">LigandMPNN</a></td>
-<td>Context-aware sequence design</td>
-<td>Core for backbone-to-sequence work</td>
-<td style="text-align: right;">45–75 min</td>
-<td>GPU recommended; model weights</td>
-<td>FASTA output, score file, and exact command</td>
+<td><code>msa_mode</code></td>
+<td>MSA generation route</td>
+<td>MMseqs2 for ColabFold; JackHMMER for a thorough local search</td>
 </tr>
 <tr class="odd">
-<td><a href="../monday/4-rfdiffusion2.html">RFdiffusion2</a></td>
-<td>Atom-level/ligand scaffolding</td>
-<td>Reference/full</td>
-<td style="text-align: right;">45–90 min</td>
-<td>16+ GB GPU; Apptainer; 10–20 GB</td>
-<td>Demo output directory and run log</td>
+<td><code>pair_mode</code></td>
+<td>Multimer sequence pairing</td>
+<td>Paired, unpaired, or both</td>
 </tr>
 <tr class="even">
-<td><a href="../monday/5-esmfold.html">ESMFold</a></td>
-<td>Fast single-sequence prediction</td>
-<td>Core if running Tuesday locally</td>
-<td style="text-align: right;">45–75 min</td>
-<td>GPU memory scales with length</td>
-<td><code>test_result.pdb</code>, confidence summary, and log</td>
-</tr>
-<tr class="odd">
-<td><a href="../monday/6-openfold.html">OpenFold</a></td>
-<td>AF2 reproduction/research</td>
-<td>Reference/full</td>
-<td style="text-align: right;">60–120 min</td>
-<td>Build compatibility; optional ~2 TB databases</td>
-<td>PDB plus pLDDT/pTM output</td>
-</tr>
-<tr class="even">
-<td><a href="../monday/7-chai1.html">Chai-1</a></td>
-<td>Complex/multimodal prediction</td>
-<td>Core only if using local Chai</td>
-<td style="text-align: right;">45–90 min</td>
-<td>16–24+ GB GPU; weights</td>
-<td>Ranked complex and confidence outputs</td>
-</tr>
-<tr class="odd">
-<td><a href="../monday/8-boltz2.html">Boltz-2</a></td>
-<td>Structure and affinity prediction</td>
-<td>Reference/full</td>
-<td style="text-align: right;">45–90 min</td>
-<td>GPU; model downloads</td>
-<td>Prediction directory plus confidence/affinity files</td>
-</tr>
-<tr class="even">
-<td><a href="../monday/9-diffdock-pp.html">DiffDock-PP</a></td>
-<td>Protein–protein docking</td>
-<td>Reference/full</td>
-<td style="text-align: right;">60–120 min</td>
-<td>Older dependency/CUDA compatibility</td>
-<td>Ranked docked PDBs and log</td>
-</tr>
-<tr class="odd">
-<td><a href="../monday/10-placer.html">PLACER</a></td>
-<td>Protein–ligand ensemble prediction</td>
-<td>Reference/full</td>
-<td style="text-align: right;">45–90 min</td>
-<td>GPU; weights</td>
-<td>Pose ensemble, scores, and run configuration</td>
-</tr>
-<tr class="even">
-<td><a href="../monday/11-bindcraft.html">BindCraft</a></td>
-<td>End-to-end binder pipeline</td>
-<td>Core alternative/full</td>
-<td style="text-align: right;">60–120 min</td>
-<td>24+ GB GPU; PyRosetta; long campaigns</td>
-<td>Successful example design folder and settings files</td>
-</tr>
-<tr class="odd">
-<td><a href="../monday/12-esm3.html">ESM3</a></td>
-<td>Multimodal protein generation</td>
-<td>Optional/reference</td>
-<td style="text-align: right;">45–90 min</td>
-<td>Hugging Face access; GPU</td>
-<td>Generated sequence/structure and sampling settings</td>
-</tr>
-<tr class="even">
-<td><a href="../monday/13-rfdiffusion-aa.html">RFdiffusion All Atom</a></td>
-<td>All-atom design predecessor</td>
-<td>Optional/reference</td>
-<td style="text-align: right;">45–90 min</td>
-<td>16+ GB GPU; container</td>
-<td>Test structure and run log</td>
+<td><code>use_templates</code></td>
+<td>Include structural templates</td>
+<td>Depends on the question and protocol</td>
 </tr>
 </tbody>
 </table>
+<p>Single-sequence mode can be useful for designed proteins with no homologs or as a controlled comparison, but it removes a major source of AlphaFold2’s predictive signal.</p>
 </section>
-<section id="pick-tools-by-question" class="level2">
-<h2 class="anchored" data-anchor-id="pick-tools-by-question">Pick tools by question</h2>
+<section id="model-selection-and-relaxation" class="level3">
+<h3 class="anchored" data-anchor-id="model-selection-and-relaxation">Model Selection and Relaxation</h3>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 33%">
-<col style="width: 33%">
-<col style="width: 33%">
+<col style="width: 50%">
+<col style="width: 50%">
 </colgroup>
 <thead>
 <tr class="header">
-<th>If your question is…</th>
-<th>Start with…</th>
-<th>Compare or add when…</th>
+<th>Setting</th>
+<th>Role</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>“What fold is compatible with this sequence?”</td>
-<td>LocalColabFold/AlphaFold2</td>
-<td>ESMFold for speed or an MSA-independent comparison</td>
+<td><code>model_type</code></td>
+<td>Select monomer, pTM-aware monomer, or multimer models</td>
 </tr>
 <tr class="even">
-<td>“How might this protein, ligand, ion, or nucleic acid complex assemble?”</td>
-<td>Chai-1 or another complex predictor</td>
-<td>Boltz-2 when affinity ranking is part of the question</td>
+<td><code>num_models</code></td>
+<td>Run one or more trained model parameter sets</td>
 </tr>
 <tr class="odd">
-<td>“What sequence fits this backbone and interface context?”</td>
-<td>LigandMPNN</td>
-<td>Use several temperatures/seeds and validate structures afterward</td>
+<td><code>rank_by</code></td>
+<td>Rank using pLDDT, pTM, or multimer confidence</td>
 </tr>
 <tr class="even">
-<td>“Can I generate a backbone around an interface or motif?”</td>
-<td>Original RFdiffusion workflow in Wednesday</td>
-<td>RFdiffusion2/RFdiffusion-AA for atom-level or ligand-centered constraints</td>
-</tr>
-<tr class="odd">
-<td>“Can I automate binder generation and filtering?”</td>
-<td>BindCraft</td>
-<td>Use a component workflow when you need more control over each stage</td>
-</tr>
-<tr class="even">
-<td>“How might two proteins or a protein and ligand dock?”</td>
-<td>DiffDock-PP or PLACER</td>
-<td>Use Thursday’s docking framework to decide what sampling/scoring evidence is still missing</td>
+<td>Amber relaxation</td>
+<td>Improve clashes and local geometry after prediction</td>
 </tr>
 </tbody>
 </table>
+<p>Running all five trained model parameter sets provides a practical agreement check. Consistent predictions increase confidence; disagreement identifies uncertainty that a single ranked model would hide.</p>
 </section>
-<section id="monday-evidence-checkpoints" class="level2">
-<h2 class="anchored" data-anchor-id="monday-evidence-checkpoints">Monday evidence checkpoints</h2>
-<p>Check an item only after the named file or record exists in your evidence portfolio.</p>
+</section>
+<section id="extensions-and-related-workflows" class="level2">
+<h2 class="anchored" data-anchor-id="extensions-and-related-workflows">Extensions and Related Workflows</h2>
 <ul>
-<li><label class="module-task" for="module-checkbox-monday-readiness-evidence"><input type="checkbox" class="module-checkbox" id="module-checkbox-monday-readiness-evidence" data-module-id="monday-readiness-evidence"><span>Readiness note names my route, compute, storage, accounts, and fallback</span></label></li>
-<li><label class="module-task" for="module-checkbox-monday-hpc-evidence"><input type="checkbox" class="module-checkbox" id="module-checkbox-monday-hpc-evidence" data-module-id="monday-hpc-evidence"><span>GPU/HPC verification record includes the job script, environment, hardware output, and successful or diagnosed smoke test</span></label></li>
-<li><label class="module-task" for="module-checkbox-monday-predictor-evidence"><input type="checkbox" class="module-checkbox" id="module-checkbox-monday-predictor-evidence" data-module-id="monday-predictor-evidence"><span>At least one chosen predictor has a reproducible smoke-test log and expected structure/confidence output</span></label></li>
-<li><label class="module-task" for="module-checkbox-monday-design-evidence"><input type="checkbox" class="module-checkbox" id="module-checkbox-monday-design-evidence" data-module-id="monday-design-evidence"><span>My chosen design or sequence tool has a reproducible smoke-test artifact, or a documented no-compute analysis substitute</span></label></li>
-<li><label class="module-task" for="module-checkbox-monday-tool-choice-evidence"><input type="checkbox" class="module-checkbox" id="module-checkbox-monday-tool-choice-evidence" data-module-id="monday-tool-choice-evidence"><span>Tool-choice memo states what I will use, what I will not use, and why</span></label></li>
+<li><strong>AlphaFold-Multimer</strong> adds cross-chain reasoning and interface-aware training for complexes. Confidence requires ipTM and interface PAE, not appearance alone.</li>
+<li><strong>AlphaFold Database</strong> provides predictions for more than 200 million UniProt sequences; check it before spending compute on a known sequence.</li>
+<li><strong>AF-Cluster</strong> runs the model on MSA subclusters to explore alternative conformational states.</li>
+<li><strong>AFsample</strong> enables inference-time dropout and extensive sampling to seek structural diversity.</li>
+<li>Workflows such as <strong>EvoPro</strong> and <strong>BindCraft</strong> use AlphaFold2 predictions as scoring and filtering steps inside iterative design pipelines.</li>
 </ul>
+<p>For proteins with rich MSAs and stable folds, AlphaFold2 remains a strong default. It is less decisive for designed sequences, dynamic systems, context-dependent assemblies, and cases where speed is more important than maximum accuracy.</p>
 </section>
-<section id="if-you-are-stuck" class="level2">
-<h2 class="anchored" data-anchor-id="if-you-are-stuck">If you are stuck</h2>
+<section id="final-check-and-artifact" class="level2">
+<h2 class="anchored" data-anchor-id="final-check-and-artifact">Final Check and Artifact</h2>
+<p>Annotate your architecture sketch with one sentence for each item:</p>
 <ol type="1">
-<li>Confirm that downloads run where internet access is allowed and GPU tests run on a GPU node.</li>
-<li>Save the exact error and active environment before changing anything.</li>
-<li>Compare Python, PyTorch, CUDA, container, GPU, and model versions with <a href="../monday/reproducibility.html">Reproducible Setup &amp; Compute Fallbacks</a>.</li>
-<li>Run the smallest test with one short input and a new output directory.</li>
-<li>If access remains blocked, complete the lesson with known-good outputs and return to the installation separately.</li>
-<li>Search the tool repository, then <a href="https://github.com/RosettaMLBootCamp2025/RosettaMLBootCamp2025.github.io/issues/new">report a course issue</a> with the evidence above.</li>
+<li>MSA representation</li>
+<li>Pair representation</li>
+<li>Outer product mean</li>
+<li>Triangle updates</li>
+<li>Invariant point attention</li>
+<li>Recycling</li>
 </ol>
-</section>
-<section id="next-step" class="level2">
-<h2 class="anchored" data-anchor-id="next-step">Next step</h2>
-<p>Proceed when the core evidence exists—not when every optional tool is installed. Tuesday begins with structure inspection and then uses AlphaFold2/ESMFold outputs to practice confidence-aware interpretation.</p>
-<div class="d-flex justify-content-between">
-<p><a href="../start-here.html">← Start Here</a></p>
-<p><a href="../tuesday/index.html">Tuesday: Structure Prediction →</a></p>
-</div>
+<p>Then explain this chain aloud or in writing:</p>
+<blockquote class="blockquote">
+<p>Evolutionary variation supplies pairwise clues; the Evoformer turns them into geometric relationships; the structure module turns those relationships into equivariant coordinate updates; recycling refines the result.</p>
+</blockquote>
+<p>If you can defend each link in that chain, the deep dive is complete. Return to the <a href="../tuesday/3-alphafold2.html">core lesson</a> to finish or review the GFP evidence artifact.</p>
 
 
 </section>
