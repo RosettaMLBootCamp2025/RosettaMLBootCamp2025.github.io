@@ -83,8 +83,9 @@
       button.removeAttribute('role');
     });
 
-    document.querySelectorAll('main table, main pre, main div.sourceCode, main .mermaid').forEach(region => {
-      if (region.scrollWidth > region.clientWidth + 1 && !region.hasAttribute('tabindex')) {
+    document.querySelectorAll('main table, main pre:not(.sourceCode), main div.sourceCode, main .mermaid').forEach(region => {
+      const isCodeBlock = region.matches('div.sourceCode');
+      if ((isCodeBlock || region.scrollWidth > region.clientWidth + 1) && !region.hasAttribute('tabindex')) {
         region.tabIndex = 0;
       }
     });
