@@ -37,7 +37,15 @@ const urls = pageUrls.flatMap(url => [
   }
 ]);
 
+const chromeLaunchConfig = process.env.CI
+  ? {args: ['--no-sandbox', '--disable-setuid-sandbox']}
+  : {};
+
 module.exports = {
   ...baseConfig,
+  defaults: {
+    ...baseConfig.defaults,
+    chromeLaunchConfig
+  },
   urls
 };
