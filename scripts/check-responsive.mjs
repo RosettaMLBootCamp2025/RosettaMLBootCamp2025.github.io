@@ -2,6 +2,12 @@ import fs from 'node:fs';
 import path from 'node:path';
 import process from 'node:process';
 import puppeteer from 'puppeteer';
+import pa11y from 'pa11y';
+import {createRequire} from 'node:module';
+import {localOnly, readProgress} from './browser-test-helpers.mjs';
+
+const accessibility = process.argv.includes('--accessibility');
+const a11yConfig = createRequire(import.meta.url)('../.pa11yci.json').defaults;
 
 const siteRoot = path.resolve('_site');
 const baseUrl = (process.env.A11Y_BASE_URL || 'http://127.0.0.1:8000').replace(/\/$/, '');
@@ -30,36 +36,62 @@ const browser = await puppeteer.launch({
   args: process.env.CI ? ['--no-sandbox', '--disable-setuid-sandbox'] : []
 });
 const failures = [];
+let completedVisits = 0;
 
 try {
-  const page = await browser.newPage();
-  page.setDefaultNavigationTimeout(30_000);
-
-  for (const viewport of [
+  const visits = [
     {name: 'mobile', width: 375, height: 812},
     {name: 'desktop', width: 1280, height: 900}
-  ]) {
-    await page.setViewport({width: viewport.width, height: viewport.height, deviceScaleFactor: 1});
-
-    for (const url of urls) {
-      await page.goto(url, {waitUntil: 'domcontentloaded'});
-      const overflow = await page.evaluate(() => ({
-        clientWidth: document.documentElement.clientWidth,
-        scrollWidth: document.documentElement.scrollWidth,
-        unnamedFrames: document.querySelectorAll('iframe:not([title]), iframe[title=""]').length
-      }));
-
-      if (overflow.scrollWidth > overflow.clientWidth + 2) {
-        failures.push(
-          `${viewport.name}: ${url} is ${overflow.scrollWidth - overflow.clientWidth}px wider than its viewport`
-        );
-      }
-      if (overflow.unnamedFrames) {
-        failures.push(`${viewport.name}: ${url} has ${overflow.unnamedFrames} unnamed iframe(s)`);
-      }
+  ].flatMap(viewport => urls.map(url => ({viewport, url})));
+  async function worker() {
+    while (visits.length) {
+      const {viewport, url} = visits.shift();
+      const page = await browser.newPage();
+      try {
+        await localOnly(page, baseUrl);
+        await page.setViewport({width: viewport.width, height: viewport.height, deviceScaleFactor: 1});
+        await page.goto(url, {waitUntil: 'load', timeout: 30_000});
+        await page.waitForFunction(() => {
+          const lesson = window.BOOTCAMP_COURSE?.lessons.some(item => location.pathname.endsWith('/' + item.path));
+          const count = document.querySelector('#checkpoint-total');
+          return (!lesson || document.querySelector('.mastery-checkbox')) &&
+            (!count || Number(count.textContent) > 0) &&
+            !document.querySelector('pre.mermaid-js, svg.mermaid-js:not([aria-labelledby])');
+        }, {timeout: 30_000, polling: 25});
+        const overflow = await page.evaluate(() => ({
+          clientWidth: document.documentElement.clientWidth,
+          scrollWidth: document.documentElement.scrollWidth,
+          unnamedFrames: document.querySelectorAll('iframe:not([title]), iframe[title=""]').length
+        }));
+        if (overflow.scrollWidth > overflow.clientWidth + 2) {
+          failures.push(`${viewport.name}: ${url} is ${overflow.scrollWidth - overflow.clientWidth}px wider than its viewport`);
+        }
+        if (overflow.unnamedFrames) failures.push(`${viewport.name}: ${url} has ${overflow.unnamedFrames} unnamed iframe(s)`);
+        if (accessibility) {
+          const result = await pa11y(url, {
+            ...a11yConfig,
+            browser, page, ignoreUrl: true,
+            // The rendered-content readiness check replaces the fixed delay.
+            wait: 0,
+            viewport: {width: viewport.width, height: viewport.height, deviceScaleFactor: 1}
+          });
+          result.issues.filter(issue => issue.type === 'error').forEach(issue => {
+            failures.push(`${viewport.name}: ${url}: ${issue.code}: ${issue.message} (${issue.selector})`);
+          });
+        }
+      } catch (error) {
+        failures.push(`${viewport.name}: ${url}: ${error.message}`);
+      } finally { await page.close(); }
+      completedVisits++;
+      if (completedVisits % 10 === 0) console.log(`Checked ${completedVisits}/${urls.length * 2} page/viewport combinations.`);
     }
   }
+  // Bound browser fan-out and reuse each navigation for both kinds of check.
+  await Promise.all([worker(), worker()]);
 
+  const page = await browser.newPage();
+  await localOnly(page, baseUrl);
+  page.setDefaultNavigationTimeout(30_000);
   await page.setViewport({width: 375, height: 812, deviceScaleFactor: 1});
   await page.goto(`${baseUrl}/tuesday/3-alphafold2.html`, {waitUntil: 'domcontentloaded'});
   await page.waitForSelector('[data-quiz-ready="true"] .quiz-radio');
@@ -122,12 +154,14 @@ try {
   if (!journeySetup.contractHasEvidence) failures.push('journey: manifest lesson contract is missing its evidence artifact');
 
   await page.click('.mastery-checkbox');
+  await readProgress(page);
   await page.reload({waitUntil: 'domcontentloaded'});
   await page.waitForSelector('.mastery-checkbox');
   const masteryPersisted = await page.$eval('.mastery-checkbox', checkbox => checkbox.checked);
   if (!masteryPersisted) failures.push('progress: lesson evidence completion did not persist after reload');
 
   await page.goto(`${baseUrl}/index.html`, {waitUntil: 'domcontentloaded'});
+  await page.waitForFunction(() => Number(document.querySelector('#checkpoint-total')?.textContent) > 0);
   const progressTotals = await page.evaluate(() => {
     const course = window.BOOTCAMP_COURSE || {};
     const lessons = Array.isArray(course.lessons) ? course.lessons : [];
@@ -154,6 +188,7 @@ try {
 
   const molstarRequests = [];
   const performancePage = await browser.newPage();
+  await localOnly(performancePage, baseUrl);
   performancePage.on('request', request => {
     if (request.url().includes('pdbe-molstar')) molstarRequests.push(request.url());
   });
@@ -163,14 +198,9 @@ try {
 
   const targetPage = await browser.newPage();
   const targetMolstarRequests = [];
-  await targetPage.setRequestInterception(true);
+  await localOnly(targetPage, baseUrl);
   targetPage.on('request', request => {
-    if (request.url().includes('pdbe-molstar')) {
-      targetMolstarRequests.push(request.url());
-      request.abort();
-    } else {
-      request.continue();
-    }
+    if (request.url().includes('pdbe-molstar')) targetMolstarRequests.push(request.url());
   });
   await targetPage.goto(`${baseUrl}/capstone/targets/pd-l1.html`, {waitUntil: 'domcontentloaded'});
   const hasStaticAlternative = await targetPage.$('.molstar-alternative a[href*="rcsb.org/structure/"]');
@@ -186,5 +216,5 @@ if (failures.length) {
   failures.forEach(failure => console.error(`- ${failure}`));
   process.exitCode = 1;
 } else {
-  console.log(`Responsive/accessibility checks passed for ${urls.length} HTML pages at mobile and desktop widths.`);
+  console.log(`${accessibility ? "Accessibility and responsive" : "Responsive"} checks passed for ${urls.length} HTML pages in ${completedVisits} shared visits; external network requests blocked.`);
 }
