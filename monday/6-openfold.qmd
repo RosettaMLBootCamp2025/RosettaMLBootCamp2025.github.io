@@ -95,24 +95,27 @@ bash scripts/download_alphafold_dbs.sh /path/to/database/directory
 
 [Mark as complete]{.task module-id="openfold-test"}
 
-Create a test FASTA file `test.fasta`:
+Create `input_fastas/test_protein.fasta` (create the directory first with `mkdir -p input_fastas`). Keep one sequence per file and use unique FASTA headers:
 ```
 >test_protein
 MKTVRQERLKSIVRILERSKEPVSGAQLAEELSVSRQVIVQDIAYLRSLGYNIVATPRGYVLAGG
 ```
 
-Run a prediction (using pre-computed MSAs or without MSAs for testing):
+The pinned CLI takes a **directory of FASTA files**, then a **directory of template mmCIF files**. The second argument is not the sequence database root. For a short test, obtain precomputed alignments for this exact sequence from your instructor or generate them using the local-database example below. Alignment subdirectories must match FASTA header identifiers (for this example, `test_protein`).
+
+Run a prediction using those precomputed MSAs:
 
 ```bash
 python run_pretrained_openfold.py \
-    test.fasta \
-    /path/to/database/directory \
+    input_fastas/ \
+    /path/to/pdb_mmcif/mmcif_files \
+    --use_precomputed_alignments /path/to/precomputed_alignments \
     --output_dir predictions/ \
     --config_preset model_1_ptm \
     --model_device cuda:0
 ```
 
-**Note**: For testing without databases, you can use `--use_precomputed_alignments` with a directory containing pre-computed MSA files.
+**Note**: Precomputed alignments avoid sequence database searches; template mmCIF files are still required. An arbitrary empty alignment directory is not an equivalent test.
 
 **Success indicators**:
 
@@ -141,12 +144,15 @@ mamba activate openfold_venv
 
 cd /path/to/openfold
 
-# Using HPC shared databases
-DATABASE_DIR=/shared/databases/alphafold
+# Reuse alignments prepared on a CPU node before allocating the GPU.
+FASTA_DIR=/path/to/input_fastas
+TEMPLATE_MMCIF_DIR=/shared/databases/alphafold/pdb_mmcif/mmcif_files
+ALIGNMENT_DIR=/path/to/precomputed_alignments
 
 python run_pretrained_openfold.py \
-    my_protein.fasta \
-    $DATABASE_DIR \
+    "$FASTA_DIR" \
+    "$TEMPLATE_MMCIF_DIR" \
+    --use_precomputed_alignments "$ALIGNMENT_DIR" \
     --output_dir predictions/ \
     --config_preset model_1_ptm \
     --model_device cuda:0
@@ -155,33 +161,62 @@ python run_pretrained_openfold.py \
 ## Usage Examples
 
 **Basic prediction with local databases**:
+
+Set these paths to the database release installed by your administrator. The filenames below are examples; all database prefixes and sequence files must exist. Keep the FASTA sequences, database release, and template settings with the run record so cached alignments are reused only for compatible inputs.
+
 ```bash
+FASTA_DIR=/path/to/input_fastas
+TEMPLATE_MMCIF_DIR=/shared/databases/alphafold/pdb_mmcif/mmcif_files
+DATABASE_DIR=/shared/databases/alphafold
+DATABASE_ARGS=(
+    --uniref90_database_path "$DATABASE_DIR/uniref90/uniref90.fasta"
+    --mgnify_database_path "$DATABASE_DIR/mgnify/mgy_clusters_2022_05.fa"
+    --bfd_database_path "$DATABASE_DIR/bfd/bfd_metaclust_clu_complete_id30_c90_final_seq.sorted_opt"
+    --uniref30_database_path "$DATABASE_DIR/uniref30/UniRef30_2021_03"
+    --pdb70_database_path "$DATABASE_DIR/pdb70/pdb70"
+)
+
 python run_pretrained_openfold.py \
-    input.fasta \
-    /path/to/databases \
-    --output_dir output/ \
-    --config_preset model_1_ptm
+    "$FASTA_DIR" "$TEMPLATE_MMCIF_DIR" \
+    "${DATABASE_ARGS[@]}" \
+    --cpus 8 \
+    --output_dir output_model_1_ptm/ \
+    --config_preset model_1_ptm \
+    --model_device cuda:0
 ```
 
-**Using pre-computed MSAs**:
+This first prediction creates `output_model_1_ptm/alignments/`, with one subdirectory per FASTA header. Complete and verify it before starting other presets; do not let concurrent jobs write the same alignment cache.
+
+**Using precomputed MSAs** (no sequence database searches):
+
 ```bash
 python run_pretrained_openfold.py \
-    input.fasta \
-    /path/to/databases \
-    --use_precomputed_alignments /path/to/msas/ \
-    --output_dir output/
+    "$FASTA_DIR" "$TEMPLATE_MMCIF_DIR" \
+    --use_precomputed_alignments /path/to/precomputed_alignments \
+    --output_dir output/ \
+    --config_preset model_1_ptm \
+    --model_device cuda:0
 ```
 
 **Multiple model presets** (ensemble):
+
+After the first `model_1_ptm` prediction above succeeds, run the remaining two presets against its completed alignments. The cache is shared, but each preset has its own prediction directory. This performs the expensive alignment searches once across the three-model ensemble.
+
 ```bash
-for preset in model_1_ptm model_2_ptm model_3_ptm; do
+set -euo pipefail
+ALIGNMENT_DIR="$PWD/output_model_1_ptm/alignments"
+test -d "$ALIGNMENT_DIR"
+for preset in model_2_ptm model_3_ptm; do
     python run_pretrained_openfold.py \
-        input.fasta \
-        /path/to/databases \
-        --config_preset $preset \
-        --output_dir output_${preset}/
+        "$FASTA_DIR" "$TEMPLATE_MMCIF_DIR" \
+        --use_precomputed_alignments "$ALIGNMENT_DIR" \
+        --config_preset "$preset" \
+        --output_dir "output_${preset}/" \
+        --model_device cuda:0
 done
 ```
+
+Regenerate alignments in a new directory when sequences, identifiers, database releases, or alignment/template settings change. An existing directory alone does not prove the previous job completed successfully.
 
 ## Model Presets
 
