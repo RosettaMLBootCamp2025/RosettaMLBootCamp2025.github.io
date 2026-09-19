@@ -2,7 +2,7 @@
 
 Render with `quarto render`, then serve `_site` with `python3 -m http.server 8000 --directory _site`. Set `A11Y_BASE_URL` if using another local port.
 
-- `npm run test:accessibility` checks every rendered page at mobile and desktop widths. Two browser workers share each navigation between layout and Pa11y/axe checks; optional external requests are blocked. It also runs progress, concurrency, and accessibility-update regressions.
+- `npm run test:accessibility` checks every rendered page at mobile and desktop widths. Two browser workers share each navigation between layout and Pa11y/axe checks. Each worker has an isolated browser context; the homepage is seeded with a returning learner, reduced motion is enabled, and fonts and finite animations settle before measurement; optional external requests are blocked. It also runs progress, concurrency, and accessibility-update regressions.
 - `npm run test:responsive` runs the same layout/interaction checks without axe.
 - `npm run test:performance` runs the targeted Python and browser regressions.
 - `npm run test:integrations` separately checks the real Mol* bundle and structure download plus one YouTube embed document. It requires network access and reports startup time and a JS heap snapshot; it is not part of the deterministic pull-request gate. Software WebGL allows it to run without a physical GPU. A successful embed-document request does not establish playable video.

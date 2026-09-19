@@ -45,47 +45,62 @@ try {
   ].flatMap(viewport => urls.map(url => ({viewport, url})));
   let nextVisit = 0;
   async function worker() {
-    while (nextVisit < visits.length) {
-      const {viewport, url} = visits[nextVisit++];
-      const page = await browser.newPage();
-      try {
-        await localOnly(page, baseUrl);
-        await page.setViewport({width: viewport.width, height: viewport.height, deviceScaleFactor: 1});
-        await page.goto(url, {waitUntil: 'load', timeout: 30_000});
-        await page.waitForFunction(() => {
-          const lesson = window.BOOTCAMP_COURSE?.lessons.some(item => location.pathname.endsWith('/' + item.path));
-          const count = document.querySelector('#checkpoint-total');
-          return (!lesson || document.querySelector('.mastery-checkbox')) &&
-            (!count || Number(count.textContent) > 0) &&
-            !document.querySelector('pre.mermaid-js, svg.mermaid-js:not([aria-labelledby])');
-        }, {timeout: 30_000, polling: 25});
-        const overflow = await page.evaluate(() => ({
-          clientWidth: document.documentElement.clientWidth,
-          scrollWidth: document.documentElement.scrollWidth,
-          unnamedFrames: document.querySelectorAll('iframe:not([title]), iframe[title=""]').length
-        }));
-        if (overflow.scrollWidth > overflow.clientWidth + 2) {
-          failures.push(`${viewport.name}: ${url} is ${overflow.scrollWidth - overflow.clientWidth}px wider than its viewport`);
-        }
-        if (overflow.unnamedFrames) failures.push(`${viewport.name}: ${url} has ${overflow.unnamedFrames} unnamed iframe(s)`);
-        if (accessibility) {
-          const result = await pa11y(url, {
-            ...a11yConfig,
-            browser, page, ignoreUrl: true,
-            // The rendered-content readiness check replaces the fixed delay.
-            wait: 0,
-            viewport: {width: viewport.width, height: viewport.height, deviceScaleFactor: 1}
-          });
-          result.issues.filter(issue => issue.type === 'error').forEach(issue => {
-            failures.push(`${viewport.name}: ${url}: ${issue.code}: ${issue.message} (${issue.selector})`);
-          });
-        }
-      } catch (error) {
-        failures.push(`${viewport.name}: ${url}: ${error.message}`);
-      } finally { await page.close(); }
-      completedVisits++;
-      if (completedVisits % 10 === 0) console.log(`Checked ${completedVisits}/${urls.length * 2} page/viewport combinations.`);
-    }
+    const context = await browser.createBrowserContext();
+    try {
+      while (nextVisit < visits.length) {
+        const {viewport, url} = visits[nextVisit++];
+        const page = await context.newPage();
+        try {
+          await localOnly(page, baseUrl);
+          await page.emulateMediaFeatures([{name: 'prefers-reduced-motion', value: 'reduce'}]);
+          await page.setViewport({width: viewport.width, height: viewport.height, deviceScaleFactor: 1});
+          // Exercise the returning-learner banner deterministically, without one
+          // worker's navigation changing another worker's storage during an audit.
+          if (new URL(url).pathname === '/index.html') {
+            await page.evaluateOnNewDocument(() => localStorage.setItem('bootcamp2025_lastpage', JSON.stringify({
+              path: '/monday/1-hpc-setup.html', title: 'Common HPC Setup', day: 'monday'
+            })));
+          }
+          await page.goto(url, {waitUntil: 'load', timeout: 30_000});
+          await page.waitForFunction(() => {
+            const lesson = window.BOOTCAMP_COURSE?.lessons.some(item => location.pathname.endsWith('/' + item.path));
+            const count = document.querySelector('#checkpoint-total');
+            return (!lesson || document.querySelector('.mastery-checkbox')) &&
+              (!count || Number(count.textContent) > 0) &&
+              !document.querySelector('pre.mermaid-js, svg.mermaid-js:not([aria-labelledby])');
+          }, {timeout: 30_000, polling: 25});
+          await page.evaluate(() => document.fonts.ready);
+          await page.evaluate(() => Promise.all(document.getAnimations()
+            .filter(animation => animation.effect?.getTiming().iterations !== Infinity)
+            .map(animation => animation.finished.catch(() => {}))));
+          const overflow = await page.evaluate(() => ({
+            clientWidth: document.documentElement.clientWidth,
+            scrollWidth: document.documentElement.scrollWidth,
+            unnamedFrames: document.querySelectorAll('iframe:not([title]), iframe[title=""]').length
+          }));
+          if (overflow.scrollWidth > overflow.clientWidth + 2) {
+            failures.push(`${viewport.name}: ${url} is ${overflow.scrollWidth - overflow.clientWidth}px wider than its viewport`);
+          }
+          if (overflow.unnamedFrames) failures.push(`${viewport.name}: ${url} has ${overflow.unnamedFrames} unnamed iframe(s)`);
+          if (accessibility) {
+            const result = await pa11y(url, {
+              ...a11yConfig,
+              browser, page, ignoreUrl: true,
+              // The rendered-content readiness check replaces the fixed delay.
+              wait: 0,
+              viewport: {width: viewport.width, height: viewport.height, deviceScaleFactor: 1}
+            });
+            result.issues.filter(issue => issue.type === 'error').forEach(issue => {
+              failures.push(`${viewport.name}: ${url}: ${issue.code}: ${issue.message} (${issue.selector})`);
+            });
+          }
+        } catch (error) {
+          failures.push(`${viewport.name}: ${url}: ${error.message}`);
+        } finally { await page.close(); }
+        completedVisits++;
+        if (completedVisits % 10 === 0) console.log(`Checked ${completedVisits}/${urls.length * 2} page/viewport combinations.`);
+      }
+    } finally { await context.close(); }
   }
   // Bound browser fan-out and reuse each navigation for both kinds of check.
   await Promise.all([worker(), worker()]);

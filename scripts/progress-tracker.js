@@ -340,11 +340,13 @@
   function showResumeBanner() {
     const isHome = normalisePath(window.location.pathname) === '/index.html';
     if (!isHome) return;
-    const existingBanner = document.getElementById('resume-banner');
-    if (existingBanner) { existingBanner.hidden = true; existingBanner.style.display = 'none'; }
     try {
       const saved = JSON.parse(localStorage.getItem(LAST_PAGE_KEY) || 'null');
-      if (!saved || !saved.path) return;
+      if (!saved || !saved.path) {
+        const banner = document.getElementById('resume-banner');
+        if (banner) { banner.hidden = true; banner.style.display = 'none'; }
+        return;
+      }
       const banner = document.getElementById('resume-banner');
       const link = document.getElementById('resume-link');
       const title = document.getElementById('last-page-title');
