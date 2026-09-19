@@ -210,7 +210,8 @@ ul.task-list li input[type="checkbox"] {
     </div>
     <div>
       <label for="import-progress" class="form-label">Import a progress file</label>
-      <input id="import-progress" class="form-control form-control-sm" type="file" accept="application/json,.json">
+      <input id="import-progress" class="form-control form-control-sm" type="file" accept="application/json,.json" aria-describedby="import-progress-help">
+      <p id="import-progress-help" class="small">Imports replace saved progress when the file finishes loading. Later checkbox changes are kept. Updates also appear in your other open course tabs.</p>
     </div>
   </div>
 </section>

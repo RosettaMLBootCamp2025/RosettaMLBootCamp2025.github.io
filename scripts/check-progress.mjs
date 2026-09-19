@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
 import puppeteer from 'puppeteer';
+import {readProgress} from './browser-test-helpers.mjs';
 
 const baseUrl = process.env.A11Y_BASE_URL || 'http://127.0.0.1:8000';
 const browser = await puppeteer.launch({headless: true, args: process.env.CI ? ['--no-sandbox', '--disable-setuid-sandbox'] : []});
@@ -22,10 +23,10 @@ try {
   }
   const original = {completed: ['hpc-setup'], tasks: ['legacy-task']};
   assert.match(await importState(original), /successfully/);
-  const stored = await page.evaluate(() => localStorage.getItem('bootcamp_progress_v2'));
+  const stored = await readProgress(page);
   assert.match(await importState({completed: [], tasks: ['x'.repeat(129)]}), /not a valid/);
   assert.match(await importState({completed: [], tasks: Array(1001).fill('task')}), /not a valid/);
-  assert.equal(await page.evaluate(() => localStorage.getItem('bootcamp_progress_v2')), stored);
+  assert.deepEqual(await readProgress(page), stored);
   // Oversized inputs must not even allocate a FileReader.
   const oversized = await page.evaluate(() => {
     const Reader = window.FileReader;
@@ -37,10 +38,10 @@ try {
   });
   assert.match(oversized, /256 KiB/);
   await page.evaluate(() => {
-    Storage.prototype.setItem = function() { throw new DOMException('Full', 'QuotaExceededError'); };
+    IDBObjectStore.prototype.put = function() { throw new DOMException('Full', 'QuotaExceededError'); };
   });
   assert.match(await importState({completed: [], tasks: []}), /could not be saved/);
-  assert.equal(await page.evaluate(() => localStorage.getItem('bootcamp_progress_v2')), stored);
+  assert.deepEqual(await readProgress(page), stored);
   const readError = await page.evaluate(() => {
     const Reader = window.FileReader;
     window.FileReader = class extends EventTarget {
