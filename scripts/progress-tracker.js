@@ -5,6 +5,9 @@
   const LEGACY_STORAGE_KEY = 'bootcamp2025_progress';
   const LAST_PAGE_KEY = 'bootcamp2025_lastpage';
   const SCHEMA_VERSION = 2;
+  const MAX_PROGRESS_BYTES = 256 * 1024;
+  const MAX_PROGRESS_IDS = 1000;
+  const MAX_ID_LENGTH = 128;
 
   function normalisePath(path) {
     if (!path) return '/';
@@ -58,31 +61,39 @@
   function sanitiseState(value) {
     const validIds = new Set(courseCheckpoints().map(checkpointId));
     const completed = Array.isArray(value && value.completed)
-      ? value.completed.filter(id => typeof id === 'string' && (validIds.size === 0 || validIds.has(id)))
+      ? value.completed.slice(0, MAX_PROGRESS_IDS).filter(id => validProgressId(id) && validIds.has(id))
       : [];
     const tasks = Array.isArray(value && value.tasks)
-      ? value.tasks.filter(id => typeof id === 'string')
+      ? value.tasks.slice(0, MAX_PROGRESS_IDS).filter(validProgressId)
       : [];
     return {
       version: SCHEMA_VERSION,
       completed: Array.from(new Set(completed)),
       tasks: Array.from(new Set(tasks)),
-      updatedAt: value && value.updatedAt ? value.updatedAt : null
+      updatedAt: typeof value?.updatedAt === 'string' && value.updatedAt.length <= 32 ? value.updatedAt : null
     };
+  }
+
+  function validProgressId(id) {
+    return typeof id === 'string' && id.length > 0 && id.length <= MAX_ID_LENGTH;
   }
 
   function loadState() {
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
-      if (saved) return sanitiseState(JSON.parse(saved));
+      if (saved) {
+        if (saved.length > MAX_PROGRESS_BYTES) throw new Error('Saved progress is too large.');
+        return sanitiseState(JSON.parse(saved));
+      }
 
       const legacy = localStorage.getItem(LEGACY_STORAGE_KEY);
       if (legacy) {
+        if (legacy.length > MAX_PROGRESS_BYTES) throw new Error('Legacy progress is too large.');
         const legacyState = JSON.parse(legacy);
         const migrated = emptyState();
         migrated.tasks = Array.isArray(legacyState.completed) ? legacyState.completed : [];
         saveState(migrated);
-        return migrated;
+        return sanitiseState(migrated);
       }
     } catch (error) {
       console.warn('Course progress could not be loaded.', error);
@@ -323,20 +334,34 @@
 
   function importProgress(file) {
     if (!file) return;
+    if (file.size > MAX_PROGRESS_BYTES) {
+      window.alert('Progress files must be 256 KiB or smaller.');
+      return;
+    }
     const reader = new FileReader();
     reader.addEventListener('load', () => {
       try {
         const imported = JSON.parse(String(reader.result));
         if (!imported || typeof imported !== 'object' ||
-            !Array.isArray(imported.completed) || !Array.isArray(imported.tasks)) {
+            !Array.isArray(imported.completed) || !Array.isArray(imported.tasks) ||
+            [imported.completed, imported.tasks].some(ids =>
+              ids.length > MAX_PROGRESS_IDS || !ids.every(validProgressId))) {
           throw new Error('Progress export has the wrong shape.');
         }
-        syncProgressUI(saveState(imported) || loadState());
+        const saved = saveState(imported);
+        if (!saved) {
+          window.alert('Progress could not be saved. Check browser storage settings or available space and try again.');
+          return;
+        }
+        syncProgressUI(saved);
+        syncLegacyTaskCheckboxes(saved);
         window.alert('Progress imported successfully.');
       } catch (error) {
         window.alert('That file is not a valid course progress export.');
       }
     });
+    reader.addEventListener('error', () => window.alert('The progress file could not be read. Please try again.'));
+    reader.addEventListener('abort', () => window.alert('Reading the progress file was canceled.'));
     reader.readAsText(file);
   }
 

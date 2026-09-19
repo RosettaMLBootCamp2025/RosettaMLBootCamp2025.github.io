@@ -4,7 +4,7 @@
   "scripts": {
     "test:accessibility": "pa11y-ci --config .pa11yci.cjs && node scripts/check-responsive.mjs && npm run test:performance",
     "test:responsive": "node scripts/check-responsive.mjs",
-    "test:performance": "python3 scripts/test_performance.py && node scripts/check-performance.mjs"
+    "test:performance": "python3 scripts/test_performance.py && node scripts/check-performance.mjs && node scripts/check-progress.mjs"
   },
   "devDependencies": {
     "pa11y-ci": "4.1.1"
