@@ -340,6 +340,8 @@
   function showResumeBanner() {
     const isHome = normalisePath(window.location.pathname) === '/index.html';
     if (!isHome) return;
+    const existingBanner = document.getElementById('resume-banner');
+    if (existingBanner) { existingBanner.hidden = true; existingBanner.style.display = 'none'; }
     try {
       const saved = JSON.parse(localStorage.getItem(LAST_PAGE_KEY) || 'null');
       if (!saved || !saved.path) return;
@@ -424,7 +426,11 @@
       localStorage.removeItem(LEGACY_STORAGE_KEY);
       localStorage.removeItem(LAST_PAGE_KEY);
     } catch (error) { console.warn('Old progress storage could not be cleared.', error); }
+    showResumeBanner();
   };
+  window.addEventListener('storage', event => {
+    if (event.key === LAST_PAGE_KEY || event.key === null) showResumeBanner();
+  });
   if (channel) channel.onmessage = refreshProgress;
   window.addEventListener('focus', refreshProgress);
   document.addEventListener('visibilitychange', () => {
