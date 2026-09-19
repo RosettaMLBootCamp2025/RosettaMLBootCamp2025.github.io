@@ -304,6 +304,10 @@ def validate_cpu_gpu_notebook(validation: Validation) -> dict:
         "def dot_product_vectorized",
         "def dot_product_torch",
         'torch.device("cpu")',
+        'time.perf_counter()',
+        'statistics.median(samples)',
+        'statistics.quantiles(samples',
+        'def prepare_inputs',
         'times["gpu"] = None',
         "N/A",
     )
@@ -352,8 +356,19 @@ def smoke_cpu_gpu_notebook(notebook: dict, validation: Validation) -> None:
         function = namespace.get(name)
         validation.require(callable(function), f"CPU smoke test could not load {name}")
         if callable(function):
-            result = function(10, torch.device("cpu"))
+            a = torch.arange(10, dtype=torch.float32)
+            b = torch.ones(10)
+            result = function(a, b)
+            torch.testing.assert_close(result, torch.dot(a, b))
             validation.require(isinstance(result, torch.Tensor) and result.numel() == 1, f"CPU smoke test failed for {name}")
+
+    benchmark = namespace.get("calculate_and_time")
+    if callable(benchmark):
+        inputs = namespace["prepare_inputs"](10, torch.device("cpu"))
+        for name in ("dot_product_for_loop", "dot_product_vectorized", "dot_product_torch"):
+            timings = benchmark(namespace[name], inputs, warmup=1, repeats=4)
+            validation.require(timings["cpu"] > 0 and timings["cpu_iqr"] >= 0, f"Invalid CPU timings for {name}")
+            validation.require(timings["gpu"] is None, "CPU benchmark must report GPU as unavailable")
 
 
 def render_course_include(course: dict) -> str:
