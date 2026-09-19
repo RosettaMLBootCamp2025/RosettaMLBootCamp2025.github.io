@@ -43,9 +43,10 @@ try {
     {name: 'mobile', width: 375, height: 812},
     {name: 'desktop', width: 1280, height: 900}
   ].flatMap(viewport => urls.map(url => ({viewport, url})));
+  let nextVisit = 0;
   async function worker() {
-    while (visits.length) {
-      const {viewport, url} = visits.shift();
+    while (nextVisit < visits.length) {
+      const {viewport, url} = visits[nextVisit++];
       const page = await browser.newPage();
       try {
         await localOnly(page, baseUrl);
