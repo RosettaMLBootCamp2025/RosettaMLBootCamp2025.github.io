@@ -49,17 +49,19 @@
     });
   }
 
-  function nameMermaidDiagrams() {
-    document.querySelectorAll('svg.mermaid-js:not([aria-labelledby])').forEach((diagram, index) => {
+  let diagramNumber = 0;
+
+  function nameMermaidDiagrams(root = document) {
+    root.querySelectorAll('svg.mermaid-js:not([aria-labelledby])').forEach(diagram => {
       const namespace = 'http://www.w3.org/2000/svg';
       const section = diagram.closest('section');
       const heading = section && section.querySelector(':scope > h2, :scope > h3, :scope > h4');
-      const idBase = diagram.id || 'course-diagram-' + (index + 1);
+      const idBase = diagram.id || 'course-diagram-' + (++diagramNumber);
       const title = document.createElementNS(namespace, 'title');
       const description = document.createElementNS(namespace, 'desc');
-      const steps = Array.from(diagram.querySelectorAll('.nodeLabel'))
+      const steps = [...new Set(Array.from(diagram.querySelectorAll('.nodeLabel'))
         .map(node => node.textContent.replace(/\s+/g, ' ').trim())
-        .filter((value, stepIndex, values) => value && values.indexOf(value) === stepIndex);
+        .filter(Boolean))];
 
       title.id = idBase + '-title';
       title.textContent = heading ? 'Flowchart for ' + heading.textContent.trim() : 'Course workflow flowchart';
@@ -81,12 +83,49 @@
       button.removeAttribute('role');
     });
 
-    document.querySelectorAll('main table, main pre:not(.sourceCode), main div.sourceCode, main .mermaid').forEach(region => {
-      const isCodeBlock = region.matches('div.sourceCode');
-      if ((isCodeBlock || region.scrollWidth > region.clientWidth + 1) && !region.hasAttribute('tabindex')) {
-        region.tabIndex = 0;
-      }
+    const diagramParents = new Set(Array.from(document.querySelectorAll('pre.mermaid-js'), node => node.parentElement));
+    diagramParents.forEach(parent => {
+      // Quarto replaces each source pre with its SVG asynchronously after load.
+      // Observe only that container and stop once its diagrams have rendered.
+      const observer = new MutationObserver(() => {
+        nameMermaidDiagrams(parent);
+        if (!parent.querySelector('pre.mermaid-js')) observer.disconnect();
+      });
+      observer.observe(parent, {childList: true});
     });
+
+    const regions = [...new Set([
+      ...document.querySelectorAll('main table, main pre:not(.sourceCode):not(.mermaid-js), main div.sourceCode, main .mermaid'),
+      ...diagramParents
+    ])];
+    function updateOverflow(changed) {
+      // Read every geometry value before changing focus attributes.
+      const measurements = changed.map(region => ({
+        region,
+        focusable: region.matches('div.sourceCode') || region.scrollWidth > region.clientWidth + 1
+      }));
+      measurements.forEach(({region, focusable}) => {
+        if (focusable && !region.hasAttribute('tabindex')) {
+          region.tabIndex = 0;
+          region.dataset.overflowFocus = 'true';
+        } else if (!focusable && region.dataset.overflowFocus === 'true') {
+          region.removeAttribute('tabindex');
+          delete region.dataset.overflowFocus;
+        }
+      });
+    }
+    if (typeof ResizeObserver === 'function') {
+      const observer = new ResizeObserver(entries => updateOverflow(entries.map(entry => entry.target)));
+      regions.forEach(region => observer.observe(region));
+    } else {
+      let scheduled = false;
+      window.addEventListener('resize', () => {
+        if (scheduled) return;
+        scheduled = true;
+        requestAnimationFrame(() => { scheduled = false; updateOverflow(regions); });
+      }, {passive: true});
+    }
+    updateOverflow(regions);
   }
 
   function prepareViewer(viewer) {
@@ -187,8 +226,6 @@
   function initialisePage() {
     improveSharedAccessibility();
     initialiseMolstar();
-    window.setTimeout(improveSharedAccessibility, 500);
-    window.setTimeout(improveSharedAccessibility, 1500);
   }
 
   if (document.readyState === 'loading') {
@@ -196,5 +233,4 @@
   } else {
     initialisePage();
   }
-  window.addEventListener('load', improveSharedAccessibility, {once: true});
 })();

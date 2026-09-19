@@ -473,17 +473,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="testing-the-installation" class="level2">
 <h2 class="anchored" data-anchor-id="testing-the-installation">Testing the Installation</h2>
 <p><label class="module-task" for="module-checkbox-openfold-test"><input type="checkbox" class="module-checkbox" id="module-checkbox-openfold-test" data-module-id="openfold-test"><span>Mark as complete</span></label></p>
-<p>Create a test FASTA file <code>test.fasta</code>:</p>
+<p>Create <code>input_fastas/test_protein.fasta</code> (create the directory first with <code>mkdir -p input_fastas</code>). Keep one sequence per file and use unique FASTA headers:</p>
 <pre><code>&gt;test_protein
 MKTVRQERLKSIVRILERSKEPVSGAQLAEELSVSRQVIVQDIAYLRSLGYNIVATPRGYVLAGG</code></pre>
-<p>Run a prediction (using pre-computed MSAs or without MSAs for testing):</p>
+<p>The pinned CLI takes a <strong>directory of FASTA files</strong>, then a <strong>directory of template mmCIF files</strong>. The second argument is not the sequence database root. For a short test, obtain precomputed alignments for this exact sequence from your instructor or generate them using the local-database example below. Alignment subdirectories must match FASTA header identifiers (for this example, <code>test_protein</code>).</p>
+<p>Run a prediction using those precomputed MSAs:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> run_pretrained_openfold.py <span class="dt">\</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    test.fasta <span class="dt">\</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    /path/to/database/directory <span class="dt">\</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">--output_dir</span> predictions/ <span class="dt">\</span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">--config_preset</span> model_1_ptm <span class="dt">\</span></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">--model_device</span> cuda:0</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><strong>Note</strong>: For testing without databases, you can use <code>--use_precomputed_alignments</code> with a directory containing pre-computed MSA files.</p>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    input_fastas/ <span class="dt">\</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    /path/to/pdb_mmcif/mmcif_files <span class="dt">\</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">--use_precomputed_alignments</span> /path/to/precomputed_alignments <span class="dt">\</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">--output_dir</span> predictions/ <span class="dt">\</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">--config_preset</span> model_1_ptm <span class="dt">\</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">--model_device</span> cuda:0</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Note</strong>: Precomputed alignments avoid sequence database searches; template mmCIF files are still required. An arbitrary empty alignment directory is not an equivalent test.</p>
 <p><strong>Success indicators</strong>:</p>
 <ul>
 <li>Command completes without errors</li>
@@ -510,38 +512,63 @@ MKTVRQERLKSIVRILERSKEPVSGAQLAEELSVSRQVIVQDIAYLRSLGYNIVATPRGYVLAGG</code></pre>
 <span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> /path/to/openfold</span>
 <span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Using HPC shared databases</span></span>
-<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a><span class="va">DATABASE_DIR</span><span class="op">=</span>/shared/databases/alphafold</span>
-<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> run_pretrained_openfold.py <span class="dt">\</span></span>
-<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>    my_protein.fasta <span class="dt">\</span></span>
-<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>    <span class="va">$DATABASE_DIR</span> <span class="dt">\</span></span>
-<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">--output_dir</span> predictions/ <span class="dt">\</span></span>
-<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">--config_preset</span> model_1_ptm <span class="dt">\</span></span>
-<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a>    <span class="at">--model_device</span> cuda:0</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Reuse alignments prepared on a CPU node before allocating the GPU.</span></span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a><span class="va">FASTA_DIR</span><span class="op">=</span>/path/to/input_fastas</span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a><span class="va">TEMPLATE_MMCIF_DIR</span><span class="op">=</span>/shared/databases/alphafold/pdb_mmcif/mmcif_files</span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a><span class="va">ALIGNMENT_DIR</span><span class="op">=</span>/path/to/precomputed_alignments</span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> run_pretrained_openfold.py <span class="dt">\</span></span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>    <span class="st">"</span><span class="va">$FASTA_DIR</span><span class="st">"</span> <span class="dt">\</span></span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a>    <span class="st">"</span><span class="va">$TEMPLATE_MMCIF_DIR</span><span class="st">"</span> <span class="dt">\</span></span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a>    <span class="at">--use_precomputed_alignments</span> <span class="st">"</span><span class="va">$ALIGNMENT_DIR</span><span class="st">"</span> <span class="dt">\</span></span>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a>    <span class="at">--output_dir</span> predictions/ <span class="dt">\</span></span>
+<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a>    <span class="at">--config_preset</span> model_1_ptm <span class="dt">\</span></span>
+<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">--model_device</span> cuda:0</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="usage-examples" class="level2">
 <h2 class="anchored" data-anchor-id="usage-examples">Usage Examples</h2>
 <p><strong>Basic prediction with local databases</strong>:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> run_pretrained_openfold.py <span class="dt">\</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    input.fasta <span class="dt">\</span></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    /path/to/databases <span class="dt">\</span></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">--output_dir</span> output/ <span class="dt">\</span></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">--config_preset</span> model_1_ptm</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><strong>Using pre-computed MSAs</strong>:</p>
+<p>Set these paths to the database release installed by your administrator. The filenames below are examples; all database prefixes and sequence files must exist. Keep the FASTA sequences, database release, and template settings with the run record so cached alignments are reused only for compatible inputs.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="va">FASTA_DIR</span><span class="op">=</span>/path/to/input_fastas</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="va">TEMPLATE_MMCIF_DIR</span><span class="op">=</span>/shared/databases/alphafold/pdb_mmcif/mmcif_files</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="va">DATABASE_DIR</span><span class="op">=</span>/shared/databases/alphafold</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="va">DATABASE_ARGS</span><span class="op">=</span><span class="va">(</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    --uniref90_database_path <span class="st">"</span><span class="va">$DATABASE_DIR</span><span class="st">/uniref90/uniref90.fasta"</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    --mgnify_database_path <span class="st">"</span><span class="va">$DATABASE_DIR</span><span class="st">/mgnify/mgy_clusters_2022_05.fa"</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    --bfd_database_path <span class="st">"</span><span class="va">$DATABASE_DIR</span><span class="st">/bfd/bfd_metaclust_clu_complete_id30_c90_final_seq.sorted_opt"</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>    --uniref30_database_path <span class="st">"</span><span class="va">$DATABASE_DIR</span><span class="st">/uniref30/UniRef30_2021_03"</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>    --pdb70_database_path <span class="st">"</span><span class="va">$DATABASE_DIR</span><span class="st">/pdb70/pdb70"</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="va">)</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> run_pretrained_openfold.py <span class="dt">\</span></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">"</span><span class="va">$FASTA_DIR</span><span class="st">"</span> <span class="st">"</span><span class="va">$TEMPLATE_MMCIF_DIR</span><span class="st">"</span> <span class="dt">\</span></span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>    <span class="st">"</span><span class="va">${DATABASE_ARGS</span><span class="op">[@]</span><span class="va">}</span><span class="st">"</span> <span class="dt">\</span></span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">--cpus</span> 8 <span class="dt">\</span></span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">--output_dir</span> output_model_1_ptm/ <span class="dt">\</span></span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">--config_preset</span> model_1_ptm <span class="dt">\</span></span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">--model_device</span> cuda:0</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This first prediction creates <code>output_model_1_ptm/alignments/</code>, with one subdirectory per FASTA header. Complete and verify it before starting other presets; do not let concurrent jobs write the same alignment cache.</p>
+<p><strong>Using precomputed MSAs</strong> (no sequence database searches):</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> run_pretrained_openfold.py <span class="dt">\</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    input.fasta <span class="dt">\</span></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    /path/to/databases <span class="dt">\</span></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">--use_precomputed_alignments</span> /path/to/msas/ <span class="dt">\</span></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">--output_dir</span> output/</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"</span><span class="va">$FASTA_DIR</span><span class="st">"</span> <span class="st">"</span><span class="va">$TEMPLATE_MMCIF_DIR</span><span class="st">"</span> <span class="dt">\</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">--use_precomputed_alignments</span> /path/to/precomputed_alignments <span class="dt">\</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">--output_dir</span> output/ <span class="dt">\</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">--config_preset</span> model_1_ptm <span class="dt">\</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">--model_device</span> cuda:0</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>Multiple model presets</strong> (ensemble):</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> preset <span class="kw">in</span> model_1_ptm model_2_ptm model_3_ptm<span class="kw">;</span> <span class="cf">do</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    <span class="ex">python</span> run_pretrained_openfold.py <span class="dt">\</span></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>        input.fasta <span class="dt">\</span></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>        /path/to/databases <span class="dt">\</span></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">--config_preset</span> <span class="va">$preset</span> <span class="dt">\</span></span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">--output_dir</span> output_<span class="va">${preset}</span>/</span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="cf">done</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>After the first <code>model_1_ptm</code> prediction above succeeds, run the remaining two presets against its completed alignments. The cache is shared, but each preset has its own prediction directory. This performs the expensive alignment searches once across the three-model ensemble.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="bu">set</span> <span class="at">-euo</span> pipefail</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="va">ALIGNMENT_DIR</span><span class="op">=</span><span class="st">"</span><span class="va">$PWD</span><span class="st">/output_model_1_ptm/alignments"</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="bu">test</span> <span class="at">-d</span> <span class="st">"</span><span class="va">$ALIGNMENT_DIR</span><span class="st">"</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> preset <span class="kw">in</span> model_2_ptm model_3_ptm<span class="kw">;</span> <span class="cf">do</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    <span class="ex">python</span> run_pretrained_openfold.py <span class="dt">\</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>        <span class="st">"</span><span class="va">$FASTA_DIR</span><span class="st">"</span> <span class="st">"</span><span class="va">$TEMPLATE_MMCIF_DIR</span><span class="st">"</span> <span class="dt">\</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">--use_precomputed_alignments</span> <span class="st">"</span><span class="va">$ALIGNMENT_DIR</span><span class="st">"</span> <span class="dt">\</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">--config_preset</span> <span class="st">"</span><span class="va">$preset</span><span class="st">"</span> <span class="dt">\</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>        <span class="at">--output_dir</span> <span class="st">"output_</span><span class="va">${preset}</span><span class="st">/"</span> <span class="dt">\</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>        <span class="at">--model_device</span> cuda:0</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="cf">done</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Regenerate alignments in a new directory when sequences, identifiers, database releases, or alignment/template settings change. An existing directory alone does not prove the previous job completed successfully.</p>
 </section>
 <section id="model-presets" class="level2">
 <h2 class="anchored" data-anchor-id="model-presets">Model Presets</h2>

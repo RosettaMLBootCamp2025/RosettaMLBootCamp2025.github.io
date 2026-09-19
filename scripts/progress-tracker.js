@@ -5,6 +5,9 @@
   const LEGACY_STORAGE_KEY = 'bootcamp2025_progress';
   const LAST_PAGE_KEY = 'bootcamp2025_lastpage';
   const SCHEMA_VERSION = 2;
+  const MAX_PROGRESS_BYTES = 256 * 1024;
+  const MAX_PROGRESS_IDS = 1000;
+  const MAX_ID_LENGTH = 128;
 
   function normalisePath(path) {
     if (!path) return '/';
@@ -58,66 +61,119 @@
   function sanitiseState(value) {
     const validIds = new Set(courseCheckpoints().map(checkpointId));
     const completed = Array.isArray(value && value.completed)
-      ? value.completed.filter(id => typeof id === 'string' && (validIds.size === 0 || validIds.has(id)))
+      ? value.completed.slice(0, MAX_PROGRESS_IDS).filter(id => validProgressId(id) && validIds.has(id))
       : [];
     const tasks = Array.isArray(value && value.tasks)
-      ? value.tasks.filter(id => typeof id === 'string')
+      ? value.tasks.slice(0, MAX_PROGRESS_IDS).filter(validProgressId)
       : [];
     return {
       version: SCHEMA_VERSION,
       completed: Array.from(new Set(completed)),
       tasks: Array.from(new Set(tasks)),
-      updatedAt: value && value.updatedAt ? value.updatedAt : null
+      updatedAt: typeof value?.updatedAt === 'string' && value.updatedAt.length <= 32 ? value.updatedAt : null
     };
   }
 
-  function loadState() {
-    try {
-      const saved = localStorage.getItem(STORAGE_KEY);
-      if (saved) return sanitiseState(JSON.parse(saved));
-
-      const legacy = localStorage.getItem(LEGACY_STORAGE_KEY);
-      if (legacy) {
-        const legacyState = JSON.parse(legacy);
-        const migrated = emptyState();
-        migrated.tasks = Array.isArray(legacyState.completed) ? legacyState.completed : [];
-        saveState(migrated);
-        return migrated;
-      }
-    } catch (error) {
-      console.warn('Course progress could not be loaded.', error);
-    }
-    return emptyState();
+  function validProgressId(id) {
+    return typeof id === 'string' && id.length > 0 && id.length <= MAX_ID_LENGTH;
   }
 
-  function saveState(state) {
-    const clean = sanitiseState(state);
-    clean.updatedAt = new Date().toISOString();
+  let databasePromise;
+  let shownRevision = -1;
+  const channel = typeof BroadcastChannel === 'function' ? new BroadcastChannel('bootcamp-progress') : null;
+
+  function database() {
+    if (!databasePromise) {
+      databasePromise = new Promise((resolve, reject) => {
+        const request = indexedDB.open('bootcamp-progress', 1);
+        request.onupgradeneeded = () => request.result.createObjectStore('progress');
+        request.onerror = () => { databasePromise = null; reject(request.error); };
+        request.onsuccess = () => {
+          const db = request.result;
+          db.onversionchange = () => { db.close(); databasePromise = null; };
+          resolve(db);
+        };
+      });
+    }
+    return databasePromise;
+  }
+
+  function legacyState() {
     try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(clean));
+      const saved = localStorage.getItem(STORAGE_KEY);
+      const legacy = saved ? null : localStorage.getItem(LEGACY_STORAGE_KEY);
+      const text = saved || legacy;
+      if (!text || text.length > MAX_PROGRESS_BYTES) return emptyState();
+      const value = JSON.parse(text);
+      return sanitiseState(saved ? value : {tasks: value.completed});
+    } catch (error) {
+      console.warn('Previous course progress could not be loaded.', error);
+      return emptyState();
+    }
+  }
+
+  // IndexedDB serializes read/write transactions across tabs. Migration, edits,
+  // replacement imports, and resets all operate on this one authoritative row.
+  async function transact(update) {
+    const db = await database();
+    return new Promise((resolve, reject) => {
+      const transaction = db.transaction('progress', 'readwrite');
+      const store = transaction.objectStore('progress');
+      const request = store.get('state');
+      let result;
+      transaction.oncomplete = () => resolve(result);
+      transaction.onabort = () => reject(transaction.error || new Error('Progress transaction aborted.'));
+      request.onsuccess = () => {
+        try {
+          const previous = request.result;
+          const state = previous || {...legacyState(), revision: 0};
+          result = state;
+          if (update) {
+            result = {...sanitiseState(update(state)), updatedAt: new Date().toISOString(), revision: state.revision + 1};
+          }
+          if (update || !previous) store.put(result, 'state');
+        } catch (error) { transaction.abort(); }
+      };
+    });
+  }
+
+  async function loadState() {
+    return transact();
+  }
+
+  async function refreshProgress() {
+    try { syncProgressUI(await loadState()); }
+    catch (error) { console.warn('Course progress could not be loaded.', error); }
+  }
+
+  async function changeProgress(update) {
+    try {
+      const state = await transact(update);
+      syncProgressUI(state);
+      channel?.postMessage('changed');
+      return state;
     } catch (error) {
       console.warn('Course progress could not be saved.', error);
+      await refreshProgress();
       return null;
     }
-    return clean;
+  }
+
+  function setCompletion(collection, id, completed) {
+    return changeProgress(state => {
+      const values = new Set(state[collection]);
+      if (completed) values.add(id);
+      else values.delete(id);
+      return {...state, [collection]: Array.from(values)};
+    });
   }
 
   function setCompleted(id, completed) {
-    const state = loadState();
-    const values = new Set(state.completed);
-    if (completed) values.add(id);
-    else values.delete(id);
-    state.completed = Array.from(values);
-    syncProgressUI(saveState(state) || loadState());
+    return setCompletion('completed', id, completed);
   }
 
   function setTaskCompleted(id, completed) {
-    const state = loadState();
-    const values = new Set(state.tasks);
-    if (completed) values.add(id);
-    else values.delete(id);
-    state.tasks = Array.from(values);
-    saveState(state);
+    return setCompletion('tasks', id, completed);
   }
 
   function currentLesson() {
@@ -252,6 +308,9 @@
   }
 
   function syncProgressUI(state) {
+    if (state.revision < shownRevision) return;
+    shownRevision = state.revision;
+    syncLegacyTaskCheckboxes(state);
     const checkpoints = courseCheckpoints();
     const core = checkpoints.filter(isCoreLesson);
     const optional = checkpoints.filter(lesson => !isCoreLesson(lesson));
@@ -283,7 +342,11 @@
     if (!isHome) return;
     try {
       const saved = JSON.parse(localStorage.getItem(LAST_PAGE_KEY) || 'null');
-      if (!saved || !saved.path) return;
+      if (!saved || !saved.path) {
+        const banner = document.getElementById('resume-banner');
+        if (banner) { banner.hidden = true; banner.style.display = 'none'; }
+        return;
+      }
       const banner = document.getElementById('resume-banner');
       const link = document.getElementById('resume-link');
       const title = document.getElementById('last-page-title');
@@ -312,8 +375,11 @@
     }
   }
 
-  function exportProgress() {
-    const blob = new Blob([JSON.stringify(loadState(), null, 2)], { type: 'application/json' });
+  async function exportProgress() {
+    let state;
+    try { state = await loadState(); }
+    catch (error) { window.alert('Progress could not be loaded for export.'); return; }
+    const blob = new Blob([JSON.stringify(sanitiseState(state), null, 2)], { type: 'application/json' });
     const link = document.createElement('a');
     link.href = URL.createObjectURL(blob);
     link.download = 'ml-protein-bootcamp-progress.json';
@@ -323,41 +389,70 @@
 
   function importProgress(file) {
     if (!file) return;
+    if (file.size > MAX_PROGRESS_BYTES) {
+      window.alert('Progress files must be 256 KiB or smaller.');
+      return;
+    }
     const reader = new FileReader();
-    reader.addEventListener('load', () => {
+    reader.addEventListener('load', async () => {
       try {
         const imported = JSON.parse(String(reader.result));
         if (!imported || typeof imported !== 'object' ||
-            !Array.isArray(imported.completed) || !Array.isArray(imported.tasks)) {
+            !Array.isArray(imported.completed) || !Array.isArray(imported.tasks) ||
+            [imported.completed, imported.tasks].some(ids =>
+              ids.length > MAX_PROGRESS_IDS || !ids.every(validProgressId))) {
           throw new Error('Progress export has the wrong shape.');
         }
-        syncProgressUI(saveState(imported) || loadState());
+        const saved = await changeProgress(() => imported);
+        if (!saved) {
+          window.alert('Progress could not be saved. Check browser storage settings or available space and try again.');
+          return;
+        }
         window.alert('Progress imported successfully.');
       } catch (error) {
         window.alert('That file is not a valid course progress export.');
       }
     });
+    reader.addEventListener('error', () => window.alert('The progress file could not be read. Please try again.'));
+    reader.addEventListener('abort', () => window.alert('Reading the progress file was canceled.'));
     reader.readAsText(file);
   }
 
-  window.clearProgress = function() {
+  window.clearProgress = async function() {
     if (!window.confirm('Reset all saved course progress in this browser? This cannot be undone unless you exported a backup.')) return;
-    localStorage.removeItem(STORAGE_KEY);
-    localStorage.removeItem(LEGACY_STORAGE_KEY);
-    localStorage.removeItem(LAST_PAGE_KEY);
-    window.location.reload();
+    const saved = await changeProgress(emptyState);
+    if (!saved) { window.alert('Progress could not be reset. Check browser storage settings.'); return; }
+    // Keep the empty authoritative row so old localStorage exports cannot revive it.
+    try {
+      localStorage.removeItem(STORAGE_KEY);
+      localStorage.removeItem(LEGACY_STORAGE_KEY);
+      localStorage.removeItem(LAST_PAGE_KEY);
+    } catch (error) { console.warn('Old progress storage could not be cleared.', error); }
+    showResumeBanner();
   };
+  window.addEventListener('storage', event => {
+    if (event.key === LAST_PAGE_KEY || event.key === null) showResumeBanner();
+  });
+  if (channel) channel.onmessage = refreshProgress;
+  window.addEventListener('focus', refreshProgress);
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible') refreshProgress();
+  });
   window.exportCourseProgress = exportProgress;
   window.importCourseProgress = importProgress;
 
-  document.addEventListener('DOMContentLoaded', function() {
-    const state = loadState();
+  document.addEventListener('DOMContentLoaded', async function() {
+    let state;
+    try { state = await loadState(); }
+    catch (error) {
+      console.warn('Course progress storage is unavailable.', error);
+      state = {...emptyState(), revision: 0};
+    }
     const lesson = currentLesson();
     saveLastPage(lesson);
     showResumeBanner();
     addLessonContract(lesson);
     addMasteryCheckpoint(lesson, state);
-    syncLegacyTaskCheckboxes(state);
     syncProgressUI(state);
 
     const exportButton = document.getElementById('export-progress');
