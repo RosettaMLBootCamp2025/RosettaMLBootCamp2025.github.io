@@ -32,7 +32,7 @@
         })
         .filter(candidate => candidate && candidate.includes('/' + day + '/'))
         .filter(candidate => !candidate.endsWith('/' + day + '/index.html'));
-      lessons = lessons.filter((candidate, index) => lessons.indexOf(candidate) === index);
+      lessons = [...new Set(lessons)];
     }
 
     const currentIndex = lessons.findIndex(candidate => path === candidate || path.endsWith(candidate));
