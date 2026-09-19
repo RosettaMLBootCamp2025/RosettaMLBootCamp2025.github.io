@@ -5,6 +5,8 @@ project:
     - "*.qmd"
     - "**/*.qmd"
   resources:
+    - files/*.zip
+    - data/analysis/**
     - data/*.yml
     - scripts/preflight.py
     - capstone/files/capstone-evidence-template.zip

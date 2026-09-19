@@ -72,15 +72,27 @@ try {
   assert.deepEqual((await release()).completed.sort(), ['hpc-setup', 'prework-pymol-vscode']);
   await mirror.waitForFunction(() => document.querySelector('.mastery-checkbox').checked, {polling: 25});
 
-  await hold();
-  await queue(first, () => first.evaluate(() => window.importCourseProgress(new File([
+  await first.evaluate(() => window.importCourseProgress(new File([
     JSON.stringify({completed: [], tasks: ['imported-task']})
-  ], 'progress.json'))));
+  ], 'progress.json')));
+  await first.waitForSelector('#import-preview');
+  await hold();
+  await queue(first, () => first.evaluate(() => [...document.querySelectorAll('#import-preview button')].find(button => button.textContent === 'Replace progress').click()));
   await click(second, true);
   const imported = await release();
   assert.deepEqual(imported.completed, ['hpc-setup']);
   assert.deepEqual(imported.tasks, ['imported-task']);
   await mirror.waitForFunction(() => !document.querySelector('.mastery-checkbox').checked, {polling: 25});
+
+  // Undo must preserve explicit checkbox edits made after the replacement.
+  await click(mirror, true); await readProgress(mirror);
+  await click(mirror, false); await readProgress(mirror);
+  await first.waitForSelector('#undo-progress');
+  await first.evaluate(() => document.querySelector('#undo-progress').click());
+  await first.waitForFunction(() => document.querySelector('#undo-progress').hidden);
+  const undone = await readProgress(first);
+  assert.deepEqual(undone.completed, ['hpc-setup']);
+  assert.deepEqual(undone.tasks, ['legacy-task']);
 
   await hold();
   await queue(first, () => first.evaluate(() => { void window.clearProgress(); }));
@@ -94,4 +106,4 @@ try {
   await mirror.waitForSelector('.mastery-checkbox');
   assert.deepEqual((await readProgress(mirror)).tasks, []);
   console.log('Concurrency checks passed: legacy migration, overlapping edits, live tabs, ordered import/reset, and no resurrection.');
-} finally { await browser.close(); }
+} catch (error) { console.error(error); throw error; } finally { await browser.close(); }

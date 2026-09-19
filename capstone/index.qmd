@@ -37,9 +37,9 @@ Run the pipeline yourself and preserve exact inputs, versions, commands/configur
 
 ### Analysis mode
 
-If GPU, account, model, license, or quota access is unavailable, use supplied or previously generated outputs. Preserve their source and reconstruct as much provenance as possible. You still complete target analysis, filtering, confidence/interface interpretation, failure analysis, and a conditional selection memo. Clearly distinguish evidence you generated from evidence you inherited.
+If GPU, account, model, license, or quota access is unavailable, [download the published PD-L1 binder analysis dataset](../files/binder-analysis.zip) and follow its [seven-stage workbook](../analysis-lab.qmd#binder-evidence). You may also use previously generated outputs. Preserve their source and reconstruct as much provenance as possible. You still complete target analysis, filtering, confidence/interface interpretation, failure analysis, and a conditional selection memo. Clearly distinguish evidence you generated from evidence you inherited.
 
-Both modes use the same rubric. Analysis mode is not permission to hide missing provenance; it is a scientifically honest fallback when infrastructure is outside the learner’s control.
+Both modes use the same five scoring categories. The [analysis-mode evidence guide](rubric.qmd#analysis-mode-evidence) specifies equivalent deliverables when original run files are missing: an evidence-gap audit, comparison of supplied models, and a sensitivity analysis. Label unknowns explicitly; new generation and inaccessible upstream logs are not required for analysis-mode completion.
 
 ## Watch → Read → Do → Check
 

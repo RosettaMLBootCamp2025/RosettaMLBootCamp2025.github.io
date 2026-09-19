@@ -2,6 +2,11 @@
 title: "4. ESMFold vs. AlphaFold2"
 ---
 
+::: {.callout-tip title="Analysis route without compute"}
+Use the [supplied GFP model and confidence data](../analysis-lab.qmd#gfp-confidence) to complete the AF2 interpretation. For the method-comparison memo, compare the documented inputs and limitations of AF2 and ESMFold on this page. **No paired ESMFold prediction is supplied**: mark empirical runtime and structural disagreement as unmeasured, predict what might differ, and specify a matched comparison you would run. This is the analysis-mode evidence alternative; do not claim you measured a two-model comparison.
+:::
+
+
 In this module, you will use **ESMFold** to predict protein structures and systematically compare results with the **AlphaFold2** predictions you generated in the previous module. ESMFold uses a fundamentally different approach—a protein language model trained on sequences alone, without requiring Multiple Sequence Alignments (MSAs) or templates. By comparing ESMFold to AF2, you will understand the trade-offs between different prediction methods and learn when to use each approach.
 
 ## Live Workshop Session

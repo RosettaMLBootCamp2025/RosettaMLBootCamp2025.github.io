@@ -17,6 +17,20 @@ Use this page at three points:
 
 <a class="btn btn-primary" href="files/capstone-evidence-template.zip" download>Download the evidence template</a>
 
+## Analysis-mode evidence {#analysis-mode-evidence}
+
+Using the [supplied PD-L1 dataset](../analysis-lab.qmd#binder-evidence)? Complete all seven workbook sections. Apply the five scoring categories below to these equivalent artifacts:
+
+| Generation-mode artifact | Analysis-mode equivalent |
+|---|---|
+| Original run configuration | Source DOI, file checksums, reproducible course analysis, and an audit of missing upstream settings and their consequences |
+| Full generation campaign and attrition | Review every supplied model; explicitly state the original campaign size, rejects, and attrition are unavailable |
+| Parent-backbone sequence library | Extracted final binder sequences with filename/chain links; record missing original design lineage |
+| Repeated confidence validation | Compare at least two structures and geometry; distinguish missing PAE/ipTM from measured evidence and specify an independent next test |
+| New failure/iteration run | Test a misleading assumption using contact-threshold and length-normalization sensitivity; report the changed interpretation or stable result |
+
+The target brief must flag unverified native residue mapping and propose a mapping check before hotspot selection. The final memo may defer selection when the evidence is insufficient. **A complete, explicit audit with a defensible next test can earn full credit; missing source data must not be filled with invented results.** Score reproducibility on the analysis you actually performed, structural evidence on the supplied structures and valid comparisons, judgment on handling uncertainty, iteration on the sensitivity test, and communication on traceability. The same 13/20 threshold and minimum category score apply.
+
 ## Required Evidence Portfolio
 
 Your final format can be a report, notebook, repository, slide deck, or video, but it should contain all seven artifacts below.

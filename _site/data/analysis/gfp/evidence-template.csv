@@ -1,0 +1,8 @@
+evidence,result,interpretation
+Mean pLDDT,,
+Residues below 70,,
+PAE pattern,,
+pTM (N/A if unavailable),,
+RMSD to 1GFL (N/A unless measured),,
+Runtime (N/A for database model),,
+Trust statement,,

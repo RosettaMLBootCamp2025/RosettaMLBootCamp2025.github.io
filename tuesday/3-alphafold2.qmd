@@ -226,7 +226,7 @@ Expected runtime is approximately 5–15 minutes, depending on available hardwar
 - a PAE heatmap.
 
 ::: {.callout-tip title="If compute is unavailable"}
-Use an instructor-provided or previously generated GFP output folder and complete the analysis. Interpreting evidence is the learning objective; a temporary GPU or queue failure should not stop the lesson.
+[Download the GFP analysis dataset](../files/gfp-analysis.zip) and follow the [first confidence task](../analysis-lab.qmd#gfp-confidence). It includes a real AlphaFold DB prediction for the same GFP sequence, confidence/PAE files, figures, an editable evidence table and a completed interpretation example. Use `load gfp.pdb, af2_gfp` after unzipping. Record database runtime, pTM and unavailable MSA details as N/A; do not claim a new ColabFold run. If offline, record the experimental alignment as not measured and complete the confidence interpretation.
 :::
 
 ### Do: Analyze Local Confidence

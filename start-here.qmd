@@ -4,6 +4,30 @@ subtitle: "Choose a route, check your setup, and decide what evidence you will p
 toc: true
 ---
 
+Start with a **15-minute readiness check**. The recommended route uses hosted notebooks; choose supplied examples if you do not have compute or account access.
+
+[Begin the readiness check ↓](#your-15-minute-readiness-check){.btn .btn-primary}
+
+```{=html}
+<section id="route-picker" aria-label="Choose your learning path"></section>
+<noscript><p>Follow the <a href="monday/index.html#pre-work-and-readiness">core readiness checklist</a>. Route selection and saved progress require JavaScript.</p></noscript>
+```
+
+## Your 15-minute readiness check
+
+Before beginning Monday, make a short `readiness.md` note and answer these questions:
+
+1. Which route are you taking: core, full, or reference?
+2. Can you open a terminal, run `python --version`, and identify the active environment?
+3. Can you open a PDB structure in PyMOL or another molecular viewer?
+4. If you plan to run models locally, can you access a Linux GPU node and run `nvidia-smi` there?
+5. Where will you store model weights, environments, and project outputs without exceeding a home-directory quota?
+6. What is your fallback if a hosted account, download, or GPU queue is unavailable?
+
+If a required answer is “not yet,” begin with [Monday pre-work](monday/index.qmd#pre-work-and-readiness). GPU access is not required for the hosted or analysis route. Your learning plan above skips local installations on those routes.
+
+[My readiness note names my route, compute, storage, accounts, and fallback]{.task module-id="monday-readiness-evidence"}
+
 ## Why the course is organized by day
 
 This site is the asynchronous version of the 2025 ML Protein Design Bootcamp. **Monday through Thursday preserve the sequence of the original in-person course** so that you can see what the cohort did and in what order. In the self-paced version, a “day” is a stage in the learning journey—not a promise that every learner will finish that material in one calendar day.
@@ -63,21 +87,8 @@ Before a local install, use **[Reproducible Setup & Compute Fallbacks](monday/re
 ::: {.callout-important}
 ## No GPU or account access?
 
-You can still learn the scientific reasoning. Read the method and analyze any supplied example or previously generated outputs instead of running the job. In your evidence portfolio, label the source of those outputs and explain what you would change in a new run. Running a model is not the same as interpreting it well.
+You can still learn the scientific reasoning. Open the [supplied analysis datasets](analysis-lab.qmd) and follow the first task instead of running the job. In your evidence portfolio, label the source of those outputs and explain what you would change in a new run. Running a model is not the same as interpreting it well.
 :::
-
-## Your 15-minute readiness check
-
-Before beginning Monday, make a short `readiness.md` note and answer these questions:
-
-1. Which route are you taking: core, full, or reference?
-2. Can you open a terminal, run `python --version`, and identify the active environment?
-3. Can you open a PDB structure in PyMOL or another molecular viewer?
-4. If you plan to run models locally, can you access a Linux GPU node and run `nvidia-smi` there?
-5. Where will you store model weights, environments, and project outputs without exceeding a home-directory quota?
-6. What is your fallback if a hosted account, download, or GPU queue is unavailable?
-
-If any answer is “not yet,” begin with [Monday pre-work](monday/index.qmd#pre-work-and-readiness). If all answers are clear, use Monday’s tool map to install only what your route requires.
 
 ## Use the Watch → Read → Do → Check loop
 
@@ -90,9 +101,9 @@ Each day dashboard distinguishes four ways of engaging with the material:
 
 For a core lesson, prioritize **Read + Do + Check**. Use Watch when you want the live explanation or when the page explicitly identifies it as required.
 
-## Build an evidence portfolio from the beginning
+## Set up your portfolio at the first hands-on task
 
-Create one project folder before your first hands-on activity. A simple structure is enough:
+When you reach your first hands-on activity, [download the portfolio starter](files/portfolio-starter.zip) and unzip it. It includes readiness and decision-log templates. A simple structure is enough:
 
 ```text
 bootcamp-portfolio/

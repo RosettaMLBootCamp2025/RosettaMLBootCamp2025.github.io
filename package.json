@@ -5,7 +5,8 @@
     "test:accessibility": "node scripts/check-responsive.mjs --accessibility && npm run test:performance",
     "test:responsive": "node scripts/check-responsive.mjs",
     "test:performance": "python3 scripts/test_performance.py && node scripts/check-performance.mjs && node scripts/check-progress.mjs && node scripts/check-concurrency.mjs && node scripts/check-accessibility-updates.mjs",
-    "test:integrations": "node scripts/check-integrations.mjs"
+    "test:integrations": "node scripts/check-integrations.mjs",
+    "test:journey": "python3 scripts/check-analysis-data.py && node scripts/check-journey.mjs && node scripts/check-progress.mjs && node scripts/check-concurrency.mjs"
   },
   "devDependencies": {
     "pa11y": "9.1.1",

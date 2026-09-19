@@ -1,0 +1,23 @@
+{
+  "source": "https://zenodo.org/records/14249738",
+  "doi": "10.5281/zenodo.14249738",
+  "authors": [
+    "Martin Pacesa",
+    "Lennart Nickel",
+    "Bruno Correia"
+  ],
+  "license": "CC BY 4.0",
+  "archive": "DesignModels.zip",
+  "archive_md5": "66364e7ce957da7f9e8cb938d5bd7ca4",
+  "retrieved": "2026-09-19",
+  "selection": "PD-L1 b8, b9, b10: a teaching subset, not an exhaustive campaign or a ranking",
+  "missing": [
+    "raw trajectory",
+    "seeds",
+    "exact run configuration",
+    "PAE matrices",
+    "ipTM scores",
+    "rejected candidates",
+    "parent backbone linkage"
+  ]
+}

@@ -1,0 +1,4 @@
+candidate,target_chain,binder_chain,target_residues,binder_residues,CA_pairs_below_6A,CA_pairs_below_8A,CA_pairs_below_10A,target_residues_with_CA_contact_8A,PAE,ipTM
+PD-L1_b10,A,B,115,90,0,14,90,37;39;44;46;49;51;98;104;105,not supplied,not supplied
+PD-L1_b8,A,B,115,75,1,14,66,39;49;51;56;57;58;98;104;105;106,not supplied,not supplied
+PD-L1_b9,A,B,115,76,5,33,106,34;35;37;39;44;98;100;101;102;103;104;105,not supplied,not supplied

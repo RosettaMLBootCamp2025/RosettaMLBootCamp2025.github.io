@@ -1195,3 +1195,53 @@ details.model-answer[open] {
   background-color: #6c757d;
   cursor: not-allowed;
 }
+
+/* Learning path and reliable progress feedback. */
+#learning-plan, #route-picker, .progress-notice, #import-preview {
+  background: #f5f8fc;
+  border: 1px solid #bbc9d8;
+  border-radius: 8px;
+  padding: 1rem;
+  margin: 1rem 0;
+}
+#route-picker:empty { display: none; }
+#route-picker legend { font-size: 1.2rem; font-weight: 700; }
+.route-fields { display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: .8rem; }
+.route-fields label { flex: 1 1 230px; font-weight: 600; }
+.route-fields select { display: block; width: 100%; padding: .65rem; margin-top: .3rem; color: #172d45; background: white; border: 1px solid #697b8c; border-radius: 4px; }
+.journey-context, #day-evidence-count { font-weight: 600; }
+.journey-list { margin: .8rem 0; }
+.journey-list summary, #manage-progress summary { cursor: pointer; padding: .65rem 0; font-weight: 600; }
+.journey-list ul { padding-left: 1.3rem; }
+.evidence-day-count { font-weight: 600; margin-top: 1rem; }
+#short-session-result:empty, #route-saved:empty { display: none; }
+#short-session-result { margin-top: 1rem; }
+#short-session-result label { display: block; }
+#learning-plan .btn, #import-preview .btn, .progress-recovery .btn { margin: .25rem .25rem .25rem 0; white-space: normal; }
+.progress-notice { padding: .65rem 1rem; font-size: .95rem; }
+.progress-notice p { margin: 0; }
+.progress-notice-error { border: 2px solid #a43819; background: #fff4ee; }
+.progress-recovery { margin-top: .6rem; }
+.task-kind { display: block; color: #44556b; font-size: .8rem; font-weight: 500; }
+.module-task { flex-wrap: wrap; }
+.module-task .task-kind { flex-basis: 100%; margin-left: 1.7rem; }
+[data-route-status="optional"]::after { content: ' · optional'; font-size: .8em; color: #526278; }
+.quiz-retry { margin-left: .5rem; min-height: 44px; }
+.mobile-tool-cards { display: none; }
+.mobile-tool-card { border: 1px solid #bbc9d8; border-radius: 8px; padding: 1rem; margin: 1rem 0; background: #f8faff; }
+.mobile-tool-card h3 { margin-top: 0; }
+.mobile-tool-card dt { font-size: .85rem; color: #394e66; }
+.mobile-tool-card dd { margin: 0 0 .6rem; }
+.analysis-preview { max-width: 100%; height: auto; }
+@media (max-width: 767px) {
+  .desktop-tool-table { display: none !important; }
+  .mobile-tool-cards { display: block; }
+  #learning-plan .btn, #route-picker .btn { display: block; width: 100%; }
+  #learning-plan, #route-picker { padding: .8rem; }
+}
+
+.journey-list summary, #manage-progress summary { color: #243b53; }
+.quarto-figure figcaption { color: #45586b; }
+.mobile-tool-card a { color: #125a91; }
+#learning-plan .btn-primary, #learning-plan .btn-primary:visited,
+#learning-plan .btn-primary:hover, #learning-plan .btn-primary:focus { color: #fff !important; }

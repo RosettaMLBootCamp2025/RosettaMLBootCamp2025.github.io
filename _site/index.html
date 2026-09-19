@@ -23,7 +23,7 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
 </style>
@@ -99,43 +99,43 @@ ul.task-list li input[type="checkbox"] {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link active" href="./index.html" aria-current="page">
+    <a class="nav-link active" href="./index.html" aria-current="page"> 
 <span class="menu-text">Home</span></a>
-  </li>
+  </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./start-here.html">
+    <a class="nav-link" href="./start-here.html"> 
 <span class="menu-text">Start Here</span></a>
-  </li>
+  </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./monday/index.html">
+    <a class="nav-link" href="./monday/index.html"> 
 <span class="menu-text">Monday</span></a>
-  </li>
+  </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./tuesday/index.html">
+    <a class="nav-link" href="./tuesday/index.html"> 
 <span class="menu-text">Tuesday</span></a>
-  </li>
+  </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./wednesday/index.html">
+    <a class="nav-link" href="./wednesday/index.html"> 
 <span class="menu-text">Wednesday</span></a>
-  </li>
+  </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./thursday/index.html">
+    <a class="nav-link" href="./thursday/index.html"> 
 <span class="menu-text">Thursday</span></a>
-  </li>
+  </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./capstone/index.html">
+    <a class="nav-link" href="./capstone/index.html"> 
 <span class="menu-text">Capstone</span></a>
-  </li>
+  </li>  
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./about.html">
+    <a class="nav-link" href="./about.html"> 
 <span class="menu-text">About</span></a>
-  </li>
+  </li>  
   <li class="nav-item">
-    <a class="nav-link" href="https://github.com/RosettaMLBootCamp2025/RosettaMLBootCamp2025.github.io/issues/new">
+    <a class="nav-link" href="https://github.com/RosettaMLBootCamp2025/RosettaMLBootCamp2025.github.io/issues/new"> 
 <span class="menu-text">Report Issue</span></a>
-  </li>
+  </li>  
 </ul>
           </div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
@@ -147,7 +147,7 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-
+    
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
@@ -160,20 +160,20 @@ ul.task-list li input[type="checkbox"] {
 
 <div class="quarto-title-meta">
 
-
-
-
+    
+  
+    
   </div>
-
+  
 
 
 </header>
 
 
 <div id="resume-banner" class="resume-banner" style="display: none;">
-  <strong>Welcome back!</strong> You were last on: <span id="last-page-title"></span>
+  <strong>Recently viewed:</strong> <span id="last-page-title"></span>
   <br>
-  <a id="resume-link" href="#" class="btn btn-primary btn-sm resume-link">Resume where you left off</a>
+  <a id="resume-link" href="#" class="btn btn-primary btn-sm resume-link">Open last viewed page</a>
 </div>
 
 <section class="course-hero">
@@ -182,8 +182,8 @@ ul.task-list li input[type="checkbox"] {
     <h2 class="anchored">Build judgment across modern ML protein design workflows.</h2>
     <p>This asynchronous edition preserves the Monday–Thursday sequence of the original 2025 workshop. Move from environment setup to structure prediction, backbone generation, docking, and a binder-design capstone—producing evidence at every stage.</p>
     <div class="course-hero-actions">
-      <a class="btn btn-primary" href="start-here.html">Choose your route</a>
-      <a class="btn btn-outline-primary" href="monday/index.html">Begin Monday</a>
+      <a class="btn btn-primary" href="start-here.html">Start with a 15-minute readiness check</a>
+      <a class="btn btn-outline-primary" href="start-here.html#route-picker">Choose or change your route</a>
       <a class="btn btn-outline-primary" href="capstone/index.html">Preview capstone</a>
     </div>
   </div>
@@ -195,15 +195,17 @@ ul.task-list li input[type="checkbox"] {
 <section class="course-progress-panel" id="progress-summary">
   <div>
     <p class="course-eyebrow">Your progress</p>
-    <h2 class="anchored">Evidence checkpoint tracker</h2>
+    <h2 class="anchored">Your saved evidence</h2>
     <p>Check an item only after its named artifact or decision exists. Progress is saved in this browser; it measures collected evidence, not time spent or model success.</p>
   </div>
   <div class="progress-readout">
     <div><strong><span id="completed-count">0</span> / <span id="checkpoint-total">0</span></strong> required evidence checkpoints</div>
+    <p id="progress-route-note" class="small"></p>
     <div><strong><span id="optional-completed-count">0</span></strong> optional checkpoints completed</div>
     <div class="progress progress-dashboard">
       <div id="progress-bar" class="progress-bar" role="progressbar" aria-label="Required evidence completion" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>
     </div>
+    <details id="manage-progress"><summary>Manage progress and backups</summary>
     <div class="d-flex flex-wrap gap-2">
       <button id="export-progress" class="btn btn-outline-primary btn-sm" type="button">Export progress</button>
       <button onclick="clearProgress()" class="btn btn-outline-secondary btn-sm" type="button">Reset progress</button>
@@ -211,8 +213,9 @@ ul.task-list li input[type="checkbox"] {
     <div>
       <label for="import-progress" class="form-label">Import a progress file</label>
       <input id="import-progress" class="form-control form-control-sm" type="file" accept="application/json,.json" aria-describedby="import-progress-help">
-      <p id="import-progress-help" class="small">Imports replace saved progress when the file finishes loading. Later checkbox changes are kept. Updates also appear in your other open course tabs.</p>
+      <p id="import-progress-help" class="small">Preview a backup before merging or replacing progress. You can undo the latest import or reset. Updates also appear in your other open course tabs.</p>
     </div>
+    </details>
   </div>
 </section>
 <section id="three-ways-through-the-course" class="level2">
@@ -317,7 +320,7 @@ ul.task-list li input[type="checkbox"] {
 <li>Start with <strong><a href="./monday/index.html#pre-work-and-readiness">Monday’s readiness checks</a></strong> unless your environment is already verified.</li>
 <li>Move through the historical days in order when possible; later activities assume earlier concepts even when they use a different tool.</li>
 <li>Check a progress item only after its named log, structure, figure, comparison, or decision memo exists.</li>
-<li>Return anytime and use the resume banner to pick up where you left off.</li>
+<li>Return anytime and use your learning plan to resume the active lesson and section. Recently viewed pages are listed separately.</li>
 </ol>
 <p><a href="https://github.com/RosettaMLBootCamp2025/RosettaMLBootCamp2025.github.io/issues/new" class="btn btn-primary">Report an Issue / Ask a Question (GitHub account required)</a></p>
 
@@ -342,7 +345,7 @@ ul.task-list li input[type="checkbox"] {
     anchorJS.add('.anchored');
     const isCodeAnnotation = (el) => {
       for (const clz of el.classList) {
-        if (clz.startsWith('code-annotation-')) {
+        if (clz.startsWith('code-annotation-')) {                     
           return true;
         }
       }
@@ -362,11 +365,11 @@ ul.task-list li input[type="checkbox"] {
         button.setAttribute("data-bs-toggle", "tooltip");
         button.setAttribute("data-bs-placement", "left");
         button.setAttribute("data-bs-title", "Copied!");
-        tooltip = new bootstrap.Tooltip(button,
-          { trigger: "manual",
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
             customClass: "code-copy-button-tooltip",
             offset: [0, -8]});
-        tooltip.show();
+        tooltip.show();    
       }
       setTimeout(function() {
         if (tooltip) {
@@ -448,7 +451,7 @@ ul.task-list li input[type="checkbox"] {
       if (onUntriggerFn) {
         config.onUntrigger = onUntriggerFn;
       }
-      window.tippy(el, config);
+      window.tippy(el, config); 
     }
     const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
     for (var i=0; i<noterefs.length; i++) {
@@ -523,7 +526,7 @@ ul.task-list li input[type="checkbox"] {
       tippyHover(xref, undefined, function(instance) {
         instance.disable();
         let url = xref.getAttribute('href');
-        let hash = undefined;
+        let hash = undefined; 
         if (url.startsWith('#')) {
           hash = url;
         } else {
@@ -551,7 +554,7 @@ ul.task-list li input[type="checkbox"] {
               if (note !== null) {
                 const html = processXRef(id, note);
                 instance.setContent(html);
-              }
+              } 
             }).finally(() => {
               instance.enable();
               instance.show();
@@ -575,7 +578,7 @@ ul.task-list li input[type="checkbox"] {
               }
               const html = processXRef(null, note);
               instance.setContent(html);
-            }
+            } 
           }).finally(() => {
             instance.enable();
             instance.show();
@@ -615,7 +618,7 @@ ul.task-list li input[type="checkbox"] {
               height = bottom - top;
             }
             if (top !== null && height !== null && parent !== null) {
-              // cook up a div (if necessary) and position it
+              // cook up a div (if necessary) and position it 
               let div = window.document.getElementById("code-annotation-line-highlight");
               if (div === null) {
                 div = window.document.createElement("div");

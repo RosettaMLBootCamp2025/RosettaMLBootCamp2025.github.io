@@ -62,7 +62,7 @@ Jump to the tool you need, but first read its **Preparation** and **Resource Req
 | [Common HPC Setup](1-hpc-setup.qmd) | Required for local GPU work | 60–120 min | Request a GPU and run the PyTorch check | Job script, scheduler log, `nvidia-smi`, and CUDA-aware PyTorch output |
 | [Reproducible setup & fallbacks](reproducibility.qmd) | Required for local model work | 20–40 min | Run the course preflight and choose a compute/analysis fallback | Saved preflight report plus version and fallback note |
 
-**No HPC route:** complete the laptop pre-work, use hosted services/notebooks where permitted, and record which local steps you are replacing. You can analyze supplied outputs when a GPU or account is unavailable.
+**No HPC route:** complete the laptop pre-work, use hosted services/notebooks where permitted, and record which local steps you are replacing. Use the [downloadable analysis datasets](../analysis-lab.qmd) when a GPU or account is unavailable.
 
 ## Tool installation map
 
@@ -99,8 +99,8 @@ The time below is hands-on setup and inspection time; downloads, dependency solv
 Check an item only after the named file or record exists in your evidence portfolio.
 
 - [Readiness note names my route, compute, storage, accounts, and fallback]{.task module-id="monday-readiness-evidence"}
-- [GPU/HPC verification record includes the job script, environment, hardware output, and successful or diagnosed smoke test]{.task module-id="monday-hpc-evidence"}
-- [At least one chosen predictor has a reproducible smoke-test log and expected structure/confidence output]{.task module-id="monday-predictor-evidence"}
+- [For local GPU work only: verification record includes the job script, environment, hardware output, and successful or diagnosed smoke test]{.task module-id="monday-hpc-evidence"}
+- [Prediction record includes a local/hosted output or supplied analysis example, with provenance and confidence interpretation]{.task module-id="monday-predictor-evidence"}
 - [My chosen design or sequence tool has a reproducible smoke-test artifact, or a documented no-compute analysis substitute]{.task module-id="monday-design-evidence"}
 - [Tool-choice memo states what I will use, what I will not use, and why]{.task module-id="monday-tool-choice-evidence"}
 

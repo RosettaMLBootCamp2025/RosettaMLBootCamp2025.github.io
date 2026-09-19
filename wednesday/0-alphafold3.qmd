@@ -2,6 +2,11 @@
 title: "1. AlphaFold3 vs. Chai-1"
 ---
 
+::: {.callout-tip title="Analysis route without compute"}
+If both prediction services are unavailable, use the [published complex models](../analysis-lab.qmd#binder-evidence) to inspect chain placement and geometry. Compare the AF3 and Chai-1 inputs, capabilities and caveats described in this lesson, then propose a matched test. Mark model-to-model agreement and missing confidence outputs as **unmeasured**. This analysis alternative earns the lesson checkpoint through a documented method-selection decision; the supplied BindCraft models are not AF3 or Chai-1 runs.
+:::
+
+
 ## Live Workshop Session
 
 ```{=html}

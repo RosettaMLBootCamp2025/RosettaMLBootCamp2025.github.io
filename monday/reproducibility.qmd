@@ -52,12 +52,12 @@ Compute access is not a learning objective. When a queue, account, model license
 
 | Lesson type | Run-it route | No-compute route | Equivalent evidence |
 |---|---|---|---|
-| Structure prediction | Generate the prediction locally or through an approved service | Use the prediction and confidence examples supplied in Tuesday's lessons | Annotated pLDDT/PAE interpretation and a method-selection memo |
-| Sequence design | Run LigandMPNN on a selected backbone | Start from the candidate sequences in a published/tool example and apply the lesson's ranking questions | Candidate table and selection rationale |
+| Structure prediction | Generate the prediction locally or through an approved service | [Download the GFP prediction and confidence dataset](../files/gfp-analysis.zip) | Annotated pLDDT/PAE interpretation and a method-selection memo |
+| Sequence design | Run LigandMPNN on a selected backbone | [Use the extracted published binder sequences](../files/binder-analysis.zip) and document missing design lineage | Candidate table and selection rationale |
 | Backbone generation | Run RFdiffusion and retain successes and failures | Use the official, revision-pinned RFdiffusion output set in Wednesday's lesson | Backbone gallery, contact/topology observations, and keep/reject rationale |
 | Complex validation | Run Chai-1, Boltz, or an approved prediction service | Analyze the supplied confidence figures or an archived prediction from your project group | Interface-confidence interpretation with limitations |
 | Benchmarking | Run the CPU/GPU notebook on both devices | Use the provided benchmark results in Thursday's activity | Plot interpretation and a prediction of the crossover point |
-| Capstone | Produce a new end-to-end campaign | Build a staged evidence portfolio from canonical targets and known-good outputs, clearly labeled as re-analysis | The same rubric-scored portfolio; no claim of a novel generated binder |
+| Capstone | Produce a new end-to-end campaign | [Use the seven-stage published binder workbook](../analysis-lab.qmd#binder-evidence), clearly labeled as re-analysis | The same rubric-scored portfolio; no claim of a novel generated binder |
 
 The no-compute route changes the provenance of the result, not the standard of reasoning. State which files you received, where they came from, and which steps you did not run.
 

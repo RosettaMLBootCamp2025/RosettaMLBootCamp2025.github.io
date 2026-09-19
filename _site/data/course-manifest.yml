@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated": "2026-08-30",
+  "updated": "2026-09-19",
   "duration_note": "Times are planning estimates for an independent learner and exclude long model downloads, queue waits, and capstone compute.",
   "routes": {
     "core": "The shortest route that develops the concepts and artifacts needed for the capstone.",
@@ -70,6 +70,74 @@
       "route": "core",
       "artifact": "Decision memo naming the selected design, rejected alternatives, risks, and next experiment",
       "checkpoint_label": "Final selection is supported by evidence and uncertainty"
+    },
+    {
+      "id": "monday-readiness-evidence",
+      "day": "monday",
+      "title": "Readiness check",
+      "path": "monday/index.qmd",
+      "route": "core",
+      "artifact": "Readiness note names my route, compute, storage, accounts, and fallback",
+      "checkpoint_label": "Readiness note names my route, compute, storage, accounts, and fallback",
+      "compute_modes": [
+        "local",
+        "hosted",
+        "analysis"
+      ]
+    },
+    {
+      "id": "monday-hpc-evidence",
+      "day": "monday",
+      "title": "GPU verification",
+      "path": "monday/index.qmd",
+      "route": "core",
+      "artifact": "GPU verification record and smoke-test log are saved",
+      "checkpoint_label": "GPU verification record and smoke-test log are saved",
+      "compute_modes": [
+        "local"
+      ]
+    },
+    {
+      "id": "monday-predictor-evidence",
+      "day": "monday",
+      "title": "Prediction evidence",
+      "path": "monday/index.qmd",
+      "route": "core",
+      "artifact": "A predictor output or supplied analysis example is inspected and documented",
+      "checkpoint_label": "A predictor output or supplied analysis example is inspected and documented",
+      "compute_modes": [
+        "local",
+        "hosted",
+        "analysis"
+      ]
+    },
+    {
+      "id": "monday-design-evidence",
+      "day": "monday",
+      "title": "Design evidence",
+      "path": "monday/index.qmd",
+      "route": "core",
+      "artifact": "A design smoke test or supplied design analysis is documented",
+      "checkpoint_label": "A design smoke test or supplied design analysis is documented",
+      "compute_modes": [
+        "local",
+        "hosted",
+        "analysis"
+      ]
+    },
+    {
+      "id": "monday-tool-choice-evidence",
+      "day": "monday",
+      "title": "Tool choices",
+      "path": "monday/index.qmd",
+      "route": "core",
+      "artifact": "Tool-choice memo records my workflow and why I chose it",
+      "checkpoint_label": "Tool-choice memo records my workflow and why I chose it",
+      "compute_modes": [
+        "local",
+        "hosted",
+        "analysis"
+      ]
     }
   ],
   "lessons": [
@@ -85,7 +153,12 @@
       "compute": "local CPU",
       "artifact": "A working bootcamp environment and cloned practice repository",
       "checkpoint_id": "prework-environment-git",
-      "checkpoint_label": "Environment verification passes"
+      "checkpoint_label": "Environment verification passes",
+      "compute_modes": [
+        "local",
+        "hosted",
+        "analysis"
+      ]
     },
     {
       "id": "prework-pymol-vscode",
@@ -99,7 +172,12 @@
       "compute": "local CPU",
       "artifact": "A saved molecular view and editor verification result",
       "checkpoint_id": "prework-pymol-vscode",
-      "checkpoint_label": "Visualization and editor checks pass"
+      "checkpoint_label": "Visualization and editor checks pass",
+      "compute_modes": [
+        "local",
+        "hosted",
+        "analysis"
+      ]
     },
     {
       "id": "prework-python",
@@ -113,7 +191,12 @@
       "compute": "local CPU",
       "artifact": "Protein analysis_results.txt and passing tests",
       "checkpoint_id": "prework-python",
-      "checkpoint_label": "All refresher tests pass"
+      "checkpoint_label": "All refresher tests pass",
+      "compute_modes": [
+        "local",
+        "hosted",
+        "analysis"
+      ]
     },
     {
       "id": "reproducible-setup",
@@ -127,7 +210,12 @@
       "compute": "local CPU",
       "artifact": "Saved preflight report and an explicit run-or-analysis fallback choice",
       "checkpoint_id": "reproducible-setup",
-      "checkpoint_label": "Version status and fallback pathway are documented"
+      "checkpoint_label": "Version status and fallback pathway are documented",
+      "compute_modes": [
+        "local",
+        "hosted",
+        "analysis"
+      ]
     },
     {
       "id": "hpc-setup",
@@ -141,7 +229,10 @@
       "compute": "HPC login node; GPU node for verification",
       "artifact": "Saved preflight report and a successful GPU allocation check",
       "checkpoint_id": "hpc-setup",
-      "checkpoint_label": "Preflight report reviewed"
+      "checkpoint_label": "Preflight report reviewed",
+      "compute_modes": [
+        "local"
+      ]
     },
     {
       "id": "localcolabfold",
@@ -155,7 +246,10 @@
       "compute": "GPU recommended; provided-output route available",
       "artifact": "Predicted PDB and confidence JSON, or an annotated known-good prediction",
       "checkpoint_id": "localcolabfold",
-      "checkpoint_label": "Prediction output and confidence are interpreted"
+      "checkpoint_label": "Prediction output and confidence are interpreted",
+      "compute_modes": [
+        "local"
+      ]
     },
     {
       "id": "ligandmpnn",
@@ -169,7 +263,11 @@
       "compute": "CPU or GPU",
       "artifact": "Designed FASTA sequences and a short selection rationale",
       "checkpoint_id": "ligandmpnn",
-      "checkpoint_label": "Designed sequences are ranked and justified"
+      "checkpoint_label": "Designed sequences are ranked and justified",
+      "compute_modes": [
+        "local"
+      ],
+      "analysis_href": "analysis-lab.html#binder-evidence"
     },
     {
       "id": "rfdiffusion2",
@@ -183,7 +281,10 @@
       "compute": "CUDA GPU and Apptainer; analysis-only route available",
       "artifact": "A generated backbone or an annotated known-good design",
       "checkpoint_id": "rfdiffusion2",
-      "checkpoint_label": "Backbone geometry and constraints are evaluated"
+      "checkpoint_label": "Backbone geometry and constraints are evaluated",
+      "compute_modes": [
+        "local"
+      ]
     },
     {
       "id": "esmfold-install",
@@ -197,7 +298,10 @@
       "compute": "GPU recommended; CPU is slow",
       "artifact": "Single-sequence structure prediction",
       "checkpoint_id": "esmfold-install",
-      "checkpoint_label": "Prediction file is valid and confidence is checked"
+      "checkpoint_label": "Prediction file is valid and confidence is checked",
+      "compute_modes": [
+        "local"
+      ]
     },
     {
       "id": "openfold",
@@ -211,7 +315,10 @@
       "compute": "GPU plus large shared databases",
       "artifact": "Environment smoke-test record",
       "checkpoint_id": "openfold",
-      "checkpoint_label": "OpenFold requirements and tradeoffs are documented"
+      "checkpoint_label": "OpenFold requirements and tradeoffs are documented",
+      "compute_modes": [
+        "local"
+      ]
     },
     {
       "id": "chai1",
@@ -225,7 +332,10 @@
       "compute": "Modern CUDA GPU recommended",
       "artifact": "Complex prediction and confidence summary",
       "checkpoint_id": "chai1",
-      "checkpoint_label": "Complex confidence is interpreted"
+      "checkpoint_label": "Complex confidence is interpreted",
+      "compute_modes": [
+        "local"
+      ]
     },
     {
       "id": "boltz2",
@@ -239,7 +349,10 @@
       "compute": "GPU recommended; CPU supported",
       "artifact": "CIF prediction and confidence summary",
       "checkpoint_id": "boltz2",
-      "checkpoint_label": "Boltz output is inspected and compared"
+      "checkpoint_label": "Boltz output is inspected and compared",
+      "compute_modes": [
+        "local"
+      ]
     },
     {
       "id": "diffdock-pp",
@@ -253,7 +366,10 @@
       "compute": "CUDA 11.6-era GPU stack",
       "artifact": "Ranked protein-protein docking poses",
       "checkpoint_id": "diffdock-pp",
-      "checkpoint_label": "Docking poses are ranked with limitations noted"
+      "checkpoint_label": "Docking poses are ranked with limitations noted",
+      "compute_modes": [
+        "local"
+      ]
     },
     {
       "id": "placer",
@@ -267,7 +383,10 @@
       "compute": "CPU or GPU",
       "artifact": "Ranked ligand conformational ensemble",
       "checkpoint_id": "placer",
-      "checkpoint_label": "Ensemble uncertainty is interpreted"
+      "checkpoint_label": "Ensemble uncertainty is interpreted",
+      "compute_modes": [
+        "local"
+      ]
     },
     {
       "id": "bindcraft",
@@ -281,7 +400,10 @@
       "compute": "24+ GB CUDA GPU; full campaigns take hours to days",
       "artifact": "Validated settings file and a campaign plan or pilot trajectory",
       "checkpoint_id": "bindcraft",
-      "checkpoint_label": "Campaign settings and stopping criteria are justified"
+      "checkpoint_label": "Campaign settings and stopping criteria are justified",
+      "compute_modes": [
+        "local"
+      ]
     },
     {
       "id": "esm3",
@@ -295,7 +417,10 @@
       "compute": "16+ GB GPU for local small model",
       "artifact": "Generated sequence and optional structure",
       "checkpoint_id": "esm3",
-      "checkpoint_label": "Generated protein is checked for plausibility"
+      "checkpoint_label": "Generated protein is checked for plausibility",
+      "compute_modes": [
+        "local"
+      ]
     },
     {
       "id": "rfdiffusion-aa",
@@ -309,7 +434,10 @@
       "compute": "CUDA GPU and Apptainer",
       "artifact": "All-atom design or documented comparison with RFdiffusion2",
       "checkpoint_id": "rfdiffusion-aa",
-      "checkpoint_label": "Tool choice is justified for the design problem"
+      "checkpoint_label": "Tool choice is justified for the design problem",
+      "compute_modes": [
+        "local"
+      ]
     },
     {
       "id": "pymol-vscode-workflow",
@@ -323,7 +451,12 @@
       "compute": "local CPU",
       "artifact": "Reproducible structure-inspection script and saved view",
       "checkpoint_id": "pymol-vscode-workflow",
-      "checkpoint_label": "Structure view can be regenerated from the script"
+      "checkpoint_label": "Structure view can be regenerated from the script",
+      "compute_modes": [
+        "local",
+        "hosted",
+        "analysis"
+      ]
     },
     {
       "id": "structure-prediction-intro",
@@ -337,7 +470,12 @@
       "compute": "local CPU",
       "artifact": "A method-selection memo for a sample sequence",
       "checkpoint_id": "structure-prediction-intro",
-      "checkpoint_label": "Prediction method choice is supported by evidence"
+      "checkpoint_label": "Prediction method choice is supported by evidence",
+      "compute_modes": [
+        "local",
+        "hosted",
+        "analysis"
+      ]
     },
     {
       "id": "alphafold2-openfold",
@@ -351,7 +489,13 @@
       "compute": "browser and optional GPU",
       "artifact": "Annotated pLDDT/PAE interpretation and prediction comparison",
       "checkpoint_id": "alphafold2-openfold",
-      "checkpoint_label": "Confidence and failure modes are explained"
+      "checkpoint_label": "Confidence and failure modes are explained",
+      "compute_modes": [
+        "local",
+        "hosted",
+        "analysis"
+      ],
+      "analysis_href": "analysis-lab.html#gfp-confidence"
     },
     {
       "id": "alphafold2-architecture-deep-dive",
@@ -365,7 +509,12 @@
       "compute": "none",
       "artifact": "Architecture concept map or completed deep-dive quiz",
       "checkpoint_id": "alphafold2-architecture-deep-dive",
-      "checkpoint_label": "Information flow through Evoformer, structure module, and recycling is explained"
+      "checkpoint_label": "Information flow through Evoformer, structure module, and recycling is explained",
+      "compute_modes": [
+        "local",
+        "hosted",
+        "analysis"
+      ]
     },
     {
       "id": "esmfold-comparison",
@@ -379,7 +528,13 @@
       "compute": "GPU or provided predictions",
       "artifact": "Side-by-side method comparison",
       "checkpoint_id": "esmfold-comparison",
-      "checkpoint_label": "Speed-confidence tradeoff is explained"
+      "checkpoint_label": "Speed-confidence tradeoff is explained",
+      "compute_modes": [
+        "local",
+        "hosted",
+        "analysis"
+      ],
+      "analysis_href": "tuesday/4-esmfold.html"
     },
     {
       "id": "alphafold3-chai1",
@@ -393,7 +548,13 @@
       "compute": "web service or GPU; provided-output route possible",
       "artifact": "Multimer prediction comparison and uncertainty notes",
       "checkpoint_id": "alphafold3-chai1",
-      "checkpoint_label": "Multimodal prediction evidence is evaluated"
+      "checkpoint_label": "Multimodal prediction evidence is evaluated",
+      "compute_modes": [
+        "local",
+        "hosted",
+        "analysis"
+      ],
+      "analysis_href": "wednesday/0-alphafold3.html"
     },
     {
       "id": "rfdiffusion-advanced",
@@ -407,7 +568,13 @@
       "compute": "CUDA GPU or official known-good outputs",
       "artifact": "Backbone gallery, hotspot analysis, and selection rationale",
       "checkpoint_id": "rfdiffusion-advanced",
-      "checkpoint_label": "Design gallery is evaluated against explicit criteria"
+      "checkpoint_label": "Design gallery is evaluated against explicit criteria",
+      "compute_modes": [
+        "local",
+        "hosted",
+        "analysis"
+      ],
+      "analysis_href": "analysis-lab.html#binder-evidence"
     },
     {
       "id": "pytorch-foundations",
@@ -421,7 +588,12 @@
       "compute": "local CPU; GPU optional",
       "artifact": "Working tensor/model notebook",
       "checkpoint_id": "pytorch-foundations",
-      "checkpoint_label": "Core tensor and gradient operations run"
+      "checkpoint_label": "Core tensor and gradient operations run",
+      "compute_modes": [
+        "local",
+        "hosted",
+        "analysis"
+      ]
     },
     {
       "id": "cpu-vs-gpu",
@@ -435,7 +607,12 @@
       "compute": "CPU and CUDA GPU, or provided benchmark",
       "artifact": "Benchmark plot with an explanation of crossover behavior",
       "checkpoint_id": "cpu-vs-gpu",
-      "checkpoint_label": "Benchmark result and caveats are explained"
+      "checkpoint_label": "Benchmark result and caveats are explained",
+      "compute_modes": [
+        "local",
+        "hosted",
+        "analysis"
+      ]
     },
     {
       "id": "molecular-docking",
@@ -449,7 +626,12 @@
       "compute": "CPU or GPU depending on tool",
       "artifact": "Ranked poses with a defensible validation criterion",
       "checkpoint_id": "molecular-docking",
-      "checkpoint_label": "Docking pose is assessed beyond score alone"
+      "checkpoint_label": "Docking pose is assessed beyond score alone",
+      "compute_modes": [
+        "local",
+        "hosted",
+        "analysis"
+      ]
     },
     {
       "id": "reflection-capstone-intro",
@@ -463,7 +645,12 @@
       "compute": "none",
       "artifact": "Target brief and capstone execution plan",
       "checkpoint_id": "reflection-capstone-intro",
-      "checkpoint_label": "Capstone question, evidence, and fallback plan are defined"
+      "checkpoint_label": "Capstone question, evidence, and fallback plan are defined",
+      "compute_modes": [
+        "local",
+        "hosted",
+        "analysis"
+      ]
     },
     {
       "id": "capstone",
@@ -478,7 +665,13 @@
       "compute": "GPU recommended; staged no-compute evidence path available",
       "artifact": "Reproducible design portfolio and final selection memo",
       "checkpoint_id": "capstone",
-      "checkpoint_label": "Portfolio meets the capstone evidence rubric"
+      "checkpoint_label": "Portfolio meets the capstone evidence rubric",
+      "compute_modes": [
+        "local",
+        "hosted",
+        "analysis"
+      ],
+      "analysis_href": "analysis-lab.html#binder-evidence"
     },
     {
       "id": "capstone-rubric",
@@ -492,7 +685,13 @@
       "compute": "none",
       "artifact": "Completed evidence portfolio and rubric self-score",
       "checkpoint_id": "capstone-rubric",
-      "checkpoint_label": "Evidence portfolio is complete and self-scored"
+      "checkpoint_label": "Evidence portfolio is complete and self-scored",
+      "compute_modes": [
+        "local",
+        "hosted",
+        "analysis"
+      ],
+      "analysis_href": "analysis-lab.html#binder-evidence"
     },
     {
       "id": "capstone-exemplar",
@@ -506,7 +705,12 @@
       "compute": "none",
       "artifact": "Notes comparing the exemplar's evidence trail with the learner's plan",
       "checkpoint_id": "capstone-exemplar",
-      "checkpoint_label": "Exemplar reasoning pattern is compared with the project plan"
+      "checkpoint_label": "Exemplar reasoning pattern is compared with the project plan",
+      "compute_modes": [
+        "local",
+        "hosted",
+        "analysis"
+      ]
     },
     {
       "id": "target-pd-l1",
@@ -520,7 +724,12 @@
       "compute": "none",
       "artifact": "Target preparation and hotspot plan",
       "checkpoint_id": "target-pd-l1",
-      "checkpoint_label": "PD-L1 target record is verified"
+      "checkpoint_label": "PD-L1 target record is verified",
+      "compute_modes": [
+        "local",
+        "hosted",
+        "analysis"
+      ]
     },
     {
       "id": "target-il-7r",
@@ -534,7 +743,12 @@
       "compute": "none",
       "artifact": "Target preparation and hotspot plan",
       "checkpoint_id": "target-il-7r",
-      "checkpoint_label": "IL-7R target record is verified"
+      "checkpoint_label": "IL-7R target record is verified",
+      "compute_modes": [
+        "local",
+        "hosted",
+        "analysis"
+      ]
     },
     {
       "id": "target-trka",
@@ -548,7 +762,12 @@
       "compute": "none",
       "artifact": "Target preparation and hotspot plan",
       "checkpoint_id": "target-trka",
-      "checkpoint_label": "TrkA target record is verified"
+      "checkpoint_label": "TrkA target record is verified",
+      "compute_modes": [
+        "local",
+        "hosted",
+        "analysis"
+      ]
     },
     {
       "id": "target-ifnar2",
@@ -562,7 +781,12 @@
       "compute": "none",
       "artifact": "Target preparation and hotspot plan",
       "checkpoint_id": "target-ifnar2",
-      "checkpoint_label": "IFNAR2 target record is verified"
+      "checkpoint_label": "IFNAR2 target record is verified",
+      "compute_modes": [
+        "local",
+        "hosted",
+        "analysis"
+      ]
     },
     {
       "id": "target-bet-v-1",
@@ -576,7 +800,12 @@
       "compute": "none",
       "artifact": "Target preparation and hotspot plan",
       "checkpoint_id": "target-bet-v-1",
-      "checkpoint_label": "Bet v 1 target record is verified"
+      "checkpoint_label": "Bet v 1 target record is verified",
+      "compute_modes": [
+        "local",
+        "hosted",
+        "analysis"
+      ]
     },
     {
       "id": "target-gm2ap",
@@ -590,7 +819,12 @@
       "compute": "none",
       "artifact": "Target preparation and hotspot plan",
       "checkpoint_id": "target-gm2ap",
-      "checkpoint_label": "GM2AP target record is verified"
+      "checkpoint_label": "GM2AP target record is verified",
+      "compute_modes": [
+        "local",
+        "hosted",
+        "analysis"
+      ]
     },
     {
       "id": "target-beta-glucosidase",
@@ -604,7 +838,12 @@
       "compute": "none",
       "artifact": "Target preparation and hotspot plan",
       "checkpoint_id": "target-beta-glucosidase",
-      "checkpoint_label": "Beta-glucosidase target record is verified"
+      "checkpoint_label": "Beta-glucosidase target record is verified",
+      "compute_modes": [
+        "local",
+        "hosted",
+        "analysis"
+      ]
     },
     {
       "id": "target-tem-1",
@@ -618,7 +857,50 @@
       "compute": "none",
       "artifact": "Target preparation and hotspot plan",
       "checkpoint_id": "target-tem-1",
-      "checkpoint_label": "TEM-1 target record is verified"
+      "checkpoint_label": "TEM-1 target record is verified",
+      "compute_modes": [
+        "local",
+        "hosted",
+        "analysis"
+      ]
+    }
+  ],
+  "checkpoint_aliases": {
+    "tuesday-pymol-evidence": "pymol-vscode-workflow",
+    "tuesday-metrics-evidence": "structure-prediction-intro",
+    "tuesday-af2-evidence": "alphafold2-openfold",
+    "tuesday-model-choice-evidence": "esmfold-comparison",
+    "wednesday-complex-comparison-evidence": "alphafold3-chai1",
+    "wednesday-rfdiffusion-evidence": "rfdiffusion-advanced",
+    "thursday-pytorch-evidence": "pytorch-foundations",
+    "thursday-benchmark-evidence": "cpu-vs-gpu",
+    "thursday-docking-evidence": "molecular-docking",
+    "thursday-capstone-plan-evidence": "reflection-capstone-intro"
+  },
+  "short_activities": [
+    {
+      "id": "quick-readiness",
+      "title": "Record your setup and fallback",
+      "minutes": 15,
+      "path": "start-here.html#your-15-minute-readiness-check",
+      "checkpoint_id": "monday-readiness-evidence",
+      "instruction": "Write your route, available compute, and fallback in readiness.md."
+    },
+    {
+      "id": "quick-confidence",
+      "title": "Annotate one GFP confidence plot",
+      "minutes": 20,
+      "path": "analysis-lab.html#gfp-confidence",
+      "checkpoint_id": "alphafold2-openfold",
+      "instruction": "Use the supplied GFP plot. Mark one confident region and one uncertainty. This is a practice step toward the lesson evidence."
+    },
+    {
+      "id": "quick-binder",
+      "title": "Compare two published binder models",
+      "minutes": 20,
+      "path": "analysis-lab.html#binder-evidence",
+      "checkpoint_id": "capstone-structural-validation",
+      "instruction": "Open the supplied candidate table. Record one comparison and one missing piece of evidence. This is a practice step toward the capstone."
     }
   ]
 }

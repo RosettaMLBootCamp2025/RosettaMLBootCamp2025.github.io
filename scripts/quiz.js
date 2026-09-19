@@ -50,6 +50,26 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const options = Array.from(optionsContainer.querySelectorAll('.quiz-option'));
     const radios = Array.from(optionsContainer.querySelectorAll('.quiz-radio'));
+    const practiceNote = document.createElement('p');
+    practiceNote.className = 'small';
+    practiceNote.textContent = 'Practice only — this does not affect course completion.';
+    checkBtn.before(practiceNote);
+    const retry = document.createElement('button');
+    retry.type = 'button';
+    retry.className = 'btn btn-outline-primary quiz-retry';
+    retry.textContent = 'Try again';
+    retry.hidden = true;
+    checkBtn.after(retry);
+    retry.addEventListener('click', () => {
+      options.forEach(option => { option.classList.remove('correct', 'incorrect', 'selected'); option.querySelectorAll('.quiz-result-label').forEach(item => item.remove()); });
+      radios.forEach(radio => { radio.disabled = false; radio.checked = false; });
+      selectedIndex = -1;
+      checkBtn.textContent = 'Check Answer';
+      checkBtn.disabled = true;
+      feedback.hidden = true;
+      retry.hidden = true;
+      radios[0].focus();
+    });
     checkBtn.type = 'button';
     checkBtn.disabled = true;
     checkBtn.setAttribute('aria-describedby', feedbackId);
@@ -74,7 +94,8 @@ document.addEventListener('DOMContentLoaded', function() {
       if (selectedIndex === -1) return;
 
       checkBtn.disabled = true;
-      checkBtn.textContent = 'Submitted';
+      checkBtn.textContent = 'Answer checked';
+      retry.hidden = false;
       radios.forEach(radio => radio.disabled = true);
 
       const selectedOption = options[selectedIndex];
