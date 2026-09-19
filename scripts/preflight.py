@@ -10,6 +10,7 @@ import shutil
 import subprocess
 import sys
 import urllib.request
+from concurrent.futures import ThreadPoolExecutor
 from dataclasses import asdict, dataclass
 from pathlib import Path
 
@@ -51,6 +52,10 @@ def tool_record(tool_id: str | None) -> dict | None:
     return next((tool for tool in data["tools"] if tool["id"] == tool_id), None)
 
 
+def first_command_version(commands: tuple[str, ...]) -> tuple[str, str | None] | None:
+    return next(((name, command_version(name, "--version")) for name in commands if shutil.which(name)), None)
+
+
 def run_checks(tool: dict | None, check_network: bool) -> list[Check]:
     checks: list[Check] = []
     python_ok = sys.version_info >= (3, 9)
@@ -63,10 +68,19 @@ def run_checks(tool: dict | None, check_network: bool) -> list[Check]:
         )
     )
 
-    git_version = command_version("git", "--version")
+    # Bound process fan-out, but preserve the report order and command preferences.
+    with ThreadPoolExecutor(max_workers=4) as executor:
+        git_probe = executor.submit(command_version, "git", "--version")
+        manager_probe = executor.submit(first_command_version, ("mamba", "micromamba", "conda"))
+        downloader_probe = executor.submit(first_command_version, ("curl", "wget"))
+        gpu_probe = executor.submit(command_version, "nvidia-smi", "--query-gpu=name,driver_version,memory.total", "--format=csv,noheader")
+        nvcc_probe = executor.submit(command_version, "nvcc", "--version")
+        container_probe = executor.submit(first_command_version, ("apptainer", "singularity", "docker"))
+
+    git_version = git_probe.result()
     checks.append(Check("Git", "PASS" if git_version else "WARN", git_version or "not found", "Install Git before cloning pinned tools." if not git_version else ""))
 
-    manager = next(((name, command_version(name, "--version")) for name in ("mamba", "micromamba", "conda") if shutil.which(name)), None)
+    manager = manager_probe.result()
     checks.append(
         Check(
             "Environment manager",
@@ -76,10 +90,10 @@ def run_checks(tool: dict | None, check_network: bool) -> list[Check]:
         )
     )
 
-    downloader = next(((name, command_version(name, "--version")) for name in ("curl", "wget") if shutil.which(name)), None)
+    downloader = downloader_probe.result()
     checks.append(Check("Downloader", "PASS" if downloader else "WARN", f"{downloader[0]}: {downloader[1]}" if downloader else "curl and wget not found", "Install curl or wget for weights and example data." if not downloader else ""))
 
-    gpu_version = command_version("nvidia-smi", "--query-gpu=name,driver_version,memory.total", "--format=csv,noheader")
+    gpu_version = gpu_probe.result()
     gpu_required = bool(tool and ("GPU" in tool.get("accelerator", "") or "CUDA" in tool.get("accelerator", "")))
     checks.append(
         Check(
@@ -90,10 +104,10 @@ def run_checks(tool: dict | None, check_network: bool) -> list[Check]:
         )
     )
 
-    nvcc_version = command_version("nvcc", "--version")
+    nvcc_version = nvcc_probe.result()
     checks.append(Check("CUDA toolkit", "PASS" if nvcc_version else "INFO", nvcc_version or "nvcc not visible; containerized tools may not need it on PATH"))
 
-    container = next(((name, command_version(name, "--version")) for name in ("apptainer", "singularity", "docker") if shutil.which(name)), None)
+    container = container_probe.result()
     container_required = bool(tool and "Apptainer" in tool.get("accelerator", ""))
     checks.append(
         Check(

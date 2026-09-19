@@ -73,6 +73,9 @@ def check_site(site_dir: Path) -> list[str]:
     if not html_files:
         return [f"No rendered HTML files found under {site_dir}"]
     parsed_pages = {path.resolve(): parse_page(path) for path in html_files}
+    # Keep caches local to this validation run so later renders are checked afresh.
+    resolved_targets: dict[tuple[Path, str], Path] = {}
+    target_exists: dict[Path, bool] = {}
 
     for source, page in parsed_pages.items():
         source_label = source.relative_to(site_dir)
@@ -86,13 +89,18 @@ def check_site(site_dir: Path) -> list[str]:
             if split.path.lower().endswith(".qmd"):
                 issues.append(f"{source_label}:{ref.line} {ref.attribute} still points to source QMD: {value}")
                 continue
-            target = resolve_local(site_dir, source, split.path)
+            resolution_key = (source.parent if split.path else source, split.path)
+            if resolution_key not in resolved_targets:
+                resolved_targets[resolution_key] = resolve_local(site_dir, source, split.path)
+            target = resolved_targets[resolution_key]
             try:
                 target.relative_to(site_dir)
             except ValueError:
                 issues.append(f"{source_label}:{ref.line} {ref.attribute} escapes the rendered site: {value}")
                 continue
-            if not target.exists():
+            if target not in target_exists:
+                target_exists[target] = target.exists()
+            if not target_exists[target]:
                 issues.append(f"{source_label}:{ref.line} missing local {ref.attribute}: {value}")
                 continue
             if split.fragment:
